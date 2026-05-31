@@ -1,0 +1,41 @@
+Collecting reduction distribution (100 circuits, varying n/d)...
+Saved 100 records
+
+======================================================================
+Threshold Scan Analysis:
+======================================================================
+
+Reduction distribution summary:
+  Min: 0.00%
+  25th percentile: 0.00%
+  Median: 0.00%
+  Mean: 0.00%
+  75th percentile: 0.00%
+  Max: 0.00%
+  Threshold for 10% circuits above: 0.00%
+  Threshold for 20% circuits above: 0.00%
+  Threshold for 50% circuits above: 0.00%
+
+Threshold vs fraction above:
+     1%:  0.0% of circuits above
+     3%:  0.0% of circuits above
+     5%:  0.0% of circuits above
+    10%:  0.0% of circuits above
+    15%:  0.0% of circuits above
+    20%:  0.0% of circuits above
+    30%:  0.0% of circuits above
+    40%:  0.0% of circuits above
+    50%:  0.0% of circuits above
+
+--- RECOMMENDATION ---
+  Median reduction: 0.00%
+  Mean reduction: 0.00%
+  => 20% threshold is INAPPROPRIATE for random circuits
+  => Natural threshold = 5% captures ~0% of circuits
+  => Recommended threshold = 10% for structured circuits
+
+  Recommended success threshold (random circuits): 5%
+  Recommended success threshold (structured circuits): 10%
+
+E9 COMPLETE — Threshold analysis: exp9_threshold_analysis_20260530_181929.json
+exp9 DONE

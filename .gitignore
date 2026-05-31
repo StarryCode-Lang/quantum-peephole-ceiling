@@ -1,0 +1,39 @@
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Hermes agent data
+.hermes/
+
+# Node
+node_modules/
+
+# Archived data
+archive/old_data/
+
+# Raw CSV data
+data/raw/*.csv
+
+# Python packaging
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Testing
+.pytest_cache/
+
+# Build artifacts
+dist/
+build/
+*.egg
+
+# Environment
+.env
+venv/
+conda_envs/
+
+# OS files
+.DS_Store
+Thumbs.db

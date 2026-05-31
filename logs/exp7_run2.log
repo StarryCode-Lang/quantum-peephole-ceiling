@@ -1,0 +1,20 @@
+Generating real quantum algorithm circuits...
+Generated 46 circuits:
+  VQE_EfficientSU2_n4_r1
+  VQE_RealAmp_n4_r1
+  VQE_EfficientSU2_n4_r2
+  VQE_RealAmp_n4_r2
+  VQE_EfficientSU2_n5_r1
+  VQE_RealAmp_n5_r1
+  VQE_EfficientSU2_n5_r2
+  VQE_RealAmp_n5_r2
+  VQE_EfficientSU2_n6_r1
+  VQE_RealAmp_n6_r1
+  ... and 36 more
+
+Running 46 circuits × 4 optimizers = 184 tests
+Traceback (most recent call last):
+  File "D:\Desktop\Q-research\experiments\exp7_real_circuits.py", line 117, in <module>
+    opt_copy = type(opt)(**opt.__dict__) if hasattr(opt, '__dict__') else type(opt)()
+TypeError: GreedyGateCancellation.__init__() got an unexpected keyword argument 'logger'
+exp7 FAILED

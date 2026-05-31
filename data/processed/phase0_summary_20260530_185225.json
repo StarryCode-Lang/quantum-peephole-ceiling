@@ -1,0 +1,17 @@
+{
+  "version": "phase0_v1",
+  "timestamp": "20260530_185225",
+  "key_finding": "old_14pct_from_phase2_commutation",
+  "universal": {
+    "old_mean_reduction": 0.10773333333333333,
+    "new_mean_reduction": 0.0,
+    "old_mean_improvements": 14.3,
+    "new_mean_improvements": 0.0,
+    "old_fidelity": 1.0
+  },
+  "clifford": {
+    "old_mean_reduction": 0.2723809523809524,
+    "new_mean_reduction": 0.0
+  },
+  "explanation": "The 14% reduction in old E1-E5 data comes from Phase 2 (commutation-based non-adjacent cancellation) in the old optimizer, NOT from a bug. The new optimizer (adjacent-only) gets 0% on random circuits. OLD fidelity indicates whether Phase 2 is valid."
+}

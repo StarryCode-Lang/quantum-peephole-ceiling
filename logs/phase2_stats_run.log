@@ -1,0 +1,30 @@
+Loading data files...
+  E1: data/raw\exp1_phase_transition_20260530_095003.csv
+  E2: data/raw\exp2_entanglement_density_20260530_161336.csv
+  E3: data/raw\exp3_scaling_20260530_100830.csv
+  E4: data/raw\exp4_algorithm_comparison_20260530_111458.csv
+Loaded: E1=5000, E2=4200, E3=12000, E4=400
+
+======================================================================
+ANALYSIS 1: Phase Transition — Exponential vs Sigmoid Model
+======================================================================
+Traceback (most recent call last):
+  File "D:\Downloads\miniforge3\envs\q-research\lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'optimizer'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Desktop\Q-research\scripts\phase2_statistics.py", line 50, in <module>
+    sub = e1[(e1['n_qubits'] == n_q) & (e1['optimizer'] == 'greedy')]
+  File "D:\Downloads\miniforge3\envs\q-research\lib\site-packages\pandas\core\frame.py", line 4113, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "D:\Downloads\miniforge3\envs\q-research\lib\site-packages\pandas\core\indexes\base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'optimizer'
+phase2_stats FAILED

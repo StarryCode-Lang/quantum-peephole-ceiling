@@ -1,0 +1,12 @@
+Generating structured circuit families...
+Family A: 150 CNOT-H-CNOT circuits
+Family B: 120 Clifford circuits
+Family C: 150 Linear chain circuits
+Total: 420 structured circuits across 3 families
+
+Processing 420 circuits × 4 optimizers
+Traceback (most recent call last):
+  File "D:\Desktop\Q-research\experiments\exp8_structured_synthetic.py", line 106, in <module>
+    opt_copy = type(opt)(**opt.__dict__) if hasattr(opt, '__dict__') else type(opt)()
+TypeError: GreedyGateCancellation.__init__() got an unexpected keyword argument 'logger'
+exp8 FAILED

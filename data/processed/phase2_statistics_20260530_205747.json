@@ -1,0 +1,35 @@
+{
+  "version": "phase0_v1",
+  "timestamp": "20260530_205747",
+  "fss": {
+    "slope": NaN,
+    "intercept": NaN,
+    "r_squared": NaN,
+    "p_value": NaN
+  },
+  "power_law": {
+    "exponent": 0.2956641138982053,
+    "intercept": -2.5184386270120167,
+    "r_squared": 0.9118787819896264,
+    "p_value": 0.0002213058498515672
+  },
+  "algorithm_comparison": {
+    "greedy_mean": 0.14359999999999995,
+    "greedy_median": 0.1333333333333333,
+    "sa_mean": 0.001999999999999996,
+    "ga_mean": 0.009999999999999976,
+    "rls_mean": 0.10159999999999995,
+    "p_greedy_vs_sa": 3.401079282372118e-37,
+    "p_greedy_vs_ga": 2.100312438522554e-34,
+    "p_greedy_vs_rls": 2.9266305617638704e-07,
+    "cliffs_delta_sa": 0.9875,
+    "cliffs_delta_ga": 0.9807,
+    "cliffs_delta_rls": 0.4072
+  },
+  "entanglement_sweet_spot": {
+    "optimal_rho": 1.0,
+    "ci_low": 1.0,
+    "ci_high": 1.0,
+    "reduction_at_optimal": 0.7520416666666666
+  }
+}

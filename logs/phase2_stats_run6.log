@@ -1,0 +1,75 @@
+Loading data files...
+  E1: data/raw\exp1_phase_transition_20260530_095003.csv
+  E2: data/raw\exp2_entanglement_density_20260530_161336.csv
+  E3: data/raw\exp3_scaling_20260530_100830.csv
+  E4: data/raw\exp4_algorithm_comparison_20260530_111458.csv
+Loaded: E1=5000, E2=4200, E3=12000, E4=400
+
+======================================================================
+ANALYSIS 1: Phase Transition — Exponential vs Sigmoid Model
+======================================================================
+
+  n=3:
+    Exponential: P0=nan, d0=nan, R²=nan
+    Sigmoid: dc=nan, w=nan, R²=nan
+    ΔAIC = +nan → favors sigmoid
+    ΔBIC = +nan
+
+  n=5:
+    Exponential: P0=0.933, d0=5973353160.8, R²=-0.000
+    Sigmoid: dc=100.0, w=19.6, R²=-0.267
+    ΔAIC = -11.8 → favors exponential
+    ΔBIC = -11.8
+
+  n=7:
+    Exponential: P0=nan, d0=nan, R²=nan
+    Sigmoid: dc=nan, w=nan, R²=nan
+    ΔAIC = +nan → favors sigmoid
+    ΔBIC = +nan
+
+======================================================================
+ANALYSIS 2: Finite-Size Scaling of d0
+======================================================================
+  d0 vs n: slope=nan, R²=nan, p=nan
+  Conclusion: d0 does NOT scale with n
+
+======================================================================
+ANALYSIS 3: Algorithm Comparison (SA/GA vs Greedy)
+======================================================================
+
+  Optimizer       Mean    Median      Std   Succ 5%
+  --------------------------------------------------
+  Greedy       14.36%   13.33%   5.91%    96.0%
+  SA            0.20%    0.00%   0.66%     0.0%
+  GA            1.00%    1.33%   0.83%     0.0%
+  RLS          10.16%    9.33%   5.19%    89.0%
+
+  Mann-Whitney (Greedy vs SA): U=9937, p=3.40e-37
+  Mann-Whitney (Greedy vs GA): U=9903, p=2.10e-34
+  Mann-Whitney (Greedy vs RLS): U=7036, p=2.93e-07
+  Cliff's delta (Greedy vs SA): +0.988 (large)
+  Cliff's delta (Greedy vs GA): +0.981
+
+======================================================================
+ANALYSIS 4: Power-Law Scaling (E3)
+======================================================================
+  Power law: reduction ∝ n^0.296
+  95% CI: [0.222, 0.369]
+  R²=0.912, p=0.0002
+  Table: n=[ 3  4  5  6  7  8  9 10], reduction=[0.10517893 0.12515379 0.13894687 0.13479933 0.14467089 0.14955748
+ 0.15189499 0.15555673]
+
+======================================================================
+ANALYSIS 5: Entanglement Density Sweet Spot (E2)
+======================================================================
+Traceback (most recent call last):
+  File "D:\Desktop\Q-research\scripts\phase2_statistics.py", line 205, in <module>
+    by_rho = e2.groupby('rho')['reduction'].agg(['mean', 'std', 'count']).reset_index()
+  File "D:\Downloads\miniforge3\envs\q-research\lib\site-packages\pandas\core\frame.py", line 9210, in groupby
+    return DataFrameGroupBy(
+  File "D:\Downloads\miniforge3\envs\q-research\lib\site-packages\pandas\core\groupby\groupby.py", line 1331, in __init__
+    grouper, exclusions, obj = get_grouper(
+  File "D:\Downloads\miniforge3\envs\q-research\lib\site-packages\pandas\core\groupby\grouper.py", line 1043, in get_grouper
+    raise KeyError(gpr)
+KeyError: 'rho'
+phase2_stats FAILED

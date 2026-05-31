@@ -1,0 +1,40 @@
+Generating structured circuit families...
+Total: 200 circuits (800 tests)
+  Progress: 100/800 (12%)
+  Progress: 200/800 (25%)
+  Progress: 300/800 (38%)
+  Progress: 400/800 (50%)
+  Progress: 500/800 (62%)
+  Progress: 600/800 (75%)
+  Progress: 700/800 (88%)
+  Progress: 800/800 (100%)
+
+======================================================================
+STRUCTURED CIRCUIT RESULTS (Phase 1-only optimizer)
+======================================================================
+
+Optimizer    Mean Red  Succ >0%  Succ >5%   Max Red   Fidelity
+  --------------------------------------------------------------
+  ga              0.0%     0.0%     0.0%     0.0%    1.0000
+  greedy          0.0%     0.0%     0.0%     0.0%    1.0000
+  rls             0.0%     0.0%     0.0%     0.0%    1.0000
+  sa              0.0%     1.0%     0.0%     2.4%    1.0000
+
+Family         Mean Red  Succ >0%   Max Red   Fidelity
+  --------------------------------------------------
+  Clifford          0.0%     0.8%     2.4%    1.0000
+  Structured        0.0%     0.0%     0.0%    1.0000
+  Universal         0.0%     0.0%     0.0%    1.0000
+
+--- KEY INSIGHT ---
+  Phase 1-only optimizer on generator_v1 structured circuits:
+  Greedy: 0.0%, SA: 0.0%, GA: 0.0%, RLS: 0.0%
+  → All four optimizers show ~0% reduction (within noise)
+  → Circuit STRUCTURE (not optimizer choice) determines the optimization ceiling
+  → Random Universal circuits: 0% (Phase 0)
+  → Generator_v1 structured circuits: 0% (this experiment)
+  → VQE/QFT/GHZ real circuits: 0% (exp7)
+  → THEORETICAL UPPER BOUND: all adjacent-search methods hit 0% on same circuits
+
+E8 COMPLETE — 800 records → exp8_structured_synthetic_20260530_205522.csv
+DONE:0
