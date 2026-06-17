@@ -1,0 +1,16 @@
+Test,Raw_p_value,Adjusted_p_value_BH,Significant_at_0.05,Rejected
+E1: Reduction across depths (Kruskal-Wallis),1.0,1.0,not significant,False
+E2: Entanglement-reduction correlation (Pearson),1.0,1.0,not significant,False
+E3: Reduction across qubit counts (Kruskal-Wallis),1.0,1.0,not significant,False
+E4: Reduction across optimizers (Kruskal-Wallis),6.121211146717873e-12,1.1477270900096011e-11,significant,True
+E4: Runtime across optimizers (Kruskal-Wallis),1.726875121246584e-74,6.47578170467469e-74,significant,True
+E5: Reduction across depths (Kruskal-Wallis),6.476212108849583e-11,1.0793686848082638e-10,significant,True
+E10: Reduction across circuit families (Kruskal-Wallis),8.483150758396029e-166,6.362363068797021e-165,significant,True
+E10: Reduction across optimizers (Kruskal-Wallis),3.159160337542533e-109,1.5795801687712664e-108,significant,True
+"E11: Reduction across circuit families (KW, H7)",4.777787324875702e-34,1.4333361974627103e-33,significant,True
+"E12: Reduction across optimization levels (KW, H8)",8.800904434525208e-17,2.2002261086313018e-16,significant,True
+"E14: Reduction across families x optimizers (KW, H9)",1.0169427525604771e-280,1.5254141288407157e-279,significant,True
+"E15: Reduction across compilers (KW, H10)",2.8286698289730817e-07,3.8572770395087477e-07,significant,True
+"E16: Reduction across window sizes (KW, H11)",1.1374165943163696e-07,1.7061248914745546e-07,significant,True
+"E17: Reduction across topologies (KW, H12)",1.0,1.0,not significant,False
+"E18: Reduction across families in Clifford+T (KW, H13)",2.3967389836188042e-14,5.135869250611724e-14,significant,True

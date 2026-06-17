@@ -9,15 +9,6 @@ __pycache__/
 # Node
 node_modules/
 
-# Archived data
-archive/old_data/
-
-# Raw CSV data
-data/raw/*.csv
-
-# Python packaging
-*.egg-info/
-
 # Jupyter
 .ipynb_checkpoints/
 
@@ -27,6 +18,7 @@ data/raw/*.csv
 # Build artifacts
 dist/
 build/
+*.egg-info/
 *.egg
 
 # Environment
@@ -37,3 +29,22 @@ conda_envs/
 # OS files
 .DS_Store
 Thumbs.db
+nul
+
+# AI assistant config
+.serena/
+.claude/
+.opencode/
+.qoder/
+
+# Logs and local runtime output
+logs/
+*.log
+
+# Coverage reports
+.coverage
+htmlcov/
+
+# Local IDE
+.vscode/
+.idea/

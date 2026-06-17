@@ -1,0 +1,52 @@
+{
+  "basis_gates": [
+    "cx",
+    "id",
+    "rz",
+    "sx",
+    "x"
+  ],
+  "canonical_data_file": "e12_compiler_baseline_e12_full_20260613_051316.csv",
+  "compiler": "qiskit_transpile",
+  "compiler_config_id": "qiskit_heavy_hex_d3",
+  "compiler_version": "2.4.1",
+  "coupling_map": "heavy_hex_d3",
+  "coupling_map_n_qubits": 19,
+  "description": "Qiskit transpiler compiler baseline comparison",
+  "experiment_id": "E12",
+  "git_commit": "17569bd575c8288282b44527f2c38d7a845fc030",
+  "max_qubits_fidelity": 10,
+  "mode": "full",
+  "n_input_circuits": 142,
+  "n_rows": 568,
+  "optimization_levels": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "package_versions": {
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "qiskit": "2.4.1",
+    "scipy": "1.15.3"
+  },
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python_version": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+  "run_id": "e12_full_20260613_051316",
+  "schema_version": "1.0.0",
+  "seed": 42,
+  "source_hashes": {
+    "analysis/structural_ceiling.py": "7791dc709a92715d668ea602abcd1a146281d3031901513751ce6afbb544eedb",
+    "experiments/e12_compiler_baseline/run.py": "777aca76531af4a057e5f7c0e120bcda721b7004dd76adfccde4c3e2dd2bda7e",
+    "src/circuits/generator_v2.py": "94ef14ad6013c893103aed0ab71edb77a9dd50baa348892416643113539f4766",
+    "src/circuits/real_benchmarks.py": "a113f1cf6e23d5574ae2c2b284fea0e604242bad22b2df530d0694e1aff6c4e9",
+    "src/optimisation/base.py": "85099cb490388eae9a6275feced3723b8b9bd64cab257c04c4bbc1394154bc35",
+    "src/optimisation/phase1/genetic_algorithm.py": "06b0f54aaf9be8c60823e4457c2530c8a27b03c8254a443332f7334a8fa280e4",
+    "src/optimisation/phase1/greedy.py": "29c52bc2f03f61bf3a99272f372b9a39e43c818a3f65b23cb744a802fc97166d",
+    "src/optimisation/phase1/random_local_search.py": "26cc47fddaeca2fc9f8dbd72bf2a69117ac06eb31ae02e7a582d0f3e70a6fea6",
+    "src/optimisation/phase1/simulated_annealing.py": "fb43ffb61cad7bf4bb13dca2970f495b8a97b92869b6b415571ebc31668e3d4c",
+    "src/optimisation/phase2/commutation_rewriter.py": "104331519b9cba863b37bd69f9ee3eefcaf183dc7663ce338fb4302be2604dcd"
+  },
+  "version": "4.1.0"
+}

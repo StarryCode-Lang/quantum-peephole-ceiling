@@ -1,0 +1,51 @@
+# Version control
+.git
+.gitignore
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info
+dist/
+build/
+*.egg
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+nul
+
+# AI assistant config
+.hermes/
+.opencode/
+.claude/
+.qoder/
+
+# Node
+node_modules/
+
+# Logs and local runtime output
+logs/
+*.log
+
+# Project deliverables
+# Keep source docs in image; omit generated deliverables by default.
+deliverables/
+
+# Large data (too big for Docker image)
+# Uncomment if data/ exceeds Docker layer limits:
+# data/v2_fixed/
+# data/v3_extended/
+
+# Documentation build artifacts
+docs/_build/
+
+# Conda
+.conda/

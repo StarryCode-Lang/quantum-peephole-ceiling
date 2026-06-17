@@ -17,10 +17,11 @@ from typing import List, Tuple, Optional, Dict, Callable, Union, Any
 import warnings
 import hashlib
 import json
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum, auto
 
-warnings.filterwarnings('ignore')
+# Suppress specific deprecation warnings from Qiskit internals
+warnings.filterwarnings('ignore', category=DeprecationWarning, module='qiskit')
 
 
 # ============================================================================
@@ -358,6 +359,26 @@ def create_generator(config: CircuitConfig) -> BaseCircuitGenerator:
     return generators[config.family](config)
 
 
+def generate_circuit(n_qubits: int, depth: int, seed: int = 42,
+                     family: CircuitFamily = CircuitFamily.UNIVERSAL,
+                     entanglement_density: float = 0.3,
+                     structure_type: StructureType = StructureType.BRICKWORK,
+                     gate_set: str = 'ht_rz_cnot',
+                     topology: str = 'nearest_neighbor') -> QuantumCircuit:
+    """Generate a single circuit using the v2 configuration API."""
+    config = CircuitConfig(
+        n_qubits=n_qubits,
+        depth=depth,
+        family=family,
+        seed=seed,
+        entanglement_density=entanglement_density,
+        structure_type=structure_type,
+        gate_set=gate_set,
+        topology=topology,
+    )
+    return create_generator(config).generate()
+
+
 def generate_circuit_batch(config: CircuitConfig, n_circuits: int,
                            metrics_calculator: Optional['MetricsCalculator'] = None) -> List[Tuple[QuantumCircuit, CircuitMetrics]]:
     """Generate a batch of circuits with metrics."""
@@ -392,8 +413,9 @@ def generate_circuit_batch(config: CircuitConfig, n_circuits: int,
 class MetricsCalculator:
     """Calculate circuit metrics with caching."""
     
-    def __init__(self):
+    def __init__(self, max_cache_size: int = 4096):
         self._cache: Dict[str, CircuitMetrics] = {}
+        self._max_cache_size = max_cache_size
     
     def calculate(self, circuit: QuantumCircuit) -> CircuitMetrics:
         """Calculate all metrics for a circuit."""
@@ -415,14 +437,28 @@ class MetricsCalculator:
                                       if metrics.page_value > 0 else 0.0)
         metrics.circuit_complexity = self._calculate_complexity(circuit)
         
+        if len(self._cache) >= self._max_cache_size:
+            self._cache.pop(next(iter(self._cache)))
         self._cache[cache_key] = metrics
         return metrics
     
     def _circuit_hash(self, circuit: QuantumCircuit) -> str:
         """Generate a hash for the circuit."""
-        # Simple hash based on circuit properties
-        data = f"{circuit.num_qubits}_{circuit.size()}_{circuit.depth()}"
-        return hashlib.md5(data.encode()).hexdigest()
+        instructions = []
+        for inst in circuit.data:
+            qubits = tuple(circuit.find_bit(q).index for q in inst.qubits)
+            clbits = tuple(circuit.find_bit(c).index for c in inst.clbits)
+            params = tuple(float(p) if isinstance(p, (int, float, np.floating)) else str(p)
+                           for p in inst.operation.params)
+            instructions.append((inst.operation.name, qubits, clbits, params))
+
+        payload = {
+            'num_qubits': circuit.num_qubits,
+            'num_clbits': circuit.num_clbits,
+            'instructions': instructions,
+        }
+        data = json.dumps(payload, sort_keys=True, separators=(',', ':'))
+        return hashlib.sha256(data.encode()).hexdigest()
     
     def _count_two_qubit_gates(self, circuit: QuantumCircuit) -> int:
         """Count two-qubit gates in circuit."""

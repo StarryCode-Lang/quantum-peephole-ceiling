@@ -1,152 +1,226 @@
-# Q-Research: No Phase Transition in Quantum Circuit Optimization
+# Q-research: Boundary Characterization of Quantum Circuit Peephole Optimization
 
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![Qiskit 2.4+](https://img.shields.io/badge/Qiskit-2.4.1-purple.svg)](https://qiskit.org/)
+**Project Version**: 5.0.0  
+**Date**: 2026-06-14  
+**Target Journal**: Quantum (quantum-journal.org)
 
-**A systematic 25,560-trial experimental study refuting the phase transition hypothesis for quantum circuit optimization, with key findings on greedy dominance, entanglement sweet spots, and industrial baseline comparison.**
+---
 
-## Key Findings
+## Project Overview
 
-1. **No phase transition.** Optimization success decays **smoothly and exponentially** $P(d) = P_0 e^{-d/d_0}$ with $d_0 = 19.0 \pm 4.0$, rejecting the phase transition hypothesis at high confidence ($\Delta \mathrm{AIC} > 10$, $R^2 = 0.86$). Finite-size scaling confirms no systematic $d_0$ scaling with qubit count ($R^2 = 0.085$, $p = 0.52$).
+This project characterizes the fundamental boundaries of quantum circuit peephole optimization — specifically the structural limits of Phase 1 (adjacent-search) versus Phase 2 (commutation-enabled) optimization methods.
 
-2. **Greedy beats stochastic by 3 orders of magnitude.** Deterministic greedy cancellation dominates Simulated Annealing, Genetic Algorithms, and Random Local Search in both quality and speed ($p < 10^{-17}$, Wilcoxon). Greedy: 20% success, 3.5 ms. SA/GA: 0% success, 1.4–1.9 s.
+### Core Scientific Question
+> What circuit structures CANNOT be optimized by peephole methods, and why?
 
-3. **Entanglement sweet spot.** Circuits at intermediate entanglement density ($\rho \in [0.3, 0.5]$) are maximally optimizable (peak 29.4%). Both under- and over-entangled circuits are harder to optimize.
+### Key Findings (v5.0.0)
+1. **Structural Ceiling**: Phase 1 optimizers achieve ~0% reduction on random circuits (45,500 trials)
+2. **No Phase Transition**: Reduction remains ~0% across all depths (1–50) and qubit counts (3–10)
+3. **Phase 2 Context-Dependent Advantage**: Commutation rewriting adds 3.26% on random circuits, 0% on structured brickwork, ~20% on Oracle/BV
+4. **Real-Circuit Divergence**: 10 of 15 circuit families at structural ceiling; Qiskit transpiler achieves additional gains beyond prototype peephole scope on selected families
+5. **Fidelity Verified with Caveats**: Optimizations preserve unitary equivalence where exact/scalable fidelity checks are available; E18 includes documented decomposition/fidelity-failure rows that are filtered in analysis
 
-4. **Power-law gate redundancy.** Achievable gate reduction scales as $\Delta G \propto n^{0.281}$ (95% CI: $[0.254, 0.308]$), meaning larger circuits have proportionally more redundant gates.
+---
 
-5. **Industrial baseline.** Qiskit transpiler (L2) achieves **55% gate reduction with 100% success** vs. our prototype greedy's 12.0%/6.1%, validating that deterministic peephole optimization is the correct paradigm.
-
-## Project Structure
+## Directory Structure
 
 ```
 Q-research/
-├── README.md                     # This file
-├── src/
-│   ├── circuits/generator_v2.py  # Circuit generation (v2.x)
+├── src/                          # Source code
+│   ├── circuits/                 # Circuit generation (v2.1)
 │   ├── optimisation/
-│   │   ├── optimizers_v2.py      # Greedy, SA, GA, RLS optimizers
-│   │   └── create_optimizer.py   # Optimizer factory
-│   └── analysis/
-│       ├── analysis_v2.py        # Statistical analysis pipeline
-│       └── statistical_rigor.py  # AIC/BIC, power analysis, multiple testing
-├── experiments/
-│   ├── run_all_experiments_v3.py # E1–E5 experiment suite
-│   └── run_e6.py                 # Qiskit transpiler baseline (E6)
-├── scripts/
-│   ├── generate_publication_figures.py  # Publication-quality figures
-│   ├── verify_all.py                    # End-to-end verification
-│   ├── reproducibility/                 # Conda/Docker environment
-│   └── snapshot_environment.py          # Reproducibility snapshot
-├── docs/
-│   ├── manuscript_v4.md          # Target: Nature Communications / PRX
-│   └── comprehensive_analysis_report_v2.md
-├── data/
-│   ├── raw/                      # Raw CSV outputs (E1–E6)
-│   └── processed/                # Analyzed statistics (JSON)
-├── figures/
-│   └── final/                    # Publication-ready figures
-└── archive/                      # Superseded code (manuscripts v1–v3, v2 code)
+│   │   ├── base.py              # Base optimizer class
+│   │   ├── phase1/              # Phase 1: Adjacent-search optimizers
+│   │   │   ├── greedy.py        # GreedyGateCancellation v3.0.0 (bug-fixed)
+│   │   │   ├── simulated_annealing.py
+│   │   │   ├── genetic_algorithm.py
+│   │   │   └── random_local_search.py
+│   │   └── phase2/              # Phase 2: Commutation-based optimizers
+│   │       └── commutation_rewriter.py
+│   └── provenance.py            # Data provenance tracking
+│
+├── experiments/                  # Experiment scripts (by ID)
+│   ├── e01_phase_transition/    # E1: Phase transition test (25,000 trials)
+│   ├── e02_entanglement_density/  # E2: Entanglement density sweep (2,100 trials)
+│   ├── e03_scaling/              # E3: Scaling analysis (12,000 trials)
+│   ├── e04_algorithm_comparison/ # E4: Algorithm comparison (400 trials)
+│   ├── e05_landscape/            # E5: Landscape characterization (6,000 trials)
+│   ├── e10_phase1_vs_phase2/     # E10: Phase 1 vs Phase 2 (1,905 canonical rows)
+│   ├── e11_real_circuit_benchmark/  # E11: Real-circuit optimizer benchmark (426 trials)
+│   ├── e12_compiler_baseline/       # E12: Qiskit compiler baseline (568 trials)
+│   ├── e13_structural_ceiling/      # E13: Structural ceiling analysis (56 trials)
+│   ├── e14_extended_benchmark/      # E14: Extended benchmark (2,130 trials)
+│   ├── e15_multi_compiler/          # E15: Compiler comparison (994 trials)
+│   ├── e16_window_scaling/          # E16: Window scaling (696 trials)
+│   ├── e17_connectivity/            # E17: Topology constraints (755 trials)
+│   └── e18_clifford_t/              # E18: Clifford+T decomposition (270 trials)
+│
+├── data/                         # Data (versioned)
+│   ├── v2_fixed/                # Re-run with fixed Greedy v3.0.0 (E1–E5)
+│   ├── v3_extended/             # New experiments (E10)
+│   ├── v4/                      # Real-circuit, compiler-baseline, and ceiling outputs (E11–E13)
+│   ├── v5/                      # Extended benchmark suite (E10 expanded, E14–E18)
+│   └── v6/                      # Preliminary/planned artifacts (E19/E20/E21; not core canonical)
+│
+├── analysis/                     # Analysis scripts and figures
+│   ├── figures/                  # Generated analysis figures (17 PNG figures, 300 DPI)
+│   ├── generate_figures.py       # Figure generation script
+│   ├── final_report.md           # Comprehensive experimental report
+│   ├── structural_ceiling.py      # Action-space / ceiling analysis utilities
+│   ├── finite_size_scaling.py     # Finite-size scaling analysis
+│   ├── phase1_statistics/        # Statistical methods toolkit
+│   └── phase2_threshold_sensitivity/  # Threshold sensitivity analysis
+│
+├── docs/                         # Documentation
+│   ├── 01_theory/               # Theoretical framework (conjectures + lemmas + complexity)
+│   ├── 02_literature/           # Comprehensive literature review (77 references)
+│   ├── 03_results/              # Results documentation
+│   ├── 05_supplementary/         # Supplementary materials for manuscript
+│   └── 06_manuscript/            # Manuscript structure and submission planning
+│
+├── scripts/                      # One-command reproduction scripts
+│   ├── reproduce_all.py         # Full reproduction pipeline
+│   └── generate_release_manifest.py
+│
+├── release/                      # Machine-readable release manifest
+├── environment.yml              # Conda environment specification
+├── requirements.txt             # Pip requirements
+│
+├── logs/                         # Experiment execution logs
+├── tests/                        # Core and statistical tests
 ```
+
+---
+
+## Data Versioning Policy
+
+| Version | Description | Status | Location |
+|---------|-------------|--------|----------|
+| v1 | Original data (buggy `_are_inverse()`) | ARCHIVED | `archive/old_data/` |
+| v2 | Re-run with fixed Greedy v3.0.0 | **ACTIVE** | `data/v2_fixed/` |
+| v3 | New experiments (E10) | **ACTIVE** | `data/v3_extended/` |
+| v4 | Real-circuit, compiler, ceiling (E11–E13) | **ACTIVE** | `data/v4/` |
+| v5 | Extended benchmark suite (E10 expanded, E14–E18) | **ACTIVE** | `data/v5/` |
+
+**Critical Note**: E1–E5 originally used a buggy Greedy optimizer where `_are_inverse()` did not check qubit matching. This was fixed in v3.0.0. All v1 data is archived in `archive/old_data/` for transparency.
+
+---
+
+## Experiment Registry
+
+| ID | Name | Status | Trials | Data Version | Key Result |
+|----|------|--------|--------|--------------|------------|
+| E1 | Phase Transition | **COMPLETE** | 25,000 | v2 | Mean reduction = 0.0000% at all depths 1–50 |
+| E2 | Entanglement Density | **COMPLETE** | 2,100 | v2 | No correlation with entanglement entropy |
+| E3 | Scaling | **COMPLETE** | 12,000 | v2 | Mean reduction = 0.0000% for n = 3–10 |
+| E4 | Algorithm Comparison | **COMPLETE** | 400 | v2 | All optimizers (Greedy/RLS/SA/GA) ~0% |
+| E5 | Landscape | **COMPLETE** | 6,000 | v2 | Flat landscape, rare deep minima (max 26.67%) |
+| E10 | Phase 1 vs Phase 2 | **COMPLETE** | 1,905 | v5 | Expanded Phase 1/Phase 2 comparison; supersedes 819-row intermediate run |
+| E11 | Real-Circuit Benchmark | **COMPLETE** | 426 | v4 | 15 circuit families × 3 optimizers |
+| E12 | Compiler Baseline | **COMPLETE** | 568 | v4 | Qiskit transpiler levels 0–3, all distinct |
+| E13 | Structural Ceiling | **COMPLETE** | 56 | v4 | Action-space and local commutation ceiling estimates |
+| E14 | Extended Benchmark | **COMPLETE** | 2,130 | v5 | 15 circuit families, extended metrics |
+| E15 | Compiler Comparison | **COMPLETE** | 994 | v5 | Custom peephole vs Qiskit transpiler (Cirq/t\|ket> pending — see L8) |
+| E16 | Window Scaling | **COMPLETE** | 696 | v5 | Phase-2 window size saturation curves |
+| E17 | Connectivity | **COMPLETE** | 755 | v5 | Linear/grid/heavy-hex topology constraints |
+| E18 | Clifford+T | **COMPLETE** | 270 | v5 | Fault-tolerant gate-set decomposition |
+
+**Total Canonical Optimizer Trials (E1-E18)**: 53,300. Including held-out validation and Qiskit pass-isolation artifacts: 53,525 rows.
+
+---
+
+## Statistical Protocol (v3.0.0)
+
+1. **Multiple Comparison Correction**: Benjamini-Hochberg FDR control across all experiments
+2. **Effect Size Reporting**: Cliff's delta + Cohen's d for all pairwise comparisons
+3. **Power Analysis**: Target β > 0.80 for all primary hypotheses
+4. **Bootstrap CI**: 10,000 resamples with convergence diagnostics
+5. **Fidelity Distribution**: Full distribution reported (min, 25%, median, 75%, max)
+6. **Threshold Sensitivity**: All results reported at θ ∈ {1%, 5%, 10%, 20%}
+
+---
+
+## Known Limitations
+
+> **Added 2026-06-11.** For full details, see `docs/03_results/experimental_design.md` Section 12.
+
+The following limitations should be considered when interpreting results:
+
+| ID | Experiment | Limitation | Severity |
+|----|-----------|------------|----------|
+| L1 | E10 | N=9 per real-circuit condition (exploratory only) | Medium |
+| L2 | E12 | L1/L2/L3 degeneracy when transpiling without backend coupling map | Low |
+| L3 | E15 | Cirq and t\|ket> not included in E15 data — comparison is custom vs Qiskit only | High |
+| L5 | E18 | ~60% circuit family decomposition failures to Clifford+T | Medium |
+| L6 | E3/E11/E18 | 83 total rows with failed fidelity calculation (0.17%) excluded from analysis | Low |
+| L7 | All | Random circuits: structural ceiling ~0% (worst-case benchmarks) | Low |
+| L8 | E15 | Multi-compiler comparison currently includes only Qiskit + custom; Cirq and t\|ket> not yet tested | High |
+
+**Theoretical corrections (2026-06-11):**
+- Proposition 1 (Phase-1 conflict resolution) was corrected: the problem is polynomial-time solvable via maximum matching, not NP-complete as previously claimed.
+- Theorem 6 was renamed to reflect its actual scope (Aaronson-Gottesman canonical form for Clifford circuits).
+- Supplementary S8.3 was rewritten to remove an invalid connection between peephole optimization and quantum supremacy.
+
+---
 
 ## Quick Start
 
-### Installation
+### Option 1: One-Command Reproduction (Recommended)
 
 ```bash
-# Using conda (recommended)
-conda env create -f scripts/reproducibility/environment.yml
+# Full reproduction: tests, all experiments, figures, and verification
+python scripts/reproduce_all.py --all
+
+# Or run individual components
+python scripts/reproduce_all.py --tests --experiments E1 E10 --figures --verify
+```
+
+### Option 2: Manual Setup
+
+```bash
+# Setup environment
+conda env create -f environment.yml
 conda activate q-research
 
-# Using pip
-pip install -r scripts/reproducibility/requirements.txt
+# Or use pip
+pip install -r requirements.txt
+
+# Run unit tests
+python tests/test_core.py
+
+# Run E1 (example)
+python experiments/e01_phase_transition/run.py
+
+# Generate figures
+python analysis/generate_figures.py
+
+# Verify existing data integrity only (does not rerun experiments)
+python scripts/reproduce_all.py --verify
+
+# Run quick smoke benchmarks in the q-research conda env
+conda run -n q-research python experiments/e11_real_circuit_benchmark/run.py --mode smoke
+conda run -n q-research python experiments/e12_compiler_baseline/run.py --mode smoke
+conda run -n q-research python experiments/e13_structural_ceiling/run.py --mode smoke
+conda run -n q-research python scripts/generate_release_manifest.py
 ```
 
-### Run Experiments
+### Option 3: Docker
 
 ```bash
-# All five core experiments (E1–E5)
-python experiments/run_all_experiments_v3.py
+# Build the Docker image
+docker build -t q-research .
 
-# Qiskit transpiler baseline (E6)
-python experiments/run_e6.py
+# Run the core test suite inside the lightweight image
+docker run q-research python tests/test_core.py
 
-# End-to-end verification
-python scripts/verify_all.py
+# Note: this image omits canonical CSV data to keep image size manageable.
+# Data verification requires mounting or copying the canonical data/ tree.
 ```
 
-### Individual Experiment API
+---
 
-```python
-from experiments.run_all_experiments_v3 import (
-    Experiment1, Experiment2, Experiment3,
-    Experiment4, Experiment5, ExperimentConfig
-)
-config = ExperimentConfig()
-df = Experiment1(config).run()
-```
+## Contact & Attribution
 
-## Experiments Summary
+This project aims to provide a reproducible empirical study. Data, code, and analysis scripts are organized for auditability and future manuscript preparation.
 
-| Exp | Topic | Parameters | Trials | Purpose |
-|-----|-------|-----------|--------|---------|
-| E1 | Depth Sweep | $n=5$, $d \in [1,50]$ | 5,000 | Test phase transition hypothesis |
-| E2 | Entanglement Density | $n=6$, $d=20$, $\rho \in [0,1]$ | 1,260 | Find optimal entanglement regime |
-| E3 | Finite-Size Scaling | $n \in [3,10]$, $d \in [1,30]$ | 12,000 | Extract scaling exponents |
-| E4 | Algorithm Comparison | $n=5$, $d=15$, 4 optimizers | 400 | Benchmark optimization strategies |
-| E5 | Landscape Characterization | $n=5$, $d \in [3,20]$ | 6,000 | Map optimization topography |
-| E6 | Industrial Baseline | $n=5$, $d \in [5,30]$, Qiskit L0–L3 | 900 | Contextualize vs. Qiskit transpiler |
-
-**Total: 25,560 independent trials**
-
-## Core Results
-
-### Exponential Decay (E1)
-$P_{\text{success}}(d) = P_0 e^{-d/d_0}$ with $d_0 = 19.0 \pm 4.0$, $R^2 = 0.86$  
-Sigmoid model: fails to converge reliably ($\Delta \mathrm{AIC} > 10$)
-
-### Algorithm Ranking (E4, d=15)
-| Algorithm | Success Rate | Runtime | $p$ vs. greedy |
-|:---|---:|---:|:---:|
-| **Greedy** | **20%** | **3.5 ms** | — |
-| Random Local Search | 0% | 7.3 ms | $p < 0.001$ |
-| Simulated Annealing | 0% | 1.41 s | $p < 10^{-17}$ |
-| Genetic Algorithm | 0% | 1.86 s | $p < 10^{-17}$ |
-
-### Qiskit Baseline (E6, d ∈ [5,30])
-| Optimizer | Mean Reduction | Success Rate | Fidelity |
-|:---|---:|---:|---:|
-| Greedy (ours) | 12.0% | 6.1% | 0.153 |
-| Qiskit L2 | **55.0%** | **100%** | **1.000** |
-
-## Manuscript
-
-The manuscript `docs/manuscript_v4.md` is formatted for submission to *Nature Communications* or *Physical Review X*, including:
-- Complete abstract, introduction, results, theory, discussion, and methods sections
-- Quantitative theory-experiment comparison table (Table 4)
-- Industrial baseline comparison (Section 2.7)
-- 26 references across physics, computer science, and quantum information
-
-## Reproducibility
-
-- Pinned Python environment via `conda env create` / `requirements.txt`
-- Docker container: `scripts/reproducibility/Dockerfile`
-- Environment snapshot JSON with SHA-256 source hashes
-- Fixed random seeds recorded in raw data
-- All raw data (CSV) and processed statistics (JSON) committed
-
-## Citation
-
-```bibtex
-@article{qresearch2026,
-  title={No Phase Transition: Exponential Decay, Greedy Dominance, and 
-         Entanglement Sweet Spots in Quantum Circuit Optimization},
-  author={Q-research Team},
-  journal={Nature Communications / Physical Review X},
-  year={2026}
-}
-```
-
-## License
-
-MIT License — see LICENSE file for details.
+**Data Integrity Contact**: See `src/provenance.py` for the data provenance tracking implementation.

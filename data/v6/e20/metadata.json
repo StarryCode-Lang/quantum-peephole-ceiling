@@ -1,0 +1,65 @@
+{
+  "experiment_id": "E20",
+  "experiment_name": "multi_compiler_full",
+  "description": "Full multi-compiler comparison: Qiskit (opt_level=3), Cirq (optimize_for_target_gateset + eject_z + merge_single_qubit_gates), and t|ket> (FullPeepholeOptimise) on the extended 15-family benchmark suite.",
+  "version": "1.0.0",
+  "schema_version": "2.0.0",
+  "compilers": {
+    "qiskit": {
+      "backend": "transpiler",
+      "optimization_level": 3,
+      "package": "qiskit",
+      "always_available": true
+    },
+    "cirq": {
+      "backend": "optimize_for_target_gateset+eject_z+merge_1q",
+      "optimization_level": "default",
+      "package": "cirq-core",
+      "pipeline": [
+        "drop_empty_moments",
+        "drop_negligible_operations",
+        "optimize_for_target_gateset(CZTargetGateset)",
+        "eject_z",
+        "merge_single_qubit_gates_to_phased_x_and_z",
+        "drop_empty_moments"
+      ]
+    },
+    "tket": {
+      "backend": "FullPeepholeOptimise",
+      "optimization_level": "default",
+      "package": "pytket + pytket-qiskit",
+      "pipeline": [
+        "DecomposeBoxes",
+        "FullPeepholeOptimise"
+      ]
+    }
+  },
+  "circuit_parameters": {
+    "target_qubits": [4, 6, 8],
+    "n_trials_per_cell": 10,
+    "circuit_families": 15,
+    "suite_source": "src/circuits/real_benchmarks.py::generate_extended_suite",
+    "mode": "full"
+  },
+  "metrics": [
+    "original_gate_count",
+    "optimized_gate_count",
+    "gate_reduction",
+    "original_depth",
+    "optimized_depth",
+    "depth_reduction",
+    "original_2q_gates",
+    "optimized_2q_gates",
+    "two_qubit_reduction",
+    "original_cnot",
+    "optimized_cnot",
+    "cnot_reduction",
+    "fidelity",
+    "compilation_time_seconds"
+  ],
+  "output_files": {
+    "results_csv": "multi_compiler_full.csv",
+    "metadata": "metadata.json"
+  },
+  "notes": "This experiment addresses the reviewer concern that E15 only included Qiskit in the multi-compiler comparison. E20 adds Cirq and t|ket> as first-class compiler backends with controlled qubit counts and multiple random trials for statistical robustness. Missing compilers are handled gracefully -- the experiment runs with whatever is available and records availability in the run metadata."
+}

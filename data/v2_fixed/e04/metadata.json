@@ -1,0 +1,17 @@
+{
+  "experiment_id": "E4",
+  "description": "Algorithm comparison with fixed optimizers v3.0.0",
+  "n_qubits": 5,
+  "depth": 15,
+  "n_trials": 100,
+  "seed_base": 42,
+  "entanglement_density": 0.3,
+  "family": "UNIVERSAL",
+  "optimizers": [
+    "greedy",
+    "rls",
+    "sa",
+    "ga"
+  ],
+  "timestamp": "2026-06-13T13:00:23.588532"
+}

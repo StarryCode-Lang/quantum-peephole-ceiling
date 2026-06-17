@@ -1,0 +1,24 @@
+{
+  "experiment_id": "E10",
+  "version": "2.0.0_expanded",
+  "description": "Expanded Phase 1 vs Phase 2 comparison with adequate sample sizes",
+  "optimizers": [
+    "greedy_phase1",
+    "commutation_phase2",
+    "hybrid_phase1_2"
+  ],
+  "circuit_families": [
+    "Universal (random, 200 trials)",
+    "Structured/Brickwork (200 trials)",
+    "RandomClifford (200 trials, NEW)",
+    "Real: QFT/GHZ/CNOT_chain/BV/QAOA/VQE/HardwareEfficient (5 sizes each)"
+  ],
+  "n_trials_random": 200,
+  "n_trials_structured": 200,
+  "n_trials_clifford": 200,
+  "n_real_circuits": 35,
+  "total_rows": 1905,
+  "timestamp": "2026-06-13T13:16:01.787644",
+  "canonical_data_file": "e10_expanded_phase1_vs_phase2_20260613_131601.csv",
+  "fix_note": "Expanded from N=9/condition to N>=100/condition for statistical power"
+}

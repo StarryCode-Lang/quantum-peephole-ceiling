@@ -1,0 +1,35 @@
+{
+  "analysis_method": "local_commutation_window_10",
+  "canonical_data_file": "e13_structural_ceiling_e13_full_20260609_043322.csv",
+  "description": "Structural ceiling/action-space analysis",
+  "experiment_id": "E13",
+  "git_commit": "17569bd575c8288282b44527f2c38d7a845fc030",
+  "mode": "full",
+  "n_input_circuits": 44,
+  "n_rows": 56,
+  "package_versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "qiskit": "2.4.1",
+    "scipy": "1.13.1"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+  "run_id": "e13_full_20260609_043322",
+  "schema_version": "1.0.0",
+  "seed": 42,
+  "source_hashes": {
+    "analysis/structural_ceiling.py": "7791dc709a92715d668ea602abcd1a146281d3031901513751ce6afbb544eedb",
+    "experiments/e13_structural_ceiling/run.py": "b1b0c6c11f60b22e90246ba5370919178fecfc9c62ee7431f8ca4cb5acbfd482",
+    "src/circuits/generator_v2.py": "94ef14ad6013c893103aed0ab71edb77a9dd50baa348892416643113539f4766",
+    "src/circuits/real_benchmarks.py": "a113f1cf6e23d5574ae2c2b284fea0e604242bad22b2df530d0694e1aff6c4e9",
+    "src/optimisation/base.py": "85099cb490388eae9a6275feced3723b8b9bd64cab257c04c4bbc1394154bc35",
+    "src/optimisation/phase1/genetic_algorithm.py": "06b0f54aaf9be8c60823e4457c2530c8a27b03c8254a443332f7334a8fa280e4",
+    "src/optimisation/phase1/greedy.py": "29c52bc2f03f61bf3a99272f372b9a39e43c818a3f65b23cb744a802fc97166d",
+    "src/optimisation/phase1/random_local_search.py": "26cc47fddaeca2fc9f8dbd72bf2a69117ac06eb31ae02e7a582d0f3e70a6fea6",
+    "src/optimisation/phase1/simulated_annealing.py": "fb43ffb61cad7bf4bb13dca2970f495b8a97b92869b6b415571ebc31668e3d4c",
+    "src/optimisation/phase2/commutation_rewriter.py": "104331519b9cba863b37bd69f9ee3eefcaf183dc7663ce338fb4302be2604dcd"
+  },
+  "version": "4.0.0",
+  "window": 10
+}
