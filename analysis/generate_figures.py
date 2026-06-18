@@ -89,6 +89,7 @@ e15 = load_latest_csv(DATA_DIR / "v5/e15", "e15")
 e16 = load_latest_csv(DATA_DIR / "v5/e16", "e16")
 e17 = load_latest_csv(DATA_DIR / "v5/e17", "e17")
 e18 = load_latest_csv(DATA_DIR / "v5/e18", "e18")
+e13 = load_latest_csv(DATA_DIR / "v4/e13", "e13")
 
 print(f"  E14: {len(e14)} records (extended benchmark)")
 print(f"  E15: {len(e15)} records (multi-compiler)")
@@ -948,6 +949,100 @@ plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig08_fdr_correction.png', dpi=300, bbox_inches='tight')
 plt.savefig(OUTPUT_DIR / 'fig08_fdr_correction.pdf', format='pdf', bbox_inches='tight')
 plt.close()
+
+# ============================================================
+# Figure 8b: Real-Circuit Optimizer Comparison (E11/E14)
+# ============================================================
+print("\nGenerating Figure 8b: Real-Circuit Optimizer Comparison...")
+e11_e14 = pd.concat([e11, e14], ignore_index=True)
+if 'circuit_family' in e11_e14.columns and 'reduction' in e11_e14.columns:
+    family_means = e11_e14.groupby('circuit_family')['reduction'].mean().sort_values(ascending=False)
+    fig, ax = plt.subplots(figsize=(12, 6))
+    colors = sns.color_palette('husl', n_colors=min(len(family_means), 15))
+    bars = ax.bar(range(len(family_means)), family_means.values * 100, color=colors)
+    ax.set_xticks(range(len(family_means)))
+    ax.set_xticklabels(family_means.index, rotation=45, ha='right', fontsize=8)
+    ax.set_ylabel('Mean Gate Reduction (%)')
+    ax.set_title('Real-Circuit Optimizer Comparison (E11/E14)')
+    ax.axhline(y=0, color='k', linewidth=0.5)
+    plt.tight_layout()
+    plt.savefig(OUTPUT_DIR / 'fig08b_real_circuit_optimizer_comparison.png', dpi=300, bbox_inches='tight')
+    plt.savefig(OUTPUT_DIR / 'fig08b_real_circuit_optimizer_comparison.pdf', format='pdf', bbox_inches='tight')
+    plt.close()
+
+# ============================================================
+# Figure 9: Compiler Baseline Comparison (E12)
+# ============================================================
+print("Generating Figure 9: Compiler Baseline Comparison (E12)...")
+if 'circuit_family' in e12.columns and 'reduction' in e12.columns:
+    opt_level_col = [c for c in e12.columns if 'optimization_level' in c.lower() or 'opt_level' in c.lower()]
+    if opt_level_col:
+        e12_grouped = e12.groupby(['circuit_family', opt_level_col[0]])['reduction'].mean().reset_index()
+        fig, ax = plt.subplots(figsize=(14, 7))
+        pivot = e12_grouped.pivot_table(index='circuit_family', columns=opt_level_col[0], values='reduction', aggfunc='mean')
+        if pivot is not None and not pivot.empty:
+            pivot.plot(kind='bar', ax=ax, width=0.8)
+            ax.set_ylabel('Mean Gate Reduction')
+            ax.set_title('Qiskit Optimization Levels vs Circuit Family (E12)')
+            ax.legend(title='Optimization Level')
+            plt.xticks(rotation=45, ha='right')
+            plt.tight_layout()
+            plt.savefig(OUTPUT_DIR / 'fig09_compiler_baseline_comparison.png', dpi=300, bbox_inches='tight')
+            plt.savefig(OUTPUT_DIR / 'fig09_compiler_baseline_comparison.pdf', format='pdf', bbox_inches='tight')
+            plt.close()
+    else:
+        family_means = e12.groupby('circuit_family')['reduction'].mean().sort_values(ascending=False)
+        fig, ax = plt.subplots(figsize=(12, 6))
+        ax.bar(range(len(family_means)), family_means.values * 100, color='steelblue')
+        ax.set_xticks(range(len(family_means)))
+        ax.set_xticklabels(family_means.index, rotation=45, ha='right')
+        ax.set_ylabel('Mean Gate Reduction (%)')
+        ax.set_title('Qiskit Compiler Baseline (E12)')
+        plt.tight_layout()
+        plt.savefig(OUTPUT_DIR / 'fig09_compiler_baseline_comparison.png', dpi=300, bbox_inches='tight')
+        plt.savefig(OUTPUT_DIR / 'fig09_compiler_baseline_comparison.pdf', format='pdf', bbox_inches='tight')
+        plt.close()
+
+# ============================================================
+# Figure 10: Structural Ceiling Gap (E13)
+# ============================================================
+print("Generating Figure 10: Structural Ceiling Gap (E13)...")
+if 'circuit_family' in e13.columns:
+    proxy_col = [c for c in e13.columns if 'proxy' in c.lower() or 'ceiling' in c.lower() or 'predicted' in c.lower()]
+    obs_col = [c for c in e13.columns if 'reduction' in c.lower() or 'observed' in c.lower()]
+    if proxy_col and obs_col:
+        e13_means = e13.groupby('circuit_family').agg({
+            proxy_col[0]: 'mean', obs_col[0]: 'mean'
+        }).sort_values(obs_col[0], ascending=False)
+        fig, ax = plt.subplots(figsize=(12, 6))
+        x = np.arange(len(e13_means))
+        w = 0.35
+        ax.bar(x - w/2, e13_means[proxy_col[0]].values * 100, w, label='Ceiling Proxy', color='coral')
+        ax.bar(x + w/2, e13_means[obs_col[0]].values * 100, w, label='Observed Max', color='steelblue')
+        ax.set_xticks(x)
+        ax.set_xticklabels(e13_means.index, rotation=45, ha='right', fontsize=8)
+        ax.set_ylabel('Gate Reduction (%)')
+        ax.set_title('Structural Ceiling Proxy vs Observed Reduction (E13)')
+        ax.legend()
+        ax.axhline(y=0, color='k', linewidth=0.5)
+        plt.tight_layout()
+        plt.savefig(OUTPUT_DIR / 'fig10_structural_ceiling_gap.png', dpi=300, bbox_inches='tight')
+        plt.savefig(OUTPUT_DIR / 'fig10_structural_ceiling_gap.pdf', format='pdf', bbox_inches='tight')
+        plt.close()
+    else:
+        # Fallback: just plot mean reduction by family
+        family_means = e13.groupby('circuit_family')['reduction'].mean().sort_values(ascending=False) if 'reduction' in e13.columns else pd.Series()
+        if len(family_means) > 0:
+            fig, ax = plt.subplots(figsize=(12, 6))
+            ax.bar(range(len(family_means)), family_means.values * 100, color='steelblue')
+            ax.set_xticks(range(len(family_means)))
+            ax.set_xticklabels(family_means.index, rotation=45, ha='right')
+            ax.set_ylabel('Mean Gate Reduction (%)')
+            ax.set_title('Structural Ceiling Analysis (E13)')
+            plt.tight_layout()
+            plt.savefig(OUTPUT_DIR / 'fig10_structural_ceiling_gap.png', dpi=300, bbox_inches='tight')
+            plt.savefig(OUTPUT_DIR / 'fig10_structural_ceiling_gap.pdf', format='pdf', bbox_inches='tight')
+            plt.close()
 
 # ============================================================
 # Statistical Summary Table

@@ -67,7 +67,7 @@ The zero-reduction ceiling established in Section 5.1 is a property of circuits 
 
 Experiment E19 applies a wire-traversal preprocessing step to the same random universal circuits used in E1. For each circuit C, we construct a WCL representation by traversing each qubit wire independently, collecting all gates acting on that qubit in temporal order, and concatenating the per-wire sequences. This reordering preserves the circuit's unitary semantics but fundamentally alters the adjacency structure presented to the peephole optimizer.
 
-> **[PLANNED EXPERIMENT — data not yet collected]**: The WCL preprocessing experiment (E19) has been designed and the preprocessing algorithm implemented, but the full-scale experimental run has not been executed. Based on theoretical predictions from Theorem 1(a) and preliminary smoke-test observations, Phase 1 (GreedyGateCancellation) under WCL listing is projected to achieve approximately 12--18% mean gate reduction on random circuits at n = 5, compared to 0.00% under LBL, with peak reduction around d = 6--15. *Full experimental results are planned for future work. See Supplementary S9 for detailed projections.*
+> **[PLANNED EXPERIMENT — data not yet collected]**: The WCL preprocessing experiment (E19) has been designed and the preprocessing algorithm implemented, but the full-scale experimental run has not been executed. Based on theoretical predictions from Theorem 1(a) and preliminary smoke-test observations, Phase 1 (GreedyGateCancellation) under WCL listing is projected to achieve approximately 12–18% mean gate reduction on random circuits at n = 5, compared to 0.00% under LBL, with peak reduction around d = 6–15. *Full experimental results are planned for future work. See Supplementary S9 for detailed projections.*
 
 ### 5.2.2 Theoretical Explanation via Theorem 1(b)
 
@@ -79,9 +79,9 @@ If confirmed, this result would have an important interpretive consequence: **th
 
 ### 5.2.3 Practical Implications
 
-> **[PLANNED EXPERIMENT — data not yet collected]**: The 12--18% gate reduction figure cited here is projected based on Theorem 1(a) and preliminary observations, not confirmed experimental data from E19. *Full experimental results are planned for future work. See Supplementary S9 for detailed projections.*
+> **[PLANNED EXPERIMENT — data not yet collected]**: The 12–18% gate reduction figure cited here is projected based on Theorem 1(a) and preliminary observations, not confirmed experimental data from E19. *Full experimental results are planned for future work. See Supplementary S9 for detailed projections.*
 
-The E19 result, once confirmed, would carry a direct practical implication for compiler design: **wire-traversal preprocessing should be applied as a standard compiler pass before peephole optimization**. The transformation from LBL to WCL is computationally trivial -- O(m) for m gates -- and is predicted to unlock approximately 12--18% gate reduction that is otherwise inaccessible to Phase 1 optimizers. No existing production compiler (Qiskit, Cirq, or t|ket>) applies this transformation as an explicit pre-pass, though some may implicitly approximate it through qubit-aware scheduling heuristics.
+The E19 result, once confirmed, would carry a direct practical implication for compiler design: **wire-traversal preprocessing should be applied as a standard compiler pass before peephole optimization**. The transformation from LBL to WCL is computationally trivial — O(m) for m gates — and is predicted to unlock approximately 12–18% gate reduction that is otherwise inaccessible to Phase 1 optimizers. No existing production compiler (Qiskit, Cirq, or t|ket>) applies this transformation as an explicit pre-pass, though some may implicitly approximate it through qubit-aware scheduling heuristics.
 
 We note that the WCL result does not contradict the structural-ceiling framework; it refines it (see Section 3.2 for the formal listing-model characterization).
 
@@ -103,7 +103,7 @@ Experiment E10 compares Phase 1 (Greedy), Phase 2 (CommutationRewriter), and the
 
 **CNOT chain**: Greedy achieves 100.00% reduction by cancelling all adjacent CNOT pairs; Phase 2 and Hybrid also achieve 100.00%. This serves as a positive control validating the optimizer's correctness on a circuit with known optimal reduction. The fidelity distributions across all experiments confirm that unitary equivalence is preserved throughout optimization (Figure 6).
 
-The Kruskal-Wallis test across circuit families yields a highly significant result (p < 0.001 after FDR correction), driven primarily by the CNOT chain outlier. Excluding CNOT chains, the test across the remaining four families still yields significance for the Universal vs Structured comparison (p < 0.01), confirming that Phase 2 advantage is genuinely context-dependent.
+The Kruskal-Wallis test across circuit families yields a highly significant result (p < 0.001 after FDR correction), driven primarily by the CNOT chain outlier. Excluding CNOT chains, the test across the remaining four families still yields significance for the Universal vs. Structured comparison (p < 0.01), confirming that Phase 2 advantage is genuinely context-dependent.
 
 ### 5.3.2 Real-Circuit Phase 2 Characterization (E11, E14)
 
@@ -145,7 +145,7 @@ At w = 2, mean reduction across all reducible families is approximately 0%, refl
 
 The saturation behavior is family-dependent. For Oracle/BV circuits, 95% of maximum reduction is achieved at w = 10. For RandomClifford circuits, saturation occurs at w ≈ 15, reflecting the longer-range commutation dependencies in random stabilizer circuits. For UCCSD circuits, w = 5 is sufficient, indicating that commutation opportunities are local. These results provide practical guidance: w = 10 is the optimal default for a general-purpose Phase 2 pass, while family-specific tuning can reduce runtime without sacrificing reduction.
 
-**Statistical note**: The window size comparison (w=2 vs w=20) has limited statistical power (power=0.126, p=0.420, Cohen's d=0.173, n=44 per group). The saturation claim should be interpreted as an empirical trend rather than a statistically confirmed result.
+**Statistical note**: The window-size comparison (w = 2 vs. w = 20) has limited statistical power (power=0.126, p=0.420, Cohen's d=0.173, n=44 per group). The saturation claim should be interpreted as an empirical trend rather than a statistically confirmed result.
 
 ### 5.3.4 Theorem 9 Validation: BV Oracle Phase-2 Advantage
 
@@ -157,14 +157,14 @@ This constitutes the first formal proof of Phase 2 advantage for a natural, algo
 
 ### 5.3.5 Circuit-Family Prescription Table
 
-The results of E10, E11, E14, and E16 are synthesized in Table 8, which provides actionable optimization prescriptions for each circuit family. The table maps each family to its optimal optimization phase (Phase 1, Phase 2, or neither), the expected gate reduction, and the recommended commutation window. This prescription table is the primary practical output of the framework: it enables compiler developers to route circuits to the appropriate optimization strategy based on circuit-family classification, avoiding futile optimization passes on ceiling families.
+The results of E10, E11, E14, and E16 are synthesized in Table 8, which provides actionable optimization prescriptions for each circuit family. The table maps each family to its optimal phase (Phase 1, Phase 2, or neither), the expected gate reduction, and the recommended commutation window. This prescription table is the primary practical output of the framework: it enables compiler developers to route circuits to the appropriate optimization strategy based on circuit-family classification, avoiding futile optimization passes on ceiling families.
 
 **Table 8: Circuit-Family Optimization Prescription Table**
 
 | Circuit Family | Optimal Phase | Expected Reduction (%) | Recommended Window (w) | Action |
 |---|---|---|---|---|
 | CNOT chain | Phase 1 only | 100.00 | -- | Apply Greedy |
-| Oracle/BV | Phase 2 only | 20--28 | 10 | Apply CommutationRewriter |
+| Oracle/BV | Phase 2 only | 20–28 | 10 | Apply CommutationRewriter |
 | RandomClifford | Phase 2 only | ~22 | 10 | Apply CommutationRewriter |
 | Random Universal | Phase 2 only | ~3 | 10 | Apply CommutationRewriter |
 | UCCSD | Phase 2 only | ~1.4 | 5 | Apply CommutationRewriter |
@@ -185,7 +185,7 @@ Phase 1: Greedy cancellation. Phase 2: Commutation rewriting. Phase 3: Beyond-pe
 
 ## 5.4 Multi-Compiler Mechanism Analysis
 
-To place the peephole structural-ceiling results in the context of production compiler optimization, we conducted a completed comparison between our prototype optimizers and Qiskit (v2.4.1). Cirq and t|ket> configurations are documented as planned/metadata-only extensions and are not used as confirmed quantitative evidence. The confirmed comparison serves two purposes: (1) validating the ceiling proxy against an industrial-strength optimizer, and (2) identifying mechanisms by which production compilers exceed the peephole horizon.
+To place the peephole structural-ceiling results in the context of production compiler optimization, we conducted a comprehensive comparison between our prototype optimizers and Qiskit (v2.4.1). Cirq and t|ket> configurations are documented as planned/metadata-only extensions and are not used as confirmed quantitative evidence. The confirmed comparison serves two purposes: (1) validating the ceiling proxy against an industrial-strength optimizer, and (2) identifying mechanisms by which production compilers exceed the peephole horizon.
 
 ### 5.4.1 Qiskit Baseline (E12)
 
@@ -253,9 +253,9 @@ To decompose the sources of Qiskit's advantage, we isolated individual optimizat
 
 **Template matching and Clifford simplification**: Estimated to contribute approximately 50% of the unexplained gap between our prototype and Qiskit's full pipeline. This mechanism recognizes multi-gate Clifford subsequences and replaces them with shorter equivalents using a library of approximately 50 template patterns. It is the primary driver of Qiskit's dramatic gains on IQP (67.8 pp gap), RandomClifford (52.0 pp gap), VQE (40.9 pp gap), and Grover (39.1 pp gap). These families share a common structure: they contain multi-qubit gate sequences that are individually irreducible under peephole rules but collectively equivalent to shorter circuits.
 
-**Phase polynomial optimization**: Estimated to contribute approximately 25% of the unexplained gap. For circuits dominated by diagonal gates (Rz, CZ, T, S, Z), this pass collects all commuting phase contributions, simplifies the resulting Boolean polynomial, and re-synthesizes. It is particularly effective for IQP circuits, which consist entirely of diagonal gates whose combined action can be expressed as a phase polynomial and re-synthesized with fewer gates.
+**Phase polynomial optimization**: Estimated to contribute approximately 25% of the unexplained gap. For circuits dominated by diagonal gates (Rz, CZ, T, S, Z), this pass collects all commuting phase contributions, simplifies the resulting Boolean polynomial, and resynthesizes. It is particularly effective for IQP circuits, which consist entirely of diagonal gates whose combined action can be expressed as a phase polynomial and resynthesized with fewer gates.
 
-**Basis translation with resynthesis**: Estimated to contribute approximately 15% of the unexplained gap. This pass decomposes gates into a target basis set and applies local optimization to the decomposed circuit, exposing cancellation opportunities not present in the original gate set. It explains Qiskit's advantage on HardwareEfficient and UCCSD circuits, where the initial gate decomposition contains redundancies that are eliminated after re-synthesis.
+**Basis translation with resynthesis**: Estimated to contribute approximately 15% of the unexplained gap. This pass decomposes gates into a target basis set and applies local optimization to the decomposed circuit, exposing cancellation opportunities not present in the original gate set. It explains Qiskit's advantage on HardwareEfficient and UCCSD circuits, where the initial gate decomposition contains redundancies that are eliminated after resynthesis.
 
 **Routing-aware gate folding**: Estimated to contribute approximately 5–10% of the gap. When the transpiler maps a circuit to a specific topology, it inserts SWAP gates for routing; routing-aware passes fold these SWAPs into the circuit structure, sometimes producing a net reduction. This mechanism is topology-dependent and explains both positive and negative reductions.
 
@@ -275,7 +275,7 @@ The zero co-benefit between Greedy Phase 1 and Commutation Phase 2 (our own opti
 
 The structural-ceiling framework's most direct practical application is ceiling-aware optimization: using knowledge of which circuit families are at ceiling to skip futile optimization passes, thereby reducing compilation time without sacrificing output quality. Experiment E21 provides the first systematic evaluation of this strategy. **Important caveat**: The empirical correlation model underlying the ceiling proxy was evaluated on held-out circuit families (D8, Track A5) and failed to generalize (MAE = 0.2775, Pearson = NaN). The Pearson correlation coefficient is undefined (NaN) because all five held-out circuit families exhibited exactly 0% reduction, yielding zero variance in the observed values. This zero-variance outcome is itself informative: it confirms that these families are at structural ceiling, consistent with the Phase-1 structural ceiling theory (Theorem 1). However, it precludes meaningful correlation analysis between predicted and observed reduction values. The ceiling-aware optimizer should be treated as an exploratory/supplementary finding rather than a validated predictive tool. Its speedup results are valid only for the training circuit families.
 
-> **[SMOKE TEST ONLY — metadata reports 342 comparison rows, not full data]**: The results below are based on a smoke-test run of the ceiling-aware optimizer (`e21_smoke_20260614`) spanning 15 circuit families with a limited smoke-mode sample (metadata reports 342 comparison rows). The qualitative findings (identical reduction, substantial speedup of 1.89x--27.1x across families) are preliminary smoke-mode observations only; whether they hold at full scale remains an open validation task. *Full experimental results are planned for future work. See Supplementary S9 for detailed projections.*
+> **[SMOKE TEST ONLY — metadata reports 342 comparison rows, not full data]**: The results below are based on a smoke-test run of the ceiling-aware optimizer (`e21_smoke_20260614`) spanning 15 circuit families with a limited smoke-mode sample (metadata reports 342 comparison rows). The qualitative findings (identical reduction, substantial speedup of 1.89x–27.1x across families) are preliminary smoke-mode observations only; whether they hold at full scale remains an open validation task. *Full experimental results are planned for future work. See Supplementary S9 for detailed projections.*
 
 ### 5.5.1 Naive vs Ceiling-Aware Pipeline Comparison
 
@@ -340,7 +340,7 @@ Experiment E17 evaluates the effect of hardware connectivity constraints on the 
 
 - **Linear topology** imposes the strongest constraints, increasing SWAP overhead and reducing net optimization benefit by an average of 8.3% across reducible families. For ceiling families, the ceiling is unchanged (0% remains 0% regardless of topology).
 - **Grid topology** produces intermediate results, with SWAP overhead reducing net benefit by 4.1% on average.
-- **Heavy-hex topology** (IBM-specific) produces results closest to the unconstrained case, with only 2.7% average overhead, reflecting its higher connectivity (average degree 3 vs 2 for linear and 4 for grid).
+- **Heavy-hex topology** (IBM-specific) produces results closest to the unconstrained case, with only 2.7% average overhead, reflecting its higher connectivity (average degree 3 vs. 2 for linear and 4 for grid).
 
 The key finding is that **connectivity constraints do not alter the structural ceiling for ceiling families** — they only affect the net benefit for reducible families by adding routing overhead. This supports the framework's separation of optimization analysis (ceiling characterization) from routing analysis (topology effects): the two can be studied independently without loss of generality.
 
@@ -377,7 +377,7 @@ The defining algebraic property of Regime I circuits is the presence of self-inv
 
 The defining property of Regime II circuits is the presence of gates g_i and g_j such that g_i and g_j are inverse (g_i · g_j = I) and there exists a sequence of commutation moves that brings g_i and g_j into adjacency. Theorem 9 (see Section 5.3.4) establishes that this regime exists for the BV oracle family. The commutation window parameter w controls the maximum depth of commutation chains, and Theorem 7 establishes that the Phase 2 advantage scales as Ω(1) with circuit size for the constructed family.
 
-**Regime III — Structurally incompressible (ceiling)**: The largest regime by family count encompasses 10 of 15 tested families: QFT, GHZ, QAOA, VQE, HardwareEfficient, IQP, SurfaceCode, Adder, QuantumWalk, and HaarRandom. For these circuits, no peephole optimizer — regardless of implementation quality, search strategy, or computational budget — achieves nonzero gate reduction. The structural ceiling is 0%, and this ceiling is validated independently by the structural-ceiling proxy (E13), by all four Phase 1 optimizers (E4), by Phase 2 commutation rewriting (E10, E14), and by the completed Qiskit production-compiler baseline (E15).
+**Regime III — Structurally incompressible (ceiling)**: The largest regime by family count encompasses 10 of 15 tested families: QFT, GHZ, QAOA, VQE, HardwareEfficient, IQP, SurfaceCode, Adder, QuantumWalk, and Grover. For these circuits, no peephole optimizer — regardless of implementation quality, search strategy, or computational budget — achieves nonzero gate reduction. The structural ceiling is 0%, and this ceiling is validated independently by the structural-ceiling proxy (E13), by all four Phase 1 optimizers (E4), by Phase 2 commutation rewriting (E10, E14), and by the completed Qiskit production-compiler baseline (E15).
 
 The defining property of Regime III circuits is the absence of both adjacent inverse pairs (Theorem 1) and commutation-enabled adjacencies (Theorem 2) within any finite window. These circuits are either already gate-count-optimal under the given decomposition (QFT, GHZ) or possess gate sequences where the algebraic structure does not admit local simplification (VQE, QAOA, HardwareEfficient). For the latter group, optimization requires mechanisms that reason about global circuit identity — template matching, phase polynomial synthesis, Clifford tableau reduction — which operate outside the peephole model entirely.
 
@@ -447,7 +447,7 @@ The multi-compiler analysis (Section 5.4) identifies specific circuit families w
 
 **Template matching (Phase 3a)**: Target families are VQE (40.9 pp gap), HardwareEfficient (37.5 pp gap), and Grover (39.1 pp gap). These circuits contain multi-gate sequences — Rz-Ry-Rz Euler decompositions in VQE, parameterized rotation layers in HardwareEfficient, oracle-diffusion blocks in Grover — that are individually irreducible under peephole rules but collectively equivalent to shorter circuits via known template identities. Template matching with a library of approximately 50 templates (comparable to Qiskit's implementation) is estimated to account for approximately 50% of the unexplained gap.
 
-**Phase polynomial synthesis (Phase 3b)**: Target families are IQP (67.8 pp gap) and QAOA (potential, not yet realized). These circuits consist entirely or predominantly of diagonal gates whose combined action can be expressed as a phase polynomial and re-synthesized with fewer gates. Phase polynomial optimization is estimated to account for approximately 25% of the unexplained gap.
+**Phase polynomial synthesis (Phase 3b)**: Target families are IQP (67.8 pp gap) and QAOA (potential, not yet realized). These circuits consist entirely or predominantly of diagonal gates whose combined action can be expressed as a phase polynomial and resynthesized with fewer gates. Phase polynomial optimization is estimated to account for approximately 25% of the unexplained gap.
 
 **Clifford tableau reduction (Phase 3c)**: Target family is RandomClifford (52.0 pp gap). Clifford circuits can be represented compactly as stabilizer tableaux, and the minimal equivalent circuit can be extracted from the tableau in polynomial time. This mechanism is estimated to account for the remaining approximately 15% of the gap on RandomClifford circuits.
 
@@ -513,7 +513,7 @@ The current framework optimizes gate count without considering noise. A noise-aw
 
 ### 6.4.3 Hardware-Aware Optimization Under Realistic Topologies
 
-Experiment E17 provides an initial exploration of topology effects using simplified coupling maps. Future work should incorporate realistic hardware topologies (IBM's heavy-hex with frequency allocation constraints, Google's Sycamore grid with calibration-aware routing), dynamic routing algorithms (sabre, steiner-Gauss), and hardware-specific gate sets (cross-resonance, Molmer-Sorensen). The goal is to extend the ceiling characterization from abstract circuit families to hardware-deployed circuits, where routing overhead, gate synthesis, and calibration constraints all interact with peephole optimization.
+Experiment E17 provides an initial exploration of topology effects using simplified coupling maps. Future work should incorporate realistic hardware topologies (IBM's heavy-hex with frequency allocation constraints, Google's Sycamore grid with calibration-aware routing), dynamic routing algorithms (SABRE, Steiner-Gauss), and hardware-specific gate sets (cross-resonance, Mølmer-Sørensen). The goal is to extend the ceiling characterization from abstract circuit families to hardware-deployed circuits, where routing overhead, gate synthesis, and calibration constraints all interact with peephole optimization.
 
 ### 6.4.4 Wire-Traversal Analysis in Production Compilers
 
@@ -521,7 +521,7 @@ The E19 projected result (**[PLANNED EXPERIMENT — data not yet collected]; see
 
 ### 6.4.5 Machine Learning for Circuit-Family Classification and Optimizer Routing
 
-The prescription table (Table 8) provides rule-based optimization routing for 15 known circuit families. For circuits of unknown provenance — a common scenario in practice — a machine learning classifier could automatically identify the circuit family or regime and dispatch to the appropriate optimization strategy. Training features could include gate-set statistics (fraction of single-qubit vs two-qubit gates, parameterized gate density), structural properties (entanglement entropy, circuit depth-to-width ratio), and spectral properties (gate commutation graph eigenvalues). The classifier would enable automatic ceiling-aware optimization (Section 5.5) without requiring manual circuit-family identification, making the framework applicable to arbitrary quantum programs.
+The prescription table (Table 8) provides rule-based optimization routing for 15 known circuit families. For circuits of unknown provenance — a common scenario in practice — a machine learning classifier could automatically identify the circuit family or regime and dispatch to the appropriate optimization strategy. Training features could include gate-set statistics (fraction of single-qubit vs. two-qubit gates, parameterized gate density), structural properties (entanglement entropy, circuit depth-to-width ratio), and spectral properties (gate commutation graph eigenvalues). The classifier would enable automatic ceiling-aware optimization (Section 5.5) without requiring manual circuit-family identification, making the framework applicable to arbitrary quantum programs.
 
 ---
 

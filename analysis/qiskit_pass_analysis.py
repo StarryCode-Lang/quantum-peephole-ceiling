@@ -423,7 +423,7 @@ def generate_fig15_waterfall(pass_df: pd.DataFrame,
     plt.savefig(OUTPUT_DIR / "fig15_qiskit_pass_waterfall.png",
                 dpi=300, bbox_inches="tight")
     plt.savefig(OUTPUT_DIR / "fig15_qiskit_pass_waterfall.pdf",
-                dpi=300, bbox_inches="tight")
+                bbox_inches="tight")
     plt.close()
     print(f"  Saved: {OUTPUT_DIR / 'fig15_qiskit_pass_waterfall.png'}")
 
@@ -480,7 +480,7 @@ def generate_fig16_heatmap(pass_df: pd.DataFrame) -> None:
     plt.savefig(OUTPUT_DIR / "fig16_qiskit_pass_family_heatmap.png",
                 dpi=300, bbox_inches="tight")
     plt.savefig(OUTPUT_DIR / "fig16_qiskit_pass_family_heatmap.pdf",
-                dpi=300, bbox_inches="tight")
+                bbox_inches="tight")
     plt.close()
     print(f"  Saved: {OUTPUT_DIR / 'fig16_qiskit_pass_family_heatmap.png'}")
 
@@ -549,7 +549,7 @@ def generate_fig17_interaction(pass_df: pd.DataFrame) -> None:
     plt.savefig(OUTPUT_DIR / "fig17_qiskit_pass_interaction.png",
                 dpi=300, bbox_inches="tight")
     plt.savefig(OUTPUT_DIR / "fig17_qiskit_pass_interaction.pdf",
-                dpi=300, bbox_inches="tight")
+                bbox_inches="tight")
     plt.close()
     print(f"  Saved: {OUTPUT_DIR / 'fig17_qiskit_pass_interaction.png'}")
 

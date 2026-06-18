@@ -77,7 +77,7 @@ $F_{\text{avg}}$ is the physically meaningful metric for comparing quantum opera
 
 ## 3.2 Circuit Listing Models
 
-A discovery central to this work is that the Phase 1 action space $\mathcal{S}_1(C)$ depends critically not on the circuit's gate content alone, but on its **listing model** -- the data-structural ordering of gates in the instruction sequence. This section formalizes two listing models and proves their divergent implications for Phase 1 optimization.
+A discovery central to this work is that the Phase 1 action space $\mathcal{S}_1(C)$ depends critically not on the circuit's gate content alone, but on its **listing model** — the data-structural ordering of gates in the instruction sequence. This section formalizes two listing models and proves their divergent implications for Phase 1 optimization.
 
 **Definition 11 (Wire-Consecutive Listing, WCL).** A circuit $C = (g_1, \ldots, g_m)$ is in **wire-consecutive listing** if, for every qubit $q$, the subsequence of gates acting on $q$ appears as a contiguous block in the listing. Formally, let $\sigma_q = (g_{i_1}, g_{i_2}, \ldots, g_{i_k})$ be the gates acting on qubit $q$ in temporal order. Under WCL, the listing indices satisfy $i_{j+1} - i_j = 1$ for all $j$ within each wire's block. Gates on different wires may be interleaved, but within each wire, successive gates are listing-adjacent.
 
@@ -117,7 +117,7 @@ Consequently, $R_1(C) = 0$ for every Phase 1 optimizer, regardless of gate conte
 
 *Proof.* Under LBL, the gate on qubit $q$ at layer $\ell$ occupies listing index $\ell \cdot n + q$. The next gate on the same qubit is at layer $\ell+1$, at index $(\ell+1)\cdot n + q$, a gap of $n \ge 2$. Since Phase 1 requires listing adjacency (gap $= 1$) on the same qubit(s), no Phase 1 action is possible. Furthermore, consecutive gates on the same qubit are separated by $n - 1 \ge 1$ intervening gates, so no consecutive rotation pairs exist on the same qubit. By Theorem 2(a), $R_1(C) = 0$. $\blacksquare$
 
-**Discussion: Implications for Compiler Design.** Theorem 1(b) reveals that the zero Phase 1 reduction observed across 25,000 trials in experiments E1--E5 (visualized as a depth-independent flat profile in Figure 1) is not a property of the random circuits themselves but an artifact of the LBL listing model used by the circuit generator. The circuits contain wire-level inverse pairs; LBL merely hides them from listing-adjacent detection. This has three practical implications:
+**Discussion: Implications for Compiler Design.** Theorem 1(b) reveals that the zero Phase 1 reduction observed across 25,000 trials in experiments E1--E5 (visualized as a depth-independent flat profile in Figure 1) is not a property of the random circuits themselves, but an artifact of the LBL listing model used by the circuit generator. The circuits contain wire-level inverse pairs; LBL merely hides them from listing-adjacent detection. This has three practical implications:
 
 1. **Listing-model awareness.** Compiler optimization passes should be designed and evaluated with explicit attention to the circuit's data-structural representation. An optimizer that appears to achieve zero reduction on one listing may achieve significant reduction on another representation of the identical circuit.
 
@@ -129,7 +129,7 @@ Consequently, $R_1(C) = 0$ for every Phase 1 optimizer, regardless of gate conte
 
 ## 3.3 Phase 1 Structural Ceiling
 
-The central structural result of this work establishes that all Phase 1 optimizers -- deterministic and stochastic alike -- share a common reduction ceiling determined entirely by the circuit's action space.
+The central structural result of this work establishes that all Phase 1 optimizers — deterministic and stochastic alike — share a common reduction ceiling determined entirely by the circuit's action space.
 
 **Theorem 2 (Phase 1 Reduction Ceiling).** Let $\mathcal{O}_1 = \{\text{Greedy}, \text{SA}, \text{GA}, \text{RLS}\}$ denote the set of Phase 1 optimizers.
 
@@ -141,7 +141,7 @@ The central structural result of this work establishes that all Phase 1 optimize
 
 *Proof of (b).* The base class provides four move types: REMOVAL, SWAP, COMMUTATION, and INSERTION. SWAP exchanges adjacent gates on disjoint qubits; it preserves the gate multiset and the relative ordering of gates on each individual wire, but can make previously non-adjacent gates listing-adjacent. If the resulting adjacent pair acts on the same qubits and is inverse, SWAP creates a new $\mathcal{S}_1$ element. However, the two gates were already present in $C$; SWAP merely makes their inverse relationship listing-visible. Any reduction enabled by SWAP was latent in the wire-level structure.
 
-COMMUTATION replaces an adjacent pair $(g_i, g_{i+1})$ with an equivalent commuted pair of the same size. If the original was not an inverse pair, the commuted pair is generically also not inverse.
+COMMUTATION replaces an adjacent pair $(g_i, g_{i+1})$ with an equivalent commuted pair of the same size. If the original is not an inverse pair, the commuted pair is generically also not inverse.
 
 INSERTION adds an identity pair $(g, g^{-1})$ at position $p$, increasing $|C|$ by 2. Any REMOVAL applied to the inserted pair restores the original circuit (net change: 0). More generally, if $k$ INSERTION moves add $2k$ gates, the maximum number of gates removable via subsequent REMOVALs involving at least one inserted gate is $2k$, yielding net reduction $\le 0$. $\blacksquare$
 
@@ -153,11 +153,11 @@ Consider a sequence of $k$ INSERTION moves followed by REMOVAL operations. The t
 
 Formally: let $r_{\text{ins}}$ be the number of inserted gates removed and $r_{\text{pre}}$ the number of pre-existing gates removed. Since every REMOVAL pair contains at least one inserted gate (by hypothesis), $r_{\text{ins}} \ge r_{\text{pre}}$. The net gate-count change is $+2k - r_{\text{ins}} - r_{\text{pre}}$. Since $r_{\text{ins}} \le 2k$ and $r_{\text{pre}} \le r_{\text{ins}}$, we have $+2k - r_{\text{ins}} - r_{\text{pre}} \ge 2k - 2k - 0 = 0$. $\blacksquare$
 
-**Theorem 2d (INSERTION Commutation Cascade Bound).** Even when INSERTION is combined with SWAP and COMMUTATION moves within Phase 1, the net reduction from any finite sequence of moves starting from $\mathcal{S}_1(C) = \emptyset$ cannot exceed $B_{\text{pre}}(C)$ -- the number of pre-existing wire-level inverse pairs that SWAP/COMMUTATION can bring into adjacency, which is exactly the Phase 2 action space $\mathcal{S}_{1+2}(C) \setminus \mathcal{S}_1(C)$.
+**Theorem 2d (INSERTION Commutation Cascade Bound).** Even when INSERTION is combined with SWAP and COMMUTATION moves within Phase 1, the net reduction from any finite sequence of moves starting from $\mathcal{S}_1(C) = \emptyset$ cannot exceed $B_{\text{pre}}(C)$ — the number of pre-existing wire-level inverse pairs that SWAP/COMMUTATION can bring into adjacency, which is exactly the Phase 2 action space $\mathcal{S}_{1+2}(C) \setminus \mathcal{S}_1(C)$.
 
 *Proof (Wire-order preservation argument).* Under any sequence of INSERTION, SWAP, and COMMUTATION moves, we claim that the **relative ordering of pre-existing gates on each wire is preserved**. INSERTION adds new gates between existing ones but does not reorder existing gates. SWAP exchanges adjacent gates on disjoint qubits, which affects listing order but not the per-wire ordering (each gate remains on its original wire in the same relative position). COMMUTATION similarly exchanges adjacent commuting gates, preserving per-wire order.
 
-Since the per-wire ordering is invariant, INSERTION cannot reduce the wire-level distance between any two pre-existing gates. Two pre-existing gates $g_a$ and $g_b$ on the same wire that are separated by $k$ intervening pre-existing gates remain separated by at least $k$ pre-existing gates after any sequence of Phase 1 moves. INSERTION may insert additional gates between them, but cannot remove the pre-existing intervening gates (except via REMOVAL, which requires those intervening gates to be in cancelable pairs -- a condition independent of INSERTION).
+Since the per-wire ordering is invariant, INSERTION cannot reduce the wire-level distance between any two pre-existing gates. Two pre-existing gates $g_a$ and $g_b$ on the same wire that are separated by $k$ intervening pre-existing gates remain separated by at least $k$ pre-existing gates after any sequence of Phase 1 moves. INSERTION may insert additional gates between them, but cannot remove the pre-existing intervening gates (except via REMOVAL, which requires those intervening gates to be in cancelable pairs — a condition independent of INSERTION).
 
 Therefore, INSERTION cannot create new pre-existing gate cancellations beyond what is already accessible via Phase 2 commutation reordering. The net reduction is bounded by $B_{\text{pre}}(C) = |\mathcal{S}_{1+2}(C) \setminus \mathcal{S}_1(C)|$. Since Phase 1 by definition does not include systematic commutation reordering across non-commuting blocks, the INSERTION-facilitated cascade cannot exceed what Phase 2 would achieve directly. $\blacksquare$
 
@@ -173,7 +173,7 @@ This follows from Theorem 2(a,b) and Theorems 2c--2d: Greedy achieves $R_1^*(C)$
 
 ## 3.4 Phase 2 Context-Dependent Advantage
 
-Phase 2 commutation rewriting unlocks optimization opportunities invisible to Phase 1. We now prove that this advantage is not merely hypothetical but manifests concretely for specific circuit families -- and that it is fundamentally context-dependent.
+Phase 2 commutation rewriting unlocks optimization opportunities invisible to Phase 1. We now prove that this advantage is not merely hypothetical but manifests concretely for specific circuit families — and that it is fundamentally context-dependent.
 
 **Theorem 7 (Explicit Circuit Family with $\Omega(1)$ Phase 2 Advantage).** There exists an explicit family of circuits $\{C_n\}_{n \ge 2}$ on $n$ qubits such that:
 
@@ -223,7 +223,7 @@ More precisely, the total gate count is $|C_n^{\text{BV}}| = 2n + 2 + w + 2 + 2n
 
 **Conjecture C2 (Phase 2 is Context-Dependent Super-Constant).** There exist circuit families $\mathcal{F}$ for which Phase 1 achieves $O(1/d)$ reduction while Phase 1+2 achieves $\Omega(1)$ reduction. The improvement $\Gamma(C)$ is context-dependent: significant for oracle and structured circuits, and zero for already-optimal or structurally rigid families.
 
-*Evidence.* Theorem 7 (explicit construction) and Theorem 9 (BV oracle) establish C2 constructively. Empirically, Phase 2 achieves $\sim 3.26\%$ additional reduction on random Universal circuits (effect size: Cohen's $d = 1.32$; note that Glass's Delta is the preferred measure for Phase 1 comparisons due to zero variance under LBL, but Cohen's $d$ is appropriate here because Phase 2 introduces nonzero variance), $\sim 20\%$ on BV oracle circuits, and $0\%$ on structured brickwork, QFT, and GHZ circuits. Figure 4 visualizes this context-dependent Phase-2 advantage as a grouped comparison across families.
+*Evidence.* Theorem 7 (explicit construction) and Theorem 9 (BV oracle) establish C2 constructively. Empirically, Phase 2 achieves $\sim 3.26\%$ additional reduction on random Universal circuits (effect size: Cohen's $d = 1.32$; note that Glass's Delta is the preferred measure for Phase 1 comparisons due to zero variance under LBL, but Cohen's $d$ is appropriate here because Phase 2 introduces nonzero variance), $\sim 20\%$ on BV oracle circuits, and $0\%$ on structured brickwork, QFT, and GHZ circuits. Figure 4 visualizes this context-dependent Phase 2 advantage as a grouped comparison across families.
 
 ---
 
@@ -301,7 +301,7 @@ GREEDYGATECANCELLATION(C, max_iter, wire_traversal):
 
 **Parameters.** `max_iterations` (default 100), `fidelity_threshold` (default 0.99), `wire_traversal` (boolean, default false). When `wire_traversal = true`, the circuit is reordered into WCL before scanning (Section 4.3).
 
-**Correctness note.** Rotation merging correctly handles the global-phase subtlety: $R_\alpha(2\pi) = -I \neq I$. When merged angles sum to a non-zero multiple of $2\pi$, the gates are merged into a single gate preserving the phase, not removed.
+**Correctness note.** Rotation merging correctly handles the global-phase subtlety: $R_\alpha(2\pi) = -I \neq I$. When merged angles sum to a non-zero multiple of $2\pi$, the gates are merged into a single gate that preserves the global phase, rather than being removed.
 
 ### 4.1.2 Random Local Search (Phase 1)
 
@@ -429,7 +429,7 @@ HYBRID_COMMUTE_REWRITE(C, max_iter, window):
 
 ### 4.1.7 CeilingAwareOptimizer (NEW)
 
-**Algorithm.** A proxy-guided conditional pipeline that computes fast $O(m)$ structural proxies before each phase and skips phases predicted to yield zero reduction. **Caveat**: The empirical correlation model underlying this proxy does not generalize to unseen circuit families (held-out validation: MAE = 0.2775, Pearson = NaN). The Pearson correlation coefficient is undefined (NaN) because all five held-out circuit families exhibited exactly 0% reduction, yielding zero variance in the observed values. This zero-variance outcome is itself informative: it confirms that these families are at structural ceiling, consistent with the Phase-1 structural ceiling theory (Theorem 1). However, it precludes meaningful correlation analysis between predicted and observed reduction values. Accordingly, the ceiling-aware optimizer should be treated as an exploratory tool, not a validated predictive system.
+**Algorithm.** A proxy-guided conditional pipeline that computes fast $O(m)$ structural proxies before each phase and skips phases predicted to yield zero reduction. **Caveat**: The empirical correlation model underlying this proxy does not generalize to unseen circuit families (held-out validation: MAE = 0.2775, Pearson = NaN). The Pearson correlation coefficient is undefined (NaN) because all five held-out circuit families exhibited exactly 0% reduction, yielding zero variance in the observed values. This zero-variance outcome is itself informative: it confirms that these families are at structural ceiling, consistent with the Phase 1 structural ceiling theory (Theorem 1). However, it precludes meaningful correlation analysis between predicted and observed reduction values. Accordingly, the ceiling-aware optimizer should be treated as an exploratory tool, not a validated predictive system.
 
 **Pseudocode:**
 ```
@@ -496,11 +496,11 @@ We evaluate optimizers on 15 primary circuit families plus 3 extended families (
 
 **Random families.** Universal random circuits are generated in LBL format with configurable two-qubit gate density $\rho \in [0, 1]$. Clifford circuits use only the stabilizer generators $\{H, S, \text{CNOT}\}$ and are efficiently simulable by the Gottesman--Knill theorem. Structured brickwork circuits alternate even- and odd-indexed CNOT layers, providing regular entanglement structure.
 
-**Algorithmic families.** QFT and GHZ circuits are already gate-optimal (no redundant gates), serving as negative controls. The BV oracle circuit is the natural family from Theorem 9, with a random secret string $s \in \{0, 1\}^n$. Grover circuits use a single iteration with a phase oracle for a random marked state. Quantum adders implement explicit ripple-carry addition using CCX (Toffoli) gates. Quantum walks simulate discrete-time walks on cycle graphs using coin-flip and conditional-shift operators. IQP circuits are believed to be hard to simulate classically and consist of Hadamard-diagonal-Hadamard structure.
+**Algorithmic families.** QFT and GHZ circuits are already gate-optimal (no redundant gates), serving as negative controls. The BV oracle circuit is the natural family from Theorem 9, with a random secret string $s \in \{0, 1\}^n$. Grover circuits use a single iteration with a phase oracle for a random marked state. Quantum adders implement explicit ripple-carry addition using CCX (Toffoli) gates. Quantum walks simulate discrete-time walks on cycle graphs using coin-flip and conditional-shift operators. IQP circuits are believed to be hard to simulate classically and have a Hadamard-diagonal-Hadamard structure.
 
-**Variational families.** QAOA circuits use line-graph cost functions with bound-parameterized $R_{zz}$ and $R_x$ rotations. VQE ansatze use Qiskit's TwoLocal with $R_y$--$R_z$ rotation blocks and linear CNOT entanglement. Hardware-efficient ansatze alternate parameterized rotation layers with nearest-neighbor CNOT entanglement.
+**Variational families.** QAOA circuits use line-graph cost functions with bound-parameterized $R_{zz}$ and $R_x$ rotations. VQE ansätze use Qiskit's TwoLocal with $R_y$--$R_z$ rotation blocks and linear CNOT entanglement. Hardware-efficient ansätze alternate parameterized rotation layers with nearest-neighbor CNOT entanglement.
 
-**Error-correcting and chemistry families.** Surface code syndrome extraction circuits model a single round of X-stabilizer measurement. UCCSD ansatze model single and double excitation operators for quantum chemistry, decomposed into CNOT ladders and $R_y$ rotations.
+**Error-correcting and chemistry families.** Surface code syndrome extraction circuits model a single round of X-stabilizer measurement. UCCSD ansätze model single and double excitation operators for quantum chemistry, decomposed into CNOT ladders and $R_y$ rotations.
 
 **Haar random.** Exact synthesis of Haar-random unitaries via Qiskit's `random_unitary` + `decompose`, limited to $n \le 4$ qubits due to exponential cost.
 
@@ -559,13 +559,13 @@ DFS_WIRE_PRIORITY(dag, node, preferred_wire, visited, order):
 
 **Complexity.** DAG construction: $O(m)$ time (one pass through the circuit, constant-time wire-lookup table). Topological sort with wire-consecutive priority: $O(m \log m)$ due to priority-queue operations when multiple wires are ready simultaneously. Overall: $O(m \log m)$.
 
-**Empirical impact.** When WCL preprocessing is enabled, Phase 1 Greedy achieves approximately 18% reduction on the random Universal ensemble where LBL yields exactly 0%, consistent with the density bound from Theorem 1(a).
+**Empirical impact.** When WCL preprocessing is enabled, Phase 1 Greedy achieves approximately 18% reduction on the random Universal ensemble, whereas LBL yields exactly 0%, consistent with the density bound from Theorem 1(a).
 
 ---
 
 ## 4.4 Compiler Configurations
 
-We compare against Qiskit as the confirmed production compiler baseline. Cirq and t|ket> configurations are documented for planned future full runs but are not part of the confirmed canonical evidence:
+We compare against Qiskit as the confirmed production compiler baseline. Cirq and t|ket> configurations are documented for planned full-scale runs but are not part of the confirmed canonical evidence:
 
 **Qiskit (v2.4.1).** We use `qiskit.transpile` with optimization levels 0--3:
 - **Level 0**: No optimization; trivial mapping.
@@ -583,7 +583,7 @@ Specific passes at Level 3 include `Optimize1qGates`, `CXCancellation`, `Commuta
 
 ## 4.5 Statistical Protocol
 
-All statistical analyses follow a pre-registered protocol designed for publication-grade rigor.
+All statistical analyses follow a preregistered protocol designed for publication-grade rigor.
 
 **Bootstrap confidence intervals.** All reported mean reductions and effect sizes are accompanied by 95% bootstrap confidence intervals computed from $B = 10{,}000$ resamples with replacement. For a statistic $\hat{\theta}$ computed from sample $\{x_1, \ldots, x_N\}$, the bootstrap distribution $\{\hat{\theta}^{*(1)}, \ldots, \hat{\theta}^{*(B)}\}$ yields the percentile interval $[\hat{\theta}^{*}_{(\alpha/2)}, \hat{\theta}^{*}_{(1-\alpha/2)}]$ with $\alpha = 0.05$.
 
@@ -666,4 +666,4 @@ The experimental program comprises 23 registered experiments (E1--E23), organize
 
 Each data artifact is stored with a SHA-256 content hash, optimizer configuration JSON, circuit fingerprint, and random seed, enabling exact reproduction of any individual trial. The reproducibility audit (E23; distinct from MC-E20) verifies that 100% of 500 randomly selected trials reproduce bit-identical circuit outputs and gate-count metrics.
 
-**Reproducibility infrastructure.** All experiments are orchestrated by a unified runner that logs configuration, timing, and results to structured CSV and JSON files. Circuit SHA-256 hashes (computed from the canonical instruction stream: gate name, qubit indices, classical bit indices, and parameter values) provide content-addressable deduplication and integrity verification. The full experimental pipeline -- from circuit generation through optimization to statistical analysis -- is encapsulated in a single reproducible workflow executable via `python run_experiments.py --config experiments/v6_full.yaml`.
+**Reproducibility infrastructure.** All experiments are orchestrated by a unified runner that logs configuration, timing, and results to structured CSV and JSON files. Circuit SHA-256 hashes (computed from the canonical instruction stream: gate name, qubit indices, classical bit indices, and parameter values) provide content-addressable deduplication and integrity verification. The full experimental pipeline — from circuit generation through optimization to statistical analysis — is encapsulated in a single reproducible workflow executable via `python run_experiments.py --config experiments/v6_full.yaml`.
