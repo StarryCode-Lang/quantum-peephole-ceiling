@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-06-17T14:49:31.530688+00:00",
+  "created_utc": "2026-06-18T05:06:56.884348+00:00",
   "datasets": [
     {
       "experiment_id": "E01",
@@ -122,7 +122,7 @@
     }
   ],
   "environment": {
-    "env_id": "q-research-20260617_144931",
+    "env_id": "q-research-20260618_050656",
     "packages": {
       "matplotlib": "3.9.0",
       "numpy": "1.26.4",
@@ -136,10 +136,10 @@
   },
   "git": {
     "branch": "master",
-    "commit": "bc781eb9f00f799dd1faecc0a07d8a0eaab8c6ef",
-    "dirty": true
+    "commit": "861d8e70896c87c2031dbc4bb5ef683b876472bd",
+    "dirty": false
   },
-  "release_id": "q-research-20260617_144931",
+  "release_id": "q-research-20260618_050656",
   "reproduction": {
     "conda_env": "q-research",
     "entrypoints": [
@@ -173,10 +173,10 @@
     "src/circuits/real_benchmarks.py": "4107b833c2bae70b30b262e0a82668906f0050c5aac86cf2a9f36423fb643a96",
     "src/optimisation/base.py": "fa214f3da7955eb47298cc61d59771bd0fbd6badaa7c852b2c069d257d79124c",
     "src/optimisation/ceiling_aware.py": "f9039c32ce8776161ded68dbecb6d2e7a4222d51f4270272d5088c2ab519a815",
-    "src/optimisation/phase1/genetic_algorithm.py": "a571d81fa75b5739252f8d02885e5eaf1153ae2afb88759199a0b7283f08e05c",
-    "src/optimisation/phase1/greedy.py": "0d09c16e12b861aec35369dfc48abde1450bbadbb045c5fc465a0b89562e741a",
+    "src/optimisation/phase1/genetic_algorithm.py": "9093c26527029c80b0feee3f8612681291b2b7c809d64c61b186ece195cd7e03",
+    "src/optimisation/phase1/greedy.py": "59d506439d44b5d0503a71d67f1589418c32c3363705e2093d9ebe9650476e60",
     "src/optimisation/phase1/random_local_search.py": "26cc47fddaeca2fc9f8dbd72bf2a69117ac06eb31ae02e7a582d0f3e70a6fea6",
-    "src/optimisation/phase1/simulated_annealing.py": "b1c1d9c249fd36965dd85b2bfbd42796392971e943536a47f71a574c97317354",
+    "src/optimisation/phase1/simulated_annealing.py": "d6fd7b9c239c9bc3c6afdd9a74adf6d83d41f73dbcd56faa36088a82d745d318",
     "src/optimisation/phase1/wire_traversal.py": "e4d2214746f4a771e1c370a61e62a984d26012a74ed529c33b9f983a6df3fbf2",
     "src/optimisation/phase2/commutation_rewriter.py": "4774fc14276471e149f1a338de4527a6c3c8899c6a51f73ca7348ca646db8bf0"
   }
