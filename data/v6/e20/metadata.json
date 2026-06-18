@@ -1,9 +1,11 @@
 {
-  "experiment_id": "E20",
+  "experiment_id": "MC-E20",
   "experiment_name": "multi_compiler_full",
+  "status": "specification_only_no_data_generated",
   "description": "Full multi-compiler comparison: Qiskit (opt_level=3), Cirq (optimize_for_target_gateset + eject_z + merge_single_qubit_gates), and t|ket> (FullPeepholeOptimise) on the extended 15-family benchmark suite.",
-  "version": "1.0.0",
-  "schema_version": "2.0.0",
+  "version": "1.1.0",
+  "schema_version": "2.1.0",
+  "status_note": "This metadata file is a SPECIFICATION ONLY. No canonical CSV has been generated. The experiment has been scripted but not run at full scale. Do not treat any numerical values derived from this spec as confirmed evidence.",
   "compilers": {
     "qiskit": {
       "backend": "transpiler",
@@ -58,7 +60,7 @@
     "compilation_time_seconds"
   ],
   "output_files": {
-    "results_csv": "multi_compiler_full.csv",
+    "results_csv": "NOT_YET_GENERATED_multi_compiler_full.csv",
     "metadata": "metadata.json"
   },
   "notes": "This experiment addresses the reviewer concern that E15 only included Qiskit in the multi-compiler comparison. E20 adds Cirq and t|ket> as first-class compiler backends with controlled qubit counts and multiple random trials for statistical robustness. Missing compilers are handled gracefully -- the experiment runs with whatever is available and records availability in the run metadata."

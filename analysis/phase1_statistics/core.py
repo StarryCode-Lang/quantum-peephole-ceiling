@@ -60,11 +60,17 @@ def benjamini_hochberg(p_values: np.ndarray, alpha: float = 0.05) -> Tuple[np.nd
     sorted_indices = np.argsort(p_values)
     sorted_p = p_values[sorted_indices]
     
-    # Find largest k such that p_k <= (k/m) * alpha
+    # Find largest k such that p_k <= (k/m) * alpha (BH step-up procedure)
     thresholds = np.arange(1, n + 1) / n * alpha
     
-    # Find rejection threshold
-    rejected_sorted = sorted_p <= thresholds
+    # Step-up: reject all hypotheses up to the largest k satisfying the threshold
+    below = sorted_p <= thresholds
+    if np.any(below):
+        k = int(np.max(np.where(below)[0])) + 1
+        rejected_sorted = np.zeros(n, dtype=bool)
+        rejected_sorted[:k] = True
+    else:
+        rejected_sorted = np.zeros(n, dtype=bool)
     
     # Adjusted p-values (Benjamini-Hochberg-Yekutieli)
     adjusted_p = np.minimum.accumulate(sorted_p[::-1] * n / np.arange(n, 0, -1))[::-1]
@@ -92,9 +98,15 @@ def holm_bonferroni(p_values: np.ndarray, alpha: float = 0.05) -> Tuple[np.ndarr
     sorted_indices = np.argsort(p_values)
     sorted_p = p_values[sorted_indices]
     
-    # Holm procedure
+    # Holm step-down procedure
     thresholds = alpha / np.arange(n, 0, -1)
-    rejected_sorted = sorted_p <= thresholds
+    violations = sorted_p > thresholds
+    if np.any(violations):
+        first_violation = int(np.argmax(violations))
+        rejected_sorted = np.zeros(n, dtype=bool)
+        rejected_sorted[:first_violation] = True
+    else:
+        rejected_sorted = np.ones(n, dtype=bool)
     
     # Adjusted p-values
     adjusted_p = np.minimum.accumulate(sorted_p * np.arange(n, 0, -1))[::-1]
@@ -197,7 +209,7 @@ def cohens_d(x: np.ndarray, y: np.ndarray) -> Tuple[float, float, float]:
     nx, ny = len(x), len(y)
     
     if nx < 2 or ny < 2:
-        return 0.0, 0.0, 0.0
+        raise ValueError("Both samples must have at least 2 observations for Cohen's d.")
     
     mx, my = np.mean(x), np.mean(y)
     sx, sy = np.std(x, ddof=1), np.std(y, ddof=1)
@@ -206,7 +218,7 @@ def cohens_d(x: np.ndarray, y: np.ndarray) -> Tuple[float, float, float]:
     pooled_std = np.sqrt(((nx - 1) * sx**2 + (ny - 1) * sy**2) / (nx + ny - 2))
     
     if pooled_std == 0:
-        return 0.0, 0.0, 0.0
+        raise ValueError("Pooled standard deviation is zero; Cohen's d is undefined. Use Glass's Delta or a non-parametric measure instead.")
     
     d = (mx - my) / pooled_std
     

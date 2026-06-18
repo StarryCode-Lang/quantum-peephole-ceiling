@@ -767,8 +767,8 @@ def main() -> None:
         description="Run E20 full multi-compiler comparison (Qiskit, Cirq, t|ket>)"
     )
     parser.add_argument(
-        "--mode", choices=["smoke", "full"], default="full",
-        help="'smoke' for quick validation, 'full' for publication results (default: full)"
+        "--mode", choices=["smoke", "full"], default="smoke",
+        help="'smoke' for quick validation (default), 'full' for publication results"
     )
     parser.add_argument("--seed", type=int, default=42, help="Base random seed")
     parser.add_argument(

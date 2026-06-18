@@ -1,6 +1,6 @@
 # 5. Results
 
-This section presents the complete experimental findings of the structural-ceiling framework, organized into six subsections. We report confirmed results from 53,300 canonical optimizer trials across 15 primary circuit families and 6 optimizer types, with a completed Qiskit compiler baseline. Reductions are reported with fidelity verification where exact/scalable checks are available; documented failure rows are tracked separately and filtered from analyses that require valid fidelity.
+This section presents the complete experimental findings of the structural-ceiling framework, organized into six subsections. We report confirmed results from 53,300 canonical optimizer trials across 15 primary circuit families and 6 optimizer types, with a completed Qiskit compiler baseline. Of these 53,300 trials, approximately 53,235 are retained for primary analysis after filtering rows with fidelity below 0.99 (65 rows, concentrated in E11/E14/E18 decomposition-sensitive families) or with decompose_error status (78 rows, E18 Clifford+T only); the filtered rows are tracked separately and documented in the data dictionary. Reductions are reported with fidelity verification where exact/scalable checks are available; documented failure rows are tracked separately and filtered from analyses that require valid fidelity.
 
 ---
 
@@ -16,7 +16,7 @@ This null result is itself a substantive finding. In a regime where the expected
 
 ### 5.1.2 Entanglement Density and Qubit Scaling (E2, E3)
 
-Two supplementary experiments test whether structural properties beyond depth correlate with Phase 1 optimizability. Experiment E2 (n = 5, depth 15, 2,100 trials) sweeps two-qubit gate density from 0.1 to 0.9, modulating entanglement entropy across the circuit ensemble. Mean reduction remains 0.0000% at all densities. The Pearson correlation coefficient between entanglement entropy and reduction is r = 0.000 (p = 1.000 after Benjamini-Hochberg FDR correction), indicating no linear or monotonic relationship between entanglement structure and local optimizability.
+Two supplementary experiments test whether structural properties beyond depth correlate with Phase 1 optimizability. Experiment E2 (n = 5, depth 15, 2,100 trials) sweeps two-qubit gate density from 0.1 to 0.9, modulating entanglement entropy across the circuit ensemble. Mean reduction remains 0.0000% at all densities. The Pearson correlation coefficient between entanglement entropy and reduction is undefined (r = NaN) because reduction has zero variance (all values are exactly 0.0000% under LBL); the corresponding p-value is treated as non-significant (p = 1.000 after Benjamini-Hochberg FDR correction), indicating no evidence of a linear or monotonic relationship between entanglement structure and local optimizability.
 
 Experiment E3 scales the qubit count from n = 3 to n = 10 at fixed depth d = 15 (12,000 trials total, stratified across qubit counts). Mean reduction is 0.0000% at every qubit count (Figure 2). The Kruskal-Wallis test across qubit groups yields H = 0.00, p = 1.000 (FDR-adjusted), confirming no statistically significant variation with system size. This is consistent with Theorem 1(a), which establishes that the expected Phase 1 reduction scales as $O(1/g_1^2 + 1/(g_2 n))$ — negligible for $n \ge 3$.
 

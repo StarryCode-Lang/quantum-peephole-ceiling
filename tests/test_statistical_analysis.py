@@ -602,11 +602,14 @@ def test_core_cohens_d_basic():
 
 
 def test_core_cohens_d_zero_variance():
-    """core.cohens_d returns (0, 0, 0) when pooled SD is zero."""
+    """core.cohens_d raises ValueError when pooled SD is zero (bug fix: was returning 0)."""
     x = np.array([5.0, 5.0, 5.0])
     y = np.array([5.0, 5.0, 5.0])
-    d, ci_low, ci_high = cohens_d_core(x, y)
-    assert d == 0.0 and ci_low == 0.0 and ci_high == 0.0
+    try:
+        cohens_d_core(x, y)
+        assert False, "Should have raised ValueError for zero pooled SD"
+    except ValueError:
+        pass
 
 
 def test_fidelity_summary_basic():
@@ -793,6 +796,22 @@ def test_core_bh_returns_tuple():
     assert rejected.dtype == bool
     assert len(rejected) == len(p)
     assert len(adjusted) == len(p)
+
+
+def test_core_bh_step_up_not_naive():
+    """core.benjamini_hochberg must use step-up, not naive per-comparison.
+
+    For p=[0.04, 0.04] at alpha=0.05:
+      thresholds = [0.025, 0.05]
+      naive per-comparison: rejected = [F, T]  (only 1 rejected)
+      step-up: k=2, rejected = [T, T]          (both rejected)
+    """
+    from analysis.phase1_statistics.core import benjamini_hochberg as bh_core
+    p = np.array([0.04, 0.04])
+    rejected, _ = bh_core(p, alpha=0.05)
+    assert rejected[0] and rejected[1], (
+        f"Step-up should reject both p=0.04 at alpha=0.05, got {rejected}"
+    )
 
 
 # ===================================================================

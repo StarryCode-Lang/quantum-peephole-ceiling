@@ -19,9 +19,19 @@ import matplotlib
 from scipy import stats
 import seaborn as sns
 
-# Import BH-FDR correction from project statistics module
+# Import statistics from the canonical dedicated modules (not the deprecated core.py)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from phase1_statistics.core import benjamini_hochberg, bootstrap_ci, cliffs_delta, hedges_g
+from phase1_statistics.multiple_comparison import benjamini_hochberg as _bh_dict
+from phase1_statistics.effect_size import cliffs_delta, hedges_g
+from phase1_statistics.bootstrap import bootstrap_ci
+
+
+def benjamini_hochberg(p_values, alpha=0.05):
+    """Compatibility wrapper: returns (rejected, adjusted_p) tuple matching the
+    legacy core.py contract, but using the correct BH step-up procedure from
+    multiple_comparison.py."""
+    result = _bh_dict(p_values, alpha=alpha)
+    return result['rejected'], result['adjusted_p']
 
 # Use Agg backend for non-interactive plotting
 matplotlib.use('Agg')
@@ -46,13 +56,16 @@ def load_latest_csv(data_dir: Path, prefix: str) -> pd.DataFrame:
     return pd.read_csv(csv_files[-1])
 
 
-def bootstrap_ci_errors(data_series: pd.Series, n_bootstrap: int = 1000) -> tuple:
+def bootstrap_ci_errors(data_series: pd.Series, n_bootstrap: int = 10000) -> tuple:
     """Compute bootstrap 95% CI error bars (lower_err, upper_err) for a series.
-    Returns (lower_error, upper_error) as distances from the mean for bar chart errorbars."""
+    Returns (lower_error, upper_error) as distances from the mean for bar chart errorbars.
+    Uses 10,000 resamples matching the manuscript's stated protocol."""
     vals = data_series.dropna().values
     if len(vals) < 2:
         return (0.0, 0.0)
-    _, ci_low, ci_high = bootstrap_ci(vals, n_bootstrap=n_bootstrap, random_state=42)
+    result = bootstrap_ci(vals, n_bootstrap=n_bootstrap, random_seed=42)
+    ci_low = result['ci_lower']
+    ci_high = result['ci_upper']
     mean_val = float(np.mean(vals))
     lower_err = mean_val - ci_low
     upper_err = ci_high - mean_val
@@ -742,13 +755,20 @@ if 'entanglement_density' in e2.columns:
     e2_valid = e2[['entanglement_density', 'reduction']].dropna()
     r_e2, p_e2_corr = stats.pearsonr(e2_valid['entanglement_density'],
                                       e2_valid['reduction'])
-    p_e2_corr = 1.0 if np.isnan(p_e2_corr) else float(p_e2_corr)
+    # E2 reduction has zero variance (all 0.0000 under LBL), so Pearson r is
+    # undefined (NaN). Report honestly: r=NaN, p=NaN → treat as non-significant.
+    if np.isnan(r_e2):
+        p_e2_corr = 1.0
+        r_e2_str = "undefined (zero variance)"
+    else:
+        p_e2_corr = 1.0 if np.isnan(p_e2_corr) else float(p_e2_corr)
+        r_e2_str = f"{r_e2:.4f}"
     pvalue_collection.append(('E2: Entanglement-reduction correlation (Pearson)', p_e2_corr))
     # For Pearson, r is itself the standardized effect size; record it directly.
     effect_size_collection.append({
         'cliffs_delta': None, 'cliffs_delta_CI95': None,
         'hedges_g': float(r_e2) if not np.isnan(r_e2) else None,
-        'hedges_g_CI95': None, 'note': f'Pearson r={r_e2:.4f}',
+        'hedges_g_CI95': None, 'note': f'Pearson r={r_e2_str}',
     })
 
 # H2 (E3): Kruskal-Wallis — reduction across qubit counts

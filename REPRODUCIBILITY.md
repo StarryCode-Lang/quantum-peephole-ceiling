@@ -4,7 +4,7 @@ This repository supports lightweight verification, smoke reproduction, and full 
 
 ## Environment
 
-Recommended Python: 3.10.
+Recommended Python: 3.12 (matching the data-generation environment recorded in `release/release_manifest.json`).
 
 Conda setup:
 
