@@ -29,6 +29,7 @@ This script demonstrates:
 
 import sys
 import os
+import unittest
 import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
@@ -53,6 +54,29 @@ class _Inspector(BaseOptimizer):
             fidelity=1.0, iterations=0,
             runtime_seconds=0.0, success=True,
         )
+
+
+class TestNumericCommutationFallback(unittest.TestCase):
+    def test_numeric_fallback_disabled_by_default(self):
+        qc = QuantumCircuit(1)
+        qc.x(0)
+        qc.rx(np.pi / 2, 0)
+        insp = _Inspector()
+        self.assertFalse(insp._gates_commute(qc, qc.data[0], qc.data[1]))
+
+    def test_numeric_fallback_detects_uncovered_one_qubit_commutation(self):
+        qc = QuantumCircuit(1)
+        qc.x(0)
+        qc.rx(np.pi / 2, 0)
+        insp = _Inspector(enable_numeric_commutation=True)
+        self.assertTrue(insp._gates_commute(qc, qc.data[0], qc.data[1]))
+
+    def test_numeric_fallback_is_bounded_to_two_qubits(self):
+        qc = QuantumCircuit(3)
+        qc.ccx(0, 1, 2)
+        qc.z(0)
+        insp = _Inspector(enable_numeric_commutation=True)
+        self.assertFalse(insp._gates_commute(qc, qc.data[0], qc.data[1]))
 
 
 def _unitary(qc: QuantumCircuit) -> np.ndarray:
@@ -348,17 +372,64 @@ def demo_post_fix():
 
 
 # ===========================================================================
+# unittest harness
+# ===========================================================================
+# The demo_* functions above are written as standalone demonstrations with
+# verbose print output, which makes them unsuitable for direct unittest
+# discovery (top-level test_* functions are not collected by the default
+# TestLoader). The TestCase below wraps each demo as a test_* method so the
+# module is discoverable by `python -m unittest tests.test_commutation_bug_reproduction`
+# while preserving the original demo_* entry points for interactive use.
+class TestCommutationBugReproduction(unittest.TestCase):
+    """unittest-compatible wrapper around the demo_* demonstrations.
+
+    Each demo_* function already contains the relevant ``assert`` statements,
+    so the test methods simply delegate and let any AssertionError propagate
+    as a test failure.
+    """
+
+    def test_condition_divergence(self):
+        demo_condition_divergence()
+
+    def test_valid_cancellation(self):
+        demo_valid_cancellation()
+
+    def test_missed_cancellation(self):
+        demo_missed_cancellation()
+
+    def test_unitary_verification(self):
+        demo_unitary_verification()
+
+    def test_post_fix(self):
+        self.assertTrue(demo_post_fix())
+
+    def test_all_demos(self):
+        """Aggregate regression test that runs every demonstration in order."""
+        demo_condition_divergence()
+        demo_valid_cancellation()
+        demo_missed_cancellation()
+        demo_unitary_verification()
+        self.assertTrue(demo_post_fix())
+
+
+# ===========================================================================
 # Main
 # ===========================================================================
 if __name__ == '__main__':
-    print("Commutation Rewriter Bug Reproduction")
-    print("=" * 70)
+    # Allow `python tests/test_commutation_bug_reproduction.py` to run either
+    # as a verbose demo script (default) or as a unittest module (--unittest).
+    if '--unittest' in sys.argv:
+        sys.argv = [a for a in sys.argv if a != '--unittest']
+        unittest.main()
+    else:
+        print("Commutation Rewriter Bug Reproduction")
+        print("=" * 70)
 
-    demo_condition_divergence()
-    demo_valid_cancellation()
-    demo_missed_cancellation()
-    demo_unitary_verification()
-    passed = demo_post_fix()
+        demo_condition_divergence()
+        demo_valid_cancellation()
+        demo_missed_cancellation()
+        demo_unitary_verification()
+        passed = demo_post_fix()
 
     print("\n" + "=" * 70)
     print("SUMMARY")

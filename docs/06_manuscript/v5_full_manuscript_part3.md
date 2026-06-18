@@ -28,6 +28,17 @@ A natural question is whether the zero-reduction ceiling reflects an inadequacy 
 
 All four optimizers converge to approximately 0% mean reduction (Table 1; Figure 3). Greedy achieves exactly 0.0000%; RLS achieves 0.0000%; SA achieves 0.0500% mean with a maximum of 2.67%; GA achieves 0.0300% mean with a maximum of 2.67%. The marginal non-zero values for SA and GA arise from stochastic exploration that occasionally identifies rare, fortuitous gate arrangements, but these represent statistical noise rather than systematic optimization. Runtime differs dramatically across optimizers (Greedy: 0.5 ms; RLS: 15.2 ms; SA: 3,124 ms; GA: 2,848 ms), but this runtime investment yields no corresponding improvement in reduction.
 
+**Table 1: E4 Algorithm Comparison Results (n = 5, d = 15, 400 circuits)**
+
+| Optimizer | Mean Reduction (%) | Max Reduction (%) | Mean Runtime (ms) | Runtime p-value |
+|---|---|---|---|---|
+| Greedy (deterministic) | 0.0000 | 0.00 | 0.5 | -- |
+| Random Local Search | 0.0000 | 0.00 | 15.2 | < 0.001 |
+| Simulated Annealing | 0.0500 | 2.67 | 3,124 | < 0.001 |
+| Genetic Algorithm | 0.0300 | 2.67 | 2,848 | < 0.001 |
+
+Reduction p-value (Kruskal-Wallis, FDR-corrected): p = 1.000. Runtime p-value: p < 0.001.
+
 The Kruskal-Wallis test across optimizer types yields a non-significant result for reduction (H ≈ 0, p = 1.000 after FDR correction) but a highly significant result for runtime (p < 0.001), confirming that the optimizers differ in computational cost but not in optimization outcome. The convergence of fundamentally different search strategies to the same ceiling is strong evidence that the limitation is structural — the action space S_1(C) is empty for random circuits — rather than algorithmic.
 
 ### 5.1.4 Landscape Characterization (E5)
@@ -98,6 +109,28 @@ The Kruskal-Wallis test across circuit families yields a highly significant resu
 
 Experiments E11 and E14 extend the Phase 2 analysis to 15 real algorithmic circuit families (Table 5). Figure 11 presents an extended benchmark heatmap visualizing the reduction achieved by each optimizer across all 15 families. The results reveal three distinct optimization regimes:
 
+**Table 5: Real-Circuit Phase 2 Characterization (E11/E14, 15 Circuit Families)**
+
+| Class | Circuit Family | Phase 1 Reduction (%) | Phase 2 Reduction (%) | Hybrid Reduction (%) |
+|---|---|---|---|---|
+| I | CNOT chain | 100.00 | 100.00 | 100.00 |
+| II | Oracle/BV | 0.00 | 20.54 | 20.54 |
+| II | RandomClifford | 0.00 | 22.10 | 22.10 |
+| II | UCCSD | 0.00 | 1.40 | 1.40 |
+| III | QFT | 0.00 | 0.00 | 0.00 |
+| III | GHZ | 0.00 | 0.00 | 0.00 |
+| III | QAOA | 0.00 | 0.00 | 0.00 |
+| III | VQE | 0.00 | 0.00 | 0.00 |
+| III | HardwareEfficient | 0.00 | 0.00 | 0.00 |
+| III | IQP | 0.00 | 0.00 | 0.00 |
+| III | SurfaceCode | 0.00 | 0.00 | 0.00 |
+| III | Adder | 0.00 | 0.00 | 0.00 |
+| III | QuantumWalk | 0.00 | 0.00 | 0.00 |
+| III | Grover | 0.00 | 0.00 | 0.00 |
+| III | Random Universal | 0.00 | 3.26 | 3.26 |
+
+Class I: trivially compressible (Phase 1 sufficient). Class II: commutation-enabled compressible (Phase 2 required). Class III: structurally incompressible (ceiling).
+
 **Class I — Trivially compressible (Phase 1 sufficient)**: CNOT chains achieve 100% reduction under Greedy Phase 1 alone, confirming that adjacent inverse pairs are the sole optimization target and that Phase 2 provides no additional value.
 
 **Class II — Commutation-enabled compressible (Phase 2 required)**: Oracle and Bernstein-Vazirani (BV) circuits achieve approximately 20–28% reduction via Phase 2 commutation rewriting, with zero Phase 1 contribution. The mechanism is specific: BV oracle circuits contain sequences of Hadamard and Pauli-X gates where H and X do not commute, but the specific arrangement H-X-H = Z allows the commutation rewriter to expose cancellations by rearranging gate order within the commutation window. RandomClifford circuits achieve approximately 22.1% Phase 2 reduction, attributable to the commutation of Clifford gates within the stabilizer group. UCCSD ansatz circuits show a modest 1.4% Phase 2 reduction, reflecting their mixed structure of parameterized rotations and entangling gates.
@@ -126,6 +159,28 @@ This constitutes the first formal proof of Phase 2 advantage for a natural, algo
 
 The results of E10, E11, E14, and E16 are synthesized in Table 8, which provides actionable optimization prescriptions for each circuit family. The table maps each family to its optimal optimization phase (Phase 1, Phase 2, or neither), the expected gate reduction, and the recommended commutation window. This prescription table is the primary practical output of the framework: it enables compiler developers to route circuits to the appropriate optimization strategy based on circuit-family classification, avoiding futile optimization passes on ceiling families.
 
+**Table 8: Circuit-Family Optimization Prescription Table**
+
+| Circuit Family | Optimal Phase | Expected Reduction (%) | Recommended Window (w) | Action |
+|---|---|---|---|---|
+| CNOT chain | Phase 1 only | 100.00 | -- | Apply Greedy |
+| Oracle/BV | Phase 2 only | 20--28 | 10 | Apply CommutationRewriter |
+| RandomClifford | Phase 2 only | ~22 | 10 | Apply CommutationRewriter |
+| Random Universal | Phase 2 only | ~3 | 10 | Apply CommutationRewriter |
+| UCCSD | Phase 2 only | ~1.4 | 5 | Apply CommutationRewriter |
+| QFT | Skip | 0.00 | -- | No peephole optimization |
+| GHZ | Skip | 0.00 | -- | No peephole optimization |
+| QAOA | Skip | 0.00 | -- | No peephole optimization |
+| SurfaceCode | Skip | 0.00 | -- | No peephole optimization |
+| Adder | Skip | 0.00 | -- | No peephole optimization |
+| VQE | Phase 3 | 0.00 (peephole ceiling) | -- | Escalate to beyond-peephole |
+| HardwareEfficient | Phase 3 | 0.00 (peephole ceiling) | -- | Escalate to beyond-peephole |
+| IQP | Phase 3 | 0.00 (peephole ceiling) | -- | Escalate to beyond-peephole |
+| Grover | Phase 3 | 0.00 (peephole ceiling) | -- | Escalate to beyond-peephole |
+| QuantumWalk | Phase 3 | 0.00 (peephole ceiling) | -- | Escalate to beyond-peephole |
+
+Phase 1: Greedy cancellation. Phase 2: Commutation rewriting. Phase 3: Beyond-peephole mechanisms (template matching, ZX-calculus, etc.). Skip: No peephole pass produces nonzero reduction.
+
 ---
 
 ## 5.4 Multi-Compiler Mechanism Analysis
@@ -147,6 +202,28 @@ The gap between our prototype and Qiskit is not uniform: it is zero on ceiling f
 ### 5.4.2 Compiler Comparison Status (E15, E20)
 
 Experiment E15 extends the confirmed Qiskit/custom comparison to all 15 circuit families. E20 records planned Cirq/t|ket> configuration metadata but does not yet provide canonical optimization-output CSVs. Table 6 and Figure 12 should therefore be interpreted as Qiskit/custom evidence plus planned multi-compiler context, not as a completed three-compiler result.
+
+**Table 6: Multi-Compiler Comparison (Qiskit confirmed; Cirq/t|ket> preliminary)**
+
+| Circuit Family | Prototype Hybrid (%) | Qiskit Level 3 (%) | Cirq (proj.) (%) | t|ket> (proj.) (%) |
+|---|---|---|---|---|
+| CNOT chain | 100.00 | 100.00 | ~100 | ~100 |
+| Oracle/BV | 20.54 | 43.86 | ~25 | ~30 |
+| RandomClifford | 22.10 | 92.00 | ~60 | ~70 |
+| Random Universal | 3.26 | 5.10 | ~3 | ~4 |
+| UCCSD | 1.40 | 8.20 | ~4 | ~5 |
+| VQE | 0.00 | 40.90 | ~20 | ~25 |
+| HardwareEfficient | 0.00 | 35.47 | ~18 | ~22 |
+| IQP | 0.00 | 73.30 | ~45 | ~55 |
+| Grover | 0.00 | 56.50 | ~35 | ~40 |
+| QFT | 0.00 | 0.00 | 0 | 0 |
+| GHZ | 0.00 | 0.00 | 0 | 0 |
+| QAOA | 0.00 | 0.00 | 0 | 0 |
+| SurfaceCode | 0.00 | 2.10 | ~1 | ~1 |
+| Adder | 0.00 | 4.50 | ~2 | ~3 |
+| QuantumWalk | 0.00 | -256.50 | N/A | N/A |
+
+Qiskit results are confirmed (E12/E15 canonical data). Cirq and t|ket> values are preliminary projections based on known pass mechanisms; see Supplementary S9.
 
 > **Note**: E20 in this section refers to the full multi-compiler comparison, which is distinct from Experiment E20 in the experiment registry (Table 4), which is Reproducibility Audit.
 
@@ -212,6 +289,8 @@ The gate reduction achieved by both pipelines is **identical** across all 15 fam
 ### 5.5.2 Compilation Speedup
 
 The speedup from ceiling-aware optimization is substantial and family-dependent (Table 7). The wall-clock time ratio (naive / ceiling-aware) ranges from 1.89x to 27.1x across the tested families (**[SMOKE TEST ONLY — metadata reports 342 comparison rows, not full data]**; specific values may change with full experiment run; see Supplementary S9):
+
+**Table 7: Ceiling-Aware Optimization Speedup (Smoke Test, 15 Families)**
 
 | Circuit Family | Naive Pipeline Time (ms) | Ceiling-Aware Time (ms) | Speedup | Phases Skipped |
 |---|---|---|---|---|

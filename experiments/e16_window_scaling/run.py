@@ -27,6 +27,7 @@ from src.circuits.real_benchmarks import (  # noqa: E402
     gate_counts,
     generate_extended_suite,
 )
+from src.optimisation.phase1.greedy import GreedyGateCancellation  # noqa: E402
 from src.optimisation.phase2.commutation_rewriter import (  # noqa: E402
     CommutationRewriter,
     HybridCommuteRewrite,
@@ -61,11 +62,14 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
         counts = gate_counts(circuit)
 
         for ws in window_sizes:
-            for opt_cls, opt_label in [
-                (CommutationRewriter, "commutation_phase2"),
-                (HybridCommuteRewrite, "hybrid_phase1_2"),
+            # Phase-1-only baseline (independent of window size) to isolate
+            # the marginal contribution of Phase-2 window scaling.
+            for opt_cls, opt_label, opt_kwargs in [
+                (GreedyGateCancellation, "phase1_only", {}),
+                (CommutationRewriter, "commutation_phase2", {"window_size": ws}),
+                (HybridCommuteRewrite, "hybrid_phase1_2", {"window_size": ws}),
             ]:
-                optimizer = opt_cls(success_reduction=0.01, window_size=ws)
+                optimizer = opt_cls(success_reduction=0.01, **opt_kwargs)
                 start = time.time()
                 result = optimizer.optimize(circuit, target=circuit)
                 runtime = time.time() - start
@@ -120,7 +124,7 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
         {
             "schema_version": SCHEMA_VERSION,
             "experiment_id": EXPERIMENT_ID,
-            "description": "Phase 2 window-size scaling study",
+            "description": "Phase 2 window-size scaling study (includes Phase-1-only baseline)",
             "mode": mode,
             "seed": seed,
             "max_qubits_fidelity": max_qubits_fidelity,

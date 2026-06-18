@@ -560,28 +560,26 @@ def test_cohens_d_zero_variance_raises():
 # ===================================================================
 
 def test_core_cliffs_delta_basic():
-    """core.cliffs_delta returns (delta, ci_low, ci_high) tuple."""
+    """core.cliffs_delta now re-exports effect_size.py and returns a Dict (bug #8)."""
     x = np.array([1.0, 2.0, 3.0, 4.0, 5.0])
     y = np.array([10.0, 11.0, 12.0, 13.0, 14.0])
     result = cliffs_delta_core(x, y)
 
-    assert isinstance(result, tuple), f"Expected tuple, got {type(result)}"
-    assert len(result) == 3, f"Expected 3 elements, got {len(result)}"
-
-    delta, ci_low, ci_high = result
+    assert isinstance(result, dict), f"Expected dict, got {type(result)}"
+    delta = result["delta"]
     assert delta < 0, f"Expected negative delta (x < y), got {delta}"
     assert abs(delta - (-1.0)) < 1e-10, f"Expected delta=-1.0, got {delta}"
-    assert ci_low <= delta <= ci_high or ci_low <= ci_high, (
-        "CI bounds should be ordered"
+    assert result["ci_lower"] <= delta <= result["ci_upper"], (
+        "CI bounds should bracket delta"
     )
 
 
 def test_core_cliffs_delta_identical():
-    """core.cliffs_delta with identical data should give delta=0."""
+    """core.cliffs_delta with identical data should give delta=0 (Dict contract)."""
     x = np.array([3.0, 3.0, 3.0, 3.0])
     y = np.array([3.0, 3.0, 3.0, 3.0])
-    delta, _, _ = cliffs_delta_core(x, y)
-    assert abs(delta) < 1e-10, f"Expected delta~0, got {delta}"
+    result = cliffs_delta_core(x, y)
+    assert abs(result["delta"]) < 1e-10, f"Expected delta~0, got {result['delta']}"
 
 
 def test_core_cohens_d_basic():

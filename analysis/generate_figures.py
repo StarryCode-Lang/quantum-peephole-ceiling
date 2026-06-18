@@ -128,9 +128,14 @@ e1_summary = e1.groupby('depth').agg({
 }).reset_index()
 e1_summary.columns = ['depth', 'mean_reduction', 'std_reduction', 'max_reduction', 'success_rate', 'mean_fidelity']
 
-ax.plot(e1_summary['depth'], e1_summary['mean_reduction'] * 100, 'o-', color='#2E86AB', 
+ax.plot(e1_summary['depth'], e1_summary['mean_reduction'] * 100, 'o-', color='#2E86AB',
         markersize=4, linewidth=1.5, label='Mean Reduction')
-ax.fill_between(e1_summary['depth'], 
+# NOTE: shaded band uses the sample standard deviation (std, ddof=1) of the
+# per-trial reduction, i.e. it visualises the *spread of individual trials*
+# rather than the standard error of the mean (SEM = std / sqrt(n)). This is
+# intentional for showing trial-to-trial variability; switch to SEM if the
+# band is meant to represent uncertainty of the mean estimate.
+ax.fill_between(e1_summary['depth'],
                 (e1_summary['mean_reduction'] - e1_summary['std_reduction']) * 100,
                 (e1_summary['mean_reduction'] + e1_summary['std_reduction']) * 100,
                 alpha=0.2, color='#2E86AB')
@@ -145,13 +150,13 @@ ax.set_xlim(0, 51)
 ax.set_ylim(-0.5, 2)
 
 # Add annotation
-ax.text(0.5, 0.95, 'Note: Mean reduction ≈ 0% across all depths\n(25,000 trials, n=5 qubits)', 
+ax.text(0.5, 0.95, 'Note: Mean reduction ≈ 0% across all depths\n(25,000 trials, n=5 qubits)',
         transform=ax.transAxes, fontsize=10, verticalalignment='top',
         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig01_phase_transition.png', dpi=300, bbox_inches='tight')
-plt.savefig(OUTPUT_DIR / 'fig01_phase_transition.pdf', dpi=300, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'fig01_phase_transition.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -185,7 +190,7 @@ for nq in e3_summary['n_qubits']:
 e3_red_yerr = np.array(e3_reduction_errors).T * 100  # shape (2, n_qubits)
 e3_suc_yerr = np.array(e3_success_errors).T * 100
 
-axes[0].bar(e3_summary['n_qubits'], e3_summary['mean_reduction'] * 100, 
+axes[0].bar(e3_summary['n_qubits'], e3_summary['mean_reduction'] * 100,
            color='#A23B72', alpha=0.8, edgecolor='black', linewidth=0.5,
             yerr=e3_red_yerr, capsize=3, ecolor='black')
 axes[0].set_xlabel('Number of Qubits', fontsize=12)
@@ -194,17 +199,24 @@ axes[0].set_title('E3: Scaling — Mean Reduction vs Qubit Count\n(depth=15, 100
 axes[0].set_xticks(range(3, 11))
 
 # Right: Success rate by qubit count
-axes[1].bar(e3_summary['n_qubits'], e3_summary['success_rate'] * 100, 
+axes[1].bar(e3_summary['n_qubits'], e3_summary['success_rate'] * 100,
            color='#F18F01', alpha=0.8, edgecolor='black', linewidth=0.5,
             yerr=e3_suc_yerr, capsize=3, ecolor='black')
 axes[1].set_xlabel('Number of Qubits', fontsize=12)
 axes[1].set_ylabel('Success Rate (%)', fontsize=12)
 axes[1].set_title('E3: Scaling — Success Rate (20% threshold)\nvs Qubit Count', fontsize=12)
 axes[1].set_xticks(range(3, 11))
+# Annotate the structural-ceiling zero-effect baseline so the panel is not
+# misread as a blank/broken chart (see Figure 1 docstring).
+if (e3_summary['success_rate'] * 100).max() < 1e-6:
+    axes[1].text(0.5, 0.5, 'No observable effect\n(success rate = 0% across all qubit counts)',
+                 transform=axes[1].transAxes, fontsize=12, fontweight='bold',
+                 color='#C73E1D', ha='center', va='center',
+                 bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.7))
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig02_scaling.png', dpi=300, bbox_inches='tight')
-plt.savefig(OUTPUT_DIR / 'fig02_scaling.pdf', dpi=300, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'fig02_scaling.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -242,8 +254,8 @@ e4_red_yerr = np.array(e4_reduction_errors).T * 100
 e4_rt_yerr = np.array(e4_runtime_errors).T * 1000
 
 # Left: Mean reduction
-axes[0].bar(x_pos, e4_summary['mean_reduction'] * 100, 
-           color=['#2E86AB', '#A23B72', '#F18F01', '#C73E1D'], 
+axes[0].bar(x_pos, e4_summary['mean_reduction'] * 100,
+           color=['#2E86AB', '#A23B72', '#F18F01', '#C73E1D'],
            alpha=0.8, edgecolor='black', linewidth=0.5,
             yerr=e4_red_yerr, capsize=3, ecolor='black')
 axes[0].set_xticks(x_pos)
@@ -251,6 +263,13 @@ axes[0].set_xticklabels(optimizers, fontsize=11)
 axes[0].set_ylabel('Mean Gate Reduction (%)', fontsize=12)
 axes[0].set_title('E4: Algorithm Comparison — Mean Reduction\n(n=5, depth=15, 100 trials)', fontsize=12)
 axes[0].axhline(y=0, color='red', linestyle='--', linewidth=1, alpha=0.7)
+# Annotate the structural-ceiling zero-effect baseline so the panel is not
+# misread as a blank/broken chart (see Figure 1 docstring).
+if (e4_summary['mean_reduction'] * 100).max() < 1e-6:
+    axes[0].text(0.5, 0.5, 'No observable effect\n(mean reduction = 0% for all optimizers)',
+                 transform=axes[0].transAxes, fontsize=12, fontweight='bold',
+                 color='#C73E1D', ha='center', va='center',
+                 bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.7))
 
 # Statistical annotation: Kruskal-Wallis test across optimizers (E4)
 _e4_kw_groups = [grp['reduction'].dropna().values for _, grp in e4.groupby('optimizer')]
@@ -265,8 +284,8 @@ axes[0].text(0.02, 0.95, f'Kruskal-Wallis: p = {_e4_kw_p:.4f}\n(BH-FDR corrected
             bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
 
 # Right: Runtime comparison
-axes[1].bar(x_pos, e4_summary['mean_runtime'] * 1000, 
-           color=['#2E86AB', '#A23B72', '#F18F01', '#C73E1D'], 
+axes[1].bar(x_pos, e4_summary['mean_runtime'] * 1000,
+           color=['#2E86AB', '#A23B72', '#F18F01', '#C73E1D'],
            alpha=0.8, edgecolor='black', linewidth=0.5,
             yerr=e4_rt_yerr, capsize=3, ecolor='black')
 axes[1].set_xticks(x_pos)
@@ -277,7 +296,7 @@ axes[1].set_yscale('log')
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig03_algorithm_comparison.png', dpi=300, bbox_inches='tight')
-plt.savefig(OUTPUT_DIR / 'fig03_algorithm_comparison.pdf', dpi=300, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'fig03_algorithm_comparison.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -313,8 +332,8 @@ width = 0.35
 
 for i, opt in enumerate(optimizers):
     data = e10_summary_main[e10_summary_main['optimizer'] == opt]
-    reductions = [data[data['circuit_family'] == f]['reduction'].values[0] * 100 
-                  if len(data[data['circuit_family'] == f]) > 0 else 0 
+    reductions = [data[data['circuit_family'] == f]['reduction'].values[0] * 100
+                  if len(data[data['circuit_family'] == f]) > 0 else 0
                   for f in families]
     # Compute bootstrap CI error bars per family for this optimizer
     yerrs = []
@@ -326,7 +345,7 @@ for i, opt in enumerate(optimizers):
         else:
             yerrs.append((0.0, 0.0))
     yerr_array = np.array(yerrs).T  # shape (2, n_families)
-    ax.bar(x + i * width, reductions, width, label=opt, alpha=0.8, 
+    ax.bar(x + i * width, reductions, width, label=opt, alpha=0.8,
            color=['#2E86AB', '#F18F01'][i], edgecolor='black', linewidth=0.5,
             yerr=yerr_array, capsize=2, ecolor='black')
 
@@ -351,7 +370,7 @@ if cnot_reductions:
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig04_phase1_vs_phase2.png', dpi=300, bbox_inches='tight')
-plt.savefig(OUTPUT_DIR / 'fig04_phase1_vs_phase2.pdf', dpi=300, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'fig04_phase1_vs_phase2.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -371,7 +390,10 @@ experiments = {
 colors = ['#2E86AB', '#A23B72', '#F18F01', '#C73E1D']
 for (name, df), color in zip(experiments.items(), colors):
     success_rates = [df['reduction'].ge(t).mean() * 100 for t in thresholds]
-    ax.plot([t * 100 for t in thresholds], success_rates, 'o-', 
+    # Mask zero success rates so log-scale axes do not drop them silently
+    # (log(0) is undefined; np.nan breaks the line so gaps are visible).
+    success_rates_plot = [s if s > 0 else np.nan for s in success_rates]
+    ax.plot([t * 100 for t in thresholds], success_rates_plot, 'o-',
             color=color, markersize=6, linewidth=2, label=name)
 
 ax.set_xlabel('Success Threshold (%)', fontsize=12)
@@ -384,13 +406,13 @@ ax.grid(True, which='both', linestyle='--', alpha=0.5)
 ax.set_xlim(0.05, 50)
 
 # Add annotation
-ax.text(0.05, 0.95, 'Key Finding: Even at 1% threshold,\nsuccess rate < 0.1% for all random circuit experiments', 
+ax.text(0.05, 0.95, 'Key Finding: Even at 1% threshold,\nsuccess rate < 0.1% for all random circuit experiments',
         transform=ax.transAxes, fontsize=10, verticalalignment='top',
         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig05_threshold_sensitivity.png', dpi=300, bbox_inches='tight')
-plt.savefig(OUTPUT_DIR / 'fig05_threshold_sensitivity.pdf', dpi=300, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'fig05_threshold_sensitivity.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -408,7 +430,7 @@ experiments_fid = [
 
 for ax, (name, df) in zip(axes.flat, experiments_fid):
     ax.hist(df['fidelity'], bins=50, color='#2E86AB', alpha=0.7, edgecolor='black', linewidth=0.3)
-    ax.axvline(df['fidelity'].mean(), color='red', linestyle='--', linewidth=2, 
+    ax.axvline(df['fidelity'].mean(), color='red', linestyle='--', linewidth=2,
                label=f'Mean: {df["fidelity"].mean():.6f}')
     ax.set_xlabel('Fidelity', fontsize=10)
     ax.set_ylabel('Frequency', fontsize=10)
@@ -417,7 +439,7 @@ for ax, (name, df) in zip(axes.flat, experiments_fid):
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig06_fidelity_distribution.png', dpi=300, bbox_inches='tight')
-plt.savefig(OUTPUT_DIR / 'fig06_fidelity_distribution.pdf', dpi=300, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'fig06_fidelity_distribution.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -428,7 +450,7 @@ fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
 # Left: Reduction vs entropy difference
 e5_sample = e5.sample(min(2000, len(e5)), random_state=42)
-axes[0].scatter(e5_sample['entropy_diff'], e5_sample['reduction'] * 100, 
+axes[0].scatter(e5_sample['entropy_diff'], e5_sample['reduction'] * 100,
                alpha=0.3, s=10, color='#A23B72')
 axes[0].set_xlabel('Entropy Difference (perturbed - base)', fontsize=12)
 axes[0].set_ylabel('Gate Reduction (%)', fontsize=12)
@@ -444,7 +466,7 @@ plt.suptitle('')  # Remove default title
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig07_landscape.png', dpi=300, bbox_inches='tight')
-plt.savefig(OUTPUT_DIR / 'fig07_landscape.pdf', dpi=300, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'fig07_landscape.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -478,7 +500,7 @@ plt.yticks(fontsize=10, rotation=0)
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig11_extended_benchmark_heatmap.png', dpi=300, bbox_inches='tight')
-plt.savefig(OUTPUT_DIR / 'fig11_extended_benchmark_heatmap.pdf', dpi=300, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'fig11_extended_benchmark_heatmap.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -536,7 +558,7 @@ ax.legend(fontsize=10, loc='upper left')
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig12_multi_compiler_comparison.png', dpi=300, bbox_inches='tight')
-plt.savefig(OUTPUT_DIR / 'fig12_multi_compiler_comparison.pdf', dpi=300, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'fig12_multi_compiler_comparison.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -571,7 +593,7 @@ ax.grid(True, linestyle='--', alpha=0.4)
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig13_window_scaling_curves.png', dpi=300, bbox_inches='tight')
-plt.savefig(OUTPUT_DIR / 'fig13_window_scaling_curves.pdf', dpi=300, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'fig13_window_scaling_curves.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -628,7 +650,7 @@ ax.legend(fontsize=10, loc='upper left')
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig14_connectivity_ceiling.png', dpi=300, bbox_inches='tight')
-plt.savefig(OUTPUT_DIR / 'fig14_connectivity_ceiling.pdf', dpi=300, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'fig14_connectivity_ceiling.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -641,6 +663,59 @@ print("="*60)
 
 # Collect p-values from all planned hypothesis tests (per experimental_design.md)
 pvalue_collection = []
+# Parallel collection for effect sizes (bug #12 fix: integrate Cliff's delta /
+# Hedges' g into the p-value reporting table). Each entry is a dict so that the
+# downstream summary table can render effect sizes alongside p-values.
+effect_size_collection = []
+
+
+def _pairwise_effect_sizes(groups):
+    """Compute representative Cliff's delta / Hedges' g for a multi-group test.
+
+    For 2-group tests the two groups are compared directly. For >2-group tests
+    (e.g. Kruskal-Wallis, Friedman) the maximum absolute pairwise Cliff's delta
+    is reported as a conservative effect-size summary, together with the
+    matching Hedges' g for that pair. Returns a dict; ``None`` fields indicate
+    that no effect size could be computed (e.g. <2 non-empty groups).
+    """
+    groups = [np.asarray(g, dtype=float) for g in groups if len(g) > 0]
+    if len(groups) < 2:
+        return {'cliffs_delta': None, 'cliffs_delta_CI95': None,
+                'hedges_g': None, 'hedges_g_CI95': None, 'note': 'n<2 groups'}
+    try:
+        if len(groups) == 2:
+            cd = cliffs_delta(groups[0], groups[1])
+            hg = hedges_g(groups[0], groups[1])
+            return {
+                'cliffs_delta': cd['delta'],
+                'cliffs_delta_CI95': f"[{cd['ci_lower']:.4f}, {cd['ci_upper']:.4f}]",
+                'hedges_g': hg['g'],
+                'hedges_g_CI95': f"[{hg['ci_lower']:.4f}, {hg['ci_upper']:.4f}]",
+                'note': '2-group direct',
+            }
+        # >2 groups: scan all pairs for the largest |Cliff's delta|
+        best = None
+        best_abs = -1.0
+        for i in range(len(groups)):
+            for j in range(i + 1, len(groups)):
+                cd = cliffs_delta(groups[i], groups[j])
+                if abs(cd['delta']) > best_abs:
+                    best_abs = abs(cd['delta'])
+                    hg = hedges_g(groups[i], groups[j])
+                    best = {
+                        'cliffs_delta': cd['delta'],
+                        'cliffs_delta_CI95': f"[{cd['ci_lower']:.4f}, {cd['ci_upper']:.4f}]",
+                        'hedges_g': hg['g'],
+                        'hedges_g_CI95': f"[{hg['ci_lower']:.4f}, {hg['ci_upper']:.4f}]",
+                        'note': f'max pairwise (pair {i} vs {j})',
+                    }
+        return best if best is not None else {
+            'cliffs_delta': None, 'cliffs_delta_CI95': None,
+            'hedges_g': None, 'hedges_g_CI95': None, 'note': 'no valid pair'}
+    except Exception as exc:
+        return {'cliffs_delta': None, 'cliffs_delta_CI95': None,
+                'hedges_g': None, 'hedges_g_CI95': None, 'note': f'error: {exc}'}
+
 
 def safe_kruskal(groups):
     """Run Kruskal-Wallis, returning p=1.0 if all values are identical."""
@@ -656,66 +731,61 @@ def safe_kruskal(groups):
 # H1 (E1): Kruskal-Wallis — reduction across depth levels (non-parametric ANOVA)
 e1_depth_groups = [grp['reduction'].dropna().values for _, grp in e1.groupby('depth')]
 p_e1_depth = safe_kruskal(e1_depth_groups)
-# NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-# phase1_statistics module but not yet integrated into figure generation.
-# See docs/05_supplementary/supplementary_materials.md for effect-size tables.
 pvalue_collection.append(('E1: Reduction across depths (Kruskal-Wallis)', p_e1_depth))
+effect_size_collection.append(_pairwise_effect_sizes(e1_depth_groups))
 
 # H5 (E2): Pearson correlation — entanglement density vs reduction
 if 'entanglement_density' in e2.columns:
-    r_e2, p_e2_corr = stats.pearsonr(e2['entanglement_density'].dropna(),
-                                      e2['reduction'].dropna())
+    # Align on rows where BOTH columns are non-missing (bug #4 fix: independent
+    # dropna() on each column misaligns rows and yields wrong correlations).
+    e2_valid = e2[['entanglement_density', 'reduction']].dropna()
+    r_e2, p_e2_corr = stats.pearsonr(e2_valid['entanglement_density'],
+                                      e2_valid['reduction'])
     p_e2_corr = 1.0 if np.isnan(p_e2_corr) else float(p_e2_corr)
     pvalue_collection.append(('E2: Entanglement-reduction correlation (Pearson)', p_e2_corr))
+    # For Pearson, r is itself the standardized effect size; record it directly.
+    effect_size_collection.append({
+        'cliffs_delta': None, 'cliffs_delta_CI95': None,
+        'hedges_g': float(r_e2) if not np.isnan(r_e2) else None,
+        'hedges_g_CI95': None, 'note': f'Pearson r={r_e2:.4f}',
+    })
 
 # H2 (E3): Kruskal-Wallis — reduction across qubit counts
 e3_qubit_groups = [grp['reduction'].dropna().values for _, grp in e3.groupby('n_qubits')]
 p_e3_qubits = safe_kruskal(e3_qubit_groups)
-# NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-# phase1_statistics module but not yet integrated into figure generation.
-# See docs/05_supplementary/supplementary_materials.md for effect-size tables.
 pvalue_collection.append(('E3: Reduction across qubit counts (Kruskal-Wallis)', p_e3_qubits))
+effect_size_collection.append(_pairwise_effect_sizes(e3_qubit_groups))
 
 # H3 (E4): Kruskal-Wallis — reduction across optimizers (non-parametric)
 e4_opt_groups = [grp['reduction'].dropna().values for _, grp in e4.groupby('optimizer')]
 p_e4_opt = safe_kruskal(e4_opt_groups)
-# NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-# phase1_statistics module but not yet integrated into figure generation.
-# See docs/05_supplementary/supplementary_materials.md for effect-size tables.
 pvalue_collection.append(('E4: Reduction across optimizers (Kruskal-Wallis)', p_e4_opt))
+effect_size_collection.append(_pairwise_effect_sizes(e4_opt_groups))
 
 # E4 runtime comparison: Kruskal-Wallis — runtime across optimizers
 e4_rt_groups = [grp['runtime_seconds'].dropna().values for _, grp in e4.groupby('optimizer')]
 p_e4_rt = safe_kruskal(e4_rt_groups)
-# NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-# phase1_statistics module but not yet integrated into figure generation.
-# See docs/05_supplementary/supplementary_materials.md for effect-size tables.
 pvalue_collection.append(('E4: Runtime across optimizers (Kruskal-Wallis)', p_e4_rt))
+effect_size_collection.append(_pairwise_effect_sizes(e4_rt_groups))
 
 # H6 (E5): Kruskal-Wallis — reduction across depths (landscape)
 e5_depth_groups = [grp['reduction'].dropna().values for _, grp in e5.groupby('depth')]
 p_e5_depth = safe_kruskal(e5_depth_groups)
-# NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-# phase1_statistics module but not yet integrated into figure generation.
-# See docs/05_supplementary/supplementary_materials.md for effect-size tables.
 pvalue_collection.append(('E5: Reduction across depths (Kruskal-Wallis)', p_e5_depth))
+effect_size_collection.append(_pairwise_effect_sizes(e5_depth_groups))
 
 # H4 (E10): Kruskal-Wallis — reduction across circuit families
 e10_fam_groups = [grp['reduction'].dropna().values for _, grp in e10.groupby('circuit_family')]
 p_e10_fam = safe_kruskal(e10_fam_groups)
-# NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-# phase1_statistics module but not yet integrated into figure generation.
-# See docs/05_supplementary/supplementary_materials.md for effect-size tables.
 pvalue_collection.append(('E10: Reduction across circuit families (Kruskal-Wallis)', p_e10_fam))
+effect_size_collection.append(_pairwise_effect_sizes(e10_fam_groups))
 
 # E10: Kruskal-Wallis — reduction across optimizers
 e10_opt_groups = [grp['reduction'].dropna().values for _, grp in e10.groupby('optimizer')]
 if len(e10_opt_groups) >= 2:
     p_e10_opt = safe_kruskal(e10_opt_groups)
-    # NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-    # phase1_statistics module but not yet integrated into figure generation.
-    # See docs/05_supplementary/supplementary_materials.md for effect-size tables.
     pvalue_collection.append(('E10: Reduction across optimizers (Kruskal-Wallis)', p_e10_opt))
+    effect_size_collection.append(_pairwise_effect_sizes(e10_opt_groups))
 
 # E10 Universal subset: Mann-Whitney U — Greedy vs Hybrid (Phase 2 advantage)
 e10_uni = e10[e10['circuit_family'] == 'Universal']
@@ -724,38 +794,30 @@ if len(e10_uni) > 0:
     hybrid_vals = e10_uni[e10_uni['optimizer'] == 'HybridCommuteRewrite']['reduction'].dropna().values
     if len(greedy_vals) > 0 and len(hybrid_vals) > 0:
         u_stat, p_e10_uni = stats.mannwhitneyu(greedy_vals, hybrid_vals, alternative='less')
-        # NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-        # phase1_statistics module but not yet integrated into figure generation.
-        # See docs/05_supplementary/supplementary_materials.md for effect-size tables.
         p_e10_uni = 1.0 if np.isnan(p_e10_uni) else float(p_e10_uni)
         pvalue_collection.append(('E10 Universal: Greedy vs Hybrid (Mann-Whitney U)', p_e10_uni))
+        effect_size_collection.append(_pairwise_effect_sizes([greedy_vals, hybrid_vals]))
 
 # === Extended tests (E11-E18) for comprehensive FDR correction ===
 
 # H7 (E11): Kruskal-Wallis — reduction across circuit families (real benchmarks)
 e11_fam_groups = [grp['reduction'].dropna().values for _, grp in e11.groupby('circuit_family')]
 p_e11_fam = safe_kruskal(e11_fam_groups)
-# NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-# phase1_statistics module but not yet integrated into figure generation.
-# See docs/05_supplementary/supplementary_materials.md for effect-size tables.
 pvalue_collection.append(('E11: Reduction across circuit families (KW, H7)', p_e11_fam))
+effect_size_collection.append(_pairwise_effect_sizes(e11_fam_groups))
 
 # H8 (E12): Kruskal-Wallis — reduction across Qiskit optimization levels
 e12_level_groups = [grp['reduction'].dropna().values for _, grp in e12.groupby('compiler_optimization_level')]
 p_e12_levels = safe_kruskal(e12_level_groups)
-# NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-# phase1_statistics module but not yet integrated into figure generation.
-# See docs/05_supplementary/supplementary_materials.md for effect-size tables.
 pvalue_collection.append(('E12: Reduction across optimization levels (KW, H8)', p_e12_levels))
+effect_size_collection.append(_pairwise_effect_sizes(e12_level_groups))
 
 # H9 (E14): Kruskal-Wallis — reduction across families x optimizers interaction
 e14['family_opt'] = e14['circuit_family'] + '_' + e14['optimizer']
 e14_interact_groups = [grp['reduction'].dropna().values for _, grp in e14.groupby('family_opt')]
 p_e14_interact = safe_kruskal(e14_interact_groups)
-# NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-# phase1_statistics module but not yet integrated into figure generation.
-# See docs/05_supplementary/supplementary_materials.md for effect-size tables.
 pvalue_collection.append(('E14: Reduction across families x optimizers (KW, H9)', p_e14_interact))
+effect_size_collection.append(_pairwise_effect_sizes(e14_interact_groups))
 
 # H10 (E15): Friedman test — reduction across compilers (matched circuit families)
 try:
@@ -763,47 +825,38 @@ try:
     e15_matrix = e15_pivot_data.pivot(index='circuit_family', columns='compiler', values='reduction').dropna()
     if len(e15_matrix.columns) >= 2 and len(e15_matrix) >= 2:
         _friedman_stat, _friedman_p = stats.friedmanchisquare(*[e15_matrix[c].values for c in e15_matrix.columns])
-        # NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-        # phase1_statistics module but not yet integrated into figure generation.
-        # See docs/05_supplementary/supplementary_materials.md for effect-size tables.
         _friedman_p = 1.0 if np.isnan(_friedman_p) else float(_friedman_p)
         pvalue_collection.append(('E15: Reduction across compilers (Friedman, H10)', _friedman_p))
+        effect_size_collection.append(_pairwise_effect_sizes(
+            [e15_matrix[c].values for c in e15_matrix.columns]))
     else:
         raise ValueError("Insufficient matched data for Friedman test")
 except Exception:
     # Fallback to Kruskal-Wallis if Friedman not applicable
     e15_comp_groups = [grp['reduction'].dropna().values for _, grp in e15.groupby('compiler')]
     p_e15_comp = safe_kruskal(e15_comp_groups)
-    # NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-    # phase1_statistics module but not yet integrated into figure generation.
-    # See docs/05_supplementary/supplementary_materials.md for effect-size tables.
     pvalue_collection.append(('E15: Reduction across compilers (KW, H10)', p_e15_comp))
+    effect_size_collection.append(_pairwise_effect_sizes(e15_comp_groups))
 
 # H11 (E16): Kruskal-Wallis — reduction across window sizes
 e16_ws_groups = [grp['reduction'].dropna().values for _, grp in e16.groupby('window_size')]
 p_e16_ws = safe_kruskal(e16_ws_groups)
-# NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-# phase1_statistics module but not yet integrated into figure generation.
-# See docs/05_supplementary/supplementary_materials.md for effect-size tables.
 pvalue_collection.append(('E16: Reduction across window sizes (KW, H11)', p_e16_ws))
+effect_size_collection.append(_pairwise_effect_sizes(e16_ws_groups))
 
 # H12 (E17): Kruskal-Wallis — reduction across topologies
 e17_topo_groups = [grp['reduction'].dropna().values for _, grp in e17.groupby('topology')]
 p_e17_topo = safe_kruskal(e17_topo_groups)
-# NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-# phase1_statistics module but not yet integrated into figure generation.
-# See docs/05_supplementary/supplementary_materials.md for effect-size tables.
 pvalue_collection.append(('E17: Reduction across topologies (KW, H12)', p_e17_topo))
+effect_size_collection.append(_pairwise_effect_sizes(e17_topo_groups))
 
 # H13 (E18): Kruskal-Wallis — reduction across circuit families in Clifford+T (ok status only)
 e18_ok = e18[e18['status'] == 'ok']
 e18_fam_groups = [grp['reduction'].dropna().values for _, grp in e18_ok.groupby('circuit_family')]
 e18_fam_groups = [g for g in e18_fam_groups if len(g) > 0]
 p_e18_fam = safe_kruskal(e18_fam_groups)
-# NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
-# phase1_statistics module but not yet integrated into figure generation.
-# See docs/05_supplementary/supplementary_materials.md for effect-size tables.
 pvalue_collection.append(('E18: Reduction across families in Clifford+T (KW, H13)', p_e18_fam))
+effect_size_collection.append(_pairwise_effect_sizes(e18_fam_groups))
 
 # --- Apply Benjamini-Hochberg FDR correction ---
 raw_p_array = np.array([p for _, p in pvalue_collection])
@@ -818,22 +871,32 @@ print("-" * 92)
 for i, (test_name, raw_p) in enumerate(pvalue_collection):
     adj_p = adjusted_p[i]
     sig = "***" if adj_p < 0.001 else "**" if adj_p < 0.01 else "*" if adj_p < 0.05 else "ns"
-    print(f"{test_name:<58} {raw_p:>12.6f} {adj_p:>12.6f} {sig:>5}")
+    es = effect_size_collection[i] if i < len(effect_size_collection) else {}
+    cd_str = f"{es.get('cliffs_delta'):.3f}" if es.get('cliffs_delta') is not None else "n/a"
+    print(f"{test_name:<58} {raw_p:>12.6f} {adj_p:>12.6f} {sig:>5}  d={cd_str}")
 
-# Save FDR results to CSV
+# Save FDR results to CSV (with integrated effect sizes, bug #12 fix)
 fdr_results_rows = []
 for i, (test_name, raw_p) in enumerate(pvalue_collection):
     sig = "significant" if rejected[i] else "not significant"
+    es = effect_size_collection[i] if i < len(effect_size_collection) else {
+        'cliffs_delta': None, 'cliffs_delta_CI95': None,
+        'hedges_g': None, 'hedges_g_CI95': None, 'note': 'n/a'}
     fdr_results_rows.append({
         'Test': test_name,
         'Raw_p_value': raw_p,
         'Adjusted_p_value_BH': adjusted_p[i],
         'Significant_at_0.05': sig,
         'Rejected': bool(rejected[i]),
+        'Cliffs_delta': es.get('cliffs_delta'),
+        'Cliffs_delta_CI95': es.get('cliffs_delta_CI95'),
+        'Hedges_g': es.get('hedges_g'),
+        'Hedges_g_CI95': es.get('hedges_g_CI95'),
+        'Effect_size_note': es.get('note'),
     })
 fdr_df = pd.DataFrame(fdr_results_rows)
 fdr_df.to_csv(OUTPUT_DIR / 'fdr_correction_results.csv', index=False)
-print(f"\nFDR correction results saved to: {OUTPUT_DIR / 'fdr_correction_results.csv'}")
+print(f"\nFDR correction results (with effect sizes) saved to: {OUTPUT_DIR / 'fdr_correction_results.csv'}")
 
 # ============================================================
 # Figure 8: FDR Correction Results Visualization
@@ -876,13 +939,14 @@ for i in range(len(test_labels)):
 
 ax.text(0.02, 0.02,
         f'BH-FDR correction applied to {len(pvalue_collection)} tests; '
-        f'{int(rejected.sum())} significant at q=0.05',
+        f'{int(rejected.sum())} significant at q=0.05. '
+        f'Effect sizes (Cliff\'s delta / Hedges\' g) reported in fdr_correction_results.csv.',
         transform=ax.transAxes, fontsize=9, verticalalignment='bottom',
         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig08_fdr_correction.png', dpi=300, bbox_inches='tight')
-plt.savefig(OUTPUT_DIR / 'fig08_fdr_correction.pdf', dpi=300, bbox_inches='tight')
+plt.savefig(OUTPUT_DIR / 'fig08_fdr_correction.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
 # ============================================================
@@ -895,14 +959,27 @@ for name, df in [('E1', e1), ('E2', e2), ('E3', e3), ('E4', e4), ('E5', e5)]:
     # Compute Cliff's delta and Hedges' g vs. a zero baseline (structural ceiling test)
     reduction_vals = df['reduction'].dropna().values
     zero_baseline = np.zeros(len(reduction_vals))
-    cd_val, cd_low, cd_high = cliffs_delta(reduction_vals, zero_baseline)
-    hg_val, hg_low, hg_high = hedges_g(reduction_vals, zero_baseline)
-    
+    # effect_size.py contract returns Dict; guard empty/variance-zero cases.
+    try:
+        cd = cliffs_delta(reduction_vals, zero_baseline)
+        cd_val, cd_low, cd_high = cd['delta'], cd['ci_lower'], cd['ci_upper']
+    except Exception:
+        cd_val, cd_low, cd_high = float('nan'), float('nan'), float('nan')
+    try:
+        hg = hedges_g(reduction_vals, zero_baseline)
+        hg_val, hg_low, hg_high = hg['g'], hg['ci_lower'], hg['ci_upper']
+    except Exception:
+        hg_val, hg_low, hg_high = float('nan'), float('nan'), float('nan')
+
     summary_data.append({
         'Experiment': name,
         'N': len(df),
         'Mean_Reduction_%': f"{df['reduction'].mean() * 100:.4f}",
         'Max_Reduction_%': f"{df['reduction'].max() * 100:.2f}",
+        # NOTE: reported as sample standard deviation (std, ddof=1), NOT the
+        # standard error of the mean (SEM). For mean ± error reporting in the
+        # manuscript, use SEM = std / sqrt(N). Kept as std here for backwards
+        # compatibility with the existing summary CSV schema.
         'Std_Reduction_%': f"{df['reduction'].std() * 100:.4f}",
         'Success_20pct_%': f"{df['success'].mean() * 100:.2f}",
         'Mean_Fidelity': f"{df['fidelity'].mean():.6f}",
@@ -923,8 +1000,16 @@ for i, opt_a in enumerate(e4_optimizers):
     for opt_b in e4_optimizers[i+1:]:
         grp_a = e4[e4['optimizer'] == opt_a]['reduction'].dropna().values
         grp_b = e4[e4['optimizer'] == opt_b]['reduction'].dropna().values
-        cd_val, cd_low, cd_high = cliffs_delta(grp_a, grp_b)
-        hg_val, hg_low, hg_high = hedges_g(grp_a, grp_b)
+        try:
+            cd = cliffs_delta(grp_a, grp_b)
+            cd_val, cd_low, cd_high = cd['delta'], cd['ci_lower'], cd['ci_upper']
+        except Exception:
+            cd_val, cd_low, cd_high = float('nan'), float('nan'), float('nan')
+        try:
+            hg = hedges_g(grp_a, grp_b)
+            hg_val, hg_low, hg_high = hg['g'], hg['ci_lower'], hg['ci_upper']
+        except Exception:
+            hg_val, hg_low, hg_high = float('nan'), float('nan'), float('nan')
         e4_effect_size_rows.append({
             'Comparison': f"{opt_a} vs {opt_b}",
             'n1': len(grp_a),
@@ -941,6 +1026,9 @@ print(f"E4 effect sizes saved to: {OUTPUT_DIR / 'e4_effect_sizes.csv'}")
 # Append FDR-corrected statistical tests summary to the CSV
 fdr_summary_rows = []
 for i, (test_name, raw_p) in enumerate(pvalue_collection):
+    es = effect_size_collection[i] if i < len(effect_size_collection) else {}
+    cd_v = es.get('cliffs_delta')
+    hg_v = es.get('hedges_g')
     fdr_summary_rows.append({
         'Experiment': 'FDR',
         'N': len(pvalue_collection),
@@ -950,6 +1038,9 @@ for i, (test_name, raw_p) in enumerate(pvalue_collection):
         'Success_20pct_%': 'significant' if rejected[i] else 'ns',
         'Mean_Fidelity': f'alpha=0.05',
         'Mean_Runtime_ms': test_name,
+        'Cliffs_delta': f'{cd_v:.4f}' if cd_v is not None else 'n/a',
+        'Hedges_g': f'{hg_v:.4f}' if hg_v is not None else 'n/a',
+        'Effect_size_note': es.get('note', 'n/a'),
     })
 fdr_summary_append = pd.DataFrame(fdr_summary_rows)
 full_summary_df = pd.concat([summary_df, fdr_summary_append], ignore_index=True)

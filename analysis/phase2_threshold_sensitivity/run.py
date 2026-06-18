@@ -26,6 +26,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 from analysis.phase1_statistics.core import threshold_sensitivity
 
 
+# Module-level alias for paths referenced elsewhere in this file (bug #3 fix).
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
+
 def load_all_experiments():
     """Load all available experiment data (v2_fixed and v3_extended)."""
     project_root = Path(__file__).resolve().parent.parent.parent

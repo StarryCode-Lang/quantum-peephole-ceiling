@@ -147,7 +147,12 @@ class _PredicateHelper:
             p2 = inst2.operation.params
             if p1 and p2:
                 try:
-                    return abs(float(p1[0]) + float(p2[0])) < DEFAULT_PRECISION
+                    angle_sum = float(p1[0]) + float(p2[0])
+                    # Use the same relative tolerance as base.py's _gates_cancel:
+                    # scale by the larger angle magnitude to avoid false negatives
+                    # for large rotations (absolute tolerance would under-count).
+                    scale = max(1.0, abs(float(p1[0])), abs(float(p2[0])))
+                    return abs(angle_sum) <= DEFAULT_PRECISION * scale
                 except Exception:
                     return False
         return False

@@ -13,22 +13,37 @@ import pandas as pd
 from scipy import stats
 from scipy.optimize import curve_fit
 
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignore', category=DeprecationWarning, module='qiskit')
 
 # ============================================================
 # CONFIGURATION
 # ============================================================
 BASE = str(Path(__file__).parent.parent.resolve())
+
+
+def _latest_csv(directory: str, prefix: str) -> str:
+    """Dynamically resolve the latest CSV in ``directory`` whose name starts
+    with ``prefix``. Prefers ``_full_`` runs over ``_smoke_`` runs so the
+    script does not break when fresh timestamped data files are generated.
+    """
+    dirp = Path(directory)
+    candidates = sorted(dirp.glob(f"{prefix}*.csv"))
+    if not candidates:
+        return os.path.join(directory, f"{prefix}_NOT_FOUND.csv")
+    full_runs = [f for f in candidates if "_full_" in f.name]
+    return str((full_runs or candidates)[-1])
+
+
 DATA_FILES = {
-    "e10": os.path.join(BASE, "data", "v3_extended", "e10", "e10_phase1_vs_phase2_20260611_191634.csv"),
-    "e11": os.path.join(BASE, "data", "v4", "e11", "e11_real_circuit_benchmark_e11_full_20260611_114615.csv"),
-    "e13": os.path.join(BASE, "data", "v4", "e13", "e13_structural_ceiling_e13_full_20260609_043322.csv"),
-    "e14": os.path.join(BASE, "data", "v5", "e14", "e14_extended_benchmark_e14_full_20260611_114726.csv"),
-    "e16": os.path.join(BASE, "data", "v5", "e16", "e16_window_scaling_e16_full_20260610_142547.csv"),
-    "e17": os.path.join(BASE, "data", "v5", "e17", "e17_connectivity_e17_full_20260610_150935.csv"),
-    "e18": os.path.join(BASE, "data", "v5", "e18", "e18_clifford_t_e18_full_20260610_052140.csv"),
-    "e01": os.path.join(BASE, "data", "v2_fixed", "e01", "e01_phase_transition_v2_20260611_195450.csv"),
-    "e02": os.path.join(BASE, "data", "v2_fixed", "e02", "e02_entanglement_density_v2_20260611_191816.csv"),
+    "e10": _latest_csv(os.path.join(BASE, "data", "v3_extended", "e10"), "e10_phase1_vs_phase2"),
+    "e11": _latest_csv(os.path.join(BASE, "data", "v4", "e11"), "e11_real_circuit_benchmark_e11_full"),
+    "e13": _latest_csv(os.path.join(BASE, "data", "v4", "e13"), "e13_structural_ceiling_e13_full"),
+    "e14": _latest_csv(os.path.join(BASE, "data", "v5", "e14"), "e14_extended_benchmark_e14_full"),
+    "e16": _latest_csv(os.path.join(BASE, "data", "v5", "e16"), "e16_window_scaling_e16_full"),
+    "e17": _latest_csv(os.path.join(BASE, "data", "v5", "e17"), "e17_connectivity_e17_full"),
+    "e18": _latest_csv(os.path.join(BASE, "data", "v5", "e18"), "e18_clifford_t_e18_full"),
+    "e01": _latest_csv(os.path.join(BASE, "data", "v2_fixed", "e01"), "e01_phase_transition_v2"),
+    "e02": _latest_csv(os.path.join(BASE, "data", "v2_fixed", "e02"), "e02_entanglement_density_v2"),
 }
 
 OUTPUT_DIR = os.path.join(BASE, "analysis")

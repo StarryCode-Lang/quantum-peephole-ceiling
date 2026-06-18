@@ -73,7 +73,7 @@ Q-research/
 │
 ├── docs/                         # Documentation
 │   ├── 01_theory/               # Theoretical framework (conjectures + lemmas + complexity)
-│   ├── 02_literature/           # Comprehensive literature review (77 references)
+│   ├── 02_literature/           # Comprehensive literature review (81 references, unified_references.md authoritative)
 │   ├── 03_results/              # Results documentation
 │   ├── 05_supplementary/         # Supplementary materials for manuscript
 │   └── 06_manuscript/            # Manuscript structure and submission planning

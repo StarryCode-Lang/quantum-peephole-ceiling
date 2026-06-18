@@ -66,7 +66,11 @@ def make_cnot_chain(n: int) -> QuantumCircuit:
 
 
 def make_bernstein_vazirani(n: int, secret: int = None) -> QuantumCircuit:
-    """Bernstein-Vazirani oracle circuit."""
+    """Bernstein-Vazirani oracle circuit.
+
+    Uses n+1 qubits: n input qubits + 1 ancilla (the standard BV
+    construction).  The returned circuit's ``num_qubits`` is n+1.
+    """
     if secret is None:
         secret = (1 << n) - 1  # all-ones secret
     qc = QuantumCircuit(n + 1)  # n input + 1 ancilla
@@ -87,7 +91,14 @@ def make_bernstein_vazirani(n: int, secret: int = None) -> QuantumCircuit:
 
 
 def make_qaoa(n: int, depth: int = 2) -> QuantumCircuit:
-    """Simplified QAOA for MaxCut on a line graph."""
+    """Simplified fixed-angle QAOA for MaxCut on a line graph.
+
+    NOTE: This is a *fixed-angle* benchmark, not a parameterized QAOA
+    ansatz.  The angles gamma and beta are hardcoded (not free
+    parameters) so the circuit is a concrete unitary suitable for
+    gate-cancellation benchmarking.  For a parameterized QAOA study,
+    use ``make_qaoa_line`` from ``real_benchmarks.py`` instead.
+    """
     qc = QuantumCircuit(n)
     # Initial superposition
     for i in range(n):
@@ -108,7 +119,13 @@ def make_qaoa(n: int, depth: int = 2) -> QuantumCircuit:
 
 
 def make_vqe_twolocal(n: int, depth: int = 2) -> QuantumCircuit:
-    """VQE TwoLocal ansatz."""
+    """VQE TwoLocal ansatz with fixed (non-parameterized) angles.
+
+    NOTE: This is a *fixed-angle* benchmark.  The rotation angles are
+    hardcoded constants rather than free ``Parameter`` objects, so the
+    circuit is a concrete unitary.  For a parameterized VQE study, use
+    ``make_vqe_twolocal`` from ``real_benchmarks.py`` instead.
+    """
     qc = QuantumCircuit(n)
     for layer in range(depth):
         # Rotation layer
@@ -305,7 +322,8 @@ def run_e10_expanded():
                 results.append({
                     "experiment": 10, "part": "real",
                     "circuit_family": circuit_name, "circuit_type": circuit_name,
-                    "n_qubits": n, "depth": circuit.depth(),
+                    "n_qubits": circuit.num_qubits, "depth": circuit.depth(),
+                    "param_n": n,
                     "trial": 0, "seed": 0,
                     "optimizer": opt_name,
                     "gate_count": metrics.gate_count,

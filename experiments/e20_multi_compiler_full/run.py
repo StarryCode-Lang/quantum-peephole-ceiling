@@ -39,17 +39,26 @@ from src.circuits.real_benchmarks import (  # noqa: E402
     gate_counts,
     generate_extended_suite,
 )
+from src.optimisation.phase1.greedy import GreedyGateCancellation  # noqa: E402
+from src.optimisation.phase2.commutation_rewriter import (  # noqa: E402
+    CommutationRewriter,
+    HybridCommuteRewrite,
+)
 from src.provenance import file_sha256, run_metadata  # noqa: E402
 
-SCHEMA_VERSION = "2.0.0"
-EXPERIMENT_ID = "E20"
-VERSION = "1.0.0"
+SCHEMA_VERSION = "2.1.0"
+# Disambiguated from the experiment-registry E20 (Reproducibility Audit).
+# The manuscript refers to this experiment as "MC-E20" (Multi-Compiler full
+# comparison). See docs/06_manuscript/v5_full_manuscript_part3.md.
+EXPERIMENT_ID = "MC-E20"
+VERSION = "1.1.0"
 
 # Target qubit counts for the controlled comparison
 TARGET_QUBITS = {4, 6, 8}
 
 # Number of independent random trials per (family, qubit_count) cell
 DEFAULT_N_TRIALS = 10
+SMOKE_N_TRIALS = 1
 
 
 def _safe_ratio(original: int, optimized: int) -> float:
@@ -94,13 +103,13 @@ def _check_compilers() -> Dict[str, bool]:
 # Compiler backends
 # ---------------------------------------------------------------------------
 
-def _qiskit_transpile(circuit, opt_level: int = 3):
-    """Run Qiskit transpiler at optimization_level=3."""
+def _qiskit_transpile(circuit, opt_level: int = 3, seed_transpiler: int = 42):
+    """Run Qiskit transpiler at the given optimization level."""
     from qiskit import transpile
     start = time.time()
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        optimized = transpile(circuit, optimization_level=opt_level, seed_transpiler=42)
+        optimized = transpile(circuit, optimization_level=opt_level, seed_transpiler=seed_transpiler)
     runtime = time.time() - start
     return optimized, runtime
 
@@ -294,12 +303,14 @@ def _build_row(
 def run(
     mode: str = "full",
     seed: int = 42,
-    n_trials: int = DEFAULT_N_TRIALS,
+    n_trials: int | None = None,
     max_qubits_fidelity: int = 10,
     skip_cirq: bool = False,
     skip_tket: bool = False,
 ) -> pd.DataFrame:
     """Run E20 multi-compiler full comparison and return the result table."""
+    if n_trials is None:
+        n_trials = SMOKE_N_TRIALS if mode == "smoke" else DEFAULT_N_TRIALS
     run_id = f"e20_{mode}_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
     script_path = Path(__file__).resolve()
     output_dir = PROJECT_ROOT / "data" / "v6" / "e20"
@@ -308,8 +319,35 @@ def run(
     # -- Check compiler availability --
     compiler_avail = _check_compilers()
     if not compiler_avail["qiskit"]:
-        print("ERROR: Qiskit is not installed. Cannot run experiment.")
-        sys.exit(1)
+        print("WARNING: Qiskit is not installed -- writing metadata and empty results.")
+        output_dir = PROJECT_ROOT / "data" / "v6" / "e20"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        csv_path = output_dir / "multi_compiler_full.csv"
+        df = pd.DataFrame()
+        df.to_csv(csv_path, index=False)
+        metadata = run_metadata(PROJECT_ROOT, script_path, VERSION, run_id)
+        metadata.update({
+            "schema_version": SCHEMA_VERSION,
+            "experiment_id": EXPERIMENT_ID,
+            "description": "Full multi-compiler comparison skipped because Qiskit is unavailable",
+            "mode": mode,
+            "seed": seed,
+            "n_trials": n_trials,
+            "target_qubits": sorted(TARGET_QUBITS),
+            "max_qubits_fidelity": max_qubits_fidelity,
+            "compilers_available": compiler_avail,
+            "compilers_run": [],
+            "skip_cirq": skip_cirq,
+            "skip_tket": skip_tket,
+            "canonical_data_file": csv_path.name,
+            "n_circuits_per_trial": 0,
+            "n_total_circuit_runs": 0,
+            "n_rows": 0,
+            "blocker": "qiskit_not_installed",
+        })
+        with (output_dir / "metadata.json").open("w", encoding="utf-8") as handle:
+            json.dump(metadata, handle, indent=2, sort_keys=True)
+        return df
 
     run_cirq = compiler_avail["cirq"] and not skip_cirq
     run_tket = compiler_avail["tket"] and not skip_tket
@@ -355,7 +393,7 @@ def run(
 
             # ---- Qiskit (optimization_level=3) ----
             try:
-                opt_circ, runtime = _qiskit_transpile(circuit, opt_level=3)
+                opt_circ, runtime = _qiskit_transpile(circuit, opt_level=3, seed_transpiler=trial_seed)
                 opt_m = _count_metrics(opt_circ)
                 output_hash = circuit_sha256(opt_circ)
                 fidelity = average_gate_fidelity(
@@ -576,6 +614,74 @@ def run(
                     ))
                     traceback.print_exc()
 
+            # ---- Custom optimizers (our Phase-1 / Phase-2) ----
+            for opt_name, opt_cls in [
+                ("greedy_phase1", GreedyGateCancellation),
+                ("commutation_phase2", CommutationRewriter),
+                ("hybrid_phase1_2", HybridCommuteRewrite),
+            ]:
+                try:
+                    optimizer = opt_cls(success_reduction=0.01)
+                    start = time.time()
+                    result = optimizer.optimize(circuit, target=circuit)
+                    runtime = time.time() - start
+                    opt_circ = result.optimized_circuit
+                    opt_m = _count_metrics(opt_circ)
+                    output_hash = circuit_sha256(opt_circ)
+                    fidelity = result.fidelity
+                    if fidelity is None or fidelity == 0.0:
+                        exact = average_gate_fidelity(
+                            opt_circ, circuit, max_qubits=max_qubits_fidelity
+                        )
+                        fidelity = exact if exact is not None else result.fidelity
+                    rows.append(_build_row(
+                        schema_version=SCHEMA_VERSION,
+                        experiment_id=EXPERIMENT_ID,
+                        run_id=run_id,
+                        bench=bench,
+                        n_qubits=n_qubits,
+                        original_size=orig_size,
+                        optimized_size=opt_circ.size(),
+                        orig_m=orig_m,
+                        opt_m=opt_m,
+                        fidelity=fidelity,
+                        runtime=runtime,
+                        compiler="custom",
+                        compiler_backend=opt_name,
+                        compiler_opt_level="default",
+                        compiler_status="ok",
+                        trial=trial_idx,
+                        seed=trial_seed,
+                        script_path=script_path,
+                        input_hash=input_hash,
+                        output_hash=output_hash,
+                    ))
+                    print(f" [{opt_name}:ok]", end="")
+                except Exception as exc:
+                    print(f" [{opt_name}:FAIL]", end="")
+                    rows.append(_build_row(
+                        schema_version=SCHEMA_VERSION,
+                        experiment_id=EXPERIMENT_ID,
+                        run_id=run_id,
+                        bench=bench,
+                        n_qubits=n_qubits,
+                        original_size=orig_size,
+                        optimized_size=None,
+                        orig_m=orig_m,
+                        opt_m=None,
+                        fidelity=None,
+                        runtime=0.0,
+                        compiler="custom",
+                        compiler_backend=opt_name,
+                        compiler_opt_level="default",
+                        compiler_status=f"error: {exc}",
+                        trial=trial_idx,
+                        seed=trial_seed,
+                        script_path=script_path,
+                        input_hash=input_hash,
+                        output_hash="none",
+                    ))
+
             print()  # newline after each circuit
 
     # -- Build DataFrame and save --
@@ -585,7 +691,7 @@ def run(
 
     # -- Metadata --
     metadata = run_metadata(PROJECT_ROOT, script_path, VERSION, run_id)
-    compilers_run = ["qiskit"]
+    compilers_run = ["qiskit", "custom"]
     if run_cirq:
         compilers_run.append("cirq")
     if run_tket:
@@ -601,7 +707,8 @@ def run(
         "description": (
             "Full multi-compiler comparison (Qiskit opt_level=3, "
             "Cirq optimize_for_target_gateset+eject_z+merge_1q, "
-            "t|ket> FullPeepholeOptimise) across 15 circuit families"
+            "t|ket> FullPeepholeOptimise, custom Phase-1/Phase-2 optimizers) "
+            "across 15 circuit families"
         ),
         "mode": mode,
         "seed": seed,
@@ -609,7 +716,13 @@ def run(
         "target_qubits": sorted(TARGET_QUBITS),
         "max_qubits_fidelity": max_qubits_fidelity,
         "compilers_available": {k: v for k, v in compiler_avail.items()},
+        "compiler_availability_report": {
+            "qiskit": "available" if compiler_avail["qiskit"] else "missing",
+            "cirq": "skipped_by_flag" if skip_cirq else ("available" if compiler_avail["cirq"] else "missing"),
+            "tket": "skipped_by_flag" if skip_tket else ("available" if compiler_avail["tket"] else "missing"),
+        },
         "compilers_run": compilers_run,
+        "custom_optimizers": ["greedy_phase1", "commutation_phase2", "hybrid_phase1_2"],
         "skip_cirq": skip_cirq,
         "skip_tket": skip_tket,
         "canonical_data_file": csv_path.name,
@@ -659,8 +772,8 @@ def main() -> None:
     )
     parser.add_argument("--seed", type=int, default=42, help="Base random seed")
     parser.add_argument(
-        "--n-trials", type=int, default=DEFAULT_N_TRIALS,
-        help=f"Number of random trials per (family, qubit_count) cell (default: {DEFAULT_N_TRIALS})"
+        "--n-trials", type=int, default=None,
+        help=f"Number of random trials per (family, qubit_count) cell (default: {SMOKE_N_TRIALS} smoke, {DEFAULT_N_TRIALS} full)"
     )
     parser.add_argument(
         "--max-qubits-fidelity", type=int, default=10,

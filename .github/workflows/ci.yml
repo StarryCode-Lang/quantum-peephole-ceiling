@@ -9,33 +9,27 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    # Use the conda environment defined in environment.yml (python=3.10) rather
+    # than a bare pip install, so that conda-forge and pip dependencies match
+    # the documented reproducibility environment.
     strategy:
       matrix:
-        python-version: ["3.12"]
+        python-version: ["3.10"]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
         with:
+          auto-update-conda: true
           python-version: ${{ matrix.python-version }}
-
-      - name: Cache pip packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest
+          environment-file: environment.yml
+          activate-environment: q-research
+          auto-activate-base: false
 
       - name: Verify environment versions
+        shell: bash -l {0}
         run: |
           python -c "
           import qiskit, numpy, pandas, scipy, matplotlib
@@ -47,14 +41,17 @@ jobs:
           "
 
       - name: Run core tests
+        shell: bash -l {0}
         run: |
           python tests/test_core.py
 
       - name: Run statistical tests
+        shell: bash -l {0}
         run: |
           python tests/test_statistical_analysis.py
 
       - name: Verify canonical data
+        shell: bash -l {0}
         run: |
           python scripts/reproduce_all.py --verify
 
@@ -64,7 +61,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.10"
       - name: Install linters
         run: pip install flake8
       - name: Lint with flake8

@@ -313,7 +313,7 @@ Output: OptimizationResult (C', reduction, fidelity)
 
 *Description*: Line plot of mean reduction (y-axis, log scale) vs. n_qubits (x-axis: 3–10). Error bars show 95% bootstrap CI. All points at y = 0 with CI [0, 0].
 
-*Key insight*: The structural ceiling is independent of qubit count, consistent with Theorem 1 (adjacent pair density scales as O(1/n) but total reduction scales as O(1/n²)).
+*Key insight*: Under the tested LBL listing and Phase-1 local rewrite model, the structural ceiling is stable across the tested qubit counts, consistent with Theorem 1 (adjacent pair density scales as O(1/n) but total reduction scales as O(1/n²)).
 
 ---
 
@@ -397,7 +397,7 @@ git clone <repo-url> Q-research
 cd Q-research
 
 # 2. Create conda environment
-conda create -n q-research python=3.12
+conda create -n q-research python=3.10
 conda activate q-research
 
 # 3. Install dependencies
@@ -471,7 +471,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.12
+  - python=3.10
   - pip
   - numpy
   - pandas
@@ -490,20 +490,20 @@ dependencies:
 
 Random circuits approximate Haar-random unitaries, which have circuit complexity $\Omega(4^n/n)$ [Harrow & Montanaro, 2017]. A random circuit of depth $d$ has $O(nd)$ gates, which is exponentially smaller than $4^n/n$ for $d \ll 4^n/n^2$. Therefore, random circuits are far from Haar-random in terms of complexity, leaving room for optimization.
 
-However, our results show that **peephole optimization cannot exploit this room** because:
-1. Peephole methods only exploit **local** structure (adjacent gates)
-2. Random circuits have **no local structure** (gates are drawn independently)
+However, our results show that the tested LBL/local peephole optimizers do not exploit this room because:
+1. The implemented peephole methods exploit local structure under explicit listing/window assumptions
+2. The tested random circuits expose negligible local structure under those assumptions
 3. The probability of adjacent inverse pairs is $O(1/d^2)$ (Theorem 1)
 
-This suggests that **global optimization methods** (e.g., Solovay-Kitaev synthesis from scratch) are needed to compress random circuits, not peephole rewriting.
+This suggests that compression of these circuits, if available, would require alternative representations, richer template systems, global synthesis, or listing-aware preprocessing rather than the tested LBL local-rewrite pipeline.
 
 ### S8.2 Implications for Quantum Compiler Design
 
 Our results have three practical implications for quantum compiler designers:
 
-1. **Skip Phase 1 for random circuits**: If a circuit is known to be random (e.g., from a variational algorithm with random initialization), Phase 1 optimization will achieve ~0% reduction. The compiler should skip this pass and proceed directly to layout/routing.
+1. **Skip Phase 1 for random circuits under LBL unless WCL preprocessing is used**: If a circuit is known to be random (e.g., from a variational algorithm with random initialization), Phase 1 optimization under the tested LBL listing will achieve ~0% reduction. The compiler should either skip this pass or first apply a listing-aware preprocessing step.
 
-2. **Use Phase 2 for structured circuits**: If a circuit has repeating patterns (e.g., QFT, VQE ansatz), Phase 2 (commutation) can achieve 3–30% additional reduction. The compiler should detect structural patterns and apply commutation rewriting.
+2. **Use implemented Phase-2a selectively for commutation-friendly circuits**: If a circuit has commutation-accessible inverse pairs (e.g., Oracle/BV or RandomClifford in the tested suite), Phase-2a (commutation) can achieve additional reduction. Repeating patterns alone are insufficient: QFT and VQE are not confirmed Phase-2a beneficiaries in the current data.
 
 3. **Use context-dependent thresholds**: The 20% success threshold is inappropriate. Compilers should use:
    - 1–5% threshold for random circuits
@@ -520,7 +520,7 @@ Random circuit sampling is a leading candidate for demonstrating quantum computa
 
 **What our results do NOT show.** Our results do not imply anything about the efficiency of classical simulation algorithms. Classical simulators use fundamentally different techniques — tensor network contraction [Markov & Shi, 2008], Schrodinger-Feynman methods [Chen et al., 2020], and related approaches — that do not operate by peephole optimization of gate sequences. A classical simulator's runtime depends on the circuit's entanglement structure, treewidth, and contraction ordering, not on whether adjacent gates cancel. The incompressibility of random circuits under peephole rewriting is a statement about the *local algebraic structure* of gate sequences, not about the computational complexity of simulation.
 
-**Honest assessment.** The structural ceiling framework characterizes limits of a specific class of circuit-to-circuit rewrite strategies. Its implications for classical simulation complexity are, at best, indirect: if a random circuit could be dramatically compressed by some method (not necessarily peephole), the compressed circuit might be easier to simulate. Our results show that peephole methods cannot perform such compression, but they do not rule out compression by other means (e.g., machine-learning-based circuit synthesis, or algebraic decomposition methods).
+**Honest assessment.** The structural ceiling framework characterizes limits of a specific class of circuit-to-circuit rewrite strategies under explicit listing/window assumptions. Its implications for classical simulation complexity are, at best, indirect: if a random circuit could be dramatically compressed by some method (not necessarily peephole), the compressed circuit might be easier to simulate. Our results show that the tested local peephole methods do not perform such compression, but they do not rule out compression by other means (e.g., machine-learning-based circuit synthesis, algebraic decomposition methods, or alternative listings).
 
 ### S8.4 Limitations and Future Directions
 
@@ -541,7 +541,7 @@ Random circuit sampling is a leading candidate for demonstrating quantum computa
 
 6. **E11/E12 comparability**: E11 and E12 cannot be directly compared circuit-by-circuit due to different schemas (E11 uses project optimizers; E12 uses Qiskit compiler levels). Cross-experiment comparisons require schema harmonization and per-circuit normalization.
 
-6. **No template matching**: Our Phase 2 only uses commutation rewriting. Template matching (e.g., Qiskit's approach) may achieve additional reduction on circuits with known patterns.
+6. **Phase-2b template matching not canonical-benchmarked**: A limited `Phase2bTemplateMatcher` implementation and unit tests exist, but the canonical E10/E11/E14/E16 Phase-2 results use Phase-2a commutation rewriting. Template matching at full benchmark scale may achieve additional reduction on circuits with known patterns and remains outside the confirmed canonical CSV evidence.
 
 ### S8.5 Connection to Quantum Error Correction
 
@@ -560,7 +560,7 @@ Fault-tolerant quantum computing uses **logical circuits** composed of Clifford+
 **Open Problem OP1 (Complexity of CODP)**:
 Is CODP QMA-hard for the restricted peephole rewrite rule set $\mathcal{R} = \{\text{adjacent cancellation, commutation-enabled cancellation}\}$?
 
-*Motivation from our results*: The structural ceiling framework provides empirical evidence that for random circuits, the answer may be "no" — because the optimization landscape is provably flat (Theorem 1-2), suggesting that the hard instances of CODP require algebraically structured circuits. Our 45,000+ trials show that the difficulty is not in search (all algorithms converge to the same ceiling) but in the action space itself.
+*Motivation from our results*: The structural ceiling framework provides empirical evidence that for random circuits under the tested LBL/local-rewrite setting, the answer may be "no" — because the observed optimization landscape is flat and Theorems 1-2 explain the sparse action space, suggesting that hard instances of CODP may require algebraically structured circuits. Our 45,000+ trials show that, in this setting, the difficulty is not in search (all algorithms converge to the same ceiling) but in the action space itself.
 
 **Open Problem OP2 (Phase Transition in Optimization Complexity)**:
 Does there exist a circuit-family-dependent phase transition in the computational complexity of optimal peephole optimization, analogous to SAT phase transitions?
@@ -594,7 +594,7 @@ Does there exist a circuit-family-dependent phase transition in the computationa
 | 11 | IQP | `make_iqp()` | Quantum supremacy | Yes |
 | 12 | Random Clifford | `make_random_clifford()` | Test (Gottesman-Knill) | Yes |
 | 13 | Surface Code | `make_surface_code_syndrome()` | Error correction | Yes |
-| 14 | UCCSD | `make_uccsd_ansatz()` | Quantum chemistry | Yes |
+| 14 | UCCSD | `make_parameterized_ansatz()` | Quantum chemistry | Yes |
 | 15 | Haar Random | `make_haar_random()` | Theoretical reference | No (n<=4) |
 
 **Design parameters**:
@@ -654,11 +654,11 @@ This suggests that **w=10 may be a practical default** for Phase 2 optimization,
 
 ### S9.5 Experiment E18: Clifford+T Gate Set
 
-**Research Question**: Does Phase 2 optimization retain value when circuits are decomposed to the fault-tolerant Clifford+T gate set?
+**Research Question**: Does Phase 2 optimization retain value among circuits that survive decomposition to the fault-tolerant Clifford+T gate set?
 
 **Gate set**: {H, S, Sdg, T, Tdg, CNOT, X, Y, Z}
 
-**Method**: Decompose circuits to Clifford+T basis using Qiskit transpiler at opt level 0, then apply peephole optimization.
+**Method**: Decompose circuits to Clifford+T basis using Qiskit transpiler at opt level 0, then apply peephole optimization. Conclusions are survivorship-biased because decomposition and fidelity-failure rows are excluded from valid-row analysis.
 
 **Key metrics**: Gate reduction, T-count reduction, Tdg-count reduction, CNOT reduction
 

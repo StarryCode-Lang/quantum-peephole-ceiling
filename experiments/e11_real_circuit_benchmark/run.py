@@ -65,9 +65,18 @@ def run(mode: str, seed: int, max_qubits_fidelity: int) -> pd.DataFrame:
             runtime = time.time() - start
             output_hash = circuit_sha256(result.optimized_circuit)
             fidelity = result.fidelity
+            fidelity_method = "optimizer_reported"
             if fidelity is None or fidelity == 0.0:
                 exact = average_gate_fidelity(result.optimized_circuit, circuit, max_qubits=max_qubits_fidelity)
-                fidelity = exact if exact is not None else result.fidelity
+                if exact is not None:
+                    fidelity = exact
+                    fidelity_method = "recomputed_exact"
+                else:
+                    # Could not recompute exactly; result.fidelity may be a
+                    # structural-similarity estimate from the optimizer's
+                    # last-resort fallback (see base.py calculate_fidelity).
+                    fidelity = result.fidelity
+                    fidelity_method = "structural_estimate" if fidelity is not None else "unavailable"
 
             row = {
                 "schema_version": SCHEMA_VERSION,
@@ -90,6 +99,7 @@ def run(mode: str, seed: int, max_qubits_fidelity: int) -> pd.DataFrame:
                 "reduction": result.reduction,
                 "reduction_pct": 100.0 * result.reduction,
                 "fidelity": fidelity,
+                "fidelity_method": fidelity_method,
                 "success": bool(result.success),
                 "runtime_seconds": runtime,
                 "optimizer": optimizer_name,

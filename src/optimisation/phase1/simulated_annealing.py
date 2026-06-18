@@ -8,6 +8,8 @@ Version: 3.0.0
 
 from __future__ import annotations
 
+from typing import Optional
+
 import numpy as np
 from qiskit import QuantumCircuit
 import copy

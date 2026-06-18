@@ -34,14 +34,14 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
-from sklearn.model_selection import cross_val_predict, KFold
+from sklearn.model_selection import cross_val_predict, KFold, train_test_split
 from sklearn.metrics import (
     precision_score, recall_score, f1_score,
     roc_auc_score, roc_curve, mean_absolute_error, r2_score,
     confusion_matrix, classification_report
 )
 
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=DeprecationWarning, module="qiskit")
 
 # ============================================================================
 # Configuration
@@ -53,12 +53,28 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 REDUCTION_THRESHOLD = 0.05  # 5% reduction is "worth optimizing"
 
+
+def _latest_csv(directory: Path, prefix: str) -> Path:
+    """Dynamically resolve the latest CSV in ``directory`` whose name starts
+    with ``prefix``. Prefers ``_full_`` runs over ``_smoke_`` runs. This
+    avoids hardcoding timestamped filenames (e.g. ``..._20260611_191634.csv``)
+    so the script keeps working when fresh data files are generated.
+    """
+    candidates = sorted(directory.glob(f"{prefix}*.csv"))
+    if not candidates:
+        # Return a non-existent path so the caller's ``path.exists()`` check
+        # emits the standard "not found" warning rather than crashing here.
+        return directory / f"{prefix}_NOT_FOUND.csv"
+    full_runs = [f for f in candidates if "_full_" in f.name]
+    return (full_runs or candidates)[-1]
+
+
 DATA_FILES = {
-    "e10": DATA_DIR / "v3_extended" / "e10" / "e10_phase1_vs_phase2_20260611_191634.csv",
-    "e11": DATA_DIR / "v4" / "e11" / "e11_real_circuit_benchmark_e11_full_20260611_114615.csv",
-    "e13": DATA_DIR / "v4" / "e13" / "e13_structural_ceiling_e13_full_20260609_043322.csv",
-    "e14": DATA_DIR / "v5" / "e14" / "e14_extended_benchmark_e14_full_20260611_114726.csv",
-    "e16": DATA_DIR / "v5" / "e16" / "e16_window_scaling_e16_full_20260610_142547.csv",
+    "e10": _latest_csv(DATA_DIR / "v3_extended" / "e10", "e10_phase1_vs_phase2"),
+    "e11": _latest_csv(DATA_DIR / "v4" / "e11", "e11_real_circuit_benchmark_e11_full"),
+    "e13": _latest_csv(DATA_DIR / "v4" / "e13", "e13_structural_ceiling_e13_full"),
+    "e14": _latest_csv(DATA_DIR / "v5" / "e14", "e14_extended_benchmark_e14_full"),
+    "e16": _latest_csv(DATA_DIR / "v5" / "e16", "e16_window_scaling_e16_full"),
 }
 
 # ============================================================================
@@ -830,6 +846,21 @@ def main():
     train_df = train_df.reset_index(drop=True)
     print(f"\n  Training set: {len(train_df)} circuits with reduction data")
 
+    # bug #17 fix: the previous code trained AND evaluated on the same train_df
+    # (in-sample evaluation), which inflates performance. Split into a
+    # train_split (for fitting / threshold learning) and a held-out test_split
+    # (for evaluation only). Stratify on worth_optimizing when available so the
+    # class balance is preserved.
+    _stratify = train_df["worth_optimizing"] if "worth_optimizing" in train_df.columns else None
+    train_split, test_split = train_test_split(
+        train_df, test_size=0.3, random_state=42, stratify=_stratify,
+    )
+    train_split = train_split.reset_index(drop=True)
+    test_split = test_split.reset_index(drop=True)
+    print(f"  Train split (fitting):   {len(train_split)} circuits")
+    print(f"  Test split (held-out):   {len(test_split)} circuits")
+    print(f"  Evaluation: held-out test set (n={len(test_split)})")
+
     # ----- Display data summary -----
     print("\n  Per-family reduction summary:")
     for fam in sorted(train_df["circuit_family"].unique()):
@@ -866,10 +897,12 @@ def main():
     results = {}
 
     # --- Rule-Based Predictor ---
+    # bug #17 fix: evaluate on the held-out test_split (rule has no fitting).
     print("\n--- Rule-Based Predictor ---")
+    print(f"  Evaluation: held-out test set (n={len(test_split)})")
     rule_pred = RuleBasedPredictor()
-    rule_eval = evaluate_predictor(rule_pred, train_df, "Rule-Based")
-    rule_cb = cost_benefit_analysis(train_df, rule_pred, "Rule-Based")
+    rule_eval = evaluate_predictor(rule_pred, test_split, "Rule-Based")
+    rule_cb = cost_benefit_analysis(test_split, rule_pred, "Rule-Based")
     results["rule_based"] = {
         "evaluation": rule_eval,
         "cost_benefit": {k: v for k, v in rule_cb.items() if k != "per_circuit_details"},
@@ -881,13 +914,15 @@ def main():
     print(f"  Efficiency:{rule_eval['optimization_efficiency_pct']:.2f}%")
 
     # --- Threshold Predictor ---
+    # bug #17 fix: learn threshold on train_split only; evaluate on test_split.
     print("\n--- Threshold Predictor ---")
-    opt_threshold, threshold_stats = ThresholdPredictor.find_optimal_threshold(train_df)
+    print(f"  Evaluation: held-out test set (n={len(test_split)})")
+    opt_threshold, threshold_stats = ThresholdPredictor.find_optimal_threshold(train_split)
     print(f"  Optimal threshold: {opt_threshold:.6f}")
     print(f"  AUC-ROC: {threshold_stats.get('auc_roc', 'N/A')}")
     thresh_pred = ThresholdPredictor(threshold=opt_threshold)
-    thresh_eval = evaluate_predictor(thresh_pred, train_df, "Threshold")
-    thresh_cb = cost_benefit_analysis(train_df, thresh_pred, "Threshold")
+    thresh_eval = evaluate_predictor(thresh_pred, test_split, "Threshold")
+    thresh_cb = cost_benefit_analysis(test_split, thresh_pred, "Threshold")
     results["threshold"] = {
         "evaluation": thresh_eval,
         "roc_analysis": threshold_stats,
@@ -899,12 +934,14 @@ def main():
     print(f"  Speedup:   {thresh_eval['compiler_speedup_pct']:.1f}%")
 
     # --- ML Predictor ---
+    # bug #17 fix: fit on train_split, evaluate on held-out test_split.
     print("\n--- ML Predictor (Random Forest) ---")
+    print(f"  Evaluation: held-out test set (n={len(test_split)})")
     ml_pred = MLPredictor(cost_threshold=REDUCTION_THRESHOLD)
-    ml_pred.fit(train_df)
-    ml_eval = evaluate_predictor(ml_pred, train_df, "ML-RandomForest")
-    ml_cb = cost_benefit_analysis(train_df, ml_pred, "ML-RandomForest")
-    ml_cv_metrics = ml_pred.get_cv_metrics(train_df)
+    ml_pred.fit(train_split)
+    ml_eval = evaluate_predictor(ml_pred, test_split, "ML-RandomForest")
+    ml_cb = cost_benefit_analysis(test_split, ml_pred, "ML-RandomForest")
+    ml_cv_metrics = ml_pred.get_cv_metrics(train_split)
     results["ml_random_forest"] = {
         "evaluation": ml_eval,
         "cross_validated_metrics": ml_cv_metrics,
@@ -923,11 +960,13 @@ def main():
         print(f"    {feat:40s}: {imp:.4f}")
 
     # --- Ensemble Predictor ---
+    # bug #17 fix: fit on train_split, evaluate on held-out test_split.
     print("\n--- Ensemble Predictor ---")
+    print(f"  Evaluation: held-out test set (n={len(test_split)})")
     ensemble = OptimizeOrSkip(strategy="ensemble")
-    ensemble.fit(train_df)
-    ens_eval = evaluate_predictor(ensemble, train_df, "Ensemble")
-    ens_cb = cost_benefit_analysis(train_df, ensemble, "Ensemble")
+    ensemble.fit(train_split)
+    ens_eval = evaluate_predictor(ensemble, test_split, "Ensemble")
+    ens_cb = cost_benefit_analysis(test_split, ensemble, "Ensemble")
     results["ensemble"] = {
         "evaluation": ens_eval,
         "cost_benefit": {k: v for k, v in ens_cb.items() if k != "per_circuit_details"},

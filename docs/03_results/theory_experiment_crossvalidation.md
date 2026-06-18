@@ -1,9 +1,9 @@
 # Theory-Experiment Cross-Validation Table
 
-> **Document Status**: Comprehensive mapping of theoretical predictions to experimental observations.  
-> **Version**: 1.0  
-> **Date**: 2026-06-13  
-> **Scope**: All theorems, lemmas, propositions, observations, and conjectures from `lemmas.md` and `conjectures.md` mapped against experiments E1-E18.  
+> **Document Status**: Comprehensive mapping of theoretical predictions to experimental observations.
+> **Version**: 1.0
+> **Date**: 2026-06-13
+> **Scope**: All theorems, lemmas, propositions, observations, and conjectures from `lemmas.md` and `conjectures.md` mapped against experiments E1-E18.
 > **Methodology**: For each result, we state the quantitative/qualitative prediction, identify the corresponding experiment(s), report the observed value, compare against the predicted value, and render an honest consistency verdict.
 
 ---
@@ -142,7 +142,31 @@ This matrix shows which experiments provide evidence for which theoretical resul
 
 ---
 
-*Document version: 1.0*  
-*Last updated: 2026-06-13*  
-*Author: Q-research Cross-Validation Analysis*  
-*Source files: `docs/01_theory/lemmas.md` (v3.4), `docs/01_theory/conjectures.md` (v3.1), `docs/01_theory/framework.md` (v5.2.0), `docs/03_results/e10_analysis.md`, `docs/03_results/experimental_design.md` (v2.3), `docs/06_manuscript/v4_claim_evidence_map.md` (v5.0), `docs/06_manuscript/v4_tables.md`, `docs/FIX2_E1_Zero_Std_Analysis.md`*
+*Document version: 1.1*
+*Last updated: 2026-06-17*
+*Author: Q-research Cross-Validation Analysis*
+*Source files: `docs/01_theory/lemmas.md` (v3.4), `docs/01_theory/conjectures.md` (v3.2), `docs/01_theory/framework.md` (v5.4.0), `docs/03_results/e10_analysis.md`, `docs/03_results/experimental_design.md` (v2.3), `docs/06_manuscript/v4_claim_evidence_map.md` (v5.0), `docs/06_manuscript/v4_tables.md`, `docs/FIX2_E1_Zero_Std_Analysis.md`*
+
+*Changelog: v1.1 (2026-06-17) — Added E18 survivorship-bias caveat. Updated C2 row to reflect Phase-2a vs Phase-2b distinction (theoretical proofs use Phase-2b; experiments use Phase-2a). Cross-referenced limitations_and_future_work.md.*
+
+---
+
+## Addendum: E18 Survivorship Bias (added 2026-06-17)
+
+**E18 (Clifford+T decomposition)** is not included in the primary cross-validation table above because it does not directly test a specific theorem. However, E18 results are referenced in the manuscript and require an explicit survivorship-bias caveat:
+
+- **Total trials**: 270
+- **Failed trials**: 120 (78 decompose_error + 42 fidelity=0), a 44.4% failure rate
+- **Surviving trials**: 150
+
+**All E18 conclusions are based on the 150 surviving trials and are therefore survivorship-biased.** Circuits that fail Clifford+T decomposition or fidelity verification are systematically excluded, and the surviving subset may have systematically different reduction properties than the full population.
+
+**Bias direction**: The bias is *conservative* — circuits that fail decomposition likely have *higher* structural complexity, and their exclusion means the reported mean reduction is likely an *overestimate* of the true population mean. The bias direction is stated to prevent misinterpretation, not to dismiss the finding.
+
+**Manuscript requirement**: All E18-related claims in the manuscript must carry the annotation "(survivorship-biased; 44.4% failure rate)" or equivalent. See `limitations_and_future_work.md` §8 for the full discussion.
+
+---
+
+## Addendum: Phase-2a vs Phase-2b in C2 (added 2026-06-17)
+
+The C2 row in the primary table reports Phase-2a empirical results (from E10/E11/E14/E16). The theoretical proofs of C2 (Theorem 7 artificial, Theorem 9 BV natural) use **Phase-2b template matching**, which is *not implemented* in the experimental codebase. The Phase-2a achievable bound is an **open question**. The empirical Phase-2a reductions (~3% random, ~20% Oracle) are *complementary* to but not direct validations of the Phase-2b theoretical bounds. See `thm7_natural_bv.md` §"Phase-2a vs Phase-2b" and `conjectures.md` C2 status for details.

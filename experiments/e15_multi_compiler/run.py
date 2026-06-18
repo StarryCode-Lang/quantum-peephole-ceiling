@@ -47,19 +47,36 @@ def _safe_ratio(o, p):
 # Compiler backends (graceful degradation when optional deps are missing)
 # ---------------------------------------------------------------------------
 
-def _qiskit_transpile(circuit, opt_level: int):
-    """Run Qiskit transpiler at a given optimization level."""
+def _qiskit_transpile(circuit, opt_level: int, seed_transpiler: int):
+    """Run Qiskit transpiler at a given optimization level.
+
+    The transpiler seed is passed explicitly (no longer hardcoded) so that
+    reproducibility is controlled by the experiment's top-level seed and
+    recorded in the run metadata.
+    """
     from qiskit import transpile
     start = time.time()
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        optimized = transpile(circuit, optimization_level=opt_level, seed_transpiler=42)
+        optimized = transpile(circuit, optimization_level=opt_level, seed_transpiler=seed_transpiler)
     runtime = time.time() - start
     return optimized, runtime
 
 
 def _cirq_optimize(circuit):
-    """Convert to Cirq, apply built-in optimizers, convert back."""
+    """Convert to Cirq, apply built-in optimizers, convert back.
+
+    WARNING: This function uses OpenQASM 2 as the interchange format
+    (Qiskit -> QASM2 -> Cirq -> QASM2 -> Qiskit).  QASM2 round-trip
+    is *not* unitary-preserving: arbitrary unitary gates must be
+    decomposed to the QASM2 basis, global phase may be lost, and some
+    Qiskit gate types are not supported by Cirq's QASM parser.  As a
+    result, the returned circuit's unitary may differ from the input
+    by more than just the intended Cirq optimizations.  Fidelity
+    comparisons against the original circuit should be interpreted
+    with this caveat.  For unitary-preserving cross-framework
+    conversion, consider QPY or direct pytket bridges instead.
+    """
     try:
         import cirq
         from qiskit import QuantumCircuit
@@ -206,7 +223,7 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
 
         # --- Qiskit transpiler (opt levels 0-3) ---
         for level in [0, 1, 2, 3]:
-            opt_circ, runtime = _qiskit_transpile(circuit, level)
+            opt_circ, runtime = _qiskit_transpile(circuit, level, seed_transpiler=seed)
             opt_m = _count_metrics(opt_circ)
             output_hash = circuit_sha256(opt_circ)
             fidelity = average_gate_fidelity(opt_circ, circuit,
@@ -233,6 +250,7 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
                 "compiler_backend": "transpiler",
                 "compiler_opt_level": level,
                 "compiler_status": "ok",
+                "conversion_format": "native",
                 "seed": bench.seed,
                 "trial": trial,
                 "source_file": script_path.relative_to(PROJECT_ROOT).as_posix(),
@@ -272,6 +290,8 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
                     "compiler_backend": "built_in_optimizers",
                     "compiler_opt_level": "default",
                     "compiler_status": status,
+                    "conversion_format": "qasm2_roundtrip",
+                    "conversion_caveat": "QASM2 round-trip may lose unitary information (global phase, arbitrary gates)",
                     "seed": bench.seed,
                     "trial": trial,
                     "source_file": script_path.relative_to(PROJECT_ROOT).as_posix(),
@@ -341,6 +361,7 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
                     "compiler_backend": "FullPeepholeOptimise",
                     "compiler_opt_level": "default",
                     "compiler_status": status,
+                    "conversion_format": "native",
                     "seed": bench.seed,
                     "trial": trial,
                     "source_file": script_path.relative_to(PROJECT_ROOT).as_posix(),
@@ -391,6 +412,7 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
             "description": "Multi-compiler baseline comparison (Qiskit, Cirq, t|ket>)",
             "mode": mode,
             "seed": seed,
+            "qiskit_transpiler_seed": seed,
             "max_qubits_fidelity": max_qubits_fidelity,
             "skip_cirq": skip_cirq,
             "skip_tket": skip_tket,

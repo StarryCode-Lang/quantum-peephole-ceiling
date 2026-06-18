@@ -1,9 +1,11 @@
 # Unified References for Q-Research Project
 
-> **Document Status**: Comprehensive, unified reference list for the Q-research manuscript.  
-> **Version**: 1.0  
-> **Date**: 2026-06-16  
-> **Scope**: Consolidates all references from `literature_review.md` (42 refs), `phase7_related_work.md` (12 refs), `v5_full_manuscript_part1/2/3.md`, and adds missing key works.  
+> **This is the SINGLE AUTHORITATIVE reference list for the Q-research project. All manuscript citations must resolve to entries in this file. The literature_review.md file is retained as a narrative companion but is NOT authoritative for citation count.**
+>
+> **Document Status**: Comprehensive, unified reference list for the Q-research manuscript.
+> **Version**: 2.0
+> **Date**: 2026-06-17
+> **Scope**: Consolidates all references from `literature_review.md` (42 refs), `phase7_related_work.md` (12 refs), `v5_full_manuscript_part1/2/3.md`, and adds missing key works.
 > **Format**: `[N] Authors, "Title," Journal/Conference, Year. arXiv:XXXX.XXXXX [if available]`
 
 ---
@@ -51,6 +53,12 @@
 [18] Y. Nam, K. M. R. Chen, and M. Roetteler, "Synthesis of fault-tolerant quantum circuits with T-depth optimization," arXiv:1801.00869, 2018.
 
 [19] D. Maslov, "Advantages of using relative phase Toffolis in quantum circuits," Physical Review A, vol. 93, 032305, 2016. arXiv:1508.03062
+
+[78] Y. Nam, N. J. Ross, Y. Su, D. Maslov, and R. K. Brayton, "Automated optimization of large quantum circuits with continuous parameters," npj Quantum Information, vol. 4, article 23, 2018. arXiv:1710.07345
+
+[79] S. Yamashita, T. Nakanishi, and S. Ishioka, "Merging quantum circuits," IEICE Transactions on Fundamentals of Electronics, Communications and Computer Sciences, vol. E93-A, no. 5, pp. 913-918, 2010.
+
+[80] M. Amy, S. Azimzadeh, and M. Mosca, "On the controlled-NOT complexity of controlled-NOT–quantum circuits," Quantum Information & Computation, vol. 18, no. 3-4, pp. 217-238, 2018. arXiv:1709.05547
 
 ---
 
@@ -200,7 +208,9 @@
 
 [73] MLCO, "Multilevel Quantum Circuit Optimization with Structural Pattern Detection," 2025.
 
-[74] A. Hietala, K. Martinez, S.-H. Hung, S. Peyton Jones, and M. Silberstein, "VOQC: A verified optimizer for quantum circuits," Proceedings of the ACM on Programming Languages (PACMPL), vol. 5, no. POPL, pp. 1-29, 2021. arXiv:1912.02250
+[74] ~~Removed: duplicate of [59] (Hietala et al., VOQC, POPL 2021). See [59].~~
+
+[81] K. Patel, J. Shapira, and I. L. Markov, "Quantum circuit optimization: A survey," ACM Computing Surveys, vol. 55, no. 9, article 178, pp. 1-32, 2022. arXiv:2210.12035
 
 ---
 
@@ -208,7 +218,7 @@
 
 [75] K. Chandrasekaran, A. Hashmi, M. Roetteler, and K. M. Svore, "PEephole REwrite: An Optimizer for Quantum Programs (PERE)," 2023.
 
-[76] S. Smith, J. Liu, and H. Zhou, "Quartz: Towards a verified, extensible quantum circuit superoptimizer," arXiv:2401.00000, 2024. (Extended Quartz framework)
+[76] K. Hietala, R. Martinez, S.-H. Hung, S. Peyton Jones, and M. Silberstein, "Quartz: Superoptimization of Quantum Circuits," Proceedings of the ACM on Programming Languages (PLDI), vol. 6, 2022. arXiv:2205.00125
 
 [77] Ravi, R. and Gokhale, P. and Smith, K. and Brown, J. and others, "QUASAR: An architecture-aware quantum compiler," Proceedings of the ACM on Programming Languages (PACMPL), 2022.
 
@@ -312,7 +322,7 @@ The following references were identified as missing from the original 42-referen
 | [23] | Kissinger, van de Wetering (2019) | Reducing T-count with ZX-calculus | F-5, H-14 |
 | [24] | Kissinger, van de Wetering (2020) | Reducing non-Clifford gates (PyZX) | F-5, H-15 |
 | [75] | Chandrasekaran et al. (2023) | PERE optimizer | H-14 |
-| [76] | Smith et al. (2024) | Extended Quartz | H-14 |
+| [76] | Hietala et al. (2022) | Quartz superoptimizer (PLDI) | H-14 |
 | [77] | Ravi et al. (2022) | QUASAR compiler | H-14 |
 | [20] | Amy, Glaudell, Ross (2018) | Phase polynomial optimization | F-5 |
 | [5] | Aho, Sethi, Ullman (1986) | Classical compiler theory | F-5 |
@@ -322,9 +332,13 @@ The following references were identified as missing from the original 42-referen
 | [71] | IBM (2024) | Benchpress | F-5 |
 | [72] | QCircuitBench (2025) | Benchmark suite | F-5 |
 | [73] | MLCO (2025) | Multilevel optimization | F-5 |
+| [78] | Nam, Ross, Su, Maslov, Brayton (2018) | Automated optimization with continuous parameters | Foundational |
+| [79] | Yamashita, Nakanishi, Ishioka (2010) | Merging quantum circuits | Foundational |
+| [80] | Amy, Azimzadeh, Mosca (2018) | CNOT complexity of CNOT circuits | Foundational |
+| [81] | Patel, Shapira, Markov (2022) | Quantum circuit optimization survey | Survey |
 
 ---
 
-*Document version: 1.0*  
-*Created: 2026-06-16*  
+*Document version: 2.0*
+*Last updated: 2026-06-17*
 *Author: Q-Research Reference Compilation*

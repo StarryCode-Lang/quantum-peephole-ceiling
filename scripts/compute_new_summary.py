@@ -134,31 +134,48 @@ def main():
     # E13 uses observed_best_reduction as the reduction metric
     # Rename for consistency
     df_e13["reduction"] = df_e13["observed_best_reduction"]
-    df_e13["fidelity"] = 1.0  # E13 doesn't have fidelity, assume perfect
+    # bug #16 fix: E13 has no fidelity column. Do NOT assume fidelity=1.0
+    # (that would mask any functionality-preservation failures). Record NaN
+    # instead and exclude these rows from fidelity aggregates below.
+    df_e13["fidelity"] = np.nan
     df_e13["success"] = df_e13["reduction"] > 0.0
-    
+
     summary["E13"] = {}
     summary["E13"]["file"] = os.path.basename(e13_path)
+    # Fidelity aggregation: use nanmean over non-missing entries; report how
+    # many rows were excluded due to missing fidelity (bug #16 fix).
+    _e13_fid_valid = df_e13["fidelity"].notna()
+    _e13_fid_n_valid = int(_e13_fid_valid.sum())
+    _e13_fid_n_excluded = int(len(df_e13) - _e13_fid_n_valid)
+    _e13_mean_fid = float(df_e13["fidelity"].mean()) if _e13_fid_n_valid > 0 else float("nan")
     summary["E13"]["overall"] = {
         "total_rows": int(len(df_e13)),
         "mean_reduction": float(df_e13["reduction"].mean()),
         "std_reduction": float(df_e13["reduction"].std()) if len(df_e13) > 1 else 0.0,
-        "mean_fidelity": 1.0,
+        "mean_fidelity": _e13_mean_fid,
+        "fidelity_note": (f"n={_e13_fid_n_excluded} excluded due to missing fidelity"
+                          if _e13_fid_n_excluded > 0 else "all rows have fidelity"),
         "success_rate": float(df_e13["success"].mean()),
         "threshold_success_rate_0.20": float((df_e13["reduction"] > 0.20).mean()),
         "min_reduction": float(df_e13["reduction"].min()),
         "max_reduction": float(df_e13["reduction"].max()),
         "median_reduction": float(df_e13["reduction"].median()),
     }
-    
+
     # Per circuit family
     per_cf = {}
     for name, group in df_e13.groupby("circuit_family"):
+        _g_valid = group["fidelity"].notna()
+        _g_n_valid = int(_g_valid.sum())
+        _g_n_excluded = int(len(group) - _g_n_valid)
+        _g_mean_fid = float(group["fidelity"].mean()) if _g_n_valid > 0 else float("nan")
         per_cf[str(name)] = {
             "total_rows": int(len(group)),
             "mean_reduction": float(group["reduction"].mean()),
             "std_reduction": float(group["reduction"].std()) if len(group) > 1 else 0.0,
-            "mean_fidelity": 1.0,
+            "mean_fidelity": _g_mean_fid,
+            "fidelity_note": (f"n={_g_n_excluded} excluded due to missing fidelity"
+                              if _g_n_excluded > 0 else "all rows have fidelity"),
             "success_rate": float(group["success"].mean()),
             "threshold_success_rate_0.20": float((group["reduction"] > 0.20).mean()),
             "min_reduction": float(group["reduction"].min()),

@@ -35,7 +35,7 @@ from src.circuits.real_benchmarks import (
     make_qft, make_ghz, make_cnot_chain, make_bernstein_vazirani,
     make_qaoa_line, make_vqe_twolocal, make_hardware_efficient,
     make_grover, make_quantum_adder, make_quantum_walk, make_iqp,
-    make_random_clifford, make_surface_code_syndrome, make_uccsd_ansatz,
+    make_random_clifford, make_surface_code_syndrome, make_parameterized_ansatz,
     make_haar_random, generate_extended_suite,
     circuit_sha256, gate_counts, average_gate_fidelity, BenchmarkCircuit,
 )
@@ -1151,8 +1151,8 @@ class TestExtendedCircuitFamilies(unittest.TestCase):
         self.assertGreater(qc.size(), 0)
 
     def test_uccsd_ansatz_generation(self):
-        """Test UCCSD ansatz circuit generation."""
-        qc = make_uccsd_ansatz(4, reps=1, seed=42)
+        """Test parameterized ansatz circuit generation (formerly UCCSD)."""
+        qc = make_parameterized_ansatz(4, reps=1, seed=42)
         self.assertIsInstance(qc, QuantumCircuit)
         self.assertEqual(qc.num_qubits, 4)
         self.assertGreater(qc.size(), 0)

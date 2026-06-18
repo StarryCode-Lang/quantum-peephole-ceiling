@@ -1,5 +1,7 @@
 # Literature Review: Quantum Circuit Optimization
 
+> **This file contains the narrative literature review (42 core references). For the authoritative reference list used in the manuscript, see unified_references.md.**
+
 > **Document Status**: Comprehensive literature review for publication-quality manuscript.  
 > **Version**: 1.1  
 > **Date**: 2026-06-10  
@@ -82,7 +84,7 @@ Peephole optimization was introduced by **McKeeman (1965)** as a final pass in c
 
 **What they achieved**: Kliuchnikov et al. established the first practical algorithm for achieving provably **optimal T-count** in Clifford+T circuits, a critical result for fault-tolerant quantum computing where T gates dominate the resource cost. Their work provided the theoretical foundation that subsequent T-count optimizers (including Amy et al. 2013, 2014 and AlphaTensor-Quantum) build upon. The algorithm is widely used in production compilers for single-qubit gate optimization.
 
-**What they did NOT do**: The algorithm is restricted to the Clifford+T gate set and primarily targets single-qubit or small-scale synthesis. It does not address general-purpose peephole optimization over arbitrary universal gate sets, does not analyze the structural properties of circuits that determine T-count optimizability at scale, and does not characterize the fundamental ceiling of T-count reduction for multi-qubit circuits with complex entangling structure. Our work studies optimization limits across all gate types, not just T-count, and characterizes when any bounded-window method — including T-count optimizers — reaches its structural ceiling.
+**What they did NOT do**: The algorithm is restricted to the Clifford+T gate set and primarily targets single-qubit or small-scale synthesis. It does not address general-purpose peephole optimization over arbitrary universal gate sets, does not analyze the structural properties of circuits that determine T-count optimizability at scale, and does not characterize listing- and model-conditional T-count reduction ceilings for multi-qubit circuits with complex entangling structure. Our work studies optimization limits across all gate types, not just T-count, and characterizes when the tested bounded-window peephole model reaches its listing-conditional structural ceiling.
 
 #### 2.2.6 ZX-Calculus-Based Circuit Simplification
 
@@ -93,7 +95,7 @@ Peephole optimization was introduced by **McKeeman (1965)** as a final pass in c
 
 **What they achieved**: Duncan et al. demonstrated that ZX-calculus provides a powerful, **gate-set-independent** framework for circuit simplification that can discover optimizations invisible to traditional gate-level methods. The graph-theoretic perspective enables reductions that require non-local reasoning about circuit structure — effectively providing a form of "global peephole optimization." Their work laid the foundation for subsequent ZX-calculus-based optimizers, including the ZX+RL approach (Riu et al., 2025 [41]) surveyed in Section 10.6. The method is particularly effective for Clifford+T circuits and has been integrated into the PyZX open-source tool.
 
-**What they did NOT do**: The ZX-calculus simplification pipeline does not characterize the **theoretical ceiling** of achievable reduction — i.e., it does not answer when no further ZX-based simplification is possible. The circuit extraction step (converting optimized ZX-diagrams back to circuits) can introduce overhead that partially negates the diagrammatic reduction. The method does not systematically analyze *which circuit families* are amenable to ZX-based optimization versus those that resist it, nor does it provide a formal theory linking circuit structural properties to ZX-calculus optimizability. Our structural ceiling framework addresses these analytical gaps by characterizing the fundamental limits that apply regardless of the rewrite system used.
+**What they did NOT do**: The ZX-calculus simplification pipeline does not characterize the **theoretical ceiling** of achievable reduction — i.e., it does not answer when no further ZX-based simplification is possible. The circuit extraction step (converting optimized ZX-diagrams back to circuits) can introduce overhead that partially negates the diagrammatic reduction. The method does not systematically analyze *which circuit families* are amenable to ZX-based optimization versus those that resist it, nor does it provide a formal theory linking circuit structural properties to ZX-calculus optimizability. Our structural ceiling framework addresses these analytical gaps for the tested listing models and local rewrite classes; it does not claim a rewrite-system-independent global limit.
 
 **de Beaudrap, Glendinning & Zhang (2022)** extended the ZX-calculus approach to achieve **faster circuit resynthesis**:
 - The work focuses on the **resynthesis** step in the ZX-calculus pipeline: after a ZX-diagram has been simplified, how efficiently can it be converted back into a low-gate-count circuit?
@@ -102,7 +104,7 @@ Peephole optimization was introduced by **McKeeman (1965)** as a final pass in c
 
 **What they achieved**: de Beaudrap et al. addressed a key practical bottleneck in the ZX-calculus optimization pipeline — the extraction step — and demonstrated that faster and higher-quality resynthesis is achievable. Their improvements make ZX-calculus-based optimization more practical for integration into compiler pipelines and demonstrate that the choice of extraction algorithm significantly affects the final circuit quality. This work highlights that optimization effectiveness depends not only on the simplification power of the rewrite system but also on the quality of the circuit-to-circuit round-trip.
 
-**What they did NOT do**: The work focuses narrowly on the extraction/resynthesis step and does not analyze the fundamental limits of ZX-calculus-based optimization as a whole. It does not characterize when the ZX-calculus pipeline (simplification + extraction combined) reaches its structural ceiling, does not study the relationship between circuit structure and ZX-calculus optimizability, and does not provide a comparative analysis across diverse circuit families. Our work's structural ceiling framework is orthogonal to the ZX-calculus approach: we characterize the limits that apply to *any* local-rewrite optimization method, including those based on diagrammatic reasoning.
+**What they did NOT do**: The work focuses narrowly on the extraction/resynthesis step and does not analyze the fundamental limits of ZX-calculus-based optimization as a whole. It does not characterize when the ZX-calculus pipeline (simplification + extraction combined) reaches a ceiling, does not study the relationship between circuit structure and ZX-calculus optimizability, and does not provide a comparative analysis across diverse circuit families. Our work's structural ceiling framework is orthogonal to the ZX-calculus approach: we characterize listing- and window-conditional limits for local circuit-to-circuit rewrites, not a global limit for all diagrammatic reasoning methods.
 
 ---
 
@@ -157,7 +159,7 @@ Peephole optimization was introduced by **McKeeman (1965)** as a final pass in c
 
 **Performance**: Qiskit's optimizer achieves 10–30% gate reduction on typical circuits but provides no optimality guarantees.
 
-**Our contribution**: We show that Qiskit's template-based approach (a form of Phase 2 optimization) cannot achieve significant reduction on random circuits because the template library is finite and random circuits lack repeating patterns.
+**Our contribution**: We show that Qiskit's template-based approach has limited effect on the tested random-circuit ensembles because the finite template library has few matching repeated patterns in those instances.
 
 ### 4.2 Cirq (Google)
 
@@ -192,9 +194,9 @@ Peephole optimization was introduced by **McKeeman (1965)** as a final pass in c
 | t|ket> | Peephole + hardware-aware | 15–40% | None | NP-hard |
 | Quartz [36] | Superoptimization (ECC) | Competitive | Window-optimal | Exponential in window |
 | Qarl [38] | RL-based (GNN) | State-of-the-art | None | Training + inference |
-| **Our work** | Phase 1 + Phase 2 characterization | 0–3.26% (random) | **Structural ceiling proven** | QMA-hard (conjectured) |
+| **Our work** | Phase 1 + Phase 2 characterization | 0–3.26% (random) | **Listing/window/model-conditional structural ceiling characterized** | QMA-hard (conjectured) |
 
-**Key insight**: Existing compilers and recent optimizers (Quartz, Qarl, AlphaTensor-Quantum, ZX+RL; see Section 10) focus on **practical reduction** (10–40% or higher on structured circuits) but provide no theoretical understanding of **why** reduction is possible or **when** it fails. Our work fills this gap by characterizing the **structural ceiling** — the fundamental limit of peephole optimization.
+**Key insight**: Existing compilers and recent optimizers (Quartz, Qarl, AlphaTensor-Quantum, ZX+RL; see Section 10) focus on **practical reduction** (10–40% or higher on structured circuits) but provide limited systematic characterization of **why** reduction is possible or **when** it fails. Our work fills this gap by characterizing a **listing/window/model-conditional structural ceiling** for the tested local peephole setting, not a rewrite-system-independent global limit.
 
 ---
 
@@ -206,7 +208,7 @@ Peephole optimization was introduced by **McKeeman (1965)** as a final pass in c
 
 **Harrow & Low (2009)** proved that random circuits achieve **anti-concentration** at depth $O(n)$, meaning the output distribution is close to uniform.
 
-**Our contribution**: We show that random circuits (which approximate Haar-random unitaries) have **zero structural redundancy** — they cannot be optimized by peephole methods. This aligns with the known result that Haar-random unitaries have circuit complexity $\Omega(4^n/n)$.
+**Our contribution**: We show that the tested random-circuit ensembles have negligible accessible redundancy under the specified LBL/local peephole model. This is a listing/window/model-conditional statement, not a claim that no alternative representation, template system, synthesis method, or global optimizer could compress them.
 
 ### 5.2 Entanglement and Circuit Complexity
 
@@ -235,7 +237,7 @@ Peephole optimization was introduced by **McKeeman (1965)** as a final pass in c
 | **Phase 2 advantage quantification** | Qualitative ("commutation helps") | Quantitative: 3.26% on random, 0% on structured; context-dependent characterization |
 | **Threshold sensitivity** | Fixed 20% threshold in literature | Systematic analysis showing 20% is self-defeating; context-dependent thresholds proposed |
 | **Average-case complexity** | Not studied | Empirical characterization of average-case behavior for random circuits |
-| **Limits of RL-based optimization** | Qarl, ZX+RL demonstrate RL efficacy but do not characterize failure modes | Our structural ceiling analysis predicts when any local-rewrite method (including RL) will fail |
+| **Limits of RL-based optimization** | Qarl, ZX+RL demonstrate RL efficacy but do not characterize failure modes | Our structural ceiling analysis identifies failure regions for the tested listing/window/local-rewrite model; it does not prove failure for all RL or global rewrite systems |
 
 ### 6.2 Experimental Gaps
 
@@ -253,7 +255,7 @@ Peephole optimization was introduced by **McKeeman (1965)** as a final pass in c
 | Gap | Current State | Our Contribution |
 |-----|--------------|----------------|
 | **When to use which optimizer?** | Compiler-specific heuristics; Quartz/Quanto/Qarl provide no guidance | **Circuit-family-dependent recommendation** (Section 6.3 of final report) |
-| **When is optimization hopeless?** | Not addressed by any optimizer (Quartz, Qarl, AlphaTensor-Q., ZX+RL) | **Structural ceiling** identifies random circuits as "hopeless" for Phase 1 |
+| **When is optimization unproductive under a specified local model?** | Not addressed by many optimizer papers (Quartz, Qarl, AlphaTensor-Q., ZX+RL) | **Structural ceiling** identifies tested random circuits as unproductive for Phase 1 under LBL unless listing-aware preprocessing is used |
 | **How to set success thresholds?** | Fixed 20% | **Context-dependent thresholds** (1–5% random, 10% structured, 20% real) |
 | **Interpreting compiler differences** | Micro-Benchmark Suite reports differences without explanation | **Structural theory** explains why compilers differ on different circuit families |
 
@@ -283,7 +285,7 @@ Micro-benchmarks (Merilehto)            →    We provide theory to interpret em
 
 Our contributions are distinct from all recent quantum circuit optimization frameworks surveyed in Section 10 (Quartz, Quanto, Qarl, AlphaTensor-Quantum, Relaxed Peephole Optimization, ZX-Calculus+RL, and the Micro-Benchmark Suite). None of these works provides a structural ceiling characterization, quantifies context-dependent Phase 2 advantage, or offers a systematic multi-compiler benchmark with formal theory.
 
-1. **Structural Ceiling Framework**: First formal characterization of the fundamental limit of Phase 1 peephole optimization. Unlike Quartz, Quanto, and Qarl — which seek to *extend* the optimization reach — our work asks the complementary question: *what is the provable upper bound on achievable reduction, and when is further optimization futile?*
+1. **Structural Ceiling Framework**: Formal characterization of listing- and model-conditional limits for Phase 1 peephole optimization. Unlike Quartz, Quanto, and Qarl — which seek to *extend* the optimization reach — our work asks the complementary question: *within a specified listing model and rewrite class, what reduction is reachable, and when are additional local passes futile?*
 2. **Context-Dependent Phase 2 Advantage**: First quantitative measurement showing that commutation-based optimization is not universally beneficial (3.26% on random circuits, 0% on structured circuits). Prior works such as Relaxed Peephole Optimization and ZX-Calculus+RL assume that larger windows or richer rewrite systems are unconditionally advantageous; we provide the first empirical refutation.
 3. **Threshold Sensitivity Analysis**: First systematic study showing that the 20% success threshold is inappropriate for random circuits. We propose context-dependent thresholds (1–5% for random, 10% for structured, 20% for real-world circuits), a distinction absent from all prior frameworks.
 4. **Large-Scale Empirical Validation**: 45,527 trials across 5 circuit families and 6 optimizers — the largest systematic study of quantum circuit peephole optimization to date. This exceeds the scale of Quartz (~100 benchmarks), Qarl (~50 benchmarks), and the Micro-Benchmark Suite (6 circuits) by two orders of magnitude.
@@ -435,7 +437,7 @@ The period 2021–2025 has witnessed a surge of activity in quantum circuit opti
 
 **What they achieved**: RPO demonstrates improved gate cancellation rates over strict peephole optimization on benchmark quantum circuits, particularly for circuits where exact pattern matches are rare. The relaxed matching enables discovery of optimization opportunities across wider circuit regions without resorting to the full computational cost of template matching or superoptimization.
 
-**What they did NOT do**: RPO extends the *reach* of peephole optimization but does not analyze its *limits*. The framework does not characterize when relaxed matching will fail (i.e., the structural ceiling under relaxation), does not systematically quantify the advantage of relaxation across diverse circuit families, and does not develop a formal theory of context-dependent optimizability. In our framework's terms, RPO improves Phase 1 by enlarging the peephole window, but it does not answer the question: "Even with an arbitrarily large window, what is the maximum achievable reduction?" Our structural ceiling framework provides this answer and shows that, for random circuits, even unbounded windows yield negligible reduction.
+**What they did NOT do**: RPO extends the *reach* of peephole optimization but does not analyze its *limits*. The framework does not characterize when relaxed matching will fail (i.e., the structural ceiling under relaxation), does not systematically quantify the advantage of relaxation across diverse circuit families, and does not develop a formal theory of context-dependent optimizability. In our framework's terms, RPO improves Phase 1 by enlarging the peephole window, but it does not answer the question: "Within a specified listing model and rewrite class, what reduction is actually reachable?" Our structural ceiling framework provides a listing-conditional answer for the tested local peephole model and shows that the tested random-circuit ensembles yield negligible reduction under those assumptions.
 
 ### 10.6 Reinforcement Learning Based Quantum Circuit Optimization via ZX-Calculus
 
@@ -479,7 +481,7 @@ The RL agent is trained using **Proximal Policy Optimization (PPO)** with **Grap
 
 **Key observations from Table 5**:
 
-1. **Structural ceiling analysis** is absent from all prior works. Every existing approach focuses on *achieving more optimization* but none asks *what the theoretical maximum is* or *when optimization is provably futile*.
+1. **Structural ceiling analysis** is absent from all prior works surveyed here. These approaches focus on *achieving more optimization* rather than asking, for a specified listing model and rewrite class, *what reduction is reachable* or *when additional local passes are futile*.
 
 2. **Context-dependent characterization** — the empirical demonstration that optimization effectiveness depends systematically on circuit structure (random vs. structured, Clifford vs. universal) — is unique to our work.
 
@@ -491,7 +493,7 @@ The RL agent is trained using **Proximal Policy Optimization (PPO)** with **Grap
 
 ### 10.9 Summary of Positioning
 
-The seven works surveyed above represent significant advances in *how* to optimize quantum circuits — through larger search spaces (Quartz, Quanto), learned policies (Qarl, ZX+RL), domain-specific RL (AlphaTensor-Quantum), relaxed matching (RPO), and better tooling (Micro-Benchmark). However, none addresses the complementary question of *why* optimization succeeds or fails on particular circuits, or *what the fundamental limits are*.
+The seven works surveyed above represent significant advances in *how* to optimize quantum circuits — through larger search spaces (Quartz, Quanto), learned policies (Qarl, ZX+RL), domain-specific RL (AlphaTensor-Quantum), relaxed matching (RPO), and better tooling (Micro-Benchmark). However, they do not systematically address the complementary question of *why* optimization succeeds or fails on particular circuits under a specified local rewrite model.
 
 Our work occupies a unique position: we provide the **boundary characterization** — the structural, empirical, and theoretical framework for understanding the *limits* of peephole optimization. This is not in competition with the works above; rather, it is the missing analytical layer that would enable practitioners to predict *a priori* whether investing computational resources in optimization (via Quartz, Qarl, AlphaTensor-Quantum, or any other method) is worthwhile for a given circuit.
 
@@ -506,7 +508,7 @@ This literature review establishes the research context for our work on the **Bo
 3. **Existing compilers** (Qiskit, Cirq, t|ket>) achieve practical reductions (10–40%) but provide no optimality guarantees or structural understanding.
 4. **Random circuits** are maximally entangling and approach Haar-random unitaries, suggesting they should be incompressible — our empirical results confirm this.
 5. **Clifford circuits** are polynomial-time optimizable via the stabilizer formalism — our empirical results confirm 0% peephole reduction (already optimal).
-6. **Recent optimization frameworks** (Quartz, Quanto, Qarl, AlphaTensor-Quantum, Relaxed Peephole Optimization, ZX+RL) push the frontier of achievable reduction but do not characterize fundamental limits, context-dependent advantage, or structural ceilings — gaps that our work directly addresses.
+6. **Recent optimization frameworks** (Quartz, Quanto, Qarl, AlphaTensor-Quantum, Relaxed Peephole Optimization, ZX+RL) push the frontier of achievable reduction but do not characterize listing/window/model-conditional ceilings or context-dependent local-rewrite advantage — gaps that our work directly addresses.
 
 **Our work fills the gap** between theoretical complexity results and practical compiler performance by:
 - Characterizing the **structural ceiling** of Phase 1 optimization

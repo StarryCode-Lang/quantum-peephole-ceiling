@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.12.12
+  - python=3.10
   - pip
   - numpy=1.26.4
   - pandas=2.2.2
@@ -16,3 +16,5 @@ dependencies:
   - pytest>=7.0
   - pip:
     - qiskit==2.4.1
+    - pytket>=1.28.0
+    - pytket-qiskit>=0.50.0

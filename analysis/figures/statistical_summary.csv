@@ -1,21 +1,21 @@
-Experiment,N,Mean_Reduction_%,Max_Reduction_%,Std_Reduction_%,Success_20pct_%,Mean_Fidelity,Mean_Runtime_ms
-E1,25000,0.0000,0.00,0.0000,0.00,1.000000,3.83
-E2,2100,0.0000,0.00,0.0000,0.00,1.000000,5.76
-E3,11962,0.0000,0.00,0.0000,0.00,1.000000,2.74
-E4,400,-0.4433,2.67,1.7796,0.00,0.999981,3948.80
-E5,6000,0.2161,26.67,1.1912,0.02,1.000000,2.55
-FDR,15,p_raw=1.000000,p_adj=1.000000,BH-FDR,ns,alpha=0.05,E1: Reduction across depths (Kruskal-Wallis)
-FDR,15,p_raw=1.000000,p_adj=1.000000,BH-FDR,ns,alpha=0.05,E2: Entanglement-reduction correlation (Pearson)
-FDR,15,p_raw=1.000000,p_adj=1.000000,BH-FDR,ns,alpha=0.05,E3: Reduction across qubit counts (Kruskal-Wallis)
-FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,E4: Reduction across optimizers (Kruskal-Wallis)
-FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,E4: Runtime across optimizers (Kruskal-Wallis)
-FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,E5: Reduction across depths (Kruskal-Wallis)
-FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,E10: Reduction across circuit families (Kruskal-Wallis)
-FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,E10: Reduction across optimizers (Kruskal-Wallis)
-FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,"E11: Reduction across circuit families (KW, H7)"
-FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,"E12: Reduction across optimization levels (KW, H8)"
-FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,"E14: Reduction across families x optimizers (KW, H9)"
-FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,"E15: Reduction across compilers (KW, H10)"
-FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,"E16: Reduction across window sizes (KW, H11)"
-FDR,15,p_raw=1.000000,p_adj=1.000000,BH-FDR,ns,alpha=0.05,"E17: Reduction across topologies (KW, H12)"
-FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,"E18: Reduction across families in Clifford+T (KW, H13)"
+Experiment,N,Mean_Reduction_%,Max_Reduction_%,Std_Reduction_%,Success_20pct_%,Mean_Fidelity,Mean_Runtime_ms,Cliffs_delta_vs_0,Cliffs_delta_CI95,Hedges_g_vs_0,Hedges_g_CI95,Cliffs_delta,Hedges_g,Effect_size_note
+E1,25000,0.0000,0.00,0.0000,0.00,1.000000,3.83,nan,"[nan, nan]",nan,"[nan, nan]",,,
+E2,2100,0.0000,0.00,0.0000,0.00,1.000000,5.76,0.0000,"[0.0000, 0.0000]",nan,"[nan, nan]",,,
+E3,11962,0.0000,0.00,0.0000,0.00,1.000000,2.74,0.0000,"[0.0000, 0.0000]",nan,"[nan, nan]",,,
+E4,400,-0.4433,2.67,1.7796,0.00,0.999981,3948.80,-0.0875,"[-0.1185, -0.0565]",-0.3520,"[-0.4916, -0.2123]",,,
+E5,6000,0.2161,26.67,1.1912,0.02,1.000000,2.55,0.0528,"[0.0472, 0.0585]",0.2565,"[0.2206, 0.2925]",,,
+FDR,15,p_raw=1.000000,p_adj=1.000000,BH-FDR,ns,alpha=0.05,E1: Reduction across depths (Kruskal-Wallis),,,,,n/a,n/a,error: Pooled standard deviation is zero; cannot compute Cohen's d.
+FDR,15,p_raw=1.000000,p_adj=1.000000,BH-FDR,ns,alpha=0.05,E2: Entanglement-reduction correlation (Pearson),,,,,n/a,n/a,Pearson r=nan
+FDR,15,p_raw=1.000000,p_adj=1.000000,BH-FDR,ns,alpha=0.05,E3: Reduction across qubit counts (Kruskal-Wallis),,,,,n/a,n/a,error: Pooled standard deviation is zero; cannot compute Cohen's d.
+FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,E4: Reduction across optimizers (Kruskal-Wallis),,,,,0.2800,0.6767,max pairwise (pair 1 vs 3)
+FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,E4: Runtime across optimizers (Kruskal-Wallis),,,,,1.0000,3.7873,max pairwise (pair 0 vs 1)
+FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,E5: Reduction across depths (Kruskal-Wallis),,,,,-0.0598,-0.0017,max pairwise (pair 0 vs 3)
+FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,E10: Reduction across circuit families (Kruskal-Wallis),,,,,-0.6817,-1.2297,max pairwise (pair 0 vs 6)
+FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,E10: Reduction across optimizers (Kruskal-Wallis),,,,,-0.5549,-0.5865,max pairwise (pair 1 vs 2)
+FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,"E11: Reduction across circuit families (KW, H7)",,,,,-0.6667,-1.8007,max pairwise (pair 0 vs 1)
+FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,"E12: Reduction across optimization levels (KW, H8)",,,,,-0.4991,-0.1577,max pairwise (pair 0 vs 1)
+FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,"E14: Reduction across families x optimizers (KW, H9)",,,,,n/a,n/a,error: Pooled standard deviation is zero; cannot compute Cohen's d.
+FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,"E15: Reduction across compilers (KW, H10)",,,,,-0.1619,0.2982,2-group direct
+FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,"E16: Reduction across window sizes (KW, H11)",,,,,-0.2061,-0.2404,max pairwise (pair 0 vs 3)
+FDR,15,p_raw=1.000000,p_adj=1.000000,BH-FDR,ns,alpha=0.05,"E17: Reduction across topologies (KW, H12)",,,,,n/a,n/a,error: Pooled standard deviation is zero; cannot compute Cohen's d.
+FDR,15,p_raw=0.000000,p_adj=0.000000,BH-FDR,significant,alpha=0.05,"E18: Reduction across families in Clifford+T (KW, H13)",,,,,-1.0000,-10.5093,max pairwise (pair 2 vs 3)

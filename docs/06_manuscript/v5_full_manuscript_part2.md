@@ -117,7 +117,7 @@ Consequently, $R_1(C) = 0$ for every Phase 1 optimizer, regardless of gate conte
 
 *Proof.* Under LBL, the gate on qubit $q$ at layer $\ell$ occupies listing index $\ell \cdot n + q$. The next gate on the same qubit is at layer $\ell+1$, at index $(\ell+1)\cdot n + q$, a gap of $n \ge 2$. Since Phase 1 requires listing adjacency (gap $= 1$) on the same qubit(s), no Phase 1 action is possible. Furthermore, consecutive gates on the same qubit are separated by $n - 1 \ge 1$ intervening gates, so no consecutive rotation pairs exist on the same qubit. By Theorem 2(a), $R_1(C) = 0$. $\blacksquare$
 
-**Discussion: Implications for Compiler Design.** Theorem 1(b) reveals that the zero Phase 1 reduction observed across 25,000 trials in experiments E1--E5 is not a property of the random circuits themselves but an artifact of the LBL listing model used by the circuit generator. The circuits contain wire-level inverse pairs; LBL merely hides them from listing-adjacent detection. This has three practical implications:
+**Discussion: Implications for Compiler Design.** Theorem 1(b) reveals that the zero Phase 1 reduction observed across 25,000 trials in experiments E1--E5 (visualized as a depth-independent flat profile in Figure 1) is not a property of the random circuits themselves but an artifact of the LBL listing model used by the circuit generator. The circuits contain wire-level inverse pairs; LBL merely hides them from listing-adjacent detection. This has three practical implications:
 
 1. **Listing-model awareness.** Compiler optimization passes should be designed and evaluated with explicit attention to the circuit's data-structural representation. An optimizer that appears to achieve zero reduction on one listing may achieve significant reduction on another representation of the identical circuit.
 
@@ -167,7 +167,7 @@ $$
 R_{\text{greedy}}(C) = R_{\text{RLS}}(C) = R_{\text{SA}}(C) = R_{\text{GA}}(C) = R_1^*(C).
 $$
 
-This follows from Theorem 2(a,b) and Theorems 2c--2d: Greedy achieves $R_1^*(C)$ by exhausting $\mathcal{S}_1(C)$, and stochastic optimizers cannot systematically exceed this ceiling via SWAP, COMMUTATION, or INSERTION moves. Empirical Observation 1 (100 circuits, 4 optimizers, all achieving $\le 0.67\%$ mean reduction on random circuits) provides strong experimental corroboration.
+This follows from Theorem 2(a,b) and Theorems 2c--2d: Greedy achieves $R_1^*(C)$ by exhausting $\mathcal{S}_1(C)$, and stochastic optimizers cannot systematically exceed this ceiling via SWAP, COMMUTATION, or INSERTION moves. Empirical Observation 1 (100 circuits, 4 optimizers, all achieving $\le 0.67\%$ mean reduction on random circuits) provides strong experimental corroboration; Figure 3 shows all four optimizers—Greedy, RLS, SA, and GA—converging to approximately 0% mean reduction on random universal circuits, despite vastly different runtime costs.
 
 ---
 
@@ -223,7 +223,7 @@ More precisely, the total gate count is $|C_n^{\text{BV}}| = 2n + 2 + w + 2 + 2n
 
 **Conjecture C2 (Phase 2 is Context-Dependent Super-Constant).** There exist circuit families $\mathcal{F}$ for which Phase 1 achieves $O(1/d)$ reduction while Phase 1+2 achieves $\Omega(1)$ reduction. The improvement $\Gamma(C)$ is context-dependent: significant for oracle and structured circuits, and zero for already-optimal or structurally rigid families.
 
-*Evidence.* Theorem 7 (explicit construction) and Theorem 9 (BV oracle) establish C2 constructively. Empirically, Phase 2 achieves $\sim 3.26\%$ additional reduction on random Universal circuits (effect size: Cohen's $d = 1.32$; note that Glass's Delta is the preferred measure for Phase 1 comparisons due to zero variance under LBL, but Cohen's $d$ is appropriate here because Phase 2 introduces nonzero variance), $\sim 20\%$ on BV oracle circuits, and $0\%$ on structured brickwork, QFT, and GHZ circuits.
+*Evidence.* Theorem 7 (explicit construction) and Theorem 9 (BV oracle) establish C2 constructively. Empirically, Phase 2 achieves $\sim 3.26\%$ additional reduction on random Universal circuits (effect size: Cohen's $d = 1.32$; note that Glass's Delta is the preferred measure for Phase 1 comparisons due to zero variance under LBL, but Cohen's $d$ is appropriate here because Phase 2 introduces nonzero variance), $\sim 20\%$ on BV oracle circuits, and $0\%$ on structured brickwork, QFT, and GHZ circuits. Figure 4 visualizes this context-dependent Phase-2 advantage as a grouped comparison across families.
 
 ---
 
@@ -249,7 +249,7 @@ doubly-exponentially fast in $n$.
 
 *Proof sketch.* Part (a) follows from dimension counting: $SU(2^n)$ has real dimension $4^n - 1$, while circuits of $k$ gates from a finite set parametrize a manifold of dimension $O(k)$. For $k < 4^n/n^2$, the parametrized volume is exponentially small relative to the Haar measure. Part (b) follows since any equivalent circuit $C'$ must satisfy $|C'| \ge \mathcal{C}(U)$. Part (c) is immediate since $k$ rewrites remove at most $kw$ gates. $\blacksquare$
 
-**Critical caveat.** Theorem 8 applies to Haar-random *unitaries*, not to the random *gate sequences* used in our experiments. For $n = 10, d = 50$, the circuit has approximately 500 gates, while the Haar-random complexity threshold is $4^{10}/10^2 \approx 10{,}486$ gates. Our random gate sequences produce unitaries far from Haar-random at these depths. The empirical $\sim 0\%$ reduction on random circuits is explained by the combinatorial sparsity of inverse pairs (Theorem 1), not by Haar-random incompressibility. Theorem 8 provides a complementary information-theoretic argument for the asymptotic regime $d \sim 4^n/n^2$ that is not reached in our experiments.
+**Critical caveat.** Theorem 8 applies to Haar-random *unitaries*, not to the random *gate sequences* used in our experiments. For $n = 10, d = 50$, the circuit has approximately 500 gates, while the Haar-random complexity threshold is $4^{10}/10^2 \approx 10{,}486$ gates. Our random gate sequences produce unitaries far from Haar-random at these depths. The empirical $\sim 0\%$ reduction on random circuits is explained by the combinatorial sparsity of inverse pairs (Theorem 1), not by Haar-random incompressibility. Theorem 8 provides a complementary information-theoretic argument for the asymptotic regime $d \sim 4^n/n^2$ that is not reached in our experiments. The empirical "optimization desert"—a flat landscape punctuated by exponentially rare deep minima—is documented in Figure 7 (E5 landscape perturbation analysis), where mean reduction is 0.22% with rare 26.67% maxima across 6,000 perturbed trials.
 
 **Open Problem OP1 (QMA-Hardness of CODP).** Is the Circuit Optimization Decision Problem (CODP) QMA-hard? Circuit Identity Testing (CIT) is QMA-complete (Janzing, Wocjan & Beth, 2003). Since CIT is the special case of CODP with $r = 0$, one might expect CODP to be at least QMA-hard. However, completing the reduction from $k$-Local Hamiltonian requires analyzing the rewrite-rule closure of history-state circuits, which remains open. The empirical observation that all Phase 1 optimizers achieve $\sim 0\%$ on random circuits is *consistent with* QMA-hardness but does not constitute proof.
 
@@ -259,7 +259,7 @@ doubly-exponentially fast in $n$.
 
 # Section 4: Methods
 
-This section describes the complete experimental infrastructure: the optimizer suite, circuit families, preprocessing pipeline, compiler baselines, statistical protocol, and experiment registry. All code is implemented in Python 3.12 using Qiskit 2.x and is version-controlled with data artifacts stored under content-addressable hashes.
+This section describes the complete experimental infrastructure: the optimizer suite, circuit families, preprocessing pipeline, compiler baselines, statistical protocol, and experiment registry. All code is implemented in Python 3.10 using Qiskit 2.x and is version-controlled with data artifacts stored under content-addressable hashes.
 
 ---
 
@@ -469,7 +469,7 @@ CEILING_AWARE_OPTIMIZER(C, max_iter, window):
 
 ## 4.2 Circuit Families
 
-We evaluate optimizers on 15 primary circuit families plus 3 extended families (18 total), spanning four categories: random, algorithmic, variational, and error-correcting. Table 3 summarizes all families.
+We evaluate optimizers on 15 primary circuit families plus 3 extended families (18 total), spanning four categories: random, algorithmic, variational, and error-correcting. Table 3 summarizes all families, and Figure 11 visualizes the resulting reduction heatmap across the 15 primary families × 3 optimizer categories, providing a compact overview of the empirical landscape that the methodology is designed to characterize.
 
 **Table 3: Circuit Family Registry (15 primary + 3 extended families)**
 
@@ -573,7 +573,7 @@ We compare against Qiskit as the confirmed production compiler baseline. Cirq an
 - **Level 2**: Medium optimization; adds commutation analysis and KAK decomposition for two-qubit gates.
 - **Level 3**: Heavy optimization; full peephole optimization including template matching, gate resynthesis, and commutation-based reordering.
 
-Specific passes at Level 3 include `Optimize1qGates`, `CXCancellation`, `CommutativeCancellation`, `OptimizeSwapBeforeMeasure`, and `Collect2qBlocks` + `ConsolidateBlocks`.
+Specific passes at Level 3 include `Optimize1qGates`, `CXCancellation`, `CommutativeCancellation`, `OptimizeSwapBeforeMeasure`, and `Collect2qBlocks` + `ConsolidateBlocks`. The per-level reduction outcomes across seven circuit families are benchmarked in Figure 9, which shows that the Level-3 advantage is concentrated on families with beyond-peephole structure (Oracle, VQE, HardwareEfficient) and absent on structural-ceiling families (QFT, GHZ, QAOA).
 
 **Cirq (planned, metadata-only).** The planned configuration uses `cirq.optimize_for_target_gateset` with the `CZTargetGateset`, combined with `cirq.eject_z` and `cirq.merge_single_qubit_gates_to_phxz`. No canonical Cirq optimization-output CSV is currently available.
 

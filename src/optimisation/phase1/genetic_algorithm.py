@@ -165,16 +165,14 @@ class GeneticAlgorithmOptimizer(BaseOptimizer):
             # falls back to sampling-based fidelity estimation.
             try:
                 f1 = self.calculate_fidelity(child1, target)
-                if f1 < self.fidelity_threshold * 0.9:
-                    # Crossover produced invalid child, fall back to fitter parent
+                if f1 < self.fidelity_threshold:
                     child1 = copy.deepcopy(parent1 if fitness1 >= fitness2 else parent2)
             except Exception:
                 child1 = copy.deepcopy(parent1 if fitness1 >= fitness2 else parent2)
             
             try:
                 f2 = self.calculate_fidelity(child2, target)
-                if f2 < self.fidelity_threshold * 0.9:
-                    # Crossover produced invalid child, fall back to fitter parent
+                if f2 < self.fidelity_threshold:
                     child2 = copy.deepcopy(parent2 if fitness2 >= fitness1 else parent1)
             except Exception:
                 child2 = copy.deepcopy(parent2 if fitness2 >= fitness1 else parent1)

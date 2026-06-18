@@ -44,8 +44,8 @@ from src.circuits.real_benchmarks import (  # noqa: E402
     make_qft, make_ghz, make_cnot_chain, make_bernstein_vazirani,
     make_qaoa_line, make_vqe_twolocal, make_hardware_efficient,
     make_grover, make_quantum_adder, make_quantum_walk, make_iqp,
-    make_random_clifford, make_surface_code_syndrome, make_uccsd_ansatz,
-    make_haar_random, circuit_sha256,
+    make_random_clifford, make_surface_code_syndrome, make_parameterized_ansatz,
+    make_haar_random, average_gate_fidelity, circuit_sha256,
 )
 from src.optimisation.phase1.greedy import GreedyGateCancellation  # noqa: E402
 from src.optimisation.phase2.commutation_rewriter import (  # noqa: E402
@@ -54,6 +54,7 @@ from src.optimisation.phase2.commutation_rewriter import (  # noqa: E402
 from src.optimisation.ceiling_aware import (  # noqa: E402
     CeilingAwareOptimizer, count_phase1_actions,
 )
+from src.optimisation.constants import MAX_EXACT_FIDELITY_QUBITS  # noqa: E402
 from src.provenance import file_sha256, run_metadata  # noqa: E402
 
 SCHEMA_VERSION = "1.0.0"
@@ -109,7 +110,7 @@ FAMILIES: List[Tuple[str, Callable, Callable]] = [
      make_surface_code_syndrome,
      lambda n, s: {"seed": s}),
     ("UCCSD",
-     make_uccsd_ansatz,
+     make_parameterized_ansatz,
      lambda n, s: {"reps": 1, "seed": s}),
     ("HaarRandom",
      make_haar_random,
@@ -122,6 +123,14 @@ HAAR_MAX_QUBITS = 4
 
 # Number of independent trials per (family, n_qubits)
 N_TRIALS = 10
+
+
+def fidelity_source(n_qubits: int, fidelity: float) -> str:
+    if pd.isna(fidelity):
+        return "unavailable"
+    if n_qubits <= MAX_EXACT_FIDELITY_QUBITS:
+        return "exact_average_gate_fidelity"
+    return "base_optimizer_large_circuit_estimate"
 
 
 # ---------------------------------------------------------------------------
@@ -173,6 +182,19 @@ def run_naive_pipeline(circuit: QuantumCircuit,
     optimized_size = optimized.size()
     gate_reduction = 1.0 - optimized_size / original_size if original_size > 0 else 0.0
 
+    # Compute fidelity against the original target circuit (bug #15 fix):
+    # the previous code hardcoded fidelity=1.0 ("by construction"), which hides
+    # any functionality-preservation regressions introduced by the pipeline.
+    # We now prefer the optimizer's reported fidelity (r3.fidelity) and fall
+    # back to an exact average_gate_fidelity computation (capped at
+    # HAAR_MAX_QUBITS for tractability). When exact computation is infeasible
+    # for large circuits we record NaN (explicitly marked as unavailable)
+    # rather than assuming 1.0. See experiments/e18_clifford_t/run.py:144-148.
+    fidelity = getattr(r3, 'fidelity', None)
+    if fidelity is None or (isinstance(fidelity, (int, float)) and float(fidelity) == 0.0):
+        exact = average_gate_fidelity(optimized, circuit, max_qubits=HAAR_MAX_QUBITS)
+        fidelity = float(exact) if exact is not None else float('nan')
+
     # Extended metrics
     def _count(c):
         d = int(c.depth() or 0)
@@ -195,7 +217,7 @@ def run_naive_pipeline(circuit: QuantumCircuit,
         'total_time_ms': total_time_ms,
         'phase1_skipped': False,
         'phase2_skipped': False,
-        'fidelity': 1.0,  # by construction (same pipeline as Hybrid)
+        'fidelity': fidelity,  # computed (bug #15 fix); NaN if exact AGF infeasible
         'depth_reduction': depth_red,
         'cnot_reduction': cnot_red,
     }
@@ -303,6 +325,7 @@ def run(mode: str = "smoke", seed: int = 42, window: int = 10) -> Tuple[pd.DataF
                     'schema_version': SCHEMA_VERSION,
                     'experiment_id': EXPERIMENT_ID,
                     'run_id': run_id,
+                    'mode': mode,
                     'family': family_name,
                     'n_qubits': n_qubits,
                     'trial_seed': trial_seed,
@@ -314,6 +337,9 @@ def run(mode: str = "smoke", seed: int = 42, window: int = 10) -> Tuple[pd.DataF
                     'input_circuit_sha256': circuit_sha256(circuit),
                 }
 
+                naive_fidelity = naive['fidelity']
+                ca_fidelity = ca['fidelity']
+
                 # Naive row
                 naive_row = {
                     **base_record,
@@ -321,6 +347,8 @@ def run(mode: str = "smoke", seed: int = 42, window: int = 10) -> Tuple[pd.DataF
                     'gate_reduction': naive['gate_reduction'],
                     'depth_reduction': naive['depth_reduction'],
                     'cnot_reduction': naive['cnot_reduction'],
+                    'fidelity': naive_fidelity,
+                    'fidelity_source': fidelity_source(n_qubits, naive_fidelity),
                     'optimized_size': naive['optimized_size'],
                     'phase1_time_ms': naive['phase1_time_ms'],
                     'phase2_time_ms': naive['phase2_time_ms'],
@@ -337,6 +365,8 @@ def run(mode: str = "smoke", seed: int = 42, window: int = 10) -> Tuple[pd.DataF
                     'gate_reduction': ca['gate_reduction'],
                     'depth_reduction': depth_red_ca,
                     'cnot_reduction': cnot_red_ca,
+                    'fidelity': ca_fidelity,
+                    'fidelity_source': fidelity_source(n_qubits, ca_fidelity),
                     'optimized_size': ca['optimized_size'],
                     'phase1_time_ms': ca['phase1_time_ms'],
                     'phase2_time_ms': ca['phase2_time_ms'],
@@ -427,6 +457,9 @@ def run(mode: str = "smoke", seed: int = 42, window: int = 10) -> Tuple[pd.DataF
         "n_rows": len(df),
         "n_skipped": skipped,
         "n_processed": processed,
+        "fidelity_field": "fidelity",
+        "fidelity_sources": sorted(df['fidelity_source'].dropna().unique().tolist()) if not df.empty else [],
+        "max_exact_fidelity_qubits": MAX_EXACT_FIDELITY_QUBITS,
         "comparison_file": csv_path.name,
         "summary_file": summary_path.name,
     })

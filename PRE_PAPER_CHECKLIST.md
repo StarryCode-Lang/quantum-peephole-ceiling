@@ -86,9 +86,9 @@
 
 ## Paper Writing Entry Points
 
-- **Manuscript structure**: `docs/06_manuscript/manuscript_structure.md` (complete outline with abstract, 7 sections, figure/table list, cover letter)
+- **Manuscript structure**: `docs/06_manuscript/manuscript_structure_v5.md` (complete outline with abstract, 7 sections, figure/table list, cover letter)
 - **Theory framework**: `docs/01_theory/framework.md` (v5.4.0, 10 definitions, 8 theorems)
-- **Literature review**: `docs/02_literature/literature_review.md` (42 references)
+- **Literature review**: `docs/02_literature/literature_review.md` (42 narrative refs; see `unified_references.md` for authoritative list of 81 refs)
 - **Experimental design**: `docs/03_results/experimental_design.md` (formal specification)
 - **Claim-evidence map**: `docs/06_manuscript/v6_claim_evidence_map.md`
 - **Scope/limitations**: `docs/06_manuscript/v6_scope_limitations_risks.md`

@@ -450,12 +450,21 @@ def make_surface_code_syndrome(n_qubits: int, seed: int = 42) -> QuantumCircuit:
     return qc
 
 
-def make_uccsd_ansatz(n_qubits: int, reps: int = 1, seed: int = 42) -> QuantumCircuit:
-    """Construct a simplified UCCSD-like ansatz for quantum chemistry.
+def make_parameterized_ansatz(n_qubits: int, reps: int = 1, seed: int = 42) -> QuantumCircuit:
+    """Construct a parameterized chemistry-inspired ansatz circuit.
 
-    Models single and double excitation operators decomposed into
-    CNOT ladders and Ry rotations. This is a simplified version;
-    a full UCCSD would use fermionic SWAP networks.
+    NOTE: This is *not* a true UCCSD ansatz. A genuine UCCSD would use
+    fermionic excitation operators (implemented via Jordan-Wigner or
+    Bravyi-Kitaev mappings) with SWAP networks and exact Trotterized
+    exponentials. This function instead builds a simplified Ry-CNOT
+    ladder structure that is loosely inspired by the *shape* of UCCSD
+    (single + double excitation patterns) but does not preserve the
+    fermionic structure or the unitary coupled-cluster amplitude
+    parametrization. It is retained as a parameterized-ansatz
+    benchmark, not as a chemically accurate UCCSD.
+
+    Models single and double excitation-like patterns decomposed into
+    CNOT ladders and Ry rotations.
     """
     rng = np.random.RandomState(seed)
     qc = QuantumCircuit(n_qubits)
@@ -543,7 +552,7 @@ def generate_extended_suite(mode: str = "smoke", seed: int = 42) -> List[Benchma
             BenchmarkCircuit(f"iqp_{n}", "IQP", "iqp", suite, make_iqp(n, depth=3, seed=seed + 700 + n), seed + 700 + n, notes="IQP circuit, 3 diagonal layers"),
             BenchmarkCircuit(f"clifford_{n}", "RandomClifford", "random_clifford", suite, make_random_clifford(n, depth=10, seed=seed + 800 + n), seed + 800 + n, notes="Random Clifford, depth=10"),
             BenchmarkCircuit(f"surface_code_{n}", "SurfaceCode", "surface_code", suite, make_surface_code_syndrome(n, seed=seed + 900 + n), seed + 900 + n, notes="X-stabilizer syndrome extraction"),
-            BenchmarkCircuit(f"uccsd_{n}", "UCCSD", "uccsd_ansatz", suite, make_uccsd_ansatz(n, reps=1, seed=seed + 1000 + n), seed + 1000 + n, notes="Simplified UCCSD ansatz"),
+            BenchmarkCircuit(f"uccsd_{n}", "UCCSD", "uccsd_ansatz", suite, make_parameterized_ansatz(n, reps=1, seed=seed + 1000 + n), seed + 1000 + n, notes="Parameterized ansatz (not true UCCSD; see make_parameterized_ansatz docstring)"),
         ])
 
     # Large-scale instances for scalable families (P4: n=12, 15, 20)

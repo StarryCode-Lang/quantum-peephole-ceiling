@@ -1,0 +1,16 @@
+# Lock placeholder
+#
+# This file is intentionally not a resolved lock file.
+# Generate a real lock in the target platform/environment before archival or release.
+#
+# Pip option:
+#   python -m pip install pip-tools
+#   python -m piptools compile requirements.txt --output-file requirements-lock.txt
+#
+# Conda option:
+#   conda env create -f environment.yml
+#   conda activate q-research
+#   conda env export --from-history > environment-history.lock.yml
+#   conda env export > environment-full.lock.yml
+#
+# Do not cite this placeholder as dependency-resolution evidence.

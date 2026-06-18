@@ -37,8 +37,12 @@ class GreedyGateCancellation(BaseOptimizer):
     """
     
     def __init__(self, max_iterations: int = 100, fidelity_threshold: float = 0.99,
-                 success_reduction: float = 0.20, wire_traversal: bool = False):
-        super().__init__(fidelity_threshold, success_reduction)
+                 success_reduction: float = 0.20, wire_traversal: bool = False,
+                 enable_numeric_commutation: bool = False,
+                 commutation_tolerance: float = DEFAULT_PRECISION):
+        super().__init__(fidelity_threshold, success_reduction,
+                         enable_numeric_commutation=enable_numeric_commutation,
+                         commutation_tolerance=commutation_tolerance)
         self.max_iterations = max_iterations
         self.wire_traversal = wire_traversal
         self._wcl_preprocessor = WireTraversalPreprocessor() if wire_traversal else None

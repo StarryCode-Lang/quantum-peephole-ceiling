@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-06-17T10:00:33.451377+00:00",
+  "created_utc": "2026-06-17T14:49:31.530688+00:00",
   "datasets": [
     {
       "experiment_id": "E01",
@@ -122,7 +122,7 @@
     }
   ],
   "environment": {
-    "env_id": "q-research-20260617_100033",
+    "env_id": "q-research-20260617_144931",
     "packages": {
       "matplotlib": "3.9.0",
       "numpy": "1.26.4",
@@ -136,10 +136,10 @@
   },
   "git": {
     "branch": "master",
-    "commit": "92173dbfe64d343c122c18fb801fc38f12b030a1",
-    "dirty": false
+    "commit": "bc781eb9f00f799dd1faecc0a07d8a0eaab8c6ef",
+    "dirty": true
   },
-  "release_id": "q-research-20260617_100033",
+  "release_id": "q-research-20260617_144931",
   "reproduction": {
     "conda_env": "q-research",
     "entrypoints": [
@@ -164,20 +164,20 @@
   },
   "schema_version": "1.0.0",
   "source_hashes": {
-    "analysis/structural_ceiling.py": "7791dc709a92715d668ea602abcd1a146281d3031901513751ce6afbb544eedb",
-    "experiments/e11_real_circuit_benchmark/run.py": "c5a46a1cb945b730235ac3df97e33964412422484c513e4ad1035adbd5cb06dc",
-    "experiments/e12_compiler_baseline/run.py": "777aca76531af4a057e5f7c0e120bcda721b7004dd76adfccde4c3e2dd2bda7e",
-    "experiments/e13_structural_ceiling/run.py": "b1b0c6c11f60b22e90246ba5370919178fecfc9c62ee7431f8ca4cb5acbfd482",
+    "analysis/structural_ceiling.py": "dd5de5b582950e5a118df45980cecc2aa4282f49236674dc6f97edcbeec8596b",
+    "experiments/e11_real_circuit_benchmark/run.py": "ab38ffb3ab21a77ab9a50df60162c8525e904a4f4425df2b87459f74d1716996",
+    "experiments/e12_compiler_baseline/run.py": "ca43bd9cb4f7000731ff84f23d8ef5ba2813826449f5b481534a9de06cc5e124",
+    "experiments/e13_structural_ceiling/run.py": "97948883da9a12095d926ac796187d617a7329e2b6c007cb270aa9d203961141",
     "scripts/generate_release_manifest.py": "ff71f8610132218b0dec04bc4d62f71ca6edab64661dc3cc9f3ab064f0f8eec8",
     "src/circuits/generator_v2.py": "e0d5f541bb23703bda2a0049410f964821d45723e482d262ebb318891fde1132",
-    "src/circuits/real_benchmarks.py": "a113f1cf6e23d5574ae2c2b284fea0e604242bad22b2df530d0694e1aff6c4e9",
-    "src/optimisation/base.py": "09bbed474fc86da268663c928249c10cb64da6f5c7c1ab41c604de807ea1db0f",
-    "src/optimisation/ceiling_aware.py": "45e479fbf919afa7504a08b34f8014760a63459d08264d6e1d20da6751d4db8c",
+    "src/circuits/real_benchmarks.py": "4107b833c2bae70b30b262e0a82668906f0050c5aac86cf2a9f36423fb643a96",
+    "src/optimisation/base.py": "fa214f3da7955eb47298cc61d59771bd0fbd6badaa7c852b2c069d257d79124c",
+    "src/optimisation/ceiling_aware.py": "f9039c32ce8776161ded68dbecb6d2e7a4222d51f4270272d5088c2ab519a815",
     "src/optimisation/phase1/genetic_algorithm.py": "a571d81fa75b5739252f8d02885e5eaf1153ae2afb88759199a0b7283f08e05c",
     "src/optimisation/phase1/greedy.py": "0d09c16e12b861aec35369dfc48abde1450bbadbb045c5fc465a0b89562e741a",
     "src/optimisation/phase1/random_local_search.py": "26cc47fddaeca2fc9f8dbd72bf2a69117ac06eb31ae02e7a582d0f3e70a6fea6",
     "src/optimisation/phase1/simulated_annealing.py": "b1c1d9c249fd36965dd85b2bfbd42796392971e943536a47f71a574c97317354",
     "src/optimisation/phase1/wire_traversal.py": "e4d2214746f4a771e1c370a61e62a984d26012a74ed529c33b9f983a6df3fbf2",
-    "src/optimisation/phase2/commutation_rewriter.py": "104331519b9cba863b37bd69f9ee3eefcaf183dc7663ce338fb4302be2604dcd"
+    "src/optimisation/phase2/commutation_rewriter.py": "4774fc14276471e149f1a338de4527a6c3c8899c6a51f73ca7348ca646db8bf0"
   }
 }

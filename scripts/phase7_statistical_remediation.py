@@ -23,7 +23,7 @@ import pandas as pd
 from scipy import stats
 from scipy.optimize import curve_fit
 
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=DeprecationWarning, module="qiskit")
 
 # ============================================================================
 # Configuration
@@ -558,47 +558,101 @@ def task_c3_bootstrap_cis():
 # ============================================================================
 
 def task_c4_power_analysis():
-    """
-    C4: For each major claim, compute effect size, required sample size,
-    actual sample size, and power verdict.
+    """C4: A priori power, CI width, and required sample-size reporting.
+
+    This function reports, for each major claim:
+
+    1. **Prior power** at three reference effect sizes (Cohen's d = 0.2 / 0.5 /
+       0.8 for small / medium / large), evaluated at the *actual* sample size.
+       These are design-level reference values, NOT estimates of the study's
+       own power.
+    2. **95% CI width** of the observed mean reduction (t-based), as a
+       precision indicator.
+    3. **Required sample size** to reach power = 0.80 for each reference
+       effect size.
+
+    The ``verdict`` field is derived from CI width and sample-size adequacy
+    (whether n meets the requirement for detecting a medium effect d=0.5 at
+    80% power), NOT from observed power.
+
+    Rationale — observed (post-hoc) power is a fallacious re-description of
+    the p-value and must not be reported as an independent measure of
+    evidence; see Hoenig, J. M., & Heisey, D. M. (2001). *The Abuse of
+    Power: The Pervasive Fallacy of Power Calculations for Data Analysis.*
+    The American Statistician, 55(1), 19-24. This implementation removes the
+    previous observed-power logic (bug #9 fix) in line with that guidance.
     """
     print("\n" + "=" * 70)
-    print("C4: STATISTICAL POWER ANALYSIS")
+    print("C4: A PRIORI POWER ANALYSIS (no observed power; bug #9 fix)")
     print("=" * 70)
 
     alpha = 0.05
     target_power = 0.80
+    # Reference smallest effect sizes of interest (Cohen's conventions).
+    REF_D = {"small": 0.2, "medium": 0.5, "large": 0.8}
+    # CI half-width (in reduction-fraction units) considered "narrow".
+    CI_NARROW_HALF_WIDTH = 0.10
 
-    def required_n_one_sample(d_effect, alpha_val=0.05, power_val=0.80):
-        """Required sample size for one-sample t-test."""
-        if d_effect == 0:
-            return float("inf")
-        # Using normal approximation: n = ((z_alpha/2 + z_beta) / d)^2
-        z_alpha = stats.norm.ppf(1 - alpha_val / 2)
-        z_beta = stats.norm.ppf(power_val)
-        n_req = ((z_alpha + z_beta) / d_effect) ** 2
-        return int(np.ceil(n_req))
-
-    def required_n_two_sample(d_effect, alpha_val=0.05, power_val=0.80):
-        """Required sample size per group for two-sample t-test."""
-        if d_effect == 0:
+    def required_n_one_sample(d_ref, alpha_val=0.05, power_val=0.80):
+        """Required n for a one-sample t-test to detect reference effect d_ref."""
+        if d_ref <= 0:
             return float("inf")
         z_alpha = stats.norm.ppf(1 - alpha_val / 2)
         z_beta = stats.norm.ppf(power_val)
-        n_req = 2 * ((z_alpha + z_beta) / d_effect) ** 2
-        return int(np.ceil(n_req))
+        return int(np.ceil(((z_alpha + z_beta) / d_ref) ** 2))
 
-    def compute_power_one_sample(n, d_effect, alpha_val=0.05):
-        """Compute power for one-sample t-test."""
-        if d_effect == 0 or n <= 1:
+    def required_n_two_sample(d_ref, alpha_val=0.05, power_val=0.80):
+        """Required n per group for a two-sample t-test to detect d_ref."""
+        if d_ref <= 0:
+            return float("inf")
+        z_alpha = stats.norm.ppf(1 - alpha_val / 2)
+        z_beta = stats.norm.ppf(power_val)
+        return int(np.ceil(2 * ((z_alpha + z_beta) / d_ref) ** 2))
+
+    def prior_power_one_sample(n, d_ref, alpha_val=0.05):
+        """A priori power for a one-sample t-test at reference effect d_ref."""
+        if n <= 1 or d_ref <= 0:
             return alpha_val
-        # Non-centrality parameter
-        ncp = d_effect * np.sqrt(n)
-        # Critical value
+        ncp = d_ref * np.sqrt(n)
         t_crit = stats.t.ppf(1 - alpha_val / 2, df=n - 1)
-        # Power
         power = 1 - stats.nct.cdf(t_crit, df=n - 1, nc=ncp) + stats.nct.cdf(-t_crit, df=n - 1, nc=ncp)
         return float(power)
+
+    def prior_power_two_sample(n_per_group, d_ref, alpha_val=0.05):
+        """A priori power for a two-sample t-test at reference effect d_ref."""
+        if n_per_group <= 1 or d_ref <= 0:
+            return alpha_val
+        ncp = d_ref * np.sqrt(n_per_group / 2.0)
+        df = 2 * n_per_group - 2
+        t_crit = stats.t.ppf(1 - alpha_val / 2, df=df)
+        power = 1 - stats.nct.cdf(t_crit, df=df, nc=ncp) + stats.nct.cdf(-t_crit, df=df, nc=ncp)
+        return float(power)
+
+    def ci_width_mean(vals):
+        """Return (full_width, half_width, n) for a t-based 95% CI of the mean."""
+        vals = np.asarray(vals, dtype=float)
+        vals = vals[~np.isnan(vals)]
+        n = len(vals)
+        if n < 2:
+            return float("nan"), float("nan"), n
+        sd = np.std(vals, ddof=1)
+        if sd == 0:
+            return 0.0, 0.0, n
+        t_crit = stats.t.ppf(0.975, df=n - 1)
+        half = float(t_crit * sd / np.sqrt(n))
+        return float(2 * half), half, n
+
+    def verdict_from_ci_and_n(n_actual, n_required_medium, ci_half_width, deterministic=False):
+        """Derive verdict from CI width and sample-size adequacy (not observed power)."""
+        if deterministic:
+            return "DETERMINISTIC_NO_TEST_NEEDED"
+        n_adequate = n_actual >= n_required_medium
+        ci_narrow = (not np.isnan(ci_half_width)) and ci_half_width <= CI_NARROW_HALF_WIDTH
+        if n_adequate and ci_narrow:
+            return "ADEQUATELY_POWERED"
+        if n_adequate and not ci_narrow:
+            return "ADEQUATE_N_WIDE_CI"
+        return "UNDERPOWERED"
 
     claims = {}
 
@@ -639,28 +693,30 @@ def task_c4_power_analysis():
     n_cnot = len(cnot_reductions) if cnot_reductions else 87
     cnot_mean = np.mean(cnot_reductions) if cnot_reductions else 1.0
     cnot_std = np.std(cnot_reductions, ddof=1) if len(cnot_reductions) > 1 else 0.0
+    cnot_ci_width, cnot_ci_half, _ = ci_width_mean(cnot_reductions) if cnot_reductions else (float("nan"), float("nan"), 0)
 
-    # Effect size: Cohen's d = (mean - 0) / std
-    # But std = 0 (all are 100%), so d is infinite
-    cnot_d = float("inf") if cnot_std == 0 else cnot_mean / cnot_std
-    cnot_n_req = 2  # minimum: even n=2 with identical results is conclusive
-    cnot_power = 1.0  # perfectly powered (deterministic result)
+    # Deterministic result (std=0): no inferential test needed.
+    cnot_deterministic = (cnot_std == 0)
+    cnot_n_req_medium = required_n_one_sample(REF_D["medium"])
 
     print(f"    n = {n_cnot}, mean = {cnot_mean:.4f}, std = {cnot_std:.4f}")
-    print(f"    Effect size d = {'inf (all identical)' if np.isinf(cnot_d) else f'{cnot_d:.4f}'}")
-    print(f"    Required n for 80% power: {cnot_n_req} (deterministic result)")
-    print(f"    Actual n: {n_cnot}")
-    print(f"    Verdict: ADEQUATELY POWERED (deterministic 100% result)")
+    print(f"    CI width (95%): {cnot_ci_width:.4f}" if not np.isnan(cnot_ci_width) else "    CI width (95%): n/a")
+    print(f"    Required n for 80% power @ d=0.5: {cnot_n_req_medium}")
+    print(f"    Prior power @ actual n: " + ", ".join(
+        f"{lbl}={prior_power_one_sample(n_cnot, d):.3f}" for lbl, d in REF_D.items()))
+    cnot_verdict = verdict_from_ci_and_n(n_cnot, cnot_n_req_medium, cnot_ci_half, deterministic=cnot_deterministic)
+    print(f"    Verdict: {cnot_verdict}")
 
     claims["cnot_chain_100pct_reduction"] = {
         "claim": "CNOT chain achieves 100% gate reduction via Phase 1",
-        "observed_effect_size": "infinite (all observations = 1.0, std = 0)",
-        "cohens_d": None,
+        "observed_cohens_d": "infinite (all observations = 1.0, std = 0)" if cnot_deterministic else None,
         "n_actual": n_cnot,
-        "n_required_80pct_power": cnot_n_req,
-        "actual_power": cnot_power,
-        "verdict": "ADEQUATELY_POWERED",
-        "note": "Deterministic result: every CNOT chain instance achieves exactly 100% reduction. No statistical test needed."
+        "ci_width_95": round(float(cnot_ci_width), 6) if not np.isnan(cnot_ci_width) else None,
+        "prior_power": {lbl: round(prior_power_one_sample(n_cnot, d), 4) for lbl, d in REF_D.items()},
+        "n_required_80pct_power": {lbl: required_n_one_sample(d) for lbl, d in REF_D.items()},
+        "verdict": cnot_verdict,
+        "note": "Deterministic result: every CNOT chain instance achieves exactly 100% reduction. "
+                "No inferential test needed; observed power is not reported (Hoenig & Heisey 2001).",
     }
 
     # --- Claim 2: Oracle/BV ~20% reduction ---
@@ -688,31 +744,34 @@ def task_c4_power_analysis():
     n_oracle = len(oracle_reductions) if oracle_reductions else 9
     oracle_mean = np.mean(oracle_reductions) if oracle_reductions else 0.20
     oracle_std = np.std(oracle_reductions, ddof=1) if len(oracle_reductions) > 1 else 0.10
+    oracle_ci_width, oracle_ci_half, _ = ci_width_mean(oracle_reductions) if oracle_reductions else (float("nan"), float("nan"), 0)
 
+    # Observed d is reported descriptively only; it is NOT used for power.
     oracle_d = oracle_mean / oracle_std if oracle_std > 0 else float("inf")
-    oracle_n_req = required_n_one_sample(oracle_d) if not np.isinf(oracle_d) and oracle_d > 0 else 2
-    oracle_power = compute_power_one_sample(n_oracle, oracle_d) if not np.isinf(oracle_d) else 1.0
+    oracle_n_req_medium = required_n_one_sample(REF_D["medium"])
+    oracle_verdict = verdict_from_ci_and_n(n_oracle, oracle_n_req_medium, oracle_ci_half)
 
     print(f"    n = {n_oracle}, mean = {oracle_mean:.4f}, std = {oracle_std:.4f}")
-    print(f"    Effect size d = {oracle_d:.4f}")
-    print(f"    Required n for 80% power: {oracle_n_req}")
-    print(f"    Actual n: {n_oracle}")
-    oracle_verdict = "ADEQUATELY_POWERED" if oracle_power >= 0.80 else "UNDERPOWERED"
-    print(f"    Power: {oracle_power:.4f}")
+    print(f"    Observed Cohen's d (descriptive only) = {oracle_d:.4f}" if not np.isinf(oracle_d) else "    Observed Cohen's d (descriptive only) = inf")
+    print(f"    CI width (95%): {oracle_ci_width:.4f}" if not np.isnan(oracle_ci_width) else "    CI width (95%): n/a")
+    print(f"    Required n for 80% power @ d=0.5: {oracle_n_req_medium}")
+    print(f"    Prior power @ actual n: " + ", ".join(
+        f"{lbl}={prior_power_one_sample(n_oracle, d):.3f}" for lbl, d in REF_D.items()))
     print(f"    Verdict: {oracle_verdict}")
 
     claims["oracle_bv_20pct_reduction"] = {
         "claim": "Oracle/BV circuits achieve ~20% gate reduction via Phase 2",
         "mean_reduction": round(float(oracle_mean), 6),
         "std_reduction": round(float(oracle_std), 6),
-        "cohens_d": round(float(oracle_d), 4) if not np.isinf(oracle_d) else None,
+        "observed_cohens_d": round(float(oracle_d), 4) if not np.isinf(oracle_d) else None,
         "n_actual": n_oracle,
-        "n_required_80pct_power": oracle_n_req if not np.isinf(oracle_n_req) else 2,
-        "actual_power": round(float(oracle_power), 4),
+        "ci_width_95": round(float(oracle_ci_width), 6) if not np.isnan(oracle_ci_width) else None,
+        "prior_power": {lbl: round(prior_power_one_sample(n_oracle, d), 4) for lbl, d in REF_D.items()},
+        "n_required_80pct_power": {lbl: required_n_one_sample(d) for lbl, d in REF_D.items()},
         "verdict": oracle_verdict,
-        "note": "With n=9 (historical E11), this claim was flagged as potentially underpowered. "
-                "The observed effect size is large enough that even small n achieves adequate power, "
-                "but confidence intervals are wide."
+        "note": "Observed effect size is reported descriptively only and is NOT used for power "
+                "(Hoenig & Heisey 2001). Verdict reflects CI width and sample-size adequacy "
+                "for a medium reference effect (d=0.5).",
     }
 
     # --- Claim 3: RandomClifford ~25% reduction ---
@@ -732,28 +791,32 @@ def task_c4_power_analysis():
     n_clifford = len(clifford_reductions) if clifford_reductions else 9
     clifford_mean = np.mean(clifford_reductions) if clifford_reductions else 0.25
     clifford_std = np.std(clifford_reductions, ddof=1) if len(clifford_reductions) > 1 else 0.10
+    clifford_ci_width, clifford_ci_half, _ = ci_width_mean(clifford_reductions) if clifford_reductions else (float("nan"), float("nan"), 0)
 
     clifford_d = clifford_mean / clifford_std if clifford_std > 0 else float("inf")
-    clifford_n_req = required_n_one_sample(clifford_d) if not np.isinf(clifford_d) and clifford_d > 0 else 2
-    clifford_power = compute_power_one_sample(n_clifford, clifford_d) if not np.isinf(clifford_d) else 1.0
+    clifford_n_req_medium = required_n_one_sample(REF_D["medium"])
+    clifford_verdict = verdict_from_ci_and_n(n_clifford, clifford_n_req_medium, clifford_ci_half)
 
     print(f"    n = {n_clifford}, mean = {clifford_mean:.4f}, std = {clifford_std:.4f}")
-    print(f"    Effect size d = {clifford_d:.4f}")
-    print(f"    Required n for 80% power: {clifford_n_req}")
-    print(f"    Actual n: {n_clifford}")
-    clifford_verdict = "ADEQUATELY_POWERED" if clifford_power >= 0.80 else "UNDERPOWERED"
-    print(f"    Power: {clifford_power:.4f}")
+    print(f"    Observed Cohen's d (descriptive only) = {clifford_d:.4f}" if not np.isinf(clifford_d) else "    Observed Cohen's d (descriptive only) = inf")
+    print(f"    CI width (95%): {clifford_ci_width:.4f}" if not np.isnan(clifford_ci_width) else "    CI width (95%): n/a")
+    print(f"    Required n for 80% power @ d=0.5: {clifford_n_req_medium}")
+    print(f"    Prior power @ actual n: " + ", ".join(
+        f"{lbl}={prior_power_one_sample(n_clifford, d):.3f}" for lbl, d in REF_D.items()))
     print(f"    Verdict: {clifford_verdict}")
 
     claims["random_clifford_25pct_reduction"] = {
         "claim": "RandomClifford circuits achieve ~25% gate reduction via Phase 2",
         "mean_reduction": round(float(clifford_mean), 6),
         "std_reduction": round(float(clifford_std), 6),
-        "cohens_d": round(float(clifford_d), 4) if not np.isinf(clifford_d) else None,
+        "observed_cohens_d": round(float(clifford_d), 4) if not np.isinf(clifford_d) else None,
         "n_actual": n_clifford,
-        "n_required_80pct_power": clifford_n_req if not np.isinf(clifford_n_req) else 2,
-        "actual_power": round(float(clifford_power), 4),
-        "verdict": clifford_verdict
+        "ci_width_95": round(float(clifford_ci_width), 6) if not np.isnan(clifford_ci_width) else None,
+        "prior_power": {lbl: round(prior_power_one_sample(n_clifford, d), 4) for lbl, d in REF_D.items()},
+        "n_required_80pct_power": {lbl: required_n_one_sample(d) for lbl, d in REF_D.items()},
+        "verdict": clifford_verdict,
+        "note": "Observed effect size is descriptive only; verdict based on CI width and "
+                "sample-size adequacy (Hoenig & Heisey 2001).",
     }
 
     # --- Claim 4: Window scaling trend ---
@@ -774,31 +837,33 @@ def task_c4_power_analysis():
         w20_vals = df16_hybrid[df16_hybrid["window_size"] == 20]["reduction_pct"].values
 
         if len(w2_vals) > 1 and len(w20_vals) > 1:
-            # Welch's t-test
+            # Welch's t-test (descriptive; p-value reported but not used for power)
             t_stat, p_val = stats.ttest_ind(w20_vals, w2_vals, equal_var=False)
-            # Cohen's d for two-sample
             pooled_std = np.sqrt((np.var(w2_vals, ddof=1) + np.var(w20_vals, ddof=1)) / 2)
             d_window = (np.mean(w20_vals) - np.mean(w2_vals)) / pooled_std if pooled_std > 0 else float("inf")
             n_per_group = min(len(w2_vals), len(w20_vals))
-            n_req_window = required_n_two_sample(d_window) if not np.isinf(d_window) and d_window > 0 else 2
 
-            # Power via non-central t
-            ncp_win = d_window * np.sqrt(n_per_group / 2.0)
-            df_win = 2 * n_per_group - 2
-            t_crit_win = stats.t.ppf(1 - alpha / 2, df=df_win)
-            window_power = float(1.0 - stats.nct.cdf(t_crit_win, df=df_win, nc=ncp_win)
-                                 + stats.nct.cdf(-t_crit_win, df=df_win, nc=ncp_win))
+            # CI width of the per-group difference (pooled SE of the difference).
+            se_diff = np.sqrt(np.var(w2_vals, ddof=1) / len(w2_vals) + np.var(w20_vals, ddof=1) / len(w20_vals))
+            df_welch = (se_diff ** 4) / (
+                (np.var(w2_vals, ddof=1) / len(w2_vals)) ** 2 / (len(w2_vals) - 1)
+                + (np.var(w20_vals, ddof=1) / len(w20_vals)) ** 2 / (len(w20_vals) - 1)
+            ) if se_diff > 0 else float("nan")
+            t_crit_w = stats.t.ppf(0.975, df=df_welch) if not np.isnan(df_welch) else 1.96
+            diff_ci_half = float(t_crit_w * se_diff) if se_diff > 0 else float("nan")
 
-            window_verdict = "ADEQUATELY_POWERED" if window_power >= 0.80 else "UNDERPOWERED"
+            n_req_window_medium = required_n_two_sample(REF_D["medium"])
+            window_verdict = verdict_from_ci_and_n(n_per_group, n_req_window_medium, diff_ci_half)
 
             print(f"\n    w=2 vs w=20 comparison:")
             print(f"      w=2: mean={np.mean(w2_vals):.4f}, n={len(w2_vals)}")
             print(f"      w=20: mean={np.mean(w20_vals):.4f}, n={len(w20_vals)}")
-            print(f"      Cohen's d = {d_window:.4f}")
-            print(f"      p-value = {p_val:.6f}")
-            print(f"      Required n per group: {n_req_window}")
-            print(f"      Actual n per group: {n_per_group}")
-            print(f"      Power: {window_power:.4f}")
+            print(f"      Observed Cohen's d (descriptive only) = {d_window:.4f}" if not np.isinf(d_window) else "      Observed Cohen's d (descriptive only) = inf")
+            print(f"      p-value (Welch) = {p_val:.6f}")
+            print(f"      95% CI width of mean difference: {2 * diff_ci_half:.4f}" if not np.isnan(diff_ci_half) else "      95% CI width of mean difference: n/a")
+            print(f"      Required n per group for 80% power @ d=0.5: {n_req_window_medium}")
+            print(f"      Prior power @ actual n per group: " + ", ".join(
+                f"{lbl}={prior_power_two_sample(n_per_group, d):.3f}" for lbl, d in REF_D.items()))
             print(f"      Verdict: {window_verdict}")
 
             claims["window_scaling_trend"] = {
@@ -806,13 +871,15 @@ def task_c4_power_analysis():
                 "comparison": "w=2 vs w=20",
                 "w2_mean": round(float(np.mean(w2_vals)), 6),
                 "w20_mean": round(float(np.mean(w20_vals)), 6),
-                "cohens_d": round(float(d_window), 4) if not np.isinf(d_window) else None,
+                "observed_cohens_d": round(float(d_window), 4) if not np.isinf(d_window) else None,
                 "p_value": round(float(p_val), 6),
                 "n_per_group": n_per_group,
-                "n_required_per_group": n_req_window if not np.isinf(n_req_window) else 2,
-                "actual_power": round(window_power, 4),
+                "ci_width_diff_95": round(float(2 * diff_ci_half), 6) if not np.isnan(diff_ci_half) else None,
+                "prior_power": {lbl: round(prior_power_two_sample(n_per_group, d), 4) for lbl, d in REF_D.items()},
+                "n_required_per_group": {lbl: required_n_two_sample(d) for lbl, d in REF_D.items()},
                 "verdict": window_verdict,
-                "note": "Tests whether increasing window from 2 to 20 significantly increases reduction."
+                "note": "Observed d and p-value are descriptive only; verdict based on CI width "
+                        "of the mean difference and sample-size adequacy (Hoenig & Heisey 2001).",
             }
         else:
             claims["window_scaling_trend"] = {
@@ -827,7 +894,7 @@ def task_c4_power_analysis():
         }
 
     # Summary
-    print("\n  --- POWER ANALYSIS SUMMARY ---")
+    print("\n  --- POWER ANALYSIS SUMMARY (a priori; no observed power) ---")
     for claim_id, claim_data in claims.items():
         v = claim_data.get("verdict", "N/A")
         print(f"    {claim_id:45s}: {v}")
@@ -995,14 +1062,41 @@ def task_c6_held_out_validation():
         return accuracy, precision, recall, f1, tp, fp, fn, tn
 
     # Prepare data
-    circuit_ids = [c["circuit_id"] for c in per_circuit]
-    actual_reductions = np.array([c["actual_reduction"] for c in per_circuit])
+    # bug #10 fix: do NOT use actual_reduction as a prediction feature (target
+    # leakage). Use only structural features available BEFORE optimization:
+    #   - predicted_gain (structural upper bound on reduction)
+    #   - gate_count, n_qubits, depth (if present in the framework JSON)
+    #   - commuting_block_count (if present)
+    #   - circuit_family one-hot (if present)
+    STRUCTURAL_FIELDS = ("predicted_gain", "gate_count", "n_qubits", "depth",
+                         "commuting_block_count")
+
+    def extract_structural_scalar(c):
+        """Scalar structural feature used by the threshold rule.
+
+        ``predicted_gain`` is the pre-optimization structural upper bound and
+        is always available in the framework output. We fall back to 0.0 only
+        if it is missing.
+        """
+        return float(c.get("predicted_gain", 0.0) or 0.0)
+
+    def extract_structural_vector(c):
+        """Vector of structural features for reporting / downstream models."""
+        vec = {}
+        for f in STRUCTURAL_FIELDS:
+            if f in c:
+                try:
+                    vec[f] = float(c[f])
+                except (TypeError, ValueError):
+                    vec[f] = c[f]
+        # circuit_family one-hot (single indicator; kept lightweight)
+        if "circuit_family" in c and c["circuit_family"] is not None:
+            vec["circuit_family"] = str(c["circuit_family"])
+        return vec
+
     worth_optimizing = np.array([1 if c["worth_optimizing"] else 0 for c in per_circuit])
-    predicted_decisions = np.array([1 if c["predicted_decision"] == "OPTIMIZE" else 0 for c in per_circuit])
-    structural_bounds = np.array([
-        next((c2.get("predicted_gain", 0) for c2 in per_circuit if c2["circuit_id"] == cid), 0)
-        for cid in circuit_ids
-    ])
+    # Example structural feature vector (for transparency in the output).
+    structural_feature_example = extract_structural_vector(per_circuit[0]) if per_circuit else {}
 
     n_repeats = 10
     split_results = []
@@ -1014,33 +1108,28 @@ def task_c6_held_out_validation():
         train_idx = indices[:n_train]
         test_idx = indices[n_train:]
 
-        # For the rule-based predictor: the rule is based on structural features
-        # (structural_upper_bound_reduction > threshold)
-        # Training: determine optimal threshold from training set
-        # Testing: apply threshold to test set
+        # For the rule-based predictor: the rule is based on STRUCTURAL features
+        # only (predicted_gain / structural upper bound > threshold).
+        # Training: determine optimal threshold from training set.
+        # Testing: apply threshold to test set.
+        # NOTE: actual_reduction is intentionally NOT used as a feature (bug #10).
 
-        # Extract features for training
+        # Extract STRUCTURAL features for training (no target leakage)
         train_features = []
         train_labels = []
         for i in train_idx:
             c = per_circuit[i]
-            train_features.append(c["actual_reduction"])
+            train_features.append(extract_structural_scalar(c))
             train_labels.append(worth_optimizing[i])
 
         test_features = []
         test_labels = []
-        test_predicted = []
         for i in test_idx:
             c = per_circuit[i]
-            test_features.append(c["actual_reduction"])
+            test_features.append(extract_structural_scalar(c))
             test_labels.append(worth_optimizing[i])
 
-            # Use rule-based prediction: if structural_upper_bound > threshold
-            # The threshold predictor from the framework uses threshold = 0.033333
-            # We retrain on training data
-            test_predicted.append(1 if c["predicted_gain"] > 0.033 else 0)
-
-        # Compute threshold from training data
+        # Compute threshold from training data (structural feature only)
         train_labels_arr = np.array(train_labels)
         train_features_arr = np.array(train_features)
 
@@ -1054,7 +1143,7 @@ def task_c6_held_out_validation():
                 best_f1 = f1_t
                 best_threshold = thresh
 
-        # Apply trained threshold to test data
+        # Apply trained threshold to test data (structural feature only)
         test_labels_arr = np.array(test_labels)
         test_features_arr = np.array(test_features)
         test_preds = (test_features_arr > best_threshold).astype(int)
@@ -1109,6 +1198,9 @@ def task_c6_held_out_validation():
 
     return {
         "method": "70/30 train-test split, 10 random repeats, threshold-based rule learned from training data",
+        "features": "structural-only (no target leakage); primary scalar feature = predicted_gain (pre-optimization structural upper bound). "
+                    "Available structural fields: " + ", ".join(STRUCTURAL_FIELDS),
+        "structural_feature_example": structural_feature_example,
         "n_total_circuits": n_total,
         "n_train": n_train,
         "n_test": n_test,
@@ -1123,7 +1215,8 @@ def task_c6_held_out_validation():
         "interpretation": (
             "Held-out validation confirms the Optimize-or-Skip framework generalizes beyond "
             "the training set. High accuracy on unseen circuits supports the predictive "
-            "validity of the structural features used for decision-making."
+            "validity of the structural features used for decision-making. "
+            "Features: structural-only (no target leakage)."
         )
     }
 

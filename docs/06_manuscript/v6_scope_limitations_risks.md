@@ -1,8 +1,11 @@
 # V6 Scope, Limitations, and Reviewer-Risk Notes
 
-> **Version**: 6.0 (Updated for *Quantum* manuscript v5.0 — planned listing-model extension, ceiling-aware smoke study, metadata-only multi-compiler expansion)  
-> **Date**: 2026-06-15  
+> **Version**: 6.1 (Updated to cross-reference the standalone `limitations_and_future_work.md` chapter and correct stale E19/E20 evidence references)
+> **Date**: 2026-06-17
 > **Changes from v5.1**: Listing-model dependency reclassified as a planned/preliminary extension. Multi-compiler claims limited to completed Qiskit data; Cirq and t|ket> remain planned/metadata-only. Ceiling-aware optimizer labeled smoke-only. INSERTION cascade result clarified as bounded-version only. New reviewer risks and counterarguments added.
+> **Changes from v6.0**: (i) Added explicit cross-reference to the standalone Limitations & Future Work chapter (`limitations_and_future_work.md`), which enumerates 14 specific limitations and 20 forward-work items not duplicated here. (ii) Corrected the reviewer-risk table: E19 (WCL Full Validation) and E20 (Multi-Compiler Full) are PLANNED, not run — previous entries that listed them as evidence assets have been fixed. (iii) E19 placeholder directory `data/v6/e19/README.md` and E20 README `data/v6/e20/README.md` are now committed.
+
+> **Relationship to `limitations_and_future_work.md`**: This document focuses on *delimitations* (conscious scope boundaries, D1–D9) and *reviewer-risk counterarguments* — the framing and defense of the manuscript's claims. The companion chapter `limitations_and_future_work.md` focuses on *specific technical limitations* (held-out validation failure, survivorship bias, under-powering, theory-experiment gaps, deferred experiments) and *constructive forward paths* for each. The two documents are complementary: a delimitation here (e.g., D8 listing-model dependency) often corresponds to a limitation there (e.g., §3 listing-conditional ceiling, §7 E19 not run). Where the two documents address the same issue, the limitation chapter provides the technical detail and forward path; this document provides the reviewer-facing framing.
 
 ---
 
@@ -145,9 +148,9 @@ The confirmed compiler comparison currently includes Qiskit as the industrial re
 | Why not more circuit families? | 15+ families in v5; framework is extensible by design | 15+ families already exceed typical benchmark scope. The framework's definitions apply to any circuit family. |
 | QMA-hardness claim? | Explicitly labeled as Open Problem (Supplementary S8.6), not a result | We never claim to prove hardness. OP1/OP2 are motivating directions, clearly labeled as open problems. |
 | Scale limitation? | Extended to n=20; theorems are scale-independent | The theory holds for arbitrary n. Empirical range is bounded by exact-fidelity verification cost, not theoretical limitations. |
-| Is listing-model effect real or an artifact? | Thm 9 (formal proof), E19 (empirical), E20 (pass decomposition), all 6 optimizers | Theorem 9 proves existence. Effect confirmed across all optimizer types and consistent with production compiler behavior. |
-| Ceiling-aware optimizer: does it miss optimization opportunities? | E19 (speedup vs. reduction trade-off), Table 7, failure mode analysis in S10 | Proxy-guided selection matches or exceeds full-pipeline reduction. Failure modes are analyzed in Supplementary S10; families with moderate reduction are the primary risk. |
-| Multi-compiler comparison: is it fair? | E20, E21 (pass-level decomposition); D2 (delimitation) | All compilers tested at standard optimization levels with default no-backend transpilation. Pass-level decomposition isolates mechanism-level contributions. |
+| Is listing-model effect real or an artifact? | Thm 9 (formal proof), E1 smoke (~18% on one family), all 6 optimizers; E19 (full WCL validation) is PLANNED, not run | Theorem 9 proves existence. Smoke observation is single-family only; full cross-family confirmation deferred to E19. Effect is consistent with production compiler behavior, but the LBL→WCL gap should be presented as preliminary, not confirmed. See `limitations_and_future_work.md` §3 and §7. |
+| Ceiling-aware optimizer: does it miss optimization opportunities? | E21 smoke (1.9x–27x speedup on training families), Table 7, failure mode analysis in S10; E21 full-mode is PLANNED | Smoke-mode evidence shows matching reduction with substantial speedup on sampled cases. Failure modes are analyzed in Supplementary S10; families with moderate reduction are the primary risk. Full-mode validation required before claiming general compiler-level speedup. See `limitations_and_future_work.md` §9 (E21 under-powered). |
+| Multi-compiler comparison: is it fair? | E15 (Qiskit confirmed), E20 (Cirq/t\|ket> PLANNED, metadata only); D2 (delimitation) | All compilers tested at standard optimization levels with default no-backend transpilation. Pass-level decomposition isolates mechanism-level contributions. **Only Qiskit data is currently available**; Cirq/t\|ket> comparison is committed as metadata (`data/v6/e20/metadata.json`) but not run. See `limitations_and_future_work.md` §6. |
 | Paper length (25–28 pages)? | *Quantum* accepts long papers; modular structure allows selective reading | *Quantum* explicitly values comprehensive empirical studies. The modular structure (clearly labeled sections, self-contained results) allows reviewers and readers to navigate selectively. Supplementary materials absorb detailed tables and extended experiments. |
 
 ---
@@ -169,6 +172,38 @@ Peephole optimization — the local rewriting of gate sequences to reduce circui
 
 ---
 
-*Document version: 6.0*  
-*Last updated: 2026-06-15*  
+## Cross-Reference Index: Delimitations vs. Technical Limitations
+
+The table below maps each delimitation in this document to the corresponding technical limitation(s) in `limitations_and_future_work.md`. The mapping is many-to-many: a single delimitation may correspond to multiple specific limitations, and a single limitation may inform multiple delimitations.
+
+| Delimitation (this doc) | Technical Limitation (`limitations_and_future_work.md`) | Relationship |
+|---|---|---|
+| D1 (Qubit Scale n=3–20) | (covered by general scoping; no specific §) | D1 is a conscious scope boundary; the limitation chapter does not add technical detail here. |
+| D2 (Default No-Backend Transpilation) | §11 (Noiseless Ideal Environment) | D2 isolates optimization from routing; §11 extends the same isolation principle to noise. |
+| D3 (Gate Count Primary Metric) | (covered by general scoping; no specific §) | D3 is a metric choice; not flagged as a limitation in the companion chapter. |
+| D4 (Local Upper-Bound Proxy) | §10 (`_gates_commute` conservative bound) | D4 establishes the proxy is local; §10 establishes the proxy is a *lower* bound on Phase-2a reduction due to conservative commutativity rules. |
+| D5 (CODP/QMA-Hardness Open) | (no corresponding §; D5 is an open problem, not a limitation) | — |
+| D6 (Fidelity Verification Scope) | (no corresponding §; D6 is a verification-scoping decision) | — |
+| D7 (Phase-2 Window Sensitivity) | (no corresponding §; D7 is parameter sensitivity, addressed by E16 saturation curve) | — |
+| D8 (Listing-Model Dependency) | §3 (Listing-Conditional Ceiling), §7 (E19 Not Run) | D8 frames the listing-model effect as planned/preliminary; §3 explains the theoretical reason (ceiling is listing-conditional, not intrinsic); §7 documents that E19 (the confirmatory experiment) is deferred. |
+| D9 (Prototype Simplicity) | §2 (Phase-2a vs. Phase-2b Gap), §10 (`_gates_commute` conservative) | D9 notes the prototype is intentionally simple; §2 specifies the missing Phase-2b (template matching) implementation; §10 specifies the conservative commutativity check. |
+
+Additional limitations in `limitations_and_future_work.md` with no corresponding delimitation here (these are technical limitations, not scope boundaries):
+
+| Limitation § | Topic | Why no delimitation |
+|---|---|---|
+| §1 | Held-out predictive validation failed | This is a methodological failure, not a scope choice. |
+| §5 | Theorem 6 unverified | This is a deferred validation, not a scope boundary. |
+| §6 | Multi-compiler Qiskit-only | Partially addressed by D2 and the "Scope of Multi-Compiler Comparison" section above, but the limitation chapter provides the data-level detail (E20 has no CSV). |
+| §8 | E18 survivorship bias | This is a data-quality issue, not a scope choice. |
+| §9 | Under-powered experiments | This is a statistical-power issue, not a scope choice. |
+| §12 | Pass isolation 5/15 families | This is an instrumentation gap, not a scope choice. |
+| §13 | Raster figures | This is a pre-submission infrastructure task, not a scope choice. |
+| §14 | E4 single seed | This is a methodological preliminary, not a scope choice. |
+
+---
+
+*Document version: 6.1*
+*Last updated: 2026-06-17*
 *Author: Q-Research Manuscript Team*
+*Companion chapter: `limitations_and_future_work.md` (v1.0, 2026-06-17)*

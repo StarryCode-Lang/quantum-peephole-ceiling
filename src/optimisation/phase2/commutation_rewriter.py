@@ -32,8 +32,12 @@ class CommutationRewriter(BaseOptimizer):
     """
     
     def __init__(self, max_iterations: int = 100, fidelity_threshold: float = 0.99,
-                 success_reduction: float = 0.20, window_size: int = 10):
-        super().__init__(fidelity_threshold, success_reduction)
+                 success_reduction: float = 0.20, window_size: int = 10,
+                 enable_numeric_commutation: bool = False,
+                 commutation_tolerance: float = 1e-10):
+        super().__init__(fidelity_threshold, success_reduction,
+                         enable_numeric_commutation=enable_numeric_commutation,
+                         commutation_tolerance=commutation_tolerance)
         self.max_iterations = max_iterations
         self.window_size = window_size
     
@@ -128,15 +132,21 @@ class HybridCommuteRewrite(BaseOptimizer):
     """
     
     def __init__(self, max_iterations: int = 100, fidelity_threshold: float = 0.99,
-                 success_reduction: float = 0.20, window_size: int = 10):
-        super().__init__(fidelity_threshold, success_reduction)
+                 success_reduction: float = 0.20, window_size: int = 10,
+                 enable_numeric_commutation: bool = False,
+                 commutation_tolerance: float = 1e-10):
+        super().__init__(fidelity_threshold, success_reduction,
+                         enable_numeric_commutation=enable_numeric_commutation,
+                         commutation_tolerance=commutation_tolerance)
         self.max_iterations = max_iterations
         self.window_size = window_size
         self.phase1 = None  # Will be initialized in optimize
         self.phase2 = CommutationRewriter(max_iterations=max_iterations,
                                           fidelity_threshold=fidelity_threshold,
                                           success_reduction=success_reduction,
-                                          window_size=window_size)
+                                          window_size=window_size,
+                                          enable_numeric_commutation=enable_numeric_commutation,
+                                          commutation_tolerance=commutation_tolerance)
     
     def optimize(self, circuit: QuantumCircuit, target: Optional[QuantumCircuit] = None) -> OptimizationResult:
         """Optimize using hybrid Phase 1 + Phase 2 approach."""
@@ -147,7 +157,9 @@ class HybridCommuteRewrite(BaseOptimizer):
         from ..phase1.greedy import GreedyGateCancellation
         self.phase1 = GreedyGateCancellation(max_iterations=self.max_iterations,
                                              fidelity_threshold=self.fidelity_threshold,
-                                             success_reduction=self.success_reduction)
+                                             success_reduction=self.success_reduction,
+                                             enable_numeric_commutation=self.enable_numeric_commutation,
+                                             commutation_tolerance=self.commutation_tolerance)
         
         result1 = self.phase1.optimize(circuit, target)
         intermediate = result1.optimized_circuit

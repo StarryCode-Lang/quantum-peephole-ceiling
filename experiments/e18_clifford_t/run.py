@@ -119,9 +119,15 @@ def run(mode: str, seed: int, max_qubits_fidelity: int) -> pd.DataFrame:
                 "run_id": run_id,
                 "circuit_id": bench.circuit_id,
                 "circuit_family": bench.family,
+                "circuit_type": bench.circuit_type,
                 "n_qubits": circuit.num_qubits,
+                "gate_set": "clifford_t",
                 "optimizer": "none",
-                "status": f"decompose_error: {exc}",
+                "status": "decompose_error",
+                "error_message": str(exc),
+                "error_type": type(exc).__name__,
+                "trial": trial,
+                "seed": bench.seed,
             })
             continue
 

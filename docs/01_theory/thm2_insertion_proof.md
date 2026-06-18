@@ -227,34 +227,37 @@ INSERTION at position $p$ inserts gates $g, g^{-1}$ between $g_p$ and $g_{p+1}$.
 
 We must show that these topology changes cannot lead to net reduction beyond $B_{\text{pre}}(C)$.
 
-**Step 3: Wire-level ordering preservation.**
+**Step 3: Wire-level structure under INSERTION + SWAP + COMMUTATION.**
 
-**Lemma (Wire-order invariant).** Let $C$ be a circuit and let $M$ be any sequence of INSERTION, SWAP, and COMMUTATION moves (no REMOVAL). Let $\pi_w(C)$ denote the subsequence of gates acting on wire $w$ in $C$. Then for every wire $w$:
+We need a structural invariant that is strong enough to bound the INSERTION-facilitated cascade, while being honest about what COMMUTATION can and cannot do.
+
+**Lemma (Wire-unitary invariant, corrected).** Let $C$ be a circuit and let $M$ be any sequence of INSERTION, SWAP, and COMMUTATION moves (no REMOVAL). For each wire $w$, let $U_w(C)$ denote the wire-level unitary implemented by the subsequence of gates acting on wire $w$ (in listing order). Then:
 
 $$
-\pi_w(C') = \pi_w(C) \cdot \sigma_w,
+U_w(C') = U_w(C) \cdot U_w(\sigma_w),
 $$
 
-where $\sigma_w$ is a sequence of inserted gates on wire $w$ interleaved into $\pi_w(C)$, and the relative ordering of pre-existing gates on wire $w$ is preserved.
+where $\sigma_w$ is the subsequence of *inserted* gates acting on wire $w$. That is, the wire-level unitary of pre-existing gates is preserved, and inserted gates contribute an additional factor $U_w(\sigma_w)$.
 
-*Proof.* INSERTION adds gates at a specific listing position. If the inserted gate $g$ acts on wire $w$, it is appended to $\pi_w$ at the corresponding position among the pre-existing gates. SWAP exchanges gates on disjoint wires, so it does not change $\pi_w$ for any wire $w$. COMMUTATION replaces $(g_i, g_{i+1})$ with $(g_i', g_{i+1}')$; if both act on wire $w$, their relative wire-order may change, but COMMUTATION preserves the unitary product $g_{i+1}' g_i' = g_{i+1} g_i$, so the wire-level unitary is unchanged.
+*Proof.* We verify each move type:
+- **INSERTION** adds a pair $(g, g^{-1})$ at some listing position. If $g$ acts on wire $w$, then $g^{-1}$ also acts on wire $w$ (since inverse gates act on the same qubits), and $g \cdot g^{-1} = I$ on wire $w$. Thus $U_w$ is unchanged by a single INSERTION viewed in isolation; the inserted pair contributes $I$ to $U_w$. However, subsequent SWAP/COMMUTATION may separate the pair, so we track the inserted gates as a separate factor $\sigma_w$.
+- **SWAP** exchanges two gates on disjoint wires. For each wire $w$, the gate subsequence $\pi_w$ is unchanged (the swapped gate on wire $w$ stays on wire $w$, just at a different listing position relative to gates on other wires). Thus $U_w$ is preserved.
+- **COMMUTATION** replaces $(g_i, g_{i+1})$ with $(g_i', g_{i+1}')$ such that $g_{i+1}' g_i' = g_{i+1} g_i$. If both gates act on wire $w$, their relative order on wire $w$ may change, but the wire-level unitary product is preserved by the commutation condition. If the gates act on different wires, each wire's subsequence is unchanged.
 
-However, we note that COMMUTATION can change the relative order of gates on the **same** wire when the two commuting gates both act on that wire. For example, if $g_i = R_z(\alpha)$ and $g_{i+1} = R_z(\beta)$ both act on the same qubit, they commute, and COMMUTATION swaps them. This preserves the wire-level unitary but changes the gate ordering.
+Combining: the wire-level unitary decomposes as $U_w(C') = U_w(\text{pre-existing}) \cdot U_w(\text{inserted})$, where the pre-existing factor equals $U_w(C)$ and the inserted factor is determined by $\sigma_w$. $\square$
 
-For gates on **different** wires, SWAP exchanges their listing positions without affecting either wire's gate subsequence. $\square$
+**Important clarification on same-wire COMMUTATION.** Unlike an earlier draft of this lemma, we do **not** claim that the relative *ordering* of pre-existing gates on a wire is preserved — same-wire COMMUTATION can reorder them (e.g., $R_z(\alpha) \cdot R_z(\beta) \to R_z(\beta) \cdot R_z(\alpha)$). What is preserved is the wire-level *unitary* product, which is the algebraically relevant quantity. This correction does not weaken Theorem 2d because the bound $B_{\text{pre}}(C)$ is defined in terms of wire-level inverse pairs that can be exposed by SWAP and COMMUTATION — it already accounts for all same-wire reorderings that COMMUTATION enables. The role of the wire-unitary invariant is to establish that INSERTION cannot *create* new wire-level inverse relationships among pre-existing gates; it can only insert additional gates whose net contribution is controlled by Theorem 2c.
 
-**Step 4: Pre-existing inverse pairs are wire-level properties.**
+**Step 4: Pre-existing inverse pairs are wire-level unitary properties.**
 
-Two pre-existing gates $g_a, g_b$ form a wire-level inverse pair if:
+Two pre-existing gates $g_a, g_b$ form a cancellable wire-level pair if:
 - They act on the same qubit(s),
 - $g_b = g_a^{-1}$,
-- They are adjacent on their shared wire (no other gates on that wire between them), or can be made adjacent by commuting past gates on other wires.
+- They can be brought into listing adjacency by SWAP (moving gates on other wires out of the way) and COMMUTATION (reordering gates on the same wire, preserving the wire unitary).
 
-The key insight: whether $g_a$ and $g_b$ can be brought into adjacency depends only on:
-1. The gates on their shared wire between them (which must commute or be removed).
-2. The gates on other wires that interleave (which can be SWAPped away).
+The set of all such pairs is exactly what $B_{\text{pre}}(C)$ counts — it is the Phase-2 action space restricted to pre-existing gates. Crucially, $B_{\text{pre}}(C)$ is determined entirely by the pre-existing gates and their wire-level unitaries, which (by Step 3) are preserved under INSERTION + SWAP + COMMUTATION.
 
-INSERTION adds gates to wires. It never removes pre-existing gates from wires. Therefore, INSERTION can only **add** obstacles on a wire between $g_a$ and $g_b$, never remove them. The only way INSERTION helps is if the inserted gates themselves are subsequently removed (via REMOVAL), but by Theorem 2c, the net cost of such removal is non-negative.
+**Key claim:** INSERTION cannot increase $B_{\text{pre}}(C)$. INSERTION adds gates to wires; it never removes pre-existing gates or changes their wire-level unitaries. The inserted gates may commute with pre-existing gates (enabling new COMMUTATION moves), but any cancellation involving an inserted gate is bounded by Theorem 2c (net gate-count change $\ge 0$ from the INSERTION side). Therefore, the only net reduction achievable comes from cancelling pre-existing pairs that were *already* in $B_{\text{pre}}(C)$ — i.e., pairs accessible to SWAP + COMMUTATION without any INSERTION.
 
 **Step 5: Bounding the INSERTION-facilitated cascade.**
 

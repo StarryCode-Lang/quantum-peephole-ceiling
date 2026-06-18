@@ -35,13 +35,38 @@ SCHEMA_VERSION = "1.0.0"
 EXPERIMENT_ID = "E12"
 VERSION = "4.1.0"
 
-# IBM-like heavy-hex coupling map (d=3, 19 qubits) and basis gates for fair comparison
-COUPLING_MAP = CouplingMap.from_heavy_hex(3)
+# Default heavy-hex distance and basis gates for fair compiler comparison.
+# The coupling map is now selected dynamically based on circuit size
+# (see _select_coupling_map) instead of a fixed 19-qubit map that
+# over-constrains small circuits and cannot fit large ones.
+DEFAULT_HEAVY_HEX_D = 3
 BASIS_GATES = ["cx", "id", "rz", "sx", "x"]
-COMPILER_CONFIG_ID = "qiskit_heavy_hex_d3"
+COMPILER_CONFIG_ID = "qiskit_heavy_hex"
 
 
-def run(mode: str, seed: int, max_qubits_fidelity: int) -> pd.DataFrame:
+def _select_coupling_map(n_qubits: int, heavy_hex_d: int = DEFAULT_HEAVY_HEX_D) -> CouplingMap:
+    """Select an appropriate coupling map for the given circuit size.
+
+    Uses the requested heavy-hex distance if it provides enough qubits;
+    otherwise scales up to the smallest distance that fits.  Falls back
+    to a linear chain for very small circuits (n <= 2).
+    """
+    if n_qubits <= 2:
+        return CouplingMap([[0, 1]])
+    cmap = CouplingMap.from_heavy_hex(heavy_hex_d)
+    if cmap.size() >= n_qubits:
+        return cmap
+    # Scale up: find smallest heavy-hex distance that fits n_qubits.
+    for d in range(heavy_hex_d + 1, heavy_hex_d + 6):
+        cmap = CouplingMap.from_heavy_hex(d)
+        if cmap.size() >= n_qubits:
+            return cmap
+    # Last resort: return the largest we tried.
+    return cmap
+
+
+def run(mode: str, seed: int, max_qubits_fidelity: int,
+        heavy_hex_d: int = DEFAULT_HEAVY_HEX_D) -> pd.DataFrame:
     """Run Qiskit transpiler baselines and return results."""
     run_id = f"e12_{mode}_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
     script_path = Path(__file__).resolve()
@@ -57,6 +82,8 @@ def run(mode: str, seed: int, max_qubits_fidelity: int) -> pd.DataFrame:
         input_hash = circuit_sha256(circuit)
         counts = gate_counts(circuit)
         baseline_gate_count = int(circuit.size())
+        # Dynamically select coupling map sized to this circuit.
+        coupling_map = _select_coupling_map(circuit.num_qubits, heavy_hex_d)
         for level in [0, 1, 2, 3]:
             start = time.time()
             error = ""
@@ -64,7 +91,7 @@ def run(mode: str, seed: int, max_qubits_fidelity: int) -> pd.DataFrame:
             try:
                 compiled = transpile(
                     circuit,
-                    coupling_map=COUPLING_MAP,
+                    coupling_map=coupling_map,
                     basis_gates=BASIS_GATES,
                     optimization_level=level,
                     seed_transpiler=seed,
@@ -156,8 +183,9 @@ def run(mode: str, seed: int, max_qubits_fidelity: int) -> pd.DataFrame:
             "compiler_version": qiskit.__version__,
             "optimization_levels": [0, 1, 2, 3],
             "compiler_config_id": COMPILER_CONFIG_ID,
-            "coupling_map": "heavy_hex_d3",
-            "coupling_map_n_qubits": COUPLING_MAP.size(),
+            "coupling_map": f"heavy_hex_d{heavy_hex_d}_dynamic",
+            "coupling_map_base_d": heavy_hex_d,
+            "coupling_map_selection": "dynamic_per_circuit",
             "basis_gates": BASIS_GATES,
         }
     )
@@ -174,8 +202,11 @@ def main() -> None:
     parser.add_argument("--mode", choices=["smoke", "full"], default="smoke")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--max-qubits-fidelity", type=int, default=10)
+    parser.add_argument("--heavy-hex-d", type=int, default=DEFAULT_HEAVY_HEX_D,
+                        help="Base heavy-hex coupling map distance (default: 3)")
     args = parser.parse_args()
-    run(mode=args.mode, seed=args.seed, max_qubits_fidelity=args.max_qubits_fidelity)
+    run(mode=args.mode, seed=args.seed, max_qubits_fidelity=args.max_qubits_fidelity,
+        heavy_hex_d=args.heavy_hex_d)
 
 
 if __name__ == "__main__":

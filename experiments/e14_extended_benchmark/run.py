@@ -39,15 +39,25 @@ VERSION = "5.0.0"
 WINDOW_SIZES = [2, 5, 10, 20, 50]
 
 
-def build_optimizers(window_size: int = 10) -> Dict[str, object]:
-    """Create optimizers with a given window size."""
+def build_optimizers(window_size: int = 10,
+                     success_reduction: float = 0.01) -> Dict[str, object]:
+    """Create optimizers with configurable window size and success threshold.
+
+    Parameters
+    ----------
+    window_size : int
+        Commutation analysis window size (Phase-2 optimizers).
+    success_reduction : float
+        Minimum fractional gate-count reduction for an optimization to
+        be deemed "meaningful" by the optimizer's success criterion.
+    """
     return {
-        "greedy_phase1": GreedyGateCancellation(success_reduction=0.01),
+        "greedy_phase1": GreedyGateCancellation(success_reduction=success_reduction),
         "commutation_phase2": CommutationRewriter(
-            success_reduction=0.01, window_size=window_size,
+            success_reduction=success_reduction, window_size=window_size,
         ),
         "hybrid_phase1_2": HybridCommuteRewrite(
-            success_reduction=0.01, window_size=window_size,
+            success_reduction=success_reduction, window_size=window_size,
         ),
     }
 

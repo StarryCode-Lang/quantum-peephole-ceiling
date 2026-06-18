@@ -79,10 +79,17 @@ def make_grid(n_qubits: int) -> List[Tuple[int, int]]:
 
 
 def make_heavy_hex(n_qubits: int) -> List[Tuple[int, int]]:
-    """Simplified heavy-hex topology (IBM-style).
+    """Approximate heavy-hex-inspired topology (IBM-style).
 
-    For small n, approximates a heavy-hex lattice where each qubit
-    has at most degree 3, with alternating hexagonal connectivity.
+    NOTE: This is *not* a true heavy-hex lattice. A genuine heavy-hex
+    topology consists of hexagonal rings with alternating "heavy" edges
+    (chains of two qubits replacing single edges), giving every qubit
+    degree <= 3. This function instead builds a grid with a checkerboard
+    vertical-connectivity pattern that loosely mimics the degree-3
+    constraint but does not form actual hexagonal rings. It is retained
+    as a "sparse grid" benchmark; for a true heavy-hex topology use
+    Qiskit's ``CouplingMap.from_heavy_hex(d)``.
+
     Falls back to a linear chain for n <= 3.
     """
     if n_qubits <= 3:
@@ -126,8 +133,16 @@ TOPOLOGIES = {
 # ---------------------------------------------------------------------------
 
 def apply_topology_constraint(circuit: QuantumCircuit,
-                               coupling_map: List[Tuple[int, int]]) -> QuantumCircuit:
-    """Transpile a circuit to respect the given coupling map."""
+                               coupling_map: List[Tuple[int, int]],
+                               seed_transpiler: int = 42) -> QuantumCircuit:
+    """Transpile a circuit to respect the given coupling map.
+
+    Uses ``optimization_level=0`` so the transpiler performs *only*
+    topology routing (SWAP insertion) without applying its own gate
+    cancellation or commutation passes.  This prevents the Qiskit
+    transpiler's built-in optimizations from contaminating the
+    connectivity-constraint measurement.
+    """
     from qiskit import transpile as qiskit_transpile
     from qiskit.transpiler import CouplingMap
 
@@ -137,9 +152,9 @@ def apply_topology_constraint(circuit: QuantumCircuit,
         transpiled = qiskit_transpile(
             circuit,
             coupling_map=cmap,
-            optimization_level=1,
+            optimization_level=0,
             basis_gates=['u1', 'u2', 'u3', 'cx'],
-            seed_transpiler=42,
+            seed_transpiler=seed_transpiler,
         )
     return transpiled
 
@@ -185,7 +200,7 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
             coupling_map = topo_fn(n)
 
             try:
-                constrained_circuit = apply_topology_constraint(circuit, coupling_map)
+                constrained_circuit = apply_topology_constraint(circuit, coupling_map, seed_transpiler=seed)
             except Exception as exc:
                 rows.append({
                     "schema_version": SCHEMA_VERSION,
@@ -196,7 +211,9 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
                     "n_qubits": n,
                     "topology": topo_name,
                     "optimizer": "none",
-                    "status": f"transpile_error: {exc}",
+                    "status": "transpile_error",
+                    "error_message": str(exc),
+                    "error_type": type(exc).__name__,
                 })
                 continue
 

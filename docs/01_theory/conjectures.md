@@ -1,10 +1,10 @@
 # Conjectures and Open Problems
 
-> **Document Status**: Living document — formal conjectures and open problems for the QIP manuscript.  
-> **Version**: 3.1  
-> **Date**: 2026-06-11  
-> **Scope**: Two formal conjectures (C1–C2) with strong empirical support, and two motivating open problems (OP1–OP2) from complexity theory.  
-> **Changes from v3.0**: Corrected OP2 to align with Proposition 1 correction (maximum matching, not MIS). Updated C1 remaining gap to reference Theorem 2 v3.3 resolution. Removed stale C2 remaining gap that contradicts Theorem 7.  
+> **Document Status**: Living document — formal conjectures and open problems for the QIP manuscript.
+> **Version**: 3.2
+> **Date**: 2026-06-17
+> **Scope**: Two formal conjectures (C1–C2) with strong empirical support, and two motivating open problems (OP1–OP2) from complexity theory.
+> **Changes from v3.1**: Refined C2 status to distinguish Phase-2b (proven, Thm 7 + Thm 9) from Phase-2a (open). Added Thm 9 (BV oracle, natural family) as second constructive proof of C2. Clarified that experimental Phase-2a results (E10/E11) are complementary to but not direct validations of the Phase-2b theoretical bounds.
 > **Dependencies**: Base definitions (D1–D10) in `framework.md`.
 
 ---
@@ -15,12 +15,12 @@ For base notation ($n$, $d$, $\mathcal{G}$, $C(n,d,\rho)$, $|C|$, $F_{\text{avg}
 
 This document defines two formal decision problems:
 
-**Definition A1 (Circuit Optimization Decision Problem, CODP).**  
-> **Input**: A quantum circuit $C$, a target reduction ratio $r \in (0, 1]$, and a tolerance $\epsilon > 0$.  
+**Definition A1 (Circuit Optimization Decision Problem, CODP).**
+> **Input**: A quantum circuit $C$, a target reduction ratio $r \in (0, 1]$, and a tolerance $\epsilon > 0$.
 > **Question**: Does there exist a circuit $C'$ such that $C \equiv_\epsilon C'$ and $|C'| \le (1 - r) |C|$?
 
-**Definition A2 (Circuit Identity Testing, CIT).**  
-> **Input**: Two quantum circuits $C$ and $C'$, and a tolerance $\epsilon > 0$.  
+**Definition A2 (Circuit Identity Testing, CIT).**
+> **Input**: Two quantum circuits $C$ and $C'$, and a tolerance $\epsilon > 0$.
 > **Question**: Does $C \equiv_\epsilon C'$ hold?
 
 Unitary equivalence up to tolerance $\epsilon$: $C \equiv_\epsilon C'$ if $\| U - U' \|_\diamond \le \epsilon$, where $\| \cdot \|_\diamond$ is the diamond norm.
@@ -84,19 +84,26 @@ These are the paper's central formal claims, supported by strong empirical evide
 
 **Statement.** There exist circuit families $\mathcal{F}$ and gate sets $\mathcal{G}$ for which Phase-1 optimization achieves $O(1/d)$ reduction (or $0\%$), while Phase-1+2 optimization achieves $\Omega(1)$ reduction. The improvement $\Gamma(C) = R_{1+2}(C) - R_1(C)$ is context-dependent: it is significant for some families (e.g., oracle circuits) and zero for others (e.g., structured brickwork, QFT, GHZ).
 
-**Status**: [CONJECTURE → PROVEN FOR EXPLICIT CONSTRUCTION] — Theorem 7 constructs an explicit circuit family demonstrating $\Omega(1)$ Phase-2 advantage, establishing Conjecture C2 constructively. The broader question of characterizing *all* families with super-constant improvement remains open (see C2.OP1–OP3).
+**Status**: [CONJECTURE → PROVEN FOR PHASE-2b (template matching); OPEN FOR PHASE-2a (commutation only)] — Two constructive proofs establish C2 for Phase-2b:
+- **Theorem 7** (`lemmas.md`) constructs an *artificial* circuit family with $\Gamma \ge 1/6 = \Omega(1)$ via Phase-2b commutation + separator-cancellation.
+- **Theorem 9** (`thm7_natural_bv.md`) proves $\Gamma^{\text{(2b)}}(BV_n) \ge n/(4.5n+4) \ge 2/13 = \Omega(1)$ for the *natural* Bernstein–Vazirani oracle family, via the $H$-CNOT-$H$ template identity.
+
+**Critical caveat on phase coverage.** Both theoretical proofs rely on **Phase-2b template matching**, which is *not* implemented in the current experimental codebase (`commutation_rewriter.py` implements only **Phase-2a** commutation rewriting). Under pure Phase-2a, the achievable Phase-2 bound for BV remains an **open question**. The experimental Phase-2a reductions reported in E10/E11 (see Evidence below) are *complementary* to the Phase-2b theoretical bounds but are not direct validations of Theorems 7/9. The manuscript must state this theory-experiment gap explicitly.
 
 **Evidence:**
 
-1. **Random Universal circuits (E10).** Phase 1 achieves $\approx 0\%$; Phase 1+2 achieves $\approx 3.26\%$ additional reduction (Cohen's $d = 1.32$, large effect).
+1. **Random Universal circuits (E10, Phase-2a).** Phase 1 achieves $\approx 0\%$; Phase-2a achieves $\approx 3.26\%$ additional reduction. Effect size: see `analysis/phase1_statistics/effect_size.py` for Cliff's $\delta$ / Hedges' $g$ (integrated into figure generation in the v6 remediation).
 
-2. **Oracle / Bernstein–Vazirani circuits (E11).** Phase 1 achieves $0\%$; Phase 1+2 achieves $\sim 20\%$ reduction via commutation of redundant H/X gates. The Phase 2 advantage is directly attributable to the algebraic structure of the oracle.
+2. **Oracle / Bernstein–Vazirani circuits (E11, Phase-2a).** Phase 1 achieves $0\%$; Phase-2a achieves $\sim 20\%$ reduction via commutation of redundant H/X gates exposed by the Oracle circuit structure. This empirical Phase-2a reduction is attributable to the algebraic structure of the oracle, but its mechanism is *not* the $H$-CNOT-$H$ template of Theorem 9 (which is unimplemented Phase-2b).
 
 3. **CNOT-chain validation circuits (E11).** Phase 1 alone achieves $100\%$ reduction, confirming that the Phase 2 advantage is circuit-family dependent rather than universal.
 
-4. **Mechanism.** Phase 2 exploits commutation relations $[U, V] = 0$ to reorder gates, bringing non-adjacent inverses into adjacency. For circuits with repeating structural patterns, commutation can slide gates across $O(d)$ positions, creating cancellations invisible to Phase 1.
+4. **Mechanism.** Phase 2 exploits commutation relations $[U, V] = 0$ to reorder gates, bringing non-adjacent inverses into adjacency. For circuits with repeating structural patterns, commutation can slide gates across $O(d)$ positions, creating cancellations invisible to Phase 1. Phase-2b additionally exploits multi-gate template identities (e.g., $H$-CNOT-$H \to$ reversed CNOT) that Phase-2a does not.
 
-**Remaining gap.** Theorem 7 (lemmas.md) constructs an explicit circuit family demonstrating $\Omega(1)$ Phase-2 advantage, partially closing this gap. The remaining open question is characterizing *all* circuit families with super-constant Phase-2 improvement: specifically, what algebraic or structural properties of a circuit family $\mathcal{F}$ determine whether $\Gamma(C)$ is $O(1/d)$ or $\Omega(1)$?
+**Remaining gaps.**
+- **(Theory)** Theorem 7 (artificial) and Theorem 9 (BV natural) establish $\Omega(1)$ Phase-2b advantage constructively. The broader question of characterizing *all* families with super-constant Phase-2b improvement remains open (C2.OP1–OP3).
+- **(Theory–experiment bridge)** The achievable Phase-2a bound for BV (and for Theorem 7's artificial family) is open. Whether Phase-2a alone can achieve $\Omega(1)$ on any non-trivial family is an open question.
+- **(Experiment)** The empirical ~20% Phase-2a reduction on Oracle/BV (E11) lacks a matching theoretical lower bound. Closing this gap requires either (a) extending Phase-2a theory to cover the E11 Oracle structure, or (b) implementing Phase-2b and re-running E11 to validate Theorem 9 directly.
 
 **Open problems:**
 - C2.OP1: Construct an explicit circuit family with proven super-constant Phase-2 improvement.
@@ -111,8 +118,8 @@ These are the paper's central formal claims, supported by strong empirical evide
 |----|------|-----------|----------|-----------------|
 | OP1 | Open Problem | CODP is QMA-hard | Weak — reduction sketch incomplete | Complete the Kitaev reduction |
 | OP2 | Open Problem | No PTAS for CODP | Updated — conflict resolution is in P (Prop 1); hardness source unclear | Identify true hardness source |
-| **C1** | **Conjecture** | **Phase 1 ceiling is structural** | **Strong — Thm 2 + Thm 5 + Thm 6 (Clifford) + Thm 8 (Haar) + 45,500 trials** | **Formalize invariant for general circuit families** |
-| **C2** | **Conjecture** | **Phase 2 is context-dependent super-constant** | **Proven — Thm 7 (explicit construction) + E10/E11 empirical** | **Characterize all families with super-constant $\Gamma$** |
+| **C1** | **Conjecture** | **Phase 1 ceiling is structural (listing-conditional)** | **Strong — Thm 2 + Thm 5 + Thm 6 (Clifford) + Thm 8 (Haar, asymptotic) + 45,500 trials (LBL). Ceiling is listing-conditional: WCL exposes ~18% Phase-1 reduction on the same circuits.** | **Formalize invariant for general circuit families; characterize WCL vs LBL gap** |
+| **C2** | **Conjecture** | **Phase 2 is context-dependent super-constant** | **Proven (Phase-2b) — Thm 7 (artificial, $\Gamma \ge 1/6$) + Thm 9 (BV natural, $\Gamma \ge 2/13$). Phase-2a bound OPEN. E10/E11 empirical (Phase-2a): ~3% random, ~20% Oracle.** | **(1) Phase-2a achievable bound; (2) characterize all families with super-constant $\Gamma$; (3) bridge theory (2b) ↔ experiment (2a)** |
 
 ---
 
@@ -126,6 +133,6 @@ These are the paper's central formal claims, supported by strong empirical evide
 
 ---
 
-*Document version: 3.1*  
-*Last updated: 2026-06-11*  
+*Document version: 3.2*
+*Last updated: 2026-06-17*
 *Author: Q-research Theoretical Framework Team*

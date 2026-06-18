@@ -3,7 +3,7 @@
 **Generated**: 2026-06-14
 **Release**: q-research-v5-final-20260614
 **Git Commit**: 17569bd (dirty)
-**Environment**: q-research (Python 3.12.12, qiskit 2.4.1)
+**Environment**: q-research (Python 3.10, qiskit 2.4.1)
 
 ---
 

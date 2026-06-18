@@ -25,54 +25,69 @@ OUTPUT_PATH = os.path.join(_PROJECT_ROOT, "analysis", "phase5_data_profile.json"
 
 REDUCTION_THRESHOLD = 0.20   # success rate threshold
 
-# File manifest
+
+def _latest_csv(directory: str, prefix: str) -> str:
+    """Dynamically resolve the latest CSV in ``directory`` whose name starts
+    with ``prefix``. Prefers ``_full_`` runs over ``_smoke_`` runs so the
+    script does not break when fresh timestamped data files are generated.
+    """
+    dirp = Path(directory)
+    candidates = sorted(dirp.glob(f"{prefix}*.csv"))
+    if not candidates:
+        return os.path.join(directory, f"{prefix}_NOT_FOUND.csv")
+    full_runs = [f for f in candidates if "_full_" in f.name]
+    return str((full_runs or candidates)[-1])
+
+
+# File manifest — paths resolved dynamically via _latest_csv() so that newly
+# generated timestamped data files are picked up automatically.
 FILES = OrderedDict([
     ("E01", {
-        "path": os.path.join(DATA_ROOT, "v2_fixed", "e01", "e01_phase_transition_v2_20260611_195450.csv"),
+        "path": _latest_csv(os.path.join(DATA_ROOT, "v2_fixed", "e01"), "e01_phase_transition_v2"),
         "version": "v2_fixed", "desc": "Phase Transition"
     }),
     ("E02", {
-        "path": os.path.join(DATA_ROOT, "v2_fixed", "e02", "e02_entanglement_density_v2_20260611_191816.csv"),
+        "path": _latest_csv(os.path.join(DATA_ROOT, "v2_fixed", "e02"), "e02_entanglement_density_v2"),
         "version": "v2_fixed", "desc": "Entanglement Density"
     }),
     ("E03_old", {
-        "path": os.path.join(DATA_ROOT, "v2_fixed", "e03", "e03_scaling_v2_20260607_091030.csv"),
+        "path": _latest_csv(os.path.join(DATA_ROOT, "v2_fixed", "e03"), "e03_scaling_v2"),
         "version": "v2_fixed (pre-fix)", "desc": "Scaling (OLD - pre-fix)"
     }),
     ("E04", {
-        "path": os.path.join(DATA_ROOT, "v2_fixed", "e04", "e04_algorithm_comparison_v2_20260611_194858.csv"),
+        "path": _latest_csv(os.path.join(DATA_ROOT, "v2_fixed", "e04"), "e04_algorithm_comparison_v2"),
         "version": "v2_fixed", "desc": "Algorithm Comparison"
     }),
     ("E05", {
-        "path": os.path.join(DATA_ROOT, "v2_fixed", "e05", "e05_landscape_v2_20260611_191723.csv"),
+        "path": _latest_csv(os.path.join(DATA_ROOT, "v2_fixed", "e05"), "e05_landscape_v2"),
         "version": "v2_fixed", "desc": "Landscape"
     }),
     ("E10", {
-        "path": os.path.join(DATA_ROOT, "v3_extended", "e10", "e10_phase1_vs_phase2_20260611_191634.csv"),
+        "path": _latest_csv(os.path.join(DATA_ROOT, "v3_extended", "e10"), "e10_phase1_vs_phase2"),
         "version": "v3_extended", "desc": "Phase1 vs Phase2"
     }),
     ("E11", {
-        "path": os.path.join(DATA_ROOT, "v4", "e11", "e11_real_circuit_benchmark_e11_full_20260611_114615.csv"),
+        "path": _latest_csv(os.path.join(DATA_ROOT, "v4", "e11"), "e11_real_circuit_benchmark_e11_full"),
         "version": "v4", "desc": "Real Circuit Benchmark"
     }),
     ("E13", {
-        "path": os.path.join(DATA_ROOT, "v4", "e13", "e13_structural_ceiling_e13_full_20260609_043322.csv"),
+        "path": _latest_csv(os.path.join(DATA_ROOT, "v4", "e13"), "e13_structural_ceiling_e13_full"),
         "version": "v4", "desc": "Structural Ceiling"
     }),
     ("E14", {
-        "path": os.path.join(DATA_ROOT, "v5", "e14", "e14_extended_benchmark_e14_full_20260611_114726.csv"),
+        "path": _latest_csv(os.path.join(DATA_ROOT, "v5", "e14"), "e14_extended_benchmark_e14_full"),
         "version": "v5", "desc": "Extended Benchmark"
     }),
     ("E16", {
-        "path": os.path.join(DATA_ROOT, "v5", "e16", "e16_window_scaling_e16_full_20260610_142547.csv"),
+        "path": _latest_csv(os.path.join(DATA_ROOT, "v5", "e16"), "e16_window_scaling_e16_full"),
         "version": "v5", "desc": "Window Scaling"
     }),
     ("E17", {
-        "path": os.path.join(DATA_ROOT, "v5", "e17", "e17_connectivity_e17_full_20260610_150935.csv"),
+        "path": _latest_csv(os.path.join(DATA_ROOT, "v5", "e17"), "e17_connectivity_e17_full"),
         "version": "v5", "desc": "Connectivity"
     }),
     ("E18", {
-        "path": os.path.join(DATA_ROOT, "v5", "e18", "e18_clifford_t_e18_full_20260610_052140.csv"),
+        "path": _latest_csv(os.path.join(DATA_ROOT, "v5", "e18"), "e18_clifford_t_e18_full"),
         "version": "v5", "desc": "Clifford+T"
     }),
 ])

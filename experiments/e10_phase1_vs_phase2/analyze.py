@@ -294,18 +294,38 @@ def generate_statistical_report(df: pd.DataFrame) -> dict:
     real_sub = df[df['part'] == 'real']
     if len(real_sub) > 0 and 'n_qubits' in real_sub.columns:
         try:
-            cumulants = binder_cumulant_by_size(
-                real_sub['reduction'].values,
-                real_sub['n_qubits'].values,
-            )
-            report["binder_cumulants"] = {
-                size: {k: v for k, v in c.items() if k != "cumulant" or True}
-                for size, c in cumulants.items()
-            }
-            # Also keep raw cumulant values
-            report["binder_cumulants_summary"] = {
-                str(size): c["cumulant"] for size, c in cumulants.items()
-            }
+            if 'circuit_family' in real_sub.columns:
+                # Per-family Binder cumulant analysis (preferred granularity)
+                report["binder_cumulants"] = {}
+                report["binder_cumulants_summary"] = {}
+                for family, sub in real_sub.groupby('circuit_family'):
+                    if len(sub) == 0:
+                        continue
+                    cumulants = binder_cumulant_by_size(
+                        sub['reduction'].values,
+                        sub['n_qubits'].values,
+                    )
+                    report["binder_cumulants"][family] = {
+                        size: {k: v for k, v in c.items() if k != "cumulant"}
+                        for size, c in cumulants.items()
+                    }
+                    report["binder_cumulants_summary"][family] = {
+                        str(size): c["cumulant"] for size, c in cumulants.items()
+                    }
+            else:
+                # Backward-compatible fallback: aggregate across all real circuits
+                cumulants = binder_cumulant_by_size(
+                    real_sub['reduction'].values,
+                    real_sub['n_qubits'].values,
+                )
+                report["binder_cumulants"] = {
+                    size: {k: v for k, v in c.items() if k != "cumulant"}
+                    for size, c in cumulants.items()
+                }
+                # Also keep raw cumulant values
+                report["binder_cumulants_summary"] = {
+                    str(size): c["cumulant"] for size, c in cumulants.items()
+                }
         except Exception as exc:
             report["binder_cumulants_error"] = str(exc)
 

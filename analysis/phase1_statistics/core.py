@@ -5,6 +5,17 @@ Implements multiple comparison correction, effect size reporting,
 power analysis, bootstrap convergence diagnostics, and fidelity distribution analysis.
 
 Version: 3.0.0 (PRA-compliant)
+
+DEPRECATED (bug #8 fix): This module contains duplicated implementations.
+Prefer the dedicated modules (effect_size.py, multiple_comparison.py,
+power_analysis.py, bootstrap.py). This module is retained only for backward
+compatibility with generate_figures.py and phase2_threshold_sensitivity/run.py.
+
+As of this fix, ``cliffs_delta`` and ``hedges_g`` defined here are thin
+re-exports of ``effect_size.py`` and share its ``Dict[str, Any]`` return
+contract (keys: 'delta'/'g', 'ci_lower', 'ci_upper', 'magnitude', 'n1',
+'n2', ...). The previous tuple ``(value, ci_low, ci_high)`` contract is no
+longer returned; callers have been updated accordingly.
 """
 
 from __future__ import annotations
@@ -15,6 +26,10 @@ from scipy import stats
 from typing import List, Tuple, Dict, Callable, Optional, Any
 import json
 from dataclasses import dataclass
+
+# Re-export the canonical effect-size implementations so that callers importing
+# from core.py receive the unified Dict[str, Any] contract (bug #8 fix).
+from .effect_size import cliffs_delta as _cliffs_delta_es, cohens_d as _cohens_d_es
 
 
 # ============================================================================
@@ -151,53 +166,23 @@ def fdr_control_table(experiment_results: List[Tuple[str, np.ndarray]], alpha: f
 # Effect Size Analysis
 # ============================================================================
 
-def cliffs_delta(x: np.ndarray, y: np.ndarray) -> Tuple[float, float, float]:
-    """
-    Calculate Cliff's delta effect size with confidence interval.
-    
-    Cliff's delta measures the probability that a randomly selected observation
-    from one group is larger than a randomly selected observation from another group,
-    minus the reverse probability.
-    
-    Args:
-        x: First sample
-        y: Second sample
-    
-    Returns:
-        (delta, ci_low, ci_high): Effect size and 95% confidence interval
-    
-    Interpretation:
-        |delta| < 0.147: negligible
-        0.147 <= |delta| < 0.33: small
-        0.33 <= |delta| < 0.474: medium
-        |delta| >= 0.474: large
-    
+def cliffs_delta(x, y):
+    """Cliff's delta effect size (re-exported from effect_size.py, bug #8 fix).
+
+    This function now delegates to :func:`effect_size.cliffs_delta` and returns
+    the unified ``Dict[str, Any]`` contract (keys: ``'delta'``, ``'ci_lower'``,
+    ``'ci_upper'``, ``'magnitude'``, ``'n1'``, ``'n2'``, ``'se'``). The legacy
+    tuple ``(delta, ci_low, ci_high)`` return is no longer produced; callers
+    must read dict keys instead.
+
+    Unlike the previous core implementation, empty samples now raise
+    ``ValueError`` (matching ``effect_size.py``) instead of returning zeros.
+
     Reference:
-        Cliff, N. (1993). Dominance statistics: Ordinal analyses to answer ordinal questions.
-        Psychological Bulletin, 114(3), 494-509.
+        Cliff, N. (1993). Dominance statistics: Ordinal analyses to answer
+        ordinal questions. Psychological Bulletin, 114(3), 494-509.
     """
-    x = np.asarray(x)
-    y = np.asarray(y)
-    n1, n2 = len(x), len(y)
-    
-    if n1 == 0 or n2 == 0:
-        return 0.0, 0.0, 0.0
-    
-    # Count pairwise comparisons
-    sum_gt = sum(xi > yi for xi in x for yi in y)
-    sum_lt = sum(xi < yi for xi in x for yi in y)
-    
-    delta = (sum_gt - sum_lt) / (n1 * n2)
-    
-    # Variance estimation (Cliff, 1993)
-    # Simplified normal approximation
-    var = (n1 + n2 + 1) / (3 * n1 * n2)
-    se = np.sqrt(var)
-    
-    ci_low = delta - 1.96 * se
-    ci_high = delta + 1.96 * se
-    
-    return delta, ci_low, ci_high
+    return _cliffs_delta_es(x, y)
 
 
 def cohens_d(x: np.ndarray, y: np.ndarray) -> Tuple[float, float, float]:
@@ -233,43 +218,26 @@ def cohens_d(x: np.ndarray, y: np.ndarray) -> Tuple[float, float, float]:
     return d, ci_low, ci_high
 
 
-def hedges_g(x: np.ndarray, y: np.ndarray) -> Tuple[float, float, float]:
-    """
-    Calculate Hedges' g effect size with confidence interval.
-    
-    Hedges' g is a bias-corrected version of Cohen's d that applies a
-    correction factor for small sample sizes.
-    
-    Args:
-        x: First sample
-        y: Second sample
-    
-    Returns:
-        (g, ci_low, ci_high): Effect size and 95% confidence interval
-    
-    Correction factor:
-        J = 1 - 3 / (4 * (n1 + n2 - 2) - 1)
-    
+def hedges_g(x, y):
+    """Hedges' g effect size (re-exported from effect_size.py, bug #8 fix).
+
+    This function now delegates to :func:`effect_size.cohens_d` (which returns
+    Hedges' g as the ``'g'`` key) and returns the unified ``Dict[str, Any]``
+    contract (keys: ``'d'``, ``'g'``, ``'ci_lower'``, ``'ci_upper'``,
+    ``'magnitude'``, ``'n1'``, ``'n2'``, ``'pooled_sd'``, ``'se'``). The legacy
+    tuple ``(g, ci_low, ci_high)`` return is no longer produced; callers must
+    read dict keys instead.
+
+    Unlike the previous core implementation, empty samples or zero pooled
+    variance now raise ``ValueError`` (matching ``effect_size.py``) instead of
+    returning zeros.
+
     Reference:
         Hedges, L. V. (1981). Distribution theory for Glass's estimator of
         effect size and related estimators. Journal of Educational Statistics,
         6(2), 107-128.
     """
-    d, d_low, d_high = cohens_d(x, y)
-    
-    nx, ny = len(x), len(y)
-    if nx < 2 or ny < 2:
-        return 0.0, 0.0, 0.0
-    
-    # Hedges' correction factor
-    df = nx + ny - 2
-    correction = 1.0 - 3.0 / (4.0 * df - 1.0)
-    
-    g = d * correction
-    g_low = d_low * correction
-    g_high = d_high * correction
-    
-    return g, g_low, g_high
+    return _cohens_d_es(x, y)
 
 
 def interpret_effect_size(delta: float) -> str:
@@ -336,9 +304,17 @@ def effect_size_table(comparisons: List[Tuple[str, str, np.ndarray, np.ndarray]]
     """
     rows = []
     for name, g1_name, g1_data, g2_name, g2_data in comparisons:
-        cd, cd_low, cd_high = cliffs_delta(g1_data, g2_data)
+        # cliffs_delta / hedges_g now return Dict (bug #8 fix); cohens_d here
+        # still returns a tuple (core implementation unchanged).
+        cd_res = cliffs_delta(g1_data, g2_data)
         d, d_low, d_high = cohens_d(g1_data, g2_data)
-        g, g_low, g_high = hedges_g(g1_data, g2_data)
+        g_res = hedges_g(g1_data, g2_data)
+        cd = cd_res["delta"]
+        cd_low = cd_res["ci_lower"]
+        cd_high = cd_res["ci_upper"]
+        g = g_res["g"]
+        g_low = g_res["ci_lower"]
+        g_high = g_res["ci_upper"]
         
         rows.append({
             "comparison": name,
@@ -701,16 +677,18 @@ def run_full_statistical_analysis(results_df: pd.DataFrame, experiment_name: str
             for i in range(len(names)):
                 for j in range(i + 1, len(names)):
                     g1, g2 = optimizer_groups[names[i]], optimizer_groups[names[j]]
-                    cd, cd_low, cd_high = cliffs_delta(g1, g2)
-                    g_val, g_low, g_high = hedges_g(g1, g2)
+                    cd_res = cliffs_delta(g1, g2)
+                    g_res = hedges_g(g1, g2)
+                    cd = cd_res["delta"]
+                    g_val = g_res["g"]
                     effect_sizes.append({
                         "comparison": f"{names[i]} vs {names[j]}",
                         "cliffs_delta": cd,
-                        "cliffs_ci_low": cd_low,
-                        "cliffs_ci_high": cd_high,
+                        "cliffs_ci_low": cd_res["ci_lower"],
+                        "cliffs_ci_high": cd_res["ci_upper"],
                         "hedges_g": g_val,
-                        "hedges_ci_low": g_low,
-                        "hedges_ci_high": g_high,
+                        "hedges_ci_low": g_res["ci_lower"],
+                        "hedges_ci_high": g_res["ci_upper"],
                         "interpretation": interpret_effect_size(cd),
                     })
             analysis["effect_sizes"] = effect_sizes

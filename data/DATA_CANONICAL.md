@@ -14,11 +14,11 @@
 
 | Exp | Canonical File | Rows | Notes |
 |-----|---------------|------|-------|
-| E1 | `v2_fixed/e01/e01_phase_transition_v2_20260611_195450.csv` | 25,000 | Deterministic; all 3 copies are identical |
-| E2 | `v2_fixed/e02/e02_entanglement_density_v2_20260611_191816.csv` | 2,100 | Deterministic; both copies identical |
+| E1 | `v2_fixed/e01/e01_phase_transition_v2_20260613_132653.csv` | 25,000 | Deterministic; all 3 copies are identical |
+| E2 | `v2_fixed/e02/e02_entanglement_density_v2_20260613_130455.csv` | 2,100 | Deterministic; both copies identical |
 | E3 | `v2_fixed/e03/e03_scaling_v2_20260611_224540.csv` | 12,000 | v5/e03 is a duplicate (fidelity rounding only) |
-| E4 | `v2_fixed/e04/e04_algorithm_comparison_v2_20260611_194858.csv` | 400 | Latest run; SA/GA differ from first run (stochastic) |
-| E5 | `v2_fixed/e05/e05_landscape_v2_20260611_191723.csv` | 6,000 | Deterministic |
+| E4 | `v2_fixed/e04/e04_algorithm_comparison_v2_20260613_132653.csv` | 400 | Latest run; SA/GA differ from first run (stochastic) |
+| E5 | `v2_fixed/e05/e05_landscape_v2_20260613_130355.csv` | 6,000 | Deterministic |
 | E10 | `v5/e10/e10_expanded_phase1_vs_phase2_20260613_131601.csv` | 1,905 | Expanded from v3 (627 rows); supersedes 819-row run |
 | E11 | `v4/e11/e11_real_circuit_benchmark_e11_full_20260611_114615.csv` | 426 | Expanded from initial 168-row run |
 | E12 | `v4/e12/e12_compiler_baseline_e12_full_20260613_051316.csv` | 568 | Expanded from initial 224-row run; L0/L1/L2/L3 all distinct |

@@ -1,3 +1,9 @@
+> **DEPRECATED**: This data dictionary is superseded. See
+> `docs/data_dictionary.md` for the authoritative version. This file is
+> retained in `05_supplementary/` for historical reference only; do not
+> cite it as the current data dictionary. All column definitions from this
+> document have been merged into `docs/data_dictionary.md`.
+
 # V5 Data Dictionary
 
 > **Version**: 5.0  

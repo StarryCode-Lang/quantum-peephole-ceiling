@@ -47,7 +47,13 @@ def run(mode: str, seed: int, window: int) -> pd.DataFrame:
         observed_best_gate_count = min(greedy_result.optimized_size, hybrid_result.optimized_size)
         observed_best_reduction = max(greedy_result.reduction, hybrid_result.reduction)
         best_optimizer = "hybrid_phase1_2" if hybrid_result.reduction >= greedy_result.reduction else "greedy_phase1"
-        ceiling_gap = ceiling.structural_upper_bound_reduction - observed_best_reduction
+        # ceiling_gap >= 0 in theory (upper bound >= observed).  In practice
+        # the optimizer can exceed the structural proxy's estimate (e.g., by
+        # finding non-local cancellations outside the analysis window), so
+        # clamp to 0 and flag the anomaly.
+        raw_gap = ceiling.structural_upper_bound_reduction - observed_best_reduction
+        ceiling_gap = max(0.0, raw_gap)
+        gap_negative = raw_gap < 0
 
         rows.append(
             {
@@ -79,6 +85,7 @@ def run(mode: str, seed: int, window: int) -> pd.DataFrame:
                 "observed_best_reduction": observed_best_reduction,
                 "ceiling_gap": ceiling_gap,
                 "ceiling_gap_pct": 100.0 * ceiling_gap,
+                "ceiling_gap_negative": gap_negative,
                 "best_optimizer": best_optimizer,
                 "best_compiler": "not_evaluated_in_e13",
                 "analysis_method": f"local_commutation_window_{window}",

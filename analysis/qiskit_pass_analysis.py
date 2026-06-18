@@ -342,7 +342,12 @@ def generate_fig15_waterfall(pass_df: pd.DataFrame,
         vals = matrix[pname].values * 100
         compiler = "custom" if pname in ("greedy_phase1", "commutation_phase2") else "qiskit"
 
-        # Compute error bars (std across qubit sizes)
+        # Compute error bars (std across qubit sizes).
+        # NOTE: uses sample standard deviation (std, ddof=1) of the per-family
+        # reductions, NOT the standard error of the mean (SEM). Since these
+        # bars annotate a *mean* reduction, SEM = std / sqrt(n) would be the
+        # statistically correct quantity for "mean ± error" reporting; std is
+        # retained here for consistency with the existing figure.
         yerrs = []
         for fam in present_families:
             fam_pass_data = pass_df[

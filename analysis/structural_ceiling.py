@@ -46,6 +46,27 @@ def _are_inverse(circuit: QuantumCircuit, inst1: CircuitInstruction, inst2: Circ
 
 
 def _is_mergeable_rotation(circuit: QuantumCircuit, inst1: CircuitInstruction, inst2: CircuitInstruction) -> bool:
+    """Check if two adjacent instructions are mergeable parameterized rotations.
+
+    NOTE: This function only detects rx/ry/rz mergeable pairs (same-axis rotations
+    whose angles can be added). For gate sets that do NOT include parameterized
+    rotations (e.g., Clifford+T = {H, S, T, CNOT, CZ}), this function returns
+    False for all pairs, so ``mergeable_rotation_count`` will be 0.
+
+    This is BY DESIGN, not a bug:
+    - Clifford+T circuits do not contain rx/ry/rz gates, so there are no
+      parameterized rotations to merge.
+    - H/S/T "merging" is a different operation (cancellation or phase accumulation),
+      captured by ``adjacent_cancellable_pairs`` and ``adjacent_commuting_pairs``.
+
+    If the circuit family uses parameterized rotations (e.g., Universal with
+    {Rx, Ry, Rz, CNOT}), this function correctly counts same-axis adjacent
+    rotation pairs. The 47,401-row observation of mergeable_rotation_count=0
+    in E13 is because E13 uses Clifford+T circuits (gate set {cp, h, ...}),
+    which contain no rx/ry/rz gates.
+
+    See: limitations_and_future_work.md §10 (conservative bounds); CRITICAL_BUG_FIXES_LOG.md.
+    """
     if _instruction_qubits(circuit, inst1) != _instruction_qubits(circuit, inst2):
         return False
     return inst1.operation.name == inst2.operation.name and inst1.operation.name in {"rx", "ry", "rz"}
