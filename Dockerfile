@@ -61,4 +61,4 @@ RUN python -c "import qiskit; import numpy; import pandas; import scipy; \
     print(f'SciPy: {scipy.__version__}')"
 
 # Default command: run test suite
-CMD ["conda", "run", "-n", "q-research", "python", "tests/test_core.py"]
+CMD ["conda", "run", "-n", "q-research", "python", "-m", "pytest", "tests/", "-q", "--timeout=600"]

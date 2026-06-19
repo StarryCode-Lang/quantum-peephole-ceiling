@@ -174,7 +174,7 @@ Build the Clifford-tableau infrastructure required for Section 15.11. The infras
 
 ### 15.13 E18 Rerun without Survivorship Bias (addresses §8)
 
-Fix the decomposition pipeline defect causing the 42 fidelity-zero rows (tracked in `CRITICAL_BUG_FIXES_LOG.md`), rerun E18 on the full 270-row ensemble, and recompute all E18 statistics without the survivorship filter. On success, remove the "survivorship-biased" qualifier from all E18 conclusions.
+Fix the decomposition pipeline defect causing the 42 fidelity-zero rows, rerun E18 on the full 270-row ensemble, and recompute all E18 statistics without the survivorship filter. On success, remove the "survivorship-biased" qualifier from all E18 conclusions.
 
 ### 15.14 Under-Powered Experiment Reruns (addresses §9)
 
@@ -221,4 +221,4 @@ None of the limitations above invalidate the manuscript's central claims. The st
 
 *Document version: 1.0*
 *Last updated: 2026-06-17*
-*Cross-references: `v6_scope_limitations_risks.md` (D-delimitations); `v6_claim_evidence_map.md` (claim-evidence scope column); `data/v6/e19/README.md` (E19 plan); `data/v6/e20/metadata.json` (E20 plan); `src/optimisation/commutation.py` (`_gates_commute` implementation); `CRITICAL_BUG_FIXES_LOG.md` (E18 decomposition defect).*
+*Cross-references: `v6_scope_limitations_risks.md` (D-delimitations); `v6_claim_evidence_map.md` (claim-evidence scope column); `data/v6/e19/README.md` (E19 plan); `data/v6/e20/metadata.json` (E20 plan); `src/optimisation/commutation.py` (`_gates_commute` implementation).*

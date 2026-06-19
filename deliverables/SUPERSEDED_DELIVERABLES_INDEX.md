@@ -74,7 +74,7 @@ the strongest outdated claims.
   Individual models may still be useful as descriptive fits, but **none**
   is endorsed as a predictive law.
 - **Authoritative replacement**:
-  - `docs/06_manuscript/v5_full_manuscript_part1.md` (theory, downgraded framing)
+  - `docs/06_manuscript/v6_manuscript.md` (theory, downgraded framing)
   - `docs/06_manuscript/v6_scope_limitations_risks.md`
   - `deliverables/D8_PHASE7_Completion_Report.docx`
 
@@ -149,9 +149,8 @@ When in doubt, use these sources (in priority order):
 1. `docs/06_manuscript/v6_manuscript.md`
 2. `docs/06_manuscript/v6_claim_evidence_map.md` — claim → evidence status
 3. `docs/06_manuscript/v6_scope_limitations_risks.md` — Limitations & Future Work
-4. `docs/06_manuscript/v5_full_manuscript_part1.md` through `v5_full_manuscript_part3.md` — source parts merged into v6
-5. `deliverables/D8_PHASE7_Completion_Report.docx`
-6. `deliverables/D9_PHASE8_Publication_Architecture.docx`
+4. `deliverables/D8_PHASE7_Completion_Report.docx`
+5. `deliverables/D9_PHASE8_Publication_Architecture.docx`
 
 **Do not** cite D1–D7 for any current claim. If a D1–D7 body text conflicts
  with any source above, the source above is correct.

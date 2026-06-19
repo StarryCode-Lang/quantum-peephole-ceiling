@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import numpy as np
 from qiskit import QuantumCircuit
-from qiskit.circuit import CircuitInstruction
 from typing import Optional, List, Tuple, Dict, Any
 import copy
 import time

@@ -65,7 +65,7 @@ def _is_mergeable_rotation(circuit: QuantumCircuit, inst1: CircuitInstruction, i
     in E13 is because E13 uses Clifford+T circuits (gate set {cp, h, ...}),
     which contain no rx/ry/rz gates.
 
-    See: limitations_and_future_work.md §10 (conservative bounds); CRITICAL_BUG_FIXES_LOG.md.
+    See: limitations_and_future_work.md §10 (conservative bounds).
     """
     if _instruction_qubits(circuit, inst1) != _instruction_qubits(circuit, inst2):
         return False

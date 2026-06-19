@@ -1,4 +1,4 @@
-# Manuscript Structure: Listing-Model Dependency and Context-Dependent Optimization in Quantum Circuit Peephole Rewriting
+# Manuscript Structure: Structural Ceilings and Context-Dependent Optimization in Quantum Circuit Peephole Rewriting
 
 > **Document Status**: Proposed manuscript structure for *Quantum* submission.  
 > **Version**: 5.0 (Major revision: structural-ceiling benchmark with planned listing-model, smoke ceiling-aware, and metadata-only multi-compiler extensions)  
@@ -353,8 +353,8 @@ All experimental data (14+ datasets with SHA-256 verified provenance), source co
 | 15 | fig15_qiskit_pass_waterfall.png (NEW) | E19 Qiskit pass waterfall: per-pass reduction accumulation under LBL vs. WCL | 5.2 |
 | 16 | fig16_pass_heatmap.png (NEW) | E19 Pass heatmap: reduction contribution per pass per family under LBL vs. WCL | 5.2 |
 | 17 | fig17_pass_interaction.png (NEW) | E20–E21 Pass interaction analysis across Qiskit, Cirq, t\|ket> | 5.4 |
-| 18 | fig18_wcl_vs_lbl.png (NEW) | E19 WCL vs. LBL optimization profiles across all circuit families | 5.6 |
-| 19 | fig19_ceiling_aware_speedup.png (NEW) | E19 Ceiling-aware speedup: compilation time vs. reduction quality | 5.6 |
+| 18 | fig18_wcl_vs_lbl.png (NEW) | E19 WCL vs. LBL optimization profiles across all circuit families **[PLANNED — figure not yet generated; to be produced after E19 full data collection]** | 5.6 |
+| 19 | fig19_ceiling_aware_speedup.png (NEW) | E19 Ceiling-aware speedup: compilation time vs. reduction quality **[PLANNED — figure not yet generated; to be produced after E21 full data collection]** | 5.6 |
 
 ### Supplementary Figures
 
