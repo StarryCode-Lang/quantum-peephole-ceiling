@@ -45,14 +45,23 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 def load_latest_csv(data_dir: Path, prefix: str) -> pd.DataFrame:
     """Load the latest full-mode CSV matching prefix from data_dir.
-    Prefers 'full' over 'smoke' mode, then picks the latest timestamp."""
+    Prefers 'full' over 'smoke' mode, then picks the latest timestamp.
+    Warns if multiple full-mode files exist (non-canonical ambiguity)."""
     csv_files = sorted(data_dir.glob(f"{prefix}_*.csv"))
     if not csv_files:
         raise FileNotFoundError(f"No CSV found for prefix '{prefix}' in {data_dir}")
     # Prefer full mode files over smoke
     full_files = [f for f in csv_files if '_full_' in f.name]
     if full_files:
+        if len(full_files) > 1:
+            print(f"WARNING: Multiple full-mode CSVs found for '{prefix}': "
+                  f"{[f.name for f in full_files]}. Using latest: {sorted(full_files)[-1].name}. "
+                  f"Verify this matches DATA_CANONICAL.md.")
         return pd.read_csv(sorted(full_files)[-1])
+    if len(csv_files) > 1:
+        print(f"WARNING: Multiple CSVs found for '{prefix}' (no full-mode): "
+              f"{[f.name for f in csv_files]}. Using latest: {csv_files[-1].name}. "
+              f"Verify this matches DATA_CANONICAL.md.")
     return pd.read_csv(csv_files[-1])
 
 

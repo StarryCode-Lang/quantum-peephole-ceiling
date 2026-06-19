@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-06-18T23:52:35.761604+00:00",
+  "created_utc": "2026-06-19T00:22:02.121461+00:00",
   "datasets": [
     {
       "experiment_id": "E01",
@@ -41,7 +41,9 @@
       "file": "data/v3_extended/e10/e10_phase1_vs_phase2_20260611_191634.csv",
       "rows": 627,
       "schema": "legacy_v2_v3",
-      "sha256": "ad5242b7651d2feabadde2c4d0b10e4d2480128cc751b89641b2bf5550fa9f61"
+      "sha256": "ad5242b7651d2feabadde2c4d0b10e4d2480128cc751b89641b2bf5550fa9f61",
+      "superseded": true,
+      "superseded_by": "v5/e10 (1905 rows)"
     },
     {
       "experiment_id": "E11",
@@ -122,7 +124,7 @@
     }
   ],
   "environment": {
-    "env_id": "q-research-20260618_235235",
+    "env_id": "q-research-20260619_002202",
     "packages": {
       "matplotlib": "3.9.0",
       "numpy": "1.26.4",
@@ -136,10 +138,10 @@
   },
   "git": {
     "branch": "master",
-    "commit": "b48d4d623dbc5ad51f861812465263b739e79d64",
-    "dirty": false
+    "commit": "8ab4a8c1e94e54904f17e6a8e4c8b3bc63eea868",
+    "dirty": true
   },
-  "release_id": "q-research-20260618_235235",
+  "release_id": "q-research-20260619_002202",
   "reproduction": {
     "conda_env": "q-research",
     "entrypoints": [
@@ -168,7 +170,7 @@
     "experiments/e11_real_circuit_benchmark/run.py": "ab38ffb3ab21a77ab9a50df60162c8525e904a4f4425df2b87459f74d1716996",
     "experiments/e12_compiler_baseline/run.py": "ca43bd9cb4f7000731ff84f23d8ef5ba2813826449f5b481534a9de06cc5e124",
     "experiments/e13_structural_ceiling/run.py": "97948883da9a12095d926ac796187d617a7329e2b6c007cb270aa9d203961141",
-    "scripts/generate_release_manifest.py": "ff71f8610132218b0dec04bc4d62f71ca6edab64661dc3cc9f3ab064f0f8eec8",
+    "scripts/generate_release_manifest.py": "0234dfd74584225df2a1fbb6afada63212e8bf352ee3ed41277d550091401edd",
     "src/circuits/generator_v2.py": "e0d5f541bb23703bda2a0049410f964821d45723e482d262ebb318891fde1132",
     "src/circuits/real_benchmarks.py": "4107b833c2bae70b30b262e0a82668906f0050c5aac86cf2a9f36423fb643a96",
     "src/optimisation/base.py": "fa214f3da7955eb47298cc61d59771bd0fbd6badaa7c852b2c069d257d79124c",

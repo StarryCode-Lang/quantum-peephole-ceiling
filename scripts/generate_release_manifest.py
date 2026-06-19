@@ -41,6 +41,12 @@ KNOWN_DUPLICATES = {
     ("v5", "e03"),
 }
 
+# Legacy datasets superseded by a newer version in a later data directory.
+# These are still listed in the manifest for provenance but marked as superseded.
+SUPERSEDED_DIRS = {
+    ("v3_extended", "e10"),  # v3 e10 (627 rows) → superseded by v5 e10 (1905 rows)
+}
+
 STANDALONE_IDS = {
     "new_families_heldout.csv": "HELDOU",
     "qiskit_pass_isolation.csv": "ISOLATION",
@@ -74,22 +80,25 @@ def dataset_entries(data_root: Path) -> List[Dict[str, object]]:
                     rows = int(len(pd.read_csv(csv_path)))
                 except Exception:
                     rows = None
-                exp_id = STANDALONE_IDS.get(csv_path.name, csv_path.parent.name.upper())
-                entries.append(
-                    {
-                        "file": csv_path.relative_to(PROJECT_ROOT).as_posix(),
-                        "sha256": file_sha256(csv_path),
-                        "rows": rows,
-                        "schema": (
-                            "results_v2"
-                            if root_name == "v5"
-                            else "results_v1"
-                            if root_name == "v4"
-                            else "legacy_v2_v3"
-                        ),
-                        "experiment_id": exp_id,
-                    }
-                )
+                exp_id = STANDALONE_IDS.get(csv_path.name, exp_dir.name.upper())
+                is_superseded = (root_name, exp_dir.name) in SUPERSEDED_DIRS
+                entry = {
+                    "file": csv_path.relative_to(PROJECT_ROOT).as_posix(),
+                    "sha256": file_sha256(csv_path),
+                    "rows": rows,
+                    "schema": (
+                        "results_v2"
+                        if root_name == "v5"
+                        else "results_v1"
+                        if root_name == "v4"
+                        else "legacy_v2_v3"
+                    ),
+                    "experiment_id": exp_id,
+                }
+                if is_superseded:
+                    entry["superseded"] = True
+                    entry["superseded_by"] = "v5/e10 (1905 rows)"
+                entries.append(entry)
     return entries
 
 

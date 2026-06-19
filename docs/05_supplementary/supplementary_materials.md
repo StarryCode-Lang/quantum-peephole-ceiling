@@ -126,7 +126,7 @@
 | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
 | 0.9 | 0.0000 | 0.0000 | [0.0000, 0.0000] | 0.00 | 0.00% | 0.00% | 0.00% | 0.00% | 1.523 | 0.008 |
 
-*Note: No correlation between entanglement density and reduction (Pearson r = 0.02, p = 0.89).* 
+*Note: No correlation between entanglement density and reduction. Pearson r is undefined (NaN) because reduction has zero variance (all values are exactly 0.0000% under LBL); the corresponding p-value is treated as non-significant (p = 1.000).* 
 
 ### S2.3 E3: Scaling — Complete Statistics
 
@@ -301,7 +301,7 @@ Output: OptimizationResult (C', reduction, fidelity)
 
 *Description*: Scatter plot of entanglement entropy (x-axis) vs. gate reduction (y-axis) for 2,100 trials. All points cluster at (entropy, 0) with no visible trend.
 
-*Key insight*: Pearson correlation r = 0.02 (p = 0.89), confirming no relationship between entanglement and peephole optimizability.
+*Key insight*: Pearson r is undefined (NaN) due to zero-variance reduction (all 0.0000% under LBL); no evidence of a relationship between entanglement and peephole optimizability.
 
 ### S4.4 Figure S4: Landscape Perturbation Analysis (E5)
 

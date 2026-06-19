@@ -112,7 +112,7 @@ The conversion is scheduled as a pre-submission infrastructure task (Section 15.
 
 ## 14. E4 Uses a Single Random Seed per Optimizer
 
-Experiment E4 compares three stochastic optimizers — simulated annealing (SA), randomized local search (RLS), and a genetic algorithm (GA) — on the Phase-2a commutation search problem. Each optimizer is run with a single fixed random seed: `seed=42` for SA, `seed=17` for RLS, `seed=2026` for GA. The optimizer ranking reported in Section 5.3.1 is therefore based on one realization of each optimizer's stochastic trajectory.
+Experiment E4 compares three stochastic optimizers — simulated annealing (SA), randomized local search (RLS), and a genetic algorithm (GA) — on the Phase-2a commutation search problem. Each optimizer is run with a single fixed random seed derived from a common `seed_base=42`: RLS uses `seed_base+10000=10042`, SA uses `seed_base+20000=20042`, and GA uses `seed_base+30000=30042`. Circuit generation for each trial uses `seed_base+trial_index` (i.e., 42–141 for 100 trials). The optimizer ranking reported in Section 5.3.1 is therefore based on one realization of each optimizer's stochastic trajectory.
 
 A single seed cannot distinguish a robust ranking from a seed-dependent ordering. The observed ranking (GA ≥ SA ≥ RLS on mean reduction) is consistent with the algorithms' known search characteristics, but the gap between optimizers is within the typical seed-to-seed variance for stochastic search at the trial counts used. The ranking should be read as *preliminary*, not confirmatory.
 
