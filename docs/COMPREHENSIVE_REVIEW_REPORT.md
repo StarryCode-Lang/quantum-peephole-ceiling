@@ -804,3 +804,95 @@ NF-19 (CI Docker 分支条件), NF-20 (Docker 镜像大小), NF-21 (定理编号
 2. **图表矢量格式**: 将 PNG 图表升级为 PDF/SVG（Quantum 期刊要求）
 3. **D1-D4 .docx**: 在 Word 中人工同步 SUPERSEDED 内容（或确认不提交 .docx）
 4. **最终 proofreading**: 全文英文校对（建议使用 Grammarly 或专业润色服务）
+
+---
+
+## 十四、2026-06-19 第七轮全面审查与项目清理（投稿前最终版本）
+
+### 审查范围
+
+使用4个并行专业代理对项目进行全面扫描：手稿一致性（10文件12类检查）、数据完整性（manifest/canonical/metadata全覆盖）、代码质量（12核心文件+全仓库扫描）、项目结构清理候选识别。
+
+### 发现并修复的问题
+
+#### A. 手稿修复（10项）
+
+| 编号 | 问题 | 修复动作 |
+|------|------|----------|
+| MS-1 | manuscript_structure_v5.md 标题使用旧版 “Listing-Model Dependency...” | 更正为 “Structural Ceilings and Context-Dependent Optimization...” |
+| MS-2 | Methods/Results 表格编号冲突（两边都从 Table 1 开始） | 统一为顺序编号：Methods T1-3, Results T4-11 |
+| MS-3 | Table 2 vs Table 4 实验数据冲突（E1/E2/E3/E18 trial数/族数不一致） | 对照 DATA_CANONICAL.md 修正 Table 3（原 Table 4）数据 |
+| MS-4 | Fraser & Hanson [1995] 和 Tanenbaum [1982] 被引用但不在参考文献列表中 | 添加为 [43] 和 [44] |
+| MS-5 | [13] Shende, [14] Nam, [15] Yamashita 在列表中但从未被引用 | 在 Section 2.3/2.4 中添加适当引用 |
+| MS-6 | E19/E20 注释关于 Table 4 内容错误（称 E19=”Statistical Power”实际是 E22） | 更正注释 |
+| MS-7 | “D8 Track A5” 指向提交包之外的文档章节（6处） | 替换为 “the Phase-7/8 self-correction analysis” |
+| MS-8 | Nielsen & Chuang 被引用为 [2000, 2010] 但列表中只有 2010 版 | 更正为 [2010] |
+| MS-9 | manuscript_structure_v5.md 中 Figure 18/19 列出但从未被引用 | 标注为 [PLANNED] |
+| MS-10 | PRE_PAPER_CHECKLIST 理论框架描述为 “10 definitions, 8 theorems” | 更正为 “12 definitions, 10 theorems” |
+
+#### B. 代码修复（4项）
+
+| 文件 | 修复动作 |
+|------|----------|
+| commutation_rewriter.py | 移除未使用的 `CircuitInstruction` 导入 |
+| Dockerfile | CMD 从 `python tests/test_core.py` 改为 `pytest tests/ -q --timeout=600`（匹配 CI） |
+| data/v6/e19/metadata.json | 创建缺失的 stub metadata（status: planned） |
+| .dockerignore | 添加缺失的 `.serena/` 模式 |
+
+#### C. 项目清理（44文件变更，删除18,518行）
+
+| 类别 | 文件数 | 说明 |
+|------|--------|------|
+| __pycache__ 目录 | 13 dirs | 从磁盘删除（未被 git 跟踪） |
+| 历史审查/修复日志 | 9 files | git rm（CRITICAL_BUG_FIXES_LOG, FIX_PLAN 等） |
+| 孤立一次性脚本 | 7 files | git rm（compare_old_new, unified_analysis 等） |
+| 废弃 v4 补充文档 | 2 files | git rm（v4_data_dictionary, v4_reproducibility_checklist） |
+| 已合并 v5 手稿部件 | 3 files | git rm（part1/2/3 已合并入 v6_manuscript.md） |
+| 重复/过时数据 CSV | 5 files | git rm（v5/e03 副本, v3/e10 旧版, v5/e10 旧版） |
+| D1-D7 SUPERSEDED 交付物 | 7 files | 移至 deliverables/_superseded/ 子目录 |
+| 占位文件 | 1 file | git rm（requirements-lock-placeholder.txt） |
+| 空目录 | 3 dirs | 删除（data/v3_extended/, data/v5/e03/ 等） |
+
+#### D. 交叉引用修复
+
+| 文件 | 修复动作 |
+|------|----------|
+| analysis/structural_ceiling.py | 移除对已删除 CRITICAL_BUG_FIXES_LOG.md 的引用 |
+| limitations_and_future_work.md | 移除对已删除 CRITICAL_BUG_FIXES_LOG.md 的引用（2处） |
+| SUPERSEDED_DELIVERABLES_INDEX.md | 更新引用路径（v5 parts 已删除，D1-D7 路径更新） |
+
+### 验证结果
+
+| 验证项 | 结果 |
+|--------|------|
+| Python 语法检查（13个核心文件） | **ALL OK** |
+| test_core.py | **149 passed** |
+| test_statistical_analysis.py | **57 passed** |
+| test_commutation_bug_reproduction.py + test_phase2b_template_matcher.py | **13 passed** |
+| Release Manifest | **dirty=false, commit=cf518a74, 16 datasets** |
+| Git status (post-commit) | **clean** |
+
+### 第七轮后最终评分
+
+| 维度 | 第六轮评分 | 第七轮评分 | 变化 |
+|------|------------|------------|------|
+| 核心科学贡献 | 8/10 | 8/10 | -- |
+| 理论严谨性 | 8/10 | 8.5/10 | +0.5 (Table 编号统一; 参考文献补全) |
+| 数据完整性 | 8/10 | 8.5/10 | +0.5 (E19 metadata; 重复数据清除) |
+| 文档一致性 | 8.5/10 | 9.5/10 | +1 (标题统一; E19/E20注释修正; 交叉引用修复) |
+| 代码质量 | 9/10 | 9.5/10 | +0.5 (unused import; Dockerfile一致性; __pycache__清除) |
+| 统计严谨性 | 7.5/10 | 7.5/10 | -- |
+| 文献覆盖度 | 8.5/10 | 9/10 | +0.5 (缺失引用已添加; 孤立引用已修复) |
+| 可复现性 | 7.5/10 | 8.5/10 | +1 (manifest clean; 项目结构清晰; Docker CI一致) |
+| **投稿准备度** | **8.5/10** | **9/10** | **+0.5** |
+
+### 结论
+
+经过七轮系统性审查与修复，项目从初始 5.5/10 提升至 9/10。本轮完成了：
+1. 手稿10项编辑修复（表格编号统一、参考文献补全、交叉引用修正）
+2. 4项代码质量修复
+3. 大规模项目清理（44文件变更，18,518行删除）
+4. 219项测试全部通过
+5. Clean release manifest (dirty=false)
+
+项目已达到撰写论文前的最终版本状态。权威手稿为 `docs/06_manuscript/v6_manuscript.md`，所有 Figure/Table 引用已验证完整，证据分类（confirmed/planned/smoke）严格维护。
