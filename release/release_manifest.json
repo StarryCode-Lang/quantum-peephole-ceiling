@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-06-19T00:22:24.360127+00:00",
+  "created_utc": "2026-06-19T01:06:48.663271+00:00",
   "datasets": [
     {
       "experiment_id": "E01",
@@ -35,15 +35,6 @@
       "rows": 6000,
       "schema": "legacy_v2_v3",
       "sha256": "e09ab43749ef39e48a75fc6bc88138cd3cd4955cd2a32e940f9aafca89234e40"
-    },
-    {
-      "experiment_id": "E10",
-      "file": "data/v3_extended/e10/e10_phase1_vs_phase2_20260611_191634.csv",
-      "rows": 627,
-      "schema": "legacy_v2_v3",
-      "sha256": "ad5242b7651d2feabadde2c4d0b10e4d2480128cc751b89641b2bf5550fa9f61",
-      "superseded": true,
-      "superseded_by": "v5/e10 (1905 rows)"
     },
     {
       "experiment_id": "E11",
@@ -124,7 +115,7 @@
     }
   ],
   "environment": {
-    "env_id": "q-research-20260619_002224",
+    "env_id": "q-research-20260619_010648",
     "packages": {
       "matplotlib": "3.9.0",
       "numpy": "1.26.4",
@@ -138,10 +129,10 @@
   },
   "git": {
     "branch": "master",
-    "commit": "adbc2a0c364a55b4420695a6f8a92fd306c3ae5e",
+    "commit": "cf518a7452380d8c62615abffea01438a1f0e722",
     "dirty": false
   },
-  "release_id": "q-research-20260619_002224",
+  "release_id": "q-research-20260619_010648",
   "reproduction": {
     "conda_env": "q-research",
     "entrypoints": [
@@ -166,7 +157,7 @@
   },
   "schema_version": "1.0.0",
   "source_hashes": {
-    "analysis/structural_ceiling.py": "dd5de5b582950e5a118df45980cecc2aa4282f49236674dc6f97edcbeec8596b",
+    "analysis/structural_ceiling.py": "e57ef84b493d36817c162f89aae1089ad064c74f9cccb76c0b144857f86b9ee0",
     "experiments/e11_real_circuit_benchmark/run.py": "ab38ffb3ab21a77ab9a50df60162c8525e904a4f4425df2b87459f74d1716996",
     "experiments/e12_compiler_baseline/run.py": "ca43bd9cb4f7000731ff84f23d8ef5ba2813826449f5b481534a9de06cc5e124",
     "experiments/e13_structural_ceiling/run.py": "97948883da9a12095d926ac796187d617a7329e2b6c007cb270aa9d203961141",
@@ -180,6 +171,6 @@
     "src/optimisation/phase1/random_local_search.py": "26cc47fddaeca2fc9f8dbd72bf2a69117ac06eb31ae02e7a582d0f3e70a6fea6",
     "src/optimisation/phase1/simulated_annealing.py": "d6fd7b9c239c9bc3c6afdd9a74adf6d83d41f73dbcd56faa36088a82d745d318",
     "src/optimisation/phase1/wire_traversal.py": "e4d2214746f4a771e1c370a61e62a984d26012a74ed529c33b9f983a6df3fbf2",
-    "src/optimisation/phase2/commutation_rewriter.py": "4774fc14276471e149f1a338de4527a6c3c8899c6a51f73ca7348ca646db8bf0"
+    "src/optimisation/phase2/commutation_rewriter.py": "bf301a589dc4ef635158f863fe7d131f3cf0e704d652d4524fc08cc4279aef52"
   }
 }
