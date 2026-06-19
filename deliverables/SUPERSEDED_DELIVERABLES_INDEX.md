@@ -1,5 +1,9 @@
 # Superseded Deliverables Index — Q-Research
 
+> **Note**: D1–D7 `.docx` files have been **removed from disk** during
+> pre-publication cleanup (2026-06-19). This index is retained as an
+> audit trail. Only D8 and D9 remain in this directory.
+
 > **Status authority**: This index is the canonical status reference for all
 > project deliverables (D1–D9). When a deliverable's `.docx` body conflicts
 > with the status recorded here, **this index takes precedence**.

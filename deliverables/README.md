@@ -1,25 +1,15 @@
 # Q-Research Deliverables
 
-This directory contains the project deliverables D1–D9.
+This directory contains the current authoritative deliverables.
 
-## Read this first
+## Contents
 
-Before opening any `.docx` file in this directory, read:
+- **D8_PHASE7_Completion_Report.docx**: PHASE-7 completion record. **CURRENT** and authoritative.
+- **D9_PHASE8_Publication_Architecture.docx**: PHASE-8 publication architecture and final manuscript plan. **CURRENT** and authoritative.
 
-**[SUPERSEDED_DELIVERABLES_INDEX.md](./SUPERSEDED_DELIVERABLES_INDEX.md)**
+## Historical note
 
-It records the authoritative status of every deliverable.
-
-## Quick summary
-
-- **D1–D7**: Pre-PHASE-7 artefacts. Their `.docx` bodies contain outdated
-  claims (e.g. "Universal Predictive Law", Cohen's d, 100% accuracy) and
-  are **SUPERSEDED**. Do not cite them for current claims.
-- **D8–D9**: PHASE-7/8 completion reports. **CURRENT** and authoritative, but use the v6 manuscript and `v6_claim_evidence_map.md` for the latest evidence-scope wording.
-
-Because `.docx` is a binary format, the superseded body text in D1–D7
-cannot be edited in place; the `SUPERSEDED_DELIVERABLES_INDEX.md` provides
-the bypass protection instead.
+D1–D7 were pre-PHASE-7 artefacts containing outdated claims (e.g. "Universal Predictive Law", Cohen's d effect sizes, 100% accuracy). They were removed during project cleanup prior to GitHub publication. Their supersession status is preserved in `SUPERSEDED_DELIVERABLES_INDEX.md` for audit trail purposes.
 
 ## Authoritative sources for current claims
 

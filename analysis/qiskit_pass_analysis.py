@@ -7,9 +7,9 @@ explain the 20-45% performance gap between Qiskit's full pipeline
 and our prototype.
 
 Generates:
-  - fig15_qiskit_pass_waterfall.png: Waterfall chart of cumulative reduction per pass
-  - fig16_qiskit_pass_family_heatmap.png: Heatmap of pass effectiveness per circuit family
-  - fig17_qiskit_pass_interaction.png: Interaction matrix between passes
+  - fig15_qiskit_pass_waterfall.pdf: Waterfall chart of cumulative reduction per pass
+  - fig16_qiskit_pass_family_heatmap.pdf: Heatmap of pass effectiveness per circuit family
+  - fig17_qiskit_pass_interaction.pdf: Interaction matrix between passes
 
 Saves:
   - analysis/figures/qiskit_pass_analysis_summary.csv
@@ -420,12 +420,10 @@ def generate_fig15_waterfall(pass_df: pd.DataFrame,
     )
 
     plt.tight_layout()
-    plt.savefig(OUTPUT_DIR / "fig15_qiskit_pass_waterfall.png",
-                dpi=300, bbox_inches="tight")
     plt.savefig(OUTPUT_DIR / "fig15_qiskit_pass_waterfall.pdf",
                 bbox_inches="tight")
     plt.close()
-    print(f"  Saved: {OUTPUT_DIR / 'fig15_qiskit_pass_waterfall.png'}")
+    print(f"  Saved: {OUTPUT_DIR / 'fig15_qiskit_pass_waterfall.pdf'}")
 
 
 def generate_fig16_heatmap(pass_df: pd.DataFrame) -> None:
@@ -477,12 +475,10 @@ def generate_fig16_heatmap(pass_df: pd.DataFrame) -> None:
     )
 
     plt.tight_layout()
-    plt.savefig(OUTPUT_DIR / "fig16_qiskit_pass_family_heatmap.png",
-                dpi=300, bbox_inches="tight")
     plt.savefig(OUTPUT_DIR / "fig16_qiskit_pass_family_heatmap.pdf",
                 bbox_inches="tight")
     plt.close()
-    print(f"  Saved: {OUTPUT_DIR / 'fig16_qiskit_pass_family_heatmap.png'}")
+    print(f"  Saved: {OUTPUT_DIR / 'fig16_qiskit_pass_family_heatmap.pdf'}")
 
 
 def generate_fig17_interaction(pass_df: pd.DataFrame) -> None:
@@ -546,12 +542,10 @@ def generate_fig17_interaction(pass_df: pd.DataFrame) -> None:
     )
 
     plt.tight_layout()
-    plt.savefig(OUTPUT_DIR / "fig17_qiskit_pass_interaction.png",
-                dpi=300, bbox_inches="tight")
     plt.savefig(OUTPUT_DIR / "fig17_qiskit_pass_interaction.pdf",
                 bbox_inches="tight")
     plt.close()
-    print(f"  Saved: {OUTPUT_DIR / 'fig17_qiskit_pass_interaction.png'}")
+    print(f"  Saved: {OUTPUT_DIR / 'fig17_qiskit_pass_interaction.pdf'}")
 
 
 # ===================================================================
@@ -675,7 +669,7 @@ def main() -> None:
     print("ANALYSIS COMPLETE")
     print("=" * 60)
     print(f"Output directory: {OUTPUT_DIR}")
-    for f in sorted(OUTPUT_DIR.glob("fig1[567]*.png")):
+    for f in sorted(OUTPUT_DIR.glob("fig1[567]*.pdf")):
         print(f"  - {f.name}")
     print(f"  - qiskit_pass_analysis_summary.csv")
 

@@ -178,7 +178,6 @@ ax.text(0.5, 0.95, 'Note: Mean reduction ≈ 0% across all depths\n(25,000 trial
         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / 'fig01_phase_transition.png', dpi=300, bbox_inches='tight')
 plt.savefig(OUTPUT_DIR / 'fig01_phase_transition.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
@@ -238,7 +237,6 @@ if (e3_summary['success_rate'] * 100).max() < 1e-6:
                  bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.7))
 
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / 'fig02_scaling.png', dpi=300, bbox_inches='tight')
 plt.savefig(OUTPUT_DIR / 'fig02_scaling.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
@@ -318,7 +316,6 @@ axes[1].set_title('E4: Algorithm Comparison — Runtime\n(log scale)', fontsize=
 axes[1].set_yscale('log')
 
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / 'fig03_algorithm_comparison.png', dpi=300, bbox_inches='tight')
 plt.savefig(OUTPUT_DIR / 'fig03_algorithm_comparison.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
@@ -392,7 +389,6 @@ if cnot_reductions:
             bbox=dict(boxstyle='round,pad=0.5', facecolor='#FFFACD', edgecolor='#B8860B', alpha=0.95))
 
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / 'fig04_phase1_vs_phase2.png', dpi=300, bbox_inches='tight')
 plt.savefig(OUTPUT_DIR / 'fig04_phase1_vs_phase2.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
@@ -434,7 +430,6 @@ ax.text(0.05, 0.95, 'Key Finding: Even at 1% threshold,\nsuccess rate < 0.1% for
         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / 'fig05_threshold_sensitivity.png', dpi=300, bbox_inches='tight')
 plt.savefig(OUTPUT_DIR / 'fig05_threshold_sensitivity.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
@@ -461,7 +456,6 @@ for ax, (name, df) in zip(axes.flat, experiments_fid):
     ax.legend(fontsize=9)
 
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / 'fig06_fidelity_distribution.png', dpi=300, bbox_inches='tight')
 plt.savefig(OUTPUT_DIR / 'fig06_fidelity_distribution.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
@@ -488,7 +482,6 @@ axes[1].set_title('E5: Reduction Distribution by Depth', fontsize=12)
 plt.suptitle('')  # Remove default title
 
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / 'fig07_landscape.png', dpi=300, bbox_inches='tight')
 plt.savefig(OUTPUT_DIR / 'fig07_landscape.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
@@ -522,7 +515,6 @@ plt.xticks(fontsize=10, rotation=0)
 plt.yticks(fontsize=10, rotation=0)
 
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / 'fig11_extended_benchmark_heatmap.png', dpi=300, bbox_inches='tight')
 plt.savefig(OUTPUT_DIR / 'fig11_extended_benchmark_heatmap.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
@@ -580,7 +572,6 @@ ax.set_xticklabels(families_15, fontsize=9, rotation=25, ha='right')
 ax.legend(fontsize=10, loc='upper left')
 
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / 'fig12_multi_compiler_comparison.png', dpi=300, bbox_inches='tight')
 plt.savefig(OUTPUT_DIR / 'fig12_multi_compiler_comparison.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
@@ -615,7 +606,6 @@ ax.legend(fontsize=8, loc='best', ncol=2, framealpha=0.9)
 ax.grid(True, linestyle='--', alpha=0.4)
 
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / 'fig13_window_scaling_curves.png', dpi=300, bbox_inches='tight')
 plt.savefig(OUTPUT_DIR / 'fig13_window_scaling_curves.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
@@ -672,7 +662,6 @@ ax.set_xticklabels(families_17, fontsize=9, rotation=25, ha='right')
 ax.legend(fontsize=10, loc='upper left')
 
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / 'fig14_connectivity_ceiling.png', dpi=300, bbox_inches='tight')
 plt.savefig(OUTPUT_DIR / 'fig14_connectivity_ceiling.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
@@ -975,7 +964,6 @@ ax.text(0.02, 0.02,
         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 plt.tight_layout()
-plt.savefig(OUTPUT_DIR / 'fig08_fdr_correction.png', dpi=300, bbox_inches='tight')
 plt.savefig(OUTPUT_DIR / 'fig08_fdr_correction.pdf', format='pdf', bbox_inches='tight')
 plt.close()
 
@@ -995,7 +983,6 @@ if 'circuit_family' in e11_e14.columns and 'reduction' in e11_e14.columns:
     ax.set_title('Real-Circuit Optimizer Comparison (E11/E14)')
     ax.axhline(y=0, color='k', linewidth=0.5)
     plt.tight_layout()
-    plt.savefig(OUTPUT_DIR / 'fig08b_real_circuit_optimizer_comparison.png', dpi=300, bbox_inches='tight')
     plt.savefig(OUTPUT_DIR / 'fig08b_real_circuit_optimizer_comparison.pdf', format='pdf', bbox_inches='tight')
     plt.close()
 
@@ -1016,7 +1003,6 @@ if 'circuit_family' in e12.columns and 'reduction' in e12.columns:
             ax.legend(title='Optimization Level')
             plt.xticks(rotation=45, ha='right')
             plt.tight_layout()
-            plt.savefig(OUTPUT_DIR / 'fig09_compiler_baseline_comparison.png', dpi=300, bbox_inches='tight')
             plt.savefig(OUTPUT_DIR / 'fig09_compiler_baseline_comparison.pdf', format='pdf', bbox_inches='tight')
             plt.close()
     else:
@@ -1028,7 +1014,6 @@ if 'circuit_family' in e12.columns and 'reduction' in e12.columns:
         ax.set_ylabel('Mean Gate Reduction (%)')
         ax.set_title('Qiskit Compiler Baseline (E12)')
         plt.tight_layout()
-        plt.savefig(OUTPUT_DIR / 'fig09_compiler_baseline_comparison.png', dpi=300, bbox_inches='tight')
         plt.savefig(OUTPUT_DIR / 'fig09_compiler_baseline_comparison.pdf', format='pdf', bbox_inches='tight')
         plt.close()
 
@@ -1055,7 +1040,6 @@ if 'circuit_family' in e13.columns:
         ax.legend()
         ax.axhline(y=0, color='k', linewidth=0.5)
         plt.tight_layout()
-        plt.savefig(OUTPUT_DIR / 'fig10_structural_ceiling_gap.png', dpi=300, bbox_inches='tight')
         plt.savefig(OUTPUT_DIR / 'fig10_structural_ceiling_gap.pdf', format='pdf', bbox_inches='tight')
         plt.close()
     else:
@@ -1069,7 +1053,6 @@ if 'circuit_family' in e13.columns:
             ax.set_ylabel('Mean Gate Reduction (%)')
             ax.set_title('Structural Ceiling Analysis (E13)')
             plt.tight_layout()
-            plt.savefig(OUTPUT_DIR / 'fig10_structural_ceiling_gap.png', dpi=300, bbox_inches='tight')
             plt.savefig(OUTPUT_DIR / 'fig10_structural_ceiling_gap.pdf', format='pdf', bbox_inches='tight')
             plt.close()
 
@@ -1190,7 +1173,7 @@ print("\n" + "="*60)
 print("ALL FIGURES GENERATED")
 print("="*60)
 print(f"Output directory: {OUTPUT_DIR}")
-for f in sorted(OUTPUT_DIR.glob('*.png')):
+for f in sorted(OUTPUT_DIR.glob('*.pdf')):
     print(f"  - {f.name}")
 print(f"  - statistical_summary.csv")
 print(f"  - fdr_correction_results.csv")

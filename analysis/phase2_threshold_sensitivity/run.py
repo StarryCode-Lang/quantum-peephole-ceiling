@@ -122,11 +122,10 @@ def generate_figure(results_df):
     output_dir = PROJECT_ROOT / "analysis" / "figures"
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    plt.savefig(output_dir / 'threshold_sensitivity.png')
     plt.savefig(output_dir / 'threshold_sensitivity.pdf')
     plt.close()
     
-    print(f"Figure saved to {output_dir / 'threshold_sensitivity.png'}")
+    print(f"Figure saved to {output_dir / 'threshold_sensitivity.pdf'}")
 
 
 def main():

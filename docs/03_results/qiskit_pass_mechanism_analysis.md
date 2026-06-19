@@ -4,7 +4,7 @@
 
 Generated from: `analysis/qiskit_pass_analysis.py`
 Data sources: `data/v5/qiskit_pass_isolation.csv`, `data/v5/e15/`
-Figures: `fig15_qiskit_pass_waterfall.png`, `fig16_qiskit_pass_family_heatmap.png`, `fig17_qiskit_pass_interaction.png`
+Figures: `fig15_qiskit_pass_waterfall.pdf`, `fig16_qiskit_pass_family_heatmap.pdf`, `fig17_qiskit_pass_interaction.pdf`
 
 ---
 

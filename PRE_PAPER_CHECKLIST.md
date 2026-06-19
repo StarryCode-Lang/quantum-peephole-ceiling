@@ -11,7 +11,7 @@
 | Check | Status | Detail |
 |-------|--------|--------|
 | All unit tests pass | ✅ | 149 tests, all passing |
-| All figures regenerated | ✅ | 17 generated PNG figures from canonical data |
+| All figures regenerated | ✅ | 17 generated PDF figures from canonical data |
 | Release manifest updated | ⚠️ | SHA256 computed, but manifest remains dirty until commit/regeneration and includes legacy entries |
 | Data canonical file aligned | ⚠️ | DATA_CANONICAL.md is authoritative; release manifest includes canonical plus legacy/provenance entries |
 | README.md updated | ✅ | v5.0.0, 53,300 canonical optimizer trials, core/statistical tests documented |
@@ -52,24 +52,24 @@
 
 | Figure | File | Content |
 |--------|------|---------|
-| Fig 1 | fig01_phase_transition.png | E1 depth sweep |
-| Fig 2 | fig02_scaling.png | E3 qubit scaling |
-| Fig 3 | fig03_algorithm_comparison.png | E4 optimizer comparison |
-| Fig 4 | fig04_phase1_vs_phase2.png | E10 Phase 1 vs Phase 2 |
-| Fig 5 | fig05_threshold_sensitivity.png | Threshold sensitivity |
-| Fig 6 | fig06_fidelity_distribution.png | Fidelity distributions |
-| Fig 7 | fig07_landscape.png | E5 landscape |
-| Fig 8 | fig08_fdr_correction.png | BH-FDR results |
-| Fig 8b | fig08b_real_circuit_optimizer_comparison.png | E11 real circuits |
-| Fig 9 | fig09_compiler_baseline_comparison.png | E12 Qiskit baseline |
-| Fig 10 | fig10_structural_ceiling_gap.png | E13 ceiling gap |
-| Fig 11 | fig11_extended_benchmark_heatmap.png | E14 heatmap |
-| Fig 12 | fig12_multi_compiler_comparison.png | E15 compiler comparison |
-| Fig 13 | fig13_window_scaling_curves.png | E16 window scaling |
-| Fig 14 | fig14_connectivity_ceiling.png | E17 connectivity |
-| Fig 15 | fig15_qiskit_pass_waterfall.png | Qiskit pass waterfall |
-| Fig 16 | fig16_qiskit_pass_family_heatmap.png | Qiskit pass family heatmap |
-| Fig 17 | fig17_qiskit_pass_interaction.png | Qiskit pass interaction |
+| Fig 1 | fig01_phase_transition.pdf | E1 depth sweep |
+| Fig 2 | fig02_scaling.pdf | E3 qubit scaling |
+| Fig 3 | fig03_algorithm_comparison.pdf | E4 optimizer comparison |
+| Fig 4 | fig04_phase1_vs_phase2.pdf | E10 Phase 1 vs Phase 2 |
+| Fig 5 | fig05_threshold_sensitivity.pdf | Threshold sensitivity |
+| Fig 6 | fig06_fidelity_distribution.pdf | Fidelity distributions |
+| Fig 7 | fig07_landscape.pdf | E5 landscape |
+| Fig 8 | fig08_fdr_correction.pdf | BH-FDR results |
+| Fig 8b | fig08b_real_circuit_optimizer_comparison.pdf | E11 real circuits |
+| Fig 9 | fig09_compiler_baseline_comparison.pdf | E12 Qiskit baseline |
+| Fig 10 | fig10_structural_ceiling_gap.pdf | E13 ceiling gap |
+| Fig 11 | fig11_extended_benchmark_heatmap.pdf | E14 heatmap |
+| Fig 12 | fig12_multi_compiler_comparison.pdf | E15 compiler comparison |
+| Fig 13 | fig13_window_scaling_curves.pdf | E16 window scaling |
+| Fig 14 | fig14_connectivity_ceiling.pdf | E17 connectivity |
+| Fig 15 | fig15_qiskit_pass_waterfall.pdf | Qiskit pass waterfall |
+| Fig 16 | fig16_qiskit_pass_family_heatmap.pdf | Qiskit pass family heatmap |
+| Fig 17 | fig17_qiskit_pass_interaction.pdf | Qiskit pass interaction |
 
 ---
 
@@ -86,7 +86,7 @@
 
 ## Paper Writing Entry Points
 
-- **Manuscript structure**: `docs/06_manuscript/manuscript_structure_v5.md` (complete outline with abstract, 7 sections, figure/table list, cover letter)
+- **Manuscript**: `docs/06_manuscript/v6_manuscript.md` (authoritative v6 manuscript, complete)
 - **Theory framework**: `docs/01_theory/framework.md` (v5.4.0, 12 definitions, 10 theorems)
 - **Literature review**: `docs/02_literature/literature_review.md` (42 narrative refs; see `unified_references.md` for authoritative list of 81 refs)
 - **Experimental design**: `docs/03_results/experimental_design.md` (formal specification)

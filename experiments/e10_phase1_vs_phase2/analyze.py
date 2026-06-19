@@ -132,11 +132,10 @@ def generate_e10_figure(df):
     output_dir = PROJECT_ROOT / "analysis/figures"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    plt.savefig(output_dir / 'e10_phase1_vs_phase2.png')
     plt.savefig(output_dir / 'e10_phase1_vs_phase2.pdf')
     plt.close()
 
-    print(f"Figure saved to {output_dir / 'e10_phase1_vs_phase2.png'}")
+    print(f"Figure saved to {output_dir / 'e10_phase1_vs_phase2.pdf'}")
 
 
 # ---------------------------------------------------------------------------
