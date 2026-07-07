@@ -24,25 +24,22 @@ def _instruction_qubits(circuit: QuantumCircuit, inst: CircuitInstruction) -> tu
     return tuple(circuit.find_bit(q).index for q in inst.qubits)
 
 
-def _are_inverse(circuit: QuantumCircuit, inst1: CircuitInstruction, inst2: CircuitInstruction) -> bool:
-    """Check inverse relation on identical qubits using project-compatible rules."""
-    name1 = inst1.operation.name
-    name2 = inst2.operation.name
-    if _instruction_qubits(circuit, inst1) != _instruction_qubits(circuit, inst2):
-        return False
-    if name1 == name2 and name1 in {"h", "x", "y", "z", "cx", "cz", "swap"}:
-        return True
-    if {name1, name2} == {"t", "tdg"}:
-        return True
-    if {name1, name2} == {"s", "sdg"}:
-        return True
-    if name1 == name2 and name1 in {"rx", "ry", "rz"}:
-        if inst1.operation.params and inst2.operation.params:
-            try:
-                return abs(float(inst1.operation.params[0]) + float(inst2.operation.params[0])) < 1e-10
-            except Exception:
-                return False
-    return False
+def _are_inverse(analyzer: BaseOptimizer, circuit: QuantumCircuit,
+                 inst1: CircuitInstruction, inst2: CircuitInstruction) -> bool:
+    """Check inverse relation using the *same* predicate as the optimizer.
+
+    Previously this function used an unscaled ``abs(...) < 1e-10`` tolerance
+    for rotation cancellation, while the optimizer used
+    ``abs(angle_sum) <= DEFAULT_PRECISION * scale``.  This inconsistency
+    (review FATAL-1 / H3) caused the structural ceiling to under-count
+    cancellable rotation pairs relative to what the optimizer could
+    actually remove, producing negative ceiling gaps that were silently
+    clamped to zero.
+
+    The fix delegates to ``analyzer._is_self_inverse_pair`` so that the
+    ceiling and the optimizer share identical cancellation semantics.
+    """
+    return analyzer._is_self_inverse_pair(circuit, inst1, inst2)
 
 
 def _is_mergeable_rotation(circuit: QuantumCircuit, inst1: CircuitInstruction, inst2: CircuitInstruction) -> bool:
@@ -140,9 +137,18 @@ def analyze_structural_ceiling(circuit: QuantumCircuit, window: int = 10) -> Str
         upper = min(n_inst, i + window)
         for j in range(i + 2, upper):
             inst_j = circuit.data[j]
-            if not _are_inverse(circuit, inst_i, inst_j):
+            if not _are_inverse(analyzer, circuit, inst_i, inst_j):
                 continue
-            if all(analyzer._gates_commute(circuit, inst_i, circuit.data[k]) for k in range(i + 1, j)):
+            # To bring inst_i and inst_j adjacent via commutation rewriting,
+            # BOTH endpoints must commute with every intermediate gate.
+            # The previous implementation only checked inst_i's commutativity
+            # with intermediate gates (review FATAL-1), missing cases where
+            # inst_j cannot be moved past a blocking gate.  Checking both
+            # directions ensures the ceiling count reflects pairs that are
+            # actually reachable by the commutation rewriter.
+            intermediates = range(i + 1, j)
+            if all(analyzer._gates_commute(circuit, inst_i, circuit.data[k]) for k in intermediates) and \
+               all(analyzer._gates_commute(circuit, inst_j, circuit.data[k]) for k in intermediates):
                 commutation_enabled += 1
 
     theoretical_removed = 2 * (adjacent_cancellable + commutation_enabled) + mergeable_rotation

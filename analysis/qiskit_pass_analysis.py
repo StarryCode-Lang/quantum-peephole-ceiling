@@ -342,20 +342,22 @@ def generate_fig15_waterfall(pass_df: pd.DataFrame,
         vals = matrix[pname].values * 100
         compiler = "custom" if pname in ("greedy_phase1", "commutation_phase2") else "qiskit"
 
-        # Compute error bars (std across qubit sizes).
-        # NOTE: uses sample standard deviation (std, ddof=1) of the per-family
-        # reductions, NOT the standard error of the mean (SEM). Since these
-        # bars annotate a *mean* reduction, SEM = std / sqrt(n) would be the
-        # statistically correct quantity for "mean ± error" reporting; std is
-        # retained here for consistency with the existing figure.
+        # review M8: use SEM not SD for mean comparison error bars.
+        # These bars annotate a *mean* reduction, so the statistically correct
+        # uncertainty quantity is the standard error of the mean
+        # (SEM = SD / sqrt(n)), not the sample standard deviation (SD). SD
+        # reflects trial-to-trial spread and overstates the mean's uncertainty,
+        # which makes mean differences appear less significant than they are.
         yerrs = []
         for fam in present_families:
             fam_pass_data = pass_df[
                 (pass_df["circuit_family"] == fam) &
                 (pass_df["pass_name"] == pname)
             ]["reduction"]
-            if len(fam_pass_data) > 1:
-                yerrs.append(fam_pass_data.std() * 100)
+            n_fam_pass = len(fam_pass_data)
+            if n_fam_pass > 1:
+                sem = fam_pass_data.std() / np.sqrt(n_fam_pass)
+                yerrs.append(sem * 100)
             else:
                 yerrs.append(0.0)
 
@@ -441,10 +443,14 @@ def generate_fig16_heatmap(pass_df: pd.DataFrame) -> None:
     row_labels = [FAMILY_DISPLAY_NAMES.get(r, r).replace("\n", " ") for r in matrix.index]
 
     fig, ax = plt.subplots(figsize=(10, 6))
+    # review L1: colorblind-safe palette. cividis is the most colorblind-safe
+    # sequential colormap and is consistent with Figure 11 (E14 heatmap) and
+    # the project-wide convention (cividis/viridis). YlOrRd is not colorblind-
+    # safe and was inconsistent with the other figures.
     sns.heatmap(
         matrix.values * 100,
         annot=True, fmt=".1f",
-        cmap="YlOrRd",
+        cmap="cividis",
         linewidths=0.8, linecolor="white",
         cbar_kws={"label": "Mean Gate Reduction (%)"},
         ax=ax,

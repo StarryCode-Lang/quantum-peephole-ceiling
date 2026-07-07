@@ -72,7 +72,10 @@ def benjamini_hochberg(p_values: np.ndarray, alpha: float = 0.05) -> Tuple[np.nd
     else:
         rejected_sorted = np.zeros(n, dtype=bool)
     
-    # Adjusted p-values (Benjamini-Hochberg-Yekutieli)
+    # Adjusted p-values: standard Benjamini-Hochberg (BH).
+    # NOTE (review Stage 5): the previous comment labelled this
+    # "Benjamini-Hochberg-Yekutieli", but the formula is the original
+    # BH (1995) adjustment, not BY (2001) which requires a c(m) factor.
     adjusted_p = np.minimum.accumulate(sorted_p[::-1] * n / np.arange(n, 0, -1))[::-1]
     adjusted_p = np.minimum(adjusted_p, 1.0)
     
@@ -221,12 +224,18 @@ def cohens_d(x: np.ndarray, y: np.ndarray) -> Tuple[float, float, float]:
         raise ValueError("Pooled standard deviation is zero; Cohen's d is undefined. Use Glass's Delta or a non-parametric measure instead.")
     
     d = (mx - my) / pooled_std
-    
-    # Standard error (approximate)
-    se = np.sqrt(1/nx + 1/ny)
+
+    # Standard error (review M1 fix): the previous formula
+    # ``se = sqrt(1/nx + 1/ny)`` omitted the ``d^2/(2*df)`` term,
+    # producing anti-conservative (too narrow) CIs for large effect
+    # sizes.  The correct approximate SE (Hedges & Olkin 1985) is:
+    #   se = sqrt(1/nx + 1/ny + d^2 / (2 * df))
+    # where df = nx + ny - 2.  This matches effect_size.py's implementation.
+    df = nx + ny - 2
+    se = np.sqrt(1.0/nx + 1.0/ny + d**2 / (2.0 * df))
     ci_low = d - 1.96 * se
     ci_high = d + 1.96 * se
-    
+
     return d, ci_low, ci_high
 
 

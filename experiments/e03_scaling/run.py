@@ -11,7 +11,7 @@ Parameters (same as original):
 - seed = 42
 - entanglement_density = 0.3
 
-Output: data/v2_fixed/e03/
+Output: data/v5/e03/
 """
 
 from __future__ import annotations

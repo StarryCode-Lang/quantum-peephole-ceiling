@@ -52,7 +52,21 @@ def _parse_seed_list(seed_text: str) -> list[int]:
 
 
 def run_e4(seed_base: int = 42, seeds: list[int] | None = None, n_trials: int = 100):
-    """Run Experiment 4 with fixed optimizers."""
+    """Run Experiment 4 with fixed optimizers.
+
+    Design note (review F2 / HIGH-1):
+    All optimizers see the **same circuit** in each trial.  The circuit is
+    generated once with ``trial_seed = current_seed_base + trial`` and then
+    passed to every optimizer.  The per-optimizer seed offsets
+    (+10_000, +20_000, +30_000) control only the *internal* stochastic
+    trajectories of RLS / SA / GA — they do **not** affect circuit
+    generation.  Greedy is deterministic and receives no seed.
+
+    This is a proper paired comparison: the only varying factor across
+    optimizers within a trial is the optimizer itself, not the input
+    circuit.  The different internal seeds prevent RLS/SA/GA from sharing
+    the same random walk, which would be a confound, not a benefit.
+    """
     
     n_qubits = 5
     depth = 15
@@ -77,6 +91,13 @@ def run_e4(seed_base: int = 42, seeds: list[int] | None = None, n_trials: int = 
         "entanglement_density": entanglement_density,
         "family": family.name,
         "optimizers": optimizer_names,
+        "paired_comparison": True,
+        "paired_comparison_note": (
+            "All optimizers see the same circuit per trial. "
+            "Circuit seed = seed_base + trial (shared). "
+            "Optimizer internal seeds differ (+10k/+20k/+30k) only to "
+            "decouple stochastic trajectories, not to change the circuit."
+        ),
         "timestamp": datetime.now().isoformat(),
     }
     
@@ -98,7 +119,7 @@ def run_e4(seed_base: int = 42, seeds: list[int] | None = None, n_trials: int = 
                 "ga": GeneticAlgorithmOptimizer(random_seed=current_seed_base + 30_000),
             }
             for trial in range(n_trials):
-                trial_seed = current_seed_base + trial
+                trial_seed = current_seed_base + trial  # SAME circuit seed for all optimizers
                 config = CircuitConfig(
                     n_qubits=n_qubits,
                     depth=depth,
@@ -107,6 +128,7 @@ def run_e4(seed_base: int = 42, seeds: list[int] | None = None, n_trials: int = 
                     entanglement_density=entanglement_density,
                 )
 
+                # Circuit generated ONCE per trial; all optimizers receive the same instance.
                 circuits = generate_circuit_batch(config, 1, metrics_calculator)
                 circuit, metrics = circuits[0]
 

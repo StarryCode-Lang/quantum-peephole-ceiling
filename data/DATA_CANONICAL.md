@@ -1,7 +1,7 @@
 # Canonical Data Files
 
-> **Version**: 1.0  
-> **Date**: 2026-06-12  
+> **Version**: 1.1  
+> **Date**: 2026-06-20  
 > **Purpose**: Each experiment has multiple timestamped CSV files from re-runs. This document specifies which file is the **canonical** version used for analysis and manuscript figures.
 
 ## Policy
@@ -28,6 +28,7 @@
 | E16 | `v5/e16/e16_window_scaling_e16_full_20260610_142547.csv` | 696 | Only full run |
 | E17 | `v5/e17/e17_connectivity_e17_full_20260610_150935.csv` | 755 | Only full run |
 | E18 | `v5/e18/e18_clifford_t_e18_full_20260610_052140.csv` | 270 | Includes 78 decompose_error rows AND 42 fidelity=0 rows (120/270 = 44.4% total failure rate) |
+| E19 | `v6/e19/e19_wcl_listing_full_e19_full_20260620_123825.csv` | 10,000 | WCL vs LBL listing-model comparison; 5,000 circuits × 2 listing models; WCL mean 7.83%, LBL 0.0000% |
 | Heldout | `v5/new_families_heldout.csv` | 125 | Phase 7 held-out validation |
 | Isolation | `v5/qiskit_pass_isolation.csv` | 100 | Phase 7 Qiskit pass isolation |
 
@@ -37,7 +38,33 @@
 2. **E1 has 4 CSV copies** — the greedy optimizer is deterministic with fixed seed, but copies differ in fidelity precision (not bitwise identical).
 3. **E18 has 78 decompose_error rows AND 42 fidelity=0 rows** — these are distinct failure modes: decompose_error rows fail at Clifford+T decomposition, while fidelity=0 rows fail at fidelity verification. Total: 120/270 = 44.4% failure rate. The generate_figures.py script filters both failure modes out.
 4. **E15 smoke and full data from 20260610 have negative reductions** — legitimate (Qiskit gate inflation on some circuits), not errors.
-5. **Total canonical optimizer trial count (E1-E18)**: 53,300. Including held-out validation and Qiskit pass-isolation artifacts, the canonical analysis artifacts contain 53,525 rows. Legacy/smoke duplicates are excluded.
+5. **Total canonical optimizer trial count (E1-E18)**: 53,300. Including E19 (WCL/LBL comparison, 10,000 rows) and held-out validation and Qiskit pass-isolation artifacts, the canonical analysis artifacts contain 63,525 rows. Legacy/smoke duplicates are excluded.
+
+---
+
+## Smoke and Auxiliary Files (Not Used in Primary Analysis)
+
+| File | Rows | Description |
+|------|------|-------------|
+| `v6/e19/e19_wcl_listing_smoke_e19_smoke_20260620_123754.csv` | 12 | E19 smoke test (validation run only) |
+| `v6/e21/ceiling_aware_comparison.csv` | 342 | E21 ceiling-aware optimizer smoke data |
+| `v6/e21/ceiling_aware_summary.csv` | 30 | E21 per-family summary statistics |
+
+---
+
+## Optimizer Naming Convention Map
+
+The Greedy optimizer is referred to by different names across experiments due to schema evolution. This table maps all known aliases:
+
+| Canonical Name | E1--E5 Column/Value | E4 | E10--E18 | E19 | Notes |
+|:---------------|:--------------------|:---|:---------|:----|:------|
+| Greedy | `optimizer_version` = `3.0.0` | `greedy` | `greedy_phase1` | `greedy_gate_cancellation` | Same algorithm (GreedyGateCancellation v3.0.0) |
+| RLS | -- | `rls` | -- | -- | E4 only |
+| SA | -- | `sa` | -- | -- | E4 only |
+| GA | -- | `ga` | -- | -- | E4 only |
+| CommutationRewriter | -- | -- | `commutation_phase2` | -- | E10/E11/E14/E16/E17/E18 |
+| HybridCommuteRewrite | -- | -- | `hybrid_phase1_2` | -- | E10/E11/E14/E16/E17/E18 |
+| Qiskit (baseline) | -- | -- | `none` | -- | E12/E17/E18 |
 
 ---
 

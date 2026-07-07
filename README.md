@@ -1,8 +1,8 @@
 # Q-research: Boundary Characterization of Quantum Circuit Peephole Optimization
 
-**Project Version**: 5.0.0  
-**Date**: 2026-06-14  
-**Target Journal**: Quantum (quantum-journal.org)
+**Project Version**: 6.0.0  
+**Date**: 2026-07-07  
+**Target Journal**: Quantum (quantum-journal.org) / QCE / TQC
 
 ---
 
@@ -72,11 +72,15 @@ Q-research/
 │   └── phase2_threshold_sensitivity/  # Threshold sensitivity analysis
 │
 ├── docs/                         # Documentation
-│   ├── 01_theory/               # Theoretical framework (conjectures + lemmas + complexity)
-│   ├── 02_literature/           # Comprehensive literature review (81 references, unified_references.md authoritative)
-│   ├── 03_results/              # Results documentation
-│   ├── 05_supplementary/         # Supplementary materials for manuscript
-│   └── 06_manuscript/            # Manuscript structure and submission planning
+│   ├── theory/                  # Theoretical framework (definitions, theorems, conjectures, complexity)
+│   ├── results/                 # Results documentation (experimental design, analysis summary)
+│   ├── references/              # Literature review and unified references
+│   ├── manuscript/              # Manuscript and appendix (claims, scope, limitations)
+│   ├── supplementary/           # Supplementary materials for manuscript
+│   ├── archive/                 # Historical documentation (audit reports, checklists)
+│   ├── data_dictionary.md       # Canonical data dictionary
+│   ├── 07_optimization_plan.md  # Top-conference submission optimization plan
+│   └── 07_optimization_tasks.csv# Executable task list
 │
 ├── scripts/                      # One-command reproduction scripts
 │   ├── reproduce_all.py         # Full reproduction pipeline
@@ -142,7 +146,7 @@ Q-research/
 
 ## Known Limitations
 
-> **Added 2026-06-11.** For full details, see `docs/03_results/experimental_design.md` Section 12.
+> **Added 2026-06-11.** For full details, see `docs/results/experimental_design.md` Section 12.
 
 The following limitations should be considered when interpreting results:
 
@@ -202,19 +206,6 @@ conda run -n q-research python experiments/e11_real_circuit_benchmark/run.py --m
 conda run -n q-research python experiments/e12_compiler_baseline/run.py --mode smoke
 conda run -n q-research python experiments/e13_structural_ceiling/run.py --mode smoke
 conda run -n q-research python scripts/generate_release_manifest.py
-```
-
-### Option 3: Docker
-
-```bash
-# Build the Docker image
-docker build -t q-research .
-
-# Run the core test suite inside the lightweight image
-docker run q-research python tests/test_core.py
-
-# Note: this image omits canonical CSV data to keep image size manageable.
-# Data verification requires mounting or copying the canonical data/ tree.
 ```
 
 ---

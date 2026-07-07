@@ -4,6 +4,15 @@ Systematically evaluates how Phase 2 commutation-rewriting performance
 varies with the search window size w in {2, 5, 10, 20, 50} across all
 circuit families. Directly supports Conjecture 2 (context-dependent
 super-constant improvement).
+
+Review M5 caveat: the optimizer's objective function optimizes GATE COUNT
+only.  The extended metrics (depth_reduction, two_qubit_reduction,
+cnot_reduction) are reported for diagnostic purposes but are NON-TARGET
+indicators — the optimizer does not directly optimize them.  A 0% depth
+or CNOT reduction does NOT indicate optimizer failure; it simply means
+the optimizer's gate-count objective did not incidentally reduce depth
+or CNOT count.  Manuscripts must NOT claim depth/CNOT reduction as a
+primary outcome of the optimizer.
 """
 
 from __future__ import annotations
@@ -133,6 +142,12 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
             "n_input_circuits": len(circuits),
             "n_rows": len(df),
             "circuit_families": sorted({bench.family for bench in circuits}),
+            "m5_caveat": (
+                "depth_reduction, two_qubit_reduction, and cnot_reduction are "
+                "NON-TARGET diagnostic metrics (review M5). The optimizer "
+                "optimizes GATE COUNT only. A 0% depth/CNOT reduction does "
+                "NOT indicate optimizer failure."
+            ),
         }
     )
     with (output_dir / "metadata.json").open("w", encoding="utf-8") as handle:
@@ -144,6 +159,25 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
         .agg({"reduction": "mean", "depth_reduction": "mean", "runtime_seconds": "mean"})
     )
     print(summary.to_string())
+
+    # Review M5: runtime reminder that depth/CNOT metrics are NON-TARGET.
+    if "depth_reduction" in df.columns or "cnot_reduction" in df.columns:
+        import warnings
+        warnings.warn(
+            "E16 summary includes depth_reduction and cnot_reduction columns. "
+            "These are NON-TARGET diagnostic metrics (review M5): the optimizer "
+            "optimizes GATE COUNT only. A 0% depth or CNOT reduction does NOT "
+            "indicate optimizer failure. Do not claim depth/CNOT reduction as "
+            "a primary outcome in manuscripts.",
+            UserWarning,
+            stacklevel=2,
+        )
+        print(
+            "\n[M5 caveat] depth_reduction and cnot_reduction are NON-TARGET "
+            "diagnostic metrics. The optimizer optimizes gate count only.\n"
+            "            A 0% depth/CNOT reduction does NOT indicate optimizer "
+            "failure.\n"
+        )
     return df
 
 

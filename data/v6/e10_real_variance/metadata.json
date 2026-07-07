@@ -1,0 +1,40 @@
+{
+  "experiment_id": "E10_real_variance",
+  "version": "1.0.0",
+  "description": "Multi-seed variance estimation for real circuit families (review H5)",
+  "seeds": [
+    42,
+    142,
+    242,
+    342,
+    442
+  ],
+  "n_seeds": 5,
+  "sizes": [
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "optimizers": [
+    "greedy_phase1",
+    "commutation_phase2",
+    "hybrid_phase1_2",
+    "template_phase2b"
+  ],
+  "families": [
+    "QFT",
+    "GHZ",
+    "CNOT_chain",
+    "BV",
+    "QAOA",
+    "VQE",
+    "HardwareEfficient"
+  ],
+  "total_rows": 700,
+  "canonical_data_file": "e10_real_variance_20260623_012636.csv",
+  "summary_file": "e10_real_variance_summary_20260623_012636.csv",
+  "timestamp": "2026-06-23T01:26:36.158807",
+  "review_fix": "H5: real circuit variance estimation (N>1 per family\u00d7size)"
+}

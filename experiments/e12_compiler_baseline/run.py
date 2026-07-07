@@ -3,6 +3,13 @@
 Runs Qiskit transpiler optimization levels 0-3 on the same real-circuit suite used by E11.
 v4.1.0 fix: Added coupling_map (heavy-hex d=3) and basis_gates to differentiate L1/L2/L3.
 Without a backend/coupling_map, Qiskit skips layout and routing, making L1-L3 bit-identical.
+
+v4.2.0 fix (review H1/F3): Added ``--no-coupling-map`` mode for a *fair* comparison.
+The default coupling_map forces Qiskit to solve routing + optimization, while the
+custom peephole optimizer only does optimization (no routing).  This makes Qiskit's
+baseline artificially worse.  The ``--no-coupling-map`` mode runs Qiskit without a
+coupling map so both optimizers solve only the optimization problem, enabling an
+apples-to-apples comparison.  Run BOTH modes and report them separately.
 """
 
 from __future__ import annotations
@@ -33,7 +40,18 @@ from src.provenance import file_sha256, run_metadata  # noqa: E402
 
 SCHEMA_VERSION = "1.0.0"
 EXPERIMENT_ID = "E12"
-VERSION = "4.1.0"
+VERSION = "4.2.1"
+
+# Review L6 note: the ``fidelity`` column in E12 output is often NULL
+# for large circuits (n > max_qubits_fidelity) because Qiskit's
+# transpiled circuit uses a different basis gate set than the input,
+# making exact unitary comparison infeasible.  The ``fidelity_source``
+# column (added in v4.2.1) records WHY:
+#   "exact"        — unitary comparison succeeded (n <= max_qubits_fidelity)
+#   "unavailable"  — n > max_qubits_fidelity or qubit count mismatch
+#   "error"        — compiler exception, fidelity not computed
+# Consumers should filter on fidelity_source == "exact" for reliable
+# fidelity values.
 
 # Default heavy-hex distance and basis gates for fair compiler comparison.
 # The coupling map is now selected dynamically based on circuit size
@@ -56,8 +74,10 @@ def _select_coupling_map(n_qubits: int, heavy_hex_d: int = DEFAULT_HEAVY_HEX_D) 
     cmap = CouplingMap.from_heavy_hex(heavy_hex_d)
     if cmap.size() >= n_qubits:
         return cmap
-    # Scale up: find smallest heavy-hex distance that fits n_qubits.
-    for d in range(heavy_hex_d + 1, heavy_hex_d + 6):
+    # Scale up: find smallest odd heavy-hex distance that fits n_qubits.
+    # Qiskit requires d to be odd; start from next odd and step by 2.
+    start_d = heavy_hex_d + 1 if heavy_hex_d % 2 == 0 else heavy_hex_d + 2
+    for d in range(start_d, start_d + 10, 2):
         cmap = CouplingMap.from_heavy_hex(d)
         if cmap.size() >= n_qubits:
             return cmap
@@ -66,9 +86,19 @@ def _select_coupling_map(n_qubits: int, heavy_hex_d: int = DEFAULT_HEAVY_HEX_D) 
 
 
 def run(mode: str, seed: int, max_qubits_fidelity: int,
-        heavy_hex_d: int = DEFAULT_HEAVY_HEX_D) -> pd.DataFrame:
-    """Run Qiskit transpiler baselines and return results."""
+        heavy_hex_d: int = DEFAULT_HEAVY_HEX_D,
+        no_coupling_map: bool = False) -> pd.DataFrame:
+    """Run Qiskit transpiler baselines and return results.
+
+    When ``no_coupling_map=True`` (review H1/F3), Qiskit runs WITHOUT a coupling
+    map so that it solves only the gate-optimization problem — matching the
+    scope of the custom peephole optimizer (which does no routing).  This
+    produces a fair comparison.  The default (``no_coupling_map=False``) keeps
+    the routing-aware baseline for hardware-realism reporting.
+    """
     run_id = f"e12_{mode}_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
+    if no_coupling_map:
+        run_id += "_nocoupling"
     script_path = Path(__file__).resolve()
     output_dir = PROJECT_ROOT / "data" / "v4" / "e12"
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -82,24 +112,26 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
         input_hash = circuit_sha256(circuit)
         counts = gate_counts(circuit)
         baseline_gate_count = int(circuit.size())
-        # Dynamically select coupling map sized to this circuit.
-        coupling_map = _select_coupling_map(circuit.num_qubits, heavy_hex_d)
+        # Only select a coupling map when not in no-coupling mode.
+        coupling_map = None if no_coupling_map else _select_coupling_map(circuit.num_qubits, heavy_hex_d)
         for level in [0, 1, 2, 3]:
             start = time.time()
             error = ""
             compiled = None
             try:
-                compiled = transpile(
-                    circuit,
-                    coupling_map=coupling_map,
-                    basis_gates=BASIS_GATES,
+                transpile_kwargs = dict(
                     optimization_level=level,
                     seed_transpiler=seed,
                 )
+                if coupling_map is not None:
+                    transpile_kwargs["coupling_map"] = coupling_map
+                    transpile_kwargs["basis_gates"] = BASIS_GATES
+                compiled = transpile(circuit, **transpile_kwargs)
                 runtime = time.time() - start
                 optimized_gate_count = int(compiled.size())
                 reduction = 1.0 - optimized_gate_count / baseline_gate_count if baseline_gate_count else 0.0
                 fidelity = average_gate_fidelity(compiled, circuit, max_qubits=max_qubits_fidelity)
+                fidelity_source = "exact" if fidelity is not None else "unavailable"
                 success = bool(fidelity is not None and fidelity >= 0.999)
                 output_hash = circuit_sha256(compiled)
                 compiled_counts = gate_counts(compiled)
@@ -108,6 +140,7 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
                 optimized_gate_count = -1
                 reduction = 0.0
                 fidelity = None
+                fidelity_source = "error"
                 success = False
                 output_hash = ""
                 compiled_counts = {
@@ -144,6 +177,7 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
                     "reduction": reduction,
                     "reduction_pct": 100.0 * reduction,
                     "fidelity": fidelity,
+                    "fidelity_source": fidelity_source,
                     "success": success,
                     "runtime_seconds": runtime,
                     "optimizer": "none",
@@ -183,10 +217,20 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
             "compiler_version": qiskit.__version__,
             "optimization_levels": [0, 1, 2, 3],
             "compiler_config_id": COMPILER_CONFIG_ID,
-            "coupling_map": f"heavy_hex_d{heavy_hex_d}_dynamic",
+            "coupling_map": "none" if no_coupling_map else f"heavy_hex_d{heavy_hex_d}_dynamic",
             "coupling_map_base_d": heavy_hex_d,
-            "coupling_map_selection": "dynamic_per_circuit",
-            "basis_gates": BASIS_GATES,
+            "coupling_map_selection": "none" if no_coupling_map else "dynamic_per_circuit",
+            "no_coupling_map": no_coupling_map,
+            "fairness_note": (
+                "no_coupling_map=True: Qiskit solves optimization only (no routing), "
+                "matching the scope of the custom peephole optimizer. This is the "
+                "FAIR comparison mode (review H1/F3)."
+            ) if no_coupling_map else (
+                "no_coupling_map=False: Qiskit solves routing + optimization, which "
+                "is harder than the custom optimizer's optimization-only scope. "
+                "Use the no_coupling_map=True run for fair comparison."
+            ),
+            "basis_gates": BASIS_GATES if not no_coupling_map else "none (native gate set)",
         }
     )
     with (output_dir / "metadata.json").open("w", encoding="utf-8") as handle:
@@ -204,9 +248,21 @@ def main() -> None:
     parser.add_argument("--max-qubits-fidelity", type=int, default=10)
     parser.add_argument("--heavy-hex-d", type=int, default=DEFAULT_HEAVY_HEX_D,
                         help="Base heavy-hex coupling map distance (default: 3)")
+    parser.add_argument("--no-coupling-map", action="store_true",
+                        help="Run Qiskit WITHOUT a coupling map (fair comparison mode, review H1/F3)")
+    parser.add_argument("--both", action="store_true",
+                        help="Run BOTH coupling-map and no-coupling-map modes and save separately")
     args = parser.parse_args()
-    run(mode=args.mode, seed=args.seed, max_qubits_fidelity=args.max_qubits_fidelity,
-        heavy_hex_d=args.heavy_hex_d)
+
+    if args.both:
+        # Run hardware-realistic (with coupling) first, then fair (without).
+        run(mode=args.mode, seed=args.seed, max_qubits_fidelity=args.max_qubits_fidelity,
+            heavy_hex_d=args.heavy_hex_d, no_coupling_map=False)
+        run(mode=args.mode, seed=args.seed, max_qubits_fidelity=args.max_qubits_fidelity,
+            heavy_hex_d=args.heavy_hex_d, no_coupling_map=True)
+    else:
+        run(mode=args.mode, seed=args.seed, max_qubits_fidelity=args.max_qubits_fidelity,
+            heavy_hex_d=args.heavy_hex_d, no_coupling_map=args.no_coupling_map)
 
 
 if __name__ == "__main__":

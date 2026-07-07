@@ -44,11 +44,11 @@ EXPERIMENTS = {
         "script": "experiments/e03_scaling/run.py",
         "description": "Scaling analysis (n=3-10, 12,000 trials)",
         "estimated_time": "~15 minutes",
-        "output": "data/v2_fixed/e03/"
+        "output": "data/v5/e03/"
     },
     "E4": {
         "script": "experiments/e04_algorithm_comparison/run.py",
-        "description": "Algorithm comparison (n=5, 400 trials)",
+        "description": "Algorithm comparison (n=5, 400 trials, paired)",
         "estimated_time": "~2 hours (SA/GA are slow)",
         "output": "data/v2_fixed/e04/"
     },
@@ -59,10 +59,16 @@ EXPERIMENTS = {
         "output": "data/v2_fixed/e05/"
     },
     "E10": {
-        "script": "experiments/e10_phase1_vs_phase2/run.py",
-        "description": "Phase 1 vs Phase 2 (5 families, 627 trials)",
+        "script": "experiments/e10_phase1_vs_phase2/run_expanded.py",
+        "description": "Phase 1 vs Phase 2 (expanded, 1,905 rows)",
         "estimated_time": "~5 minutes",
-        "output": "data/v3_extended/e10/"
+        "output": "data/v5/e10/"
+    },
+    "E10p2b": {
+        "script": "experiments/e10_phase1_vs_phase2/run_phase2b.py",
+        "description": "Phase-2b template matching validation (Thm 7/9, review F1)",
+        "estimated_time": "~2 minutes",
+        "output": "data/v6/e10_phase2b/"
     },
     "E11": {
         "script": "experiments/e11_real_circuit_benchmark/run.py",
@@ -72,7 +78,7 @@ EXPERIMENTS = {
     },
     "E12": {
         "script": "experiments/e12_compiler_baseline/run.py",
-        "description": "Qiskit compiler baseline (smoke default)",
+        "description": "Qiskit compiler baseline (smoke default, supports --no-coupling-map)",
         "estimated_time": "~1 minute smoke / longer full",
         "output": "data/v4/e12/"
     },
@@ -90,7 +96,7 @@ EXPERIMENTS = {
     },
     "E15": {
         "script": "experiments/e15_multi_compiler/run.py",
-        "description": "Multi-compiler baseline (Qiskit only, smoke default)",
+        "description": "Multi-compiler baseline (Qiskit+Cirq+t|ket>, smoke default)",
         "estimated_time": "~2 minutes smoke / ~20 minutes full",
         "output": "data/v5/e15/"
     },
@@ -111,7 +117,19 @@ EXPERIMENTS = {
         "description": "Clifford+T gate-set experiment (smoke default)",
         "estimated_time": "~1 minute smoke / ~15 minutes full",
         "output": "data/v5/e18/"
-    }
+    },
+    "E19": {
+        "script": "experiments/e19_wcl_listing/run.py",
+        "description": "WCL vs LBL listing model comparison (review fix M10)",
+        "estimated_time": "~5 minutes",
+        "output": "data/v6/e19/"
+    },
+    "E21": {
+        "script": "experiments/e21_ceiling_aware/run.py",
+        "description": "Ceiling-aware optimizer (smoke default, review fix M10)",
+        "estimated_time": "~1 minute smoke / ~10 minutes full",
+        "output": "data/v6/e21/"
+    },
 }
 
 
@@ -230,6 +248,15 @@ def verify_data():
                     required_cols = ['n_qubits', 'reduction', 'fidelity']
                 elif exp_id == "E18":
                     required_cols = ['n_qubits', 'reduction', 'fidelity']
+                elif exp_id == "E19":
+                    # WCL vs LBL listing model — schema v2 with listing_model column
+                    required_cols = ['n_qubits', 'reduction']
+                elif exp_id == "E21":
+                    # Ceiling-aware optimizer summary — may have different schema
+                    required_cols = []  # accept any columns
+                elif exp_id == "E10p2b":
+                    # Phase-2b validation — has optimizer + reduction columns
+                    required_cols = ['optimizer', 'reduction']
                 else:
                     required_cols = ['n_qubits', 'depth', 'reduction', 'fidelity']
                     if 'experiment' not in df.columns and 'experiment_id' not in df.columns:

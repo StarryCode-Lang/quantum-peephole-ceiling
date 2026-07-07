@@ -18,7 +18,7 @@
 | PROJECT_SUMMARY.md updated | ✅ | Consistent with README |
 | manuscript_structure.md updated | ✅ | v5 structure, 53,300 canonical optimizer trials, target Quantum |
 | E12 degeneracy resolved | ✅ | New 568-row data shows distinct L0/L1/L2/L3 |
-| v6 directory documented | ✅ | README/data/v6 document E19/E20/E21 as preliminary/planned/smoke-only |
+| v6 directory documented | ✅ | README/data/v6 documents E19 (full canonical run, 10,000 rows), E20 (metadata-only), E21 (smoke-only) |
 | provenance.py updated | ✅ | Includes ceiling_aware.py, wire_traversal.py |
 | FDR correction complete | ✅ | 11/15 hypotheses significant after BH-FDR |
 | Target journal unified | ✅ | All documents reference Quantum (quantum-journal.org) |
@@ -43,8 +43,9 @@
 | E16 Window Scaling | 696 | Saturation at ws=10-20 |
 | E17 Connectivity | 755 | Linear/grid/heavy-hex |
 | E18 Clifford+T | 270 | T-count reduction |
+| E19 WCL Listing | 10,000 | WCL vs LBL comparison; WCL 7.83% vs LBL 0.0000% |
 | **Total E1-E18** | **53,300** | canonical optimizer rows |
-| **Total incl. held-out/isolation** | **53,525** | canonical analysis artifacts |
+| **Total incl. E19 + held-out/isolation** | **63,525** | canonical analysis artifacts |
 
 ---
 

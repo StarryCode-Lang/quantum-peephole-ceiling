@@ -26,7 +26,7 @@
 | **E17 Connectivity** | **755** | **15 families** | **varies** | **Hybrid** | **v5** |
 | **E18 Clifford+T** | **270** | **~6 families*** | **varies** | **Hybrid** | **v5** |
 
-**Total Canonical Optimizer Records (E1-E18)**: 53,300. Including held-out validation and Qiskit pass-isolation artifacts: 53,525 rows.
+**Total Canonical Optimizer Records (E1-E18)**: 53,300. Including E19 (WCL/LBL listing comparison, 10,000 rows), held-out validation, and Qiskit pass-isolation artifacts: 63,525 rows.
 
 *E18: ~60% of families fail Clifford+T decomposition.
 

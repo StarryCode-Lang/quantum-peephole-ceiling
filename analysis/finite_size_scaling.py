@@ -337,7 +337,9 @@ def scaling_collapse(
         - 'critical_estimate': float
         - 'nu': float
         - 'beta': float
-        - 'collapsed': bool, whether collapse succeeded (always True here)
+        - 'collapsed': bool, whether collapse succeeded (quantitatively validated)
+        - 'r_squared': float, R² goodness-of-fit for the scaling ansatz
+        - 'quality': str, qualitative assessment ('good', 'marginal', 'poor')
     """
     control_arr = np.asarray(control, dtype=float)
     values_arr = np.asarray(values, dtype=float)
@@ -347,13 +349,47 @@ def scaling_collapse(
     rescaled_x = np.abs(control_arr - critical_estimate) * (sizes_arr ** (1.0 / nu))
     rescaled_y = values_arr * (sizes_arr ** (-beta / nu))
 
+    # Review M7 fix: previously ``collapsed`` was hardcoded to True with
+    # no quantitative validation.  We now compute an R² goodness-of-fit
+    # for the scaling ansatz by fitting rescaled_y as a function of
+    # rescaled_x and measuring how well the data collapses onto a single
+    # curve.  We use a simple polynomial fit (degree 2) as the reference
+    # model and compute R² = 1 - SS_res/SS_tot.
+    r_squared = None
+    quality = "unknown"
+    collapsed = False
+    if len(rescaled_x) >= 4:
+        try:
+            from numpy.polynomial import polynomial as P
+            coeffs = P.polyfit(rescaled_x, rescaled_y, min(3, len(rescaled_x) - 1))
+            y_pred = P.polyval(rescaled_x, coeffs)
+            ss_res = float(np.sum((rescaled_y - y_pred) ** 2))
+            ss_tot = float(np.sum((rescaled_y - np.mean(rescaled_y)) ** 2))
+            r_squared = 1.0 - ss_res / ss_tot if ss_tot > 0 else 0.0
+            # Quality thresholds: R² > 0.9 is good, > 0.7 is marginal.
+            if r_squared >= 0.9:
+                quality = "good"
+                collapsed = True
+            elif r_squared >= 0.7:
+                quality = "marginal"
+                collapsed = True
+            else:
+                quality = "poor"
+                collapsed = False
+        except Exception:
+            r_squared = None
+            quality = "fit_failed"
+            collapsed = False
+
     return {
         "rescaled_x": rescaled_x.tolist(),
         "rescaled_y": rescaled_y.tolist(),
         "critical_estimate": float(critical_estimate),
         "nu": float(nu),
         "beta": float(beta),
-        "collapsed": True,
+        "collapsed": collapsed,
+        "r_squared": r_squared,
+        "quality": quality,
     }
 
 

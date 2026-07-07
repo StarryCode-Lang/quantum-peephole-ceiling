@@ -1,0 +1,9 @@
+optimizer,cohort,n_total,n_with_reduction,n_failed,failure_rate,mean_reduction,std_reduction,median_reduction
+none,full_cohort,78,0,78,1.0,,,
+none,survivor_subset,0,0,0,0.0,,,
+greedy_phase1,full_cohort,64,64,0,0.0,0.2754871173669645,0.356843288485786,0.1372549019607843
+greedy_phase1,survivor_subset,64,64,0,0.0,0.2754871173669645,0.356843288485786,0.1372549019607843
+commutation_phase2,full_cohort,64,64,0,0.0,0.011807500439044306,0.02385379675691004,0.0
+commutation_phase2,survivor_subset,64,64,0,0.0,0.011807500439044306,0.02385379675691004,0.0
+hybrid_phase1_2,full_cohort,64,64,0,0.0,0.2773797052442961,0.35565948621435106,0.1372549019607843
+hybrid_phase1_2,survivor_subset,64,64,0,0.0,0.2773797052442961,0.35565948621435106,0.1372549019607843

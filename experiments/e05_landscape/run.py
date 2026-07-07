@@ -127,18 +127,27 @@ def run_e5():
 
 
 def _perturb_circuit(circuit, n_qubits, seed):
-    """Create a perturbed version of the circuit."""
+    """Create a perturbed version of the circuit.
+
+    Review M3 fix: previously this function could *remove* a gate (the
+    ``else`` branch popped a gate), which changed the circuit's size and
+    thus the denominator of the reduction metric.  Different perturbation
+    levels then had different denominators, making the reduction values
+    incomparable.  We now only *swap* two gates (preserving size) or, if
+    a removal is desired for a specific analysis, the caller must record
+    the original size separately and use a fixed-denominator reduction.
+    The removal branch is removed entirely so all perturbed circuits
+    have the same gate count as the base circuit.
+    """
     rng = np.random.RandomState(seed)
     perturbed = copy.deepcopy(circuit)
-    
-    if len(perturbed.data) > 0:
-        if rng.random() < 0.5 and len(perturbed.data) > 1:
-            i, j = rng.choice(len(perturbed.data), 2, replace=False)
-            perturbed.data[i], perturbed.data[j] = perturbed.data[j], perturbed.data[i]
-        else:
-            idx = rng.randint(0, len(perturbed.data))
-            perturbed.data.pop(idx)
-    
+
+    if len(perturbed.data) > 1:
+        # Only swap two gates — this preserves the circuit size so the
+        # reduction denominator is constant across perturbation levels.
+        i, j = rng.choice(len(perturbed.data), 2, replace=False)
+        perturbed.data[i], perturbed.data[j] = perturbed.data[j], perturbed.data[i]
+
     return perturbed
 
 

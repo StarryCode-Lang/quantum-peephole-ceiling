@@ -123,6 +123,7 @@ HAAR_MAX_QUBITS = 4
 
 # Number of independent trials per (family, n_qubits)
 N_TRIALS = 10
+N_TRIALS_CANONICAL = 50  # review M9: canonical mode for publishable data
 
 
 def fidelity_source(n_qubits: int, fidelity: float) -> str:
@@ -253,7 +254,7 @@ def run(mode: str = "smoke", seed: int = 42, window: int = 10) -> Tuple[pd.DataF
     Returns:
         (comparison_df, summary_df) tuple.
     """
-    n_trials = 3 if mode == "smoke" else N_TRIALS
+    n_trials = 3 if mode == "smoke" else (50 if mode == "canonical" else N_TRIALS)
     run_id = f"e21_{mode}_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
     script_path = Path(__file__).resolve()
     output_dir = PROJECT_ROOT / "data" / "v6" / "e21"
@@ -493,8 +494,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Run E21 ceiling-aware optimizer comparison"
     )
-    parser.add_argument("--mode", choices=["smoke", "full"], default="smoke",
-                        help="smoke = 3 trials (quick); full = 10 trials (publication)")
+    parser.add_argument("--mode", choices=["smoke", "full", "canonical"], default="smoke",
+                        help="smoke = 3 trials (quick); full = 10 trials; canonical = 50 trials (review M9)")
     parser.add_argument("--seed", type=int, default=42,
                         help="Base random seed for reproducibility")
     parser.add_argument("--window", type=int, default=10,

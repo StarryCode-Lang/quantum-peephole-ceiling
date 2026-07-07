@@ -44,7 +44,7 @@ from analysis.finite_size_scaling import (
 
 def load_e10_data():
     """Load E10 data."""
-    data_dir = PROJECT_ROOT / "data/v3_extended/e10"
+    data_dir = PROJECT_ROOT / "data/v5/e10"
     csv_files = list(data_dir.glob("*.csv"))
 
     if not csv_files:
@@ -452,7 +452,7 @@ def main():
     save_statistical_json(stat_report, json_dir)
 
     # Also save to data directory for provenance
-    data_json_dir = PROJECT_ROOT / "data/v3_extended/e10"
+    data_json_dir = PROJECT_ROOT / "data/v5/e10"
     data_json_dir.mkdir(parents=True, exist_ok=True)
     save_statistical_json(stat_report, data_json_dir)
 

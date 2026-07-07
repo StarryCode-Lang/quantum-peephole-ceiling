@@ -2,6 +2,15 @@
 
 Runs all optimizers on the extended 15-family benchmark suite with
 parameterized window sizes and extended metrics (depth, 2Q-gate, CNOT reduction).
+
+Review M5 caveat: the optimizer's objective function optimizes GATE COUNT
+only.  The extended metrics (depth_reduction, two_qubit_reduction,
+cnot_reduction) are reported for diagnostic purposes but are NON-TARGET
+indicators — the optimizer does not directly optimize them.  A 0% depth
+or CNOT reduction does NOT indicate optimizer failure; it simply means
+the optimizer's gate-count objective did not incidentally reduce depth
+or CNOT count.  Manuscripts must NOT claim depth/CNOT reduction as a
+primary outcome of the optimizer.
 """
 
 from __future__ import annotations

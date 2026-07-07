@@ -15,6 +15,7 @@ DEFAULT_SOURCE_FILES = (
     "src/circuits/generator_v2.py",
     "src/circuits/real_benchmarks.py",
     "src/optimisation/base.py",
+    "src/optimisation/_gate_predicates.py",
     "src/optimisation/ceiling_aware.py",
     "src/optimisation/phase1/greedy.py",
     "src/optimisation/phase1/random_local_search.py",
@@ -22,6 +23,7 @@ DEFAULT_SOURCE_FILES = (
     "src/optimisation/phase1/genetic_algorithm.py",
     "src/optimisation/phase1/wire_traversal.py",
     "src/optimisation/phase2/commutation_rewriter.py",
+    "src/optimisation/phase2/template_matcher.py",
     "analysis/structural_ceiling.py",
 )
 

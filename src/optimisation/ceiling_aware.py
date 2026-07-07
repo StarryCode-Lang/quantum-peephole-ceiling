@@ -32,6 +32,7 @@ from qiskit import QuantumCircuit
 
 from .base import BaseOptimizer, OptimizationResult, _SELF_INVERSE_GATES
 from .constants import DEFAULT_PRECISION
+from . import _gate_predicates as _gp
 
 
 # ---------------------------------------------------------------------------
@@ -54,15 +55,13 @@ def count_phase1_actions(circuit: QuantumCircuit) -> int:
     if n < 2:
         return 0
 
-    # Re-use the BaseOptimizer predicates via a lightweight helper.
-    helper = _PredicateHelper()
     count = 0
     for i in range(n - 1):
         inst_a = circuit.data[i]
         inst_b = circuit.data[i + 1]
-        if helper.is_self_inverse_pair(circuit, inst_a, inst_b):
+        if _gp.is_self_inverse_pair(circuit, inst_a, inst_b):
             count += 1
-        elif helper.is_mergeable_rotation(circuit, inst_a, inst_b):
+        elif _gp.is_mergeable_rotation(circuit, inst_a, inst_b):
             count += 1
     return count
 
@@ -89,112 +88,25 @@ def count_phase2_actions(circuit: QuantumCircuit, window: int = 10) -> int:
     if n < 3:
         return 0
 
-    helper = _PredicateHelper()
     count = 0
     for i in range(n):
         upper = min(n, i + window)
         for j in range(i + 2, upper):
-            if not helper.is_self_inverse_pair(circuit, circuit.data[i], circuit.data[j]):
+            if not _gp.is_self_inverse_pair(circuit, circuit.data[i], circuit.data[j]):
                 continue
             # Check if all intermediates commute with BOTH endpoints
             can_commute = True
             for k in range(i + 1, j):
-                if not helper.gates_commute(circuit, circuit.data[i], circuit.data[k]):
+                if not _gp.gates_commute(circuit, circuit.data[i], circuit.data[k]):
                     can_commute = False
                     break
-                if not helper.gates_commute(circuit, circuit.data[k], circuit.data[j]):
+                if not _gp.gates_commute(circuit, circuit.data[k], circuit.data[j]):
                     can_commute = False
                     break
             if can_commute:
                 count += 1
                 break  # count at most one opportunity per anchor i
     return count
-
-
-# ---------------------------------------------------------------------------
-# Lightweight predicate helper (avoids instantiating a full BaseOptimizer)
-# ---------------------------------------------------------------------------
-
-class _PredicateHelper:
-    """Exposes the same gate predicates as BaseOptimizer, but without
-    the overhead of a full optimizer instance.  All methods are
-    stateless and O(1) per call.
-    """
-
-    @staticmethod
-    def _qubit_indices(circuit: QuantumCircuit, inst) -> list[int]:
-        try:
-            return [circuit.find_bit(q).index for q in inst.qubits]
-        except Exception:
-            return []
-
-    def is_self_inverse_pair(self, circuit, inst1, inst2) -> bool:
-        """Check if two instructions form a self-inverse (cancellable) pair."""
-        q1 = self._qubit_indices(circuit, inst1)
-        q2 = self._qubit_indices(circuit, inst2)
-        if q1 != q2:
-            return False
-        n1 = inst1.operation.name
-        n2 = inst2.operation.name
-        if n1 == n2 and n1 in _SELF_INVERSE_GATES:
-            return True
-        if (n1 == 't' and n2 == 'tdg') or (n1 == 'tdg' and n2 == 't'):
-            return True
-        if (n1 == 's' and n2 == 'sdg') or (n1 == 'sdg' and n2 == 's'):
-            return True
-        if n1 == n2 and n1 in ('rx', 'ry', 'rz'):
-            p1 = inst1.operation.params
-            p2 = inst2.operation.params
-            if p1 and p2:
-                try:
-                    angle_sum = float(p1[0]) + float(p2[0])
-                    # Use the same relative tolerance as base.py's _gates_cancel:
-                    # scale by the larger angle magnitude to avoid false negatives
-                    # for large rotations (absolute tolerance would under-count).
-                    scale = max(1.0, abs(float(p1[0])), abs(float(p2[0])))
-                    return abs(angle_sum) <= DEFAULT_PRECISION * scale
-                except Exception:
-                    return False
-        return False
-
-    @staticmethod
-    def is_mergeable_rotation(circuit, inst1, inst2) -> bool:
-        """Check if two adjacent instructions are same-axis rotations on the same qubit."""
-        q1 = _PredicateHelper._qubit_indices(circuit, inst1)
-        q2 = _PredicateHelper._qubit_indices(circuit, inst2)
-        if q1 != q2:
-            return False
-        n1 = inst1.operation.name
-        n2 = inst2.operation.name
-        return n1 == n2 and n1 in ('rx', 'ry', 'rz')
-
-    def gates_commute(self, circuit, inst1, inst2) -> bool:
-        """Check if two gate instructions commute (sufficient conditions)."""
-        q1 = set(self._qubit_indices(circuit, inst1))
-        q2 = set(self._qubit_indices(circuit, inst2))
-        # Disjoint qubits always commute
-        if q1 and q2 and len(q1 & q2) == 0:
-            return True
-        n1 = inst1.operation.name
-        n2 = inst2.operation.name
-        q1l = self._qubit_indices(circuit, inst1)
-        q2l = self._qubit_indices(circuit, inst2)
-        # Same single-qubit gate on same qubit
-        if n1 == n2 and q1l == q2l and len(q1l) == 1:
-            return True
-        # Same-axis rotations commute
-        if n1 == n2 and q1l == q2l and n1 in ('rz', 'rx', 'ry'):
-            return True
-        # Z-family commutation
-        z_family = {'z', 'rz', 's', 'sdg', 't', 'tdg'}
-        if n1 in z_family and n2 in z_family and q1l == q2l:
-            return True
-        # CNOT commutes with Z-rotation on control qubit
-        if n1 == 'cx' and n2 in z_family and len(q2l) == 1 and q2l[0] == q1l[0]:
-            return True
-        if n2 == 'cx' and n1 in z_family and len(q1l) == 1 and q1l[0] == q2l[0]:
-            return True
-        return False
 
 
 # ---------------------------------------------------------------------------

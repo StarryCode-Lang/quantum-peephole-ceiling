@@ -116,7 +116,19 @@ def _cirq_optimize(circuit):
 
 
 def _tket_optimize(circuit):
-    """Convert to t|ket>, apply optimization, convert back."""
+    """Convert to t|ket>, apply a *full* optimization pipeline, convert back.
+
+    Review H2: the previous implementation used only ``FullPeepholeOptimise``
+    as a single pass, which understates t|ket>'s capability.  The full
+    pipeline now runs:
+      1. DecomposeBoxes       — expand any composite blocks
+      2. FullPeepholeOptimise — peephole + resynthesis
+      3. CliffordSimp         — Clifford simplification
+      4. RebaseTket           — normalize to a common basis
+      5. FullPeepholeOptimise — second peephole pass after Clifford rewrites
+    This matches the recommended t|ket> compilation recipe rather than a
+    single-pass strawman.
+    """
     try:
         from pytket.extensions.qiskit import qiskit_to_tk, tk_to_qiskit
         from pytket.passes import (
@@ -130,8 +142,27 @@ def _tket_optimize(circuit):
     try:
         tk_circ = qiskit_to_tk(circuit)
         start = time.time()
-        DecomposeBoxes().apply(tk_circ)
-        FullPeepholeOptimise().apply(tk_circ)
+        # Build the full pipeline (review H2 fix).
+        passes = [
+            DecomposeBoxes(),
+            FullPeepholeOptimise(),
+        ]
+        # CliffordSimp and RebaseTket are optional but recommended; import
+        # lazily so a missing optional pass does not abort the whole run.
+        try:
+            from pytket.passes import CliffordSimp
+            passes.append(CliffordSimp())
+        except ImportError:
+            pass
+        try:
+            from pytket.passes import RebaseTket
+            passes.append(RebaseTket())
+        except ImportError:
+            pass
+        passes.append(FullPeepholeOptimise())  # second peephole after rewrites
+
+        pipeline = SequencePass(passes)
+        pipeline.apply(tk_circ)
         runtime = time.time() - start
         qc_back = tk_to_qiskit(tk_circ)
         return qc_back, runtime, "ok"
@@ -441,9 +472,40 @@ def main() -> None:
     parser.add_argument("--mode", choices=["smoke", "full"], default="smoke")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--max-qubits-fidelity", type=int, default=10)
-    parser.add_argument("--skip-cirq", action="store_true", help="Skip Cirq backend")
-    parser.add_argument("--skip-tket", action="store_true", help="Skip t|ket> backend")
+    parser.add_argument("--skip-cirq", action="store_true",
+                        help="Skip Cirq backend (Cirq is attempted by default when installed)")
+    parser.add_argument("--skip-tket", action="store_true",
+                        help="Skip t|ket> backend (t|ket> is attempted by default when installed)")
+    parser.add_argument("--require-all-compilers", action="store_true",
+                        help="Fail hard if Cirq or t|ket> are not installed (review H2)")
     args = parser.parse_args()
+
+    # Review H2: detect missing compilers and either fail or warn.
+    missing = []
+    if not args.skip_cirq:
+        try:
+            import cirq  # noqa: F401
+        except ImportError:
+            missing.append("cirq")
+    if not args.skip_tket:
+        try:
+            import pytket  # noqa: F401
+        except ImportError:
+            missing.append("pytket")
+    if missing and args.require_all_compilers:
+        parser.error(
+            f"Required compilers not installed: {', '.join(missing)}. "
+            "Install them or drop --require-all-compilers."
+        )
+    if missing:
+        print(
+            f"WARNING (review H2): optional compilers not installed: {', '.join(missing)}. "
+            "These will be recorded as 'not_installed' in the output. "
+            "For a complete multi-compiler comparison, install them. "
+            "Do NOT claim 'multi-compiler comparison' in the manuscript "
+            "without data from all compilers."
+        )
+
     run(mode=args.mode, seed=args.seed, max_qubits_fidelity=args.max_qubits_fidelity,
         skip_cirq=args.skip_cirq, skip_tket=args.skip_tket)
 

@@ -1,0 +1,38 @@
+{
+  "experiment_id": "E10_phase2b",
+  "version": "1.0.0",
+  "description": "Phase-2b (template matching) validation on the canonical E10 circuit suite. Closes the theory-experiment gap flagged in review F1 by running Phase2bTemplateMatcher alongside Phase-1 and Phase-2a on identical circuits.",
+  "optimizers": [
+    "greedy_phase1",
+    "commutation_phase2a",
+    "template_phase2b"
+  ],
+  "n_trials_random": 100,
+  "bv_sizes_for_theory": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "real_sizes": [
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "total_rows": 1017,
+  "canonical_data_file": "e10_phase2b_validation_20260622_115818.csv",
+  "theory_file": "e10_phase2b_bv_theory_20260622_115818.csv",
+  "theorems_validated": {
+    "Thm_7_artificial": ">= 1/6 = 16.7% (artificial family, not run here)",
+    "Thm_9_BV_oracle": ">= n/(4.5n+4), validated for n in [2, 3, 4, 5, 6, 7, 8, 9, 10]"
+  },
+  "timestamp": "2026-06-22T11:58:18.059014",
+  "review_fix": "F1 (FATAL): Phase-2b canonical validation"
+}

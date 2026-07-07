@@ -27,6 +27,8 @@ sys.path.insert(0, str(PROJECT_ROOT))
 # Imports from the standalone submodules
 from analysis.phase1_statistics.multiple_comparison import (
     benjamini_hochberg as bh_fdr,
+    holm_bonferroni as holm_correction,
+    benjamini_yekutieli as by_correction,
 )
 from analysis.phase1_statistics.bootstrap import (
     bootstrap_ci as boot_ci_mod,
@@ -495,28 +497,39 @@ def test_hedges_g_larger_samples():
 
 
 def test_effect_size_magnitude_thresholds():
-    """Verify interpretation thresholds match conventional cut-offs."""
-    assert interpret_mod(0.0) == "negligible"
-    assert interpret_mod(0.1) == "negligible"
-    assert interpret_mod(0.19) == "negligible"
+    """Verify interpretation thresholds match conventional cut-offs.
 
-    assert interpret_mod(0.2) == "small"
-    assert interpret_mod(0.35) == "small"
-    assert interpret_mod(0.49) == "small"
+    Review M2: interpret_effect_size now takes a ``metric`` parameter.
+    Cohen's d thresholds (0.2/0.5/0.8) and Cliff's delta thresholds
+    (0.147/0.33/0.474) are tested separately.
+    """
+    # Cohen's d thresholds
+    assert interpret_mod(0.0, metric="cohens_d") == "negligible"
+    assert interpret_mod(0.1, metric="cohens_d") == "negligible"
+    assert interpret_mod(0.19, metric="cohens_d") == "negligible"
 
-    assert interpret_mod(0.5) == "medium"
-    assert interpret_mod(0.65) == "medium"
-    assert interpret_mod(0.79) == "medium"
+    assert interpret_mod(0.2, metric="cohens_d") == "small"
+    assert interpret_mod(0.35, metric="cohens_d") == "small"
+    assert interpret_mod(0.49, metric="cohens_d") == "small"
 
-    assert interpret_mod(0.8) == "large"
-    assert interpret_mod(1.0) == "large"
-    assert interpret_mod(2.0) == "large"
+    assert interpret_mod(0.5, metric="cohens_d") == "medium"
+    assert interpret_mod(0.65, metric="cohens_d") == "medium"
+    assert interpret_mod(0.79, metric="cohens_d") == "medium"
+
+    assert interpret_mod(0.8, metric="cohens_d") == "large"
+    assert interpret_mod(2.0, metric="cohens_d") == "large"
+
+    # Cliff's delta thresholds (different from Cohen's d!)
+    assert interpret_mod(0.1, metric="cliffs_delta") == "negligible"
+    assert interpret_mod(0.147, metric="cliffs_delta") == "small"
+    assert interpret_mod(0.33, metric="cliffs_delta") == "medium"
+    assert interpret_mod(0.474, metric="cliffs_delta") == "large"
 
     # Negative values should use absolute magnitude
-    assert interpret_mod(-0.1) == "negligible"
-    assert interpret_mod(-0.3) == "small"
-    assert interpret_mod(-0.6) == "medium"
-    assert interpret_mod(-1.0) == "large"
+    assert interpret_mod(-0.1, metric="cohens_d") == "negligible"
+    assert interpret_mod(-0.3, metric="cohens_d") == "small"
+    assert interpret_mod(-0.6, metric="cohens_d") == "medium"
+    assert interpret_mod(-1.0, metric="cohens_d") == "large"
 
 
 def test_effect_size_empty_x_raises():
@@ -815,6 +828,110 @@ def test_core_bh_step_up_not_naive():
 
 
 # ===================================================================
+# Holm-Bonferroni and BY tests (review L8)
+# ===================================================================
+
+def test_holm_bonferroni_basic():
+    """Holm-Bonferroni should control FWER and reject small p-values."""
+    p = [0.01, 0.04, 0.03, 0.20]
+    result = holm_correction(p, alpha=0.05)
+    assert result["n_tests"] == 4
+    # p=0.01 should be rejected (smallest, passes Holm step-down).
+    rejected = result["rejected"]
+    assert rejected[0], f"p=0.01 should be rejected, got {rejected}"
+    assert result["method"] == "Holm-Bonferroni"
+
+
+def test_holm_bonferroni_all_significant():
+    """When all p-values are tiny, Holm should reject all."""
+    p = [0.001, 0.002, 0.003]
+    result = holm_correction(p, alpha=0.05)
+    assert all(result["rejected"]), f"All should be rejected, got {result['rejected']}"
+
+
+def test_holm_bonferroni_none_significant():
+    """When all p-values are large, Holm should reject none."""
+    p = [0.5, 0.6, 0.7]
+    result = holm_correction(p, alpha=0.05)
+    assert not any(result["rejected"]), f"None should be rejected, got {result['rejected']}"
+
+
+def test_by_correction_more_conservative_than_bh():
+    """BY adjusted p-values should be >= BH adjusted p-values."""
+    p = [0.01, 0.02, 0.03, 0.04, 0.05]
+    bh_result = bh_fdr(p, alpha=0.05)
+    by_result = by_correction(p, alpha=0.05)
+    # BY adjusted p-values should be >= BH adjusted p-values.
+    for i in range(len(p)):
+        assert by_result["adjusted_p"][i] >= bh_result["adjusted_p"][i] - 1e-10, (
+            f"BY adjusted p should be >= BH adjusted p at index {i}: "
+            f"BY={by_result['adjusted_p'][i]} vs BH={bh_result['adjusted_p'][i]}"
+        )
+    assert by_result["method"] == "Benjamini-Yekutieli"
+    assert "c_m" in by_result
+
+
+def test_by_c_m_correction_factor():
+    """BY should multiply by c(m) = sum(1/i)."""
+    p = [0.01, 0.02, 0.03]
+    by_result = by_correction(p, alpha=0.05)
+    expected_cm = sum(1.0 / i for i in range(1, len(p) + 1))
+    assert abs(by_result["c_m"] - expected_cm) < 1e-10, (
+        f"c_m should be {expected_cm}, got {by_result['c_m']}"
+    )
+
+
+# ===================================================================
+# Holm-Bonferroni and BY tests (review L8)
+# ===================================================================
+
+def test_holm_bonferroni_basic():
+    """Holm-Bonferroni should be more conservative than BH."""
+    p = [0.01, 0.02, 0.03, 0.50]
+    result = holm_correction(p, alpha=0.05)
+    assert result["n_tests"] == 4
+    assert result["method"] == "Holm-Bonferroni"
+    # p=0.01 should be rejected
+    assert result["rejected"][0] == True
+    # p=0.50 should not be rejected
+    assert result["rejected"][3] == False
+
+def test_holm_bonferroni_all_significant():
+    """Holm-Bonferroni with all small p-values should reject all."""
+    p = [0.001, 0.002, 0.003]
+    result = holm_correction(p, alpha=0.05)
+    assert all(result["rejected"]), f"Expected all rejected, got {result['rejected']}"
+
+def test_holm_bonferroni_none_significant():
+    """Holm-Bonferroni with all large p-values should reject none."""
+    p = [0.5, 0.6, 0.7]
+    result = holm_correction(p, alpha=0.05)
+    assert not any(result["rejected"]), f"Expected none rejected, got {result['rejected']}"
+
+def test_by_correction_basic():
+    """Benjamini-Yekutieli should be more conservative than BH."""
+    p = [0.01, 0.02, 0.03, 0.50]
+    bh_result = bh_fdr(p, alpha=0.05)
+    by_result = by_correction(p, alpha=0.05)
+    # BY should have >= adjusted p-values than BH
+    assert all(by_result["adjusted_p"] >= bh_result["adjusted_p"] - 1e-10), (
+        f"BY should be >= BH: BY={by_result['adjusted_p']}, BH={bh_result['adjusted_p']}"
+    )
+    assert by_result["method"] == "Benjamini-Yekutieli"
+    assert "c_m" in by_result
+
+def test_by_cm_factor():
+    """BY correction factor c(m) = sum(1/i) for i=1..m."""
+    # For m=3: c(3) = 1 + 1/2 + 1/3 = 1.8333...
+    p = [0.01, 0.02, 0.03]
+    by_result = by_correction(p, alpha=0.05)
+    expected_cm = 1 + 0.5 + 1.0/3.0
+    assert abs(by_result["c_m"] - expected_cm) < 1e-6, (
+        f"c(3) should be {expected_cm}, got {by_result['c_m']}"
+    )
+
+
+# ===================================================================
 # Main entry point
 # ===================================================================
 
@@ -899,6 +1016,15 @@ if __name__ == "__main__":
     _run(test_power_module_calculate_power)
     _run(test_power_module_invalid_n_raises)
     _run(test_core_bh_returns_tuple)
+    print()
+
+    # ---- 6. Holm-Bonferroni and BY (review L8) ----
+    print("--- Holm-Bonferroni and BY (review L8) ---")
+    _run(test_holm_bonferroni_basic)
+    _run(test_holm_bonferroni_all_significant)
+    _run(test_holm_bonferroni_none_significant)
+    _run(test_by_correction_more_conservative_than_bh)
+    _run(test_by_c_m_correction_factor)
     print()
 
     _report()

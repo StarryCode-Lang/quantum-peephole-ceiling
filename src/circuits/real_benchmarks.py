@@ -552,7 +552,7 @@ def generate_extended_suite(mode: str = "smoke", seed: int = 42) -> List[Benchma
             BenchmarkCircuit(f"iqp_{n}", "IQP", "iqp", suite, make_iqp(n, depth=3, seed=seed + 700 + n), seed + 700 + n, notes="IQP circuit, 3 diagonal layers"),
             BenchmarkCircuit(f"clifford_{n}", "RandomClifford", "random_clifford", suite, make_random_clifford(n, depth=10, seed=seed + 800 + n), seed + 800 + n, notes="Random Clifford, depth=10"),
             BenchmarkCircuit(f"surface_code_{n}", "SurfaceCode", "surface_code", suite, make_surface_code_syndrome(n, seed=seed + 900 + n), seed + 900 + n, notes="X-stabilizer syndrome extraction"),
-            BenchmarkCircuit(f"uccsd_{n}", "UCCSD", "uccsd_ansatz", suite, make_parameterized_ansatz(n, reps=1, seed=seed + 1000 + n), seed + 1000 + n, notes="Parameterized ansatz (not true UCCSD; see make_parameterized_ansatz docstring)"),
+            BenchmarkCircuit(f"uccsd_{n}", "UCCSD_inspired", "uccsd_inspired_ansatz", suite, make_parameterized_ansatz(n, reps=1, seed=seed + 1000 + n), seed + 1000 + n, notes="Parameterized ansatz INSPIRED BY (not true) UCCSD; see make_parameterized_ansatz docstring. Renamed from 'UCCSD' to 'UCCSD_inspired' per review L3 to avoid false claim."),
         ])
 
     # Large-scale instances for scalable families (P4: n=12, 15, 20)

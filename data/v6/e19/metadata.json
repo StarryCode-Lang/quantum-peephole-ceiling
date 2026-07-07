@@ -1,9 +1,54 @@
 {
-  "experiment_id": "E19",
+  "canonical_data_file": "e19_wcl_listing_full_e19_full_20260620_123825.csv",
+  "depth_range": [
+    1,
+    50
+  ],
+  "description": "WCL vs LBL listing model comparison for Phase 1 ceiling",
+  "evidence_level": "canonical_full_run",
+  "experiment_id": "WCL-E19",
+  "git_commit": "f3c6880a2faa7777c07d3a3b89773e675800cf99",
+  "mode": "full",
+  "n_qubits": 5,
+  "n_rows": 10000,
   "name": "WCL Preprocessing Benchmark",
-  "status": "planned",
-  "description": "Full WCL preprocessing benchmark — planned but not yet executed as of release.",
-  "canonical_data_file": null,
-  "evidence_level": "planned",
-  "notes": "Only the experiment specification exists. No canonical run data has been generated."
+  "notes": "Full canonical run completed. WCL mean reduction 7.83% vs LBL 0%. Structural ceiling confirmed listing-dependent (Theorem 1a).",
+  "optimizer_selection": "both",
+  "optimizers_run": [
+    "LBL",
+    "WCL"
+  ],
+  "package_versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "qiskit": "2.4.1",
+    "scipy": "1.13.1"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+  "run_id": "e19_full_20260620_123825",
+  "schema_version": "1.1.0",
+  "seed": 42,
+  "source_hashes": {
+    "analysis/structural_ceiling.py": "e57ef84b493d36817c162f89aae1089ad064c74f9cccb76c0b144857f86b9ee0",
+    "experiments/e19_wcl_listing/run.py": "32f8a9a46eda191a90dd0e49470db5281d475a314419fb9ad08a671285928bf4",
+    "src/circuits/generator_v2.py": "e0d5f541bb23703bda2a0049410f964821d45723e482d262ebb318891fde1132",
+    "src/circuits/real_benchmarks.py": "4107b833c2bae70b30b262e0a82668906f0050c5aac86cf2a9f36423fb643a96",
+    "src/optimisation/base.py": "fa214f3da7955eb47298cc61d59771bd0fbd6badaa7c852b2c069d257d79124c",
+    "src/optimisation/ceiling_aware.py": "f9039c32ce8776161ded68dbecb6d2e7a4222d51f4270272d5088c2ab519a815",
+    "src/optimisation/phase1/genetic_algorithm.py": "9093c26527029c80b0feee3f8612681291b2b7c809d64c61b186ece195cd7e03",
+    "src/optimisation/phase1/greedy.py": "59d506439d44b5d0503a71d67f1589418c32c3363705e2093d9ebe9650476e60",
+    "src/optimisation/phase1/random_local_search.py": "26cc47fddaeca2fc9f8dbd72bf2a69117ac06eb31ae02e7a582d0f3e70a6fea6",
+    "src/optimisation/phase1/simulated_annealing.py": "d6fd7b9c239c9bc3c6afdd9a74adf6d83d41f73dbcd56faa36088a82d745d318",
+    "src/optimisation/phase1/wire_traversal.py": "e4d2214746f4a771e1c370a61e62a984d26012a74ed529c33b9f983a6df3fbf2",
+    "src/optimisation/phase2/commutation_rewriter.py": "bf301a589dc4ef635158f863fe7d131f3cf0e704d652d4524fc08cc4279aef52"
+  },
+  "status": "completed",
+  "total_circuits": 5000,
+  "trials_per_depth": 100,
+  "version": "5.1.0",
+  "wire_traversal_by_listing_model": {
+    "LBL": false,
+    "WCL": true
+  }
 }

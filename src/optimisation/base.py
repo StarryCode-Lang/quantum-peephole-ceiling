@@ -663,13 +663,23 @@ class BaseOptimizer(ABC):
 
     def _fitness(self, circuit: QuantumCircuit, target: QuantumCircuit) -> float:
         """
-        Calculate fitness with smooth fidelity penalty.
+        Calculate fitness with smooth fidelity penalty and cancellation potential.
 
         Uses a sigmoid-based penalty instead of hard cutoff, providing gradient
         information for stochastic optimizers even when fidelity is below threshold.
 
-        Returns: reduction * sigmoid_penalty, where sigmoid_penalty smoothly
-        transitions from 0 to 1 around the fidelity threshold.
+        Returns: reduction * sigmoid_penalty + cancellation_potential_bonus.
+
+        Review Stage 6 / fitness insertion bias fix:
+        Previously, INSERTION moves (which add 2 gates) always decreased
+        fitness because they increased circuit.size(), making reduction
+        negative (clamped to 0).  This meant stochastic optimizers
+        effectively never used insertion, even though insertion can
+        enable future cancellations.  We now add a small "potential"
+        bonus proportional to the number of adjacent cancellable pairs
+        in the circuit, giving insertion moves a gradient signal when
+        they create cancellation opportunities.  The bonus coefficient
+        (0.01) is small enough not to dominate the reduction objective.
         """
         fidelity = self.calculate_fidelity(circuit, target)
 
@@ -692,4 +702,18 @@ class BaseOptimizer(ABC):
         # to avoid rewarding no-ops or circuits that grew while keeping fidelity.
         reward = 0.1 * fidelity * penalty if reduction > 0.0 else 0.0
 
-        return float(reduction * penalty + reward)
+        # Cancellation potential bonus (review Stage 6 fix).
+        # Count adjacent self-inverse / mergeable pairs that could be
+        # cancelled in the next move.  This gives INSERTION moves a
+        # positive gradient when they bring inverse gates together.
+        # The coefficient is deliberately small (0.01) so the bonus
+        # never dominates the primary reduction objective.
+        potential_bonus = 0.0
+        if len(circuit.data) >= 2:
+            cancellable = 0
+            for i in range(len(circuit.data) - 1):
+                if self._is_self_inverse_pair(circuit, circuit.data[i], circuit.data[i + 1]):
+                    cancellable += 1
+            potential_bonus = 0.01 * cancellable * penalty
+
+        return float(reduction * penalty + reward + potential_bonus)

@@ -126,7 +126,6 @@ def bootstrap_convergence(
     if data_arr.size == 0:
         raise ValueError("data must not be empty.")
 
-    rng = np.random.default_rng(random_seed)
     n = len(data_arr)
 
     # Geometric progression of resample counts up to max_bootstrap
@@ -139,7 +138,16 @@ def bootstrap_convergence(
         counts.append(max_bootstrap)
 
     widths: Dict[int, float] = {}
-    for count in counts:
+    for idx, count in enumerate(counts):
+        # Review M6 fix: previously all counts shared the SAME RNG
+        # (seeded once), so the 1000-resample run at count=1000 was a
+        # strict prefix of the 2500-run, introducing correlation between
+        # width measurements.  We now seed a FRESH RNG per count using
+        # ``random_seed + idx`` so each count draws independent resamples.
+        # This breaks the prefix correlation and gives valid convergence
+        # diagnostics.  The base ``random_seed`` still ensures full
+        # reproducibility.
+        rng = np.random.default_rng(random_seed + idx)
         stats = np.empty(count)
         for i in range(count):
             sample = rng.choice(data_arr, size=n, replace=True)

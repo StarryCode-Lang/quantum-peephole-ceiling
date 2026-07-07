@@ -73,7 +73,7 @@ def cliffs_delta(x: Sequence[float], y: Sequence[float]) -> Dict[str, Any]:
         "delta": float(delta),
         "ci_lower": ci_lower,
         "ci_upper": ci_upper,
-        "magnitude": interpret_effect_size(float(delta)),
+        "magnitude": interpret_effect_size(float(delta), metric="cliffs_delta"),
         "n1": n1,
         "n2": n2,
         "se": float(se),
@@ -141,7 +141,7 @@ def cohens_d(x: Sequence[float], y: Sequence[float]) -> Dict[str, Any]:
         "g": float(g),
         "ci_lower": ci_lower,
         "ci_upper": ci_upper,
-        "magnitude": interpret_effect_size(float(g)),
+        "magnitude": interpret_effect_size(float(g), metric="cohens_d"),
         "n1": n1,
         "n2": n2,
         "pooled_sd": float(pooled_sd),
@@ -149,16 +149,33 @@ def cohens_d(x: Sequence[float], y: Sequence[float]) -> Dict[str, Any]:
     }
 
 
-def interpret_effect_size(delta: float) -> str:
+def interpret_effect_size(delta: float, metric: str = "auto") -> str:
     """Interpret the magnitude of an effect size.
 
     Uses conventional thresholds for Cohen's d / Hedges' g and
     adapted thresholds for Cliff's delta (absolute value).
 
+    Review M2 fix: previously this function used Cohen's d thresholds
+    (0.2/0.5/0.8) for BOTH Cliff's delta and Cohen's d, causing
+    inconsistencies with ``core.py`` which uses Cliff-specific
+    thresholds (0.147/0.33/0.474).  The ``metric`` parameter now
+    selects the correct threshold set:
+
+    - ``metric="cliffs_delta"`` (or ``"delta"``): Cliff 1993 thresholds
+      (0.147 / 0.33 / 0.474).
+    - ``metric="cohens_d"`` (or ``"d"``, ``"g"``): Cohen 1988 thresholds
+      (0.2 / 0.5 / 0.8).
+    - ``metric="auto"`` (default): uses Cliff thresholds when
+      ``abs(delta) <= 1.0`` (Cliff's delta range) and Cohen thresholds
+      otherwise.  This is a heuristic; pass the metric explicitly when
+      the type is known.
+
     Parameters
     ----------
     delta : float
         Effect size estimate (Cohen's d, Hedges' g, or Cliff's delta).
+    metric : str
+        Which threshold set to use (see above).
 
     Returns
     -------
@@ -166,11 +183,25 @@ def interpret_effect_size(delta: float) -> str:
         One of: 'negligible', 'small', 'medium', 'large'.
     """
     abs_d = abs(delta)
-    if abs_d < 0.2:
+
+    # Select threshold set based on metric.
+    if metric in ("cliffs_delta", "delta"):
+        # Cliff 1993 thresholds — designed for delta in [-1, 1].
+        small, medium, large = 0.147, 0.33, 0.474
+    elif metric in ("cohens_d", "d", "g"):
+        # Cohen 1988 thresholds.
+        small, medium, large = 0.2, 0.5, 0.8
+    else:  # "auto"
+        if abs_d <= 1.0:
+            small, medium, large = 0.147, 0.33, 0.474
+        else:
+            small, medium, large = 0.2, 0.5, 0.8
+
+    if abs_d < small:
         return "negligible"
-    elif abs_d < 0.5:
+    elif abs_d < medium:
         return "small"
-    elif abs_d < 0.8:
+    elif abs_d < large:
         return "medium"
     else:
         return "large"
@@ -248,3 +279,31 @@ def effect_size_table(comparisons: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
     }
 
     return {"table": table, "summary": summary}
+
+
+def hedges_g(x: Sequence[float], y: Sequence[float]) -> Dict[str, Any]:
+    """Hedges' g effect size (bias-corrected Cohen's d).
+
+    This is a convenience wrapper around :func:`cohens_d` — the Cohen's d
+    function already applies the Hedges' g small-sample correction factor
+    and returns the result as the ``'g'`` key.  This function exists so
+    that callers importing ``hedges_g`` from ``effect_size`` (rather than
+    from ``core``) get the same unified ``Dict[str, Any]`` contract.
+
+    Parameters
+    ----------
+    x, y : sequence of float
+        Two samples to compare.
+
+    Returns
+    -------
+    dict
+        Same as :func:`cohens_d` (keys include ``'d'``, ``'g'``,
+        ``'ci_lower'``, ``'ci_upper'``, ``'magnitude'``, etc.).
+
+    Raises
+    ------
+    ValueError
+        If either sample is empty or has zero variance.
+    """
+    return cohens_d(x, y)

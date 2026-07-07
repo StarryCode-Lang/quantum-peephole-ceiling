@@ -14,9 +14,22 @@ fidelity_distribution
     Full distributional summaries and outlier detection.
 """
 
-from .multiple_comparison import benjamini_hochberg, holm_bonferroni, fdr_control_table
+from .multiple_comparison import (
+    benjamini_hochberg,
+    holm_bonferroni,
+    fdr_control_table,
+    shapiro_wilk_normality_test,
+    levene_variance_test,
+    dunn_posthoc_test,
+)
 from .effect_size import cliffs_delta, cohens_d, interpret_effect_size, effect_size_table
-from .power_analysis import calculate_power, required_sample_size, power_curve
+from .power_analysis import (
+    calculate_power,
+    required_sample_size,
+    power_curve,
+    nonparametric_power_analysis,
+    report_power_for_experiment,
+)
 from .bootstrap import bootstrap_ci, bootstrap_convergence, bootstrap_distribution
 from .fidelity_distribution import fidelity_summary, fidelity_outliers, fidelity_by_circuit_family
 
@@ -24,6 +37,9 @@ __all__ = [
     "benjamini_hochberg",
     "holm_bonferroni",
     "fdr_control_table",
+    "shapiro_wilk_normality_test",
+    "levene_variance_test",
+    "dunn_posthoc_test",
     "cliffs_delta",
     "cohens_d",
     "interpret_effect_size",
@@ -31,6 +47,8 @@ __all__ = [
     "calculate_power",
     "required_sample_size",
     "power_curve",
+    "nonparametric_power_analysis",
+    "report_power_for_experiment",
     "bootstrap_ci",
     "bootstrap_convergence",
     "bootstrap_distribution",

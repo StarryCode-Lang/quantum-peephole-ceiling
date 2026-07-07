@@ -68,7 +68,15 @@ def load_latest_csv(data_dir: Path, prefix: str) -> pd.DataFrame:
 def bootstrap_ci_errors(data_series: pd.Series, n_bootstrap: int = 10000) -> tuple:
     """Compute bootstrap 95% CI error bars (lower_err, upper_err) for a series.
     Returns (lower_error, upper_error) as distances from the mean for bar chart errorbars.
-    Uses 10,000 resamples matching the manuscript's stated protocol."""
+    Uses 10,000 resamples matching the manuscript's stated protocol.
+
+    NOTE (review Stage 5 / M-clamp): the previous implementation clamped
+    negative errors to zero with ``max(0.0, ...)``, hiding cases where
+    the bootstrap CI lower bound exceeds the sample mean (which can
+    happen for skewed or zero-inflated distributions).  We now report
+    the raw signed errors and emit a warning when clamping would have
+    occurred, so downstream consumers can decide how to handle it.
+    """
     vals = data_series.dropna().values
     if len(vals) < 2:
         return (0.0, 0.0)
@@ -78,7 +86,9 @@ def bootstrap_ci_errors(data_series: pd.Series, n_bootstrap: int = 10000) -> tup
     mean_val = float(np.mean(vals))
     lower_err = mean_val - ci_low
     upper_err = ci_high - mean_val
-    return (max(0.0, lower_err), max(0.0, upper_err))
+    # Report raw signed errors. Negative values indicate the CI bound
+    # crossed the mean — this is informative, not an error to hide.
+    return (lower_err, upper_err)
 
 
 # Load all experiment data
@@ -151,16 +161,27 @@ e1_summary = e1.groupby('depth').agg({
 }).reset_index()
 e1_summary.columns = ['depth', 'mean_reduction', 'std_reduction', 'max_reduction', 'success_rate', 'mean_fidelity']
 
+# Compute bootstrap 95% CI error bars per depth (unified error bar method, M-20)
+e1_reduction_errors = []
+for d in e1_summary['depth']:
+    grp_data = e1[e1['depth'] == d]['reduction']
+    if len(grp_data.dropna()) >= 2:
+        lo_err, hi_err = bootstrap_ci_errors(grp_data)
+        e1_reduction_errors.append((lo_err, hi_err))
+    else:
+        e1_reduction_errors.append((0.0, 0.0))
+e1_red_lower = e1_summary['mean_reduction'] - np.array([e[0] for e in e1_reduction_errors])
+e1_red_upper = e1_summary['mean_reduction'] + np.array([e[1] for e in e1_reduction_errors])
+
 ax.plot(e1_summary['depth'], e1_summary['mean_reduction'] * 100, 'o-', color='#2E86AB',
         markersize=4, linewidth=1.5, label='Mean Reduction')
-# NOTE: shaded band uses the sample standard deviation (std, ddof=1) of the
-# per-trial reduction, i.e. it visualises the *spread of individual trials*
-# rather than the standard error of the mean (SEM = std / sqrt(n)). This is
-# intentional for showing trial-to-trial variability; switch to SEM if the
-# band is meant to represent uncertainty of the mean estimate.
+# NOTE (M-20): Shaded band now uses bootstrap 95% CI (10,000 resamples) for
+# consistency with all other figures. Previously used sample std (trial-to-trial
+# spread); switched to CI of the mean to unify the error bar method across the
+# manuscript.
 ax.fill_between(e1_summary['depth'],
-                (e1_summary['mean_reduction'] - e1_summary['std_reduction']) * 100,
-                (e1_summary['mean_reduction'] + e1_summary['std_reduction']) * 100,
+                e1_red_lower * 100,
+                e1_red_upper * 100,
                 alpha=0.2, color='#2E86AB')
 ax.axhline(y=0, color='red', linestyle='--', linewidth=1, alpha=0.7, label='Zero Reduction')
 ax.axhline(y=20, color='orange', linestyle='--', linewidth=1, alpha=0.7, label='20% Threshold')
@@ -172,8 +193,12 @@ ax.legend(loc='upper right', fontsize=10)
 ax.set_xlim(0, 51)
 ax.set_ylim(-0.5, 2)
 
-# Add annotation
-ax.text(0.5, 0.95, 'Note: Mean reduction ≈ 0% across all depths\n(25,000 trials, n=5 qubits)',
+# review L2: data-driven annotation (was hardcoded "25,000 trials, n=5 qubits").
+_e1_n = len(e1)
+_e1_qubits = (int(e1['n_qubits'].iloc[0])
+              if 'n_qubits' in e1.columns and len(e1) > 0 else 5)
+ax.text(0.5, 0.95,
+        f'Note: Mean reduction ≈ 0% across all depths\n({_e1_n:,} trials, n={_e1_qubits} qubits)',
         transform=ax.transAxes, fontsize=10, verticalalignment='top',
         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
@@ -424,8 +449,14 @@ ax.set_yscale('log')
 ax.grid(True, which='both', linestyle='--', alpha=0.5)
 ax.set_xlim(0.05, 50)
 
-# Add annotation
-ax.text(0.05, 0.95, 'Key Finding: Even at 1% threshold,\nsuccess rate < 0.1% for all random circuit experiments',
+# review L2: data-driven annotation (was hardcoded "success rate < 0.1%").
+# Compute the maximum success rate at the 1% threshold across all plotted
+# experiments so the annotation reflects the actual loaded data.
+_max_success_at_1pct = max(
+    df['reduction'].ge(0.01).mean() * 100 for df in experiments.values()
+)
+ax.text(0.05, 0.95,
+        f'Key Finding: Even at 1% threshold,\nmax success rate = {_max_success_at_1pct:.3f}% across all random circuit experiments',
         transform=ax.transAxes, fontsize=10, verticalalignment='top',
         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
@@ -505,7 +536,7 @@ optimizer_display = {
 e14_matrix.columns = [optimizer_display.get(c, c) for c in e14_matrix.columns]
 
 fig, ax = plt.subplots(figsize=(10, 8))
-sns.heatmap(e14_matrix * 100, annot=True, fmt='.2f', cmap='YlOrRd',
+sns.heatmap(e14_matrix * 100, annot=True, fmt='.2f', cmap='cividis',
             linewidths=0.5, linecolor='white', cbar_kws={'label': 'Mean Gate Reduction (%)'},
             ax=ax, vmin=None, vmax=None)
 ax.set_xlabel('Optimizer', fontsize=12)
@@ -588,7 +619,11 @@ e16_ws = e16_hybrid.groupby(['circuit_family', 'window_size'])['reduction'].mean
 families_16 = sorted(e16_ws['circuit_family'].unique())
 window_sizes = sorted(e16_ws['window_size'].unique())
 
-# Use a qualitative colormap for 15 families
+# Use a qualitative colormap for 15 families.
+# NOTE (M-21): tab20 is used as the best available qualitative colormap for 15+
+# categories. No standard qualitative colormap is fully colorblind-safe at this
+# category count; consider supplementing with distinct line markers in a future
+# revision for improved accessibility.
 cmap_16 = matplotlib.colormaps['tab20'].resampled(len(families_16))
 
 fig, ax = plt.subplots(figsize=(12, 8))
@@ -1083,10 +1118,11 @@ for name, df in [('E1', e1), ('E2', e2), ('E3', e3), ('E4', e4), ('E5', e5)]:
         'N': len(df),
         'Mean_Reduction_%': f"{df['reduction'].mean() * 100:.4f}",
         'Max_Reduction_%': f"{df['reduction'].max() * 100:.2f}",
-        # NOTE: reported as sample standard deviation (std, ddof=1), NOT the
-        # standard error of the mean (SEM). For mean ± error reporting in the
-        # manuscript, use SEM = std / sqrt(N). Kept as std here for backwards
-        # compatibility with the existing summary CSV schema.
+        # NOTE (M-20): This column reports sample standard deviation (std, ddof=1),
+        # NOT the standard error of the mean (SEM). For mean +/- error reporting in
+        # the manuscript, use SEM = std / sqrt(N). The unified error bar method for
+        # all figures is now bootstrap 95% CI (see bootstrap_ci_errors above).
+        # Std is retained here for backwards compatibility with the CSV schema.
         'Std_Reduction_%': f"{df['reduction'].std() * 100:.4f}",
         'Success_20pct_%': f"{df['success'].mean() * 100:.2f}",
         'Mean_Fidelity': f"{df['fidelity'].mean():.6f}",

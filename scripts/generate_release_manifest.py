@@ -54,9 +54,9 @@ STANDALONE_IDS = {
 
 
 def dataset_entries(data_root: Path) -> List[Dict[str, object]]:
-    """Collect canonical active CSV datasets under data/v2_fixed, data/v3_extended, data/v4, and data/v5."""
+    """Collect canonical active CSV datasets under data/v2_fixed, data/v3_extended, data/v4, data/v5, and data/v6."""
     entries: List[Dict[str, object]] = []
-    for root_name in ["v2_fixed", "v3_extended", "v4", "v5"]:
+    for root_name in ["v2_fixed", "v3_extended", "v4", "v5", "v6"]:
         root = data_root / root_name
         if not root.exists():
             continue
@@ -82,17 +82,20 @@ def dataset_entries(data_root: Path) -> List[Dict[str, object]]:
                     rows = None
                 exp_id = STANDALONE_IDS.get(csv_path.name, exp_dir.name.upper())
                 is_superseded = (root_name, exp_dir.name) in SUPERSEDED_DIRS
+                schema = (
+                    "results_v6"
+                    if root_name == "v6"
+                    else "results_v2"
+                    if root_name == "v5"
+                    else "results_v1"
+                    if root_name == "v4"
+                    else "legacy_v2_v3"
+                )
                 entry = {
                     "file": csv_path.relative_to(PROJECT_ROOT).as_posix(),
                     "sha256": file_sha256(csv_path),
                     "rows": rows,
-                    "schema": (
-                        "results_v2"
-                        if root_name == "v5"
-                        else "results_v1"
-                        if root_name == "v4"
-                        else "legacy_v2_v3"
-                    ),
+                    "schema": schema,
                     "experiment_id": exp_id,
                 }
                 if is_superseded:
@@ -106,10 +109,13 @@ def generate_manifest(release_id: str) -> Dict[str, object]:
     """Build release manifest data."""
     source_files = tuple(DEFAULT_SOURCE_FILES) + (
         "src/circuits/real_benchmarks.py",
+        "src/optimisation/_gate_predicates.py",
+        "src/optimisation/ceiling_aware.py",
         "analysis/structural_ceiling.py",
         "experiments/e11_real_circuit_benchmark/run.py",
         "experiments/e12_compiler_baseline/run.py",
         "experiments/e13_structural_ceiling/run.py",
+        "experiments/e19_wcl_listing/run.py",
         "scripts/generate_release_manifest.py",
     )
     return {
@@ -147,13 +153,16 @@ def generate_manifest(release_id: str) -> Dict[str, object]:
             ],
             "full_experiment_entrypoints": [
                 "conda run -n q-research python experiments/e11_real_circuit_benchmark/run.py --mode full",
-                "conda run -n q-research python experiments/e12_compiler_baseline/run.py --mode full",
+                "conda run -n q-research python experiments/e12_compiler_baseline/run.py --mode full --both",
                 "conda run -n q-research python experiments/e13_structural_ceiling/run.py --mode full",
                 "conda run -n q-research python experiments/e14_extended_benchmark/run.py --mode full",
                 "conda run -n q-research python experiments/e15_multi_compiler/run.py --mode full",
                 "conda run -n q-research python experiments/e16_window_scaling/run.py --mode full",
                 "conda run -n q-research python experiments/e17_connectivity/run.py --mode full",
                 "conda run -n q-research python experiments/e18_clifford_t/run.py --mode full",
+                "conda run -n q-research python experiments/e19_wcl_listing/run.py --mode full",
+                "conda run -n q-research python experiments/e10_phase1_vs_phase2/run_phase2b.py",
+                "conda run -n q-research python experiments/e21_ceiling_aware/run.py --mode full",
             ],
             "random_seed_policy": "recorded_per_row",
         },
@@ -173,6 +182,20 @@ def main() -> None:
         json.dump(manifest, handle, indent=2, sort_keys=True)
     print(f"Release manifest written to {output}")
     print(f"Datasets: {len(manifest['datasets'])}")
+
+    # Review H8: warn loudly when the worktree is dirty so the release
+    # manager knows to commit before publishing.  A dirty release means
+    # the source_hashes cannot be recovered from git alone, breaking
+    # third-party reproducibility.
+    if manifest["git"].get("dirty"):
+        print(
+            "\n⚠️  WARNING (review H8): git worktree is DIRTY. "
+            "The release manifest's source_hashes may not be recoverable "
+            "from git. To produce a clean release:\n"
+            "  1. Commit all changes:  git add -A && git commit -m 'release'\n"
+            "  2. Re-run:  python scripts/generate_release_manifest.py\n"
+            "  3. Verify manifest['git']['dirty'] == false"
+        )
 
 
 if __name__ == "__main__":

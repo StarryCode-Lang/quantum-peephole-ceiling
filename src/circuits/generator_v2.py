@@ -45,15 +45,24 @@ class StructureType(Enum):
 
 @dataclass(frozen=True)
 class CircuitConfig:
-    """Immutable configuration for circuit generation."""
+    """Immutable configuration for circuit generation.
+
+    Review L4 note: the ``gate_set`` and ``topology`` fields are
+    DECLARED but currently UNUSED by any generator (all generators
+    hardcode their gate set and use nearest-neighbor connectivity).
+    They are retained for API forward-compatibility but should not be
+    relied upon to influence circuit generation.  A future refactor
+    may wire these fields into the generators; until then, setting them
+    has no effect on the generated circuit.
+    """
     n_qubits: int
     depth: int
     family: CircuitFamily
     seed: int = 42
     entanglement_density: float = 0.3
     structure_type: StructureType = StructureType.BRICKWORK
-    gate_set: str = 'ht_rz_cnot'
-    topology: str = 'nearest_neighbor'
+    gate_set: str = 'ht_rz_cnot'  # UNUSED (review L4) — kept for API compatibility
+    topology: str = 'nearest_neighbor'  # UNUSED (review L4) — kept for API compatibility
     
     def __post_init__(self):
         if self.n_qubits < 1:
@@ -62,6 +71,23 @@ class CircuitConfig:
             raise ValueError(f"depth must be >= 1, got {self.depth}")
         if not 0 <= self.entanglement_density <= 1:
             raise ValueError(f"entanglement_density must be in [0,1], got {self.entanglement_density}")
+        # Review L4: warn if non-default gate_set/topology is used since
+        # these fields are currently ignored by all generators.
+        import warnings as _w
+        if self.gate_set != 'ht_rz_cnot':
+            _w.warn(
+                f"CircuitConfig.gate_set='{self.gate_set}' is currently UNUSED "
+                f"(review L4). All generators hardcode their gate sets. "
+                f"Setting this field has no effect on the generated circuit.",
+                stacklevel=2,
+            )
+        if self.topology != 'nearest_neighbor':
+            _w.warn(
+                f"CircuitConfig.topology='{self.topology}' is currently UNUSED "
+                f"(review L4). All generators use nearest-neighbor connectivity. "
+                f"Setting this field has no effect on the generated circuit.",
+                stacklevel=2,
+            )
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization."""
@@ -138,22 +164,10 @@ class BaseCircuitGenerator:
         """Create a quantum circuit with the configured number of qubits."""
         return QuantumCircuit(self.config.n_qubits)
     
-    def _apply_random_single_qubit(self, qc: QuantumCircuit, qubit: int) -> None:
-        """Apply a random single-qubit gate."""
-        gate = self.rng.choice(['h', 't', 'rz', 'rx', 'ry'])
-        if gate == 'h':
-            qc.h(qubit)
-        elif gate == 't':
-            qc.t(qubit)
-        elif gate == 'rz':
-            angle = self.rng.uniform(0, 2 * np.pi)
-            qc.rz(angle, qubit)
-        elif gate == 'rx':
-            angle = self.rng.uniform(0, 2 * np.pi)
-            qc.rx(angle, qubit)
-        elif gate == 'ry':
-            angle = self.rng.uniform(0, 2 * np.pi)
-            qc.ry(angle, qubit)
+    # NOTE (review L5): The previous ``_apply_random_single_qubit`` helper
+    # was dead code — no generator subclass called it.  Removed to avoid
+    # the maintenance cost of unused logic.  Each generator applies its
+    # own family-specific single-qubit gates inline.
 
 
 # ============================================================================
