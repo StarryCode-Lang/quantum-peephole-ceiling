@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-07-07T01:20:15.345848+00:00",
+  "created_utc": "2026-07-08T23:42:41.153375+00:00",
   "datasets": [
     {
       "experiment_id": "E01",
@@ -135,6 +135,13 @@
       "sha256": "cbc2b78823a9e67c833842bb9af94f5f9f0663b224f71a3be7569328d67b5845"
     },
     {
+      "experiment_id": "E20",
+      "file": "data/v6/e20/multi_compiler_full.csv",
+      "rows": 1070,
+      "schema": "results_v6",
+      "sha256": "dfa892cfc74b65d40c21e82f3ee631979f72d81df91474479c12dc671fe4b27b"
+    },
+    {
       "experiment_id": "E21",
       "file": "data/v6/e21/ceiling_aware_comparison.csv",
       "rows": 342,
@@ -150,7 +157,7 @@
     }
   ],
   "environment": {
-    "env_id": "q-research-20260707_012015",
+    "env_id": "v6-20260709",
     "packages": {
       "matplotlib": "3.9.0",
       "numpy": "1.26.4",
@@ -164,10 +171,10 @@
   },
   "git": {
     "branch": "master",
-    "commit": "20146b53c491fd024b99c9131a1ee9c353455428",
+    "commit": "d8568655451e93d51dbc5a8675fbad9a545670f4",
     "dirty": false
   },
-  "release_id": "q-research-20260707_012015",
+  "release_id": "v6-20260709",
   "reproduction": {
     "conda_env": "q-research",
     "entrypoints": [
