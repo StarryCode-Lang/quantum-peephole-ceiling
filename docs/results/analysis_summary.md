@@ -448,4 +448,10 @@ The C2 row in the primary table reports Phase-2a empirical results (from E10/E11
 
 ---
 
+### Note on the Empirical Correlation Model (Predictive Model)
+
+The empirical correlation model (formerly referred to as the "Universal Predictive Law") was evaluated on a held-out split of new circuit families and failed to generalize: MAE = 0.2775 and Pearson = NaN. The model should therefore **not** be presented as a validated contribution. It is retained only as an exploratory observation and a direction for future work.
+
+---
+
 *End of consolidated analysis summary.*

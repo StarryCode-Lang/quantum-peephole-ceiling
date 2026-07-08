@@ -19,7 +19,7 @@
 | E3 | `v2_fixed/e03/e03_scaling_v2_20260611_224540.csv` | 12,000 | v5/e03 is a duplicate (fidelity rounding only) |
 | E4 | `v2_fixed/e04/e04_algorithm_comparison_v2_20260613_132653.csv` | 400 | Latest run; SA/GA differ from first run (stochastic) |
 | E5 | `v2_fixed/e05/e05_landscape_v2_20260613_130355.csv` | 6,000 | Deterministic |
-| E10 | `v5/e10/e10_expanded_phase1_vs_phase2_20260613_131601.csv` | 1,905 | Expanded from v3 (627 rows); supersedes 819-row run |
+| E10 | `v5/e10/e10_expanded_phase1_vs_phase2_20260613_131601.csv` | 1,905 | Canonical file is the 1,905-row expanded version; the 819-row intermediate run is superseded and should not be used |
 | E11 | `v4/e11/e11_real_circuit_benchmark_e11_full_20260611_114615.csv` | 426 | Expanded from initial 168-row run |
 | E12 | `v4/e12/e12_compiler_baseline_e12_full_20260613_051316.csv` | 568 | Expanded from initial 224-row run; L0/L1/L2/L3 all distinct |
 | E13 | `v4/e13/e13_structural_ceiling_e13_full_20260609_043322.csv` | 56 | Only full run |

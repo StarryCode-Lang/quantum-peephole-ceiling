@@ -28,6 +28,7 @@ Outputs:
 
 import json
 import os
+import sys
 import warnings
 from pathlib import Path
 
@@ -46,27 +47,18 @@ warnings.filterwarnings("ignore", category=DeprecationWarning, module="qiskit")
 # ============================================================================
 # Configuration
 # ============================================================================
-BASE_DIR = Path(__file__).parent.parent.resolve()
-DATA_DIR = BASE_DIR / "data"
-OUTPUT_DIR = BASE_DIR / "analysis"
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from src import config
+
+BASE_DIR = config.PROJECT_ROOT
+DATA_DIR = config.DATA_ROOT
+OUTPUT_DIR = config.ANALYSIS_DIR
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 REDUCTION_THRESHOLD = 0.05  # 5% reduction is "worth optimizing"
 
 
-def _latest_csv(directory: Path, prefix: str) -> Path:
-    """Dynamically resolve the latest CSV in ``directory`` whose name starts
-    with ``prefix``. Prefers ``_full_`` runs over ``_smoke_`` runs. This
-    avoids hardcoding timestamped filenames (e.g. ``..._20260611_191634.csv``)
-    so the script keeps working when fresh data files are generated.
-    """
-    candidates = sorted(directory.glob(f"{prefix}*.csv"))
-    if not candidates:
-        # Return a non-existent path so the caller's ``path.exists()`` check
-        # emits the standard "not found" warning rather than crashing here.
-        return directory / f"{prefix}_NOT_FOUND.csv"
-    full_runs = [f for f in candidates if "_full_" in f.name]
-    return (full_runs or candidates)[-1]
+_latest_csv = config.latest_csv
 
 
 DATA_FILES = {

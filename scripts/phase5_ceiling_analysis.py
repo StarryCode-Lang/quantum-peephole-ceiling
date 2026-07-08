@@ -7,6 +7,7 @@ Quantum Circuit Optimization Research Pipeline
 import json
 import warnings
 import os
+import sys
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -18,7 +19,10 @@ warnings.filterwarnings('ignore', category=DeprecationWarning, module='qiskit')
 # ============================================================
 # CONFIGURATION
 # ============================================================
-BASE = str(Path(__file__).parent.parent.resolve())
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from src import config
+
+BASE = str(config.PROJECT_ROOT)
 
 
 def _latest_csv(directory: str, prefix: str) -> str:

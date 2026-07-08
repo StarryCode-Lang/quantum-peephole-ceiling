@@ -1,67 +1,96 @@
 {
-  "experiment_id": "MC-E20",
-  "experiment_name": "multi_compiler_full",
-  "status": "specification_only_no_data_generated",
-  "description": "Full multi-compiler comparison: Qiskit (opt_level=3), Cirq (optimize_for_target_gateset + eject_z + merge_single_qubit_gates), and t|ket> (FullPeepholeOptimise) on the extended 15-family benchmark suite.",
-  "version": "1.1.0",
-  "schema_version": "2.1.0",
-  "status_note": "This metadata file is a SPECIFICATION ONLY. No canonical CSV has been generated. The experiment has been scripted but not run at full scale. Do not treat any numerical values derived from this spec as confirmed evidence.",
-  "compilers": {
-    "qiskit": {
-      "backend": "transpiler",
-      "optimization_level": 3,
-      "package": "qiskit",
-      "always_available": true
-    },
-    "cirq": {
-      "backend": "optimize_for_target_gateset+eject_z+merge_1q",
-      "optimization_level": "default",
-      "package": "cirq-core",
-      "pipeline": [
-        "drop_empty_moments",
-        "drop_negligible_operations",
-        "optimize_for_target_gateset(CZTargetGateset)",
-        "eject_z",
-        "merge_single_qubit_gates_to_phased_x_and_z",
-        "drop_empty_moments"
-      ]
-    },
-    "tket": {
-      "backend": "FullPeepholeOptimise",
-      "optimization_level": "default",
-      "package": "pytket + pytket-qiskit",
-      "pipeline": [
-        "DecomposeBoxes",
-        "FullPeepholeOptimise"
-      ]
-    }
+  "basis_gate_sets": {
+    "cirq": "CZTargetGateset (PhasedXZ + CZ)",
+    "qiskit": "default transpiler basis (cx, u, h, s, t where selected by transpiler)",
+    "tket": "pytket FullPeepholeOptimise default basis"
   },
-  "circuit_parameters": {
-    "target_qubits": [4, 6, 8],
-    "n_trials_per_cell": 10,
-    "circuit_families": 15,
-    "suite_source": "src/circuits/real_benchmarks.py::generate_extended_suite",
-    "mode": "full"
-  },
-  "metrics": [
-    "original_gate_count",
-    "optimized_gate_count",
-    "gate_reduction",
-    "original_depth",
-    "optimized_depth",
-    "depth_reduction",
-    "original_2q_gates",
-    "optimized_2q_gates",
-    "two_qubit_reduction",
-    "original_cnot",
-    "optimized_cnot",
-    "cnot_reduction",
-    "fidelity",
-    "compilation_time_seconds"
+  "canonical_data_file": "multi_compiler_full.csv",
+  "circuit_families": [
+    "Adder",
+    "CNOT",
+    "GHZ",
+    "Grover",
+    "HaarRandom",
+    "HardwareEfficient",
+    "IQP",
+    "Oracle",
+    "QAOA",
+    "QFT",
+    "QuantumWalk",
+    "RandomClifford",
+    "SurfaceCode",
+    "UCCSD_inspired",
+    "VQE"
   ],
-  "output_files": {
-    "results_csv": "NOT_YET_GENERATED_multi_compiler_full.csv",
-    "metadata": "metadata.json"
+  "compiler_availability_report": {
+    "cirq": "available",
+    "qiskit": "available",
+    "tket": "available"
   },
-  "notes": "This experiment addresses the reviewer concern that E15 only included Qiskit in the multi-compiler comparison. E20 adds Cirq and t|ket> as first-class compiler backends with controlled qubit counts and multiple random trials for statistical robustness. Missing compilers are handled gracefully -- the experiment runs with whatever is available and records availability in the run metadata."
+  "compiler_versions": {
+    "cirq": "1.6.1",
+    "qiskit": "2.4.1",
+    "tket": "2.18.0"
+  },
+  "compilers_available": {
+    "cirq": true,
+    "qiskit": true,
+    "tket": true
+  },
+  "compilers_run": [
+    "qiskit",
+    "cirq",
+    "tket"
+  ],
+  "custom_optimizers": [
+    "greedy_phase1",
+    "commutation_phase2",
+    "hybrid_phase1_2"
+  ],
+  "description": "Full multi-compiler comparison (Qiskit opt_level=3, Cirq optimize_for_target_gateset+eject_z+merge_1q, t|ket> FullPeepholeOptimise, custom Phase-1/Phase-2 optimizers) across 15 circuit families",
+  "experiment_id": "MC-E20",
+  "git_commit": "0f7ab78c7fe1975ddee7d51051f66f634a9bf2b4",
+  "max_qubits_fidelity": 10,
+  "mode": "full",
+  "n_circuits_per_trial": 43,
+  "n_rows": 1070,
+  "n_total_circuit_runs": 430,
+  "n_trials": 10,
+  "package_versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "qiskit": "2.4.1",
+    "scipy": "1.13.1"
+  },
+  "per_circuit_timeout_seconds": 60.0,
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+  "run_id": "e20_full_20260708_150741",
+  "schema_version": "2.1.0",
+  "seed": 42,
+  "skip_cirq": false,
+  "skip_custom": true,
+  "skip_tket": false,
+  "source_hashes": {
+    "analysis/structural_ceiling.py": "c36dbb5e951cf5fd7ea2e9655ada682d1bf05b9d2934e394ebba65bad57e5102",
+    "experiments/e20_multi_compiler_full/run.py": "ebee5ff951a32c483940d55b6c51af2fd8395c683fd5204c14669df11211025c",
+    "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
+    "src/circuits/real_benchmarks.py": "5f137e8efaf872cc2205f2e2cac5e4420c014d7fa3ac0cf440e04dad7e4dd82a",
+    "src/optimisation/_gate_predicates.py": "259956ddbf8e73bcfee790c6265035b2ede720e366932ed7d3cbe92a2f52dc83",
+    "src/optimisation/base.py": "ac66c71751b45bec9a2f74fbbc84f5c17edba094bd433a6c89639e628cbd8e4e",
+    "src/optimisation/ceiling_aware.py": "3bd57c6fdd257696c67ce637e3c34ba110964e21c61f00d6dd08bb0b6ea9d60d",
+    "src/optimisation/phase1/genetic_algorithm.py": "9093c26527029c80b0feee3f8612681291b2b7c809d64c61b186ece195cd7e03",
+    "src/optimisation/phase1/greedy.py": "59d506439d44b5d0503a71d67f1589418c32c3363705e2093d9ebe9650476e60",
+    "src/optimisation/phase1/random_local_search.py": "26cc47fddaeca2fc9f8dbd72bf2a69117ac06eb31ae02e7a582d0f3e70a6fea6",
+    "src/optimisation/phase1/simulated_annealing.py": "d6fd7b9c239c9bc3c6afdd9a74adf6d83d41f73dbcd56faa36088a82d745d318",
+    "src/optimisation/phase1/wire_traversal.py": "e4d2214746f4a771e1c370a61e62a984d26012a74ed529c33b9f983a6df3fbf2",
+    "src/optimisation/phase2/commutation_rewriter.py": "bf301a589dc4ef635158f863fe7d131f3cf0e704d652d4524fc08cc4279aef52",
+    "src/optimisation/phase2/template_matcher.py": "28f26a20930b9d77a42cfaf578c8b4bbf74835cc315e46e267f00e568924c9c0"
+  },
+  "target_qubits": [
+    4,
+    6,
+    8
+  ],
+  "version": "1.1.0"
 }

@@ -12,6 +12,7 @@ import pandas as pd
 import numpy as np
 import json
 import os
+import sys
 from pathlib import Path
 from collections import OrderedDict
 from datetime import datetime
@@ -19,9 +20,11 @@ from datetime import datetime
 # ──────────────────────────────────────────────────────────────────────────
 # 0. Configuration
 # ──────────────────────────────────────────────────────────────────────────
-_PROJECT_ROOT = str(Path(__file__).parent.parent.resolve())
-DATA_ROOT = os.path.join(_PROJECT_ROOT, "data")
-OUTPUT_PATH = os.path.join(_PROJECT_ROOT, "analysis", "phase5_data_profile.json")
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from src import config
+
+DATA_ROOT = str(config.DATA_ROOT)
+OUTPUT_PATH = str(config.ANALYSIS_DIR / "phase5_data_profile.json")
 
 REDUCTION_THRESHOLD = 0.20   # success rate threshold
 

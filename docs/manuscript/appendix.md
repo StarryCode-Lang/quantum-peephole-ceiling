@@ -348,6 +348,8 @@ A feature-leakage defect was identified in the initial feature set: the `actual_
 
 The structural-ceiling framework itself — the theorems, the empirical trichotomy across E1–E18, and the Qiskit baseline comparison — is unaffected by this failure, since those results do not depend on the predictive model. The predictive direction is retained as future work (Section 15.5): richer feature sets (Pauli-spectrum descriptors, entanglement entropy proxies, learned circuit embeddings) and non-linear regressors (gradient-boosted trees, small MLPs) are concrete next steps. Until such a model clears a pre-registered held-out evaluation, all "prediction" language in the manuscript is scoped as exploratory.
 
+**Held-out validation failure.** On the held-out split the empirical correlation model achieved MAE = 0.2775 and Pearson = NaN (degenerate covariance caused by a zero-variance prediction column). The model therefore does not generalize to new circuit families and should be classified as exploratory rather than predictive.
+
 ## 2. Phase-2a vs. Phase-2b Gap Between Theory and Experiment
 
 The theoretical separation between Phase-2a (commutation-only rewriting) and Phase-2b (template-matching-augmented rewriting) is established at the asymptotic level: Theorem 7 (artificial circuit family) and Theorem 9 (Bernstein–Vazirani natural family) each prove an Ω(1) Phase-2b advantage over Phase-2a. These results certify that template matching is not redundant with commutation rewriting — there exist natural circuit families for which the Phase-2b horizon strictly exceeds the Phase-2a horizon.

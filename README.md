@@ -63,7 +63,7 @@ Q-research/
 │   └── v6/                      # Preliminary/planned artifacts (E19/E20/E21; not core canonical)
 │
 ├── analysis/                     # Analysis scripts and figures
-│   ├── figures/                  # Generated analysis figures (17 PNG figures, 300 DPI)
+│   ├── figures/                  # Generated analysis figures (17 vector PDF figures)
 │   ├── generate_figures.py       # Figure generation script
 │   ├── final_report.md           # Comprehensive experimental report
 │   ├── structural_ceiling.py      # Action-space / ceiling analysis utilities

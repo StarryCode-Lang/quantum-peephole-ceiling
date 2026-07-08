@@ -21,9 +21,12 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DATA_ROOT = PROJECT_ROOT / "data"
-OUTPUT_PATH = PROJECT_ROOT / "analysis" / "figures" / "unified_summary.csv"
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from src import config
+
+PROJECT_ROOT = config.PROJECT_ROOT
+DATA_ROOT = config.DATA_ROOT
+OUTPUT_PATH = config.FIGURES_DIR / "unified_summary.csv"
 
 # Canonical mapping: experiment id -> directory containing its data.
 # Each directory must have a metadata.json declaring canonical_data_file.

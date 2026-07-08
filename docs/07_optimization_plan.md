@@ -89,7 +89,7 @@
 **目标**：消除 Phase-2a（commutation rewriting）与 Phase-2b（template matching）在形式化、实现、手稿中的混淆。
 
 **行动项**：
-- [ ] 在 `docs/01_theory/framework.md` 中新增一个独立小节，明确定义：
+- [ ] 在 `docs/theory/framework.md` 中新增一个独立小节，明确定义：
   - Phase-2a = 仅通过对易关系重排 gate 顺序以实现非相邻逆元相消；
   - Phase-2b = 使用模板/规则直接替换子电路（可改变 gate 计数和结构）；
   - Phase-3 = 全局优化（phase-polynomial、ZX、Clifford tableau、resynthesis）。
@@ -97,7 +97,7 @@
   - Theorem 7（人工构造的 Phase-2b 优势）保持为 Phase-2b；
   - Theorem 9（BV Oracle）明确是 Phase-2b 模板匹配优势，并与 Phase-2a 的实验结果区分开；
   - 若 Phase-2a 对 BV 也有优势，需单独给出 Lemma 或 Theorem。
-- [ ] 在 `docs/01_theory/conjectures.md` 中修正 C2：
+- [ ] 在 `docs/theory/formal_results.md` 中修正 C2：
   - 原表述："Phase 2 provides context-dependent super-constant improvement"；
   - 修正为："Phase-2b template matching can provide Ω(1) advantage over Phase-1/Phase-2a on certain circuit families; Phase-2a commutation rewriting provides O(1) small gains."
 - [ ] 修改 `src/optimisation/phase2/commutation_rewriter.py` 的 docstring 和类型名，统一使用 `Phase2aCommutationRewriter`。
@@ -112,7 +112,7 @@
 **问题**：Theorem 8 讨论 Haar-随机酉的不可压缩性，但实验是浅层随机门序列，两者 regime 不同。
 
 **行动项**：
-- [ ] 在 `docs/01_theory/framework.md` 和 `docs/06_manuscript/v6_manuscript.md` 中新增 "Regime mismatch and scope" 小节：
+- [ ] 在 `docs/theory/framework.md` 和 `docs/manuscript/manuscript.md` 中新增 "Regime mismatch and scope" 小节：
   - 承认 Theorem 8 的 Haar-随机酉假设；
   - 明确实验电路生成器（`generator_v2.py` 中的 `UniversalGenerator`、`CliffordGenerator`）产生的是浅层随机门序列，不是 Haar 样本；
   - 给出两者关系的讨论：浅层随机序列是否/何时近似 unitary design？
@@ -130,8 +130,8 @@
 **行动项**：
 - [ ] 实现 AG canonical form 电路生成器（`src/circuits/ag_canonical.py`）；
 - [ ] 编写实验 E23：在 AG canonical form 电路上运行 Phase-1 Greedy，验证 reduction 是否等于理论值；
-- [ ] 将结果写入 `data/v7/e23/` 和 `docs/03_results/theory_experiment_crossvalidation.md`；
-- [ ] 更新 `docs/01_theory/lemmas.md` 中 Theorem 6 的标注为 "Empirically validated"。
+- [ ] 将结果写入 `data/v7/e23/` 和 `docs/results/analysis_summary.md`；
+- [ ] 更新 `docs/theory/formal_results.md` 中 Theorem 6 的标注为 "Empirically validated"。
 
 **验收标准**：
 - 至少 100 个 AG canonical form 电路通过验证，匹配率 ≥95%。
@@ -141,7 +141,7 @@
 **目标**：将 Theorem 7 的人工构造电路族实例化并实验验证。
 
 **行动项**：
-- [ ] 从 `docs/01_theory/lemmas.md` 提取 Theorem 7 的构造细节；
+- [ ] 从 `docs/theory/formal_results.md` 提取 Theorem 7 的构造细节；
 - [ ] 在 `src/circuits/hardness_families.py` 中实现该构造；
 - [ ] 设计实验 E24：比较 Phase-1/Phase-2a/Phase-2b 在该族上的 reduction；
 - [ ] 验证实测 reduction 是否达到理论下界 Ω(1)。
@@ -154,7 +154,7 @@
 **目标**：提升复杂度讨论的严谨性。
 
 **行动项**：
-- [ ] 在 `docs/01_theory/complexity.md` 中：
+- [ ] 在 `docs/theory/framework.md` 中：
   - 引用并讨论 CIT 的 QMA-complete 经典结果；
   - 明确 CODP 的 QMA-hardness 仍为猜想，避免给出误导性表述；
   - 补充参数化复杂度（parameterized complexity）讨论。
@@ -222,7 +222,7 @@
 
 **验收标准**：
 - 主要假设（H1–H6）经事后或事前功效分析，β ≥ 0.80；
-- `docs/03_results/experimental_design.md` 中记录样本量计算依据。
+- `docs/results/experimental_design.md` 中记录样本量计算依据。
 
 #### 4.2.5 完成 E21 Ceiling-Aware Optimizer 全量验证
 
@@ -317,7 +317,7 @@
 **行动项**：
 - [ ] 在 `analysis/generate_figures.py` 中调用 `analysis/phase1_statistics/effect_size.py` 生成 Cliff's delta / Hedges' g；
 - [ ] 在图注/表中同时报告 p 值、效应量、95% CI；
-- [ ] 修改 `docs/03_results/experimental_design.md` 中的统计协议，明确效应量要求。
+- [ ] 修改 `docs/results/experimental_design.md` 中的统计协议，明确效应量要求。
 
 #### 4.4.2 统一随机种子与方差估计
 
@@ -329,9 +329,9 @@
 #### 4.4.3 重命名/降级预测模型
 
 **行动项**：
-- [ ] 将 "Universal Predictive Law" 改为 "Empirical Correlation Model"；
-- [ ] 在手稿中诚实报告 held-out validation 失败（MAE=0.2775，Pearson=NaN）；
-- [ ] 若保留该模型，仅作为 exploratory observation，不列为核心贡献。
+- [x] 将 "Universal Predictive Law" 改为 "Empirical Correlation Model"；
+- [x] 在手稿中诚实报告 held-out validation 失败（MAE=0.2775，Pearson=NaN）；
+- [x] 若保留该模型，仅作为 exploratory observation，不列为核心贡献。
 
 ---
 
@@ -354,7 +354,7 @@
 #### 4.5.3 声明-证据映射表
 
 **行动项**：
-- [ ] 在 `docs/06_manuscript/v6_claim_evidence_map.md` 基础上扩展为 `docs/06_manuscript/claim_evidence_table.csv`；
+- [ ] 在 `docs/manuscript/appendix.md` 基础上扩展为 `docs/06_manuscript/claim_evidence_table.csv`；
 - [ ] 每行包含：Claim ID、手稿位置、实验/定理证据、代码脚本、数据文件、限制/警告。
 
 #### 4.5.4 一键重跑脚本
@@ -385,7 +385,7 @@
 #### 4.6.2 统一引用格式
 
 **行动项**：
-- [ ] 将所有引用合并到 `docs/02_literature/unified_references.md`；
+- [ ] 将所有引用合并到 `docs/references/unified_references.md`；
 - [ ] 统一使用 `[Number]` 格式；
 - [ ] 补充 DOI / arXiv ID；
 - [ ] 在 LaTeX 写作时使用 `.bib` 文件导出。

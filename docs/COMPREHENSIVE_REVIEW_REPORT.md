@@ -60,7 +60,7 @@
 
 ### F-3. 交付物 D1-D4 与 PHASE-7/8 修正后结论严重矛盾
 
-D1-D4 仍保留着 PHASE-7 remediation 之前的过时/错误表述，但 D8/D9 已明确修正了这些内容。具体矛盾包括：D1/D2/D4 称之为"Universal Predictive Law"但 D8 降级为"Empirical Correlation Model"；D1 使用 Cohen's d 但 D8 发现因 Phase 1 标准差为零而 technically undefined 改用 Glass's Delta；D1/D5 声称 Optimize-or-Skip 达到100%准确率但 D8 修正为97.86% [93.9%, 99.3%]；D3 使用因果语言但 D8 发现25处因果语言需替换为相关性语言。
+D1-D4 仍保留着 PHASE-7 remediation 之前的过时/错误表述，但 D8/D9 已明确修正了这些内容。具体矛盾包括：D1/D2/D4 仍使用旧称"Universal Predictive Law"，而 D8 已将其降级为"Empirical Correlation Model"；D1 使用 Cohen's d 但 D8 发现因 Phase 1 标准差为零而 technically undefined 改用 Glass's Delta；D1/D5 声称 Optimize-or-Skip 达到100%准确率但 D8 修正为97.86% [93.9%, 99.3%]；D3 使用因果语言但 D8 发现25处因果语言需替换为相关性语言。
 
 **修复**: 更新 D1-D4 以反映 PHASE-7/8 的修正结论，或在每个文件头部添加醒目的"SUPERSEDED"声明。
 
