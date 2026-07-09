@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-07-08T23:42:41.153375+00:00",
+  "created_utc": "2026-07-09T12:34:49.686923+00:00",
   "datasets": [
     {
       "experiment_id": "E01",
@@ -144,20 +144,27 @@
     {
       "experiment_id": "E21",
       "file": "data/v6/e21/ceiling_aware_comparison.csv",
-      "rows": 342,
+      "rows": 1140,
       "schema": "results_v6",
-      "sha256": "81c09ca6288fa2dd4b1d151718ac944c80c1d3f760b07aacbd9eb6c26f1896e9"
+      "sha256": "d8dc3953e74136e68ef383a326c844a81de9e4355a6de8e36b399be23000aac8"
     },
     {
       "experiment_id": "E21",
       "file": "data/v6/e21/ceiling_aware_summary.csv",
       "rows": 30,
       "schema": "results_v6",
-      "sha256": "b79057c55aedfc5ea253825a5f5ef5a64cb9d4f0830da14a4fc34d2b34c393c8"
+      "sha256": "88d9534a28130bdb16d9478ae9695089bc460ead2d7edc13f73142c1f9fee33b"
+    },
+    {
+      "experiment_id": "E21",
+      "file": "data/v6/e21/e21_paired_statistics.csv",
+      "rows": 57,
+      "schema": "results_v6",
+      "sha256": "a45c9a7b3c72d3204c96e29ce4561f7be16c033c8c0810dad22d333c33430616"
     }
   ],
   "environment": {
-    "env_id": "v6-20260709",
+    "env_id": "q-research-20260709_123449",
     "packages": {
       "matplotlib": "3.9.0",
       "numpy": "1.26.4",
@@ -171,10 +178,10 @@
   },
   "git": {
     "branch": "master",
-    "commit": "d8568655451e93d51dbc5a8675fbad9a545670f4",
+    "commit": "a6296ceeab704543c348048384de38cb1a062989",
     "dirty": false
   },
-  "release_id": "v6-20260709",
+  "release_id": "q-research-20260709_123449",
   "reproduction": {
     "conda_env": "q-research",
     "entrypoints": [
@@ -212,13 +219,13 @@
     "src/circuits/real_benchmarks.py": "5f137e8efaf872cc2205f2e2cac5e4420c014d7fa3ac0cf440e04dad7e4dd82a",
     "src/optimisation/_gate_predicates.py": "259956ddbf8e73bcfee790c6265035b2ede720e366932ed7d3cbe92a2f52dc83",
     "src/optimisation/base.py": "ac66c71751b45bec9a2f74fbbc84f5c17edba094bd433a6c89639e628cbd8e4e",
-    "src/optimisation/ceiling_aware.py": "3bd57c6fdd257696c67ce637e3c34ba110964e21c61f00d6dd08bb0b6ea9d60d",
+    "src/optimisation/ceiling_aware.py": "37c4fd77b5098d4369b8f68d898fc988748b03f98582f82fec46b050df76ce8f",
     "src/optimisation/phase1/genetic_algorithm.py": "9093c26527029c80b0feee3f8612681291b2b7c809d64c61b186ece195cd7e03",
     "src/optimisation/phase1/greedy.py": "59d506439d44b5d0503a71d67f1589418c32c3363705e2093d9ebe9650476e60",
     "src/optimisation/phase1/random_local_search.py": "26cc47fddaeca2fc9f8dbd72bf2a69117ac06eb31ae02e7a582d0f3e70a6fea6",
     "src/optimisation/phase1/simulated_annealing.py": "d6fd7b9c239c9bc3c6afdd9a74adf6d83d41f73dbcd56faa36088a82d745d318",
     "src/optimisation/phase1/wire_traversal.py": "e4d2214746f4a771e1c370a61e62a984d26012a74ed529c33b9f983a6df3fbf2",
-    "src/optimisation/phase2/commutation_rewriter.py": "bf301a589dc4ef635158f863fe7d131f3cf0e704d652d4524fc08cc4279aef52",
-    "src/optimisation/phase2/template_matcher.py": "28f26a20930b9d77a42cfaf578c8b4bbf74835cc315e46e267f00e568924c9c0"
+    "src/optimisation/phase2/commutation_rewriter.py": "033c4ebf965ea039b66b3a540e837d26b4296a3b41210475fad00fdc68687c06",
+    "src/optimisation/phase2/template_matcher.py": "b09fe69742bd72b307df2d5c0964da7003eaacdf195897238512cf4608d3f17e"
   }
 }
