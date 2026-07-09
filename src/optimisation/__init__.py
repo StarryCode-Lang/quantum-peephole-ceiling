@@ -6,7 +6,13 @@ from .phase1 import (
     SimulatedAnnealingOptimizer,
     GeneticAlgorithmOptimizer,
 )
-from .phase2 import CommutationRewriter, HybridCommuteRewrite, Phase2bTemplateMatcher
+from .phase2 import (
+    Phase2aCommutationRewriter,
+    HybridPhase2aRewrite,
+    CommutationRewriter,
+    HybridCommuteRewrite,
+    Phase2bTemplateMatcher,
+)
 from .ceiling_aware import CeilingAwareOptimizer, count_phase1_actions, count_phase2_actions
 
 __all__ = [
@@ -18,6 +24,8 @@ __all__ = [
     'RandomLocalSearch',
     'SimulatedAnnealingOptimizer',
     'GeneticAlgorithmOptimizer',
+    'Phase2aCommutationRewriter',
+    'HybridPhase2aRewrite',
     'CommutationRewriter',
     'HybridCommuteRewrite',
     'Phase2bTemplateMatcher',

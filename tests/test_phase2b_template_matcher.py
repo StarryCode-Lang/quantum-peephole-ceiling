@@ -84,6 +84,44 @@ class TestPhase2bTemplateMatcher(unittest.TestCase):
                 self.assertEqual(result.metadata['template_rewrites'], n)
                 self.assertEqual(result.metadata['hh_cancellations'], 2 * n - 1)
 
+    def test_h_cx_h_target_to_cz(self):
+        """H on target of CX is equivalent to CZ: H_t CX(c,t) H_t = CZ(c,t)."""
+        qc = QuantumCircuit(2)
+        qc.h(1)
+        qc.cx(0, 1)
+        qc.h(1)
+
+        result = Phase2bTemplateMatcher().optimize(qc, target=qc)
+        optimized = result.optimized_circuit
+
+        self.assertEqual(optimized.size(), 1)
+        self.assertEqual(optimized.data[0].operation.name, 'cz')
+        self.assert_unitary_equal(qc, optimized)
+
+    def test_s_sdag_cancellation(self):
+        qc = QuantumCircuit(1)
+        qc.s(0)
+        qc.sdg(0)
+        result = Phase2bTemplateMatcher().optimize(qc, target=qc)
+        self.assertEqual(result.optimized_size, 0)
+        self.assert_unitary_equal(qc, result.optimized_circuit)
+
+    def test_cz_cz_cancellation(self):
+        qc = QuantumCircuit(2)
+        qc.cz(0, 1)
+        qc.cz(1, 0)
+        result = Phase2bTemplateMatcher().optimize(qc, target=qc)
+        self.assertEqual(result.optimized_size, 0)
+        self.assert_unitary_equal(qc, result.optimized_circuit)
+
+    def test_h_h_cancellation(self):
+        qc = QuantumCircuit(1)
+        qc.h(0)
+        qc.h(0)
+        result = Phase2bTemplateMatcher().optimize(qc, target=qc)
+        self.assertEqual(result.optimized_size, 0)
+        self.assert_unitary_equal(qc, result.optimized_circuit)
+
 
 if __name__ == '__main__':
     unittest.main()

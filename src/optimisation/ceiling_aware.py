@@ -5,7 +5,7 @@ A compiler pass that uses the structural ceiling proxy to skip
 futile optimization phases, reducing compilation time without
 sacrificing gate-count reduction.
 
-The key insight: by computing the Phase-1 and Phase-2 action-space
+The key insight: by computing the Phase-1 and Phase-2a action-space
 sizes BEFORE running each optimizer phase (O(m) where m = gate count),
 we can skip phases that would yield zero reduction, saving compilation
 time.  This transforms a structural-ceiling *analysis* into a
@@ -14,11 +14,11 @@ structural-ceiling *decision rule* embedded in the compiler itself.
 Pipeline:
     1. Compute Phase-1 action space |S1(C)|.
     2. If |S1(C)| > 0: run Phase 1 (Greedy).  Else: skip.
-    3. Compute Phase-2 action space |S2(C')| on the intermediate circuit.
-    4. If |S2(C')| > 0: run Phase 2 (CommutationRewriter).  Else: skip.
-    5. If Phase 2 was run, do a final Phase-1 cleanup pass.
+    3. Compute Phase-2a action space |S2(C')| on the intermediate circuit.
+    4. If |S2(C')| > 0: run Phase-2a (Phase2aCommutationRewriter).  Else: skip.
+    5. If Phase-2a was run, do a final Phase-1 cleanup pass.
 
-Version: 1.0.0
+Version: 1.1.0
 """
 
 from __future__ import annotations
@@ -69,8 +69,8 @@ def count_phase1_actions(circuit: QuantumCircuit) -> int:
 def count_phase2_actions(circuit: QuantumCircuit, window: int = 10) -> int:
     """Count commutation-enabled inverse pairs within a sliding window.
 
-    This is the Phase-2 action-space size |S2(C)|: the number of
-    non-adjacent inverse pairs that CommutationRewriter could bring
+    This is the Phase-2a action-space size |S2(C)|: the number of
+    non-adjacent inverse pairs that Phase2aCommutationRewriter could bring
     together by commuting intermediate gates.
 
     To keep this fast we restrict to pairs at distance 2..window and
@@ -173,11 +173,11 @@ class CeilingAwareOptimizer(BaseOptimizer):
         1. Compute |S1(C)| — Phase-1 action-space proxy.
         2. If |S1(C)| > 0 → run Phase 1 (GreedyGateCancellation).
            Else → skip Phase 1.
-        3. Compute |S2(C')| — Phase-2 action-space proxy on the
+        3. Compute |S2(C')| — Phase-2a action-space proxy on the
            intermediate circuit.
-        4. If |S2(C')| > 0 → run Phase 2 (CommutationRewriter).
-           Else → skip Phase 2.
-        5. If Phase 2 was run → final Phase 1 cleanup pass.
+        4. If |S2(C')| > 0 → run Phase-2a (Phase2aCommutationRewriter).
+           Else → skip Phase-2a.
+        5. If Phase-2a was run → final Phase 1 cleanup pass.
 
     The ceiling proxy adds O(m) overhead per check, which is
     negligible compared to the cost of a full optimization phase.
@@ -209,7 +209,7 @@ class CeilingAwareOptimizer(BaseOptimizer):
         information (e.g., for experiment E21).
         """
         from .phase1.greedy import GreedyGateCancellation
-        from .phase2.commutation_rewriter import CommutationRewriter
+        from .phase2.commutation_rewriter import Phase2aCommutationRewriter
 
         t_start = time.perf_counter()
         original = circuit
@@ -219,7 +219,7 @@ class CeilingAwareOptimizer(BaseOptimizer):
             fidelity_threshold=self.fidelity_threshold,
             success_reduction=self.success_reduction,
         )
-        phase2 = CommutationRewriter(
+        phase2 = Phase2aCommutationRewriter(
             max_iterations=self.max_iterations,
             fidelity_threshold=self.fidelity_threshold,
             success_reduction=self.success_reduction,

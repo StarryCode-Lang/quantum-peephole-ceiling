@@ -254,7 +254,7 @@ from scipy.stats import false_discovery_rate
 
 ### 8.2 Effect Size Reporting
 
-All pairwise comparisons report:
+All pairwise comparisons report both parametric and non-parametric effect sizes:
 - **Cohen's d**: (mean₁ - mean₂) / pooled_SD
   - d < 0.2: negligible
   - 0.2 ≤ d < 0.5: small
@@ -266,6 +266,8 @@ All pairwise comparisons report:
   - 0.147 ≤ |delta| < 0.33: small
   - 0.33 ≤ |delta| < 0.474: medium
   - |delta| ≥ 0.474: large
+
+Effect sizes are computed by `analysis/phase1_statistics/effect_size.py` and integrated into `analysis/generate_figures.py`.  Per-comparison values are saved in `analysis/figures/fdr_correction_results.csv` and a curated summary is available at `analysis/figures/effect_sizes_summary.csv`.
 
 ### 8.3 Bootstrap Confidence Intervals
 

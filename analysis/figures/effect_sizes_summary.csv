@@ -1,0 +1,11 @@
+Test,Raw_p_value,Adjusted_p_value_BH,Significant_at_0.05,Cliffs_delta,Cliffs_delta_CI95,Hedges_g,Hedges_g_CI95,Effect_size_note
+E4: Reduction across optimizers (Kruskal-Wallis),6.121211146717873e-12,1.1477270900096011e-11,significant,0.28,"[0.1873, 0.3727]",0.6766855240886117,"[0.3915, 0.9618]",max pairwise (pair 1 vs 3)
+E4: Runtime across optimizers (Kruskal-Wallis),1.726875121246584e-74,6.47578170467469e-74,significant,1.0,"[1.0000, 1.0000]",3.787281660902025,"[3.3214, 4.2532]",max pairwise (pair 0 vs 1)
+E5: Reduction across depths (Kruskal-Wallis),6.476212108849582e-11,1.0793686848082637e-10,significant,-0.059847,"[-0.0799, -0.0398]",-0.0016567966793307,"[-0.0893, 0.0860]",max pairwise (pair 0 vs 3)
+E10: Reduction across circuit families (Kruskal-Wallis),8.48315075839603e-166,6.362363068797021e-165,significant,-0.6816666666666666,"[-0.7190, -0.6444]",-1.2297087886309506,"[-1.7467, -0.7127]",max pairwise (pair 0 vs 6)
+E10: Reduction across optimizers (Kruskal-Wallis),3.1591603375425333e-109,1.5795801687712666e-108,significant,-0.5548614297228595,"[-0.5953, -0.5144]",-0.586480399932338,"[-0.6988, -0.4741]",max pairwise (pair 1 vs 2)
+"E11: Reduction across circuit families (KW, H7)",4.7777873248757025e-34,1.4333361974627105e-33,significant,-0.6666666666666666,"[-0.8300, -0.5033]",-1.8007316959073951,"[-2.4275, -1.1739]",max pairwise (pair 0 vs 1)
+"E12: Reduction across optimization levels (KW, H8)",7.98133123287372e-18,1.9953328082184292e-17,significant,-0.4738147193017258,"[-0.5784, -0.3692]",-0.0701565740115935,"[-0.3028, 0.1625]",max pairwise (pair 0 vs 1)
+"E15: Reduction across compilers (KW, H10)",2.8286698289730817e-07,3.857277039508748e-07,significant,-0.1618974409839317,"[-0.2217, -0.1021]",0.2981656882957144,"[0.1719, 0.4245]",2-group direct
+"E16: Reduction across window sizes (KW, H11)",1.1374165943163697e-07,1.7061248914745549e-07,significant,-0.2061368740916898,"[-0.2780, -0.1343]",-0.2404266180612379,"[-0.4513, -0.0295]",max pairwise (pair 0 vs 3)
+"E18: Reduction across families in Clifford+T (KW, H13)",2.396738983618804e-14,5.1358692506117244e-14,significant,-1.0,"[-1.0000, -1.0000]",-10.509309240661397,"[-13.5795, -7.4391]",max pairwise (pair 2 vs 3)

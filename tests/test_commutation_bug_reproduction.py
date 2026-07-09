@@ -1,11 +1,11 @@
 """
 Commutation Rewriter Bug Reproduction
 ======================================
-Demonstrates the correctness bug in the Phase-2 CommutationRewriter.
+Demonstrates the correctness bug in the Phase-2 Phase2aCommutationRewriter.
 
 THE BUG
 -------
-In CommutationRewriter.optimize():
+In Phase2aCommutationRewriter.optimize():
 
   Pre-check (lines 57-61):
     Verifies: _gates_commute(circuit, gate[i], gate[k])
@@ -37,7 +37,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from qiskit import QuantumCircuit
 from qiskit.quantum_info import Operator
 
-from src.optimisation.phase2.commutation_rewriter import CommutationRewriter
+from src.optimisation.phase2.commutation_rewriter import Phase2aCommutationRewriter
 from src.optimisation.base import BaseOptimizer, OptimizationResult
 
 
@@ -179,7 +179,7 @@ def demo_valid_cancellation():
     print("DEMONSTRATION 2: Correct cancellation (unitary preserved)")
     print("=" * 70)
 
-    opt = CommutationRewriter(window_size=10)
+    opt = Phase2aCommutationRewriter(window_size=10)
 
     # Circuit: CNOT(0,1), S(0), Rz(pi/4, 0), CNOT(0,1)
     # Both S and Rz(pi/4) are Z-family on qubit 0 (CNOT control).
@@ -225,7 +225,7 @@ def demo_missed_cancellation():
     print("DEMONSTRATION 3: Missed valid cancellation (pre-check too restrictive)")
     print("=" * 70)
 
-    opt = CommutationRewriter(window_size=10)
+    opt = Phase2aCommutationRewriter(window_size=10)
 
     qc = QuantumCircuit(1)
     qc.h(0)
@@ -279,7 +279,7 @@ def demo_unitary_verification():
     print("DEMONSTRATION 4: Unitary preservation on multi-gate circuit")
     print("=" * 70)
 
-    opt = CommutationRewriter(window_size=10)
+    opt = Phase2aCommutationRewriter(window_size=10)
 
     # Circuit with multiple cancellation opportunities:
     # CNOT(0,1), S(0), T(0), CNOT(0,1), X(1), H(0), H(0), X(1)
@@ -326,7 +326,7 @@ def demo_post_fix():
     print("DEMONSTRATION 5: Post-fix verification")
     print("=" * 70)
 
-    opt = CommutationRewriter(window_size=10)
+    opt = Phase2aCommutationRewriter(window_size=10)
 
     test_circuits = []
 

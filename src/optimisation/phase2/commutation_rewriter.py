@@ -1,10 +1,14 @@
 """
-Phase 2 Optimizers: Commutation-Based Optimization
-==================================================
-Implements commutation rewriting and hybrid optimizers that enable
+Phase-2a Optimizers: Commutation-Based Optimization
+===================================================
+Implements Phase-2a commutation rewriting and hybrid optimizers that enable
 non-local gate cancellations beyond the Phase 1 adjacent-search ceiling.
 
-Version: 3.1.0 (Fixed commutation pre-check correctness bug)
+This module exposes ``Phase2aCommutationRewriter`` and
+``HybridPhase2aRewrite``.  The legacy names ``CommutationRewriter`` and
+``HybridCommuteRewrite`` are retained as aliases for backward compatibility.
+
+Version: 3.2.0 (Phase-2a naming; fixed commutation pre-check correctness bug)
 """
 
 from __future__ import annotations
@@ -18,7 +22,7 @@ import time
 from ..base import BaseOptimizer, OptimizationResult
 
 
-class CommutationRewriter(BaseOptimizer):
+class Phase2aCommutationRewriter(BaseOptimizer):
     """
     Commutation-based circuit rewriter.
     
@@ -120,7 +124,7 @@ class CommutationRewriter(BaseOptimizer):
         )
 
 
-class HybridCommuteRewrite(BaseOptimizer):
+class HybridPhase2aRewrite(BaseOptimizer):
     """
     Hybrid optimizer: Phase 1 (Greedy) + Phase 2 (Commutation Rewriting).
     
@@ -140,7 +144,7 @@ class HybridCommuteRewrite(BaseOptimizer):
         self.max_iterations = max_iterations
         self.window_size = window_size
         self.phase1 = None  # Will be initialized in optimize
-        self.phase2 = CommutationRewriter(max_iterations=max_iterations,
+        self.phase2 = Phase2aCommutationRewriter(max_iterations=max_iterations,
                                           fidelity_threshold=fidelity_threshold,
                                           success_reduction=success_reduction,
                                           window_size=window_size,
@@ -200,3 +204,8 @@ class HybridCommuteRewrite(BaseOptimizer):
                 'window_size': self.window_size,
             }
         )
+
+
+# Backward-compatible aliases for external callers.
+CommutationRewriter = Phase2aCommutationRewriter
+HybridCommuteRewrite = HybridPhase2aRewrite

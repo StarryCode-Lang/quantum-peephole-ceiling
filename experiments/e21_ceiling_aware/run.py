@@ -142,11 +142,17 @@ def fidelity_source(n_qubits: int, fidelity: float) -> str:
 def run_naive_pipeline(circuit: QuantumCircuit,
                        max_iterations: int = 100,
                        window_size: int = 10,
+                       target: QuantumCircuit | None = None,
                        ) -> Dict:
     """Run the naive always-on pipeline with per-phase timing.
 
     Equivalent to HybridCommuteRewrite but with instrumented timers
     for each phase so we can fairly compare compilation cost.
+
+    Args:
+        target: Target circuit for fidelity verification.  If None, the
+                optimizer reports fidelity=1.0 by convention; use this for
+                large qubit counts where exact fidelity is infeasible.
 
     Returns a dict with keys:
         optimized_circuit, gate_reduction, original_size, optimized_size,
@@ -161,19 +167,19 @@ def run_naive_pipeline(circuit: QuantumCircuit,
 
     # Phase 1
     t0 = time.perf_counter()
-    r1 = phase1.optimize(circuit, target=circuit)
+    r1 = phase1.optimize(circuit, target=target)
     phase1_time_ms = (time.perf_counter() - t0) * 1000.0
     intermediate = r1.optimized_circuit
 
     # Phase 2
     t0 = time.perf_counter()
-    r2 = phase2.optimize(intermediate, target=circuit)
+    r2 = phase2.optimize(intermediate, target=target)
     phase2_time_ms = (time.perf_counter() - t0) * 1000.0
     after_phase2 = r2.optimized_circuit
 
     # Final Phase 1 cleanup
     t0 = time.perf_counter()
-    r3 = phase1.optimize(after_phase2, target=circuit)
+    r3 = phase1.optimize(after_phase2, target=target)
     final_phase1_time_ms = (time.perf_counter() - t0) * 1000.0
     optimized = r3.optimized_circuit
 
@@ -242,7 +248,8 @@ def generate_circuit_for_experiment(family_name: str, factory: Callable,
 # ---------------------------------------------------------------------------
 
 
-def run(mode: str = "smoke", seed: int = 42, window: int = 10) -> Tuple[pd.DataFrame, pd.DataFrame]:
+def run(mode: str = "smoke", seed: int = 42, window: int = 10,
+        max_exact_fidelity_qubits: int = 6) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """Run the E21 ceiling-aware comparison experiment.
 
     Args:
@@ -250,6 +257,10 @@ def run(mode: str = "smoke", seed: int = 42, window: int = 10) -> Tuple[pd.DataF
               'full' uses N_TRIALS (10) for publication results.
         seed: Base random seed for reproducibility.
         window: Commutation window size for Phase 2.
+        max_exact_fidelity_qubits: For n_qubits above this threshold, pass
+            target=None to optimizers to avoid expensive exact fidelity
+            computation.  Exact fidelity is still verified on all smaller
+            circuits.
 
     Returns:
         (comparison_df, summary_df) tuple.
@@ -261,6 +272,7 @@ def run(mode: str = "smoke", seed: int = 42, window: int = 10) -> Tuple[pd.DataF
     output_dir.mkdir(parents=True, exist_ok=True)
 
     metadata = run_metadata(PROJECT_ROOT, script_path, VERSION, run_id)
+    metadata["max_exact_fidelity_qubits"] = max_exact_fidelity_qubits
 
     ceiling_opt = CeilingAwareOptimizer(
         max_iterations=100,
@@ -302,11 +314,14 @@ def run(mode: str = "smoke", seed: int = 42, window: int = 10) -> Tuple[pd.DataF
                     skipped += 1
                     continue
 
+                # Exact fidelity is expensive for large qubit counts.
+                fidelity_target = circuit if n_qubits <= max_exact_fidelity_qubits else None
+
                 # -- Strategy 1: Naive pipeline ----------------------------
-                naive = run_naive_pipeline(circuit, window_size=window)
+                naive = run_naive_pipeline(circuit, window_size=window, target=fidelity_target)
 
                 # -- Strategy 2: Ceiling-aware pipeline --------------------
-                detailed = ceiling_opt.optimize_detailed(circuit, target=circuit)
+                detailed = ceiling_opt.optimize_detailed(circuit, target=fidelity_target)
                 ca = detailed.to_dict()
                 ca_opt = detailed.optimization_result
 
@@ -500,8 +515,11 @@ def main() -> None:
                         help="Base random seed for reproducibility")
     parser.add_argument("--window", type=int, default=10,
                         help="Commutation window size for Phase 2")
+    parser.add_argument("--max-exact-fidelity-qubits", type=int, default=6,
+                        help="Verify exact fidelity only for n_qubits <= this value")
     args = parser.parse_args()
-    run(mode=args.mode, seed=args.seed, window=args.window)
+    run(mode=args.mode, seed=args.seed, window=args.window,
+        max_exact_fidelity_qubits=args.max_exact_fidelity_qubits)
 
 
 if __name__ == "__main__":

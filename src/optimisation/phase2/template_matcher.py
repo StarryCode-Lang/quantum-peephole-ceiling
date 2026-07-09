@@ -5,14 +5,21 @@ Deterministic template rewrites for Clifford subcircuits.
 
 The optimizer exposes two entry points:
   * ``optimize``                 — single template pass on the *as-listed* circuit.
-  * ``optimize_full_pipeline``   — commutation reordering + template + HH cancel.
+  * ``optimize_full_pipeline``   — commutation reordering + templates + cleanup.
 
-The single-pass ``optimize`` only fires on listing-adjacent H-CX-H patterns.
+The single-pass ``optimize`` only fires on listing-adjacent template patterns.
 For circuits like the Bernstein–Vazirani oracle, where the H gates live in
 separate layers from the CNOTs, the template cannot fire until a
 commutation pre-pass brings the H gates next to their CNOTs.  The
 ``optimize_full_pipeline`` method performs that reordering and is the
 correct entry point for validating Theorem 9 (review F1).
+
+Templates implemented:
+  * H-CX-H on control  → reversed H-CX-H on target
+  * H-CX-H on target   → CZ
+  * S-S†               → I
+  * CZ-CZ              → I
+  * H-H                → I
 """
 
 from __future__ import annotations
@@ -22,7 +29,7 @@ import time
 
 from qiskit import QuantumCircuit
 from qiskit.circuit import CircuitInstruction
-from qiskit.circuit.library import CXGate, HGate
+from qiskit.circuit.library import CXGate, HGate, CZGate, SGate, SdgGate
 
 from ..base import BaseOptimizer, OptimizationResult
 
@@ -38,21 +45,38 @@ class Phase2bTemplateMatcher(BaseOptimizer):
     def optimize(self, circuit: QuantumCircuit, target: QuantumCircuit | None = None) -> OptimizationResult:
         """Single template pass on the as-listed circuit (no reordering).
 
-        This only fires on listing-adjacent H-CX-H patterns.  For circuits
+        This only fires on listing-adjacent template patterns.  For circuits
         where H gates are in separate layers from CNOTs (e.g. BV oracle),
         use :meth:`optimize_full_pipeline` instead.
         """
         start_time = time.time()
         original = circuit
         optimized = copy.deepcopy(circuit)
-        template_rewrites = 0
+        h_rewrites = 0
+        local_cancellations = 0
         hh_cancellations = 0
 
-        template_rewrites = self._apply_h_cx_h_control_template(optimized)
         for _ in range(self.max_iterations):
-            cancellations = self._cancel_adjacent_h_pairs(optimized)
-            hh_cancellations += cancellations
-            if cancellations == 0:
+            iter_h = 0
+            iter_local = 0
+            iter_hh = 0
+
+            iter_h += self._apply_h_cx_h_control_template(optimized)
+            iter_h += self._apply_h_cx_h_target_template(optimized)
+            iter_local += self._apply_s_sdag_cancellation(optimized)
+            iter_local += self._apply_cz_cz_cancellation(optimized)
+
+            for _ in range(self.max_iterations):
+                c = self._cancel_adjacent_h_pairs(optimized)
+                iter_hh += c
+                if c == 0:
+                    break
+
+            h_rewrites += iter_h
+            local_cancellations += iter_local
+            hh_cancellations += iter_hh
+
+            if iter_h == 0 and iter_local == 0 and iter_hh == 0:
                 break
 
         runtime = time.time() - start_time
@@ -64,15 +88,16 @@ class Phase2bTemplateMatcher(BaseOptimizer):
             original_size=original.size(),
             optimized_size=optimized.size(),
             fidelity=fidelity,
-            iterations=template_rewrites + hh_cancellations,
+            iterations=h_rewrites + local_cancellations + hh_cancellations,
             runtime_seconds=runtime,
             success=self._is_success(reduction, fidelity),
             metadata={
                 'algorithm': 'phase2b_template_matcher',
-                'template_rewrites': template_rewrites,
+                'template_rewrites': h_rewrites,
+                'local_cancellations': local_cancellations,
                 'hh_cancellations': hh_cancellations,
                 'pipeline': 'single_pass',
-                'version': '1.1.0',
+                'version': '1.2.0',
             },
         )
 
@@ -246,6 +271,53 @@ class Phase2bTemplateMatcher(BaseOptimizer):
                 i += 1
         return rewrites
 
+    def _apply_h_cx_h_target_template(self, circuit: QuantumCircuit) -> int:
+        """Rewrite H-CX-H on target into CZ."""
+        rewrites = 0
+        i = 0
+        while i <= len(circuit.data) - 3:
+            first = circuit.data[i]
+            middle = circuit.data[i + 1]
+            last = circuit.data[i + 2]
+            if self._is_h_cx_h_target(circuit, first, middle, last):
+                control, target = self._cx_qubits(circuit, middle)
+                self._replace_with_cz(circuit, i, control, target)
+                rewrites += 1
+                i += 3
+            else:
+                i += 1
+        return rewrites
+
+    def _apply_s_sdag_cancellation(self, circuit: QuantumCircuit) -> int:
+        """Cancel adjacent S-Sdg pairs (in either order) on the same qubit."""
+        cancellations = 0
+        i = 0
+        while i < len(circuit.data) - 1:
+            if self._is_s_sdag_pair(circuit, circuit.data[i], circuit.data[i + 1]):
+                circuit.data.pop(i)
+                circuit.data.pop(i)
+                cancellations += 1
+                if i > 0:
+                    i -= 1
+            else:
+                i += 1
+        return cancellations
+
+    def _apply_cz_cz_cancellation(self, circuit: QuantumCircuit) -> int:
+        """Cancel adjacent CZ-CZ pairs on the same two qubits."""
+        cancellations = 0
+        i = 0
+        while i < len(circuit.data) - 1:
+            if self._is_cz_cz_pair(circuit, circuit.data[i], circuit.data[i + 1]):
+                circuit.data.pop(i)
+                circuit.data.pop(i)
+                cancellations += 1
+                if i > 0:
+                    i -= 1
+            else:
+                i += 1
+        return cancellations
+
     def _cancel_adjacent_h_pairs(self, circuit: QuantumCircuit) -> int:
         cancellations = 0
         i = 0
@@ -266,7 +338,20 @@ class Phase2bTemplateMatcher(BaseOptimizer):
         first_qubits = self._get_qubit_indices(circuit, first)
         last_qubits = self._get_qubit_indices(circuit, last)
         cx_qubits = self._cx_qubits(circuit, middle)
-        return len(first_qubits) == 1 and first_qubits == last_qubits and first_qubits[0] == cx_qubits[0]
+        # Canonical ordering: only rewrite when control < target.  This prevents
+        # the identity from oscillating with its own inverse in repeated passes.
+        return (len(first_qubits) == 1
+                and first_qubits == last_qubits
+                and first_qubits[0] == cx_qubits[0]
+                and cx_qubits[0] < cx_qubits[1])
+
+    def _is_h_cx_h_target(self, circuit: QuantumCircuit, first, middle, last) -> bool:
+        if first.operation.name != 'h' or middle.operation.name not in ('cx', 'cnot') or last.operation.name != 'h':
+            return False
+        first_qubits = self._get_qubit_indices(circuit, first)
+        last_qubits = self._get_qubit_indices(circuit, last)
+        cx_qubits = self._cx_qubits(circuit, middle)
+        return len(first_qubits) == 1 and first_qubits == last_qubits and first_qubits[0] == cx_qubits[1]
 
     def _is_adjacent_h_pair(self, circuit: QuantumCircuit, first, second) -> bool:
         return (
@@ -274,6 +359,19 @@ class Phase2bTemplateMatcher(BaseOptimizer):
             and second.operation.name == 'h'
             and self._get_qubit_indices(circuit, first) == self._get_qubit_indices(circuit, second)
         )
+
+    def _is_s_sdag_pair(self, circuit: QuantumCircuit, first, second) -> bool:
+        names = (first.operation.name, second.operation.name)
+        if sorted(names) != ['s', 'sdg']:
+            return False
+        return self._get_qubit_indices(circuit, first) == self._get_qubit_indices(circuit, second)
+
+    def _is_cz_cz_pair(self, circuit: QuantumCircuit, first, second) -> bool:
+        if first.operation.name != 'cz' or second.operation.name != 'cz':
+            return False
+        qubits1 = set(self._get_qubit_indices(circuit, first))
+        qubits2 = set(self._get_qubit_indices(circuit, second))
+        return qubits1 == qubits2 and len(qubits1) == 2
 
     def _replace_with_reversed_h_cx_h(self, circuit: QuantumCircuit, index: int, control: int, target: int) -> None:
         for _ in range(3):
@@ -285,6 +383,11 @@ class Phase2bTemplateMatcher(BaseOptimizer):
         ]
         for offset, instruction in enumerate(replacement):
             circuit.data.insert(index + offset, instruction)
+
+    def _replace_with_cz(self, circuit: QuantumCircuit, index: int, control: int, target: int) -> None:
+        for _ in range(3):
+            circuit.data.pop(index)
+        circuit.data.insert(index, CircuitInstruction(CZGate(), (circuit.qubits[control], circuit.qubits[target]), ()))
 
     def _cx_qubits(self, circuit: QuantumCircuit, inst) -> tuple[int, int]:
         qubits = self._get_qubit_indices(circuit, inst)

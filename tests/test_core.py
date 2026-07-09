@@ -30,7 +30,7 @@ from src.optimisation.phase1.random_local_search import RandomLocalSearch
 from src.optimisation.phase1.simulated_annealing import SimulatedAnnealingOptimizer
 from src.optimisation.phase1.genetic_algorithm import GeneticAlgorithmOptimizer
 from src.optimisation.phase1.wire_traversal import WireTraversalPreprocessor
-from src.optimisation.phase2.commutation_rewriter import CommutationRewriter, HybridCommuteRewrite
+from src.optimisation.phase2.commutation_rewriter import Phase2aCommutationRewriter, HybridPhase2aRewrite
 from src.circuits.real_benchmarks import (
     make_qft, make_ghz, make_cnot_chain, make_bernstein_vazirani,
     make_qaoa_line, make_vqe_twolocal, make_hardware_efficient,
@@ -448,8 +448,8 @@ class TestPhase2Optimizer(unittest.TestCase):
     """Tests for Phase 2 commutation-based optimizers."""
     
     def test_commutation_rewriter_runs(self):
-        """Test that CommutationRewriter runs without errors."""
-        optimizer = CommutationRewriter()
+        """Test that Phase2aCommutationRewriter runs without errors."""
+        optimizer = Phase2aCommutationRewriter()
         circuit = generate_circuit(
             n_qubits=3, depth=5, seed=42,
             family=CircuitFamily.UNIVERSAL
@@ -461,8 +461,8 @@ class TestPhase2Optimizer(unittest.TestCase):
         self.assertLessEqual(result.optimized_size, result.original_size)
     
     def test_hybrid_optimizer_runs(self):
-        """Test that HybridCommuteRewrite runs without errors."""
-        optimizer = HybridCommuteRewrite()
+        """Test that HybridPhase2aRewrite runs without errors."""
+        optimizer = HybridPhase2aRewrite()
         circuit = generate_circuit(
             n_qubits=3, depth=5, seed=42,
             family=CircuitFamily.UNIVERSAL
@@ -478,7 +478,7 @@ class TestPhase2Optimizer(unittest.TestCase):
     
     def test_hybrid_on_cnot_chain(self):
         """Test hybrid optimizer on CNOT chain (should cancel all)."""
-        optimizer = HybridCommuteRewrite()
+        optimizer = HybridPhase2aRewrite()
         qc = QuantumCircuit(2)
         for _ in range(6):
             qc.cx(0, 1)
@@ -520,9 +520,9 @@ def _unitaries_equal(qc1, qc2, tol=1e-10):
     return np.allclose(u1, u2, atol=tol)
 
 
-class TestCommutationRewriterCorrectness(unittest.TestCase):
+class TestPhase2aCommutationRewriterCorrectness(unittest.TestCase):
     """
-    Exhaustive tests for the CommutationRewriter correctness fix (v3.1.0).
+    Exhaustive tests for the Phase2aCommutationRewriter correctness fix (v3.1.0).
 
     The v3.0.0 pre-check verified commutation with gate[i] only, but the
     bubble-sort moves gate[j] leftward, requiring commutation with gate[j].
@@ -556,7 +556,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
         self.assertTrue(insp._gates_commute(qc, gm, gj))
 
         # Verify cancellation preserves unitary
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         U_before = _exact_unitary(qc)
         result = opt.optimize(qc)
         U_after = _exact_unitary(result.optimized_circuit)
@@ -572,7 +572,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
         S is in Z-family on control qubit -> commutes with CNOT.
         Both conditions pass -> valid cancellation.
         """
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = QuantumCircuit(2)
         qc.cx(0, 1); qc.s(0); qc.cx(0, 1)
 
@@ -594,7 +594,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
         Both intermediates are Z-family on qubit 0 (CNOT control).
         They commute with both CNOTs.  CNOT-CNOT should cancel.
         """
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = QuantumCircuit(2)
         qc.cx(0, 1); qc.s(0); qc.rz(np.pi / 4, 0); qc.cx(0, 1)
 
@@ -613,7 +613,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
         gate[i]=S, gate[j]=Sdg, intermediates are all Z-family on control.
         All commute with S and Sdg.  S-Sdg should cancel.
         """
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = QuantumCircuit(2)
         qc.s(0); qc.cx(0, 1); qc.rz(0.3, 0); qc.t(0); qc.sdg(0)
 
@@ -637,7 +637,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
         The pre-check (both conditions) should FAIL.
         No cancellation should occur.
         """
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = QuantumCircuit(1)
         qc.h(0); qc.x(0); qc.h(0)
 
@@ -657,7 +657,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
         X on control qubit does NOT commute with CNOT (not Z-family).
         No cancellation should occur.
         """
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = QuantumCircuit(2)
         qc.cx(0, 1); qc.x(0); qc.cx(0, 1)
 
@@ -674,7 +674,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
         Z(0) commutes with CNOT (Z-family on control), but H(0) does NOT.
         Pre-check should fail at H(0). No cancellation.
         """
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = QuantumCircuit(2)
         qc.cx(0, 1); qc.z(0); qc.h(0); qc.cx(0, 1)
 
@@ -694,7 +694,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
         Circuit: S(0), Z(0), Sdg(0)
         Z commutes with S and Sdg (all Z-family). Valid cancellation.
         """
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = QuantumCircuit(1)
         qc.s(0); qc.z(0); qc.sdg(0)
 
@@ -714,7 +714,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
         All intermediates are Z-family on qubit 0 (CNOT control).
         Window size must be large enough to span i to j.
         """
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = QuantumCircuit(2)
         qc.cx(0, 1)    # data[0] = gate[i]
         qc.s(0)         # data[1]
@@ -736,24 +736,24 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
     def test_adjacent_pair_not_handled_by_phase2(self):
         """
         Adjacent self-inverse pairs (j = i+1) should NOT be handled
-        by CommutationRewriter (it starts at j = i+2).
+        by Phase2aCommutationRewriter (it starts at j = i+2).
         Those are handled by Phase 1 (GreedyGateCancellation).
         """
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = QuantumCircuit(1)
         qc.h(0); qc.h(0)
 
         result = opt.optimize(qc)
-        # CommutationRewriter should NOT cancel adjacent pairs
+        # Phase2aCommutationRewriter should NOT cancel adjacent pairs
         self.assertEqual(result.optimized_size, 2,
-                         "CommutationRewriter should not cancel adjacent pairs")
+                         "Phase2aCommutationRewriter should not cancel adjacent pairs")
 
     def test_adjacent_pair_handled_by_hybrid(self):
         """
-        HybridCommuteRewrite (Phase 1 + Phase 2) should cancel adjacent pairs
+        HybridPhase2aRewrite (Phase 1 + Phase 2) should cancel adjacent pairs
         via the Phase 1 greedy optimizer.
         """
-        opt = HybridCommuteRewrite()
+        opt = HybridPhase2aRewrite()
         qc = QuantumCircuit(1)
         qc.h(0); qc.h(0)
 
@@ -767,7 +767,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
         H(2) is on a disjoint qubit from CNOT(0,1).
         Disjoint qubits always commute -> valid cancellation.
         """
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = QuantumCircuit(3)
         qc.cx(0, 1); qc.h(2); qc.cx(0, 1)
 
@@ -785,7 +785,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
     # ------------------------------------------------------------------
     def test_unitary_preservation_random_small(self):
         """Test unitary preservation on random 2-qubit circuits."""
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         for seed in range(10):
             circuit = generate_circuit(
                 n_qubits=2, depth=8, seed=seed,
@@ -802,7 +802,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
 
     def test_unitary_preservation_random_medium(self):
         """Test unitary preservation on random 3-qubit circuits."""
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         for seed in range(10):
             circuit = generate_circuit(
                 n_qubits=3, depth=10, seed=seed,
@@ -819,7 +819,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
 
     def test_unitary_preservation_random_clifford(self):
         """Test unitary preservation on random Clifford circuits."""
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         for seed in range(10):
             circuit = generate_circuit(
                 n_qubits=3, depth=8, seed=seed,
@@ -835,8 +835,8 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
             )
 
     def test_unitary_preservation_hybrid_random(self):
-        """Test unitary preservation of HybridCommuteRewrite on random circuits."""
-        opt = HybridCommuteRewrite(window_size=10)
+        """Test unitary preservation of HybridPhase2aRewrite on random circuits."""
+        opt = HybridPhase2aRewrite(window_size=10)
         for seed in range(5):
             circuit = generate_circuit(
                 n_qubits=3, depth=10, seed=seed,
@@ -865,7 +865,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
         Intermediate CNOT(0,1): commutes with T and Tdg (Z-family on control).
         Both conditions pass -> cancellation should occur.
         """
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = QuantumCircuit(2)
         qc.t(0); qc.s(0); qc.cx(0, 1); qc.tdg(0)
 
@@ -898,7 +898,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
         self.assertFalse(insp._gates_commute(qc, gm, gj),
                          "X should not commute with H")
 
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         U_before = _exact_unitary(qc)
         result = opt.optimize(qc)
         U_after = _exact_unitary(result.optimized_circuit)
@@ -915,10 +915,10 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
         Circuit with multiple non-adjacent pairs that can cancel:
         CNOT(0,1), S(0), CNOT(0,1), T(0), Tdg(0)
         First: CNOT pair cancels (S commutes with CNOT).
-        Note: T-Tdg is an adjacent pair, which CommutationRewriter does NOT
-        handle (it starts at j = i+2).  Use HybridCommuteRewrite for both.
+        Note: T-Tdg is an adjacent pair, which Phase2aCommutationRewriter does NOT
+        handle (it starts at j = i+2).  Use HybridPhase2aRewrite for both.
         """
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = QuantumCircuit(2)
         qc.cx(0, 1); qc.s(0); qc.cx(0, 1); qc.t(0); qc.tdg(0)
 
@@ -928,12 +928,12 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
 
         self.assertTrue(np.allclose(U_before, U_after),
                         "Unitary must be preserved after multiple cancellations")
-        # CommutationRewriter cancels CNOT pair; T-Tdg is adjacent (Phase 1)
+        # Phase2aCommutationRewriter cancels CNOT pair; T-Tdg is adjacent (Phase 1)
         self.assertEqual(result.optimized_size, 3,
                          "CNOT pair cancels, leaving S(0), T(0), Tdg(0)")
 
-        # HybridCommuteRewrite should also cancel the adjacent T-Tdg pair
-        opt_hybrid = HybridCommuteRewrite(window_size=10)
+        # HybridPhase2aRewrite should also cancel the adjacent T-Tdg pair
+        opt_hybrid = HybridPhase2aRewrite(window_size=10)
         result_hybrid = opt_hybrid.optimize(qc)
         U_hybrid = _exact_unitary(result_hybrid.optimized_circuit)
         self.assertTrue(np.allclose(U_before, U_hybrid),
@@ -946,7 +946,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
         Circuit: CNOT(0,1), Z(0), CNOT(0,1), S(0), CNOT(0,1)
         Multiple CNOT cancellation opportunities with Z-family intermediates.
         """
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = QuantumCircuit(2)
         qc.cx(0, 1); qc.z(0); qc.cx(0, 1); qc.s(0); qc.cx(0, 1)
 
@@ -964,7 +964,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
     # ------------------------------------------------------------------
     def test_unitary_preservation_on_qft(self):
         """Test unitary preservation on QFT circuit."""
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = make_qft(3)
         U_before = _exact_unitary(qc)
         result = opt.optimize(qc)
@@ -974,7 +974,7 @@ class TestCommutationRewriterCorrectness(unittest.TestCase):
 
     def test_unitary_preservation_on_ghz(self):
         """Test unitary preservation on GHZ circuit."""
-        opt = CommutationRewriter(window_size=10)
+        opt = Phase2aCommutationRewriter(window_size=10)
         qc = make_ghz(3)
         U_before = _exact_unitary(qc)
         result = opt.optimize(qc)
@@ -1002,8 +1002,8 @@ class TestIntegration(unittest.TestCase):
             'rls': RandomLocalSearch(),
             'sa': SimulatedAnnealingOptimizer(),
             'ga': GeneticAlgorithmOptimizer(),
-            'commutation': CommutationRewriter(),
-            'hybrid': HybridCommuteRewrite(),
+            'commutation': Phase2aCommutationRewriter(),
+            'hybrid': HybridPhase2aRewrite(),
         }
         
         results = {}
@@ -1014,9 +1014,13 @@ class TestIntegration(unittest.TestCase):
             # All optimizers must preserve fidelity
             self.assertGreaterEqual(result.fidelity, 0.99,
                 f"{name} failed fidelity check: {result.fidelity}")
-            # All optimizers must not increase gate count
-            self.assertLessEqual(result.optimized_size, result.original_size,
-                f"{name} increased gate count")
+            # Deterministic peephole optimizers must not increase gate count.
+            # Stochastic optimizers (RLS, SA, GA) may use INSERTION moves and
+            # therefore can increase gate count during search; only fidelity is
+            # required for them.
+            if name in ('greedy', 'commutation', 'hybrid'):
+                self.assertLessEqual(result.optimized_size, result.original_size,
+                    f"{name} increased gate count")
         
         # Log results for inspection
         print("\nOptimizer results on random circuit:")
@@ -1069,7 +1073,7 @@ class TestPerformance(unittest.TestCase):
     
     def test_hybrid_runtime_small_circuit(self):
         """Test Hybrid optimizer runs in reasonable time for small circuits."""
-        optimizer = HybridCommuteRewrite()
+        optimizer = HybridPhase2aRewrite()
         circuit = generate_circuit(
             n_qubits=3, depth=5, seed=42,
             family=CircuitFamily.UNIVERSAL
@@ -1202,7 +1206,7 @@ class TestExtendedSuiteGeneration(unittest.TestCase):
         expected = {
             "QFT", "GHZ", "CNOT", "Oracle", "QAOA", "VQE",
             "HardwareEfficient", "Grover", "Adder", "QuantumWalk",
-            "IQP", "RandomClifford", "SurfaceCode", "UCCSD", "HaarRandom",
+            "IQP", "RandomClifford", "SurfaceCode", "UCCSD_inspired", "HaarRandom",
         }
         self.assertTrue(expected.issubset(families),
                         f"Missing families: {expected - families}")
@@ -1319,7 +1323,7 @@ class TestExtendedMetrics(unittest.TestCase):
     def test_extended_metrics_on_real_circuit(self):
         """Test extended metrics on a real benchmark circuit."""
         qc = make_bernstein_vazirani(3, seed=42)
-        optimizer = HybridCommuteRewrite()
+        optimizer = HybridPhase2aRewrite()
         result = optimizer.optimize(qc, target=qc)
         metrics = result.compute_extended_metrics(qc)
 
@@ -2354,7 +2358,7 @@ class TestCeilingAware(unittest.TestCase):
 
     E21 validates three properties:
     1. The ceiling-aware optimizer produces the SAME gate reduction as
-       the naive always-run pipeline (HybridCommuteRewrite).
+       the naive always-run pipeline (HybridPhase2aRewrite).
     2. The ceiling-aware optimizer is FASTER on ceiling families
        (QFT, GHZ, etc.) where at least one phase has an empty action space.
     3. The action-space proxy (count_phase1_actions) correctly identifies
@@ -2370,7 +2374,7 @@ class TestCeilingAware(unittest.TestCase):
         from src.optimisation.ceiling_aware import CeilingAwareOptimizer
 
         qc = make_cnot_chain(4, repeats=4)
-        naive = HybridCommuteRewrite()
+        naive = HybridPhase2aRewrite()
         aware = CeilingAwareOptimizer()
 
         naive_result = naive.optimize(qc, target=qc)
@@ -2390,7 +2394,7 @@ class TestCeilingAware(unittest.TestCase):
             n_qubits=3, depth=10, seed=42,
             family=CircuitFamily.UNIVERSAL
         )
-        naive = HybridCommuteRewrite()
+        naive = HybridPhase2aRewrite()
         aware = CeilingAwareOptimizer()
 
         naive_result = naive.optimize(circuit, target=circuit)
@@ -2414,7 +2418,7 @@ class TestCeilingAware(unittest.TestCase):
             ("CNOT", make_cnot_chain(3, repeats=3)),
             ("BV", make_bernstein_vazirani(3, seed=42)),
         ]
-        naive = HybridCommuteRewrite()
+        naive = HybridPhase2aRewrite()
         aware = CeilingAwareOptimizer()
 
         for name, qc in circuits:
