@@ -3,9 +3,11 @@
 > **This is the SINGLE AUTHORITATIVE reference list for the Q-research project. All manuscript citations must resolve to entries in this file. The literature_review.md file is retained as a narrative companion but is NOT authoritative for citation count.**
 >
 > **Document Status**: Comprehensive, unified reference list for the Q-research manuscript.
-> **Version**: 2.0
-> **Date**: 2026-06-17
+> **Version**: 2.1
+> **Date**: 2026-07-09
 > **Scope**: Consolidates all references from `literature_review.md` (42 refs), `phase7_related_work.md` (12 refs), `v5_full_manuscript_part1/2/3.md`, and adds missing key works.
+>
+> **Pending additions**: A draft list of ~20 additional key references identified in `docs/07_optimization_plan.md` §4.6.1 is maintained in `missing_references_draft.md`. These entries require exact bibliographic verification before being merged into this authoritative list and cited in the manuscript.
 > **Format**: `[N] Authors, "Title," Journal/Conference, Year. arXiv:XXXX.XXXXX [if available]`
 
 ---
