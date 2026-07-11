@@ -4,10 +4,10 @@
 >
 > **Document Status**: Comprehensive, unified reference list for the Q-research manuscript.
 > **Version**: 2.1
-> **Date**: 2026-07-09
+> **Date**: 2026-07-10
 > **Scope**: Consolidates all references from `literature_review.md` (42 refs), `phase7_related_work.md` (12 refs), `v5_full_manuscript_part1/2/3.md`, and adds missing key works.
 >
-> **Pending additions**: A draft list of ~20 additional key references identified in `docs/07_optimization_plan.md` §4.6.1 is maintained in `missing_references_draft.md`. These entries require exact bibliographic verification before being merged into this authoritative list and cited in the manuscript.
+> **Pending additions**: A draft list of additional key references identified in `docs/07_optimization_plan.md` §4.6.1 is maintained in `missing_references_draft.md`. Verified entries are merged into this list as they are confirmed; unverified entries remain in the draft until bibliographic details are confirmed.
 > **Format**: `[N] Authors, "Title," Journal/Conference, Year. arXiv:XXXX.XXXXX [if available]`
 
 ---
@@ -56,7 +56,7 @@
 
 [19] D. Maslov, "Advantages of using relative phase Toffolis in quantum circuits," Physical Review A, vol. 93, 032305, 2016. arXiv:1508.03062
 
-[78] Y. Nam, N. J. Ross, Y. Su, D. Maslov, and R. K. Brayton, "Automated optimization of large quantum circuits with continuous parameters," npj Quantum Information, vol. 4, article 23, 2018. arXiv:1710.07345
+[78] Y. Nam, N. J. Ross, Y. Su, A. M. Childs, and D. Maslov, "Automated optimization of large quantum circuits with continuous parameters," npj Quantum Information, vol. 4, article 23, 2018. arXiv:1710.07345
 
 [79] S. Yamashita, T. Nakanishi, and S. Ishioka, "Merging quantum circuits," IEICE Transactions on Fundamentals of Electronics, Communications and Computer Sciences, vol. E93-A, no. 5, pp. 913-918, 2010.
 
@@ -67,6 +67,8 @@
 ## C. Commutation-Based and Phase Polynomial Optimization
 
 [20] M. Amy, P. Glaudell, and N. J. Ross, "Number-theoretic constructions of optimal quantum circuits for diagonal unitaries," npj Quantum Information, vol. 4, article 43, 2018. arXiv:1606.02729
+
+[83] J. Liu, A. Gonzales, B. Huang, Z. H. Saleem, and P. Hovland, "QuCLEAR: Clifford extraction and absorption for quantum circuit optimization," arXiv:2408.13316, 2024.
 
 ---
 
@@ -79,6 +81,8 @@
 [23] A. Kissinger and J. van de Wetering, "Reducing T-count with the ZX-calculus," arXiv:1903.10477, 2019.
 
 [24] A. Kissinger and J. van de Wetering, "Reducing the number of non-Clifford gates in quantum circuits," Physical Review A, vol. 102, 022406, 2020. arXiv:2001.04457
+
+[82] A. Kissinger and J. van de Wetering, "PyZX: Large scale automated diagrammatic reasoning," Electronic Proceedings in Theoretical Computer Science (EPTCS), vol. 318, pp. 229-241, 2020. arXiv:1904.04735
 
 ---
 
@@ -105,6 +109,10 @@
 [34] A. Yu. Kitaev, "Quantum computations: algorithms and error correction," Russian Mathematical Surveys, vol. 52, pp. 1191-1249, 1997.
 
 [35] S. Shende, S. S. Bullock, and I. L. Markov, "Synthesis of Quantum-Logic Circuits," IEEE TCAD, vol. 25, no. 6, pp. 1000-1010, 2006. arXiv:quant-ph/0406176
+
+[86] Y. Mori, H. Hakoshima, K. Sudo, T. Mori, K. Mitarai, and K. Fujii, "Quantum circuit unoptimization," Physical Review Research, vol. 7, no. 2, 023139, 2025. arXiv:2311.03805
+
+[88] V. V. Shende, I. L. Markov, and S. S. Bullock, "The minimal reversible circuit with an arbitrary number of inputs," Proceedings of the 34th IEEE International Symposium on Multiple-Valued Logic (ISMVL), 2004, pp. 273-278.
 
 [36] E. Boixo, S. V. Isakov, V. N. Smelyanskiy, R. Babbush, N. Ding, Z. Jiang, M. J. Bremner, J. M. Martinis, and H. Neven, "Characterizing quantum supremacy in near-term devices," Nature Physics, vol. 14, pp. 595-600, 2018. arXiv:1608.00263
 
@@ -198,17 +206,23 @@
 
 [67] J. Riu, J. Nogue, G. Vilaplana, A. Garcia-Saez, and M. P. Estarellas, "Reinforcement learning based quantum circuit optimization via ZX-calculus," Quantum, vol. 9, 1634, 2025. arXiv:2312.11597
 
+[85] A. Xu, A. Molavi, L. Pick, S. Tannu, and A. Albarghouthi, "Synthesizing quantum-circuit optimizers," Proceedings of the ACM on Programming Languages (PACMPL), vol. 7, no. PLDI, pp. 140-165, 2023. arXiv:2211.09691
+
+[87] Z. Yang, D. Ding, C. Zhu, J. Chen, and Y. Xie, "PHOENIX: Pauli-based high-level optimization engine for instruction execution on NISQ devices," Proceedings of the 62nd ACM/IEEE Design Automation Conference (DAC), 2025, pp. 1-7. arXiv:2504.03529
+
 [68] J. Merilehto, "A 200-line Python micro-benchmark suite for NISQ circuit compilers," arXiv:2509.16205, 2025.
 
-[69] C. Nitsch, D. Hillmich, M. Burgholzer, and R. Wille, "MQT Bench: Benchmarking Software and Design Automation Tools for Quantum Computing," ACM Transactions on Quantum Computing (TEAC), vol. 4, no. 1, 2023. arXiv:2204.13719
+[69] N. Quetschlich, L. Burgholzer, and R. Wille, "MQT Bench: Benchmarking software and design automation tools for quantum computing," Quantum, vol. 7, p. 1062, 2023. arXiv:2204.13719
 
 [70] A. Wang, S. Lu, and X. Wang, "QASMBench: A low-layer QASM benchmark suite for evaluating NISQ programming and compilation," arXiv:2108.10472, 2021.
 
-[71] IBM, "Benchpress: A benchmarking framework for quantum compilation," 2024.
+[71] P. D. Nation, A. A. Saki, S. Brandhofer, L. Bello, S. Garion, M. Treinish, and A. Javadi-Abhari, "Benchmarking the performance of quantum computing software," Nature Computational Science, 2025. arXiv:2409.08844
 
 [72] QCircuitBench, "QCircuitBench: A benchmark suite for quantum circuit optimization," NeurIPS 2025 Datasets and Benchmarks Track, 2025.
 
-[73] MLCO, "Multilevel Quantum Circuit Optimization with Structural Pattern Detection," 2025.
+[73] T. Onodera, Y. Sato, T. Itoko, and N. Yamamoto, "Multilevel circuit optimization in quantum compilers: A case study," arXiv:2505.09320, 2025.
+
+[84] B. Tan and J. Cong, "Optimality study of existing quantum computing layout synthesis tools," IEEE Transactions on Computers, vol. 70, no. 9, pp. 1363-1373, 2021. arXiv:2002.09783
 
 [74] ~~Removed: duplicate of [59] (Hietala et al., VOQC, POPL 2021). See [59].~~
 
@@ -329,18 +343,25 @@ The following references were identified as missing from the original 42-referen
 | [20] | Amy, Glaudell, Ross (2018) | Phase polynomial optimization | F-5 |
 | [5] | Aho, Sethi, Ullman (1986) | Classical compiler theory | F-5 |
 | [6] | Amdahl (1967) | Amdahl's Law | F-5 |
-| [69] | Nitsch et al. (2023) | MQT Bench | F-5 |
+| [69] | Quetschlich, Burgholzer, Wille (2023) | MQT Bench | F-5 |
 | [70] | Wang et al. (2021) | QASMBench | F-5 |
-| [71] | IBM (2024) | Benchpress | F-5 |
+| [71] | Nation et al. (2025) | Benchpress | F-5 |
 | [72] | QCircuitBench (2025) | Benchmark suite | F-5 |
-| [73] | MLCO (2025) | Multilevel optimization | F-5 |
-| [78] | Nam, Ross, Su, Maslov, Brayton (2018) | Automated optimization with continuous parameters | Foundational |
+| [73] | Onodera et al. (2025) | Multilevel optimization | F-5 |
+| [78] | Nam, Ross, Su, Childs, Maslov (2018) | Automated optimization with continuous parameters | Foundational |
 | [79] | Yamashita, Nakanishi, Ishioka (2010) | Merging quantum circuits | Foundational |
 | [80] | Amy, Azimzadeh, Mosca (2018) | CNOT complexity of CNOT circuits | Foundational |
 | [81] | Patel, Shapira, Markov (2022) | Quantum circuit optimization survey | Survey |
+| [82] | Kissinger, van de Wetering (2020) | PyZX | F-5, H-15 |
+| [83] | Liu et al. (2024) | QuCLEAR | F-5 |
+| [84] | Tan, Cong (2021) | QUEKO / layout synthesis optimality | F-5 |
+| [85] | Xu et al. (2023) | QUESO | F-5 |
+| [86] | Mori et al. (2025) | Quantum circuit unoptimization | Foundational |
+| [87] | Yang et al. (2025) | PHOENIX | F-5 |
+| [88] | Shende, Markov, Bullock (2004) | Minimal reversible circuit | F-5, C-8 |
 
 ---
 
-*Document version: 2.0*
-*Last updated: 2026-06-17*
+*Document version: 2.1*
+*Last updated: 2026-07-10*
 *Author: Q-Research Reference Compilation*

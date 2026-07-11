@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-07-10T13:12:06.990707+00:00",
+  "created_utc": "2026-07-11T04:27:32.731042+00:00",
   "datasets": [
     {
       "experiment_id": "E01",
@@ -38,10 +38,10 @@
     },
     {
       "experiment_id": "E11",
-      "file": "data/v4/e11/e11_real_circuit_benchmark_e11_full_20260611_114615.csv",
-      "rows": 426,
+      "file": "data/v4/e11/e11_real_circuit_benchmark_e11_smoke_r2_20260711_002756.csv",
+      "rows": 237,
       "schema": "results_v1",
-      "sha256": "7f7300ca12f5295bf6980689c89828dc16d876afade9b2b391fedc978055d8ae"
+      "sha256": "03b0be986b57c28df7a266db5d4585d1d743e857fb5201b294a2c8166c6b70f6"
     },
     {
       "experiment_id": "E12",
@@ -161,10 +161,17 @@
       "rows": 57,
       "schema": "results_v6",
       "sha256": "a45c9a7b3c72d3204c96e29ce4561f7be16c033c8c0810dad22d333c33430616"
+    },
+    {
+      "experiment_id": "E25",
+      "file": "data/v6/e25/e25_industry_benchmarks_e25_industry_proxies_20260711_042550.csv",
+      "rows": 66,
+      "schema": "results_v6",
+      "sha256": "5545e6a199e5e3da45d89491c03f33d0861e12ccc96052779ce50a6b8bcf16dd"
     }
   ],
   "environment": {
-    "env_id": "q-research-20260710_131206",
+    "env_id": "q-research-20260711_042732",
     "packages": {
       "matplotlib": "3.9.0",
       "numpy": "1.26.4",
@@ -178,10 +185,10 @@
   },
   "git": {
     "branch": "master",
-    "commit": "4601de0ceedde405a3e1cf37106f22512e14dda8",
-    "dirty": false
+    "commit": "91c489f5ddce9ab1c0525aec641eb25a635b1d90",
+    "dirty": true
   },
-  "release_id": "q-research-20260710_131206",
+  "release_id": "q-research-20260711_042732",
   "reproduction": {
     "conda_env": "q-research",
     "entrypoints": [
@@ -210,7 +217,7 @@
   "schema_version": "1.0.0",
   "source_hashes": {
     "analysis/structural_ceiling.py": "c36dbb5e951cf5fd7ea2e9655ada682d1bf05b9d2934e394ebba65bad57e5102",
-    "experiments/e11_real_circuit_benchmark/run.py": "ab38ffb3ab21a77ab9a50df60162c8525e904a4f4425df2b87459f74d1716996",
+    "experiments/e11_real_circuit_benchmark/run.py": "8fd1ce53ed0c76f938d1230eb307725202a645c0dc886f442de4972b1a88ecb0",
     "experiments/e12_compiler_baseline/run.py": "10f7595c9adbe703d05441e503aea4ad795eaacfc60f43ce1fc71f9253dfbf1e",
     "experiments/e13_structural_ceiling/run.py": "97948883da9a12095d926ac796187d617a7329e2b6c007cb270aa9d203961141",
     "experiments/e19_wcl_listing/run.py": "32f8a9a46eda191a90dd0e49470db5281d475a314419fb9ad08a671285928bf4",

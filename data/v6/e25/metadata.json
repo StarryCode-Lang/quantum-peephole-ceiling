@@ -1,0 +1,43 @@
+{
+  "canonical_data_file": "e25_industry_benchmarks_e25_industry_proxies_20260711_042550.csv",
+  "description": "Industry benchmark proxy (MQT Bench / QUEKO / Benchpress fallback)",
+  "experiment_id": "E25",
+  "fallback_note": "Industry suite packages not available offline; used Qiskit-based proxy circuits.",
+  "git_commit": "91c489f5ddce9ab1c0525aec641eb25a635b1d90",
+  "n_input_circuits": 33,
+  "n_rows": 66,
+  "optimizers": [
+    "greedy_phase1",
+    "hybrid_phase1_2"
+  ],
+  "package_versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "qiskit": "2.4.1",
+    "scipy": "1.13.1"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+  "run_id": "e25_industry_proxies_20260711_042550",
+  "schema_version": "1.0.0",
+  "source_hashes": {
+    "analysis/structural_ceiling.py": "c36dbb5e951cf5fd7ea2e9655ada682d1bf05b9d2934e394ebba65bad57e5102",
+    "experiments/e25_industry_benchmarks/run.py": "0f74542a585f6ae1c1df58fd5a45645e4312919e2727287f29cbce3e697fa3cc",
+    "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
+    "src/circuits/real_benchmarks.py": "5f137e8efaf872cc2205f2e2cac5e4420c014d7fa3ac0cf440e04dad7e4dd82a",
+    "src/optimisation/_gate_predicates.py": "259956ddbf8e73bcfee790c6265035b2ede720e366932ed7d3cbe92a2f52dc83",
+    "src/optimisation/base.py": "ac66c71751b45bec9a2f74fbbc84f5c17edba094bd433a6c89639e628cbd8e4e",
+    "src/optimisation/ceiling_aware.py": "37c4fd77b5098d4369b8f68d898fc988748b03f98582f82fec46b050df76ce8f",
+    "src/optimisation/phase1/genetic_algorithm.py": "9093c26527029c80b0feee3f8612681291b2b7c809d64c61b186ece195cd7e03",
+    "src/optimisation/phase1/greedy.py": "59d506439d44b5d0503a71d67f1589418c32c3363705e2093d9ebe9650476e60",
+    "src/optimisation/phase1/random_local_search.py": "26cc47fddaeca2fc9f8dbd72bf2a69117ac06eb31ae02e7a582d0f3e70a6fea6",
+    "src/optimisation/phase1/simulated_annealing.py": "d6fd7b9c239c9bc3c6afdd9a74adf6d83d41f73dbcd56faa36088a82d745d318",
+    "src/optimisation/phase1/wire_traversal.py": "e4d2214746f4a771e1c370a61e62a984d26012a74ed529c33b9f983a6df3fbf2",
+    "src/optimisation/phase2/commutation_rewriter.py": "033c4ebf965ea039b66b3a540e837d26b4296a3b41210475fad00fdc68687c06",
+    "src/optimisation/phase2/template_matcher.py": "b09fe69742bd72b307df2d5c0964da7003eaacdf195897238512cf4608d3f17e"
+  },
+  "source_tags": [
+    "qiskit_fallback"
+  ],
+  "version": "1.0.0"
+}

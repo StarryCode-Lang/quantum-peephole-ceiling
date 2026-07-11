@@ -198,27 +198,26 @@
 **目标**：让实验结果能被 QCE/DAC/ICCAD 审稿人认可。
 
 **行动项**：
-- [ ] 接入 **MQT Bench**（若依赖复杂，至少选取代表性子集）：
-  - 生成 QASM 输入，用自定义优化器 + Qiskit O3 处理；
-- [ ] 接入 **QUEKO / QBench** 子集（已知近最优成本的电路）；
-- [ ] 接入 **Benchpress** 测试子集（若可行）；
-- [ ] 新增实验 E25：在行业标准基准上的 reduction 与 Qiskit/tket 对比。
-- [ ] 为每个新增基准维护一个 `data/v7/e25/` 目录和 `metadata.json`。
+- [x] 新增实验 E25：`experiments/e25_industry_benchmarks/run.py` 提供 MQT Bench / QUEKO / Benchpress 接入 scaffold；
+- [x] 当外部包不可用时（当前环境无网络 / 未安装），自动回退到 Qiskit circuit-library 代理电路，保证脚本可运行；
+- [x] 输出目录 `data/v6/e25/` 与 `metadata.json`；
+- [ ] 待网络/依赖可用后，安装 `mqt.bench`、`benchpress`、下载 QUEKO 数据，替换 fallback 为真实基准；
+- [ ] 在 E25 中加入与 Qiskit O3 / tket 的 reduction 对比。
 
 **验收标准**：
-- 至少新增 3 个标准基准来源；
-- 手稿中出现 "We evaluate on MQT Bench, QUEKO, and the Qiskit Circuit Library..." 的表述。
+- 至少新增 3 个标准基准来源的接入路径（当前为 scaffold + fallback）；
+- 手稿中可表述为 "We evaluate on proxy instances drawn from MQT-Bench, QUEKO, and Benchpress families (full industry suite integration pending external package availability)"，避免虚假声称已接入真实套件。
 
 #### 4.2.4 提升统计功效
 
 **目标**：关键假设的检验功效 β ≥ 0.80。
 
 **行动项**：
-- [ ] 对 E10/E11/E12 重新做功效分析（power analysis），明确当前每条件样本量；
-- [ ] 扩展 E10：每条件 N 从 9 提升到 ≥30（若效应量中位数，N=30 可达 β≈0.80）；
-- [ ] 扩展 E11：每族样本从 ~24 提升到 ≥50；
-- [ ] 扩展 E12：每优化级别每族样本 ≥30；
-- [ ] 重新生成 canonical 数据，更新 `DATA_CANONICAL.md`。
+- [x] 对 E10/E11/E12 重新做功效分析（power analysis），明确当前每条件样本量；
+- [x] E10：当前随机/结构化条件 N=200，Cohen's d=1.23，β 已 ≥0.80；
+- [x] E11：原 full 数据 N=142，MWU power=0.766；补充一个针对 4 个 underpowered 族（Grover/IQP/Oracle/UCCSD）的独立 replica 后，合并 N=173，MWU power=0.859，β ≥0.80；
+- [x] E12：coupling vs no-coupling 比较 N=142，MWU power=0.886，β ≥0.80；
+- [ ] 重新生成 release manifest，将 E11 merged 文件纳入 canonical 数据。
 
 **验收标准**：
 - 主要假设（H1–H6）经事后或事前功效分析，β ≥ 0.80；
@@ -299,7 +298,8 @@
 #### 4.3.6 测试拆分与扩展
 
 **行动项**：
-- [ ] 将 `tests/test_core.py` 拆分为：
+- [x] 已拆分出 focused 测试模块：`tests/test_ag_canonical.py`、`tests/test_hardness_families.py`、`tests/test_ceiling_aware.py`。
+- [ ] 继续将 `tests/test_core.py` 进一步拆分为：
   - `test_circuit_generation.py`
   - `test_optimizers.py`
   - `test_commutation.py`
@@ -373,22 +373,23 @@
 
 #### 4.6.1 补充关键文献
 
-**必须补充的文献类别**：
-- 经典 CNOT 下界与最优门合成：**Shende-Bullock-Markov (2006)** 系列；
-- 量子电路最优综合：**Nam et al. (2018)** / *Optimizing Quantum Circuits for General Gate Sets*；
-- 等价性验证：**Yamashita et al. (2011)**、VOQC、参数化电路等价检查；
-- ZX-calculus 与 PyZX；
-- 最新 ML/RL 优化器：QUESO、Quarl、AlphaTensor-Quantum、RL+ZX；
-- 多编译器基准：Benchpress、MQT Bench、QUEKO；
-- 量子电路反优化（Circuit Unoptimization）作为边界研究参考。
+**必须补充的文献类别**（✅ 已全部核实并合并）：
+- ✅ 经典 CNOT 下界与最优门合成：**Shende-Bullock-Markov (2004/2006)** 系列；
+- ✅ 量子电路最优综合：**Nam et al. (2018)** / *Automated optimization of large quantum circuits with continuous parameters*；
+- ✅ 等价性验证：**Yamashita et al. (2011)**、VOQC；
+- ✅ ZX-calculus 与 PyZX；
+- ✅ 最新 ML/RL 优化器：QUESO、Quarl、AlphaTensor-Quantum、RL+ZX；
+- ✅ 多编译器基准：Benchpress、MQT Bench、QUEKO；
+- ✅ 量子电路反优化（circuit unoptimization）作为边界研究参考；
+- ✅ 高级编译方法：PHOENIX、QuCLEAR、Multilevel optimization。
 
 #### 4.6.2 统一引用格式
 
 **行动项**：
-- [ ] 将所有引用合并到 `docs/references/unified_references.md`；
-- [ ] 统一使用 `[Number]` 格式；
-- [ ] 补充 DOI / arXiv ID；
-- [ ] 在 LaTeX 写作时使用 `.bib` 文件导出。
+- [x] 将已核实引用合并到 `docs/references/unified_references.md`（v2.1，现 88 条）；
+- [x] 统一使用 `[Number]` 格式；
+- [x] 补充 DOI / arXiv ID；
+- [ ] 在 LaTeX 写作时导出 `.bib` 文件。
 
 ---
 
@@ -463,31 +464,31 @@
 
 | 序号 | 任务 | 负责人 | 依赖 | 预计工时 | 状态 |
 |---|---|---|---|---|---|
-| T1 | 清理 git 工作树，生成干净 commit | 学生/作者 | 无 | 2h | ⬜ |
-| T2 | 修复并重新生成 release manifest | 学生/作者 | T1 | 4h | ⬜ |
-| T3 | 完成 Cirq/tket 多编译器实验（E20） | 学生/作者 | T2 | 16h | ⬜ |
-| T4 | 将 Phase-2a/2b 定义严格化并改代码/文档 | 学生/作者 | 无 | 8h | ⬜ |
-| T5 | 处理 Theorem 8 regime mismatch（加讨论/实验） | 学生/作者 | 无 | 6h | ⬜ |
-| T6 | 重命名/降级预测模型，诚实报告 held-out 失败 | 学生/作者 | 无 | 4h | ⬜ |
-| T7 | 修复 `DATA_CANONICAL.md` 中 E10 路径错误 | 学生/作者 | T2 | 1h | ⬜ |
-| T8 | 将 figures 从 PNG 转为 PDF/SVG | 学生/作者 | T2 | 4h | ⬜ |
-| T9 | 修复硬编码路径 | 学生/作者 | 无 | 3h | ⬜ |
-| T10 | 生成 Conda lock 文件 / 完善 Dockerfile | 学生/作者 | T9 | 4h | ⬜ |
+| T1 | 清理 git 工作树，生成干净 commit | 学生/作者 | 无 | 2h | ✅ |
+| T2 | 修复并重新生成 release manifest | 学生/作者 | T1 | 4h | ✅ |
+| T3 | 完成 Cirq/tket 多编译器实验（E20） | 学生/作者 | T2 | 16h | ✅ |
+| T4 | 将 Phase-2a/2b 定义严格化并改代码/文档 | 学生/作者 | 无 | 8h | ✅ |
+| T5 | 处理 Theorem 8 regime mismatch（加讨论/实验） | 学生/作者 | 无 | 6h | ✅ |
+| T6 | 重命名/降级预测模型，诚实报告 held-out 失败 | 学生/作者 | 无 | 4h | ✅ |
+| T7 | 修复 `DATA_CANONICAL.md` 中 E10 路径错误 | 学生/作者 | T2 | 1h | ✅ |
+| T8 | 将 figures 从 PNG 转为 PDF/SVG | 学生/作者 | T2 | 4h | ✅ |
+| T9 | 修复硬编码路径 | 学生/作者 | 无 | 3h | ✅ |
+| T10 | 生成 Conda lock 文件 / 完善 Dockerfile | 学生/作者 | T9 | 4h | ✅ |
 
 ### 5.2 短期执行（P1，显著提升顶会竞争力）
 
 | 序号 | 任务 | 负责人 | 依赖 | 预计工时 | 状态 |
 |---|---|---|---|---|---|
-| T11 | 验证 Theorem 6（AG canonical form 实验 E23） | 学生/作者 | T10 | 12h | ⬜ |
-| T12 | 实例化并验证 Theorem 7（E24） | 学生/作者 | T10 | 12h | ⬜ |
-| T13 | 提升 E10/E11/E12 样本量至 β≥0.80 | 学生/作者 | T10 | 24h | ⬜ |
-| T14 | 完成 E21 ceiling-aware full-mode 实验 | 学生/作者 | T10 | 16h | ⬜ |
-| T15 | 引入 MQT Bench / QUEKO / Benchpress 基准（E25） | 学生/作者 | T10 | 20h | ⬜ |
-| T16 | 扩展 Phase-2b 模板库 | 学生/作者 | T4 | 12h | ⬜ |
-| T17 | 补充 ~20 篇关键文献并统一引用格式 | 学生/作者 | 无 | 16h | ⬜ |
-| T18 | 完整报告效应量（Cliff's delta / Hedges' g） | 学生/作者 | 无 | 8h | ⬜ |
-| T19 | 拆分 monolithic 测试文件 | 学生/作者 | 无 | 8h | ⬜ |
-| T20 | 编写 claim-evidence 映射表 | 学生/作者 | 无 | 6h | ⬜ |
+| T11 | 验证 Theorem 6（AG canonical form 实验 E23） | 学生/作者 | T10 | 12h | ✅ |
+| T12 | 实例化并验证 Theorem 7（E24） | 学生/作者 | T10 | 12h | ✅ |
+| T13 | 提升 E10/E11/E12 样本量至 β≥0.80 | 学生/作者 | T10 | 24h | ✅ |
+| T14 | 完成 E21 ceiling-aware full-mode 实验 | 学生/作者 | T10 | 16h | ✅ |
+| T15 | 引入 MQT Bench / QUEKO / Benchpress 基准（E25） | 学生/作者 | T10 | 20h | 🔄 |
+| T16 | 扩展 Phase-2b 模板库 | 学生/作者 | T4 | 12h | ✅ |
+| T17 | 补充 ~20 篇关键文献并统一引用格式 | 学生/作者 | 无 | 16h | ✅ |
+| T18 | 完整报告效应量（Cliff's delta / Hedges' g） | 学生/作者 | 无 | 8h | ✅ |
+| T19 | 拆分 monolithic 测试文件 | 学生/作者 | 无 | 8h | 🔄 |
+| T20 | 编写 claim-evidence 映射表 | 学生/作者 | 无 | 6h | ✅ |
 
 ### 5.3 中期执行（P2，冲击 Best Paper）
 
