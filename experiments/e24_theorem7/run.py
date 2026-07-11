@@ -37,6 +37,8 @@ def run_e24(n_min: int = 4, n_max: int = 12, step: int = 2, n_trials: int = 5):
         "phase2a_commutation": Phase2aCommutationRewriter(max_iterations=500, window_size=30),
         "phase2b_template": Phase2bTemplateMatcher(max_iterations=100),
     }
+    # Use full pipeline for Phase-2b to enable commutation reordering + template + cleanup
+    FULL_PIPELINE_OPTIMIZERS = {"phase2b_template"}
 
     results = []
     sizes = list(range(n_min, n_max + 1, step))
@@ -50,7 +52,11 @@ def run_e24(n_min: int = 4, n_max: int = 12, step: int = 2, n_trials: int = 5):
                 qc = make_theorem7_hardness_family(n_qubits)
                 for opt_name, optimizer in optimizers.items():
                     target = qc if use_target else None
-                    result = optimizer.optimize(qc, target=target)
+                    # Phase-2b requires full pipeline (reordering + template + cleanup)
+                    if opt_name in FULL_PIPELINE_OPTIMIZERS:
+                        result = optimizer.optimize_full_pipeline(qc, target=target)
+                    else:
+                        result = optimizer.optimize(qc, target=target)
                     results.append({
                         "experiment": 24,
                         "n_qubits": n_qubits,
@@ -77,9 +83,12 @@ def run_e24(n_min: int = 4, n_max: int = 12, step: int = 2, n_trials: int = 5):
     summary_path = output_dir / "e24_theorem7_summary.csv"
     summary.to_csv(summary_path, index=False)
 
-    # Check theoretical lower bound: Gamma >= 1/6 for Phase-2a/2b.
-    phase2 = df[df["optimizer"].isin(["phase2a_commutation", "phase2b_template"])]
-    meets_bound = (phase2.groupby("n_qubits")["reduction"].min() >= 1.0 / 6.0 - 1e-9)
+    # Check theoretical lower bound: Gamma >= 1/6 for Phase-2a only
+    # (Phase-2b may need the full pipeline — check separately)
+    phase2a = df[df["optimizer"] == "phase2a_commutation"]
+    phase2b = df[df["optimizer"] == "phase2b_template"]
+    phase2a_meets_bound = (phase2a.groupby("n_qubits")["reduction"].min() >= 1.0 / 6.0 - 1e-9)
+    phase2b_meets_bound = (phase2b.groupby("n_qubits")["reduction"].min() >= 1.0 / 6.0 - 1e-9)
 
     metadata = {
         "experiment": "E24",
@@ -92,10 +101,11 @@ def run_e24(n_min: int = 4, n_max: int = 12, step: int = 2, n_trials: int = 5):
         "total_rows": len(df),
         "csv_path": str(csv_path.relative_to(PROJECT_ROOT)),
         "summary_path": str(summary_path.relative_to(PROJECT_ROOT)),
-        "mean_phase2a_reduction": float(df[df["optimizer"] == "phase2a_commutation"]["reduction"].mean()),
-        "mean_phase2b_reduction": float(df[df["optimizer"] == "phase2b_template"]["reduction"].mean()),
+        "mean_phase2a_reduction": float(phase2a["reduction"].mean()),
+        "mean_phase2b_reduction": float(phase2b["reduction"].mean()),
         "mean_phase1_reduction": float(df[df["optimizer"] == "phase1_greedy"]["reduction"].mean()),
-        "all_sizes_meet_one_sixth_bound": bool(meets_bound.all()) if not meets_bound.empty else None,
+        "phase2a_all_sizes_meet_one_sixth_bound": bool(phase2a_meets_bound.all()) if not phase2a_meets_bound.empty else None,
+        "phase2b_all_sizes_meet_one_sixth_bound": bool(phase2b_meets_bound.all()) if not phase2b_meets_bound.empty else None,
     }
 
     meta_path = output_dir / "metadata.json"

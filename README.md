@@ -57,7 +57,6 @@ Q-research/
 │
 ├── data/                         # Data (versioned)
 │   ├── v2_fixed/                # Re-run with fixed Greedy v3.0.0 (E1–E5)
-│   ├── v3_extended/             # New experiments (E10)
 │   ├── v4/                      # Real-circuit, compiler-baseline, and ceiling outputs (E11–E13)
 │   ├── v5/                      # Extended benchmark suite (E10 expanded, E14–E18)
 │   └── v6/                      # Preliminary/planned artifacts (E19/E20/E21; not core canonical)
@@ -78,9 +77,9 @@ Q-research/
 │   ├── manuscript/              # Manuscript and appendix (claims, scope, limitations)
 │   ├── supplementary/           # Supplementary materials for manuscript
 │   ├── archive/                 # Historical documentation (audit reports, checklists)
+│   ├── deliverables/             # Phase completion reports (.docx)
 │   ├── data_dictionary.md       # Canonical data dictionary
-│   ├── 07_optimization_plan.md  # Top-conference submission optimization plan
-│   └── 07_optimization_tasks.csv# Executable task list
+│   ├── archive/                 # Historical planning docs, audit reports
 │
 ├── scripts/                      # One-command reproduction scripts
 │   ├── reproduce_all.py         # Full reproduction pipeline
@@ -102,7 +101,7 @@ Q-research/
 |---------|-------------|--------|----------|
 | v1 | Original data (buggy `_are_inverse()`) | ARCHIVED | `archive/old_data/` |
 | v2 | Re-run with fixed Greedy v3.0.0 | **ACTIVE** | `data/v2_fixed/` |
-| v3 | New experiments (E10) | **ACTIVE** | `data/v3_extended/` |
+| v3 | New experiments (E10) — superseded by v5 | **SUPERSEDED** | `data/v5/e10/` (was `data/v3_extended/`) |
 | v4 | Real-circuit, compiler, ceiling (E11–E13) | **ACTIVE** | `data/v4/` |
 | v5 | Extended benchmark suite (E10 expanded, E14–E18) | **ACTIVE** | `data/v5/` |
 
@@ -124,12 +123,18 @@ Q-research/
 | E12 | Compiler Baseline | **COMPLETE** | 568 | v4 | Qiskit transpiler levels 0–3, all distinct |
 | E13 | Structural Ceiling | **COMPLETE** | 56 | v4 | Action-space and local commutation ceiling estimates |
 | E14 | Extended Benchmark | **COMPLETE** | 2,130 | v5 | 15 circuit families, extended metrics |
-| E15 | Compiler Comparison | **COMPLETE** | 994 | v5 | Custom peephole vs Qiskit transpiler (Cirq/t\|ket> pending — see L8) |
+| E15 | Compiler Comparison | **COMPLETE** | 994 | v5 | Custom peephole vs Qiskit transpiler (Cirq/t\|ket> see E20) |
 | E16 | Window Scaling | **COMPLETE** | 696 | v5 | Phase-2 window size saturation curves |
 | E17 | Connectivity | **COMPLETE** | 755 | v5 | Linear/grid/heavy-hex topology constraints |
-| E18 | Clifford+T | **COMPLETE** | 270 | v5 | Fault-tolerant gate-set decomposition |
+| E18 | Clifford+T | **COMPLETE** | 270 | v5 | Fault-tolerant gate-set decomposition (survivorship-biased) |
+| E19 | WCL Listing | **COMPLETE** | 10,000 | v6 | WCL mean reduction 7.83% vs LBL 0% on random circuits |
+| E20 | Multi-Compiler Full | **COMPLETE** | 1,070 | v6 | Qiskit/Cirq/t\|ket> compared on 15 families |
+| E21 | Ceiling-Aware | **COMPLETE** | 1,140 | v6 | 1.6x–228x speedup with identical reduction |
+| E23 | AG Canonical Form | **COMPLETE** | 160 | v7 | Thm 6: Phase-1 reduction = 0% on AG canonical Clifford |
+| E24 | Theorem 7 Hardness | **COMPLETE** | 75 | v7 | Phase-2a reduction = 79.8% (exceeds 1/6 bound) |
+| E25 | Industry Benchmarks | **COMPLETE** | 66 | v6 | Industry proxy circuit benchmarks |
 
-**Total Canonical Optimizer Trials (E1-E18)**: 53,300. Including held-out validation and Qiskit pass-isolation artifacts: 53,525 rows.
+**Total Canonical Optimizer Trials (E1-E18)**: 53,300 rows. **Total (E1-E25)**: 65,811 rows.
 
 ---
 
@@ -154,11 +159,11 @@ The following limitations should be considered when interpreting results:
 |----|-----------|------------|----------|
 | L1 | E10 | N=9 per real-circuit condition (exploratory only) | Medium |
 | L2 | E12 | L1/L2/L3 degeneracy when transpiling without backend coupling map | Low |
-| L3 | E15 | Cirq and t\|ket> not included in E15 data — comparison is custom vs Qiskit only | High |
+| L3 | E15/E20 | Cirq and t\|ket> comparisons completed in E20 (1,070 rows) | Low (resolved) |
 | L5 | E18 | ~60% circuit family decomposition failures to Clifford+T | Medium |
 | L6 | E3/E11/E18 | 83 total rows with failed fidelity calculation (0.17%) excluded from analysis | Low |
 | L7 | All | Random circuits: structural ceiling ~0% (worst-case benchmarks) | Low |
-| L8 | E15 | Multi-compiler comparison currently includes only Qiskit + custom; Cirq and t\|ket> not yet tested | High |
+| L8 | E20 | Multi-compiler comparison completed (Qiskit/Cirq/t\|ket>) — see E20 | Low (resolved) |
 
 **Theoretical corrections (2026-06-11):**
 - Proposition 1 (Phase-1 conflict resolution) was corrected: the problem is polynomial-time solvable via maximum matching, not NP-complete as previously claimed.

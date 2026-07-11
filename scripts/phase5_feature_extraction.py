@@ -66,8 +66,8 @@ FILES = OrderedDict([
         "version": "v2_fixed", "desc": "Landscape"
     }),
     ("E10", {
-        "path": _latest_csv(os.path.join(DATA_ROOT, "v3_extended", "e10"), "e10_phase1_vs_phase2"),
-        "version": "v3_extended", "desc": "Phase1 vs Phase2"
+        "path": _latest_csv(os.path.join(DATA_ROOT, "v5", "e10"), "e10_expanded_phase1_vs_phase2"),
+        "version": "v5 (supersedes v3_extended)", "desc": "Phase1 vs Phase2 (expanded)"
     }),
     ("E11", {
         "path": _latest_csv(os.path.join(DATA_ROOT, "v4", "e11"), "e11_real_circuit_benchmark_e11_full"),

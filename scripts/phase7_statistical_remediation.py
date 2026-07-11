@@ -658,7 +658,7 @@ def task_c4_power_analysis():
 
     # Helper: load E11 and E10 data
     e11_csv = find_latest_csv("v4/e11")
-    e10_csv = find_latest_csv("v3_extended/e10")
+    e10_csv = find_latest_csv("v5/e10")
     e14_csv = find_latest_csv("v5/e14")
 
     df_e11 = pd.read_csv(e11_csv) if e11_csv else None

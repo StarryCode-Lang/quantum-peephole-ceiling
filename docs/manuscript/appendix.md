@@ -38,7 +38,7 @@
 | E03 | Scaling study | data/v2_fixed/e03/ |
 | E04 | Algorithm comparison | data/v2_fixed/e04/ |
 | E05 | Landscape study | data/v2_fixed/e05/ |
-| E10 | Phase 1 vs Phase 2a | data/v3_extended/e10/ and data/v5/e10/ |
+| E10 | Phase 1 vs Phase 2a | data/v5/e10/ |
 | E11 | Real-circuit benchmark (v4) | data/v4/e11/ |
 | E12 | Compiler baseline (v4) | data/v4/e12/ |
 | E13 | Structural ceiling proxy | data/v4/e13/ |
@@ -58,8 +58,11 @@
 | experiment_id | description | data dir | key claim | status |
 |---|---|---|---|---|
 | WCL-E19 | Listing-model dependency test (WCL vs. LBL) | data/v6/e19/ | C9 confirmed | Completed (full canonical run, 10,000 rows) |
-| MC-E20 | Cirq and t\|ket> full multi-compiler extension | data/v6/e20/ | C11 planned | Metadata-only |
-| E21 | Ceiling-aware optimizer evaluation | data/v6/e21/ | C10 smoke-only | Smoke-only |
+| MC-E20 | Cirq and t\|ket> full multi-compiler extension | data/v6/e20/ | C11 | Completed (full, 1,070 rows) |
+| E21 | Ceiling-aware optimizer evaluation | data/v6/e21/ | C10 | Completed (full, 1,140 rows) |
+| E23 | AG canonical form validation (Thm 6) | data/v7/e23/ | Thm 6 | Completed (160 circuits, matching rate = 1.0) |
+| E24 | Theorem 7 hardness family instantiation | data/v7/e24/ | Thm 7 | Completed (75 circuits, Phase-2a mean = 79.8%) |
+| E25 | Industry benchmarks | data/v6/e25/ | C3 | Completed (66 circuits) |
 | Phase-2b unit tests | Template-assisted matcher sanity tests | tests/test_phase2b_template_matcher.py | C12 | Unit-tested, no full canonical CSV |
 
 ---
@@ -70,7 +73,7 @@
 C1 (Phase-1 listing/window/model-conditional ceiling)
  ├── C2 (Phase-2a commutation advantage)
  ├── C9 (Listing-model dependency; planned E19 modifies C1 scope)
- └── C10 (Ceiling-aware optimizer smoke study; depends on C1/C2 training-family prescriptions)
+ └── C10 (Ceiling-aware optimizer; depends on C1/C2 training-family prescriptions)
 
 C3 (Qiskit confirmed compiler gap)
  └── C11 (Cirq/t|ket> metadata-only planned extension)
@@ -96,6 +99,19 @@ C7 (Fidelity for retained verified rows) ← retained verified datasets only
 | C9 | Listing dependency hypothesis (E19 planned/not run) | Confirmed canonical result | E19 full run completed: 10,000 rows, WCL 7.83% vs LBL 0.0000% |
 | C1 | Listing/window/model-conditional ceiling | Updated with E19 evidence | WCL validation confirmed for random Universal family |
 | C7 | E19 has no data | E19 confirmed with fidelity=1.0 | All 10,000 E19 rows verified |
+
+## Changes from v6.2 to v6.3
+
+| Claim | Prior Status | v6.3 Status | Change Description |
+|-------|--------------|-------------|-------------------|
+| Thm 6 | Untested | Confirmed experimentally | E23 completed: 160 AG canonical circuits, matching rate = 1.0 |
+| Thm 7 | Theoretical only | Confirmed experimentally | E24 completed: 75 circuits, Phase-2a mean = 79.8% (exceeds 1/6 bound) |
+| C10 | Smoke-only (E21) | Full-mode validated | E21 full mode: 1,140 rows, 1.6x–228x speedup |
+| C11 | Metadata-only (E20) | Full-mode completed | E20 full mode: 1,070 rows across 3 compilers |
+| C3 | Qiskit only confirmed | Updated with E20 data | E20 provides Cirq/t\|ket> comparison data |
+| L3/L8 | Cirq/t\|ket> pending | Resolved | E20 completed, limitations downgraded |
+
+---
 
 ## Changes from v5 to v6.2
 

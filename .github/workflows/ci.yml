@@ -63,14 +63,19 @@ jobs:
           flake8 src/ --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 src/ --count --exit-zero --max-complexity=15 --max-line-length=120 --statistics
 
-  docker-build:
+  verify-data-integrity:
     runs-on: ubuntu-latest
     needs: test
-    timeout-minutes: 20
+    timeout-minutes: 10
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
-      - name: Build Docker image
-        run: docker build -t q-research:ci .
-      - name: Run tests in Docker
-        run: docker run --rm q-research:ci python -m pytest tests/ -q --timeout=600
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          python-version: "3.12"
+          environment-file: environment.yml
+          activate-environment: q-research
+          auto-activate-base: false
+      - name: Verify data integrity
+        shell: bash -l {0}
+        run: python scripts/reproduce_all.py --verify

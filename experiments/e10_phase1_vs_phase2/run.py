@@ -16,7 +16,10 @@ Optimizers:
 2. CommutationRewriter (Phase 2 only)
 3. HybridCommuteRewrite (Phase 1 + Phase 2)
 
-Output: data/v3_extended/e10/
+NOTE: This original E10 experiment is superseded by the expanded run in
+data/v5/e10/ (1905 canonical rows). Kept for reproducibility of the
+original 627-row dataset.
+Output: data/v5/e10_original/
 """
 
 from __future__ import annotations
@@ -78,7 +81,7 @@ def generate_real_circuits():
 def run_e10():
     """Run E10: Phase 1 vs Phase 2 comparison."""
     
-    output_dir = PROJECT_ROOT / "data/v3_extended/e10"
+    output_dir = PROJECT_ROOT / "data/v5/e10_original"
     output_dir.mkdir(parents=True, exist_ok=True)
     
     optimizers = {

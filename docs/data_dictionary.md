@@ -38,7 +38,7 @@
 
 ## Schema Families
 
-The release uses three schema families. The `schema_version` column on each
+The release uses five schema families. The `schema_version` column on each
 row identifies which family it belongs to.
 
 | Schema family | Experiments | Notes |
@@ -46,6 +46,8 @@ row identifies which family it belongs to.
 | `legacy_v2_v3` | E1–E5, E10 | Greedy-bug-fixed + extended. Uses the legacy column names (`original_size`, `optimized_size`). |
 | `results_v1` | E11–E13 | Real circuits, compiler baselines, structural ceilings. Introduces `circuit_id`, `circuit_type`, `*_sha256`, and `*_gate_count` aliases. |
 | `results_v2` | E14–E18 | Extended suites, multi-compiler, window scaling, connectivity/topology, Clifford+T. Adds extended metrics and per-gate-class reduction columns. |
+| `results_v6` | E19–E22, E25 | WCL listing, multi-compiler full, ceiling-aware, industry benchmarks. |
+| `results_v7` | E23–E24 | Theory-validation experiments (AG canonical form, Theorem 7 hardness family). Minimal schema with core columns. |
 
 > **Column-name aliasing**: `results_v1`/`results_v2` rows use
 > `gate_count_total` / `baseline_gate_count` / `optimized_gate_count` for
@@ -319,9 +321,9 @@ All data files include provenance columns (appended by `src/provenance.py`):
 
 Data versions:
 - **v2_fixed**: E1–E5 (Greedy bug fixed)
-- **v3_extended**: E10
+- **v3_extended** (superseded → v5): E10
 - **v4**: E11–E13 (real circuits, compiler baselines, structural ceilings)
-- **v5**: E14–E18 (extended suites, multi-compiler, window scaling, connectivity, Clifford+T)
+- **v5**: E10 (expanded), E14–E18 (extended suites, multi-compiler, window scaling, connectivity, Clifford+T)
 
 ---
 

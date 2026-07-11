@@ -31,11 +31,11 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 
 def load_all_experiments():
-    """Load all available experiment data (v2_fixed and v3_extended)."""
+    """Load all available experiment data (v2_fixed and v5/e10)."""
     project_root = Path(__file__).resolve().parent.parent.parent
     data_dirs = [
         str(project_root / "data/v2_fixed"),
-        str(project_root / "data/v3_extended"),
+        str(project_root / "data/v5/e10"),
     ]
     
     experiments = {}

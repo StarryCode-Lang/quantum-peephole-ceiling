@@ -39,7 +39,7 @@ def _latest_csv(directory: str, prefix: str) -> str:
 
 
 DATA_FILES = {
-    "e10": _latest_csv(os.path.join(BASE, "data", "v3_extended", "e10"), "e10_phase1_vs_phase2"),
+    "e10": _latest_csv(os.path.join(BASE, "data", "v5", "e10"), "e10_expanded_phase1_vs_phase2"),
     "e11": _latest_csv(os.path.join(BASE, "data", "v4", "e11"), "e11_real_circuit_benchmark_e11_full"),
     "e13": _latest_csv(os.path.join(BASE, "data", "v4", "e13"), "e13_structural_ceiling_e13_full"),
     "e14": _latest_csv(os.path.join(BASE, "data", "v5", "e14"), "e14_extended_benchmark_e14_full"),

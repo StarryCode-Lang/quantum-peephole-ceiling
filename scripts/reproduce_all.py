@@ -124,11 +124,35 @@ EXPERIMENTS = {
         "estimated_time": "~5 minutes",
         "output": "data/v6/e19/"
     },
+    "E20": {
+        "script": "experiments/e20_multi_compiler_full/run.py",
+        "description": "Multi-compiler full comparison (Qiskit/Cirq/t|ket>)",
+        "estimated_time": "~5 minutes",
+        "output": "data/v6/e20/"
+    },
     "E21": {
         "script": "experiments/e21_ceiling_aware/run.py",
         "description": "Ceiling-aware optimizer (smoke default, review fix M10)",
         "estimated_time": "~1 minute smoke / ~10 minutes full",
         "output": "data/v6/e21/"
+    },
+    "E23": {
+        "script": "experiments/e23_ag_canonical/run.py",
+        "description": "AG canonical form validation (Thm 6)",
+        "estimated_time": "~1 minute",
+        "output": "data/v7/e23/"
+    },
+    "E24": {
+        "script": "experiments/e24_theorem7/run.py",
+        "description": "Theorem 7 hardness family validation",
+        "estimated_time": "~1 minute",
+        "output": "data/v7/e24/"
+    },
+    "E25": {
+        "script": "experiments/e25_industry_benchmarks/run.py",
+        "description": "Industry benchmark proxy circuits",
+        "estimated_time": "~1 minute",
+        "output": "data/v6/e25/"
     },
 }
 
@@ -254,6 +278,13 @@ def verify_data():
                 elif exp_id == "E21":
                     # Ceiling-aware optimizer summary — may have different schema
                     required_cols = []  # accept any columns
+                elif exp_id == "E23":
+                    required_cols = ['n_qubits', 'reduction', 'fidelity']
+                elif exp_id == "E24":
+                    if 'summary' in csv_file.name.lower():
+                        required_cols = ['n_qubits', 'optimizer', 'mean_reduction']
+                    else:
+                        required_cols = ['n_qubits', 'reduction', 'fidelity']
                 elif exp_id == "E10p2b":
                     # Phase-2b validation — has optimizer + reduction columns
                     required_cols = ['optimizer', 'reduction']
@@ -270,8 +301,10 @@ def verify_data():
                     row_id_note = f" | Row id: {row_id_col}" if row_id_col else ""
                     if 'fidelity' in df.columns:
                         quality_note = f" | Mean fidelity: {df['fidelity'].dropna().mean():.6f}"
-                    else:
+                    elif 'structural_upper_bound_reduction' in df.columns:
                         quality_note = f" | Mean ceiling: {df['structural_upper_bound_reduction'].mean():.6f}"
+                    else:
+                        quality_note = ""
                     print(f"✅ {exp_id}: {csv_file.name} | Records: {len(df)}{quality_note}{row_id_note}")
             
             # SHA256 source hash verification

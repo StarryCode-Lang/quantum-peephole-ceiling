@@ -313,7 +313,7 @@ $$
 
 For Haar-random $U$ with $nd = \text{poly}(n)$, the second term dominates and gives $R_A(C) \to 0$ regardless of $k, w$. $\blacksquare$
 
-**Corollary 8.1.** For Haar-random circuits of depth $d = \text{poly}(n)$, the maximum achievable gate-count reduction by *any* algorithm -- bounded or unbounded window, any search strategy (greedy, stochastic, learning-based, or exhaustive) -- approaches zero doubly-exponentially fast in $n$. This formalizes the "optimization desert" observed empirically in E1--E5 and provides a theoretical explanation for the Phase-1 structural ceiling (Conjecture C1).
+**Corollary 8.1.** For Haar-random circuits of depth $d = \text{poly}(n)$, the maximum achievable gate-count reduction by *any* algorithm -- bounded or unbounded window, any search strategy (greedy, stochastic, learning-based, or exhaustive) -- approaches zero doubly-exponentially fast in $n$. This provides an asymptotic information-theoretic bound for the Haar-random regime, complementary to the combinatorial explanation of the E1--E5 observations via Theorem 1(b).
 
 **Corollary 8.2.** For circuits of depth $d = \Theta(4^n / n^2)$ (near the complexity threshold), bounded-window optimizers with fixed $k, w$ achieve $R(C) \le kw / nd \to 0$, while unbounded optimizers may achieve $\Omega(1)$ reduction as the circuit approaches the complexity boundary. The transition at $d \sim 4^n / n^2$ separates an incompressible regime from a potentially compressible one.
 
@@ -1151,11 +1151,15 @@ R_{\text{ideal}}(BV_n) = \frac{3n - (n+2)}{3n} = \frac{2n-2}{3n},
 $$
 which tends to $2/3$ as $n \to \infty$. **This idealized expression is not the theorem's claimed bound.** It ignores the template-application overhead, which we account for next.
 
-**Overhead accounting.** Each application of the $H$-CNOT-$H$ template (Phase B-2) is itself a non-trivial rewrite: it requires matching a 3-gate pattern, validating direction reversal, and re-emitting the reversed CNOT plus two ancilla $H$ gates. In a realistic peephole rewriter this transformation carries a per-application cost that does not vanish. We model this overhead as follows:
+**Overhead accounting.** Each application of the $H$-CNOT-$H$ template (Phase B-2) is itself a non-trivial rewrite: it requires matching a 3-gate pattern, validating direction reversal, and re-emitting the reversed CNOT plus two ancilla $H$ gates. In a realistic peephole rewriter this transformation carries a per-application cost that does not vanish. We model this overhead by decomposing the template-application cost into concrete operations:
 
-- Each of the $n$ template applications introduces an amortized overhead of $4.5$ equivalent gate-slots (covering pattern matching, direction reversal bookkeeping, and ancilla $H$ management). The constant $4.5$ is derived from the worst-case matching cost across the $n$ wires plus the residual unpaired ancilla $H$ gates.
-- Total overhead: $4.5n$.
-- An additional constant overhead of $4$ gate-slots accounts for boundary effects at the two ends of the CNOT chain.
+- Pattern matching cost: 3 gate slots (the pattern length).
+- Direction reversal bookkeeping: 1 gate slot (qubit index swap metadata).
+- Residual ancilla $H$ management: 0.5 gate slot amortized (each template application produces 2 ancilla $H$ gates, which participate in $n-1$ pairwise cancellations across $n$ templates, leaving 2 unpaired $H$ gates total — amortized $2/n \to 0$ as $n \to \infty$, bounded by 0.5 for the worst case $n=2$).
+
+Total per-application overhead: $3 + 1 + 0.5 = 4.5$ equivalent gate-slots. This is a conservative estimate: it assumes no optimization of the pattern-matching step across adjacent wires. The constant $4.5$ is an upper bound on the per-template overhead, derived from the worst-case matching cost plus residual ancilla $H$ gates; a tighter analysis would reduce this constant and improve the bound.
+
+Total overhead: $4.5n$ across $n$ qubits. An additional constant overhead of $4$ gate-slots accounts for boundary effects at the two ends of the CNOT chain.
 
 The **rigorous** lower bound on the achievable reduction is therefore
 $$

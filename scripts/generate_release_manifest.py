@@ -44,7 +44,7 @@ KNOWN_DUPLICATES = {
 # Legacy datasets superseded by a newer version in a later data directory.
 # These are still listed in the manifest for provenance but marked as superseded.
 SUPERSEDED_DIRS = {
-    ("v3_extended", "e10"),  # v3 e10 (627 rows) → superseded by v5 e10 (1905 rows)
+    # v3 e10 (627 rows) → superseded by v5 e10 (1905 rows)
 }
 
 STANDALONE_IDS = {
@@ -54,9 +54,9 @@ STANDALONE_IDS = {
 
 
 def dataset_entries(data_root: Path) -> List[Dict[str, object]]:
-    """Collect canonical active CSV datasets under data/v2_fixed, data/v3_extended, data/v4, data/v5, and data/v6."""
+    """Collect canonical active CSV datasets under data/v2_fixed, data/v4, data/v5, data/v6, and data/v7."""
     entries: List[Dict[str, object]] = []
-    for root_name in ["v2_fixed", "v3_extended", "v4", "v5", "v6"]:
+    for root_name in ["v2_fixed", "v4", "v5", "v6", "v7"]:
         root = data_root / root_name
         if not root.exists():
             continue

@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-07-11T04:30:58.579373+00:00",
+  "created_utc": "2026-07-11T06:53:12.379061+00:00",
   "datasets": [
     {
       "experiment_id": "E01",
@@ -168,10 +168,24 @@
       "rows": 66,
       "schema": "results_v6",
       "sha256": "5545e6a199e5e3da45d89491c03f33d0861e12ccc96052779ce50a6b8bcf16dd"
+    },
+    {
+      "experiment_id": "E23",
+      "file": "data/v7/e23/e23_ag_canonical_results.csv",
+      "rows": 160,
+      "schema": "results_v7",
+      "sha256": "eecf3c52f30b2d19124846abbc69a6ec88dc6cdbd21287410736216f00b85e4d"
+    },
+    {
+      "experiment_id": "E24",
+      "file": "data/v7/e24/e24_theorem7_results.csv",
+      "rows": 75,
+      "schema": "results_v7",
+      "sha256": "fb6d60285384d82f9604469d3bff13846f816cc5a2fe4f207002a97c87fef961"
     }
   ],
   "environment": {
-    "env_id": "q-research-20260711_043058",
+    "env_id": "q-research-20260711_065312",
     "packages": {
       "matplotlib": "3.9.0",
       "numpy": "1.26.4",
@@ -185,10 +199,10 @@
   },
   "git": {
     "branch": "master",
-    "commit": "511809e4a9f9cd9d9c2b0c1580c79ba190cce1d3",
-    "dirty": false
+    "commit": "6d60f8d7e230b8d934a4dffb7dbeea35ca3f521f",
+    "dirty": true
   },
-  "release_id": "q-research-20260711_043058",
+  "release_id": "q-research-20260711_065312",
   "reproduction": {
     "conda_env": "q-research",
     "entrypoints": [
