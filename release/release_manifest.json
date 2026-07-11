@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-07-11T04:27:32.731042+00:00",
+  "created_utc": "2026-07-11T04:30:58.579373+00:00",
   "datasets": [
     {
       "experiment_id": "E01",
@@ -38,10 +38,10 @@
     },
     {
       "experiment_id": "E11",
-      "file": "data/v4/e11/e11_real_circuit_benchmark_e11_smoke_r2_20260711_002756.csv",
-      "rows": 237,
+      "file": "data/v4/e11/e11_merged_powered.csv",
+      "rows": 519,
       "schema": "results_v1",
-      "sha256": "03b0be986b57c28df7a266db5d4585d1d743e857fb5201b294a2c8166c6b70f6"
+      "sha256": "3fe9f79934a1ed5e4c4da7935e97b55377e5f6094bc7a6cb557da1dc0fd72f1d"
     },
     {
       "experiment_id": "E12",
@@ -171,7 +171,7 @@
     }
   ],
   "environment": {
-    "env_id": "q-research-20260711_042732",
+    "env_id": "q-research-20260711_043058",
     "packages": {
       "matplotlib": "3.9.0",
       "numpy": "1.26.4",
@@ -185,10 +185,10 @@
   },
   "git": {
     "branch": "master",
-    "commit": "91c489f5ddce9ab1c0525aec641eb25a635b1d90",
-    "dirty": true
+    "commit": "511809e4a9f9cd9d9c2b0c1580c79ba190cce1d3",
+    "dirty": false
   },
-  "release_id": "q-research-20260711_042732",
+  "release_id": "q-research-20260711_043058",
   "reproduction": {
     "conda_env": "q-research",
     "entrypoints": [
