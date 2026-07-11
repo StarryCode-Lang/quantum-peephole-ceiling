@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-07-11T06:53:12.379061+00:00",
+  "created_utc": "2026-07-11T11:02:51.507610+00:00",
   "datasets": [
     {
       "experiment_id": "E01",
@@ -173,19 +173,26 @@
       "experiment_id": "E23",
       "file": "data/v7/e23/e23_ag_canonical_results.csv",
       "rows": 160,
-      "schema": "results_v7",
+      "schema": "legacy_v2_v3",
       "sha256": "eecf3c52f30b2d19124846abbc69a6ec88dc6cdbd21287410736216f00b85e4d"
     },
     {
       "experiment_id": "E24",
       "file": "data/v7/e24/e24_theorem7_results.csv",
       "rows": 75,
-      "schema": "results_v7",
-      "sha256": "fb6d60285384d82f9604469d3bff13846f816cc5a2fe4f207002a97c87fef961"
+      "schema": "legacy_v2_v3",
+      "sha256": "cdeb08e6a326d8b0edfcd7a633b0ee80f34facfed2ad8b5016fdb1bf028d8033"
+    },
+    {
+      "experiment_id": "E24",
+      "file": "data/v7/e24/e24_theorem7_summary.csv",
+      "rows": 15,
+      "schema": "legacy_v2_v3",
+      "sha256": "8cb9444f0c76c583294a348a3e20c86c82bcb47c994521ead7e03b2ef1c715ec"
     }
   ],
   "environment": {
-    "env_id": "q-research-20260711_065312",
+    "env_id": "q-research-20260711_110251",
     "packages": {
       "matplotlib": "3.9.0",
       "numpy": "1.26.4",
@@ -199,10 +206,10 @@
   },
   "git": {
     "branch": "master",
-    "commit": "6d60f8d7e230b8d934a4dffb7dbeea35ca3f521f",
-    "dirty": true
+    "commit": "eee5d94662fc20f6e8acd1eff90f7f5034a21ede",
+    "dirty": false
   },
-  "release_id": "q-research-20260711_065312",
+  "release_id": "q-research-20260711_110251",
   "reproduction": {
     "conda_env": "q-research",
     "entrypoints": [
@@ -235,7 +242,7 @@
     "experiments/e12_compiler_baseline/run.py": "10f7595c9adbe703d05441e503aea4ad795eaacfc60f43ce1fc71f9253dfbf1e",
     "experiments/e13_structural_ceiling/run.py": "97948883da9a12095d926ac796187d617a7329e2b6c007cb270aa9d203961141",
     "experiments/e19_wcl_listing/run.py": "32f8a9a46eda191a90dd0e49470db5281d475a314419fb9ad08a671285928bf4",
-    "scripts/generate_release_manifest.py": "7524649c672bfea0895c353ab897c16b2b1549e3e59e1f1ebfb493513a2f1ba7",
+    "scripts/generate_release_manifest.py": "3db2386dc5024be8efe5d0c4459e9fcff9aa51bb574c385ce344c7d69760ff8d",
     "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
     "src/circuits/real_benchmarks.py": "5f137e8efaf872cc2205f2e2cac5e4420c014d7fa3ac0cf440e04dad7e4dd82a",
     "src/optimisation/_gate_predicates.py": "259956ddbf8e73bcfee790c6265035b2ede720e366932ed7d3cbe92a2f52dc83",

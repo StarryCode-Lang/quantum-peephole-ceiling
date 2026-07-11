@@ -275,6 +275,9 @@ def verify_data():
                 elif exp_id == "E19":
                     # WCL vs LBL listing model — schema v2 with listing_model column
                     required_cols = ['n_qubits', 'reduction']
+                elif exp_id == "E20":
+                    # Multi-compiler comparison — uses gate_reduction not reduction
+                    required_cols = ['n_qubits', 'gate_reduction', 'fidelity']
                 elif exp_id == "E21":
                     # Ceiling-aware optimizer summary — may have different schema
                     required_cols = []  # accept any columns
