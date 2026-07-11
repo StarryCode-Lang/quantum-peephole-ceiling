@@ -44,7 +44,7 @@ EXPERIMENTS = {
         "script": "experiments/e03_scaling/run.py",
         "description": "Scaling analysis (n=3-10, 12,000 trials)",
         "estimated_time": "~15 minutes",
-        "output": "data/v5/e03/"
+        "output": "data/v2_fixed/e03/"
     },
     "E4": {
         "script": "experiments/e04_algorithm_comparison/run.py",
