@@ -293,7 +293,7 @@ Output: OptimizationResult (C', reduction, fidelity)
 
 ### S4.2 Figure S2: Fidelity Distribution (All Experiments)
 
-*Description*: Histogram of fidelity values across all 45,527 trials. All values are exactly 1.000000 (bin width 10^{-6}).
+*Description*: Histogram of fidelity values across all 53,300 canonical trials (E1–E18). All values are exactly 1.000000 (bin width 10^{-6}).
 
 *Key insight*: Fidelity checks confirm unitary preservation where exact/scalable verification is available; documented failure rows (notably E18 decomposition/fidelity failures) are treated explicitly and filtered from analyses that require valid fidelity. No approximation is introduced.
 
@@ -325,7 +325,7 @@ Output: OptimizationResult (C', reduction, fidelity)
 |------------|------|---------|-----------|-------------------|
 | E1 | e01_phase_transition_v2_20260611_195450.csv | 25,000 | 1,247 | — |
 | E2 | e02_entanglement_density_v2_20260611_191816.csv | 2,100 | 105 | — |
-| E3 | e03_scaling_v2_20260611_224540.csv | 11,962* | 598 | — |
+| E3 | e03_scaling_v2_20260611_224540.csv | 12,000* | 598 | — |
 | E4 | e04_algorithm_comparison_v2_20260611_194858.csv | 400 | 46 | — |
 | E5 | e05_landscape_v2_20260611_191723.csv | 6,000 | 299 | — |
 | E10 | e10_expanded_phase1_vs_phase2_20260613_131601.csv | 1,905 | 95 | — |
@@ -337,10 +337,18 @@ Output: OptimizationResult (C', reduction, fidelity)
 | E16 | e16_window_scaling_e16_full_20260610_142547.csv | 696 | 100 | — |
 | E17 | e17_connectivity_e17_full_20260610_150935.csv | 755 | 108 | — |
 | E18 | e18_clifford_t_e18_full_20260610_052140.csv | 270** | 33 | — |
+| E19 | e19_listing_model_wcl_vs_lbl_full.csv | 10,000 | — | — |
+| E20 | e20_multi_compiler_full.csv | 1,070 | — | — |
+| E21 | e21_ceiling_aware_full.csv | 1,140 | — | — |
+| E23 | e23_ag_canonical_form.csv | 160 | — | — |
+| E24 | e24_theorem7_hardness_family.csv | 75 | — | — |
+| E25 | e25_industry_benchmarks.csv | 66 | — | — |
+| **Total (E1–E18, canonical)** | | **53,300** | | |
+| **Total (E1–E25, all experiments)** | | **65,811** | | |
 
 *Note: Verified SHA-256 checksums are stored in `release/release_manifest.json` and per-experiment `metadata.json` files.*
 
-\* E3: 38 rows with failed fidelity calculation (fidelity = 0.0) excluded from analysis.
+\* E3: 38 rows with failed fidelity calculation (fidelity = 0.0) excluded from analysis; 12,000 total records before fidelity filter (11,962 after).
 \*\* E18: 42 rows with failed fidelity excluded; ~60% of circuit families fail Clifford+T decomposition.
 
 ### S5.2 Data Format Specification
@@ -437,7 +445,7 @@ python scripts/reproduce_all.py --verify
 | E3 | 12,000 records, mean fidelity = 1.000000 | ±0.000001 |
 | E4 | 400 records, mean fidelity = 1.000000 | ±0.000001 |
 | E5 | 6,000 records, mean fidelity = 1.000000 | ±0.000001 |
-| E10 | 627 records, mean fidelity = 1.000000 | ±0.000001 |
+| E10 | 1,905 records, mean fidelity = 1.000000 | ±0.000001 |
 | Figures | 7 PNG files @ 300 DPI | Exact count |
 
 ---

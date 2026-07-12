@@ -10,7 +10,7 @@
 
 | Check | Status | Detail |
 |-------|--------|--------|
-| All unit tests pass | ✅ | 149 tests, all passing |
+| All unit tests pass | ✅ | 239 tests, all passing |
 | All figures regenerated | ✅ | 17 generated PDF figures from canonical data |
 | Release manifest updated | ⚠️ | SHA256 computed, but manifest remains dirty until commit/regeneration and includes legacy entries |
 | Data canonical file aligned | ⚠️ | DATA_CANONICAL.md is authoritative; release manifest includes canonical plus legacy/provenance entries |

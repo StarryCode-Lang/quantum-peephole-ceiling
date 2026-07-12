@@ -136,8 +136,8 @@ How does the Phase 1 structural ceiling scale with the number of qubits?
 | Independent variable | n (qubits) | 8 levels: 3–10 |
 | Dependent variable | reduction (%) | Continuous |
 | Fixed variables | depths=1–30 sweep, ρ=0.3, family=Universal | Isolates scaling effect |
-| Trials per level | 50 × 15 (3 optimizers × 5 families) | 1,500 per qubit count |
-| Total trials | 12,000 | 8 qubit levels × 1,500 trials; 11,962 after fidelity filter. **Note**: Earlier design documents listed only 400 trials (8 levels × 50 trials, Greedy only); the full experiment expanded to include 3 optimizers × 5 families per qubit count. |
+| Trials per level | 50 per (n, d) cell | 30 depths × 50 trials = 1,500 per qubit count |
+| Total trials | 12,000 | 8 qubit levels × 30 depth levels × 50 trials; 11,962 after fidelity filter. **Note**: Earlier design documents listed only 400 trials (8 qubit levels × 50 trials, single depth, Greedy only); the full v5 experiment expanded to sweep 30 depth levels per qubit count. |
 
 ### 4.4 Analysis Plan
 
@@ -211,6 +211,8 @@ What is the topology of the peephole optimization landscape? Is it flat, rugged,
 ---
 
 ## 7. Experiment E10: Phase 1 vs Phase 2
+
+> **[EXPLORATORY — requires confirmatory replication]** Per-family analysis has N=9 per condition, well below the pre-registered power target (beta >= 0.80). See Section 12.8.2 for details.
 
 ### 7.1 Research Question
 Does Phase 2 (commutation) provide significant additional reduction over Phase 1, and is this advantage circuit-family dependent?
@@ -418,11 +420,15 @@ All optimizations are verified for **exact unitary equivalence**:
 
 ### 12.1 E10: Small Sample Size for Real-Circuit Conditions
 
+> **[EXPLORATORY — requires confirmatory replication]** E10 per-family analysis has N=9 per condition. See Section 12.8.2 for full power analysis.
+
 **Limitation.** Experiment E10 (Phase 1 vs Phase 2, 627 trials) has approximately N=9 trials per real-circuit condition when the 627 trials are distributed across 5 circuit families x 3 optimizers x multiple circuit instances. This sample size is **exploratory only** and does not meet the pre-registered power target of beta >= 0.80 for detecting small effect sizes (Cohen's d < 0.5).
 
 **Impact.** Effect size estimates from E10 (e.g., Cohen's d = 1.32 for Universal circuits) should be interpreted as preliminary. The large effect sizes observed may partially reflect small-sample variance. Full-power replication with N >= 64 per condition is needed for confirmatory analysis.
 
 ### 12.2 E12: L1/L2/L3 Degeneracy Without Backend Coupling Map
+
+> **[EXPLORATORY — requires confirmatory replication]** E12 has N=8 per level (achieved power = 0.154). See Section 12.8.2 for full power analysis.
 
 **Limitation.** In Experiment E12 (Compiler Baseline), Qiskit transpiler optimization levels L1, L2, and L3 may produce **identical or near-identical output** when no backend coupling map is specified. Without a coupling map constraint, the transpiler's routing pass is bypassed, and the optimization levels differ primarily in their routing aggressiveness — which is irrelevant for topology-free circuits.
 

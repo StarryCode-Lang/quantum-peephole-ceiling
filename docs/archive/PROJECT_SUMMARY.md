@@ -136,7 +136,7 @@ conda run -n q-research python scripts/generate_release_manifest.py
 
 ## Quality Checklist
 
-- [x] All 149 unit tests pass
+- [x] All 239 unit tests pass
 - [x] All canonical datasets verify successfully (E1-E18)
 - [x] Release manifest generated with SHA256 checksums
 - [x] Environment versions pinned (requirements.txt, environment.yml)

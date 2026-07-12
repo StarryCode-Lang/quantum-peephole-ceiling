@@ -10,6 +10,8 @@
 
 For base notation ($n$, $d$, $\mathcal{G}$, $C(n,d,\rho)$, $|C|$, $F_{\text{avg}}$, etc.) and all formal definitions D1--D10 (quantum circuit, unitary equivalence, peephole optimization, Phase 1/2, ceilings, action spaces), see `framework.md`.
 
+> **Notation**: Phase-2a refers to commutation-based rewriting (implemented in `commutation_rewriter.py`). Phase-2b refers to template-assisted rewriting (limited implementation in `template_matcher.py`, not part of canonical experiments). When we write "Phase-2" without a suffix, we refer to Phase-2a, which is the canonical implementation.
+
 Notation specific to this document:
 
 - $L(C)$: line graph of circuit $C$ (vertices = gates, edges = adjacency in the circuit list)
@@ -80,7 +82,7 @@ Consequently, $R_1(C) = 0$ for every Phase-1 optimizer, regardless of the circui
 
 **Step 4: Conclusion.** By Theorem 2(a), if $\mathcal{S}_1(C) = \emptyset$ and no consecutive rotation gates on the same qubit admit merging, then the Greedy optimizer achieves zero reduction. Under LBL, consecutive gates on the same qubit are separated by $n-1 \ge 1$ intervening gates, so no consecutive rotation pairs exist on the same qubit either. Therefore $R_1(C) = 0$ for all Phase-1 optimizers. $\blacksquare$
 
-**Remark.** Theorem 1(b) explains the empirically observed zero standard deviation in E1 (25,000 trials): the generator uses LBL, so $\mathcal{S}_1(C)$ is structurally empty for every generated circuit. This is not a bug but a property of the listing model. To test Phase-1 cancellation empirically under conditions where Theorem 1(a) applies, circuits must use WCL or the optimizer must include a wire-traversal pre-processing step that identifies wire-consecutive (not listing-adjacent) inverse pairs. Our Phase-2 commutation rewriter (which operates on the circuit graph rather than the listing) is not affected by this listing-model dependency.
+**Remark.** Theorem 1(b) explains the empirically observed zero standard deviation in E1 (25,000 trials): the generator uses LBL, so $\mathcal{S}_1(C)$ is structurally empty for every generated circuit. This is not a bug but a property of the listing model. To test Phase-1 cancellation empirically under conditions where Theorem 1(a) applies, circuits must use WCL or the optimizer must include a wire-traversal pre-processing step that identifies wire-consecutive (not listing-adjacent) inverse pairs. Our Phase-2a commutation rewriter (which operates on the circuit graph rather than the listing) is not affected by this listing-model dependency.
 
 ---
 
@@ -116,9 +118,9 @@ Local COMMUTATION replaces $(g_i, g_{i+1})$ with an equivalent pair $(g_i', g_{i
 
 - **Theorem 2c (Bounded INSERTION Cascade Lemma):** For any circuit $C$ with $\mathcal{S}_1(C) = \emptyset$, let $k$ INSERTION moves produce circuit $C'$ with $|C'| = |C| + 2k$. Let $R_{\text{removal}}(C')$ be the maximum number of gates removable via REMOVAL sequences involving at least one inserted gate. Then $R_{\text{removal}}(C') \le 2k$, so the net gate-count change from any INSERTION + REMOVAL sequence is $\ge 0$. The proof uses an insertion-debt invariant: each INSERTION increases the debt by 2, each REMOVAL involving an inserted gate decreases it by at most 2, and the debt is always non-negative.
 
-- **Theorem 2d (INSERTION Commutation Cascade Bound):** Even when INSERTION is combined with SWAP and COMMUTATION moves within Phase 1, the net reduction from any finite sequence of moves starting from $\mathcal{S}_1(C) = \emptyset$ is bounded by $B_{\text{pre}}(C)$ -- the number of pre-existing wire-level inverse pairs that SWAP/COMMUTATION can expose (which is exactly the Phase-2 action space). Since Phase 1 by definition does not include systematic commutation reordering, the INSERTION-facilitated cascade cannot exceed what Phase 2 would achieve.
+- **Theorem 2d (INSERTION Commutation Cascade Bound):** Even when INSERTION is combined with SWAP and COMMUTATION moves within Phase 1, the net reduction from any finite sequence of moves starting from $\mathcal{S}_1(C) = \emptyset$ is bounded by $B_{\text{pre}}(C)$ -- the number of pre-existing wire-level inverse pairs that SWAP/COMMUTATION can expose (which is exactly the Phase-2a action space). Since Phase 1 by definition does not include systematic commutation reordering, the INSERTION-facilitated cascade cannot exceed what Phase-2a would achieve.
 
-The key insight is that INSERTION only adds gates to the circuit and never removes pre-existing gates from their wires, so it cannot reduce the wire-level distance between pre-existing gates. The wire-order invariant (proven in Appendix A) formalizes this: under any sequence of INSERTION, SWAP, and COMMUTATION moves, the relative ordering of pre-existing gates on each wire is preserved. Consequently, INSERTION cannot create new pre-existing gate cancellations beyond what is already accessible via Phase-2 commutation reordering.
+The key insight is that INSERTION only adds gates to the circuit and never removes pre-existing gates from their wires, so it cannot reduce the wire-level distance between pre-existing gates. The wire-order invariant (proven in Appendix A) formalizes this: under any sequence of INSERTION, SWAP, and COMMUTATION moves, the relative ordering of pre-existing gates on each wire is preserved. Consequently, INSERTION cannot create new pre-existing gate cancellations beyond what is already accessible via Phase-2a commutation reordering.
 
 **Status:** [RESOLVED -- bounded version]. Full proofs in Appendix A.
 
@@ -134,7 +136,7 @@ The key insight is that INSERTION only adds gates to the circuit and never remov
 
 **Corollary 3.1.** Any sequence of commutation rewrites preserves unitary equivalence.
 
-**Corollary 3.2.** Any circuit produced by the HybridCommuteRewrite pipeline (Phase 1 + Phase 2 + Phase 1) is exactly unitarily equivalent to the input.
+**Corollary 3.2.** Any circuit produced by the HybridCommuteRewrite pipeline (Phase 1 + Phase-2a + Phase 1) is exactly unitarily equivalent to the input.
 
 ---
 
@@ -182,7 +184,7 @@ $$
 
 **Step 3: Substitution.** Setting $t = \sqrt{2N\ln\frac{1}{\delta}}$, we obtain $\Pr[X \ge \mathbb{E}[X] + t] \le \exp(-t^2/(2N)) = \exp(-\ln(1/\delta)) = \delta$. Substituting $\mathbb{E}[X]$ from Theorem 1 and dividing by $|C|/2$ to obtain the fractional reduction yields the stated bound. $\blacksquare$
 
-**Remark (Commutation sufficiency).** The bound in Theorem 5 applies to *listing-adjacent* inverse pairs only -- i.e., pairs that are consecutive on the same wire under the chosen listing model. Phase-2 commutation rewriting can access inverse pairs beyond this bound by swapping non-adjacent gates into adjacency via commutation moves. The set of commutation rules implemented in the optimizer (disjoint-qubit commutation, same-axis rotation commutation, CX control/target swaps) is *sufficient but not necessary*: they never produce an incorrect reordering, but they may miss valid reorderings that would expose additional cancellations. Consequently, any experimental "Phase-2 ceiling" measured with this rule set is a *lower bound* on the true ceiling achievable with a complete set of commutation identities. Papers must frame Phase-2 ceiling measurements as "under the tested commutation rules," not as fundamental limits.
+**Remark (Commutation sufficiency).** The bound in Theorem 5 applies to *listing-adjacent* inverse pairs only -- i.e., pairs that are consecutive on the same wire under the chosen listing model. Phase-2a commutation rewriting can access inverse pairs beyond this bound by swapping non-adjacent gates into adjacency via commutation moves. The set of commutation rules implemented in the optimizer (disjoint-qubit commutation, same-axis rotation commutation, CX control/target swaps) is *sufficient but not necessary*: they never produce an incorrect reordering, but they may miss valid reorderings that would expose additional cancellations. Consequently, any experimental "Phase-2a ceiling" measured with this rule set is a *lower bound* on the true ceiling achievable with a complete set of commutation identities. Papers must frame Phase-2a ceiling measurements as "under the tested commutation rules," not as fundamental limits.
 
 ---
 
@@ -233,9 +235,9 @@ The circuit $C_n$ implements the identity: $U(C_n) = I$ since $C_n = A \cdot B \
 
 **Step 1: Phase-1 action space is empty.** In the original circuit ordering, no two adjacent gates in the listing are inverses acting on the same qubits. Specifically: Layer 1 CNOTs act on even pairs, Layer 2 applies $H$ to all qubits -- no CNOT is adjacent to a CNOT on the same pair. Layers 3--4 are CNOTs on odd pairs, which are indeed self-inverse and adjacent. However, within each layer the CNOTs act on disjoint qubit pairs. If the listing places $\text{CNOT}(q_1, q_2)$ from Layer 3 immediately before $\text{CNOT}(q_1, q_2)$ from Layer 4, these are inverse and adjacent. Thus $\mathcal{S}_1(C_n) \neq \emptyset$ for this naive construction.
 
-**Step 2: Refined construction.** To enforce $\mathcal{S}_1(C_n) = \emptyset$, interleave single-qubit "separator" gates between layers. Insert $S$ (phase gate) on the **control** qubit of each CNOT in Layer 3, between Layers 3 and 4. Since $S$ is not self-inverse ($S^{-1} = S^\dagger \neq S$), no adjacent pair involving the separator is an inverse pair. Crucially, $S$ on the control qubit commutes with CNOT (since $S \otimes I$ and $\text{CNOT}$ share the computational basis eigenstates on the control wire), so Phase 2 can commute the Layer-3 CNOTs past the $S$ separators.
+**Step 2: Refined construction.** To enforce $\mathcal{S}_1(C_n) = \emptyset$, interleave single-qubit "separator" gates between layers. Insert $S$ (phase gate) on the **control** qubit of each CNOT in Layer 3, between Layers 3 and 4. Since $S$ is not self-inverse ($S^{-1} = S^\dagger \neq S$), no adjacent pair involving the separator is an inverse pair. Crucially, $S$ on the control qubit commutes with CNOT (since $S \otimes I$ and $\text{CNOT}$ share the computational basis eigenstates on the control wire), so Phase-2a can commute the Layer-3 CNOTs past the $S$ separators.
 
-Formally: Let $q_c$ be the control qubit of $\text{CNOT}(q_c, q_t)$ in Layer 3. The $S(q_c)$ separator satisfies $[S(q_c), \text{CNOT}(q_c, q_t)] = 0$ because $S = |0\rangle\langle 0| + i|1\rangle\langle 1|$ is diagonal in the computational basis, and the CNOT control logic depends only on the computational basis state of $q_c$. Therefore Phase 2 can move $\text{CNOT}(q_c, q_t)$ past $S(q_c)$ via commutation.
+Formally: Let $q_c$ be the control qubit of $\text{CNOT}(q_c, q_t)$ in Layer 3. The $S(q_c)$ separator satisfies $[S(q_c), \text{CNOT}(q_c, q_t)] = 0$ because $S = |0\rangle\langle 0| + i|1\rangle\langle 1|$ is diagonal in the computational basis, and the CNOT control logic depends only on the computational basis state of $q_c$. Therefore Phase-2a can move $\text{CNOT}(q_c, q_t)$ past $S(q_c)$ via commutation.
 
 After commutation, the separator $S(q_c)$ becomes adjacent to the next gate in the circuit. If that gate is $H(q_c)$ from Layer 5, then $H \cdot S \neq I$, so no spurious cancellation occurs. The $S$ and $S^\dagger$ gates introduced as separators between Layers 3/4 and their mirrors between Layers 4/5 cancel in pairs after the CNOT cancellations are complete.
 
@@ -249,7 +251,7 @@ After Layer-3/4 CNOT cancellation, the $S$ separators become adjacent to their i
 - Layers 3,4: $n/2$ CNOTs each (total $n$)
 - Separators: $n/2$ $S$ gates + $n/2$ $S^\dagger$ gates (total $n$)
 
-Total: $n + 2n + n + n = 5n$ gates. Phase 2 cancels Layers 3+4 CNOTs ($n$ gates) and separator pairs ($n$ gates), removing $2n$ gates. Fraction: $2n / 5n = 2/5 > 1/6$. $\blacksquare$
+Total: $n + 2n + n + n = 5n$ gates. Phase-2a cancels Layers 3+4 CNOTs ($n$ gates) and separator pairs ($n$ gates), removing $2n$ gates. Fraction: $2n / 5n = 2/5 > 1/6$. $\blacksquare$
 
 ---
 
@@ -317,7 +319,7 @@ For Haar-random $U$ with $nd = \text{poly}(n)$, the second term dominates and gi
 
 **Corollary 8.2.** For circuits of depth $d = \Theta(4^n / n^2)$ (near the complexity threshold), bounded-window optimizers with fixed $k, w$ achieve $R(C) \le kw / nd \to 0$, while unbounded optimizers may achieve $\Omega(1)$ reduction as the circuit approaches the complexity boundary. The transition at $d \sim 4^n / n^2$ separates an incompressible regime from a potentially compressible one.
 
-**Remark.** Part (b) is the substantive result: it shows that the incompressibility of Haar-random unitaries is the fundamental barrier to optimization, not merely the boundedness of the window size. The earlier formulation (v3.0) stated only the bounded-window bound $kw / nd$, which is trivially true for *any* circuit regardless of structure and does not invoke Haar-randomness. The present formulation establishes that Haar-random circuits are not just hard for local optimizers but hard for *all* optimizers, due to the information-theoretic incompressibility of random unitaries. This explains why Phase-2 techniques (commutation rewriting, template matching) succeed on structured circuits (Oracle, BV) where algebraic structure provides shortcuts unavailable in the Haar-random ensemble.
+**Remark.** Part (b) is the substantive result: it shows that the incompressibility of Haar-random unitaries is the fundamental barrier to optimization, not merely the boundedness of the window size. The earlier formulation (v3.0) stated only the bounded-window bound $kw / nd$, which is trivially true for *any* circuit regardless of structure and does not invoke Haar-randomness. The present formulation establishes that Haar-random circuits are not just hard for local optimizers but hard for *all* optimizers, due to the information-theoretic incompressibility of random unitaries. This explains why Phase-2 (a+b) techniques (commutation rewriting, template matching) succeed on structured circuits (Oracle, BV) where algebraic structure provides shortcuts unavailable in the Haar-random ensemble.
 
 ---
 
@@ -353,7 +355,7 @@ On a disjoint union of paths, maximum independent set is solvable in $O(|V|)$ ti
 
 **Practical implication.** The $O(m)$ greedy scan used in our implementation computes a maximal (not necessarily maximum) matching. For circuits where conflicts exist, the greedy result may be suboptimal by a constant factor (at most 2x, by the standard greedy matching approximation ratio). In practice, conflicts are rare in random circuits and the greedy scan achieves the optimum. For structured circuits where conflicts may arise, an exact maximum matching algorithm (e.g., Edmonds' blossom) can be substituted in polynomial time if optimality is required. $\square$
 
-**Remark.** The general Circuit Optimization Decision Problem (CODP) -- which includes commutation rewriting, template matching, and other Phase-2 moves -- may still be computationally hard (see Conjecture OP1). Proposition 1 addresses only the restricted sub-problem of Phase-1 adjacent-pair selection.
+**Remark.** The general Circuit Optimization Decision Problem (CODP) -- which includes commutation rewriting, template matching, and other Phase-2 (a+b) moves -- may still be computationally hard (see Conjecture OP1). Proposition 1 addresses only the restricted sub-problem of Phase-1 adjacent-pair selection.
 
 ---
 
@@ -424,13 +426,13 @@ These are the paper's central formal claims, supported by strong empirical evide
 
 3. **Theoretical argument.** A Phase-1 optimizer can cancel adjacent inverses (REMOVAL), swap disjoint-qubit gates (SWAP), or commute gates (COMMUTATION). SWAP and COMMUTATION preserve gate count. Without commutation-based reordering across non-commuting blocks, the set of cancelable pairs is invariant under Phase-1 moves.
 
-**Remaining gap.** The formal invariant argument must show that SWAP and COMMUTATION moves within Phase-1 scope cannot *create* new adjacent inverse pairs. Theorem 2 addresses this: it proves that SWAP can create listing-adjacent pairs but only reveals pre-existing wire-level structure (no net reduction), and INSERTION creates new $\mathcal{S}_1$ elements but cannot achieve net reduction (insertion adds 2 gates, cancellation removes 2 gates). The remaining open question is whether this invariant extends to Phase-1 scope when commutation is restricted (no reordering across non-commuting blocks) -- which is precisely why Phase 2 exists.
+**Remaining gap.** The formal invariant argument must show that SWAP and COMMUTATION moves within Phase-1 scope cannot *create* new adjacent inverse pairs. Theorem 2 addresses this: it proves that SWAP can create listing-adjacent pairs but only reveals pre-existing wire-level structure (no net reduction), and INSERTION creates new $\mathcal{S}_1$ elements but cannot achieve net reduction (insertion adds 2 gates, cancellation removes 2 gates). The remaining open question is whether this invariant extends to Phase-1 scope when commutation is restricted (no reordering across non-commuting blocks) -- which is precisely why Phase-2 (a+b) exists.
 
 **Open problems:**
 - C1.OP1: Formalize the invariant characterizing exactly which circuit families have empty Phase-1 action spaces.
 - C1.OP2: Quantify $\Pr[\mathcal{S}_1(C) \neq \emptyset]$ as a function of $(n, d, \mathcal{G})$ for random circuit ensembles.
 
-#### Conjecture 2: Phase 2 Provides Context-Dependent Super-Constant Improvement
+#### Conjecture 2: Phase-2 (a+b) Provides Context-Dependent Super-Constant Improvement
 
 **Statement.** There exist circuit families $\mathcal{F}$ and gate sets $\mathcal{G}$ for which Phase-1 optimization achieves $O(1/d)$ reduction (or $0\%$), while Phase-1+2 optimization achieves $\Omega(1)$ reduction. The improvement $\Gamma(C) = R_{1+2}(C) - R_1(C)$ is context-dependent: it is significant for some families (e.g., oracle circuits) and zero for others (e.g., structured brickwork, QFT, GHZ).
 
@@ -446,18 +448,18 @@ These are the paper's central formal claims, supported by strong empirical evide
 
 2. **Oracle / Bernstein--Vazirani circuits (E11, Phase-2a).** Phase 1 achieves $0\%$; Phase-2a achieves $\sim 20\%$ reduction via commutation of redundant H/X gates exposed by the Oracle circuit structure. This empirical Phase-2a reduction is attributable to the algebraic structure of the oracle, but its mechanism is *not* the $H$-CNOT-$H$ template of Theorem 9 (which is unimplemented Phase-2b).
 
-3. **CNOT-chain validation circuits (E11).** Phase 1 alone achieves $100\%$ reduction, confirming that the Phase 2 advantage is circuit-family dependent rather than universal.
+3. **CNOT-chain validation circuits (E11).** Phase 1 alone achieves $100\%$ reduction, confirming that the Phase-2 (a+b) advantage is circuit-family dependent rather than universal.
 
-4. **Mechanism.** Phase 2 exploits commutation relations $[U, V] = 0$ to reorder gates, bringing non-adjacent inverses into adjacency. For circuits with repeating structural patterns, commutation can slide gates across $O(d)$ positions, creating cancellations invisible to Phase 1. Phase-2b additionally exploits multi-gate template identities (e.g., $H$-CNOT-$H \to$ reversed CNOT) that Phase-2a does not.
+4. **Mechanism.** Phase-2a exploits commutation relations $[U, V] = 0$ to reorder gates, bringing non-adjacent inverses into adjacency. For circuits with repeating structural patterns, commutation can slide gates across $O(d)$ positions, creating cancellations invisible to Phase 1. Phase-2b additionally exploits multi-gate template identities (e.g., $H$-CNOT-$H \to$ reversed CNOT) that Phase-2a does not.
 
 **Remaining gaps.**
 - **(Theory)** Theorem 7 (artificial, Phase-2a) and Theorem 9 (BV natural, Phase-2b) establish $\Omega(1)$ advantage constructively. The broader question of characterizing *all* families with super-constant Phase-2a/2b improvement remains open (C2.OP1--OP3).
 - **(Theory--experiment bridge)** The achievable Phase-2a bound for BV remains open: the empirical $\sim$20% Phase-2a reduction on Oracle/BV (E11) lacks a matching theoretical lower bound.  Closing this gap requires either (a) extending Phase-2a theory to cover the E11 Oracle structure, or (b) running E11 with the implemented Phase-2b matcher to validate Theorem 9 directly.
 
 **Open problems:**
-- C2.OP1: Construct an explicit circuit family with proven super-constant Phase-2 improvement.
+- C2.OP1: Construct an explicit circuit family with proven super-constant Phase-2 (a+b) improvement.
 - C2.OP2: Determine $\max_C \Gamma(C) / R_1(C)$ as a function of $(n, d, \mathcal{G})$.
-- C2.OP3: Characterize the gate-set conditions under which Phase 2 is necessary.
+- C2.OP3: Characterize the gate-set conditions under which Phase-2 (a+b) is necessary.
 
 ---
 
@@ -468,7 +470,7 @@ These are the paper's central formal claims, supported by strong empirical evide
 | OP1 | Open Problem | CODP is QMA-hard | Weak -- reduction sketch incomplete | Complete the Kitaev reduction |
 | OP2 | Open Problem | No PTAS for CODP | Updated -- conflict resolution is in P (Prop 1); hardness source unclear | Identify true hardness source |
 | **C1** | **Conjecture** | **Phase 1 ceiling is structural (listing-conditional)** | **Strong -- Thm 2 + Thm 5 + Thm 6 (Clifford) + Thm 8 (Haar, asymptotic) + 45,500 trials (LBL). Ceiling is listing-conditional: WCL exposes ~18% Phase-1 reduction on the same circuits.** | **Formalize invariant for general circuit families; characterize WCL vs LBL gap** |
-| **C2** | **Conjecture** | **Phase 2 is context-dependent super-constant** | **Proven (Phase-2a and Phase-2b) -- Thm 7 (artificial, Phase-2a, $\Gamma \ge 1/6$, validated by E24) + Thm 9 (BV natural, Phase-2b, $\Gamma \ge 2/13$). E10/E11 empirical (Phase-2a): ~3% random, ~20% Oracle.** | **(1) Phase-2a bound for BV / natural families; (2) characterize all families with super-constant $\Gamma$; (3) bridge theory (2b) $\leftrightarrow$ experiment (2a)** |
+| **C2** | **Conjecture** | **Phase-2 (a+b) is context-dependent super-constant** | **Proven (Phase-2a and Phase-2b) -- Thm 7 (artificial, Phase-2a, $\Gamma \ge 1/6$, validated by E24) + Thm 9 (BV natural, Phase-2b, $\Gamma \ge 2/13$). E10/E11 empirical (Phase-2a): ~3% random, ~20% Oracle.** | **(1) Phase-2a bound for BV / natural families; (2) characterize all families with super-constant $\Gamma$; (3) bridge theory (2b) $\leftrightarrow$ experiment (2a)** |
 
 ---
 
@@ -534,7 +536,7 @@ Production compilers (Qiskit `transpile`, Cirq, t|ket>) use DAG representations 
 
 1. **Listing-model sensitivity.** The framework proves that the choice of listing model (LBL vs WCL vs DAG) materially affects Phase-1 peephole performance. This is a genuine finding: a naive peephole optimizer on an LBL listing is structurally blind to same-qubit inverse pairs.
 
-2. **Phase-2 commutation value.** Phase-2 commutation rewriting (which operates on wire-level structure, not listing order) is listing-independent. The framework's Phase-2 results (Theorem 7, Theorem 9) hold regardless of the listing model, because commutation is a wire-level algebraic property.
+2. **Phase-2a commutation value.** Phase-2a commutation rewriting (which operates on wire-level structure, not listing order) is listing-independent. The framework's Phase-2 (a+b) results (Theorem 7, Theorem 9) hold regardless of the listing model, because commutation is a wire-level algebraic property.
 
 3. **Ceiling is representation-dependent, not algorithm-dependent.** Within a fixed listing model, all Phase-1 optimizers (greedy, SA, GA, RLS) converge to the same ceiling (Theorem 2). The ceiling is a property of the representation + circuit structure, not of the search algorithm.
 
@@ -630,7 +632,7 @@ For the implemented BV-like fixture, the input size is $5n$ and the optimized si
 
 ### Remaining gap
 
-This is not a complete Phase-2 optimizer. It does not yet implement:
+This is not a complete Phase-2 (a+b) optimizer. It does not yet implement:
 
 - non-adjacent template matching through commutation-aware movement;
 - multi-template search or cost-guided template selection;
@@ -653,11 +655,11 @@ The current module should therefore be interpreted as a minimal Phase-2b templat
 
 Theorem 2(b) establishes that stochastic Phase-1 optimizers (SA, GA, RLS) cannot systematically exceed the Greedy reduction ceiling on circuits where $\mathcal{S}_1(C) = \emptyset$. Step 3 of that proof asserts that "cancellations involving only pre-existing gates could have been found without INSERTION." However, this assertion left an **open gap**: INSERTION can change the commutation topology of the circuit, potentially enabling SWAP or COMMUTATION sequences that were previously impossible.
 
-Specifically, if inserting $H \cdot H$ between gates $A$ and $B$ makes $A$ and $B$ commutable (by changing the effective ordering context), then INSERTION has created a Phase-2-style opportunity that Phase-1 alone could not find. The concern is that an INSERTION-facilitated commutation cascade might achieve net gate-count reduction beyond what is available without INSERTION.
+Specifically, if inserting $H \cdot H$ between gates $A$ and $B$ makes $A$ and $B$ commutable (by changing the effective ordering context), then INSERTION has created a Phase-2a-style opportunity that Phase-1 alone could not find. The concern is that an INSERTION-facilitated commutation cascade might achieve net gate-count reduction beyond what is available without INSERTION.
 
 This appendix closes the gap with two results:
 - **Theorem 2c** proves that the net gate-count change from any INSERTION + REMOVAL sequence is non-negative (bounded version).
-- **Theorem 2d** extends this to the combined INSERTION + SWAP + COMMUTATION setting, showing that the INSERTION-facilitated cascade cannot exceed what Phase 2 would achieve independently.
+- **Theorem 2d** extends this to the combined INSERTION + SWAP + COMMUTATION setting, showing that the INSERTION-facilitated cascade cannot exceed what Phase-2a would achieve independently.
 
 ### Preliminaries
 
@@ -833,15 +835,15 @@ $$
 |C'| - |C| \ge -B_{\text{pre}}(C),
 $$
 
-where $B_{\text{pre}}(C)$ is the number of pre-existing wire-level inverse pairs in $C$ that can be exposed by SWAP and COMMUTATION moves alone (without INSERTION). In particular, $B_{\text{pre}}(C)$ is exactly the size of the Phase-2 action space $|\mathcal{S}_{1+2}(C)|$ applied to the pre-existing gates of $C$.
+where $B_{\text{pre}}(C)$ is the number of pre-existing wire-level inverse pairs in $C$ that can be exposed by SWAP and COMMUTATION moves alone (without INSERTION). In particular, $B_{\text{pre}}(C)$ is exactly the size of the Phase-2 (a+b) action space $|\mathcal{S}_{1+2}(C)|$ applied to the pre-existing gates of $C$.
 
-**Corollary.** Since Phase 1 by definition does not include systematic commutation reordering (Phase 2), the INSERTION-facilitated cascade within Phase 1 cannot exceed what Phase 2 would achieve independently. That is, for any Phase-1 optimizer employing INSERTION:
+**Corollary.** Since Phase 1 by definition does not include systematic commutation reordering (Phase-2a), the INSERTION-facilitated cascade within Phase 1 cannot exceed what Phase-2a would achieve independently. That is, for any Phase-1 optimizer employing INSERTION:
 
 $$
 R_1^{\text{INSERTION}}(C) \le R_{1+2}(C) - R_1(C) = \Gamma(C).
 $$
 
-This means INSERTION within Phase 1 can at best simulate Phase 2, never exceed it.
+This means INSERTION within Phase 1 can at best simulate Phase-2a, never exceed it.
 
 #### Proof of Theorem 2d
 
@@ -891,7 +893,7 @@ Two pre-existing gates $g_a, g_b$ form a cancellable wire-level pair if:
 - $g_b = g_a^{-1}$,
 - They can be brought into listing adjacency by SWAP (moving gates on other wires out of the way) and COMMUTATION (reordering gates on the same wire, preserving the wire unitary).
 
-The set of all such pairs is exactly what $B_{\text{pre}}(C)$ counts -- it is the Phase-2 action space restricted to pre-existing gates. Crucially, $B_{\text{pre}}(C)$ is determined entirely by the pre-existing gates and their wire-level unitaries, which (by Step 3) are preserved under INSERTION + SWAP + COMMUTATION.
+The set of all such pairs is exactly what $B_{\text{pre}}(C)$ counts -- it is the Phase-2 (a+b) action space restricted to pre-existing gates. Crucially, $B_{\text{pre}}(C)$ is determined entirely by the pre-existing gates and their wire-level unitaries, which (by Step 3) are preserved under INSERTION + SWAP + COMMUTATION.
 
 **Key claim:** INSERTION cannot increase $B_{\text{pre}}(C)$. INSERTION adds gates to wires; it never removes pre-existing gates or changes their wire-level unitaries. The inserted gates may commute with pre-existing gates (enabling new COMMUTATION moves), but any cancellation involving an inserted gate is bounded by Theorem 2c (net gate-count change $\ge 0$ from the INSERTION side). Therefore, the only net reduction achievable comes from cancelling pre-existing pairs that were *already* in $B_{\text{pre}}(C)$ -- i.e., pairs accessible to SWAP + COMMUTATION without any INSERTION.
 
@@ -920,11 +922,11 @@ $$
 \Delta|C| = \underbrace{+2k}_{\text{INSERTIONs}} - \underbrace{R_{\text{total}}}_{\text{all REMOVALs}} \ge -R_{\text{pre,indep}} \ge -B_{\text{pre}}(C).
 $$
 
-**Step 6: Phase-1 vs. Phase-2 interpretation.**
+**Step 6: Phase-1 vs. Phase-2 (a+b) interpretation.**
 
-Phase 1 optimizers employ $\{\text{REMOVAL}, \text{SWAP}, \text{COMMUTATION}, \text{INSERTION}\}$ but do not perform systematic commutation reordering. Phase 2 optimizers perform systematic commutation reordering on the pre-existing circuit.
+Phase 1 optimizers employ $\{\text{REMOVAL}, \text{SWAP}, \text{COMMUTATION}, \text{INSERTION}\}$ but do not perform systematic commutation reordering. Phase-2a optimizers perform systematic commutation reordering on the pre-existing circuit.
 
-The bound $B_{\text{pre}}(C)$ is precisely the number of pre-existing gate pairs that Phase 2 can bring into adjacency and cancel. Since INSERTION within Phase 1 can achieve at most $B_{\text{pre}}(C)$ reduction (and only at a net cost that makes the effective reduction $\le B_{\text{pre}}(C)$), we have:
+The bound $B_{\text{pre}}(C)$ is precisely the number of pre-existing gate pairs that Phase-2a can bring into adjacency and cancel. Since INSERTION within Phase 1 can achieve at most $B_{\text{pre}}(C)$ reduction (and only at a net cost that makes the effective reduction $\le B_{\text{pre}}(C)$), we have:
 
 $$
 R_1^{\text{INSERTION}}(C) \le \frac{2 \cdot B_{\text{pre}}(C)}{|C|} = R_{1+2}(C).
@@ -936,7 +938,7 @@ $$
 R_1^{\text{INSERTION}}(C) - R_1(C) \le R_{1+2}(C) - R_1(C) = \Gamma(C).
 $$
 
-This proves that INSERTION within Phase 1 can at best simulate Phase 2's commutation reordering, never exceed it. $\blacksquare$
+This proves that INSERTION within Phase 1 can at best simulate Phase-2a's commutation reordering, never exceed it. $\blacksquare$
 
 #### Discussion
 
@@ -944,7 +946,7 @@ This proves that INSERTION within Phase 1 can at best simulate Phase 2's commuta
 
 The bound in Theorem 2c ($R_{\text{removal}}(C') \le 2k$) is **tight**: a sequence of $k$ INSERTION moves followed by $k$ REMOVAL moves on the inserted pairs themselves achieves exactly $R_{\text{removal}} = 2k$ with net change 0. No sequence can achieve $R_{\text{removal}} > 2k$ involving inserted gates.
 
-The bound in Theorem 2d ($\Delta|C| \ge -B_{\text{pre}}(C)$) is also tight in the following sense: if the circuit contains $B_{\text{pre}}(C)$ pre-existing wire-level inverse pairs accessible to SWAP/COMMUTATION, then Phase 2 (without any INSERTION) can achieve exactly that reduction. INSERTION cannot improve upon this.
+The bound in Theorem 2d ($\Delta|C| \ge -B_{\text{pre}}(C)$) is also tight in the following sense: if the circuit contains $B_{\text{pre}}(C)$ pre-existing wire-level inverse pairs accessible to SWAP/COMMUTATION, then Phase-2a (without any INSERTION) can achieve exactly that reduction. INSERTION cannot improve upon this.
 
 **Implications for the INSERTION Cascade Gap**
 
@@ -952,23 +954,23 @@ The open gap in Theorem 2 (Step 3) asked whether INSERTION-facilitated commutati
 
 1. **INSERTION + REMOVAL alone** (Thm 2c): Net gate-count change is $\ge 0$. INSERTION is a "zero-sum" operation when combined only with REMOVAL.
 
-2. **INSERTION + REMOVAL + SWAP + COMMUTATION** (Thm 2d): Net reduction is bounded by $B_{\text{pre}}(C)$, which is exactly the Phase-2 action space. INSERTION cannot create new reduction opportunities beyond what Phase 2 already provides.
+2. **INSERTION + REMOVAL + SWAP + COMMUTATION** (Thm 2d): Net reduction is bounded by $B_{\text{pre}}(C)$, which is exactly the Phase-2 (a+b) action space. INSERTION cannot create new reduction opportunities beyond what Phase-2 (a+b) already provides.
 
 3. **Practical consequence**: Stochastic Phase-1 optimizers that employ INSERTION (SA, GA, RLS) cannot systematically exceed the Greedy reduction ceiling, even when INSERTION changes the commutation topology. The empirical observation of 100% zero net reduction in 5000 trials is a necessary consequence of the algebraic structure, not a coincidence.
 
-**Relation to Phase-2 Advantage**
+**Relation to Phase-2 (a+b) Advantage**
 
 Theorem 2d establishes a clean separation:
 
-- **Phase 1 + INSERTION** $\le$ **Phase 2** in terms of achievable reduction.
-- **Phase 2** exploits the pre-existing wire-level structure of $C$ via systematic commutation reordering.
-- **INSERTION** within Phase 1 is at best a clumsy simulation of Phase 2, adding and removing gates to achieve what Phase 2 does directly.
+- **Phase 1 + INSERTION** $\le$ **Phase-2a** in terms of achievable reduction.
+- **Phase-2a** exploits the pre-existing wire-level structure of $C$ via systematic commutation reordering.
+- **INSERTION** within Phase 1 is at best a clumsy simulation of Phase-2a, adding and removing gates to achieve what Phase-2a does directly.
 
 This reinforces the central message of the theoretical framework: the optimization gap $\Gamma(C) = R_{1+2}(C) - R_1(C)$ is a property of the circuit's algebraic structure (commutation relations), not of the Phase-1 optimizer's search strategy.
 
 ---
 
-## Appendix B: Theorem 9 -- Phase-2 Advantage for Bernstein--Vazirani Oracle Circuits
+## Appendix B: Theorem 9 -- Phase-2 (a+b) Advantage for Bernstein--Vazirani Oracle Circuits
 
 > **Document Status**: Formal proof (rewritten 2026-06-17 to remove draft artifacts and consolidate the argument).
 > **Version**: 2.0
@@ -977,11 +979,11 @@ This reinforces the central message of the theoretical framework: the optimizati
 
 ### Motivation
 
-Theorem 7 establishes the existence of an explicit circuit family $\{C_n\}$ with $R_1(C_n) = 0$ and $R_{1+2}(C_n) \ge 1/6$, proving Conjecture C2 constructively. However, the circuit family used in Theorem 7 is an artificial construction designed specifically to exhibit Phase-2 advantage. A natural question is whether Phase-2 advantage arises in **naturally occurring** quantum circuit families -- circuits that arise from standard quantum algorithms without adversarial design.
+Theorem 7 establishes the existence of an explicit circuit family $\{C_n\}$ with $R_1(C_n) = 0$ and $R_{1+2}(C_n) \ge 1/6$, proving Conjecture C2 constructively. However, the circuit family used in Theorem 7 is an artificial construction designed specifically to exhibit Phase-2 (a+b) advantage. A natural question is whether Phase-2 (a+b) advantage arises in **naturally occurring** quantum circuit families -- circuits that arise from standard quantum algorithms without adversarial design.
 
-This appendix proves that the **Bernstein--Vazirani (BV) oracle circuit** family exhibits a constant-factor Phase-2 advantage, establishing that the Phase-1/Phase-2 optimization gap is not merely an artifact of artificial constructions but arises in standard quantum algorithmic primitives.
+This appendix proves that the **Bernstein--Vazirani (BV) oracle circuit** family exhibits a constant-factor Phase-2 (a+b) advantage, establishing that the Phase-1/Phase-2 (a+b) optimization gap is not merely an artifact of artificial constructions but arises in standard quantum algorithmic primitives.
 
-> **Important scope note.** The Phase-2 advantage established here relies on **Phase-2b template matching** (the $H$-CNOT-$H$ identity), which is *not* implemented in the current experimental codebase. The current codebase implements only **Phase-2a commutation rewriting** (`commutation_rewriter.py`). Under pure Phase-2a, the achievable bound for BV remains an **open question**. See "Phase-2a vs. Phase-2b" below. All experimental results labeled "Phase 2" in the manuscript refer to Phase-2a unless explicitly stated otherwise.
+> **Important scope note.** The Phase-2b advantage established here relies on **Phase-2b template matching** (the $H$-CNOT-$H$ identity), which is *not* implemented in the current experimental codebase. The current codebase implements only **Phase-2a commutation rewriting** (`commutation_rewriter.py`). Under pure Phase-2a, the achievable bound for BV remains an **open question**. See "Phase-2a vs. Phase-2b" below. All experimental results labeled "Phase 2" in the manuscript refer to Phase-2a unless explicitly stated otherwise.
 
 ### Preliminaries
 
@@ -1022,7 +1024,7 @@ R_{1+2}^{\text{(2b)}}(BV_n) \ge \frac{n}{4.5n+4} \ge \frac{2}{13} \quad \text{fo
 $$
 In particular $R_{1+2}^{\text{(2b)}}(BV_n) = \Omega(1)$, and the optimization gap satisfies $\Gamma^{\text{(2b)}}(BV_n) \ge \frac{2}{13}$ for all $n \ge 2$.
 
-**Remark on the bound.** The exact reduction achievable by Phase 2 depends on the listing order and the specific commutation/template sequence applied. We prove a lower bound of $n/(4.5n+4)$, which for $n \ge 2$ yields at least $2/13 \approx 0.154$, and which approaches $1/4.5 \approx 0.222$ as $n \to \infty$. The bound uses Phase-2b template matching (the $H$-CNOT-$H$ identity) and accounts for the gate-overhead of the template transformation. Under pure Phase-2a commutation rewriting (the mechanism implemented in the current codebase), the achievable bound for BV remains an **open question** -- see "Phase-2a vs. Phase-2b" below.
+**Remark on the bound.** The exact reduction achievable by Phase-2 (a+b) depends on the listing order and the specific commutation/template sequence applied. We prove a lower bound of $n/(4.5n+4)$, which for $n \ge 2$ yields at least $2/13 \approx 0.154$, and which approaches $1/4.5 \approx 0.222$ as $n \to \infty$. The bound uses Phase-2b template matching (the $H$-CNOT-$H$ identity) and accounts for the gate-overhead of the template transformation. Under pure Phase-2a commutation rewriting (the mechanism implemented in the current codebase), the achievable bound for BV remains an **open question** -- see "Phase-2a vs. Phase-2b" below.
 
 > **Audit note (review Stage 2 -- "Thm 10 calculation inconsistency").** An external review flagged an apparent inconsistency between a "45.5%" figure and a recomputed "66.7%". This note resolves the confusion:
 >
@@ -1087,7 +1089,7 @@ $$
 $$
 Applying both in either order yields $|x, y \oplus x_i \oplus x_j\rangle$, which is symmetric in $i, j$. $\square$
 
-**Consequence.** Phase 2 may reorder the $n$ CNOTs in Layer 2 arbitrarily at no gate cost.
+**Consequence.** Phase-2a may reorder the $n$ CNOTs in Layer 2 arbitrarily at no gate cost.
 
 **Lemma A2 ($H$-CNOT-$H$ template identity).** For control qubit $c$ and target qubit $t$,
 $$
@@ -1205,7 +1207,7 @@ Gate count: 5. Original: 9. Idealized reduction: $4/9 \approx 0.444$. (Rigorous 
 
 The gap between the idealized ratio and the rigorous bound reflects the template-matching overhead, which dominates at small $n$ and amortizes as $n$ grows.
 
-### Phase-2 rule requirements
+### Phase-2b rule requirements
 
 The Phase-2b procedure above uses four operations, all within the Phase-2b toolkit:
 
@@ -1245,7 +1247,7 @@ The Phase-2b result is also listing-independent in the sense that the rewrite pr
 | Circuit family | Adversarial construction | Natural quantum algorithm |
 | $R_1$ | 0 | 0 |
 | $R_{1+2}^{\text{(2b)}}$ lower bound | $\ge 1/6 \approx 0.167$ | $\ge n/(4.5n+4) \ge 2/13 \approx 0.154$ |
-| Phase-2 mechanism | CNOT--CNOT cancellation via $S$-commutation | $H$-CNOT-$H$ template (Phase-2b) + ancilla $H$-cancellation |
+| Phase-2 (a+b) mechanism | CNOT--CNOT cancellation via $S$-commutation | $H$-CNOT-$H$ template (Phase-2b) + ancilla $H$-cancellation |
 | Practical relevance | Low (designed for proof) | High (BV is a standard oracle algorithm) |
 | Asymptotic gap $\Gamma^{\text{(2b)}}$ | $\Omega(1)$ | $\Omega(1)$ (specifically $\to 1/4.5$) |
 | Implemented in codebase? | Phase-2a only | Phase-2b **not** implemented |
@@ -1265,17 +1267,17 @@ Theorem 9 strengthens the case for Conjecture C2 by demonstrating Phase-2b advan
 | **Lemma 4** | Lemma | Greedy optimality for non-conflicting pairs | [PROVEN -- narrow scope, supporting lemma] |
 | **Thm 5** | Theorem | High-probability bound on adjacent inverse pairs (McDiarmid) | [PROVEN -- standard concentration] |
 | **Thm 6** | Theorem | Phase-1 ceiling exact for Clifford circuits in canonical form | [PROVEN -- not empirically tested] |
-| **Thm 7** | Theorem | Explicit circuit family with $\Omega(1)$ Phase-2 advantage | [PROVEN -- artificial construction] |
+| **Thm 7** | Theorem | Explicit circuit family with $\Omega(1)$ Phase-2a advantage | [PROVEN -- artificial construction] |
 | **Thm 8** | Theorem | Haar-random circuit incompressibility and bounded-window limit | [PROVEN -- Parts a-b substantive; Part c trivial; does not apply to experimental regime] |
 | **Thm 2c** | Theorem | Bounded INSERTION cascade lemma: $R_{\text{removal}}(C') \le 2k$ | [PROVEN -- insertion-debt invariant, see Appendix A] |
-| **Thm 2d** | Theorem | INSERTION commutation cascade bound: cannot exceed Phase-2 action space | [PROVEN -- wire-order invariant, see Appendix A] |
+| **Thm 2d** | Theorem | INSERTION commutation cascade bound: cannot exceed Phase-2 (a+b) action space | [PROVEN -- wire-order invariant, see Appendix A] |
 | **Thm 9** | Theorem | Phase-2b/template-assisted advantage $\ge n/(4.5n+4) = \Omega(1)$ for BV oracle circuits | [PROVEN -- natural circuit family; pure Phase-2a bound open, see Appendix B] |
 | Prop 1 | Proposition | Conflict resolution is polynomial-time (maximum matching) | [CORRECTED] |
 | Obs 1 | Empirical Observation | Greedy matches stochastic Phase-1 optimizers | [EMPIRICAL -- downgraded from Prop 2] |
 | OP1 | Open Problem | CODP is QMA-hard | [CONJECTURE] |
 | OP2 | Open Problem | No PTAS for CODP | [CONJECTURE] |
 | C1 | Conjecture | Phase 1 ceiling is structural (listing-conditional) | [PARTIALLY PROVEN] |
-| C2 | Conjecture | Phase 2 is context-dependent super-constant | [PROVEN for Phase-2b; OPEN for Phase-2a] |
+| C2 | Conjecture | Phase-2 (a+b) is context-dependent super-constant | [PROVEN for Phase-2b; OPEN for Phase-2a] |
 
 ---
 

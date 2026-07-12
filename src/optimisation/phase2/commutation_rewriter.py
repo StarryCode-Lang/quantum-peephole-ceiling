@@ -11,6 +11,10 @@ This module exposes ``Phase2aCommutationRewriter`` and
 Version: 3.2.0 (Phase-2a naming; fixed commutation pre-check correctness bug)
 """
 
+# This module implements Phase-2a: commutation-based rewriting.
+# Phase-2b (template-assisted rewriting) is implemented separately in template_matcher.py
+# and is NOT part of the canonical experimental pipeline.
+
 from __future__ import annotations
 
 import numpy as np

@@ -735,39 +735,69 @@ def _pairwise_effect_sizes(groups):
     if len(groups) < 2:
         return {'cliffs_delta': None, 'cliffs_delta_CI95': None,
                 'hedges_g': None, 'hedges_g_CI95': None, 'note': 'n<2 groups'}
-    try:
-        if len(groups) == 2:
+
+    if len(groups) == 2:
+        # Compute Cliff's delta and Hedges' g independently so a zero-variance
+        # failure in Hedges' g does not wipe out the Cliff's delta result
+        # (matches the separate-try pattern in generate_effect_sizes.py).
+        try:
             cd = cliffs_delta(groups[0], groups[1])
+            cd_val = cd['delta']
+            cd_ci = f"[{cd['ci_lower']:.4f}, {cd['ci_upper']:.4f}]"
+        except Exception:
+            cd_val, cd_ci = None, None
+        try:
             hg = hedges_g(groups[0], groups[1])
-            return {
-                'cliffs_delta': cd['delta'],
-                'cliffs_delta_CI95': f"[{cd['ci_lower']:.4f}, {cd['ci_upper']:.4f}]",
-                'hedges_g': hg['g'],
-                'hedges_g_CI95': f"[{hg['ci_lower']:.4f}, {hg['ci_upper']:.4f}]",
-                'note': '2-group direct',
-            }
-        # >2 groups: scan all pairs for the largest |Cliff's delta|
-        best = None
-        best_abs = -1.0
-        for i in range(len(groups)):
-            for j in range(i + 1, len(groups)):
+            hg_val = hg['g']
+            hg_ci = f"[{hg['ci_lower']:.4f}, {hg['ci_upper']:.4f}]"
+        except Exception:
+            hg_val, hg_ci = None, None
+        note = '2-group direct'
+        if cd_val is not None and hg_val is None:
+            note += '; Hedges g undefined (zero variance)'
+        return {
+            'cliffs_delta': cd_val,
+            'cliffs_delta_CI95': cd_ci,
+            'hedges_g': hg_val,
+            'hedges_g_CI95': hg_ci,
+            'note': note,
+        }
+
+    # >2 groups: scan all pairs for the largest |Cliff's delta|, then compute
+    # Hedges' g for that pair independently (may be undefined on zero variance).
+    best_cd = None
+    best_abs = -1.0
+    best_pair = None
+    for i in range(len(groups)):
+        for j in range(i + 1, len(groups)):
+            try:
                 cd = cliffs_delta(groups[i], groups[j])
-                if abs(cd['delta']) > best_abs:
-                    best_abs = abs(cd['delta'])
-                    hg = hedges_g(groups[i], groups[j])
-                    best = {
-                        'cliffs_delta': cd['delta'],
-                        'cliffs_delta_CI95': f"[{cd['ci_lower']:.4f}, {cd['ci_upper']:.4f}]",
-                        'hedges_g': hg['g'],
-                        'hedges_g_CI95': f"[{hg['ci_lower']:.4f}, {hg['ci_upper']:.4f}]",
-                        'note': f'max pairwise (pair {i} vs {j})',
-                    }
-        return best if best is not None else {
-            'cliffs_delta': None, 'cliffs_delta_CI95': None,
+            except Exception:
+                continue
+            if abs(cd['delta']) > best_abs:
+                best_abs = abs(cd['delta'])
+                best_cd = cd
+                best_pair = (i, j)
+    if best_cd is not None:
+        i, j = best_pair
+        try:
+            hg = hedges_g(groups[i], groups[j])
+            hg_val = hg['g']
+            hg_ci = f"[{hg['ci_lower']:.4f}, {hg['ci_upper']:.4f}]"
+        except Exception:
+            hg_val, hg_ci = None, None
+        note = f'max pairwise (pair {i} vs {j})'
+        if hg_val is None:
+            note += '; Hedges g undefined (zero variance)'
+        return {
+            'cliffs_delta': best_cd['delta'],
+            'cliffs_delta_CI95': f"[{best_cd['ci_lower']:.4f}, {best_cd['ci_upper']:.4f}]",
+            'hedges_g': hg_val,
+            'hedges_g_CI95': hg_ci,
+            'note': note,
+        }
+    return {'cliffs_delta': None, 'cliffs_delta_CI95': None,
             'hedges_g': None, 'hedges_g_CI95': None, 'note': 'no valid pair'}
-    except Exception as exc:
-        return {'cliffs_delta': None, 'cliffs_delta_CI95': None,
-                'hedges_g': None, 'hedges_g_CI95': None, 'note': f'error: {exc}'}
 
 
 def safe_kruskal(groups):

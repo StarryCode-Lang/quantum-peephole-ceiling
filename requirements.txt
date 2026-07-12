@@ -1,14 +1,14 @@
 qiskit==2.4.1
-numpy==1.26.4
-pandas==2.2.2
-matplotlib==3.9.0
-scipy==1.13.1
-tqdm==4.66.4
+numpy==2.2.6
+pandas==2.3.3
+matplotlib==3.10.9
+scipy==1.15.3
+tqdm==4.67.3
 seaborn==0.13.2
-scikit-learn==1.8.0
+scikit-learn>=1.7.0
 # E20: Multi-compiler comparison (Cirq + t|ket>)
-cirq-core==1.6.1
-pytket==2.18.0
-pytket-qiskit==0.77.0
+cirq-core>=1.6.0
+pytket>=2.0.0
+pytket-qiskit>=0.70.0
 # Testing
-pytest==8.2.2
+pytest>=8.0.0

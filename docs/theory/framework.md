@@ -17,11 +17,13 @@ This document is the **central hub** of the theoretical framework for the QIP ma
 
 For detailed formal results, see the companion document `formal_results.md` which contains all theorems, lemmas, propositions, conjectures, and proof appendices.
 
+> **Notation**: Phase-2a refers to commutation-based rewriting (implemented in `commutation_rewriter.py`). Phase-2b refers to template-assisted rewriting (limited implementation in `template_matcher.py`, not part of canonical experiments). When we write "Phase-2" without a suffix, we refer to Phase-2a, which is the canonical implementation.
+
 > **Honest assessment of theoretical contribution (updated 2026-06-13).** Of the 11 labeled theorems, 3--4 serve as primary theoretical contributions, with the remaining results providing formal backing for the empirical patterns observed:
-> - **Thm 2** (Phase-1 Reduction Ceiling): The core structural result. The INSERTION cascade gap is now **resolved** (bounded version) via Thm 2c/2d, which prove that INSERTION cannot achieve net reduction beyond the Phase-2 action space.
+> - **Thm 2** (Phase-1 Reduction Ceiling): The core structural result. The INSERTION cascade gap is now **resolved** (bounded version) via Thm 2c/2d, which prove that INSERTION cannot achieve net reduction beyond the Phase-2 (a+b) action space.
 > - **Thm 8 Parts a--b** (Haar-random incompressibility): Standard but non-trivial dimension-counting; however, it applies to Haar-random *unitaries*, not the random *gate sequences* used in experiments (see caveat below).
-> - **Thm 7** (Explicit Phase-2 advantage): Constructive but uses an artificial circuit family.
-> - **Thm 9** (Phase-2 advantage for BV oracle circuits): Proves $\Omega(1)$ Phase-2 advantage for the natural Bernstein--Vazirani oracle family, strengthening Thm 7 from artificial to natural circuits.
+> - **Thm 7** (Explicit Phase-2a advantage): Constructive but uses an artificial circuit family.
+> - **Thm 9** (Phase-2b advantage for BV oracle circuits): Proves $\Omega(1)$ Phase-2b advantage for the natural Bernstein--Vazirani oracle family, strengthening Thm 7 from artificial to natural circuits.
 >
 > The remaining theorems are supporting: Thm 1(a) (birthday-paradox calculation), Thm 1(b) (listing-model structural result, important for methodology), Thm 2c/2d (INSERTION cascade closure), Lemma 3 (1-line associativity), Lemma 4 (trivially narrow special case), Thm 5 (standard McDiarmid application), Thm 6 (untested on actual circuits), Thm 8 Part c (trivially true for any circuit). They provide formal backing but are not themselves novel contributions.
 
@@ -77,7 +79,7 @@ Unless otherwise specified, "Phase 2" in the experimental results refers to Phas
 **Definition 8 (Phase 1 Ceiling $R_1^*(C)$ and Structural Ceiling $L_1(\mathcal{F})$).**
 $$R_1^*(C) = \max_{O \in \mathcal{O}_1} \frac{|C| - |O(C)|}{|C|}, \qquad L_1(\mathcal{F}) = \mathbb{E}_{C \sim \mathcal{F}}[R_1^*(C)]$$
 
-**Definition 9 (Optimization Gap $\Gamma(C)$).** The additional reduction enabled by Phase 2:
+**Definition 9 (Optimization Gap $\Gamma(C)$).** The additional reduction enabled by Phase-2 (a+b):
 $$\Gamma(C) = R_{1+2}^*(C) - R_1^*(C)$$
 Conjecture C2 states that $\Gamma(C) = \Omega(1)$ for specific circuit families.
 
@@ -107,7 +109,7 @@ Unitary equivalence up to tolerance $\epsilon$: $C \equiv_\epsilon C'$ if $\| U 
 
 1. **Combinatorial core.** The Phase-1 ceiling arises because adjacent inverse pairs are rare in random sequences of gates drawn from a finite alphabet. This is a property shared with any random sequence over a finite set with an involution (inverse operation) -- it has nothing specifically to do with quantum mechanics. Theorem 1 is, at its heart, a birthday-paradox-style calculation on sequences.
 
-2. **Algebraic structure.** Phase-2 optimization exploits commutation relations between gates, which *are* properties of the operator algebra (e.g., $[H \otimes I, \text{CNOT}] \neq 0$ but $[S \otimes I, \text{CNOT}] = 0$ on the control qubit). This algebraic content is the genuinely quantum-computational aspect of the framework, but it is limited to cataloging which gates commute -- a well-known and finite set of relations for any given gate set.
+2. **Algebraic structure.** Phase-2a optimization exploits commutation relations between gates, which *are* properties of the operator algebra (e.g., $[H \otimes I, \text{CNOT}] \neq 0$ but $[S \otimes I, \text{CNOT}] = 0$ on the control qubit). This algebraic content is the genuinely quantum-computational aspect of the framework, but it is limited to cataloging which gates commute -- a well-known and finite set of relations for any given gate set.
 
 3. **What the framework does NOT claim.** The framework does not discover new quantum phenomena, prove lower bounds on quantum circuit complexity, or establish connections to quantum gravity, holography, or other areas of fundamental physics. The "structural ceiling" is a limit on a specific class of *classical algorithms* (peephole rewriters) applied to a specific *data structure* (gate sequences). It should not be confused with circuit complexity lower bounds (which concern the minimum number of gates needed to represent a unitary, regardless of algorithm).
 
@@ -156,9 +158,9 @@ This framing is not a limitation but a clarification: the framework occupies a w
 | Finding | Value | Source |
 |---------|-------|--------|
 | Phase 1 reduction on random circuits | $\approx$ 0% (all n, d) | E1--E5 |
-| Phase 2 additional reduction (random Universal) | $\approx$ 3.26% | E10 |
-| Phase 2 additional reduction (structured brickwork) | 0% | E10 |
-| Phase 2 reduction on Oracle (BV) circuits | ~20% | E11 |
+| Phase-2a additional reduction (random Universal) | $\approx$ 3.26% | E10 |
+| Phase-2a additional reduction (structured brickwork) | 0% | E10 |
+| Phase-2a reduction on Oracle (BV) circuits | ~20% | E11 |
 | Phase 1 reduction on CNOT chain | 100% | E11 |
 | Qiskit O3 mean reduction (real circuits) | 23.42% | E12 |
 | Our best optimizer mean (real circuits) | 11.48% | E11 |
@@ -175,14 +177,14 @@ The **structural ceiling** (Conjecture C1) is the fundamental limit on Phase 1 o
 
 3. **Therefore**, when $\mathcal{S}_1(C) = \emptyset$, all Phase 1 optimizers achieve exactly 0% reduction. This is a **structural property**, not an algorithmic failure.
 
-### The Phase 2 Advantage is Context-Dependent
+### The Phase-2 (a+b) Advantage is Context-Dependent
 
-Phase 2 (commutation rewriting) provides additional reduction only when:
+Phase-2a (commutation rewriting) provides additional reduction only when:
 - The circuit contains **commuting gate blocks** that can be reordered
 - **Non-adjacent inverse gates** exist that can be brought together
 - The circuit has **structural regularity** (repeating patterns)
 
-| Circuit Family | Phase 1 | Phase 2 Additional | Reason |
+| Circuit Family | Phase 1 | Phase-2a Additional | Reason |
 |---------------|---------|-------------------|--------|
 | Random Universal | 0% | ~3% | Rare commutation opportunities |
 | Structured brickwork | 0% | 0% | No commuting blocks to exploit |
@@ -206,7 +208,7 @@ Phase 2 (commutation rewriting) provides additional reduction only when:
 
 **WCL discovery and empirical implications.** When circuits are represented in WCL instead of LBL, the Phase-1 action space becomes non-empty for circuits that contain wire-consecutive inverse pairs. Empirically, WCL listing enables approximately 18% Phase-1 reduction on the same random circuit ensemble where LBL yields exactly 0%. This 18% figure is consistent with the density bound from Theorem 1(a): $\mathbb{E}[|\mathcal{A}_{\text{adj}}(C)|] = n(d-1) \cdot p_{\text{cancel}}(n, \rho)$, which for typical parameters yields a small but non-zero number of adjacent inverse pairs.
 
-**Interpretation.** The zero Phase-1 reduction observed in experiments E1--E5 is **not** a fundamental property of the random circuits themselves, but a consequence of the LBL listing model used by the generator. The circuits contain wire-level inverse pairs; LBL merely hides them from listing-adjacent Phase-1 detection. Phase-2 commutation rewriters (which operate on the circuit graph rather than the listing) are unaffected by this listing-model dependency, since they reason about wire-level adjacency rather than listing adjacency.
+**Interpretation.** The zero Phase-1 reduction observed in experiments E1--E5 is **not** a fundamental property of the random circuits themselves, but a consequence of the LBL listing model used by the generator. The circuits contain wire-level inverse pairs; LBL merely hides them from listing-adjacent Phase-1 detection. Phase-2a commutation rewriters (which operate on the circuit graph rather than the listing) are unaffected by this listing-model dependency, since they reason about wire-level adjacency rather than listing adjacency.
 
 **Recommendation.** Future experiments should either (a) adopt WCL as the default listing model for Phase-1 evaluation, or (b) include a wire-traversal pre-processing step that identifies wire-consecutive (not listing-adjacent) inverse pairs before Phase-1 optimization. This ensures that Phase-1 results reflect the circuit's intrinsic structure rather than an artifact of the data-structure ordering.
 
@@ -368,11 +370,11 @@ The Solovay-Kitaev algorithm constructs such a circuit in classical polynomial t
 
 #### 5.1 Quantum Circuit Optimization in Compilers
 
-Production compilers (Qiskit, Cirq, t|ket>) implement both Phase 1 and Phase 2. The complexity results here explain why:
+Production compilers (Qiskit, Cirq, t|ket>) implement both Phase 1 and Phase-2 (a+b). The complexity results here explain why:
 
 - **Phase 1** (adjacent cancellation) is fast ($O(|C|)$) and the conflict resolution subproblem is polynomial-time solvable via maximum matching (Proposition 1, corrected). The greedy scan provides a practical $O(|C|)$ approximation.
-- **Phase 2** (commutation-based rewriting) is slower (the general problem is believed to be hard, see Conjecture OP1) but necessary to exceed the Phase-1 ceiling.
-- **Template matching** (e.g., Qiskit's `TemplateOptimization`) is a form of Phase 2 with a fixed pattern library; its complexity is governed by subgraph isomorphism on the circuit graph, which is NP-hard.
+- **Phase-2a** (commutation-based rewriting) is slower (the general problem is believed to be hard, see Conjecture OP1) but necessary to exceed the Phase-1 ceiling.
+- **Template matching** (e.g., Qiskit's `TemplateOptimization`) is a form of Phase-2b with a fixed pattern library; its complexity is governed by subgraph isomorphism on the circuit graph, which is NP-hard.
 
 #### 5.2 Barren Plateaus and Circuit Complexity
 
@@ -405,7 +407,7 @@ This provides a *complexity-theoretic* explanation for the exponential decay of 
 | OP1 | CODP is QMA-hard (motivating open problem) | Weak -- reduction sketch | formal_results.md Conjectures |
 | OP2 | No PTAS for CODP (motivating open problem) | Weak -- MIS gap issues | formal_results.md Conjectures |
 | **C1** | **Phase 1 ceiling is structural** | **Strong -- Thm 2 + empirical** | formal_results.md Conjectures |
-| **C2** | **Phase 2 is context-dependent super-constant** | **Strong -- E10/E11** | formal_results.md Conjectures |
+| **C2** | **Phase-2 (a+b) is context-dependent super-constant** | **Strong -- E10/E11** | formal_results.md Conjectures |
 
 ### Theorems and Propositions (detailed in `formal_results.md`)
 
@@ -415,12 +417,12 @@ This provides a *complexity-theoretic* explanation for the exponential decay of 
 | Thm 1(b) | LBL listing model yields $\mathcal{S}_1(C) = \emptyset$ for $n \ge 2$ | [PROVEN -- structural] | formal_results.md Theorems |
 | Thm 2 | Phase-1 action-space identity / reduction ceiling | [PROVEN -- INSERTION cascade resolved (bounded version)] | formal_results.md Theorems |
 | Thm 2c | Bounded INSERTION cascade lemma ($R_{\text{removal}} \le 2k$) | [PROVEN -- insertion-debt invariant] | formal_results.md Appendix A |
-| Thm 2d | INSERTION commutation cascade bound ($\le$ Phase-2 action space) | [PROVEN -- wire-order invariant] | formal_results.md Appendix A |
+| Thm 2d | INSERTION commutation cascade bound ($\le$ Phase-2 (a+b) action space) | [PROVEN -- wire-order invariant] | formal_results.md Appendix A |
 | Lemma 3 | Commutation preserves equivalence | [PROVEN -- 1-line, supporting lemma] | formal_results.md Lemmas |
 | Lemma 4 | Greedy optimality for non-conflicting pairs | [PROVEN -- narrow scope, supporting lemma] | formal_results.md Lemmas |
 | Thm 5 | High-probability bound on inverse pairs (McDiarmid) | [PROVEN -- standard] | formal_results.md Theorems |
 | Thm 6 | Phase-1 ceiling exact for Clifford in canonical form | [PROVEN -- untested] | formal_results.md Theorems |
-| Thm 7 | Explicit circuit family with $\Omega(1)$ Phase-2 advantage | [PROVEN -- artificial] | formal_results.md Theorems |
+| Thm 7 | Explicit circuit family with $\Omega(1)$ Phase-2a advantage | [PROVEN -- artificial] | formal_results.md Theorems |
 | Thm 8 | Haar-random incompressibility + bounded-window limit | [PROVEN -- Parts a-b substantive; Part c trivial] | formal_results.md Theorems |
 | Thm 9 | Phase-2b/template-assisted advantage $\ge n/(4.5n+4)$ for BV oracle circuits | [PROVEN -- natural circuit family; pure Phase-2a bound open] | formal_results.md Appendix B |
 | Prop 1 | Conflict resolution is polynomial-time (maximum matching) | [CORRECTED] | formal_results.md Propositions |

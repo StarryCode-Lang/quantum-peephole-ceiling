@@ -10,6 +10,11 @@ the same gate-level structural checks in multiple locations.
 All functions accept a ``QuantumCircuit`` and one or two
 ``CircuitInstruction`` objects and return a boolean.
 
+NOTE: The commutation rules implemented here are SUFFICIENT but not NECESSARY.
+Some valid commutation relations may be missing (e.g., SWAP gate partial commutation,
+parameterized gate special angles). This may cause the optimizer to miss some
+optimization opportunities. See manuscript Section 3.2 for theoretical discussion.
+
 Version: 1.0.0
 """
 
@@ -117,6 +122,10 @@ def is_mergeable_rotation(circuit: QuantumCircuit, inst1, inst2) -> bool:
 # Z-family gates: all mutually commute on the same qubit.
 _Z_FAMILY = frozenset({'z', 'rz', 's', 'sdg', 't', 'tdg'})
 
+# X-family gates: commute with CNOT on the target qubit (CNOT conjugates
+# X -> X on target; RX is a linear combination of I and X, so also commutes).
+_X_FAMILY = frozenset({'x', 'rx'})
+
 
 def gates_commute(circuit: QuantumCircuit, inst1, inst2) -> bool:
     """Check if two gate instructions commute (sufficient conditions only).
@@ -132,6 +141,8 @@ def gates_commute(circuit: QuantumCircuit, inst1, inst2) -> bool:
     3. Both are same-axis rotation gates on the same qubit.
     4. Both are in the Z-family on the same qubit.
     5. CNOT commutes with Z-family rotations on its control qubit.
+    6. CNOT commutes with X-family rotations on its target qubit.
+    7. CZ commutes with Z-family rotations on either of its qubits.
     """
     q1_set = set(qubit_indices(circuit, inst1))
     q2_set = set(qubit_indices(circuit, inst2))
@@ -161,6 +172,21 @@ def gates_commute(circuit: QuantumCircuit, inst1, inst2) -> bool:
     if n1 == 'cx' and n2 in _Z_FAMILY and len(q2) == 1 and q2[0] == q1[0]:
         return True
     if n2 == 'cx' and n1 in _Z_FAMILY and len(q1) == 1 and q1[0] == q2[0]:
+        return True
+
+    # 6. CNOT commutes with X-family rotations on target qubit
+    #    (CNOT conjugates X -> X on target; RX = cos(a/2)I - i sin(a/2)X
+    #    is a linear combination of I and X, so also commutes.)
+    if n1 == 'cx' and n2 in _X_FAMILY and len(q2) == 1 and len(q1) == 2 and q2[0] == q1[1]:
+        return True
+    if n2 == 'cx' and n1 in _X_FAMILY and len(q1) == 1 and len(q2) == 2 and q1[0] == q2[1]:
+        return True
+
+    # 7. CZ commutes with Z-family rotations on either of its qubits
+    #    (CZ is symmetric; both qubits behave as "controls".)
+    if n1 == 'cz' and n2 in _Z_FAMILY and len(q2) == 1 and len(q1) == 2 and q2[0] in q1:
+        return True
+    if n2 == 'cz' and n1 in _Z_FAMILY and len(q1) == 1 and len(q2) == 2 and q1[0] in q2:
         return True
 
     return False

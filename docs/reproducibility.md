@@ -50,6 +50,16 @@ python scripts/reproduce_all.py --tests --figures --verify
 
 Full E1-E18 reruns are compute-sensitive. Record CPU, RAM, OS, Python version, Qiskit version, command lines, runtime, and any skipped optional compiler dependencies.
 
+## Effect size reporting
+
+Cliff's delta (non-parametric) and Hedges' g (bias-corrected Cohen's d) are computed for all pairwise optimizer comparisons using the canonical implementations in `analysis/phase1_statistics/effect_size.py`. Three scripts produce the effect-size outputs:
+
+- `analysis/generate_figures.py` — integrates effect sizes into the FDR correction table (`analysis/figures/fdr_correction_results.csv`) and writes E4 pairwise comparisons to `analysis/figures/e4_effect_sizes.csv`. The `_pairwise_effect_sizes` helper computes Cliff's delta and Hedges' g independently (separate try/except blocks) so that a zero-variance failure in Hedges' g does not suppress the Cliff's delta result.
+- `analysis/generate_effect_sizes.py` — standalone script that loads E1, E4, E10, E14, E19 and writes the machine-readable `analysis/figures/effect_sizes.csv` plus the formatted `analysis/figures/effect_sizes_summary.md`.
+- `analysis/summarize_effect_sizes.py` — extracts the effect-size columns from `fdr_correction_results.csv` into `analysis/figures/effect_sizes_summary.csv`.
+
+Coverage for the primary experiments: E4 (6 pairwise optimizer comparisons), E10 (Phase-1 vs Phase-2a), E11 (max pairwise across circuit families), E14 (16 per-family comparisons against the random baseline).
+
 ## Fidelity fallback characterization
 
 The fallback characterization is not automatic. Run it manually when auditing fidelity estimates:
