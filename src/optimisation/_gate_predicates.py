@@ -13,7 +13,7 @@ All functions accept a ``QuantumCircuit`` and one or two
 NOTE: The commutation rules implemented here are SUFFICIENT but not NECESSARY.
 Some valid commutation relations may be missing (e.g., SWAP gate partial commutation,
 parameterized gate special angles). This may cause the optimizer to miss some
-optimization opportunities. See manuscript Section 3.2 for theoretical discussion.
+optimization opportunities. See manuscript Section 4.1.5 for theoretical discussion.
 
 Version: 1.0.0
 """

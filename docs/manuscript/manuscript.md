@@ -583,7 +583,7 @@ COMMUTATION_REWRITER(C, max_iter, window):
     return C'
 ```
 
-**Commutation rules.** The implementation checks sufficient conditions: (1) disjoint qubit sets (always commute), (2) same single-qubit gate on same qubit, (3) same-axis rotations, (4) Z-family gates ($Z, R_z, S, S^\dagger, T, T^\dagger$) on the same qubit, (5) CNOT with Z-family on the control qubit.
+**Commutation rules.** The implementation checks sufficient conditions: (1) disjoint qubit sets (always commute), (2) same single-qubit gate on same qubit, (3) same-axis rotations, (4) Z-family gates ($Z, R_z, S, S^\dagger, T, T^\dagger$) on the same qubit, (5) CNOT with Z-family on the control qubit. These rules are sufficient but not necessary: some valid commutation relations (e.g., SWAP gate partial commutation, parameterized gate special angles) are not captured, potentially causing the optimizer to miss some optimization opportunities. This limitation is discussed in Section 6.3.
 
 **Time complexity.** $O(\text{max\_iter} \cdot m \cdot w^2)$ in the worst case, but typically $O(m \cdot w)$ due to early termination of the commutation check loop.
 
@@ -1444,6 +1444,28 @@ Experiment E18 reveals a 44.4% row-level failure rate (120/270 trials) when benc
 The E18 results should be interpreted as a limitation of the Clifford+T decomposition for optimization benchmarking, not as a limitation of the structural-ceiling framework itself. The framework's predictions are gate-set-specific: the ceiling for a given family may differ under different gate sets, and the trichotomy (Regime I, II, III) may shift as gates are decomposed. For fault-tolerant applications where Clifford+T is the native gate set, the framework's predictions should be applied to the decomposed circuit, not the original.
 
 The 44.4% failure rate demonstrates that Clifford+T decomposition is not universally applicable. The 150 surviving rows carry a mean fidelity of 0.7812 when computed over all non-NaN entries—a figure depressed by the 42 zero-fidelity rows and rising to approximately 1.0 on the strictly valid subset. This filtering enriches the survivor set for circuits whose gate composition is amenable to Clifford+T decomposition (fewer parameterized rotations, fewer non-Clifford multi-qubit gates), meaning reduction rates computed on survivors overstate the optimism for the general circuit population. The ceiling for Clifford+T circuits is conditional on successful decomposition: it characterizes the optimization landscape only for circuits that survive the encoding step. A rerun on the full 270-row ensemble—contingent on fixing the decomposition pipeline defect responsible for the 42 fidelity-zero rows—is scheduled as future work.
+
+Table X: E18 Per-Family Decomposition Failure Distribution
+
+| Family | Total Rows | Failed | Failure Rate | Status |
+|--------|-----------|--------|--------------|--------|
+| Adder | 24 | 0 | 0.0% | Success |
+| CNOT | 33 | 0 | 0.0% | Success |
+| GHZ | 33 | 0 | 0.0% | Success |
+| Oracle (BV) | 33 | 0 | 0.0% | Success |
+| RandomClifford | 33 | 0 | 0.0% | Success |
+| SurfaceCode | 33 | 0 | 0.0% | Success |
+| Grover | 10 | 7 | 70.0% | Partial |
+| QFT | 11 | 11 | 100% | Failed |
+| VQE | 8 | 8 | 100% | Failed |
+| QAOA | 11 | 11 | 100% | Failed |
+| UCCSD | 8 | 8 | 100% | Failed |
+| HardwareEfficient | 11 | 11 | 100% | Failed |
+| IQP | 11 | 11 | 100% | Failed |
+| QuantumWalk | 8 | 8 | 100% | Failed |
+| HaarRandom | 3 | 3 | 100% | Failed |
+
+Notably, the most practically relevant variational circuit families-VQE, QAOA, and UCCSD-are among the 8 families that completely fail Clifford+T decomposition, as their continuous rotation gates (Rz, Ry with arbitrary angles) cannot be exactly represented without Solovay-Kitaev approximation. Consequently, E18 results apply only to circuits with naturally discrete gate sets.
 
 ### 6.3.6 Listing-Model Dependence of the Ceiling
 

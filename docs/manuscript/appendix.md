@@ -53,6 +53,8 @@
 | E17 | Hardware connectivity constraints | data/v5/e17/ | C5 |
 | E18 | Clifford+T gate-set experiment | data/v5/e18/ | C6, C7; survivorship-biased |
 
+**E18 Supplementary Data**: The complete per-optimizer and per-family failure analysis is available in `data/v5/e18/e18_survivor_bias_report.csv` (see supplementary materials).
+
 ## v6 Experiments and Preliminary Artifacts
 
 | experiment_id | description | data dir | key claim | status |
