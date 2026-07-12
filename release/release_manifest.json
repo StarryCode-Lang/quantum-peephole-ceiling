@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-07-12T01:10:16.826629+00:00",
+  "created_utc": "2026-07-12T01:30:03.917687+00:00",
   "datasets": [
     {
       "experiment_id": "E01",
@@ -192,24 +192,24 @@
     }
   ],
   "environment": {
-    "env_id": "q-research-20260712_011016",
+    "env_id": "q-research-20260712_013003",
     "packages": {
-      "matplotlib": "3.10.9",
-      "numpy": "2.2.6",
-      "pandas": "2.3.3",
+      "matplotlib": "3.9.0",
+      "numpy": "1.26.4",
+      "pandas": "2.2.2",
       "qiskit": "2.4.1",
-      "scipy": "1.15.3",
-      "tqdm": "4.67.3"
+      "scipy": "1.13.1",
+      "tqdm": "4.66.4"
     },
-    "platform": "Windows-10-10.0.26200-SP0",
-    "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]"
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]"
   },
   "git": {
     "branch": "master",
-    "commit": "a15ad859d5d8279e10f08deef936ca8f83e7e5b7",
+    "commit": "f4ddadbb84e00bb8d06e82e4768c8f0360cc5cfb",
     "dirty": false
   },
-  "release_id": "q-research-20260712_011016",
+  "release_id": "q-research-20260712_013003",
   "reproduction": {
     "conda_env": "q-research",
     "entrypoints": [
@@ -245,7 +245,7 @@
     "scripts/generate_release_manifest.py": "3db2386dc5024be8efe5d0c4459e9fcff9aa51bb574c385ce344c7d69760ff8d",
     "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
     "src/circuits/real_benchmarks.py": "5f137e8efaf872cc2205f2e2cac5e4420c014d7fa3ac0cf440e04dad7e4dd82a",
-    "src/optimisation/_gate_predicates.py": "b66e38ac4a3503eff7382d820cd994cb0080061641176f7f6be6215d552970c9",
+    "src/optimisation/_gate_predicates.py": "0602937660d156dfb34683c96984e2337728a5c61f01528119c6cdc012266b72",
     "src/optimisation/base.py": "ac66c71751b45bec9a2f74fbbc84f5c17edba094bd433a6c89639e628cbd8e4e",
     "src/optimisation/ceiling_aware.py": "37c4fd77b5098d4369b8f68d898fc988748b03f98582f82fec46b050df76ce8f",
     "src/optimisation/phase1/genetic_algorithm.py": "9093c26527029c80b0feee3f8612681291b2b7c809d64c61b186ece195cd7e03",
