@@ -25,14 +25,14 @@ Notation specific to this document:
 
 ## Section 1: Theorems (Fully Proven)
 
-### Theorem 1: Adjacent Inverse Pair Density in Random Circuits
+### Observation 1 (formerly Theorem 1): Adjacent Inverse Pair Density in Random Circuits
 
 > **Listing-model note (added 2026-06-13).** The number of adjacent inverse pairs depends critically on the **circuit listing model** -- how gates are ordered in the circuit data structure. We distinguish two models:
 >
 > - **Wire-consecutive listing (WCL):** Gates on the same qubit wire are placed consecutively in the listing. This is the natural model for circuit diagrams and some synthesis tools.
 > - **Layer-by-layer listing (LBL):** The circuit is generated layer by layer, with one gate per qubit per layer. Gates on the same qubit at layers $L$ and $L+1$ are separated by $n-1$ intervening gates from other qubits. This is the model used by our `UniversalGenerator` (`src/circuits/generator_v2.py`).
 >
-> Theorem 1(a) applies to WCL; Theorem 1(b) proves that LBL yields a structurally empty Phase-1 action space for $n \ge 2$.
+> Observation 1(a) applies to WCL; Observation 1(b) proves that LBL yields a structurally empty Phase-1 action space for $n \ge 2$.
 
 **Statement (a): Wire-consecutive listing model.** Let $C(n, d, \rho)$ be a random circuit on $n$ qubits of depth $d$ with two-qubit gate density $\rho$, represented in a wire-consecutive listing where gates on the same qubit are adjacent in the circuit listing. Assume single-qubit gates are drawn uniformly from $\mathcal{G}_1$ with $|\mathcal{G}_1| = g_1$, and two-qubit gates from $\mathcal{G}_2$ with $|\mathcal{G}_2| = g_2$. The expected number of listing-adjacent inverse pairs is
 
@@ -82,7 +82,9 @@ Consequently, $R_1(C) = 0$ for every Phase-1 optimizer, regardless of the circui
 
 **Step 4: Conclusion.** By Theorem 2(a), if $\mathcal{S}_1(C) = \emptyset$ and no consecutive rotation gates on the same qubit admit merging, then the Greedy optimizer achieves zero reduction. Under LBL, consecutive gates on the same qubit are separated by $n-1 \ge 1$ intervening gates, so no consecutive rotation pairs exist on the same qubit either. Therefore $R_1(C) = 0$ for all Phase-1 optimizers. $\blacksquare$
 
-**Remark.** Theorem 1(b) explains the empirically observed zero standard deviation in E1 (25,000 trials): the generator uses LBL, so $\mathcal{S}_1(C)$ is structurally empty for every generated circuit. This is not a bug but a property of the listing model. To test Phase-1 cancellation empirically under conditions where Theorem 1(a) applies, circuits must use WCL or the optimizer must include a wire-traversal pre-processing step that identifies wire-consecutive (not listing-adjacent) inverse pairs. Our Phase-2a commutation rewriter (which operates on the circuit graph rather than the listing) is not affected by this listing-model dependency.
+**Remark.** Observation 1(b) explains the empirically observed zero standard deviation in E1 (25,000 trials): the generator uses LBL, so $\mathcal{S}_1(C)$ is structurally empty for every generated circuit. This is not a bug but a property of the listing model.
+
+**Note on depth.** Part (b) follows directly from the definition of LBL listing and the Phase-1 action space. Under LBL, gates are grouped by circuit layer, meaning adjacent gates in the listing act on disjoint qubit sets. Since Phase-1 cancellation requires adjacent gates to share at least one qubit, the action space is trivially empty. This is a definitional observation rather than a deep structural theorem.
 
 ---
 
@@ -216,6 +218,8 @@ $$
 
 This establishes Conjecture C2 constructively for Phase-2a.
 
+**Nature of the construction.** The hardness family constructed in Theorem 7 is an artificial circuit family designed specifically to demonstrate that the Phase-2a advantage bound is achievable. It is not a naturally occurring circuit family and should not be interpreted as evidence that natural circuit families exhibit this behavior. The theorem is an existence proof, not an empirical claim about practical circuits.
+
 **Status.** [PROVEN + EMPIRICALLY VALIDATED] Experiment E24 instantiates this family for $n = 4, 6, \dots, 12$ (5 trials each) and measures mean Phase-1 reduction $0.0000$ and mean Phase-2a reduction $0.7980 \gg 1/6$, confirming the $\Omega(1)$ Phase-2a advantage.  The construction uses only commutation rewriting (Phase-2a), not template matching (Phase-2b).
 
 **Construction.** For each even $n \ge 4$, define $C_n$ as the following layered circuit:
@@ -315,7 +319,7 @@ $$
 
 For Haar-random $U$ with $nd = \text{poly}(n)$, the second term dominates and gives $R_A(C) \to 0$ regardless of $k, w$. $\blacksquare$
 
-**Corollary 8.1.** For Haar-random circuits of depth $d = \text{poly}(n)$, the maximum achievable gate-count reduction by *any* algorithm -- bounded or unbounded window, any search strategy (greedy, stochastic, learning-based, or exhaustive) -- approaches zero doubly-exponentially fast in $n$. This provides an asymptotic information-theoretic bound for the Haar-random regime, complementary to the combinatorial explanation of the E1--E5 observations via Theorem 1(b).
+**Corollary 8.1.** For Haar-random circuits of depth $d = \text{poly}(n)$, the maximum achievable gate-count reduction by *any* algorithm -- bounded or unbounded window, any search strategy (greedy, stochastic, learning-based, or exhaustive) -- approaches zero doubly-exponentially fast in $n$. This provides an asymptotic information-theoretic bound for the Haar-random regime, complementary to the combinatorial explanation of the E1--E5 observations via Observation 1(b).
 
 **Corollary 8.2.** For circuits of depth $d = \Theta(4^n / n^2)$ (near the complexity threshold), bounded-window optimizers with fixed $k, w$ achieve $R(C) \le kw / nd \to 0$, while unbounded optimizers may achieve $\Omega(1)$ reduction as the circuit approaches the complexity boundary. The transition at $d \sim 4^n / n^2$ separates an incompressible regime from a potentially compressible one.
 
@@ -329,7 +333,7 @@ For Haar-random $U$ with $nd = \text{poly}(n)$, the second term dominates and gi
 
 **Regime separation.** For typical E1--E5 parameters (e.g., $n = 10$, $d = 50$, $|C| \approx 500$ gates), the Haar-random complexity threshold is $4^n / n^2 \approx 10{,}486$ gates. The experimental circuits are therefore far from the Haar-random regime. Theorem 8 should be treated as an asymptotic worst-case / complementary information-theoretic bound, not as a direct explanation of the E1--E5 empirical observations.
 
-**What explains the experiments.** The empirical $\sim 0\%$ Phase-1 reduction observed in E1--E5 is explained by Theorem 1 (adjacent inverse-pair density) and Theorem 1(b) (layer-by-layer listing empties the Phase-1 action space), not by Haar-random incompressibility. Corollary 8.1 is a valid asymptotic statement about the optimization desert, but it does not apply pointwise to the shallow random gate sequences used in the experiments.
+**What explains the experiments.** The empirical $\sim 0\%$ Phase-1 reduction observed in E1--E5 is explained by Theorem 1 (adjacent inverse-pair density) and Observation 1(b) (layer-by-layer listing empties the Phase-1 action space), not by Haar-random incompressibility. Corollary 8.1 is a valid asymptotic statement about the optimization desert, but it does not apply pointwise to the shallow random gate sequences used in the experiments.
 
 **Practical implication.** Theorem 8 should not be invoked to explain the low reduction in E1--E5; the correct explanation is the combinatorial sparsity of inverse pairs under the LBL listing model.
 
@@ -496,14 +500,14 @@ Quantum circuits can be represented in (at least) three data structures, each af
 - **Structure**: The circuit is a flat sequence $C = (g_1, \ldots, g_m)$ where gates are ordered layer by layer. Within each layer, gates on different qubits are listed in qubit-index order.
 - **Adjacency**: Two gates are "listing-adjacent" if their indices differ by 1. Under LBL with $n \ge 2$ qubits, two gates on the *same* qubit are never listing-adjacent (they are separated by $n-1$ gates from other qubits).
 - **Used by**: This project's `UniversalGenerator` (`src/circuits/generator_v2.py`).
-- **Theorem 1(b) consequence**: $\mathcal{S}_1(C) = \emptyset$ structurally -- Phase-1 action space is empty by construction.
+- **Observation 1(b) consequence**: $\mathcal{S}_1(C) = \emptyset$ structurally -- Phase-1 action space is empty by construction.
 
 #### 5.1.2 Wire-Consecutive Listing (WCL)
 
 - **Structure**: The circuit is a flat sequence where gates on the same qubit wire are listed consecutively.
 - **Adjacency**: Two successive gates on the same qubit are listing-adjacent.
 - **Used by**: Some synthesis tools; circuit diagrams (when read wire-by-wire).
-- **Theorem 1(a) consequence**: $\mathcal{S}_1(C)$ is non-empty in expectation, with density $\approx p_{\text{cancel}}(n, \rho)$.
+- **Observation 1(a) consequence**: $\mathcal{S}_1(C)$ is non-empty in expectation, with density $\approx p_{\text{cancel}}(n, \rho)$.
 
 #### 5.1.3 Directed Acyclic Graph (DAG)
 
@@ -514,17 +518,17 @@ Quantum circuits can be represented in (at least) three data structures, each af
 
 ### 5.2 The Listing--DAG Gap
 
-**The core observation.** Theorem 1(b) proves that under LBL, $\mathcal{S}_1(C) = \emptyset$ for $n \ge 2$. This is a property of the *listing*, not of the *circuit*. The same circuit, represented as a DAG (or as WCL), would expose wire-level inverse pairs to a peephole optimizer.
+**The core observation.** Observation 1(b) proves that under LBL, $\mathcal{S}_1(C) = \emptyset$ for $n \ge 2$. This is a property of the *listing*, not of the *circuit*. The same circuit, represented as a DAG (or as WCL), would expose wire-level inverse pairs to a peephole optimizer.
 
 **Implication for the structural ceiling.** The "structural ceiling" ($R_1 \approx 0\%$ on random circuits) observed in experiments E1--E5 is therefore **listing-conditional**:
 
 $$
-R_1^{\text{LBL}}(C) = 0 \quad \text{(Theorem 1(b), structural)} \\
-R_1^{\text{WCL}}(C) \approx 2 p_{\text{cancel}}(n, \rho) \quad \text{(Theorem 1(a), small but non-zero)} \\
+R_1^{\text{LBL}}(C) = 0 \quad \text{(Observation 1(b), structural)} \\
+R_1^{\text{WCL}}(C) \approx 2 p_{\text{cancel}}(n, \rho) \quad \text{(Observation 1(a), small but non-zero)} \\
 R_1^{\text{DAG}}(C) \approx R_1^{\text{WCL}}(C) \quad \text{(DAG sees wire-level adjacency, like WCL)}
 $$
 
-The empirical ~0% Phase-1 reduction in E1--E5 is explained by Theorem 1(b) (the LBL listing structurally empties the action space), **not** by any intrinsic incompressibility of the circuits. Under WCL or DAG representation, the same circuits would exhibit a small but non-zero Phase-1 reduction (~18% in our WCL experiment, consistent with Theorem 1(a)).
+The empirical ~0% Phase-1 reduction in E1--E5 is explained by Observation 1(b) (the LBL listing structurally empties the action space), **not** by any intrinsic incompressibility of the circuits. Under WCL or DAG representation, the same circuits would exhibit a small but non-zero Phase-1 reduction (~18% in our WCL experiment, consistent with Observation 1(a)).
 
 **This is not a flaw in the framework -- it is a feature.** The framework's value is in *characterizing* how the listing model affects peephole optimization. The LBL$\to$WCL gap (~18% vs 0%) is itself a measurable, theoretically-grounded result about the sensitivity of peephole optimization to circuit representation.
 
@@ -542,15 +546,15 @@ Production compilers (Qiskit `transpile`, Cirq, t|ket>) use DAG representations 
 
 #### 5.3.2 What the framework does NOT claim
 
-1. **Not a lower bound on DAG-compiler performance.** The framework does *not* claim that production DAG-based compilers are bounded by the LBL ceiling. A DAG-based compiler that performs wire-level cancellation directly would bypass Theorem 1(b) entirely. The empirical result that Qiskit O3 achieves ~23% reduction on real circuits (E12) -- far above our prototype's ~11% -- is consistent with this: Qiskit operates on a DAG and employs passes (commutation analysis, template matching, resynthesis) that go beyond Phase-1 listing-adjacent cancellation.
+1. **Not a lower bound on DAG-compiler performance.** The framework does *not* claim that production DAG-based compilers are bounded by the LBL ceiling. A DAG-based compiler that performs wire-level cancellation directly would bypass Observation 1(b) entirely. The empirical result that Qiskit O3 achieves ~23% reduction on real circuits (E12) -- far above our prototype's ~11% -- is consistent with this: Qiskit operates on a DAG and employs passes (commutation analysis, template matching, resynthesis) that go beyond Phase-1 listing-adjacent cancellation.
 
 2. **Not a complexity-theoretic lower bound.** The structural ceiling is a limit on a specific class of *classical algorithms* (listing-based peephole rewriters) applied to a specific *data structure* (gate listings). It is not a lower bound on quantum circuit complexity (which concerns the minimum number of gates to represent a unitary, regardless of algorithm or representation).
 
-3. **Not a claim about all peephole optimizers.** The framework's Phase-1 ceiling applies to optimizers that scan a listing and cancel listing-adjacent inverses. A DAG-based peephole optimizer that scans wire-adjacent gates is effectively operating in the WCL regime and is subject to Theorem 1(a), not Theorem 1(b).
+3. **Not a claim about all peephole optimizers.** The framework's Phase-1 ceiling applies to optimizers that scan a listing and cancel listing-adjacent inverses. A DAG-based peephole optimizer that scans wire-adjacent gates is effectively operating in the WCL regime and is subject to Observation 1(a), not Observation 1(b).
 
 #### 5.3.3 Honest scope statement
 
-The structural-ceiling framework should be read as: **"For listing-based peephole optimizers operating on LBL representations, Phase-1 reduction is structurally zero; the gap to WCL/DAG representations is ~18%, explainable by Theorem 1(a). Production DAG compilers operate in a different regime and are not bounded by this ceiling."**
+The structural-ceiling framework should be read as: **"For listing-based peephole optimizers operating on LBL representations, Phase-1 reduction is structurally zero; the gap to WCL/DAG representations is ~18%, explainable by Observation 1(a). Production DAG compilers operate in a different regime and are not bounded by this ceiling."**
 
 This is a narrower, more honest claim than "quantum circuits cannot be optimized by peephole methods." The narrower claim is defensible and useful; the broader claim is not supported.
 
@@ -581,7 +585,7 @@ Based on this analysis, the manuscript should:
 
 1. **Add a "Scope and Representation" subsection** in the Methodology chapter, explicitly stating that the structural ceiling is listing-conditional (LBL) and that DAG-based compilers operate in a different regime.
 
-2. **Reframe the central claim** from "Phase-1 peephole optimization achieves ~0% on random circuits" to "Phase-1 peephole optimization on LBL representations achieves ~0% on random circuits; under WCL/DAG representations, ~18% is achievable, consistent with Theorem 1(a)."
+2. **Reframe the central claim** from "Phase-1 peephole optimization achieves ~0% on random circuits" to "Phase-1 peephole optimization on LBL representations achieves ~0% on random circuits; under WCL/DAG representations, ~18% is achievable, consistent with Observation 1(a)."
 
 3. **Include a DAG comparison discussion** noting that production compilers (Qiskit O3 ~23%) exceed the prototype's Phase-1+2 (~11%) because they operate on DAGs and employ passes beyond the prototype's scope. This is not a failure of the framework -- it is a difference in representation and pass sophistication.
 
@@ -593,8 +597,8 @@ Based on this analysis, the manuscript should:
 
 | Question | Answer |
 |----------|--------|
-| Is the structural ceiling listing-conditional? | **Yes.** Theorem 1(b) is an LBL property; WCL/DAG expose ~18% reduction. |
-| Does the framework bound DAG-compiler performance? | **No.** DAG compilers bypass Theorem 1(b). The framework does not claim to bound them. |
+| Is the structural ceiling listing-conditional? | **Yes.** Observation 1(b) is an LBL property; WCL/DAG expose ~18% reduction. |
+| Does the framework bound DAG-compiler performance? | **No.** DAG compilers bypass Observation 1(b). The framework does not claim to bound them. |
 | Is the LBL$\to$WCL gap a real finding? | **Yes.** It quantifies representation sensitivity of peephole optimization. |
 | Is the Qiskit pass-isolation complete? | **No.** Only 5/15 families isolated; the rest must be downgraded to Future Work. |
 | Should the central claim be reframed? | **Yes.** From "0% on random circuits" to "0% under LBL; ~18% under WCL/DAG." |
@@ -1238,7 +1242,7 @@ As with Theorem 1, the Phase-1 result $R_1(BV_n) = 0$ depends on the listing mod
 
 The Phase-2b result is also listing-independent in the sense that the rewrite procedure operates on the circuit *graph* (wire-level adjacency), not on the listing order. However, the *gate-counting* of the rewrite depends on the initial listing: under WCL the $H$ gates are already adjacent to their CNOTs, so Stage B-1 is a no-op and the overhead is reduced.
 
-> **Connection to the broader listing-conditional framing.** The structural-ceiling framework (Conjecture C1, Theorem 1(b)) is explicitly **listing-conditional**: the Phase-1 ceiling $\mathcal{S}_1(C) = \emptyset$ is a property of the LBL listing, not of the circuit's intrinsic unitary. Theorem 9's Phase-1 result inherits this listing-conditionality.
+> **Connection to the broader listing-conditional framing.** The structural-ceiling framework (Conjecture C1, Observation 1(b)) is explicitly **listing-conditional**: the Phase-1 ceiling $\mathcal{S}_1(C) = \emptyset$ is a property of the LBL listing, not of the circuit's intrinsic unitary. Theorem 9's Phase-1 result inherits this listing-conditionality.
 
 ### Comparison with Theorem 7
 
