@@ -321,58 +321,53 @@ Output: OptimizationResult (C', reduction, fidelity)
 
 ### S5.1 Data File Inventory
 
-| Experiment | File | Records | Size (KB) | Checksum (SHA-256) |
-|------------|------|---------|-----------|-------------------|
-| E1 | e01_phase_transition_v2_20260611_195450.csv | 25,000 | 1,247 | — |
-| E2 | e02_entanglement_density_v2_20260611_191816.csv | 2,100 | 105 | — |
-| E3 | e03_scaling_v2_20260611_224540.csv | 12,000* | 598 | — |
-| E4 | e04_algorithm_comparison_v2_20260611_194858.csv | 400 | 46 | — |
-| E5 | e05_landscape_v2_20260611_191723.csv | 6,000 | 299 | — |
-| E10 | e10_expanded_phase1_vs_phase2_20260613_131601.csv | 1,905 | 95 | — |
-| E11 | e11_real_circuit_benchmark_e11_full_20260611_114615.csv | 426 | 60 | — |
-| E12 | e12_compiler_baseline_e12_full_20260613_051316.csv | 568 | 80 | — |
-| E13 | e13_structural_ceiling_e13_full_20260609_043322.csv | 56 | 8 | — |
-| E14 | e14_extended_benchmark_e14_full_20260611_114726.csv | 2,130 | 305 | — |
-| E15 | e15_multi_compiler_e15_full_20260611_150934.csv | 994 | 142 | — |
-| E16 | e16_window_scaling_e16_full_20260610_142547.csv | 696 | 100 | — |
-| E17 | e17_connectivity_e17_full_20260610_150935.csv | 755 | 108 | — |
-| E18 | e18_clifford_t_e18_full_20260610_052140.csv | 270** | 33 | — |
-| E19 | e19_listing_model_wcl_vs_lbl_full.csv | 10,000 | — | — |
-| E20 | e20_multi_compiler_full.csv | 1,070 | — | — |
-| E21 | e21_ceiling_aware_full.csv | 1,140 | — | — |
-| E23 | e23_ag_canonical_form.csv | 160 | — | — |
-| E24 | e24_theorem7_hardness_family.csv | 75 | — | — |
-| E25 | e25_industry_benchmarks.csv | 66 | — | — |
-| **Total (E1–E18, canonical)** | | **53,300** | | |
-| **Total (E1–E25, all experiments)** | | **over 67,000** | | |
+> Canonical file inventory. For the authoritative list with full SHA-256 checksums, see `release/release_manifest.json`.
 
-*Note: Verified SHA-256 checksums are stored in `release/release_manifest.json` and per-experiment `metadata.json` files.*
+| Experiment | File | Records | SHA-256 (prefix) |
+|------------|------|---------|-------------------|
+| E01 | e01_phase_transition_v2_20260613_132653.csv | 25,000 | - | 97efc30d5c6c3840... |
+| E02 | e02_entanglement_density_v2_20260613_130455.csv | 2,100 | - | 72ec3fc0d32aa98b... |
+| E03 | e03_scaling_v2_20260611_224540.csv | 12,000 | - | c08cf5ef5927df4b... |
+| E04 | e04_algorithm_comparison_v2_20260613_132653.csv | 400 | - | 496a5917dbb401a0... |
+| E05 | e05_landscape_v2_20260613_130355.csv | 6,000 | - | e09ab43749ef39e4... |
+| E11 | e11_merged_powered.csv | 519 | - | 3fe9f79934a1ed5e... |
+| E12 | e12_compiler_baseline_e12_full_20260626_000134_nocoupling.csv | 568 | - | 798e6d81ec8f327d... |
+| E13 | e13_structural_ceiling_e13_full_20260609_043322.csv | 56 | - | 5169ff846f45de43... |
+| HELDOU | new_families_heldout.csv | 125 | - | 7ae795207c673820... |
+| ISOLATION | qiskit_pass_isolation.csv | 100 | - | 29780f1aa0ac81d3... |
+| E10 | e10_expanded_phase1_vs_phase2_20260613_131601.csv | 1,905 | - | 4c8a28f45d99d6f4... |
+| E14 | e14_extended_benchmark_e14_full_20260611_114726.csv | 2,130 | - | bbd4acb346ae31c9... |
+| E15 | e15_multi_compiler_e15_full_20260611_150934.csv | 994 | - | 5d24d8fd595b738d... |
+| E16 | e16_window_scaling_e16_full_20260610_142547.csv | 696 | - | e54973f6a5bcc489... |
+| E17 | e17_connectivity_e17_full_20260610_150935.csv | 755 | - | 2a82d9e97de5fd6a... |
+| E18 | e18_clifford_t_e18_full_20260610_052140.csv | 270 | - | 1929e1f6a70ca43d... |
+| E10_PHASE2B | e10_phase2b_validation_20260622_115818.csv | 1,017 | - | f3f75237708d845a... |
+| E10_REAL_VARIANCE | e10_real_variance_20260623_012636.csv | 700 | - | cca42a3c783da29f... |
+| E19 | e19_wcl_listing_full_e19_full_20260620_123825.csv | 10,000 | - | cbc2b78823a9e67c... |
+| E20 | multi_compiler_full.csv | 1,070 | - | dfa892cfc74b65d4... |
+| E21 | ceiling_aware_comparison.csv | 1,140 | - | d8dc3953e74136e6... |
+| E21 | ceiling_aware_summary.csv | 30 | - | 88d9534a28130bdb... |
+| E21 | e21_paired_statistics.csv | 57 | - | a45c9a7b3c72d320... |
+| E25 | e25_industry_benchmarks_e25_industry_proxies_20260711_042550.csv | 66 | - | 5545e6a199e5e3da... |
+| E23 | e23_ag_canonical_results.csv | 160 | - | eecf3c52f30b2d19... |
+| E24 | e24_theorem7_results.csv | 75 | - | cdeb08e6a326d8b0... |
+| E24 | e24_theorem7_summary.csv | 15 | - | 8cb9444f0c76c583... |
+| **Total** | **27 datasets** | **67,948** | |
 
-\* E3: 38 rows with failed fidelity calculation (fidelity = 0.0) excluded from analysis; 12,000 total records before fidelity filter (11,962 after).
-\*\* E18: 42 rows with failed fidelity excluded; ~60% of circuit families fail Clifford+T decomposition.
+Checksums and file paths are canonical in `release/release_manifest.json`. Per-experiment metadata is in each `data/v*/e*/metadata.json`.
 
 ### S5.2 Data Format Specification
 
-All CSV files follow the same schema:
+The project uses 5 schema families across data versions. For the canonical schema definitions, field descriptions, and version mapping, see `docs/data_dictionary.md`.
 
-```
-experiment: int           // Experiment ID (1, 2, 3, 4, 5, 10)
-n_qubits: int             // Number of qubits
-depth: int                // Circuit depth
-trial: int                // Trial index within experiment
-seed: int                 // Random seed for reproducibility
-optimizer: str            // Optimizer name (greedy, rls, sa, ga, commutation, hybrid)
-gate_count: int           // Original gate count
-entanglement_entropy: float // Von Neumann entropy of reduced state
-normalized_entropy: float  // Entropy / log(2^n)
-original_size: int        // Original circuit size
-optimized_size: int       // Optimized circuit size
-reduction: float          // (original - optimized) / original
-fidelity: float           // Average gate fidelity (should be 1.0)
-success: bool             // reduction >= threshold
-runtime_seconds: float    // Optimization runtime
-optimizer_version: str    // Version string (e.g., "3.0.0")
-```
+**Schema families:**
+- `legacy_v2_v3`: E1-E5 (early experiments, v2/v3 format)
+- `results_v1`: E11-E13 (real-circuit benchmarks)
+- `results_v2`: E10, E14-E18, held-out, isolation (expanded benchmarks)
+- `results_v6`: E19-E21 (listing model, multi-compiler, ceiling-aware)
+- `results_v7`: E23-E25 (theory validation, industry benchmarks)
+
+Each CSV file's schema is recorded in its experiment's `metadata.json` under the `schema` field.
 
 ---
 

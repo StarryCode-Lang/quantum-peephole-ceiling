@@ -333,6 +333,7 @@ class Phase2bTemplateMatcher(BaseOptimizer):
         return cancellations
 
     def _is_h_cx_h_control(self, circuit: QuantumCircuit, first, middle, last) -> bool:
+        """Check if three consecutive gates form an H-CX-H pattern on the CX control qubit."""
         if first.operation.name != 'h' or middle.operation.name not in ('cx', 'cnot') or last.operation.name != 'h':
             return False
         first_qubits = self._get_qubit_indices(circuit, first)
@@ -346,6 +347,7 @@ class Phase2bTemplateMatcher(BaseOptimizer):
                 and cx_qubits[0] < cx_qubits[1])
 
     def _is_h_cx_h_target(self, circuit: QuantumCircuit, first, middle, last) -> bool:
+        """Check if three consecutive gates form an H-CX-H pattern on the CX target qubit."""
         if first.operation.name != 'h' or middle.operation.name not in ('cx', 'cnot') or last.operation.name != 'h':
             return False
         first_qubits = self._get_qubit_indices(circuit, first)
@@ -354,6 +356,7 @@ class Phase2bTemplateMatcher(BaseOptimizer):
         return len(first_qubits) == 1 and first_qubits == last_qubits and first_qubits[0] == cx_qubits[1]
 
     def _is_adjacent_h_pair(self, circuit: QuantumCircuit, first, second) -> bool:
+        """Check if two consecutive H gates on the same qubit form a cancellable pair."""
         return (
             first.operation.name == 'h'
             and second.operation.name == 'h'
@@ -361,12 +364,14 @@ class Phase2bTemplateMatcher(BaseOptimizer):
         )
 
     def _is_s_sdag_pair(self, circuit: QuantumCircuit, first, second) -> bool:
+        """Check if two consecutive gates are S and Sdg on the same qubit."""
         names = (first.operation.name, second.operation.name)
         if sorted(names) != ['s', 'sdg']:
             return False
         return self._get_qubit_indices(circuit, first) == self._get_qubit_indices(circuit, second)
 
     def _is_cz_cz_pair(self, circuit: QuantumCircuit, first, second) -> bool:
+        """Check if two consecutive CZ gates act on the same qubit pair."""
         if first.operation.name != 'cz' or second.operation.name != 'cz':
             return False
         qubits1 = set(self._get_qubit_indices(circuit, first))
@@ -374,6 +379,7 @@ class Phase2bTemplateMatcher(BaseOptimizer):
         return qubits1 == qubits2 and len(qubits1) == 2
 
     def _replace_with_reversed_h_cx_h(self, circuit: QuantumCircuit, index: int, control: int, target: int) -> None:
+        """Replace H-CX(control,target)-H with H-CX(target,control)-H (CNOT direction reversal)."""
         for _ in range(3):
             circuit.data.pop(index)
         replacement = [
@@ -385,11 +391,13 @@ class Phase2bTemplateMatcher(BaseOptimizer):
             circuit.data.insert(index + offset, instruction)
 
     def _replace_with_cz(self, circuit: QuantumCircuit, index: int, control: int, target: int) -> None:
+        """Replace a 3-gate H-CX-H block with a single CZ gate."""
         for _ in range(3):
             circuit.data.pop(index)
         circuit.data.insert(index, CircuitInstruction(CZGate(), (circuit.qubits[control], circuit.qubits[target]), ()))
 
     def _cx_qubits(self, circuit: QuantumCircuit, inst) -> tuple[int, int]:
+        """Extract (control, target) qubit indices from a CX instruction."""
         qubits = self._get_qubit_indices(circuit, inst)
         if len(qubits) != 2:
             return (-1, -1)

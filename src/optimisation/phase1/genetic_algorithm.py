@@ -17,6 +17,18 @@ import time
 from ..base import BaseOptimizer, OptimizationResult
 
 
+def _fast_copy(circuit: QuantumCircuit) -> QuantumCircuit:
+    """Shallow-copy a circuit's gate list without deep-copying registers.
+
+    CircuitInstruction objects are immutable, so sharing them across
+    circuit copies is safe. Only the ``data`` list needs a fresh copy
+    so pop/insert on one circuit does not affect others.
+    """
+    new_circuit = QuantumCircuit(circuit.num_qubits, circuit.num_clbits)
+    new_circuit.data = circuit.data.copy()
+    return new_circuit
+
+
 class GeneticAlgorithmOptimizer(BaseOptimizer):
     """
     Genetic Algorithm optimizer.
@@ -44,16 +56,16 @@ class GeneticAlgorithmOptimizer(BaseOptimizer):
             target = circuit
         
         # Initialize population with random valid moves applied to the original
-        population = [copy.deepcopy(circuit)]
+        population = [_fast_copy(circuit)]
         for _ in range(self.population_size - 1):
-            individual = copy.deepcopy(circuit)
+            individual = _fast_copy(circuit)
             # Apply 1-3 random moves to create diversity
             num_moves = self.rng.randint(1, 4)
             for _ in range(num_moves):
                 individual = self._generate_neighbor(individual)
             population.append(individual)
         
-        best = copy.deepcopy(circuit)
+        best = _fast_copy(circuit)
         best_fitness = self._fitness(best, target)
         
         for generation in range(self.generations):
@@ -63,7 +75,7 @@ class GeneticAlgorithmOptimizer(BaseOptimizer):
             # Find best
             gen_best_idx = np.argmax(fitnesses)
             if fitnesses[gen_best_idx] > best_fitness:
-                best = copy.deepcopy(population[gen_best_idx])
+                best = _fast_copy(population[gen_best_idx])
                 best_fitness = fitnesses[gen_best_idx]
             
             # Selection (tournament)
@@ -102,11 +114,11 @@ class GeneticAlgorithmOptimizer(BaseOptimizer):
     def _tournament_select(self, population: List[QuantumCircuit], fitnesses: List[float]) -> List[QuantumCircuit]:
         """Tournament selection."""
         if len(population) <= 1:
-            return [copy.deepcopy(population[0])] if population else []
+            return [_fast_copy(population[0])] if population else []
         selected = []
         for _ in range(len(population)):
             i, j = self.rng.choice(len(population), 2, replace=False)
-            selected.append(copy.deepcopy(population[i] if fitnesses[i] > fitnesses[j] else population[j]))
+            selected.append(_fast_copy(population[i] if fitnesses[i] > fitnesses[j] else population[j]))
         return selected
     
     def _crossover(self, parent1: QuantumCircuit, parent2: QuantumCircuit,
@@ -130,7 +142,7 @@ class GeneticAlgorithmOptimizer(BaseOptimizer):
         
         # Need at least 2 gates in each parent for meaningful crossover
         if n1 < 2 or n2 < 2:
-            return copy.deepcopy(parent1), copy.deepcopy(parent2)
+            return _fast_copy(parent1), _fast_copy(parent2)
         
         # Find safe cut points in parent1: positions where consecutive gates
         # act on disjoint qubits (so swapping a segment won't break qubit coherence)
@@ -153,11 +165,11 @@ class GeneticAlgorithmOptimizer(BaseOptimizer):
             
             # Child 1: parent1[:cut1] + parent2[cut2:] (if qubit counts match)
             child1 = QuantumCircuit(parent1.num_qubits)
-            child1.data = copy.deepcopy(parent1.data[:cut1]) + copy.deepcopy(parent2.data[cut2:])
+            child1.data = parent1.data[:cut1] + parent2.data[cut2:]
             
             # Child 2: parent2[:cut2] + parent1[cut1:]
             child2 = QuantumCircuit(parent2.num_qubits)
-            child2.data = copy.deepcopy(parent2.data[:cut2]) + copy.deepcopy(parent1.data[cut1:])
+            child2.data = parent2.data[:cut2] + parent1.data[cut1:]
             
             # Always verify unitary equivalence.
             # For small circuits (n <= MAX_EXACT_FIDELITY_QUBITS), calculate_fidelity
@@ -166,23 +178,23 @@ class GeneticAlgorithmOptimizer(BaseOptimizer):
             try:
                 f1 = self.calculate_fidelity(child1, target)
                 if f1 < self.fidelity_threshold:
-                    child1 = copy.deepcopy(parent1 if fitness1 >= fitness2 else parent2)
+                    child1 = _fast_copy(parent1 if fitness1 >= fitness2 else parent2)
             except Exception:
-                child1 = copy.deepcopy(parent1 if fitness1 >= fitness2 else parent2)
+                child1 = _fast_copy(parent1 if fitness1 >= fitness2 else parent2)
             
             try:
                 f2 = self.calculate_fidelity(child2, target)
                 if f2 < self.fidelity_threshold:
-                    child2 = copy.deepcopy(parent2 if fitness2 >= fitness1 else parent1)
+                    child2 = _fast_copy(parent2 if fitness2 >= fitness1 else parent1)
             except Exception:
-                child2 = copy.deepcopy(parent2 if fitness2 >= fitness1 else parent1)
+                child2 = _fast_copy(parent2 if fitness2 >= fitness1 else parent1)
             
             return child1, child2
         
         # Fallback: no safe cut points found, return mutated copies of stronger parent
-        stronger = copy.deepcopy(parent1 if fitness1 >= fitness2 else parent2)
+        stronger = _fast_copy(parent1 if fitness1 >= fitness2 else parent2)
         child1 = self._generate_neighbor(stronger)
-        child2 = self._generate_neighbor(copy.deepcopy(stronger))
+        child2 = self._generate_neighbor(_fast_copy(stronger))
         return child1, child2
     
     def _mutate(self, circuit: QuantumCircuit) -> QuantumCircuit:

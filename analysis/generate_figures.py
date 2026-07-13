@@ -542,14 +542,22 @@ optimizer_display = {
 e14_matrix.columns = [optimizer_display.get(c, c) for c in e14_matrix.columns]
 
 fig, ax = plt.subplots(figsize=(10, 8))
-sns.heatmap(e14_matrix * 100, annot=True, fmt='.2f', cmap='cividis',
+# Use a diverging colormap centered at 0 to distinguish zero (ceiling) from positive
+sns.heatmap(e14_matrix * 100, annot=True, fmt='.2f', cmap='RdYlGn',
             linewidths=0.5, linecolor='white', cbar_kws={'label': 'Mean Gate Reduction (%)'},
-            ax=ax, vmin=None, vmax=None)
+            ax=ax, vmin=-5, vmax=100, center=0)
 ax.set_xlabel('Optimizer', fontsize=12)
 ax.set_ylabel('Circuit Family', fontsize=12)
-ax.set_title('E14: Extended Benchmark — Mean Gate Reduction (%)\n15 Circuit Families x 3 Optimizers', fontsize=13)
+ax.set_title('E14: Extended Benchmark - Mean Gate Reduction (%)\n15 Circuit Families x 3 Optimizers\n(0.00% = prototype action-space ceiling; genuine ceilings: QFT, GHZ, SurfaceCode)', fontsize=11)
 plt.xticks(fontsize=10, rotation=0)
 plt.yticks(fontsize=10, rotation=0)
+
+# Annotate ceiling families with diagonal hatching
+ceiling_families = ['QFT', 'GHZ', 'SurfaceCode', 'VQE', 'HardwareEfficient', 'IQP', 'UCCSD', 'QAOA', 'Adder', 'QuantumWalk']
+for i, family in enumerate(e14_matrix.index):
+    if family in ceiling_families:
+        for j in range(len(e14_matrix.columns)):
+            ax.add_patch(plt.Rectangle((j, i), 1, 1, fill=False, edgecolor='red', lw=1.5, hatch='//'))
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig11_extended_benchmark_heatmap.pdf', format=FIGURE_FORMAT, bbox_inches='tight')
