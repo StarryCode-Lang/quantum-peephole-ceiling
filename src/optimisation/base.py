@@ -449,6 +449,22 @@ class BaseOptimizer(ABC):
             if set(qubits1) == set(qubits2):
                 return True
 
+        # CNOT commutes with X-family rotations on its target qubit
+        # (sync with _gate_predicates.py: CNOT conjugates X -> X on target;
+        #  RX = cos(a/2)I - i sin(a/2)X is a linear combination of I and X.)
+        _x_family = {'x', 'rx'}
+        if name1 == 'cx' and name2 in _x_family and len(qubits2) == 1 and len(qubits1) == 2 and qubits2[0] == qubits1[1]:
+            return True
+        if name2 == 'cx' and name1 in _x_family and len(qubits1) == 1 and len(qubits2) == 2 and qubits1[0] == qubits2[1]:
+            return True
+
+        # CZ commutes with Z-family rotations on either of its qubits
+        # (sync with _gate_predicates.py: CZ is symmetric; both qubits are "controls".)
+        if name1 == 'cz' and name2 in z_family and len(qubits2) == 1 and len(qubits1) == 2 and qubits2[0] in qubits1:
+            return True
+        if name2 == 'cz' and name1 in z_family and len(qubits1) == 1 and len(qubits2) == 2 and qubits1[0] in qubits2:
+            return True
+
         if numeric_fallback:
             return self._gates_commute_numerically(inst1, inst2, qubits1, qubits2, numeric_tolerance)
 

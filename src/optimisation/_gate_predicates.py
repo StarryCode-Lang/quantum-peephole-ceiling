@@ -189,4 +189,15 @@ def gates_commute(circuit: QuantumCircuit, inst1, inst2) -> bool:
     if n2 == 'cz' and n1 in _Z_FAMILY and len(q1) == 1 and len(q2) == 2 and q1[0] in q2:
         return True
 
+    # 8. Two SWAP gates on the same qubit pair commute (bug #11 sync with base.py)
+    if n1 == 'swap' and n2 == 'swap' and len(q1) == 2 and len(q2) == 2:
+        if set(q1) == set(q2):
+            return True
+
+    # 9. Two CZ gates on the same qubit pair commute (bug #11 sync with base.py)
+    #    CZ is diagonal; diagonal operators always commute.
+    if n1 == 'cz' and n2 == 'cz' and len(q1) == 2 and len(q2) == 2:
+        if set(q1) == set(q2):
+            return True
+
     return False

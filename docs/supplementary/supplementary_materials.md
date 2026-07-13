@@ -344,7 +344,7 @@ Output: OptimizationResult (C', reduction, fidelity)
 | E24 | e24_theorem7_hardness_family.csv | 75 | — | — |
 | E25 | e25_industry_benchmarks.csv | 66 | — | — |
 | **Total (E1–E18, canonical)** | | **53,300** | | |
-| **Total (E1–E25, all experiments)** | | **65,811** | | |
+| **Total (E1–E25, all experiments)** | | **over 67,000** | | |
 
 *Note: Verified SHA-256 checksums are stored in `release/release_manifest.json` and per-experiment `metadata.json` files.*
 
