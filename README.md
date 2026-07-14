@@ -165,6 +165,27 @@ docker run q-research
 
 MIT License. See `LICENSE` for details.
 
+## Contributors
+
+### Human
+- **Author A** -- Conceived the study, designed experiments, implemented optimizers, wrote manuscript.
+- **Author B** -- Contributed to theoretical analysis and manuscript revision.
+
+### AI / Agent Assistants
+The following AI tools and agent frameworks contributed to code development, review, documentation, and remediation during this project:
+
+- **Claude Code** (Anthropic) -- Code review, refactoring, test generation, academic manuscript editing
+- **opencode** (Anomaly) -- Session orchestration, multi-agent task dispatch, integrated review pipeline
+- **Codex** (OpenAI) -- Code generation and debugging assistance
+- **Hermes** -- Agent infrastructure, skill management, experiment automation
+- **QoderWork CN** -- Manuscript polishing, academic paper review skills
+- **Trae CN** -- MCP server integration, sequential thinking analysis
+- **ZCode** -- CLI plugin support, commit workflow
+- **Kimi Code** (Moonshot) -- Literature search, web bridge research
+- **Mimocode** -- Configuration management, agent coordination
+
+All AI-generated code was reviewed, tested, and verified by the human authors. AI tools served as assistants; all scientific decisions, claims, and final manuscript content are the responsibility of the human authors.
+
 ## Contact
 
 **Data Integrity**: See `src/provenance.py` for the data provenance tracking implementation.  
