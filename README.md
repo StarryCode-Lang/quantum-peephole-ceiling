@@ -2,7 +2,6 @@
 
 **Project Version**: 6.0.0  
 **Date**: 2026-07-14  
-**Target Journal**: Quantum (quantum-journal.org) / ACM TQC / IEEE QCE
 
 ---
 
