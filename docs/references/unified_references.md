@@ -7,7 +7,7 @@
 > **Date**: 2026-07-10
 > **Scope**: Consolidates all references from `literature_review.md` (42 refs), `phase7_related_work.md` (12 refs), `v5_full_manuscript_part1/2/3.md`, and adds missing key works.
 >
-> **Pending additions**: A draft list of additional key references identified in `docs/07_optimization_plan.md` §4.6.1 is maintained in `missing_references_draft.md`. Verified entries are merged into this list as they are confirmed; unverified entries remain in the draft until bibliographic details are confirmed.
+> **Pending additions**: References are actively maintained in this file. All verifiable entries from earlier drafts have been merged with corrected bibliographic details.
 > **Format**: `[N] Authors, "Title," Journal/Conference, Year. arXiv:XXXX.XXXXX [if available]`
 
 ---

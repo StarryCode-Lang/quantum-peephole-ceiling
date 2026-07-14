@@ -50,7 +50,7 @@ from src.provenance import file_sha256, run_metadata  # noqa: E402
 SCHEMA_VERSION = "2.1.0"
 # Disambiguated from the experiment-registry E20 (Reproducibility Audit).
 # The manuscript refers to this experiment as "MC-E20" (Multi-Compiler full
-# comparison). See docs/06_manuscript/v5_full_manuscript_part3.md.
+# comparison). See docs/manuscript/manuscript.md.
 EXPERIMENT_ID = "MC-E20"
 VERSION = "1.1.0"
 

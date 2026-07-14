@@ -420,7 +420,7 @@ This matrix shows which experiments provide evidence for which theoretical resul
 *Document version: 1.1*
 *Last updated: 2026-06-17*
 *Author: Q-research Cross-Validation Analysis*
-*Source files: `docs/01_theory/lemmas.md` (v3.4), `docs/01_theory/conjectures.md` (v3.2), `docs/01_theory/framework.md` (v5.4.0), `docs/03_results/e10_analysis.md`, `docs/03_results/experimental_design.md` (v2.3), `docs/06_manuscript/v4_claim_evidence_map.md` (v5.0), `docs/06_manuscript/v4_tables.md`, `docs/FIX2_E1_Zero_Std_Analysis.md`*
+*Source files: `docs/theory/formal_results.md`, `docs/theory/framework.md`, `docs/results/experimental_design.md`, `docs/manuscript/manuscript.md`*
 
 *Changelog: v1.1 (2026-06-17) — Added E18 survivorship-bias caveat. Updated C2 row to reflect Phase-2a vs Phase-2b distinction (theoretical proofs use Phase-2b; experiments use Phase-2a). Cross-referenced limitations_and_future_work.md.*
 

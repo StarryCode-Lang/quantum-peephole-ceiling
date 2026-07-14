@@ -11,7 +11,7 @@
 - Script support for Qiskit, Cirq, t|ket>, and custom optimizers (`greedy_phase1`, `commutation_phase2`, `hybrid_phase1_2`).
 - No full-run `multi_compiler_full.csv` should be treated as canonical unless explicitly generated in full mode with compiler availability recorded.
 
-**Manuscript treatment**: The v6 manuscript is corrected to read "Qiskit-only" wherever E15 is invoked as evidence. Cirq and t|ket> numerical values are not reported as confirmed; any projection of their behavior is labeled as pass-mechanism inference, not measurement. See `docs/06_manuscript/limitations_and_future_work.md` §6 (Multi-Compiler Comparison Is Qiskit-Only) and §15.8 (E20: Multi-Compiler Full Comparison future-work item).
+**Manuscript treatment**: The v6 manuscript is corrected to read "Qiskit-only" wherever E15 is invoked as evidence. Cirq and t|ket> numerical values are not reported as confirmed; any projection of their behavior is labeled as pass-mechanism inference, not measurement. See `docs/manuscript/manuscript.md` §5.4 (Multi-Compiler Mechanism Analysis) and §6.3 (Limitations).
 
 **Notes on the generated full run**:
 - Custom Phase-1/Phase-2 optimizers were skipped (`--skip-custom`) in the full run to keep the three-compiler comparison tractable.

@@ -5,7 +5,7 @@
 
 > **Version**: 6.3
 > **Date**: 2026-07-09
-> **Scope**: Confirmed manuscript claims include E1-E18 canonical optimizer data, completed E19 WCL listing-model comparison (10,000 rows), completed E20 multi-compiler full CSV, completed E21 ceiling-aware full-mode evaluation (1,140 rows), validated Theorem 6 via E23, validated Theorem 7 via E24, and expanded Phase-2b template matcher with unit tests. A machine-readable version of this table is maintained at `docs/06_manuscript/claim_evidence_table.csv`.
+> **Scope**: Confirmed manuscript claims include E1-E18 canonical optimizer data, completed E19 WCL listing-model comparison (10,000 rows), completed E20 multi-compiler full CSV, completed E21 ceiling-aware full-mode evaluation (1,140 rows), validated Theorem 6 via E23, validated Theorem 7 via E24, and expanded Phase-2b template matcher with unit tests. A machine-readable version of this table is maintained at `docs/manuscript/claim_evidence_table.csv`.
 > **Caveats**: E18 conclusions remain survivorship-biased; full canonical-scale Phase-2b benchmark rerun remains future work.
 
 ---

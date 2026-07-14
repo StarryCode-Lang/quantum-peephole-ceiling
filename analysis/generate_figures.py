@@ -329,7 +329,7 @@ _e4_kw_groups = [g for g in _e4_kw_groups if len(g) > 0]
 _e4_kw_stat, _e4_kw_p = stats.kruskal(*_e4_kw_groups)
 # NOTE: Effect size (Cliff's delta / Hedges' g) is available via the
 # phase1_statistics module but not yet integrated into figure generation.
-# See docs/05_supplementary/supplementary_materials.md for effect-size tables.
+# See docs/supplementary/supplementary_materials.md for effect-size tables.
 _e4_kw_p = 1.0 if np.isnan(_e4_kw_p) else _e4_kw_p
 axes[0].text(0.02, 0.95, f'Kruskal-Wallis: p = {_e4_kw_p:.4f}\n(BH-FDR corrected in Fig. 8)',
             transform=axes[0].transAxes, fontsize=9, verticalalignment='top',
