@@ -168,8 +168,7 @@ MIT License. See `LICENSE` for details.
 ## Contributors
 
 ### Human
-- **Author A** -- Conceived the study, designed experiments, implemented optimizers, wrote manuscript.
-- **Author B** -- Contributed to theoretical analysis and manuscript revision.
+- **StarryCode-Lang** -- Conceived the study, designed experiments, implemented optimizers, wrote manuscript, directed all AI-assisted work.
 
 ### AI / Agent Assistants
 The following AI tools and agent frameworks contributed to code development, review, documentation, and remediation during this project:
