@@ -1756,6 +1756,6 @@ The authors declare no competing interests.
 
 [81] K. Patel, J. Shapira, and I. L. Markov, "Quantum circuit optimization: A survey," ACM Computing Surveys, vol. 55, no. 9, article 178, pp. 1-32, 2022. arXiv:2210.12035
 
-[82] T. Vandaele, "Depth optimization of quantum circuits: Survey and new insights," arXiv:2403.03028, 2024.
+[82] S. Bravyi, R. Shaydulin, S. Hu, and D. Maslov, "Clifford Circuit Optimization with Templates and Symbolic Pauli Gates," Quantum, vol. 5, article 580, 2021. arXiv:2105.02291
 
-[83] L. Burgholzer, R. Kueng, and R. Wille, "MQT Compiler: A framework for quantum circuit optimization via intermediate representations," IEEE Transactions on Quantum Engineering, 2024. arXiv:2312.09207
+[83] X. Li, J. Liu, S. Xu, P. Hovland, and V. Chaudhary, "HOPPS: Hardware-Aware Optimal Phase Polynomial Synthesis with Blockwise Optimization for Quantum Circuits," arXiv:2511.18770, 2025
