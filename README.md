@@ -1,24 +1,25 @@
-# Q-research: Boundary Characterization of Quantum Circuit Peephole Optimization
+# Q-research: Listing Model Sensitivity and Prototype Action-Space Ceilings in Quantum Circuit Optimization
 
 **Project Version**: 6.0.0  
-**Date**: 2026-07-07  
-**Target Journal**: Quantum (quantum-journal.org) / QCE / TQC
+**Date**: 2026-07-14  
+**Target Journal**: Quantum (quantum-journal.org) / ACM TQC / IEEE QCE
 
 ---
 
 ## Project Overview
 
-This project characterizes the fundamental boundaries of quantum circuit peephole optimization — specifically the structural limits of Phase 1 (adjacent-search) versus Phase 2 (commutation-enabled) optimization methods.
+This project characterizes the boundaries of quantum circuit peephole optimization across 15 circuit families and 6 optimizer types, with over 67,000 data rows across 27 datasets. The central contribution is the discovery that the circuit listing model (the data-structure ordering of gates) is the key factor governing Phase-1 adjacent-cancellation optimizer behavior.
 
 ### Core Scientific Question
-> What circuit structures CANNOT be optimized by peephole methods, and why?
+> When and why does peephole optimization succeed or fail across diverse circuit families?
 
-### Key Findings (v5.0.0)
-1. **Structural Ceiling**: Phase 1 optimizers achieve ~0% reduction on random circuits (45,500 trials)
-2. **No Phase Transition**: Reduction remains ~0% across all depths (1–50) and qubit counts (3–10)
-3. **Phase 2 Context-Dependent Advantage**: Commutation rewriting adds 3.26% on random circuits, 0% on structured brickwork, ~20% on Oracle/BV
-4. **Real-Circuit Divergence**: 10 of 15 circuit families at structural ceiling; Qiskit transpiler achieves additional gains beyond prototype peephole scope on selected families
-5. **Fidelity Verified with Caveats**: Optimizations preserve unitary equivalence where exact/scalable fidelity checks are available; E18 includes documented decomposition/fidelity-failure rows that are filtered in analysis
+### Key Findings (v6.0.0)
+1. **Listing Model Sensitivity**: Layer-by-layer listing (LBL) structurally empties the Phase-1 action space for n >= 2 (Observation 1(b)); wire-consecutive listing (WCL) exposes ~7.8% reduction hidden under LBL (E19, 10,000 rows)
+2. **Empirical Trichotomy**: CNOT chains achieve 100% Phase-1 reduction; oracle/Clifford circuits yield 14-16% via Phase-2a commutation; 3 of 15 families at genuine structural ceiling (QFT/GHZ/SurfaceCode) + 7 of 15 at prototype action-space ceiling
+3. **Prototype vs Production**: Production peephole optimizers (t|ket> FullPeepholeOptimise) achieve 5-63% on 5 of 7 "ceiling" families, confirming the ceiling is prototype-specific, not a structural limit of peephole optimization
+4. **Theory-Experiment Validation**: 8 observables cross-validated; Theorem 9 (BV oracle Phase-2b advantage >= n/(4.5n+4)) partially validated via fixture-scale Phase-2b template matching
+5. **Ceiling-Aware Optimization (Exploratory)**: 1.6x-228x speedup (mean 35x) with identical reduction on training families; held-out validation failed (MAE=0.2775, Pearson=NaN) -- classified as supplementary observation, not a validated predictive tool
+6. **Fidelity Verified**: Optimizations preserve unitary equivalence where exact/scalable checks are available; E18 includes documented decomposition/fidelity-failure rows (44.4% failure rate, survivorship-biased)
 
 ---
 
@@ -30,161 +31,108 @@ Q-research/
 │   ├── circuits/                 # Circuit generation (v2.1)
 │   ├── optimisation/
 │   │   ├── base.py              # Base optimizer class
+│   │   ├── _gate_predicates.py  # Shared gate predicate functions
+│   │   ├── ceiling_aware.py     # Ceiling-aware optimizer
 │   │   ├── phase1/              # Phase 1: Adjacent-search optimizers
-│   │   │   ├── greedy.py        # GreedyGateCancellation v3.0.0 (bug-fixed)
+│   │   │   ├── greedy.py        # GreedyGateCancellation v3.0.0
 │   │   │   ├── simulated_annealing.py
 │   │   │   ├── genetic_algorithm.py
-│   │   │   └── random_local_search.py
-│   │   └── phase2/              # Phase 2: Commutation-based optimizers
-│   │       └── commutation_rewriter.py
+│   │   │   ├── random_local_search.py
+│   │   │   └── wire_traversal.py # WCL preprocessing
+│   │   └── phase2/              # Phase 2: Commutation + template matching
+│   │       ├── commutation_rewriter.py  # Phase-2a
+│   │       └── template_matcher.py      # Phase-2b (fixture-scale)
 │   └── provenance.py            # Data provenance tracking
 │
 ├── experiments/                  # Experiment scripts (by ID)
-│   ├── e01_phase_transition/    # E1: Phase transition test (25,000 trials)
-│   ├── e02_entanglement_density/  # E2: Entanglement density sweep (2,100 trials)
-│   ├── e03_scaling/              # E3: Scaling analysis (12,000 trials)
-│   ├── e04_algorithm_comparison/ # E4: Algorithm comparison (400 trials)
-│   ├── e05_landscape/            # E5: Landscape characterization (6,000 trials)
-│   ├── e10_phase1_vs_phase2/     # E10: Phase 1 vs Phase 2 (1,905 canonical rows)
-│   ├── e11_real_circuit_benchmark/  # E11: Real-circuit optimizer benchmark (426 trials)
-│   ├── e12_compiler_baseline/       # E12: Qiskit compiler baseline (568 trials)
-│   ├── e13_structural_ceiling/      # E13: Structural ceiling analysis (56 trials)
-│   ├── e14_extended_benchmark/      # E14: Extended benchmark (2,130 trials)
-│   ├── e15_multi_compiler/          # E15: Compiler comparison (994 trials)
-│   ├── e16_window_scaling/          # E16: Window scaling (696 trials)
-│   ├── e17_connectivity/            # E17: Topology constraints (755 trials)
-│   └── e18_clifford_t/              # E18: Clifford+T decomposition (270 trials)
-│
-├── data/                         # Data (versioned)
-│   ├── v2_fixed/                # Re-run with fixed Greedy v3.0.0 (E1–E5)
-│   ├── v4/                      # Real-circuit, compiler-baseline, and ceiling outputs (E11–E13)
-│   ├── v5/                      # Extended benchmark suite (E10 expanded, E14–E18)
-│   └── v6/                      # Preliminary/planned artifacts (E19/E20/E21; not core canonical)
-│
-├── analysis/                     # Analysis scripts and figures
-│   ├── figures/                  # Generated analysis figures (17 vector PDF figures)
-│   ├── generate_figures.py       # Figure generation script
-│   ├── final_report.md           # Comprehensive experimental report
-│   ├── structural_ceiling.py      # Action-space / ceiling analysis utilities
-│   ├── finite_size_scaling.py     # Finite-size scaling analysis
-│   ├── phase1_statistics/        # Statistical methods toolkit
-│   └── phase2_threshold_sensitivity/  # Threshold sensitivity analysis
-│
+├── data/                         # Data (versioned: v2_fixed through v7)
+├── analysis/                     # Analysis scripts, figures, statistics
 ├── docs/                         # Documentation
-│   ├── theory/                  # Theoretical framework (definitions, theorems, conjectures, complexity)
-│   ├── results/                 # Results documentation (experimental design, analysis summary)
-│   ├── references/              # Literature review and unified references
-│   ├── manuscript/              # Manuscript and appendix (claims, scope, limitations)
-│   ├── supplementary/           # Supplementary materials for manuscript
-│   ├── archive/                 # Historical documentation (audit reports, checklists)
-│   ├── deliverables/             # Phase completion reports (.docx)
-│   ├── data_dictionary.md       # Canonical data dictionary
-│   ├── archive/                 # Historical planning docs, audit reports
-│
-├── scripts/                      # One-command reproduction scripts
-│   ├── reproduce_all.py         # Full reproduction pipeline
-│   └── generate_release_manifest.py
-│
+│   ├── theory/                  # Theoretical framework + formal results
+│   ├── results/                 # Experimental design + analysis summary
+│   ├── manuscript/              # Manuscript (v6) + supporting docs
+│   ├── supplementary/           # Supplementary materials
+│   └── data_dictionary.md       # Canonical data dictionary
+├── scripts/                      # Reproduction scripts
 ├── release/                      # Machine-readable release manifest
-├── environment.yml              # Conda environment specification
+├── tests/                        # 268 unit + statistical tests
+├── environment.yml              # Conda environment (Python 3.10+)
 ├── requirements.txt             # Pip requirements
-│
-├── logs/                         # Experiment execution logs
-├── tests/                        # Core and statistical tests
+├── Dockerfile                   # Docker container
+└── .github/workflows/ci.yml    # CI pipeline
 ```
-
----
-
-## Data Versioning Policy
-
-| Version | Description | Status | Location |
-|---------|-------------|--------|----------|
-| v1 | Original data (buggy `_are_inverse()`) | ARCHIVED | `archive/old_data/` |
-| v2 | Re-run with fixed Greedy v3.0.0 | **ACTIVE** | `data/v2_fixed/` |
-| v3 | New experiments (E10) — superseded by v5 | **SUPERSEDED** | `data/v5/e10/` (was `data/v3_extended/`) |
-| v4 | Real-circuit, compiler, ceiling (E11–E13) | **ACTIVE** | `data/v4/` |
-| v5 | Extended benchmark suite (E10 expanded, E14–E18) | **ACTIVE** | `data/v5/` |
-
-**Critical Note**: E1–E5 originally used a buggy Greedy optimizer where `_are_inverse()` did not check qubit matching. This was fixed in v3.0.0. All v1 data is archived in `archive/old_data/` for transparency.
 
 ---
 
 ## Experiment Registry
 
-| ID | Name | Status | Trials | Data Version | Key Result |
-|----|------|--------|--------|--------------|------------|
-| E1 | Phase Transition | **COMPLETE** | 25,000 | v2 | Mean reduction = 0.0000% at all depths 1–50 |
-| E2 | Entanglement Density | **COMPLETE** | 2,100 | v2 | No correlation with entanglement entropy |
-| E3 | Scaling | **COMPLETE** | 12,000 | v2 | Mean reduction = 0.0000% for n = 3–10 |
-| E4 | Algorithm Comparison | **COMPLETE** | 400 | v2 | All optimizers (Greedy/RLS/SA/GA) ~0% |
-| E5 | Landscape | **COMPLETE** | 6,000 | v2 | Flat landscape, rare deep minima (max 26.67%) |
-| E10 | Phase 1 vs Phase 2 | **COMPLETE** | 1,905 | v5 | Expanded Phase 1/Phase 2 comparison; supersedes 819-row intermediate run |
-| E11 | Real-Circuit Benchmark | **COMPLETE** | 426 | v4 | 15 circuit families × 3 optimizers |
-| E12 | Compiler Baseline | **COMPLETE** | 568 | v4 | Qiskit transpiler levels 0–3, all distinct |
-| E13 | Structural Ceiling | **COMPLETE** | 56 | v4 | Action-space and local commutation ceiling estimates |
-| E14 | Extended Benchmark | **COMPLETE** | 2,130 | v5 | 15 circuit families, extended metrics |
-| E15 | Compiler Comparison | **COMPLETE** | 994 | v5 | Custom peephole vs Qiskit transpiler (Cirq/t\|ket> see E20) |
-| E16 | Window Scaling | **COMPLETE** | 696 | v5 | Phase-2 window size saturation curves |
-| E17 | Connectivity | **COMPLETE** | 755 | v5 | Linear/grid/heavy-hex topology constraints |
-| E18 | Clifford+T | **COMPLETE** | 270 | v5 | Fault-tolerant gate-set decomposition (survivorship-biased) |
-| E19 | WCL Listing | **COMPLETE** | 10,000 | v6 | WCL mean reduction 7.83% vs LBL 0% on random circuits |
-| E20 | Multi-Compiler Full | **COMPLETE** | 1,070 | v6 | Qiskit/Cirq/t\|ket> compared on 15 families |
-| E21 | Ceiling-Aware | **COMPLETE** | 1,140 | v6 | 1.6x–228x speedup with identical reduction |
-| E23 | AG Canonical Form | **COMPLETE** | 160 | v7 | Thm 6: Phase-1 reduction = 0% on AG canonical Clifford |
-| E24 | Theorem 7 Hardness | **COMPLETE** | 75 | v7 | Phase-2a reduction = 79.8% (exceeds 1/6 bound) |
-| E25 | Industry Benchmarks | **COMPLETE** | 66 | v6 | Industry proxy circuit benchmarks |
+| ID | Name | Status | Rows | Key Result |
+|----|------|--------|------|------------|
+| E1 | Phase Transition | COMPLETE | 25,000 | Mean reduction = 0.0000% at all depths 1-50 (LBL) |
+| E2 | Entanglement Density | COMPLETE | 2,100 | No correlation with entanglement entropy |
+| E3 | Scaling | COMPLETE | 12,000 | Mean reduction = 0.0000% for n = 3-10 |
+| E4 | Algorithm Comparison | COMPLETE | 400 | All Phase-1 optimizers converge to ~0% |
+| E5 | Landscape | COMPLETE | 6,000 | Flat landscape, rare deep minima (max 26.67%) |
+| E10 | Phase 1 vs Phase 2 | COMPLETE | 1,905 | Phase-2a context-dependent advantage |
+| E10p2b | Phase-2b Validation | COMPLETE | 1,017 | Fixture-scale Phase-2b template matching |
+| E11 | Real-Circuit Benchmark | COMPLETE | 519 | 15 circuit families x 3 optimizers |
+| E12 | Compiler Baseline | COMPLETE | 568 | Qiskit transpiler levels 0-3 |
+| E13 | Structural Ceiling | COMPLETE | 56 | Prototype action-space ceiling proxy |
+| E14 | Extended Benchmark | COMPLETE | 2,130 | 15 circuit families, extended metrics |
+| E15 | Compiler Comparison | COMPLETE | 994 | Custom peephole vs Qiskit |
+| E16 | Window Scaling | COMPLETE | 696 | Phase-2 window size saturation |
+| E17 | Connectivity | COMPLETE | 755 | Linear/grid/heavy-hex topology |
+| E18 | Clifford+T | COMPLETE | 270 | Survivorship-biased (44.4% failure) |
+| E19 | WCL Listing | COMPLETE | 10,000 | WCL 7.83% vs LBL 0% on random circuits |
+| E20 | Multi-Compiler Full | COMPLETE | 1,070 | Qiskit/Cirq/t|ket> on 15 families |
+| E21 | Ceiling-Aware | COMPLETE | 1,140 | 1.6x-228x speedup (exploratory) |
+| E23 | AG Canonical Form | COMPLETE | 160 | Thm 6: Phase-1 = 0% on AG canonical Clifford |
+| E24 | Theorem 7 Hardness | COMPLETE | 75 | Phase-2a reduction = 79.8% (exceeds 1/6 bound) |
+| E25 | Industry Benchmarks | COMPLETE | 66 | Industry proxy circuit benchmarks |
 
-**Total Canonical Optimizer Trials (E1-E18)**: 53,300 rows. **Total (E1-E25)**: 65,811 rows.
+**Total**: over 67,000 data rows across 27 datasets.
 
 ---
 
-## Statistical Protocol (v3.0.0)
+## Statistical Protocol
 
-1. **Multiple Comparison Correction**: Benjamini-Hochberg FDR control across all experiments
-2. **Effect Size Reporting**: Cliff's delta + Cohen's d for all pairwise comparisons
-3. **Power Analysis**: Target β > 0.80 for all primary hypotheses
-4. **Bootstrap CI**: 10,000 resamples with convergence diagnostics
+1. **Multiple Comparison Correction**: Benjamini-Hochberg FDR control (q=0.05)
+2. **Effect Size Reporting**: Cliff's delta + Cohen's d + Glass's Delta (for zero-variance comparisons)
+3. **Power Analysis**: Target beta > 0.80; underpowered experiments labeled exploratory
+4. **Bootstrap CI**: 10,000 resamples with percentile method
 5. **Fidelity Distribution**: Full distribution reported (min, 25%, median, 75%, max)
-6. **Threshold Sensitivity**: All results reported at θ ∈ {1%, 5%, 10%, 20%}
+6. **Threshold Sensitivity**: Results reported at theta in {1%, 5%, 10%, 20%}
 
 ---
 
 ## Known Limitations
 
-> **Added 2026-06-11.** For full details, see `docs/results/experimental_design.md` Section 12.
+> Full details in `docs/manuscript/manuscript.md` Section 6.3 (13 subsections).
 
-The following limitations should be considered when interpreting results:
-
-| ID | Experiment | Limitation | Severity |
-|----|-----------|------------|----------|
-| L1 | E10 | N=9 per real-circuit condition (exploratory only) | Medium |
-| L2 | E12 | L1/L2/L3 degeneracy when transpiling without backend coupling map | Low |
-| L3 | E15/E20 | Cirq and t\|ket> comparisons completed in E20 (1,070 rows) | Low (resolved) |
-| L5 | E18 | ~60% circuit family decomposition failures to Clifford+T | Medium |
-| L6 | E3/E11/E18 | 83 total rows with failed fidelity calculation (0.17%) excluded from analysis | Low |
-| L7 | All | Random circuits: structural ceiling ~0% (worst-case benchmarks) | Low |
-| L8 | E20 | Multi-compiler comparison completed (Qiskit/Cirq/t\|ket>) — see E20 | Low (resolved) |
-
-**Theoretical corrections (2026-06-11):**
-- Proposition 1 (Phase-1 conflict resolution) was corrected: the problem is polynomial-time solvable via maximum matching, not NP-complete as previously claimed.
-- Theorem 6 was renamed to reflect its actual scope (Aaronson-Gottesman canonical form for Clifford circuits).
-- Supplementary S8.3 was rewritten to remove an invalid connection between peephole optimization and quantum supremacy.
+Key limitations:
+- Trichotomy is empirical observation on 15 pre-selected families, not universal law
+- Held-out validation failed (MAE=0.2775, Pearson=NaN) -- ceiling-aware model does not generalize
+- Phase-2b template matching validated at fixture scale only; full benchmark pending
+- E18 Clifford+T results are survivorship-biased (44.4% failure rate)
+- WCL validation (E19) limited to random Universal circuits
+- No random gate shuffler control performed
+- E04 uses single seed (acknowledged in limitations)
 
 ---
 
 ## Quick Start
 
-### Option 1: One-Command Reproduction (Recommended)
+### One-Command Reproduction
 
 ```bash
+# Verify data integrity (fast, no reruns)
+python scripts/reproduce_all.py --verify
+
 # Full reproduction: tests, all experiments, figures, and verification
 python scripts/reproduce_all.py --all
-
-# Or run individual components
-python scripts/reproduce_all.py --tests --experiments E1 E10 --figures --verify
 ```
 
-### Option 2: Manual Setup
+### Manual Setup
 
 ```bash
 # Setup environment
@@ -194,29 +142,31 @@ conda activate q-research
 # Or use pip
 pip install -r requirements.txt
 
-# Run unit tests
-python tests/test_core.py
+# Run tests
+python -m pytest tests/ -q
 
 # Run E1 (example)
 python experiments/e01_phase_transition/run.py
 
 # Generate figures
 python analysis/generate_figures.py
+```
 
-# Verify existing data integrity only (does not rerun experiments)
-python scripts/reproduce_all.py --verify
+### Docker
 
-# Run quick smoke benchmarks in the q-research conda env
-conda run -n q-research python experiments/e11_real_circuit_benchmark/run.py --mode smoke
-conda run -n q-research python experiments/e12_compiler_baseline/run.py --mode smoke
-conda run -n q-research python experiments/e13_structural_ceiling/run.py --mode smoke
-conda run -n q-research python scripts/generate_release_manifest.py
+```bash
+docker build -t q-research .
+docker run q-research
 ```
 
 ---
 
-## Contact & Attribution
+## License
 
-This project aims to provide a reproducible empirical study. Data, code, and analysis scripts are organized for auditability and future manuscript preparation.
+MIT License. See `LICENSE` for details.
 
-**Data Integrity Contact**: See `src/provenance.py` for the data provenance tracking implementation.
+## Contact
+
+**Data Integrity**: See `src/provenance.py` for the data provenance tracking implementation.  
+**Reproducibility**: See `docs/reproducibility.md` for full reproducibility documentation.  
+**Release Manifest**: `release/release_manifest.json` contains SHA-256 checksums for all datasets.
