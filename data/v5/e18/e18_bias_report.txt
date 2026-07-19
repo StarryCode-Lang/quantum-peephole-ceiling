@@ -1,0 +1,51 @@
+========================================================================
+E18 SURVIVORSHIP-BIAS CORRECTION REPORT
+========================================================================
+
+1. MISSINGNESS MECHANISM
+   Total rows           : 270
+   Valid (analyzable)    : 150 (55.6%)
+   Decompose-error rows  : 78 (gate-set incompatibility; systematic)
+   Fidelity-zero rows     : 42 (width > max_qubits_fidelity=10; systematic)
+   Total failed          : 120 (44.4%)
+
+2. FORMAL MISSINGNESS TESTS
+   Little's MCAR  : d2 = 49.959, df = 1, p = 1.570e-12
+   Verdict        : REJECT MCAR (missingness is NOT completely at random)
+   Chi2 failure x family  : systematic (see failure_analysis.md)
+   Classification : MAR (explained by family + n_qubits)
+
+3. MAR ASSUMPTION CHECK (within-family reduction vs width)
+   Adder             : Levene p = 0.043  [CHECK (width trend within family)]
+   CNOT              : Levene p = 1.000  [OK]
+   GHZ               : Levene p = nan  [CHECK (width trend within family)]
+   Oracle            : Levene p = 0.448  [OK]
+   RandomClifford    : Levene p = 0.338  [OK]
+   SurfaceCode       : Levene p = nan  [CHECK (width trend within family)]
+
+4. CONVERTIBILITY (survival framing)
+   P(decomposable)                = 71.1%
+   P(optimizable & verifiable)    = 55.6%
+   Circuit-level failure fraction = 64.8% (92/142)
+
+5. ITT ANALYSIS (all 270 rows; n_imputations = 50)
+   convention: valid=observed; fidelity_zero=MI-pooled; decompose_error=0 (strict ITT)
+   pooled real-optimizer survivor mean = 0.1800
+
+   scope                     n   ITT mean               95% CI            [lower,upper]
+   greedy_phase1            64     0.2781        [0.191,0.365]            [0.278,0.278]
+   commutation_phase2       64     0.0116        [0.006,0.017]            [0.012,0.012]
+   hybrid_phase1_2          64     0.2802        [0.193,0.367]            [0.280,0.280]
+   ALL                     270     0.1351        [0.102,0.169]            [0.135,0.187]
+
+6. SURVIVOR-SUBSET vs ITT (pooled across real optimizers)
+   pooled survivor mean (valid rows) = 0.1800
+   pooled ITT mean (full cohort)     = 0.1351
+   optimistic upper bound            = 0.1871
+   sensitivity bracket width         = 0.0520
+
+CONCLUSION: survivor-subset statistics are an UPPER BOUND on the
+population ITT mean. The bias is directional (survivors are the
+easiest-to-decompose circuits). ITT-MI + sensitivity bracket is
+the bias-corrected estimate to report in the manuscript.
+========================================================================

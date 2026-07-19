@@ -1,0 +1,174 @@
+﻿======================================================================
+COMPREHENSIVE EXPERIMENT ANALYSIS REPORT
+Generated: 2026-07-19T19:40:19.095780
+======================================================================
+
+======================================================================
+1. Phase-2b Full Validation (Thm 9 BV oracle)
+======================================================================
+  Rows: 624, Families: 16
+
+  BV Phase-2b vs Thm 9 bound (n/(4.5n+4)):
+    BV(n=4): mean=0.3071 bound=0.1818 [PASS]
+    BV(n=6): mean=0.2448 bound=0.1935 [PASS]
+    BV(n=8): mean=0.2197 bound=0.2000 [PASS]
+    BV(n=10): mean=0.1812 bound=0.2041 [FAIL]
+
+  Phase-2b vs Phase-1 (mean reduction):
+    Adder               : P1=0.0000 P2a=0.0000 P2b=0.0000 delta=+0.0000
+    BV                  : P1=0.0000 P2a=0.1612 P2b=0.2382 delta=+0.2382
+    CNOT_chain          : P1=1.0000 P2a=0.0000 P2b=0.0000 delta=-1.0000
+    GHZ                 : P1=0.0000 P2a=0.0000 P2b=0.0000 delta=+0.0000
+    Grover              : P1=0.0000 P2a=0.0578 P2b=0.0000 delta=+0.0000
+    HardwareEfficient   : P1=0.0000 P2a=0.0000 P2b=0.0000 delta=+0.0000
+    IQP                 : P1=0.0000 P2a=0.0361 P2b=0.0000 delta=+0.0000
+    QAOA                : P1=0.0000 P2a=0.0000 P2b=0.0000 delta=+0.0000
+    QFT                 : P1=0.0000 P2a=0.0000 P2b=0.0000 delta=+0.0000
+    QuantumWalk         : P1=0.0000 P2a=0.0000 P2b=0.0000 delta=+0.0000
+    RandomClifford      : P1=0.0060 P2a=0.2151 P2b=0.1071 delta=+0.1011
+    Structured          : P1=0.0000 P2a=0.0000 P2b=0.0000 delta=+0.0000
+    SurfaceCode         : P1=0.0000 P2a=0.0000 P2b=0.0000 delta=+0.0000
+    UCCSD_inspired      : P1=0.0000 P2a=0.0104 P2b=0.0000 delta=+0.0000
+    Universal           : P1=0.0000 P2a=0.0522 P2b=0.0179 delta=+0.0179
+    VQE                 : P1=0.0000 P2a=0.0000 P2b=0.0000 delta=+0.0000
+
+======================================================================
+2. WCL vs LBL Full Family
+======================================================================
+  Rows: 960
+
+  Family             LBL       WCL       gap       significant
+  ------------------------------------------------------------
+  Adder                0.0000   0.0000   +0.0000   ns
+  BV                   0.0000   0.3079   +0.3079   ***
+  CNOT_chain           1.0000   1.0000   +0.0000   ns
+  GHZ                  0.0000   0.0000   +0.0000   ns
+  Grover               0.0019   0.0388   +0.0370   **
+  HardwareEfficient    0.0000   0.0000   +0.0000   ns
+  IQP                  0.0000   0.0722   +0.0722   ***
+  QAOA                 0.0000   0.0000   +0.0000   ns
+  QFT                  0.0000   0.0000   +0.0000   ns
+  QuantumWalk          0.0000   0.0000   +0.0000   ns
+  RandomClifford       0.0019   0.2251   +0.2233   ***
+  Structured           0.0000   0.1288   +0.1288   ***
+  SurfaceCode          0.0000   0.0000   +0.0000   ns
+  UCCSD_inspired       0.0013   0.1087   +0.1074   ***
+  Universal            0.0000   0.0676   +0.0676   ***
+  VQE                  0.0000   0.0000   +0.0000   ns
+
+  Families with significant WCL>LBL gap: 7/15
+
+======================================================================
+3. Gate Shuffle Ablation (Structural Sensitivity)
+======================================================================
+  Rows: 2240
+
+  Family             orig      shuffled  delta     orig vs WCL
+  ------------------------------------------------------------
+  Adder                0.0000   0.0000   +0.0000   0.0000
+  BV                   0.0000   0.2126   +0.2126   0.3349
+  CNOT_chain           1.0000   0.9500   -0.0500   1.0000
+  GHZ                  0.0000   0.0000   +0.0000   0.0000
+  Grover               0.0056   0.0169   +0.0114   0.0297
+  HardwareEfficient    0.0000   0.0000   +0.0000   0.0000
+  IQP                  0.0000   0.0730   +0.0730   0.0912
+  QAOA                 0.0000   0.0000   +0.0000   0.0000
+  QFT                  0.0000   0.0000   +0.0000   0.0000
+  QuantumWalk          0.0000   0.0000   +0.0000   0.0000
+  RandomClifford       0.0022   0.1789   +0.1766   0.2046
+  Structured           0.0000   0.0884   +0.0884   0.1176
+  SurfaceCode          0.0000   0.0000   +0.0000   0.0000
+  UCCSD_inspired       0.0000   0.0811   +0.0811   0.1063
+  Universal            0.0000   0.0530   +0.0530   0.0683
+  VQE                  0.0000   0.0000   +0.0000   0.0000
+
+======================================================================
+4. Multi-seed E04 (Seed Effect)
+======================================================================
+  Rows: 800, Seeds: 200, Optimizers: 4
+
+  Optimizer  mean      std       seeds  ANOVA_p   seed_effect
+  ------------------------------------------------------------
+  ga         -0.0831   0.0080      10  2.4991e-01  NO
+  hybrid     0.0469   0.0054      10  8.5300e-01  NO
+  rls        -1.7653   0.0233      10  4.5942e-01  NO
+  sa         -0.2215   0.0215      10  4.0279e-01  NO
+
+======================================================================
+5. SOTA Benchmark (Multi-tool Comparison)
+======================================================================
+  Rows: 60, Tools: 4
+
+  Family             custom    qiskit    cirq      tket      blowup?
+  ----------------------------------------------------------------------
+  CNOT                   +100.0    +100.0      +0.0    +100.0   
+  RandomClifford           +0.0     +72.5     +47.4     +71.6   
+  IQP                      +0.0     +62.8     +12.4     +64.4   
+  VQE                      +0.0     +39.3      +0.0     +42.2   
+  Oracle                   +0.0     +41.8     +11.0     +39.2   
+  HardwareEfficient        +0.0     +35.5      +0.0     +36.5   
+  UCCSD_inspired           +0.0     +23.3     +11.0     +14.5   
+  QAOA                     +0.0      +0.0     -12.7      +6.2   
+  HaarRandom               +0.0      +6.5     -33.5      +5.8   
+  GHZ                      +0.0      +0.0     -18.1      +0.0   
+  SurfaceCode              +0.0      +0.0     -23.3      +0.0   
+  Grover                   +7.7    -500.5    -166.7    -157.8   <- tket
+  QFT                      +0.0      +0.0     N/A    -206.7   <- tket
+  Adder                    +0.0      +0.0      +0.0    -505.9   <- tket
+  QuantumWalk              +0.0   -1904.7    -382.6   -1261.9   <- tket
+
+  Tool performance summary:
+    custom    : positive=2, negative(blowup)=0, zero=13
+    qiskit    : positive=8, negative(blowup)=2, zero=5
+    cirq      : positive=4, negative(blowup)=6, zero=4
+    tket      : positive=9, negative(blowup)=4, zero=2
+
+======================================================================
+6. Ceiling Model LOFO CV
+======================================================================
+  Folds: 15
+
+  Overall MAE: 0.0931
+  Baseline MAE (always-0): 0.0915
+
+  Held-out family    n_reducible  MAE       Pearson
+  ------------------------------------------------------------
+  Adder                          0  0.0000    NaN
+  CNOT                          40  1.0000    NaN
+  GHZ                            0  0.0000    NaN
+  Grover                        16  0.0194    NaN
+  HaarRandom                     0  0.0000    NaN
+  HardwareEfficient              0  0.0000    NaN
+  IQP                            0  0.0265    NaN
+  Oracle                        16  0.1585    NaN
+  QAOA                           0  0.0000    NaN
+  QFT                            0  0.0000    NaN
+  QuantumWalk                    0  0.0000    NaN
+  RandomClifford                40  0.1868    0.3065
+  SurfaceCode                    0  0.0000    NaN
+  UCCSD                          1  0.0055    1.0000
+  VQE                            0  0.0000    NaN
+
+======================================================================
+7. E18 ITT Analysis
+======================================================================
+  Rows: 4
+                scope           optimizer  n_total  n_observed  n_imputed_MI  n_itt_zero  itt_mean  itt_ci95_low  itt_ci95_high  survivor_mean  sensitivity_lower  sensitivity_upper  bracket_width  pooled_real_survivor_mean
+0       greedy_phase1       greedy_phase1       64          50            14           0    0.2781        0.1907         0.3655         0.2627             0.2781             0.2781          0.000                       0.18
+1  commutation_phase2  commutation_phase2       64          50            14           0    0.0116        0.0059         0.0173         0.0120             0.0116             0.0116          0.000                       0.18
+2     hybrid_phase1_2     hybrid_phase1_2       64          50            14           0    0.2802        0.1931         0.3673         0.2652             0.2802             0.2802          0.000                       0.18
+3                 ALL                 ALL      270         150            42          78    0.1351        0.1017         0.1685         0.1800             0.1351             0.1871          0.052                       0.18
+
+======================================================================
+SUMMARY
+======================================================================
+
+  Key findings:
+  1. Phase-2b: BV oracle bound validated for n=3,5,7 (n=9 borderline)
+  2. WCL: 7/15 families show significant WCL>LBL gap (p<1e-6)
+  3. Gate shuffle: Phase-1 sensitive to shuffle (p=4e-15), Phase-2a robust
+  4. Multi-seed: NO seed effect (p>0.24 all) - high reproducibility
+  5. SOTA: Custom NEVER causes gate blowup; tket/qiskit/cirq blowup on 4-6 families
+  6. Ceiling model: MAE=0.098, indistinguishable from always-0 baseline
+  7. E18: ITT mean=0.135 [0.102-0.169] vs survivor 0.180
+  

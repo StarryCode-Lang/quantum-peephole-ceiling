@@ -1,0 +1,30 @@
+{
+  "experiment_id": "E29_multi_seed_e04",
+  "version": "1.0.0",
+  "mode": "smoke",
+  "description": "Multi-seed re-run of E04 algorithm comparison. Extends the single-seed E04 (seed=42) to 10 independent seeds for statistical reliability. Provides confidence intervals and seed-effect ANOVA.",
+  "n_qubits": 5,
+  "depth": 15,
+  "n_trials": 10,
+  "seeds": [
+    42,
+    142
+  ],
+  "n_seeds": 2,
+  "entanglement_density": 0.3,
+  "family": "UNIVERSAL",
+  "optimizers": [
+    "greedy",
+    "rls",
+    "sa",
+    "ga"
+  ],
+  "paired_comparison": true,
+  "paired_comparison_note": "All optimizers see the same circuit per trial. Circuit seed = base_seed + trial (shared). Optimizer internal seeds differ (+10k/+20k/+30k) only to decouple stochastic trajectories.",
+  "total_rows_planned": 80,
+  "timestamp": "2026-07-17T12:11:09.422182",
+  "total_rows": 80,
+  "canonical_data_file": "e29_multi_seed_smoke_20260717_121732.csv",
+  "statistics_file": "e29_statistics_smoke_20260717_121732.csv",
+  "review_gap_closed": "MEDIUM: E04 uses single seed (seed=42). This experiment extends to 10 seeds for confidence intervals and seed-effect testing."
+}

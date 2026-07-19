@@ -1,0 +1,82 @@
+{
+  "valid_rows_with_fidelity": 150,
+  "by_optimizer": {
+    "commutation_phase2": {
+      "n": 50,
+      "flag_counts": {
+        "pass": 50
+      },
+      "mean_fidelity": 0.9999999999999969
+    },
+    "greedy_phase1": {
+      "n": 50,
+      "flag_counts": {
+        "pass": 50
+      },
+      "mean_fidelity": 0.9999999999999974
+    },
+    "hybrid_phase1_2": {
+      "n": 50,
+      "flag_counts": {
+        "pass": 50
+      },
+      "mean_fidelity": 0.9999999999999974
+    }
+  },
+  "by_family": {
+    "Adder": {
+      "n": 24,
+      "flag_counts": {
+        "pass": 24
+      },
+      "mean_fidelity": 0.9999999999999932
+    },
+    "CNOT": {
+      "n": 24,
+      "flag_counts": {
+        "pass": 24
+      },
+      "mean_fidelity": 1.0
+    },
+    "GHZ": {
+      "n": 27,
+      "flag_counts": {
+        "pass": 27
+      },
+      "mean_fidelity": 0.9999999999999998
+    },
+    "Grover": {
+      "n": 3,
+      "flag_counts": {
+        "pass": 3
+      },
+      "mean_fidelity": 0.9999999999999938
+    },
+    "Oracle": {
+      "n": 24,
+      "flag_counts": {
+        "pass": 24
+      },
+      "mean_fidelity": 0.9999999999999961
+    },
+    "RandomClifford": {
+      "n": 24,
+      "flag_counts": {
+        "pass": 24
+      },
+      "mean_fidelity": 0.9999999999999947
+    },
+    "SurfaceCode": {
+      "n": 24,
+      "flag_counts": {
+        "pass": 24
+      },
+      "mean_fidelity": 0.9999999999999997
+    }
+  },
+  "flag_totals": {
+    "pass": 150,
+    "decompose_error": 78,
+    "unverifiable_width": 42
+  }
+}
