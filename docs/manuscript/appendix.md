@@ -1,4 +1,6 @@
-﻿# Appendix
+> **STATUS**: Not yet integrated into main manuscript. Pending merge.
+
+# Appendix
 
 ## A. Claim-Evidence Map
 # V6 Claim-Evidence Map

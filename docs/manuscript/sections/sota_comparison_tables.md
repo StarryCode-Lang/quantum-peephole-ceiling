@@ -1,3 +1,5 @@
+> **STATUS**: Not yet integrated into main manuscript. Pending merge.
+
 # SOTA Comparison Tables (Updated with Actual Data)
 
 > **Generated**: 2026-07-19T02:40:15.943503

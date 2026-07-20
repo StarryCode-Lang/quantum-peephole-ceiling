@@ -1,3 +1,5 @@
+> **STATUS**: Not yet integrated into main manuscript. Pending merge.
+
 ## E18 Clifford+T Gate-Set Experiment (Revised with ITT Analysis)
 
 *This section replaces the original E18 results. It introduces an

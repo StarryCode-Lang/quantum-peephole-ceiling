@@ -49,7 +49,7 @@ Q-research/
 ├── docs/                         # Documentation
 │   ├── theory/                  # Theoretical framework + formal results
 │   ├── results/                 # Experimental design + analysis summary
-│   ├── manuscript/              # Manuscript (v6) + supporting docs
+│   ├── manuscript/              # Manuscript (active draft) + supporting docs
 │   ├── supplementary/           # Supplementary materials
 │   └── data_dictionary.md       # Canonical data dictionary
 ├── scripts/                      # Reproduction scripts

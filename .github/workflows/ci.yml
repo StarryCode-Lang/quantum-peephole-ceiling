@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.10"]
+        python-version: ["3.10", "3.12"]
 
     steps:
       - uses: actions/checkout@v4
@@ -38,10 +38,11 @@ jobs:
           print(f'Matplotlib: {matplotlib.__version__}')
           "
 
-      - name: Run full test suite
+      - name: Run full test suite with coverage
         shell: bash -l {0}
         run: |
-          python -m pytest tests/ -q --timeout=600
+          pip install pytest-cov
+          python -m pytest tests/ -q --timeout=600 --cov=src --cov-report=term-missing
 
       - name: Verify canonical data
         shell: bash -l {0}
@@ -61,7 +62,7 @@ jobs:
       - name: Lint with flake8
         run: |
           flake8 src/ --count --select=E9,F63,F7,F82 --show-source --statistics
-          flake8 src/ --count --exit-zero --max-complexity=15 --max-line-length=120 --statistics
+          flake8 src/ --count --max-complexity=15 --max-line-length=120 --statistics
 
   verify-data-integrity:
     runs-on: ubuntu-latest

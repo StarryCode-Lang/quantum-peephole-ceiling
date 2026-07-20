@@ -1,0 +1,14 @@
+{
+  "experiment_id": "E29",
+  "description": "Multi-seed re-run of E04 algorithm comparison: extends single-seed E04 (seed=42) to 10 independent seeds for statistical reliability. Provides per-seed mean reduction, std, bootstrap CIs, and seed-effect ANOVA. Directory contains the raw per-trial data (e29_multi_seed_e04_full.csv, 800 rows) and aggregated statistics (e29_multi_seed_statistics.csv, 44 rows).",
+  "timestamp": "2026-07-19T01:04:07",
+  "source_file": "experiments/outputs/e29_statistics_full_20260719_010407.csv",
+  "canonical_data_file": "e29_multi_seed_e04_full.csv",
+  "statistics_file": "e29_multi_seed_statistics.csv",
+  "n_rows": 800,
+  "seed": 42,
+  "python_version": "3.12.12",
+  "qiskit_version": "2.4.1",
+  "git_commit": null,
+  "schema_version": "v7"
+}

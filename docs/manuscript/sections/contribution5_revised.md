@@ -1,3 +1,5 @@
+> **STATUS**: Not yet integrated into main manuscript. Pending merge.
+
 ## 5.5 Ceiling-Aware Optimization (Revised)
 
 **Status**: Supplementary observation with confirmed limitations.

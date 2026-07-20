@@ -1,3 +1,5 @@
+> **STATUS**: Not yet integrated into main manuscript. Pending merge.
+
 # Theory--Experiment Cross-Validation Table
 
 > **Purpose.** This file provides a row-by-row comparison of every major theoretical prediction (Theorems 1--9, Conjectures C1--C2) against the corresponding experimental measurement. It is intended as a supplementary reference for the manuscript; the main text should be updated independently to incorporate these results.

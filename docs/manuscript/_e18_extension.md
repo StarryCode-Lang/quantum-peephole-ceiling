@@ -1,3 +1,5 @@
+> **STATUS**: Not yet integrated into main manuscript. Pending merge.
+
 # E18 Survivorship Bias: Extended Discussion
 
 > **Context**: Extension of Section 6.3.5 (Clifford+T Decomposition Overhead) in `manuscript.md`. This file supplements, and does not modify, the main manuscript.
