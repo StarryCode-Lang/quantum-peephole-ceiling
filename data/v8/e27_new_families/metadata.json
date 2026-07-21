@@ -1,0 +1,40 @@
+{
+  "experiment_id": "E27_new_families",
+  "version": "1.0.0",
+  "description": "5 new circuit families for family-mean statistical power. QPE, TrotterHamiltonian, QuantumVolume, WState, RepetitionCode.",
+  "timestamp": "2026-07-21T04:04:21.868050+00:00",
+  "n_rows": 675,
+  "mode": "full",
+  "families": [
+    "QPE",
+    "QuantumVolume",
+    "RepetitionCode",
+    "TrotterHamiltonian",
+    "WState"
+  ],
+  "sizes": [
+    3,
+    4,
+    5,
+    6,
+    8
+  ],
+  "depths": [
+    10,
+    20,
+    30
+  ],
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "python_version": "3.12.12",
+  "qiskit_version": "2.4.1",
+  "git_commit": "0e3d10efba0daf56cf62c863478a5c59cf0f5125",
+  "canonical_data_file": "e27_new_families_v8.csv",
+  "chunk_file": "e27_new_families_20260721_120421.csv",
+  "fidelity_methods": {
+    "exact": 675
+  }
+}

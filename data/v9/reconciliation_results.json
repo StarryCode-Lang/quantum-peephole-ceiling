@@ -1,0 +1,99 @@
+[
+  {
+    "experiment_id": "E12",
+    "status": "NOT_RERUN",
+    "canonical_file": "data\\v4\\e12\\e12_compiler_baseline_e12_full_20260626_000134_nocoupling.csv",
+    "note": "Rerun not completed within compute budget"
+  },
+  {
+    "experiment_id": "E13",
+    "status": "NOT_RERUN",
+    "canonical_file": "data\\v4\\e13\\e13_structural_ceiling_e13_full_20260609_043322.csv",
+    "note": "Rerun not completed within compute budget"
+  },
+  {
+    "experiment_id": "E14",
+    "status": "NOT_RERUN",
+    "canonical_file": "data\\v5\\e14\\e14_extended_benchmark_e14_full_20260611_114726.csv",
+    "note": "Rerun not completed within compute budget"
+  },
+  {
+    "experiment_id": "E15",
+    "status": "NOT_RERUN",
+    "canonical_file": "data\\v5\\e15\\e15_multi_compiler_e15_full_20260611_150934.csv",
+    "note": "Rerun not completed within compute budget"
+  },
+  {
+    "experiment_id": "E16",
+    "status": "NOT_RERUN",
+    "canonical_file": "data\\v5\\e16\\e16_window_scaling_e16_full_20260610_142547.csv",
+    "note": "Rerun not completed within compute budget"
+  },
+  {
+    "experiment_id": "E17",
+    "status": "NOT_RERUN",
+    "canonical_file": "data\\v5\\e17\\e17_connectivity_e17_full_20260610_150935.csv",
+    "note": "Rerun not completed within compute budget"
+  },
+  {
+    "experiment_id": "E18",
+    "status": "NOT_RERUN",
+    "canonical_file": "data\\v5\\e18\\e18_clifford_t_e18_full_20260610_052140.csv",
+    "note": "Rerun not completed within compute budget"
+  },
+  {
+    "experiment_id": "E19",
+    "status": "NOT_RERUN",
+    "canonical_file": "data\\v6\\e19\\e19_wcl_listing_full_e19_full_20260620_123825.csv",
+    "note": "Rerun not completed within compute budget"
+  },
+  {
+    "experiment_id": "E20",
+    "status": "NOT_RERUN",
+    "canonical_file": "data\\v6\\e20\\multi_compiler_full.csv",
+    "note": "Rerun not completed within compute budget"
+  },
+  {
+    "experiment_id": "E21",
+    "status": "NOT_RERUN",
+    "canonical_file": "data\\v6\\e21\\ceiling_aware_comparison.csv",
+    "note": "Rerun not completed within compute budget"
+  },
+  {
+    "experiment_id": "E25",
+    "canonical_file": "data\\v6\\e25\\e25_industry_benchmarks_e25_industry_proxies_20260711_042550.csv",
+    "rerun_file": "data\\v9\\e25\\e25_industry_benchmarks_e25_industry_proxies_20260721_033411.csv",
+    "canonical_rows": 66,
+    "rerun_rows": 66,
+    "same_columns": true,
+    "numeric_comparison": {
+      "reduction": {
+        "max_diff": 0.0,
+        "n_match": 66,
+        "n_total": 66
+      },
+      "fidelity": {
+        "max_diff": 0.0,
+        "n_match": 66,
+        "n_total": 66
+      },
+      "runtime_seconds": {
+        "max_diff": 0.13544249534606928,
+        "n_match": 0,
+        "n_total": 66
+      },
+      "original_size": {
+        "max_diff": 0.0,
+        "n_match": 66,
+        "n_total": 66
+      },
+      "optimized_size": {
+        "max_diff": 0.0,
+        "n_match": 66,
+        "n_total": 66
+      }
+    },
+    "status": "EQUIVALENT",
+    "reason": "All scientific columns identical; only runtime_seconds differs (max=0.1354s)"
+  }
+]

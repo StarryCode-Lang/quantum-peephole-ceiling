@@ -263,3 +263,51 @@ source-level findings above.
 - Qiskit synthesis passes (`UnitarySynthesis`, `HighLevelSynthesis`) can be
   stochastic in general; all Qiskit runs here used a fixed `seed_transpiler=42`, and
   invariance held at that seed.
+
+## 8. Addendum: Wave-5 listing-sensitivity expansion (2026-07-21)
+
+The relisting experiment (Sec. 6) has been expanded from 4 families x n=5 x 20
+variants to **10 families x n={3,5,8} x 20-50 variants** (4,320 rows, data in
+data/v8/listing_sensitivity/). Families covered: CNOT, GHZ, Grover,
+HaarRandom, HardwareEfficient, IQP, Oracle, QAOA, QFT, RandomClifford. Five
+families (UCCSD_inspired, VQE, Adder, QuantumWalk, SurfaceCode) were not
+completed due to compute-time constraints at n=5/8; the 10 completed families
+provide 81 production-compiler family-n-tool combos and 27 prototype combos.
+
+### 8.1 Results
+
+| Metric | Original (Sec. 6) | Wave-5 expansion |
+|---|---|---|
+| Families | 4 | 10 |
+| N values | {5} | {3, 5, 8} |
+| Variants per circuit | 20 | 50 (n=3,5) / 20 (n=8) |
+| Total rows | ~320 | 4,320 |
+| Production compiler sensitive combos | 0/16 | **0/81** |
+| Prototype sensitive combos | 5/16 | **13/27** |
+
+**Conclusion unchanged and strengthened.** All three production compilers
+(Qiskit L3, pytket FPO allow_swaps=False, Cirq default) produce identical gate
+counts across all relistings for every tested family and n-value (0/81
+sensitive combos). The flat-list prototype is listing-sensitive on 13/27
+combos, spanning CNOT, Grover, IQP, Oracle, and RandomClifford at n=3, 5, and 8.
+
+### 8.2 Impact on manuscript claim
+
+The manuscript's core claim ("listing model determines the reachable action
+space of listing-type peephole optimizers") is **strengthened** by the expanded
+coverage. The negative result (production compilers are flat-listing invariant)
+now holds across 10 families and 3 qubit counts, eliminating the "small sample"
+rebuttal. The positive control (prototype IS listing-sensitive) now demonstrates
+sensitivity in 5 distinct families across 3 n-values, including the
+worst-case RandomClifford family (6 distinct outputs at n=3, 6 at n=5, 3 at
+n=8).
+
+### 8.3 Remaining limitations
+
+- 5 of 15 families (UCCSD_inspired, VQE, Adder, QuantumWalk, SurfaceCode) were
+  not completed due to compute-time constraints (some families produce very
+  large circuits at n=5/8 that are slow to compile with all 4 tools). The
+  conclusion is not expected to change for these families (they use the same
+  DAG/moment-based compilers), but this should be noted.
+- Same-wire commuting-gate swaps were not enumerated (same as Sec. 7).
+- n=8 used 20 variants (vs. 50 for n=3,5) due to compilation time.

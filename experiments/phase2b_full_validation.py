@@ -283,6 +283,22 @@ def run_chunk(chunk: str, smoke: bool, output_dir: Path) -> Path:
                 for d in depths:
                     for si, seed in enumerate(seeds):
                         plan.append((fam, n, d, BASE_SEED + seed * 100 + n * 10 + d, si))
+    if chunk == "depth_fill":
+        # Wave-5 grid fill: add missing n={4,6,7,9,10} x depth={20,35,50}
+        # and n={3,5,8} x depth={25,30,40,45} for depth families.
+        FILL_SIZES = [4, 6, 7, 9, 10]
+        FILL_DEPTHS_EXISTING = [20, 35, 50]
+        FILL_SIZES_EXISTING = [3, 5, 8]
+        FILL_DEPTHS_NEW = [25, 30, 40, 45]
+        for fam in sorted(DEPTH_FAMILIES):
+            for n in FILL_SIZES:
+                for d in FILL_DEPTHS_EXISTING:
+                    for si, seed in enumerate(seeds):
+                        plan.append((fam, n, d, BASE_SEED + seed * 100 + n * 10 + d, si))
+            for n in FILL_SIZES_EXISTING:
+                for d in FILL_DEPTHS_NEW:
+                    for si, seed in enumerate(seeds):
+                        plan.append((fam, n, d, BASE_SEED + seed * 100 + n * 10 + d, si))
     if chunk in ("bv", "all"):
         for n in bv_sizes:
             for trial in range(bv_secrets):
@@ -312,20 +328,26 @@ def run_chunk(chunk: str, smoke: bool, output_dir: Path) -> Path:
     print(f"{EXPERIMENT_ID}: chunk={chunk} rows_planned={len(plan) * len(optimizers)}")
     rows = []
     t_start = time.time()
+    output_dir.mkdir(parents=True, exist_ok=True)
+    ts_start = datetime.now().strftime("%Y%m%d_%H%M%S")
+    inc_path = output_dir / f"phase2b_v8_{chunk}_{ts_start}.csv"
     for idx, (fam, n, d, seed, trial) in enumerate(plan):
         try:
             rows.extend(_run_row(optimizers, fam, n, d, seed, trial,
                                  metrics_calc, run_id, chunk,
                                  force_fidelity_method=force_fidelity_method))
         except Exception as exc:  # pragma: no cover - defensive
-            print(f"  WARNING {fam}(n={n},d={d},seed={seed}): {exc}")
-        if (idx + 1) % 40 == 0:
+            print(f"  WARNING {fam}(n={n},d={d},seed={seed}): {exc}", flush=True)
+        if (idx + 1) % 20 == 0:
+            # Incremental write for safety
+            pd.DataFrame(rows).to_csv(inc_path, index=False)
             print(f"  ... {idx + 1}/{len(plan)} grid points "
-                  f"({time.time() - t_start:.0f}s)")
+                  f"({time.time() - t_start:.0f}s)", flush=True)
     df = pd.DataFrame(rows)
-    output_dir.mkdir(parents=True, exist_ok=True)
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    path = output_dir / f"phase2b_v8_{chunk}_{ts}.csv"
+    # Final write to the same incremental path (already created)
+    df.to_csv(inc_path, index=False)
+    ts = ts_start
+    path = inc_path
     df.to_csv(path, index=False)
     print(f"chunk {chunk}: {len(df)} rows -> {path} ({time.time() - t_start:.0f}s)")
     return path
@@ -519,7 +541,7 @@ def merge_and_analyze(output_dir: Path) -> None:
 
 def main():
     parser = argparse.ArgumentParser(description=f"{EXPERIMENT_ID} v{VERSION}")
-    parser.add_argument("--chunk", choices=["depth", "bv", "algo", "qw8", "all"], default=None)
+    parser.add_argument("--chunk", choices=["depth", "bv", "algo", "qw8", "all", "depth_fill"], default=None)
     parser.add_argument("--mode", choices=["smoke", "full"], default="full")
     parser.add_argument("--merge-only", action="store_true")
     parser.add_argument("--output-dir", type=str, default=None)

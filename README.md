@@ -1,14 +1,14 @@
 # Q-research: Listing Model Sensitivity and Prototype Action-Space Ceilings in Quantum Circuit Optimization
 
-**Project Version**: 8.0.0  
+**Project Version**: 9.0.0  
 **Date**: 2026-07-21  
-**Release ID**: q-research-8.0.0-wave4  
+**Release ID**: q-research-9.0.0-wave5  
 
 ---
 
 ## Project Overview
 
-This project characterizes the boundaries of quantum circuit peephole optimization across 15 circuit families and 6 optimizer types, with 73,702 data rows across 34 canonical datasets. The central contribution is the discovery that the circuit listing model (the data-structure ordering of gates) is the key factor governing Phase-1 adjacent-cancellation optimizer behavior.
+This project characterizes the boundaries of quantum circuit peephole optimization across 15 circuit families and 6 optimizer types, with 79,669 data rows across 36 canonical datasets. The central contribution is the discovery that the circuit listing model (the data-structure ordering of gates) is the key factor governing Phase-1 adjacent-cancellation optimizer behavior.
 
 ### Core Scientific Question
 > When and why does peephole optimization succeed or fail across diverse circuit families?
@@ -95,7 +95,7 @@ Q-research/
 | E10p2b-v2 | Phase-2b Full v2 | COMPLETE | 735 | Full-scale Phase-2b; pooled reduction 46.1% (95% CI [41.9, 50.1]) |
 | EHW | Hardware Validation (noise-model) | COMPLETE | 288 | Noise-model only, NOT real hardware; BV 46.15% logical -> 0% physical L1 |
 
-**Total**: 73,702 data rows across 34 canonical datasets (see `release/release_manifest.json` and `data/DATA_CANONICAL.md` for the exact per-dataset counts).
+**Total**: 79,669 data rows across 36 canonical datasets (see `release/release_manifest.json` and `data/DATA_CANONICAL.md` for the exact per-dataset counts).
 
 ---
 
@@ -117,7 +117,7 @@ Q-research/
 Key limitations:
 - Trichotomy is empirical observation on 15 pre-selected families, not universal law
 - Held-out generalization: the original heuristic ceiling-aware model failed (MAE=0.2775, Pearson=NaN); the repaired hybrid model (mechanism gate + random forest) generalizes strongly per-circuit (LOFO MAE 0.0172 [0.0129, 0.0218], pooled r=0.977; gate selected post hoc) but family-mean prediction remains underpowered (n=15 folds, r=0.059)
-- Phase-2b v2 full-scale validation complete (735 rows; BV/IQP/Structured/RandomClifford exceed 30% mean reduction); residual limitations: stratified grid (not full factorial) and no parity-gadget phase-polynomial templates (QAOA/VQE/HardwareEfficient remain 0%)
+- Phase-2b v2 full-scale validation complete (1,707 rows; BV/IQP/Structured/RandomClifford exceed 30% mean reduction); residual limitations: partial factorial grid and no parity-gadget phase-polynomial templates (QAOA/VQE/HardwareEfficient remain 0%)
 - E18 Clifford+T results are survivorship-biased (44.4% failure rate)
 - WCL cross-family validation (E19-extended, 960 rows): 7 of 16 families show WCL advantage > 0 (BV +30.8pp, RandomClifford +22.3pp, Structured +12.9pp, UCCSD +10.7pp, IQP +7.2pp, Universal +6.8pp, Grover +3.7pp); the other 9 show no WCL benefit (including CNOT, saturated at 100% under both listings)
 - Gate-shuffler control (E22) complete -- counterintuitive: shuffled circuits yield higher greedy Phase-1 reduction than original (10.3% vs 6.3%)

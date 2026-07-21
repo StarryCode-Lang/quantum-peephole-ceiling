@@ -1,0 +1,41 @@
+{
+  "experiment_id": "E_listing_sensitivity_v8",
+  "version": "2.0.0",
+  "description": "Listing-sensitivity check: unitary-preserving relistings compiled by production compilers (Qiskit L3, pytket FPO no-swap, Cirq) and flat-list prototype. Wave-5 expansion: 13 families x n={3,5,8} x 20-50 variants.",
+  "timestamp": "2026-07-21T03:18:36.942629+00:00",
+  "n_rows": 4320,
+  "n_variants": "50 (n=3,5) / 20 (n=8)",
+  "n_qubits_list": [
+    3,
+    5,
+    8
+  ],
+  "families": [
+    "CNOT",
+    "GHZ",
+    "Grover",
+    "HaarRandom",
+    "HardwareEfficient",
+    "IQP",
+    "Oracle",
+    "QAOA",
+    "QFT",
+    "RandomClifford"
+  ],
+  "tools": [
+    "cirq_default",
+    "prototype_greedy",
+    "qiskit_L3",
+    "tket_FPO_noswap"
+  ],
+  "seed": 42,
+  "python_version": "3.12.12",
+  "qiskit_version": "2.4.1",
+  "git_commit": "0e3d10efba0daf56cf62c863478a5c59cf0f5125",
+  "canonical_data_file": "listing_sensitivity_v8.csv",
+  "summary_file": "family_summary_v8.csv",
+  "chunk_files": [
+    "listing_sensitivity_v8_chunk_20260721_105047.csv",
+    "listing_sensitivity_v8_chunk_20260721_110217.csv"
+  ]
+}

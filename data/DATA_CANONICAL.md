@@ -1,11 +1,11 @@
 # Canonical Data Files
 
-> **Version**: 2.1.0  
+> **Version**: 2.2.0  
 > **Date**: 2026-07-21  
 > **Purpose**: Define, for every experiment, the single **canonical** CSV used
 > for analysis and manuscript figures, the layout of derived artifacts, and the
-> data-version policy. Aligned with `release/release_manifest.json` (34 canonical
-> datasets, 73,702 rows as of 2026-07-21).
+> data-version policy. Aligned with `release/release_manifest.json` (36 canonical
+> datasets, 79,669 rows as of 2026-07-21).
 
 ## Roles
 
@@ -73,9 +73,11 @@ Fields that were not recorded at generation time were backfilled during the
 | Heldout | `v5/new_families_heldout.csv` | 125 | results_v2 | Phase 7 held-out validation |
 | Isolation | `v5/qiskit_pass_isolation.csv` | 100 | results_v2 | Phase 7 Qiskit pass isolation |
 | EHW | `v8/hardware_validation/ehw_runs_full_20260720_150931.csv` | 288 | results_v8 | Hardware-validation full run (FakeManilaV2/FakeNairobiV2 noise-model simulation, **not** real hardware); supersedes the 48-row smoke; summary CSV in same dir is derived |
-| E10p2b-v2 | `v8/phase2b_full/phase2b_full_validation_v8.csv` | 735 | results_v8 | Phase-2b v2 full-scale validation; BV reaches exact k+2 optimum on all 80 instances; analysis CSVs in same dir |
+| E10p2b-v2 | `v8/phase2b_full/phase2b_full_validation_v8.csv` | 1,707 | results_v8 | Phase-2b v2 full-scale validation (wave-5 expanded grid); BV reaches exact k+2 optimum on all 80 instances; analysis CSVs in same dir |
+| E_listing_sensitivity_v8 | `v8/listing_sensitivity/listing_sensitivity_v8.csv` | 4,320 | results_v8 | Listing-sensitivity check (wave-5): 10 families x n={3,5,8} x 20-50 relisting variants; production compilers 0/81 sensitive, prototype 13/27 |
+| E27_new_families | `v8/e27_new_families/e27_new_families_v8.csv` | 675 | results_v8 | 5 new circuit families (QPE, TrotterHamiltonian, QuantumVolume, WState, RepetitionCode) for family-mean statistical power |
 
-**Totals**: 34 canonical datasets, 73,702 rows (2026-07-21).
+**Totals**: 36 canonical datasets, 79,669 rows (2026-07-21).
 
 ## derived/ directories
 

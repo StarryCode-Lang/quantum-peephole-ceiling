@@ -321,7 +321,7 @@ Output: OptimizationResult (C', reduction, fidelity)
 
 ### S5.1 Data File Inventory
 
-> Canonical file inventory, refreshed from `release/release_manifest.json` on 2026-07-21 (34 canonical datasets, 73,702 rows). For the authoritative list with full SHA-256 checksums, see `release/release_manifest.json`. Derived (non-canonical) analysis files live under each experiment's `derived/` directory and are intentionally excluded from the manifest — e.g. `data/v6/e21/derived/{ceiling_aware_summary.csv, e21_paired_statistics.csv}`, `data/v7/e24/derived/e24_theorem7_summary.csv`, `data/v7/e29/derived/e29_multi_seed_statistics.csv`, and the E18 bias artifacts in `data/v5/e18/derived/`.
+> Canonical file inventory, refreshed from `release/release_manifest.json` on 2026-07-21 (36 canonical datasets, 79,669 rows). For the authoritative list with full SHA-256 checksums, see `release/release_manifest.json`. Derived (non-canonical) analysis files live under each experiment's `derived/` directory and are intentionally excluded from the manifest — e.g. `data/v6/e21/derived/{ceiling_aware_summary.csv, e21_paired_statistics.csv}`, `data/v7/e24/derived/e24_theorem7_summary.csv`, `data/v7/e29/derived/e29_multi_seed_statistics.csv`, and the E18 bias artifacts in `data/v5/e18/derived/`.
 
 | Experiment | File | Records | SHA-256 (prefix) |
 |------------|------|---------|-------------------|
@@ -357,9 +357,11 @@ Output: OptimizationResult (C', reduction, fidelity)
 | E24 | e24_theorem7_results.csv | 75 | cdeb08e6a326d8b0... |
 | E26 | e26_bv_theory_results.csv | 4 | ce044aa13a63735f... |
 | E29 | e29_multi_seed_e04_full.csv | 800 | 68a814a853d95b9a... |
-| E26_phase2b_full_v8 | phase2b_full_validation_v8.csv | 735 | 2a0a863a657ad8d1... |
+| E26_phase2b_full_v8 | phase2b_full_validation_v8.csv | 1,707 | 2a0a863a657ad8d1... |
+| E_listing_sensitivity_v8 | listing_sensitivity_v8.csv | 4,320 | (wave-5) |
+| E27_new_families | e27_new_families_v8.csv | 675 | (wave-5) |
 | HARDWARE_VALIDATION | ehw_runs_full_20260720_150931.csv | 288 | e6537e0ee9b59ca5... |
-| **Total** | **34 datasets** | **73,702** | |
+| **Total** | **36 datasets** | **79,669** | |
 
 Checksums and file paths are canonical in `release/release_manifest.json`. Per-experiment metadata is in each `data/v*/e*/metadata.json`.
 

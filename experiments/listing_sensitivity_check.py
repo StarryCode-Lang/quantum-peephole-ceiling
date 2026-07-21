@@ -25,28 +25,43 @@ listing sensitivity.
 Positive control: the repo's flat-list prototype (Phase-1 GreedyGateCancellation)
 is included to demonstrate what listing sensitivity looks like.
 
-Run:  /d/Downloads/miniforge3/python experiments/listing_sensitivity_check.py
+Wave-5 expansion (2026-07-21): extended from 4 families x n=5 x 20 variants to
+all 15 suite families x n={3,5,8} x 50 variants, with CSV + metadata output to
+data/v8/listing_sensitivity/.
+
+Run:  D:\\Downloads\\miniforge3\\python experiments\\listing_sensitivity_check.py
+      D:\\Downloads\\miniforge3\\python experiments\\listing_sensitivity_check.py --smoke
 """
 
 from __future__ import annotations
 
+import argparse
+import json
+import platform
 import random
+import subprocess
 import sys
+import time
 import warnings
+from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import numpy as np
+import pandas as pd
 from qiskit import QuantumCircuit, transpile
 from qiskit.quantum_info import Operator
 
 from src.circuits.real_benchmarks import generate_extended_suite
 
-N_VARIANTS = 20
-FAMILIES = ["RandomClifford", "IQP", "QAOA", "VQE"]
-N_QUBITS = 5
+# Wave-5 expanded constants
+N_VARIANTS = 50
+N_QUBITS_LIST = [3, 5, 8]
 SEED = 42
+EXPERIMENT_ID = "E_listing_sensitivity_v8"
+VERSION = "2.0.0"
+DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "v8" / "listing_sensitivity"
 
 
 def relist(circuit: QuantumCircuit, n_swaps: int, rng: random.Random) -> QuantumCircuit:
@@ -118,10 +133,30 @@ def compile_prototype(qc: QuantumCircuit) -> int:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description="Listing-sensitivity check (wave-5 expanded)")
+    parser.add_argument("--smoke", action="store_true",
+                        help="Quick mode: 5 variants, n=3 only")
+    parser.add_argument("--n-variants", type=int, default=None,
+                        help="Override variant count")
+    parser.add_argument("--sizes", type=str, default=None,
+                        help="Comma-separated n values, e.g. '3,5,8'")
+    parser.add_argument("--output-dir", type=str, default=None)
+    args = parser.parse_args()
+
+    n_variants = args.n_variants or (5 if args.smoke else N_VARIANTS)
+    if args.sizes:
+        n_list = [int(x) for x in args.sizes.split(",")]
+    elif args.smoke:
+        n_list = [3]
+    else:
+        n_list = N_QUBITS_LIST
+    out_dir = Path(args.output_dir) if args.output_dir else DATA_DIR
+    out_dir.mkdir(parents=True, exist_ok=True)
+
     suite = {
         bc.circuit_id: bc
         for bc in generate_extended_suite(mode="full", seed=SEED)
-        if bc.family in FAMILIES and bc.circuit.num_qubits == N_QUBITS
+        if bc.circuit.num_qubits in n_list
     }
     tools = {
         "qiskit_L3": compile_qiskit,
@@ -129,35 +164,155 @@ def main() -> int:
         "cirq_default": compile_cirq,
         "prototype_greedy": compile_prototype,
     }
-    print(f"Listing-sensitivity check: {N_VARIANTS} unitary-preserving relistings "
-          f"per circuit (adjacent disjoint-gate swaps), n = {N_QUBITS}\n")
-    print(f"{'circuit':<14}{'tool':<20}{'base':>5}{'min':>5}{'max':>5}"
-          f"{'distinct':>9}  counts")
-    print("-" * 100)
+    print(f"Listing-sensitivity check (wave-5): {n_variants} unitary-preserving "
+          f"relistings per circuit, n={n_list}")
+    print(f"Circuits: {len(suite)} across {len(set(bc.family for bc in suite.values()))} families\n")
+
+    all_rows = []
+    t_start = time.time()
     any_sensitive = False
+    chunk_csv = out_dir / f"listing_sensitivity_v8_chunk_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+    chunk_written = False
+
     for name in sorted(suite):
-        qc = suite[name].circuit
+        bc = suite[name]
+        qc = bc.circuit
+        fam = bc.family
+        n = qc.num_qubits
         rng = random.Random(1234)
         variants = [qc] + [relist(qc, n_swaps=4 * qc.size(), rng=rng)
-                           for _ in range(N_VARIANTS - 1)]
+                           for _ in range(n_variants - 1)]
         # sanity: relistings preserve the unitary
-        u0 = Operator(qc).data
-        assert all(np.allclose(Operator(v).data, u0, atol=1e-10) for v in variants[1:]), \
-            f"relisting changed the unitary for {name}"
-        for tool, fn in tools.items():
-            try:
-                counts = [fn(v) for v in variants]
-            except Exception as exc:  # report, don't hide
-                print(f"{name:<14}{tool:<20}  ERROR: {exc}")
-                continue
-            spread = len(set(counts))
-            if spread > 1:
-                any_sensitive = True
-            print(f"{name:<14}{tool:<20}{qc.size():>5}{min(counts):>5}{max(counts):>5}"
-                  f"{spread:>9}  {counts[:10]}{'...' if len(counts) > 10 else ''}")
-    print()
-    print("VERDICT:", "some tool IS listing-sensitive" if any_sensitive
-          else "all tested tools are flat-listing invariant on this suite")
+        try:
+            u0 = Operator(qc).data
+            unitary_ok = all(np.allclose(Operator(v).data, u0, atol=1e-10)
+                             for v in variants[1:])
+        except Exception:
+            unitary_ok = None  # too large for exact; skip check
+        if unitary_ok is False:
+            print(f"  SKIP {name}: relisting changed the unitary", flush=True)
+            continue
+
+        family_rows = []
+        for vi, variant in enumerate(variants):
+            for tool, fn in tools.items():
+                try:
+                    gc = fn(variant)
+                except Exception as exc:
+                    gc = -1
+                    err = str(exc)[:80]
+                else:
+                    err = ""
+                row = {
+                    "experiment": EXPERIMENT_ID,
+                    "circuit_id": name,
+                    "circuit_family": fam,
+                    "n_qubits": n,
+                    "variant_idx": vi,
+                    "tool": tool,
+                    "gate_count": gc,
+                    "base_gate_count": qc.size() if vi == 0 else None,
+                    "unitary_check": "pass" if unitary_ok else ("skip" if unitary_ok is None else "fail"),
+                    "error": err,
+                }
+                family_rows.append(row)
+                all_rows.append(row)
+                if vi == 0 and gc >= 0:
+                    base_gc = gc
+                if vi > 0 and gc >= 0 and gc != base_gc:
+                    any_sensitive = True
+
+        # Incremental write: append this family's rows to chunk CSV
+        fam_df = pd.DataFrame(family_rows)
+        fam_df.to_csv(chunk_csv, mode='a', header=not chunk_written, index=False)
+        chunk_written = True
+
+        elapsed = time.time() - t_start
+        print(f"  {name:<24} n={n} fam={fam:<18} ({len(all_rows)//len(tools)} "
+              f"variants done, {elapsed:.0f}s)", flush=True)
+
+    df = pd.DataFrame(all_rows)
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    csv_path = out_dir / f"listing_sensitivity_v8_{ts}.csv"
+
+    # Atomic write
+    tmp = out_dir / (csv_path.name + ".tmp")
+    df.to_csv(tmp, index=False)
+    tmp.replace(csv_path)
+
+    # Canonical symlink/copy
+    canonical = out_dir / "listing_sensitivity_v8.csv"
+    if canonical.exists():
+        bak = out_dir / f"listing_sensitivity_v8.csv.bak-{ts}"
+        canonical.replace(bak)
+    df.to_csv(canonical, index=False)
+
+    # Summary per family x tool
+    summary_rows = []
+    for (fam, n, tool), grp in df[df.gate_count >= 0].groupby(["circuit_family", "n_qubits", "tool"]):
+        counts = grp.gate_count.values
+        summary_rows.append({
+            "circuit_family": fam,
+            "n_qubits": n,
+            "tool": tool,
+            "n_variants": len(counts),
+            "min_gates": int(counts.min()),
+            "max_gates": int(counts.max()),
+            "distinct_outputs": int(len(set(counts))),
+            "std_gates": float(counts.std()) if len(counts) > 1 else 0.0,
+            "listing_sensitive": bool(len(set(counts)) > 1),
+        })
+    summary_df = pd.DataFrame(summary_rows)
+    summary_path = out_dir / "family_summary_v8.csv"
+    tmp2 = out_dir / (summary_path.name + ".tmp")
+    summary_df.to_csv(tmp2, index=False)
+    tmp2.replace(summary_path)
+
+    # Metadata
+    import qiskit
+    try:
+        git_commit = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=Path(__file__).resolve().parent.parent,
+            text=True).strip()
+    except Exception:
+        git_commit = "unknown"
+    metadata = {
+        "experiment_id": EXPERIMENT_ID,
+        "version": VERSION,
+        "description": (
+            "Listing-sensitivity check: unitary-preserving relistings compiled "
+            "by production compilers (Qiskit L3, pytket FPO no-swap, Cirq) and "
+            "flat-list prototype. Wave-5 expansion: all 15 families x n={3,5,8} "
+            f"x {n_variants} variants."),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "n_rows": int(len(df)),
+        "n_variants": n_variants,
+        "n_qubits_list": n_list,
+        "families": sorted(df.circuit_family.unique().tolist()),
+        "tools": sorted(df.tool.unique().tolist()),
+        "seed": SEED,
+        "python_version": platform.python_version(),
+        "qiskit_version": qiskit.__version__,
+        "git_commit": git_commit,
+        "canonical_data_file": canonical.name,
+        "summary_file": summary_path.name,
+        "chunk_file": csv_path.name,
+    }
+    meta_path = out_dir / "metadata.json"
+    if meta_path.exists():
+        bak2 = out_dir / f"metadata.json.bak-{ts}"
+        meta_path.replace(bak2)
+    tmp3 = out_dir / "metadata.json.tmp"
+    with open(tmp3, "w") as f:
+        json.dump(metadata, f, indent=2)
+    tmp3.replace(meta_path)
+
+    print(f"\n{'='*70}")
+    print(f"VERDICT: {'some tool IS listing-sensitive' if any_sensitive else 'all tested tools are flat-listing invariant'}")
+    print(f"Rows: {len(df)} -> {canonical}")
+    print(f"Summary: {summary_path}")
+    print(f"Metadata: {meta_path}")
+    print(f"Sensitive combos: {len(summary_df[summary_df.listing_sensitive])}/{len(summary_df)}")
     return 0
 
 

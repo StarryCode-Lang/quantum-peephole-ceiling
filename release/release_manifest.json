@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-07-21T01:34:03.233954+00:00",
+  "created_utc": "2026-07-21T04:23:47.371312+00:00",
   "datasets": [
     {
       "experiment_id": "E1",
@@ -228,6 +228,13 @@
       "sha256": "68a814a853d95b9a9763edd6ba3bb136fe75b7faf4a1b455ca2ede69bc843787"
     },
     {
+      "experiment_id": "E27_new_families",
+      "file": "data/v8/e27_new_families/e27_new_families_v8.csv",
+      "rows": 675,
+      "schema": "results_v8",
+      "sha256": "4d18b0833d7c6a1161ea79fa03b81519537d0a649af83976189a7a08dfd25d71"
+    },
+    {
       "experiment_id": "HARDWARE_VALIDATION",
       "file": "data/v8/hardware_validation/ehw_runs_full_20260720_150931.csv",
       "rows": 288,
@@ -235,15 +242,22 @@
       "sha256": "e6537e0ee9b59ca5f9d3f3f0050cecb700661dfa53f6176a8bf074ecea874516"
     },
     {
+      "experiment_id": "E_listing_sensitivity_v8",
+      "file": "data/v8/listing_sensitivity/listing_sensitivity_v8.csv",
+      "rows": 4320,
+      "schema": "results_v8",
+      "sha256": "61c435661bcba7038c3f0fd21980df9856e3e4b15cc5a3ebb7dc1d715cdc4bd9"
+    },
+    {
       "experiment_id": "E26_phase2b_full_v8",
       "file": "data/v8/phase2b_full/phase2b_full_validation_v8.csv",
-      "rows": 735,
+      "rows": 1707,
       "schema": "results_v8",
-      "sha256": "2a0a863a657ad8d1d450c8b27ad837bbac0257f7302d1b6425ee303af1988b77"
+      "sha256": "19cbf82f8c0487f6fc570058f53893bb794490656f4459c32f5beddebb15c6bf"
     }
   ],
   "environment": {
-    "env_id": "q-research-8.0.0-wave4",
+    "env_id": "q-research-9.0.0-wave5",
     "packages": {
       "matplotlib": "3.9.0",
       "numpy": "1.26.4",
@@ -257,10 +271,10 @@
   },
   "git": {
     "branch": "master",
-    "commit": "f0ba50a9098a3708cb662c9f3a89d7fe2a681b95",
-    "dirty": false
+    "commit": "0e3d10efba0daf56cf62c863478a5c59cf0f5125",
+    "dirty": true
   },
-  "release_id": "q-research-8.0.0-wave4",
+  "release_id": "q-research-9.0.0-wave5",
   "reproduction": {
     "conda_env": "q-research",
     "entrypoints": [
