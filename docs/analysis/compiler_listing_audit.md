@@ -311,3 +311,66 @@ n=8).
   DAG/moment-based compilers), but this should be noted.
 - Same-wire commuting-gate swaps were not enumerated (same as Sec. 7).
 - n=8 used 20 variants (vs. 50 for n=3,5) due to compilation time.
+
+---
+
+## 9. Addendum: Wave-6 completion of the remaining 5 families (2026-07-21)
+
+The 5 families left incomplete in wave 5 (UCCSD_inspired, VQE, Adder,
+QuantumWalk, SurfaceCode) have now been run with the identical methodology
+(unitary-preserving adjacent disjoint-gate relistings, rng = Random(1234),
+n_swaps = 4 x size, 50 variants at nominal n={3,5}, 20 at n=8, same 4 tools).
+Data merged into `data/v8/listing_sensitivity/listing_sensitivity_v8.csv`
+(4,320 -> 6,652 rows; backups `*.bak-20260721_141836`).
+
+### 9.1 Root cause of the wave-5 gap (corrected)
+
+Wave 5 attributed the gap to compile-time at n=5/8. The full root cause is
+twofold:
+
+1. **Selection bug**: the wave-5 script filters suite circuits by
+   `circuit.num_qubits in {3,5,8}`. Adder, QuantumWalk, and SurfaceCode use
+   ancilla/coin qubits, so their actual qubit counts (4-10) never match the
+   nominal sizes and these circuits were silently excluded regardless of
+   budget. The wave-6 fill script
+   (`experiments/listing_sensitivity_fill.py`) selects by circuit_id suffix
+   (nominal n) instead, and records the ACTUAL qubit count in `n_qubits`.
+2. **Genuine compute cost**: QuantumWalk is dominated by MCX decompositions;
+   at nominal n=8 (9 qubits, 106 gates) one variant costs ~190 s across the
+   4 tools (pytket 61.6 s, Cirq 30.1 s, prototype 98.4 s), and the exact
+   `Operator()` unitary check at 9 qubits pushed a single variant past the
+   250 s per-call budget.
+
+### 9.2 Results (5 filled families, 60 new family-n-tool combos)
+
+| Metric | Wave-5 (10 fam) | Wave-6 (15 fam) |
+|---|---|---|
+| Families covered | 10/15 | **15/15** |
+| Total rows | 4,320 | 6,652 |
+| Family-n-tool combos | 108 | 168 |
+| Production compiler sensitive combos | 0/81 | **0/126** |
+| Prototype sensitive combos | 13/27 | **15/42** |
+
+Newly observed prototype sensitivity: UCCSD_inspired at n_qubits=5 (5 distinct
+outputs, 44-48 gates) and n_qubits=8 (3 distinct, 78-80 gates). VQE, Adder,
+QuantumWalk, and SurfaceCode show no prototype sensitivity (their circuits are
+either too structured or already minimal for the greedy pass).
+
+**Conclusion unchanged and now complete.** All three production compilers
+produce identical gate counts across all relistings for **every** suite family
+(0/126 sensitive combos, 15/15 families). The flat-list prototype remains
+listing-sensitive (15/42 combos, now spanning 6 families including
+UCCSD_inspired). The manuscript's core claim survives full-coverage testing.
+
+### 9.3 Honest limitations of the wave-6 fill
+
+- **qwalk_8 is partial**: 3/20 variants (indices 0-2) due to the ~190 s/variant
+  cost; all 3 variants x 4 tools give identical gate counts (qiskit 4551,
+  tket 7385, Cirq 11474, prototype 106). Recorded as a gap, not extrapolated.
+- **qwalk_8 unitary check skipped** (`unitary_check=skip`, 12 rows): the exact
+  `Operator()` equivalence check is computationally infeasible at 9 qubits
+  within budget. The relisting transform is unitary-preserving by construction
+  (adjacent disjoint-gate swaps) and was verified exactly (`pass`) for all
+  other 14 circuits including qwalk_3 and qwalk_5 (2,320 rows).
+- n_qubits for Adder/QuantumWalk/SurfaceCode is the actual count (4-10), so
+  their summary rows appear at n_qubits in {4,5,6,7,8,9,10}, not {3,5,8}.

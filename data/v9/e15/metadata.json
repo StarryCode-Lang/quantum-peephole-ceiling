@@ -1,0 +1,82 @@
+{
+  "canonical_data_file": "e15_multi_compiler_e15_full_20260721_075707.csv",
+  "circuit_families": [
+    "Adder",
+    "CNOT",
+    "GHZ",
+    "Grover",
+    "HaarRandom",
+    "HardwareEfficient",
+    "IQP",
+    "Oracle",
+    "QAOA",
+    "QFT",
+    "QuantumWalk",
+    "RandomClifford",
+    "SurfaceCode",
+    "UCCSD_inspired",
+    "VQE"
+  ],
+  "compilers": [
+    "custom",
+    "qiskit"
+  ],
+  "deferred_circuits": [
+    {
+      "baseline_gate_count": 118,
+      "circuit_id": "qwalk_9",
+      "compiled_l0_gate_count": 6916,
+      "n_qubits": 10,
+      "reason": "exact fidelity on n>=10 with >1500 transpiled gates exceeds per-call compute budget",
+      "rows_deferred": "qiskit L0-L3"
+    },
+    {
+      "baseline_gate_count": 68,
+      "circuit_id": "grover_10",
+      "compiled_l0_gate_count": 1772,
+      "n_qubits": 10,
+      "reason": "exact fidelity on n>=10 with >1500 transpiled gates exceeds per-call compute budget",
+      "rows_deferred": "qiskit L0-L3"
+    }
+  ],
+  "deferred_reason": "exact fidelity on n>=10 with >1500 transpiled gates exceeds per-call compute budget (qiskit rows only)",
+  "description": "Multi-compiler baseline comparison (Qiskit, Cirq, t|ket>)",
+  "experiment_id": "E15",
+  "git_commit": "dffcd3144ba34592bb5c02aadda197343a9ed344",
+  "max_qubits_fidelity": 10,
+  "mode": "full",
+  "n_input_circuits": 142,
+  "n_rows": 986,
+  "package_versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "qiskit": "2.4.1",
+    "scipy": "1.13.1"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+  "qiskit_transpiler_seed": 42,
+  "rerun_note": "checkpointed rerun via analysis/rerun_e15_checkpointed.py; fast-fidelity runtime accommodation on the custom-optimizer path only (exact<=10q, 32 samples, equality+Clifford shortcuts, memoized); Qiskit rows computed exactly as canonical",
+  "run_id": "e15_full_20260721_075707",
+  "schema_version": "2.0.0",
+  "seed": 42,
+  "skip_cirq": true,
+  "skip_tket": true,
+  "source_hashes": {
+    "analysis/structural_ceiling.py": "c36dbb5e951cf5fd7ea2e9655ada682d1bf05b9d2934e394ebba65bad57e5102",
+    "experiments/e15_multi_compiler/run.py": "abd412e4d198451ad40c92634a256f4b5b4e0aad4b798833f36cfa7b391ef386",
+    "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
+    "src/circuits/real_benchmarks.py": "5f137e8efaf872cc2205f2e2cac5e4420c014d7fa3ac0cf440e04dad7e4dd82a",
+    "src/optimisation/_gate_predicates.py": "c7c0c6a7c985e5e4f19b2699323679f94b3f5040376b9a3224d40364b6bf83f2",
+    "src/optimisation/base.py": "9deebb58086c5afa39be961e3c55a38bbf68fb459a793444236becb76ed78e13",
+    "src/optimisation/ceiling_aware.py": "53a29f2a065e69a460686b4b132f1b60aaf6899f097f556cfee270bef4fe373b",
+    "src/optimisation/phase1/genetic_algorithm.py": "2fb72ff5056c11b369a3b8ecdda7a44139ebaca6893c85a37fd2f3d04c12ea22",
+    "src/optimisation/phase1/greedy.py": "3f50c48d160161772e4fe4a0eb8b23d1c5fb3598a62c048788004a459072cd1a",
+    "src/optimisation/phase1/random_local_search.py": "1a44d4ced7903d0e57d56e55ac6b40fbe840f1a5f83fc9f38e48a2bf2c77873b",
+    "src/optimisation/phase1/simulated_annealing.py": "b7f23188aa6095ce4ad44179e5560d655c5b1183e18cba8462f5ca90e94bcd6e",
+    "src/optimisation/phase1/wire_traversal.py": "c78ce84f0ce8f5e5e1991d6322fed32817184959edb34569bdaa164126b457eb",
+    "src/optimisation/phase2/commutation_rewriter.py": "a53769804a1e7e5d6a1e02146e12dbe79774a011fca4fc0990755ced3475a83d",
+    "src/optimisation/phase2/template_matcher.py": "4df19a21b1b9f4ac344905e9f2239022a2ef0c343b4e649ac216d9ce15207e4e"
+  },
+  "version": "5.0.0"
+}

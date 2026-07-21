@@ -1,0 +1,16 @@
+[
+  {
+    "circuit_id": "qwalk_9",
+    "n_qubits": 10,
+    "baseline_gate_count": 118,
+    "compiled_l0_gate_count": 6916,
+    "reason": "exact fidelity on n>=10 with >1500 compiled gates exceeds per-call compute budget (>250 s/level)"
+  },
+  {
+    "circuit_id": "grover_10",
+    "n_qubits": 10,
+    "baseline_gate_count": 68,
+    "compiled_l0_gate_count": 1772,
+    "reason": "exact fidelity on n>=10 with >1500 compiled gates exceeds per-call compute budget (>250 s/level)"
+  }
+]

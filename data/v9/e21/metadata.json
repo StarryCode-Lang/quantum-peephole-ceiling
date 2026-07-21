@@ -1,0 +1,56 @@
+{
+  "canonical_data_file": "ceiling_aware_comparison.csv",
+  "comparison_file": "ceiling_aware_comparison.csv",
+  "description": "Ceiling-aware optimizer vs naive pipeline comparison. Demonstrates that structural ceiling knowledge saves compilation time without losing gate-count reduction.",
+  "experiment_id": "E21",
+  "fidelity_field": "fidelity",
+  "fidelity_sources": [
+    "base_optimizer_large_circuit_estimate",
+    "exact_average_gate_fidelity"
+  ],
+  "git_commit": "dffcd3144ba34592bb5c02aadda197343a9ed344",
+  "max_exact_fidelity_qubits": 6,
+  "mode": "full",
+  "n_families": 15,
+  "n_processed": 570,
+  "n_rows": 1140,
+  "n_skipped": 30,
+  "n_trials_per_config": 10,
+  "package_versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "qiskit": "2.4.1",
+    "scipy": "1.13.1"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+  "qubit_sizes": [
+    4,
+    6,
+    8,
+    10
+  ],
+  "rerun_note": "checkpointed rerun via analysis/rerun_e21_checkpointed.py; no fidelity patch (canonical semantics: target=None for n>6, exact AGF for n<=6)",
+  "run_id": "e21_full_20260721_072214",
+  "schema_version": "1.0.0",
+  "seed": 42,
+  "source_hashes": {
+    "analysis/structural_ceiling.py": "c36dbb5e951cf5fd7ea2e9655ada682d1bf05b9d2934e394ebba65bad57e5102",
+    "experiments/e21_ceiling_aware/run.py": "2b8771a011162a52c5f7e3bea952474faae70e75fea65a14bbf150f01260c682",
+    "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
+    "src/circuits/real_benchmarks.py": "5f137e8efaf872cc2205f2e2cac5e4420c014d7fa3ac0cf440e04dad7e4dd82a",
+    "src/optimisation/_gate_predicates.py": "c7c0c6a7c985e5e4f19b2699323679f94b3f5040376b9a3224d40364b6bf83f2",
+    "src/optimisation/base.py": "9deebb58086c5afa39be961e3c55a38bbf68fb459a793444236becb76ed78e13",
+    "src/optimisation/ceiling_aware.py": "53a29f2a065e69a460686b4b132f1b60aaf6899f097f556cfee270bef4fe373b",
+    "src/optimisation/phase1/genetic_algorithm.py": "2fb72ff5056c11b369a3b8ecdda7a44139ebaca6893c85a37fd2f3d04c12ea22",
+    "src/optimisation/phase1/greedy.py": "3f50c48d160161772e4fe4a0eb8b23d1c5fb3598a62c048788004a459072cd1a",
+    "src/optimisation/phase1/random_local_search.py": "1a44d4ced7903d0e57d56e55ac6b40fbe840f1a5f83fc9f38e48a2bf2c77873b",
+    "src/optimisation/phase1/simulated_annealing.py": "b7f23188aa6095ce4ad44179e5560d655c5b1183e18cba8462f5ca90e94bcd6e",
+    "src/optimisation/phase1/wire_traversal.py": "c78ce84f0ce8f5e5e1991d6322fed32817184959edb34569bdaa164126b457eb",
+    "src/optimisation/phase2/commutation_rewriter.py": "a53769804a1e7e5d6a1e02146e12dbe79774a011fca4fc0990755ced3475a83d",
+    "src/optimisation/phase2/template_matcher.py": "4df19a21b1b9f4ac344905e9f2239022a2ef0c343b4e649ac216d9ce15207e4e"
+  },
+  "summary_file": "ceiling_aware_summary.csv",
+  "version": "1.0.0",
+  "window": 10
+}

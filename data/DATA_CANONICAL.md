@@ -5,7 +5,7 @@
 > **Purpose**: Define, for every experiment, the single **canonical** CSV used
 > for analysis and manuscript figures, the layout of derived artifacts, and the
 > data-version policy. Aligned with `release/release_manifest.json` (36 canonical
-> datasets, 79,669 rows as of 2026-07-21).
+> datasets, 82,721 rows as of 2026-07-21).
 
 ## Roles
 
@@ -73,11 +73,11 @@ Fields that were not recorded at generation time were backfilled during the
 | Heldout | `v5/new_families_heldout.csv` | 125 | results_v2 | Phase 7 held-out validation |
 | Isolation | `v5/qiskit_pass_isolation.csv` | 100 | results_v2 | Phase 7 Qiskit pass isolation |
 | EHW | `v8/hardware_validation/ehw_runs_full_20260720_150931.csv` | 288 | results_v8 | Hardware-validation full run (FakeManilaV2/FakeNairobiV2 noise-model simulation, **not** real hardware); supersedes the 48-row smoke; summary CSV in same dir is derived |
-| E10p2b-v2 | `v8/phase2b_full/phase2b_full_validation_v8.csv` | 1,707 | results_v8 | Phase-2b v2 full-scale validation (wave-5 expanded grid); BV reaches exact k+2 optimum on all 80 instances; analysis CSVs in same dir |
-| E_listing_sensitivity_v8 | `v8/listing_sensitivity/listing_sensitivity_v8.csv` | 4,320 | results_v8 | Listing-sensitivity check (wave-5): 10 families x n={3,5,8} x 20-50 relisting variants; production compilers 0/81 sensitive, prototype 13/27 |
-| E27_new_families | `v8/e27_new_families/e27_new_families_v8.csv` | 675 | results_v8 | 5 new circuit families (QPE, TrotterHamiltonian, QuantumVolume, WState, RepetitionCode) for family-mean statistical power |
+| E10p2b-v2 | `v8/phase2b_full/phase2b_full_validation_v8.csv` | 2,427 | results_v8 | Phase-2b v2 full-scale validation (wave-6 full-factorial grid: depth families n=3..10 x depth={20..50 step 5}, 56/56 combos; 0 fidelity failures); BV reaches exact k+2 optimum on all 80 instances; analysis CSVs in same dir |
+| E_listing_sensitivity_v8 | `v8/listing_sensitivity/listing_sensitivity_v8.csv` | 6,652 | results_v8 | Listing-sensitivity check (wave-6 full coverage): 15/15 families x 20-50 relisting variants; production compilers 0/126 sensitive, prototype 15/42 (6 sensitive families); qwalk_8 partial (3/20 variants; its 12 rows skip the exact unitary check) |
+| E27_new_families | `v8/e27_new_families/e27_new_families_v8.csv` | 675 | results_v8 | 5 new circuit families (QPE, TrotterHamiltonian, QuantumVolume, WState, RepetitionCode) for family-mean statistical power; wave-6 PART-5 LOFO evaluation in `v6/ceiling_repair/part5_*` (docs/review/wave6/e27_part5.md) |
 
-**Totals**: 36 canonical datasets, 79,669 rows (2026-07-21).
+**Totals**: 36 canonical datasets, 82,721 rows (2026-07-21).
 
 ## derived/ directories
 
@@ -155,6 +155,18 @@ Version meanings:
    as an analysis variable; it is retained for schema continuity across data
    versions. (Datasets whose schema has no `success` column — e.g. E20, E21,
    E23, E24, E26, SOTA, CeilingRepair, EHW — are unaffected.)
+8. **Wave-6 rerun reconciliation (E12–E17, E19, E21)** — 8 experiments rerun
+   under current code and reconciled row-by-row; canonical retained for all
+   (owner decision), E14/E15/E17/E21 annotated. Unified IQP sensitivity:
+   IQP-family commutation/hybrid reductions in canonical E14/E15/E16/E21 are
+   systematically lower than current-code values (strengthened commutation
+   predicate, review FATAL-1 repair direction — optimizer-capability
+   enhancement, not a data error). E14 canonical also carries 20 fidelity = 0.0
+   artifact rows on unchanged circuits (current code correctly reports 1.0).
+   E18/E20 not rerun (single-machine budget); their 'source modified since run'
+   warnings stand as accepted. Details: `docs/review/wave6/rerun_batch1.md`,
+   `rerun_batch2.md`, `rerun_batch3.md`; rerun outputs live in `data/v9/`
+   (non-canonical).
 
 ## Optimizer Naming Convention Map
 

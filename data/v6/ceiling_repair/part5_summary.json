@@ -1,0 +1,584 @@
+{
+  "timestamp": "2026-07-21T05:24:56.839350+00:00",
+  "part": "PART 5 \u2014 E27 new families join the LOFO evaluation (wave 6)",
+  "datasets": {
+    "e21": "data/v6/e21/ceiling_aware_comparison.csv (naive rows) + cached mechanism_features.csv",
+    "e27": "data/v8/e27_new_families/e27_new_families_v8.csv; labels recomputed with the exact E21 naive pipeline (Phase1 -> Phase2(window=10) -> Phase1) on regenerated, size- and Phase-1-cross-checked, content-deduplicated circuits"
+  },
+  "seed": 42,
+  "e27_verification": {
+    "n_specs": 225,
+    "n_size_verified": 225,
+    "n_greedy_phase1_crosscheck_ok": 225,
+    "n_duplicate_circuits_dropped": 103,
+    "n_unique_circuits": 122,
+    "unique_per_family": {
+      "QPE": 15,
+      "QuantumVolume": 45,
+      "RepetitionCode": 12,
+      "TrotterHamiltonian": 45,
+      "WState": 5
+    },
+    "elapsed_seconds": 4.1
+  },
+  "reference_15family": {
+    "v4_pooled_mae": 0.017240047157436947,
+    "v4_pooled_pearson_r": 0.9769398851816893,
+    "v4_pooled_spearman_r": 0.8527459395997157,
+    "family_mean_r_n15": 0.05879992845693669,
+    "sources": [
+      "data/v6/ceiling_repair/regime_intervention_summary.json",
+      "data/v6/ceiling_repair/repair_summary.json"
+    ]
+  },
+  "reproduction_check_v4_15fam": {
+    "mae": 0.017240047157436947,
+    "pearson_r": 0.9769398851816893,
+    "spearman_r": 0.8527459395997157,
+    "r2": 0.9535090647344712,
+    "matches_wave4": true
+  },
+  "lofo_20fam": {
+    "v0_baseline_mech_rf_20fam": {
+      "mae": 0.04238882576585543,
+      "pearson_r": 0.9398869581673432,
+      "spearman_r": 0.654282656230081,
+      "r2": 0.7757963152364314,
+      "mae_ci95": [
+        0.03446229918102202,
+        0.050648864188825186
+      ],
+      "pearson_ci95": [
+        0.9086862191767751,
+        0.964516058219519
+      ],
+      "mean_fold_mae": 0.047249198040867905,
+      "max_fold_mae": 0.40879454334936227
+    },
+    "v4_rule_gate_phase1_20fam": {
+      "mae": 0.018759083375718882,
+      "pearson_r": 0.9665283242888018,
+      "spearman_r": 0.6543646103498545,
+      "r2": 0.9335588446739606,
+      "mae_ci95": [
+        0.014408546949569228,
+        0.023600403306600185
+      ],
+      "pearson_ci95": [
+        0.9480309898731663,
+        0.9792682674928855
+      ],
+      "mean_fold_mae": 0.026809470873399792,
+      "max_fold_mae": 0.3034091509955916
+    }
+  },
+  "family_mean_regression": {
+    "protocol": "RF (300 trees, depth 3, min_leaf 1) on family-mean combined features, leave-one-family-out; identical to Part 3b(a)",
+    "n15_repro": {
+      "n_families": 15,
+      "mae": 0.11408757628491381,
+      "pearson_r": 0.05879992845693669,
+      "spearman_r": 0.5081656903972619,
+      "per_family": {
+        "Adder": {
+          "actual": 0.0,
+          "predicted": 0.009149139989398704
+        },
+        "CNOT": {
+          "actual": 1.0,
+          "predicted": 0.05572564255651835
+        },
+        "GHZ": {
+          "actual": 0.0,
+          "predicted": 0.23493751494760184
+        },
+        "Grover": {
+          "actual": 0.019384806546351163,
+          "predicted": 0.051524575940656736
+        },
+        "HaarRandom": {
+          "actual": 0.0,
+          "predicted": 0.025201069127907837
+        },
+        "HardwareEfficient": {
+          "actual": 0.0,
+          "predicted": 0.001739528179955706
+        },
+        "IQP": {
+          "actual": 0.0,
+          "predicted": 0.07566448178255776
+        },
+        "Oracle": {
+          "actual": 0.1584744856107085,
+          "predicted": 0.026312124015298224
+        },
+        "QAOA": {
+          "actual": 0.0,
+          "predicted": 0.02339252657527657
+        },
+        "QFT": {
+          "actual": 0.0,
+          "predicted": 0.0233658599086099
+        },
+        "QuantumWalk": {
+          "actual": 0.0,
+          "predicted": 0.024590682697356404
+        },
+        "RandomClifford": {
+          "actual": 0.1935843603262552,
+          "predicted": 0.10860132076751318
+        },
+        "SurfaceCode": {
+          "actual": 0.0,
+          "predicted": 0.0415314948706724
+        },
+        "UCCSD": {
+          "actual": 0.001,
+          "predicted": 0.046044569198449944
+        },
+        "VQE": {
+          "actual": 0.0,
+          "predicted": 0.013137249003980575
+        }
+      }
+    },
+    "n20_rf_only": {
+      "n_families": 20,
+      "mae": 0.08538936802985002,
+      "pearson_r": 0.7800661829280136,
+      "spearman_r": 0.5101252078584636,
+      "per_family": {
+        "Adder": {
+          "actual": 0.0,
+          "predicted": 0.007476243440383221
+        },
+        "CNOT": {
+          "actual": 1.0,
+          "predicted": 0.3008164220966841
+        },
+        "GHZ": {
+          "actual": 0.0,
+          "predicted": 0.0604150933756436
+        },
+        "Grover": {
+          "actual": 0.019384806546351163,
+          "predicted": 0.04896605720247215
+        },
+        "HaarRandom": {
+          "actual": 0.0,
+          "predicted": 0.023824919934330748
+        },
+        "HardwareEfficient": {
+          "actual": 0.0,
+          "predicted": 0.008937806522588384
+        },
+        "IQP": {
+          "actual": 0.0,
+          "predicted": 0.07792927883619374
+        },
+        "Oracle": {
+          "actual": 0.1584744856107085,
+          "predicted": 0.04951442092037346
+        },
+        "QAOA": {
+          "actual": 0.0,
+          "predicted": 0.003539199493965334
+        },
+        "QFT": {
+          "actual": 0.0,
+          "predicted": 0.003539199493965334
+        },
+        "QPE": {
+          "actual": 0.0,
+          "predicted": 0.0019398299897668365
+        },
+        "QuantumVolume": {
+          "actual": 0.0,
+          "predicted": 0.12847108523642856
+        },
+        "QuantumWalk": {
+          "actual": 0.0,
+          "predicted": 0.00957641062182499
+        },
+        "RandomClifford": {
+          "actual": 0.1935843603262552,
+          "predicted": 0.1776383719548962
+        },
+        "RepetitionCode": {
+          "actual": 0.48622497711473517,
+          "predicted": 0.040928051681934245
+        },
+        "SurfaceCode": {
+          "actual": 0.0,
+          "predicted": 0.003334218322908335
+        },
+        "TrotterHamiltonian": {
+          "actual": 0.00900617283950617,
+          "predicted": 0.030008600153272714
+        },
+        "UCCSD": {
+          "actual": 0.001,
+          "predicted": 0.004558419497862372
+        },
+        "VQE": {
+          "actual": 0.0,
+          "predicted": 0.02163237671944177
+        },
+        "WState": {
+          "actual": 0.0,
+          "predicted": 0.03364304474399881
+        }
+      }
+    },
+    "n20_rf_plus_v4_gate": {
+      "n_families": 20,
+      "mae": 0.05043018913468422,
+      "pearson_r": 0.8873142658191102,
+      "spearman_r": 0.5101252078584636,
+      "per_family": {
+        "Adder": {
+          "actual": 0.0,
+          "predicted": 0.007476243440383221
+        },
+        "CNOT": {
+          "actual": 1.0,
+          "predicted": 1.0
+        },
+        "GHZ": {
+          "actual": 0.0,
+          "predicted": 0.0604150933756436
+        },
+        "Grover": {
+          "actual": 0.019384806546351163,
+          "predicted": 0.04896605720247215
+        },
+        "HaarRandom": {
+          "actual": 0.0,
+          "predicted": 0.023824919934330748
+        },
+        "HardwareEfficient": {
+          "actual": 0.0,
+          "predicted": 0.008937806522588384
+        },
+        "IQP": {
+          "actual": 0.0,
+          "predicted": 0.07792927883619374
+        },
+        "Oracle": {
+          "actual": 0.1584744856107085,
+          "predicted": 0.04951442092037346
+        },
+        "QAOA": {
+          "actual": 0.0,
+          "predicted": 0.003539199493965334
+        },
+        "QFT": {
+          "actual": 0.0,
+          "predicted": 0.003539199493965334
+        },
+        "QPE": {
+          "actual": 0.0,
+          "predicted": 0.0019398299897668365
+        },
+        "QuantumVolume": {
+          "actual": 0.0,
+          "predicted": 0.12847108523642856
+        },
+        "QuantumWalk": {
+          "actual": 0.0,
+          "predicted": 0.00957641062182499
+        },
+        "RandomClifford": {
+          "actual": 0.1935843603262552,
+          "predicted": 0.1776383719548962
+        },
+        "RepetitionCode": {
+          "actual": 0.48622497711473517,
+          "predicted": 0.040928051681934245
+        },
+        "SurfaceCode": {
+          "actual": 0.0,
+          "predicted": 0.003334218322908335
+        },
+        "TrotterHamiltonian": {
+          "actual": 0.00900617283950617,
+          "predicted": 0.030008600153272714
+        },
+        "UCCSD": {
+          "actual": 0.001,
+          "predicted": 0.004558419497862372
+        },
+        "VQE": {
+          "actual": 0.0,
+          "predicted": 0.02163237671944177
+        },
+        "WState": {
+          "actual": 0.0,
+          "predicted": 0.03364304474399881
+        }
+      }
+    },
+    "previous_published_n15_r": 0.059
+  },
+  "gate_behaviour_per_family": [
+    {
+      "family": "Adder",
+      "is_new_family": false,
+      "n_rows": 40,
+      "mean_actual_reduction": 0.0,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.0,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 2.0661157024793266e-07,
+      "v4_fold_pearson_r": NaN
+    },
+    {
+      "family": "CNOT",
+      "is_new_family": false,
+      "n_rows": 40,
+      "mean_actual_reduction": 1.0,
+      "mean_phase1_action_density": 0.5,
+      "max_phase1_action_density": 0.5,
+      "mean_structural_upper_bound": 1.0,
+      "gate_fire_rate": 1.0,
+      "v4_fold_mae": 0.0,
+      "v4_fold_pearson_r": NaN
+    },
+    {
+      "family": "GHZ",
+      "is_new_family": false,
+      "n_rows": 40,
+      "mean_actual_reduction": 0.0,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.0,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 6.802721088435305e-08,
+      "v4_fold_pearson_r": NaN
+    },
+    {
+      "family": "Grover",
+      "is_new_family": false,
+      "n_rows": 40,
+      "mean_actual_reduction": 0.019384806546351163,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.019384806546351163,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 0.012892663820866465,
+      "v4_fold_pearson_r": 0.8135049401388869
+    },
+    {
+      "family": "HaarRandom",
+      "is_new_family": false,
+      "n_rows": 10,
+      "mean_actual_reduction": 0.0,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.0,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 2.136752136752115e-08,
+      "v4_fold_pearson_r": NaN
+    },
+    {
+      "family": "HardwareEfficient",
+      "is_new_family": false,
+      "n_rows": 40,
+      "mean_actual_reduction": 0.0,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.0,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 9.833492862905669e-05,
+      "v4_fold_pearson_r": NaN
+    },
+    {
+      "family": "IQP",
+      "is_new_family": false,
+      "n_rows": 40,
+      "mean_actual_reduction": 0.0,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.042605995182001685,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 0.0437786065072432,
+      "v4_fold_pearson_r": NaN
+    },
+    {
+      "family": "Oracle",
+      "is_new_family": false,
+      "n_rows": 40,
+      "mean_actual_reduction": 0.1584744856107085,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.15430781894404183,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 0.041967265387131275,
+      "v4_fold_pearson_r": 0.9127731520827992
+    },
+    {
+      "family": "QAOA",
+      "is_new_family": false,
+      "n_rows": 40,
+      "mean_actual_reduction": 0.0,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.0,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 0.0,
+      "v4_fold_pearson_r": NaN
+    },
+    {
+      "family": "QFT",
+      "is_new_family": false,
+      "n_rows": 40,
+      "mean_actual_reduction": 0.0,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.0,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 6.802721088435305e-08,
+      "v4_fold_pearson_r": NaN
+    },
+    {
+      "family": "QPE",
+      "is_new_family": true,
+      "n_rows": 15,
+      "mean_actual_reduction": 0.0,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.0,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 7.0018365472910525e-06,
+      "v4_fold_pearson_r": NaN
+    },
+    {
+      "family": "QuantumVolume",
+      "is_new_family": true,
+      "n_rows": 45,
+      "mean_actual_reduction": 0.0,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.0,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 7.13802908393476e-06,
+      "v4_fold_pearson_r": NaN
+    },
+    {
+      "family": "QuantumWalk",
+      "is_new_family": false,
+      "n_rows": 40,
+      "mean_actual_reduction": 0.0,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.0,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 0.00026722513773888524,
+      "v4_fold_pearson_r": NaN
+    },
+    {
+      "family": "RandomClifford",
+      "is_new_family": false,
+      "n_rows": 40,
+      "mean_actual_reduction": 0.1935843603262552,
+      "mean_phase1_action_density": 0.00086206896551724,
+      "max_phase1_action_density": 0.0344827586206896,
+      "mean_structural_upper_bound": 0.26480329679131537,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 0.12781812868725279,
+      "v4_fold_pearson_r": 0.8057512190357007
+    },
+    {
+      "family": "RepetitionCode",
+      "is_new_family": true,
+      "n_rows": 12,
+      "mean_actual_reduction": 0.48622497711473517,
+      "mean_phase1_action_density": 0.24311248855736758,
+      "max_phase1_action_density": 0.24793388429752067,
+      "mean_structural_upper_bound": 0.48622497711473517,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 0.3034091509955916,
+      "v4_fold_pearson_r": -0.8264904165319726
+    },
+    {
+      "family": "SurfaceCode",
+      "is_new_family": false,
+      "n_rows": 40,
+      "mean_actual_reduction": 0.0,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.0,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 0.0,
+      "v4_fold_pearson_r": NaN
+    },
+    {
+      "family": "TrotterHamiltonian",
+      "is_new_family": true,
+      "n_rows": 45,
+      "mean_actual_reduction": 0.00900617283950617,
+      "mean_phase1_action_density": 0.002845679012345679,
+      "max_phase1_action_density": 0.02,
+      "mean_structural_upper_bound": 0.006160493827160493,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 0.005861044389619324,
+      "v4_fold_pearson_r": 0.8354129672407407
+    },
+    {
+      "family": "UCCSD",
+      "is_new_family": false,
+      "n_rows": 40,
+      "mean_actual_reduction": 0.001,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.001,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 8.249371477875977e-05,
+      "v4_fold_pearson_r": 0.9999999999999998
+    },
+    {
+      "family": "VQE",
+      "is_new_family": false,
+      "n_rows": 40,
+      "mean_actual_reduction": 0.0,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.0,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 0.0,
+      "v4_fold_pearson_r": NaN
+    },
+    {
+      "family": "WState",
+      "is_new_family": true,
+      "n_rows": 5,
+      "mean_actual_reduction": 0.0,
+      "mean_phase1_action_density": 0.0,
+      "max_phase1_action_density": 0.0,
+      "mean_structural_upper_bound": 0.0,
+      "gate_fire_rate": 0.0,
+      "v4_fold_mae": 0.0,
+      "v4_fold_pearson_r": NaN
+    }
+  ],
+  "verdict": {
+    "family_mean_r_improved_materially": true,
+    "family_mean_r_delta_n20_vs_n15": 0.7212662544710768,
+    "new_family_fold_maes": {
+      "QPE": 7.0018365472910525e-06,
+      "QuantumVolume": 7.13802908393476e-06,
+      "RepetitionCode": 0.3034091509955916,
+      "TrotterHamiltonian": 0.005861044389619324,
+      "WState": 0.0
+    },
+    "new_family_folds_mae_gt_0.1": {
+      "RepetitionCode": 0.3034091509955916
+    },
+    "new_family_gate_false_positive_candidates": [],
+    "v4_vs_v0_on_20fam": {
+      "pooled_mae_delta": 0.02362974239013655,
+      "pooled_r_delta": 0.02664136612145851
+    }
+  }
+}

@@ -1,9 +1,9 @@
 {
   "experiment_id": "E_listing_sensitivity_v8",
   "version": "2.0.0",
-  "description": "Listing-sensitivity check: unitary-preserving relistings compiled by production compilers (Qiskit L3, pytket FPO no-swap, Cirq) and flat-list prototype. Wave-5 expansion: 13 families x n={3,5,8} x 20-50 variants.",
-  "timestamp": "2026-07-21T03:18:36.942629+00:00",
-  "n_rows": 4320,
+  "description": "Listing-sensitivity check: unitary-preserving relistings compiled by production compilers (Qiskit L3, pytket FPO no-swap, Cirq) and flat-list prototype. Wave-5: 10 families x n={3,5,8} x 20-50 variants. Wave-6 fill (2026-07-21): remaining 5 families (UCCSD_inspired, VQE, Adder, QuantumWalk, SurfaceCode) completed; coverage now 15/15 families. Note: Adder/QuantumWalk/SurfaceCode have ancilla/coin qubits, so recorded n_qubits is the ACTUAL count (4-10), selected by nominal size via circuit_id. qwalk_8 partial: 3/20 variants (compute budget; ~190 s/variant). qwalk_8 unitary_check = skip (exact Operator check infeasible at 9 qubits; relisting is unitary-preserving by construction and verified exactly at qwalk_3/qwalk_5).",
+  "timestamp": "2026-07-21T06:18:36.599485+00:00",
+  "n_rows": 6652,
   "n_variants": "50 (n=3,5) / 20 (n=8)",
   "n_qubits_list": [
     3,
@@ -11,6 +11,7 @@
     8
   ],
   "families": [
+    "Adder",
     "CNOT",
     "GHZ",
     "Grover",
@@ -20,7 +21,11 @@
     "Oracle",
     "QAOA",
     "QFT",
-    "RandomClifford"
+    "QuantumWalk",
+    "RandomClifford",
+    "SurfaceCode",
+    "UCCSD_inspired",
+    "VQE"
   ],
   "tools": [
     "cirq_default",
@@ -37,5 +42,22 @@
   "chunk_files": [
     "listing_sensitivity_v8_chunk_20260721_105047.csv",
     "listing_sensitivity_v8_chunk_20260721_110217.csv"
-  ]
+  ],
+  "wave6_fill": {
+    "date": "2026-07-21",
+    "rows_added": 2332,
+    "families_added": [
+      "Adder",
+      "QuantumWalk",
+      "SurfaceCode",
+      "UCCSD_inspired",
+      "VQE"
+    ],
+    "partial": {
+      "qwalk_8": "3/20 variants (compute budget)"
+    },
+    "canonical_backup": "listing_sensitivity_v8.csv.bak-20260721_141836",
+    "summary_backup": "family_summary_v8.csv.bak-20260721_141836",
+    "metadata_backup": "metadata.json.bak-20260721_141836"
+  }
 }

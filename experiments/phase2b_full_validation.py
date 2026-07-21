@@ -258,7 +258,8 @@ def _run_row(optimizers, family, n, depth, seed, trial, metrics_calc, run_id, ch
     return rows
 
 
-def run_chunk(chunk: str, smoke: bool, output_dir: Path) -> Path:
+def run_chunk(chunk: str, smoke: bool, output_dir: Path,
+              plan_start: int = 0, plan_limit: int | None = None) -> Path:
     metrics_calc = MetricsCalculator()
     optimizers = {
         "greedy_phase1": (GreedyGateCancellation(), False),
@@ -299,6 +300,21 @@ def run_chunk(chunk: str, smoke: bool, output_dir: Path) -> Path:
                 for d in FILL_DEPTHS_NEW:
                     for si, seed in enumerate(seeds):
                         plan.append((fam, n, d, BASE_SEED + seed * 100 + n * 10 + d, si))
+    if chunk == "depth_fill2":
+        # Wave-6 cross-product fill: the 20 (n, depth) combos still missing
+        # after wave-5 -- n={4,6,7,9,10} x depth={25,30,40,45} -- for each of
+        # the 4 depth families.  240 grid points x 3 optimizers = 720 rows.
+        # Supports --plan-start/--plan-limit slicing so long batches can be
+        # split across multiple invocations within a per-call time envelope;
+        # each slice writes its own timestamped chunk CSV and the merge step
+        # de-duplicates on the grid key.
+        FILL2_SIZES = [4, 6, 7, 9, 10]
+        FILL2_DEPTHS = [25, 30, 40, 45]
+        for fam in sorted(DEPTH_FAMILIES):
+            for n in FILL2_SIZES:
+                for d in FILL2_DEPTHS:
+                    for si, seed in enumerate(SEEDS_STRAT):
+                        plan.append((fam, n, d, BASE_SEED + seed * 100 + n * 10 + d, si))
     if chunk in ("bv", "all"):
         for n in bv_sizes:
             for trial in range(bv_secrets):
@@ -323,6 +339,11 @@ def run_chunk(chunk: str, smoke: bool, output_dir: Path) -> Path:
         force_fidelity_method = "sampled200"
         for si, seed in enumerate(ALGO_SEEDS):
             plan.append(("QuantumWalk", 8, None, BASE_SEED + seed * 100 + 8, si))
+
+    if plan_limit is not None:
+        plan = plan[plan_start:plan_start + plan_limit]
+    elif plan_start:
+        plan = plan[plan_start:]
 
     run_id = f"e26v8_{chunk}_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
     print(f"{EXPERIMENT_ID}: chunk={chunk} rows_planned={len(plan) * len(optimizers)}")
@@ -472,14 +493,29 @@ def merge_and_analyze(output_dir: Path) -> None:
             "n={3,5,8} x 2 seeds (stratified); QuantumWalk limited to n={3,5} "
             "(9-qubit exact fidelity with 7-controlled MCX exceeds compute "
             "envelope at n=8)")
+    # Depth-family coverage statement derived from the merged data itself.
+    depth_df = df[df.circuit_family.isin(sorted(DEPTH_FAMILIES))]
+    depth_p2b = depth_df[depth_df.optimizer == "template_phase2b"]
+    covered = set(zip(depth_p2b.param_n.astype(int), depth_p2b.depth.astype(int)))
+    full_grid = {(n, d) for n in range(3, 11) for d in (20, 25, 30, 35, 40, 45, 50)}
+    missing = sorted(full_grid - covered)
+    if missing:
+        depth_cov = (
+            f"n=3..10 x depth={{20..50 step 5}}: {len(covered)}/56 (n, depth) "
+            f"combos covered x 3 seeds; missing: {missing}")
+    else:
+        depth_cov = (
+            "FULL factor grid n=3..10 x depth={20,25,30,35,40,45,50} "
+            "(56/56 combos) x 3 seeds per depth family")
     metadata = {
         "experiment_id": EXPERIMENT_ID,
         "version": VERSION,
         "description": (
             "Phase-2b full-scale validation with the v2.0.0 template matcher "
-            "(extended Clifford + phase-polynomial library). Stratified grid: "
-            "BV full n=3..10 x 10 secrets; depth families n={3,5,8} x depth="
-            "{20,35,50} x 3 seeds; other algorithmic families n={3,5,8} x 2 seeds."),
+            "(extended Clifford + phase-polynomial library). Grid: "
+            "BV full n=3..10 x 10 secrets; depth families full factor "
+            "n=3..10 x depth={20..50 step 5} x 3 seeds (wave-6 complete); "
+            "other algorithmic families n={3,5,8} x 2 seeds."),
         "timestamp": datetime.now().isoformat(),
         "canonical_data_file": canonical.name,
         "summary_files": [summary_path.name, core_path.name, bv_path.name, boot_path.name],
@@ -496,8 +532,7 @@ def merge_and_analyze(output_dir: Path) -> None:
         },
         "coverage": {
             "bv_theorem_family": "FULL grid n=3..10 (8 sizes) x 10 secrets/size",
-            "depth_parameterized_families": "n={3,5,8} x depth={20,35,50} x 3 seeds "
-                                            "(stratified 3x3x3 of the n=3..10 x depth=20..50 space)",
+            "depth_parameterized_families": depth_cov,
             "other_algorithmic_families": other_algo_cov,
             "fidelity_methods": fid_methods,
         },
@@ -541,10 +576,14 @@ def merge_and_analyze(output_dir: Path) -> None:
 
 def main():
     parser = argparse.ArgumentParser(description=f"{EXPERIMENT_ID} v{VERSION}")
-    parser.add_argument("--chunk", choices=["depth", "bv", "algo", "qw8", "all", "depth_fill"], default=None)
+    parser.add_argument("--chunk", choices=["depth", "bv", "algo", "qw8", "all", "depth_fill", "depth_fill2"], default=None)
     parser.add_argument("--mode", choices=["smoke", "full"], default="full")
     parser.add_argument("--merge-only", action="store_true")
     parser.add_argument("--output-dir", type=str, default=None)
+    parser.add_argument("--plan-start", type=int, default=0,
+                        help="slice the planned grid points: start index")
+    parser.add_argument("--plan-limit", type=int, default=None,
+                        help="slice the planned grid points: max count")
     args = parser.parse_args()
 
     out_dir = Path(args.output_dir) if args.output_dir else DATA_DIR
@@ -553,7 +592,8 @@ def main():
         return
     if args.chunk is None:
         parser.error("--chunk required unless --merge-only")
-    run_chunk(args.chunk, smoke=(args.mode == "smoke"), output_dir=out_dir)
+    run_chunk(args.chunk, smoke=(args.mode == "smoke"), output_dir=out_dir,
+              plan_start=args.plan_start, plan_limit=args.plan_limit)
 
 
 if __name__ == "__main__":

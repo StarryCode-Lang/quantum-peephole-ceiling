@@ -1,8 +1,8 @@
 {
   "experiment_id": "E26_phase2b_full_v8",
   "version": "2.0.0",
-  "description": "Phase-2b full-scale validation with the v2.0.0 template matcher (extended Clifford + phase-polynomial library). Stratified grid: BV full n=3..10 x 10 secrets; depth families n={3,5,8} x depth={20,35,50} x 3 seeds; other algorithmic families n={3,5,8} x 2 seeds.",
-  "timestamp": "2026-07-21T11:31:32.775708",
+  "description": "Phase-2b full-scale validation with the v2.0.0 template matcher (extended Clifford + phase-polynomial library). Grid: BV full n=3..10 x 10 secrets; depth families full factor n=3..10 x depth={20..50 step 5} x 3 seeds (wave-6 complete); other algorithmic families n={3,5,8} x 2 seeds.",
+  "timestamp": "2026-07-21T13:31:59.584361",
   "canonical_data_file": "phase2b_full_validation_v8.csv",
   "summary_files": [
     "family_summary_v8.csv",
@@ -14,10 +14,18 @@
     "phase2b_v8_algo_20260721_000848.csv",
     "phase2b_v8_bv_20260720_235617.csv",
     "phase2b_v8_depth_20260720_235559.csv",
+    "phase2b_v8_depth_fill2_20260721_131807.csv",
+    "phase2b_v8_depth_fill2_20260721_131914.csv",
+    "phase2b_v8_depth_fill2_20260721_132233.csv",
+    "phase2b_v8_depth_fill2_20260721_132353.csv",
+    "phase2b_v8_depth_fill2_20260721_132425.csv",
+    "phase2b_v8_depth_fill2_20260721_132827.csv",
+    "phase2b_v8_depth_fill2_20260721_132843.csv",
+    "phase2b_v8_depth_fill2_20260721_133014.csv",
     "phase2b_v8_depth_fill_20260721_112245.csv",
     "phase2b_v8_qw8_20260721_084322.csv"
   ],
-  "n_rows": 1707,
+  "n_rows": 2427,
   "n_families": 16,
   "families": [
     "Adder",
@@ -77,20 +85,20 @@
   },
   "coverage": {
     "bv_theorem_family": "FULL grid n=3..10 (8 sizes) x 10 secrets/size",
-    "depth_parameterized_families": "n={3,5,8} x depth={20,35,50} x 3 seeds (stratified 3x3x3 of the n=3..10 x depth=20..50 space)",
+    "depth_parameterized_families": "FULL factor grid n=3..10 x depth={20,25,30,35,40,45,50} (56/56 combos) x 3 seeds per depth family",
     "other_algorithmic_families": "n={3,5,8} x 2 seeds (stratified); QuantumWalk covered at n=[3, 5, 8] (full stratified grid); n=8 rows use sampled200 fidelity -- exact Operator fidelity measured at ~133 s/row for the 9-qubit, 36-MCX walk circuit exceeds the compute envelope (wave-4 gap-fill, chunk qw8)",
     "fidelity_methods": {
-      "clifford_tableau": 87,
-      "exact": 1527,
-      "sampled200": 93
+      "clifford_tableau": 123,
+      "exact": 2103,
+      "sampled200": 201
     }
   },
   "phase2b_template_matcher_version": "2.0.0",
-  "script_sha256": "c84f0af1988613ec303fbfea04c407801eabe166e3a0841a0a8eae1e979e2be3",
+  "script_sha256": "9060415ee982c96f54d5773e089fa6bd42a13914d5ee503a6733623d7922343d",
   "provenance": {
     "version": "2.0.0",
     "run_id": "E26_phase2b_full_v8",
-    "git_commit": "0e3d10efba0daf56cf62c863478a5c59cf0f5125",
+    "git_commit": "dffcd3144ba34592bb5c02aadda197343a9ed344",
     "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
     "platform": "Windows-11-10.0.26200-SP0",
     "package_versions": {
@@ -113,7 +121,7 @@
       "src/optimisation/phase2/commutation_rewriter.py": "a53769804a1e7e5d6a1e02146e12dbe79774a011fca4fc0990755ced3475a83d",
       "src/optimisation/phase2/template_matcher.py": "4df19a21b1b9f4ac344905e9f2239022a2ef0c343b4e649ac216d9ce15207e4e",
       "analysis/structural_ceiling.py": "c36dbb5e951cf5fd7ea2e9655ada682d1bf05b9d2934e394ebba65bad57e5102",
-      "experiments/phase2b_full_validation.py": "c84f0af1988613ec303fbfea04c407801eabe166e3a0841a0a8eae1e979e2be3"
+      "experiments/phase2b_full_validation.py": "9060415ee982c96f54d5773e089fa6bd42a13914d5ee503a6733623d7922343d"
     }
   },
   "schema_version": "v8",

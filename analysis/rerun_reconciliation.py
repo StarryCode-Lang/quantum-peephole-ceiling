@@ -50,6 +50,90 @@ def find_rerun(exp_id: str) -> Path | None:
     return csvs[0] if csvs else None
 
 
+OVERLAP_KEYS = ["circuit_id", "optimizer", "window_size", "topology"]
+# Extra scientific columns worth comparing when present (E13 schema etc.)
+EXTRA_NUMERIC_COLS = [
+    "gate_count_total", "baseline_gate_count", "optimized_gate_count",
+    "depth", "original_depth", "optimized_depth",
+    "structural_upper_bound_reduction", "observed_best_reduction",
+    "observed_best_gate_count", "ceiling_gap",
+    "depth_reduction", "two_qubit_reduction", "cnot_reduction",
+    "structural_lower_bound", "cancellable_pair_count",
+    "mergeable_rotation_count", "adjacent_commuting_pairs",
+    "commutation_enabled_inverse_pairs", "commuting_block_count",
+]
+
+
+def reconcile_overlap(canon: pd.DataFrame, rerun: pd.DataFrame) -> dict:
+    """Compare canonical vs rerun on their shared key rows.
+
+    Used when row counts diverge (e.g. the circuit generator gained families
+    since the canonical run). Answers two questions:
+      1. Are same-named circuits bit-identical (input_circuit_sha256)?
+      2. Do the scientific values on shared keys still agree?
+    """
+    keys = [c for c in OVERLAP_KEYS if c in canon.columns and c in rerun.columns]
+    if "circuit_id" not in keys:
+        return {"status": "OVERLAP_NOT_COMPARABLE", "reason": "no circuit_id key"}
+
+    # Only compare rows with status ok (E17 emits transpile_error rows)
+    for df in (canon, rerun):
+        if "status" in df.columns:
+            df.drop(df.index[df["status"] != "ok"], inplace=True)
+
+    canon = canon.drop_duplicates(subset=keys).set_index(keys)
+    rerun = rerun.drop_duplicates(subset=keys).set_index(keys)
+    common = canon.index.intersection(rerun.index)
+    out = {
+        "keys": keys,
+        "canonical_key_rows": len(canon),
+        "rerun_key_rows": len(rerun),
+        "common_key_rows": len(common),
+    }
+    if len(common) == 0:
+        out["status"] = "OVERLAP_EMPTY"
+        return out
+
+    c = canon.loc[common]
+    r = rerun.loc[common]
+
+    if "input_circuit_sha256" in c.columns and "input_circuit_sha256" in r.columns:
+        same_input = (c["input_circuit_sha256"].values == r["input_circuit_sha256"].values)
+        out["input_circuit_identical"] = int(same_input.sum())
+        out["input_circuit_changed"] = int((~same_input).sum())
+    if "output_circuit_sha256" in c.columns and "output_circuit_sha256" in r.columns:
+        same_output = (c["output_circuit_sha256"].values == r["output_circuit_sha256"].values)
+        out["output_circuit_identical"] = int(same_output.sum())
+        out["output_circuit_changed"] = int((~same_output).sum())
+
+    num_cols = [col for col in NUMERIC_COLS + EXTRA_NUMERIC_COLS
+                if col in c.columns and col in r.columns]
+    diffs = {}
+    worst = 0.0
+    for col in num_cols:
+        cv = pd.to_numeric(c[col], errors="coerce").values
+        rv = pd.to_numeric(r[col], errors="coerce").values
+        both = ~(np.isnan(cv) | np.isnan(rv))
+        if both.sum() == 0:
+            continue
+        d = np.abs(cv[both] - rv[both])
+        max_d = float(d.max()) if len(d) else 0.0
+        n_match = int((d < 1e-9).sum())
+        diffs[col] = {"max_diff": max_d, "n_match": n_match, "n_total": int(both.sum())}
+        if col != "runtime_seconds":
+            worst = max(worst, max_d)
+    out["numeric_comparison"] = diffs
+    out["worst_nonruntime_diff"] = worst
+
+    if worst < 1e-9:
+        out["status"] = "OVERLAP_IDENTICAL"
+    elif worst < 1e-6:
+        out["status"] = "OVERLAP_EQUIVALENT"
+    else:
+        out["status"] = "OVERLAP_DIVERGED"
+    return out
+
+
 def reconcile(exp_id: str) -> dict:
     canon_path = PROJECT_ROOT / CANONICAL_MAP.get(exp_id, "")
     if not canon_path.exists():
@@ -77,6 +161,7 @@ def reconcile(exp_id: str) -> dict:
     if len(canon) != len(rerun):
         result["status"] = "DIVERGED"
         result["reason"] = f"Row count mismatch: {len(canon)} vs {len(rerun)}"
+        result["overlap"] = reconcile_overlap(canon, rerun)
         return result
 
     common_sort = [c for c in SORT_KEYS if c in canon.columns and c in rerun.columns]

@@ -49,6 +49,11 @@ Usage:
         Requires the cached mechanism_features.csv; writes NEW files
         (regime_intervention_results.csv / regime_intervention_summary.json)
         and never overwrites the Part-1..3 outputs.
+    python experiments/ceiling_model_repair.py --part5
+        Run PART 5 only (E27 new families join the LOFO evaluation, wave 6).
+        Requires the cached mechanism_features.csv and
+        data/v8/e27_new_families/e27_new_families_v8.csv; writes NEW files
+        (part5_*.csv / part5_summary.json) and never overwrites prior outputs.
 """
 
 from __future__ import annotations
@@ -572,6 +577,393 @@ def run_regime_intervention():
 
 
 # ---------------------------------------------------------------------------
+# Part 5 (wave 6, 2026-07-22): E27 new families join the LOFO evaluation
+# ---------------------------------------------------------------------------
+#
+# Wave 5 generated 5 new circuit families (QPE, TrotterHamiltonian,
+# QuantumVolume, WState, RepetitionCode; data/v8/e27_new_families/, 675 rows)
+# to lift the family-mean regression from n = 15 to n = 20.  PART 5 evaluates
+# the V4 hybrid model (mechanism rule gate + RF, the wave-4 winner) under LOFO
+# on all 20 families.
+#
+# Label caveat (handled explicitly): E27 ran three optimizers independently
+# and never ran the E21 "naive" pipeline (Phase1 -> Phase2 -> Phase1) that
+# defines the model target `gate_reduction`.  PART 5 therefore regenerates
+# every unique E27 circuit deterministically (same generators, same seeds)
+# and re-runs the exact E21 naive pipeline to obtain labels with an identical
+# definition.  Regeneration is verified two ways:
+#   1. circuit.size() must equal the CSV `original_size` for every spec;
+#   2. a Phase-1-only re-run must reproduce the CSV `greedy_phase1`
+#      reduction exactly for every spec.
+# Circuits are additionally deduplicated by content sha256 within a family
+# (WState ignores depth/seed -> 9 identical copies per size; QPE ignores
+# depth; RepetitionCode param_n=3 is promoted to n=4 and duplicates
+# param_n=4).  Duplicates carry no information and would overweight folds.
+#
+# Outputs (NEW files only; Part-1..4 outputs never touched):
+#   part5_e27_features.csv   per-unique-circuit features + naive-pipeline label
+#   part5_lofo_results.csv   per-fold metrics (V0/V4 on 20 fams, V4 on 15 fams)
+#   part5_summary.json       pooled metrics old/new, family-mean regression
+#                            n=15 vs n=20, per-family gate behaviour, verdict
+
+E27_CSV = (PROJECT_ROOT / "data" / "v8" / "e27_new_families"
+           / "e27_new_families_v8.csv")
+
+PART5_FEATURES_CSV = OUT_DIR / "part5_e27_features.csv"
+PART5_FOLDS_CSV = OUT_DIR / "part5_lofo_results.csv"
+PART5_SUMMARY_JSON = OUT_DIR / "part5_summary.json"
+
+
+def _load_e27_generators():
+    """Import FAMILY_GENERATORS from experiments/e27_new_families/run.py."""
+    import importlib.util
+    path = PROJECT_ROOT / "experiments" / "e27_new_families" / "run.py"
+    spec = importlib.util.spec_from_file_location("e27_new_families_run", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.FAMILY_GENERATORS
+
+
+def _part5_circuit_features(circuit, n_qubits):
+    """Mechanism + generic features for one circuit.
+
+    Definitions identical to Part 2 (extract_mechanism_features); kept as a
+    separate helper so the Part-1..4 code path is untouched.
+    """
+    from analysis.structural_ceiling import analyze_structural_ceiling
+    sc = analyze_structural_ceiling(circuit, window=10)
+    size = max(1, circuit.size())
+    names = [inst.operation.name for inst in circuit.data]
+    n_self_inv = sum(1 for nm in names if nm in SELF_INVERSE_GATES)
+    n_rot = sum(1 for nm in names if nm in {"rx", "ry", "rz"})
+    n_2q = sum(1 for inst in circuit.data if len(inst.qubits) >= 2)
+    depth = circuit.depth()
+    return {
+        "total_gates": size,
+        "log_total_gates": float(np.log1p(size)),
+        "gate_density": size / max(1, int(n_qubits)),
+        "original_depth": int(depth),
+        "depth_per_qubit": float(depth) / max(1, int(n_qubits)),
+        "two_qubit_fraction": n_2q / size,
+        "gate_diversity": len(set(names)),
+        "rotation_fraction": n_rot / size,
+        "adjacent_cancellable_pairs": sc.adjacent_cancellable_pairs,
+        "phase1_action_density": sc.adjacent_cancellable_pairs / size,
+        "commutation_enabled_pairs": sc.commutation_enabled_inverse_pairs,
+        "commutation_density": sc.commutation_enabled_inverse_pairs / size,
+        "mergeable_rotation_pairs": sc.mergeable_rotation_pairs,
+        "mergeable_rotation_density": sc.mergeable_rotation_pairs / size,
+        "structural_upper_bound": sc.structural_upper_bound_reduction,
+        "commuting_block_count": sc.commuting_block_count,
+        "commuting_block_density": sc.commuting_block_count / size,
+        "mean_block_size": sc.mean_block_size,
+        "max_block_size": sc.max_block_size,
+        "self_inverse_fraction": n_self_inv / size,
+    }
+
+
+def _part5_build_e27_table():
+    """Regenerate E27 circuits, verify, dedupe, label with the naive pipeline.
+
+    Returns (e27_df, verification_report).  e27_df has the same feature and
+    target columns as the E21 `data` frame used in Parts 3-4.
+    """
+    from src.circuits.real_benchmarks import circuit_sha256
+    from src.optimisation.phase1.greedy import GreedyGateCancellation
+    from src.optimisation.phase2.commutation_rewriter import CommutationRewriter
+
+    raw = pd.read_csv(E27_CSV)
+    specs = raw.drop_duplicates(
+        subset=["circuit_family", "param_n", "depth", "seed"])
+    # per-spec reference values from the CSV (identical across the 3 optimizers,
+    # verified below)
+    greedy_ref = (raw[raw["optimizer"] == "greedy_phase1"]
+                  .set_index(["circuit_family", "param_n", "depth", "seed"])
+                  ["reduction"].to_dict())
+
+    generators = _load_e27_generators()
+    rows, seen_hashes = [], set()
+    n_size_ok, n_greedy_ok, n_dup = 0, 0, 0
+    t0 = time.time()
+
+    for _, s in specs.iterrows():
+        fam = s["circuit_family"]
+        param_n, depth, seed = int(s["param_n"]), int(s["depth"]), int(s["seed"])
+        circuit = generators[fam](param_n, depth, seed)
+
+        # verification 1: size must match the CSV
+        if circuit.size() != int(s["original_size"]):
+            raise RuntimeError(
+                f"E27 regeneration size mismatch: {fam} param_n={param_n} "
+                f"depth={depth} seed={seed}: regenerated {circuit.size()} "
+                f"vs CSV {int(s['original_size'])}")
+        n_size_ok += 1
+
+        # verification 2: deterministic Phase-1 re-run must reproduce the CSV
+        # greedy_phase1 reduction exactly
+        p1 = GreedyGateCancellation(max_iterations=100)
+        r1 = p1.optimize(circuit, target=None)
+        greedy_reduction = 1.0 - r1.optimized_circuit.size() / circuit.size()
+        ref = float(greedy_ref[(fam, param_n, depth, seed)])
+        if abs(greedy_reduction - ref) > 1e-12:
+            raise RuntimeError(
+                f"E27 Phase-1 cross-check failed: {fam} param_n={param_n} "
+                f"depth={depth} seed={seed}: rerun {greedy_reduction:.6f} "
+                f"vs CSV {ref:.6f}")
+        n_greedy_ok += 1
+
+        # content dedup within family
+        digest = circuit_sha256(circuit)
+        if (fam, digest) in seen_hashes:
+            n_dup += 1
+            continue
+        seen_hashes.add((fam, digest))
+
+        # naive pipeline label (E21 definition: Phase1 -> Phase2 -> Phase1)
+        p2 = CommutationRewriter(max_iterations=100, window_size=10)
+        r2 = p2.optimize(r1.optimized_circuit, target=None)
+        r3 = GreedyGateCancellation(max_iterations=100).optimize(
+            r2.optimized_circuit, target=None)
+        naive_reduction = 1.0 - r3.optimized_circuit.size() / circuit.size()
+
+        feats = _part5_circuit_features(circuit, circuit.num_qubits)
+        rows.append({
+            "family": fam,
+            "n_qubits": int(circuit.num_qubits),
+            "param_n": param_n,
+            "depth": depth,
+            "seed": seed,
+            "circuit_sha256": digest,
+            "gate_reduction": float(naive_reduction),
+            "phase1_only_reduction": float(greedy_reduction),
+            **feats,
+        })
+
+    e27_df = pd.DataFrame(rows)
+    verification = {
+        "n_specs": int(len(specs)),
+        "n_size_verified": n_size_ok,
+        "n_greedy_phase1_crosscheck_ok": n_greedy_ok,
+        "n_duplicate_circuits_dropped": n_dup,
+        "n_unique_circuits": int(len(e27_df)),
+        "unique_per_family": e27_df.groupby("family").size().to_dict(),
+        "elapsed_seconds": round(time.time() - t0, 1),
+    }
+    return e27_df, verification
+
+
+def _part5_family_mean_regression(data, target, use_v4_gate=False):
+    """Leave-one-family-out regression on family means.
+
+    Protocol identical to Part 3b(a): RF (300 trees, depth 3, min_leaf 1) on
+    family-mean combined features.  When use_v4_gate=True the deterministic
+    V4 saturation rule (2 * mean phase1_action_density >= 1 ->
+    predict min(1, 2*d)) overrides the RF output, mirroring the hybrid model.
+    """
+    fam_feat = data.groupby("family")[FEATURE_SETS["combined"]].mean()
+    fam_y = data.groupby("family")[target].mean()
+    preds = {}
+    for held in fam_feat.index:
+        tr = fam_feat.index != held
+        reg = RandomForestRegressor(n_estimators=300, max_depth=3,
+                                    min_samples_leaf=1, random_state=RNG_SEED)
+        reg.fit(fam_feat.loc[tr, FEATURE_SETS["combined"]], fam_y.loc[tr])
+        p = float(reg.predict(fam_feat.loc[[held], FEATURE_SETS["combined"]])[0])
+        if use_v4_gate:
+            d = float(fam_feat.loc[held, "phase1_action_density"])
+            if 2.0 * d >= 1.0:
+                p = min(1.0, 2.0 * d)
+        preds[held] = p
+    pv = pd.Series(preds)
+    return {
+        "n_families": int(len(fam_y)),
+        "mae": float(mean_absolute_error(fam_y.values, pv.values)),
+        "pearson_r": _safe_pearson(fam_y.values, pv.values),
+        "spearman_r": _safe_spearman(fam_y.values, pv.values),
+        "per_family": {f: {"actual": float(fam_y[f]), "predicted": float(pv[f])}
+                       for f in fam_y.index},
+    }
+
+
+def run_part5_new_families():
+    """PART 5 entry point: add the 5 E27 families to the LOFO evaluation."""
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    if not FEATURE_CSV.exists():
+        raise SystemExit(
+            f"cached {FEATURE_CSV} missing; run the base script first")
+    if not E27_CSV.exists():
+        raise SystemExit(f"E27 canonical CSV missing: {E27_CSV}")
+
+    target = "gate_reduction"
+
+    # ---- E21 side (identical merge to Part 4) ----
+    raw = pd.read_csv(E21_CSV)
+    df = raw[raw["strategy_name"] == "naive"].copy().reset_index(drop=True)
+    feat = pd.read_csv(FEATURE_CSV)
+    data15 = df.merge(
+        feat.drop(columns=["family", "n_qubits", "trial_seed",
+                           "input_circuit_sha256"]),
+        left_index=True, right_on="row_idx", how="left")
+    print(f"[Load] E21 naive rows: {len(data15)} "
+          f"({data15['family'].nunique()} families)")
+
+    # ---- E27 side: regenerate, verify, dedupe, label ----
+    print("[E27] regenerating circuits + naive-pipeline labels ...")
+    e27_df, verification = _part5_build_e27_table()
+    print(f"  verified {verification['n_greedy_phase1_crosscheck_ok']}/"
+          f"{verification['n_specs']} specs; "
+          f"{verification['n_duplicate_circuits_dropped']} duplicates dropped; "
+          f"{verification['n_unique_circuits']} unique circuits kept")
+
+    tmp = PART5_FEATURES_CSV.with_suffix(".csv.tmp")
+    e27_df.to_csv(tmp, index=False)
+    tmp.replace(PART5_FEATURES_CSV)
+    print(f"[Save] {PART5_FEATURES_CSV}")
+
+    data20 = pd.concat([data15, e27_df], ignore_index=True)
+    print(f"[Merge] combined: {len(data20)} rows, "
+          f"{data20['family'].nunique()} families")
+
+    report = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "part": "PART 5 — E27 new families join the LOFO evaluation (wave 6)",
+        "datasets": {
+            "e21": "data/v6/e21/ceiling_aware_comparison.csv (naive rows) "
+                   "+ cached mechanism_features.csv",
+            "e27": "data/v8/e27_new_families/e27_new_families_v8.csv; "
+                   "labels recomputed with the exact E21 naive pipeline "
+                   "(Phase1 -> Phase2(window=10) -> Phase1) on regenerated, "
+                   "size- and Phase-1-cross-checked, content-deduplicated "
+                   "circuits",
+        },
+        "seed": RNG_SEED,
+        "e27_verification": verification,
+        "reference_15family": {
+            "v4_pooled_mae": 0.017240047157436947,
+            "v4_pooled_pearson_r": 0.9769398851816893,
+            "v4_pooled_spearman_r": 0.8527459395997157,
+            "family_mean_r_n15": 0.05879992845693669,
+            "sources": [
+                "data/v6/ceiling_repair/regime_intervention_summary.json",
+                "data/v6/ceiling_repair/repair_summary.json",
+            ],
+        },
+    }
+
+    # ---- reproduction check: V4 on the 15 original families ----
+    folds15, pooled15 = lofo_evaluate_fn(
+        data15, MECHANISM_FEATURES, pred_v4_rule_gate_phase1, target)
+    m15 = pooled_metrics(pooled15)
+    folds15.insert(0, "config", "v4_rule_gate_phase1_15fam_repro")
+    print(f"[Repro] V4 on 15 fams: MAE={m15['mae']:.4f} "
+          f"r={m15['pearson_r']:.4f} rho={m15['spearman_r']:.4f}")
+    repro_ok = (abs(m15["mae"] - 0.017240047157436947) < 1e-9
+                and abs(m15["pearson_r"] - 0.9769398851816893) < 1e-9)
+    report["reproduction_check_v4_15fam"] = {**m15, "matches_wave4": repro_ok}
+
+    # ---- LOFO on 20 families: V0 (mech RF) and V4 (hybrid gate + RF) ----
+    all_folds = [folds15]
+    summaries = {}
+    for name, fn in [("v0_baseline_mech_rf_20fam", pred_v0_baseline),
+                     ("v4_rule_gate_phase1_20fam", pred_v4_rule_gate_phase1)]:
+        folds, pooled = lofo_evaluate_fn(data20, MECHANISM_FEATURES, fn, target)
+        m = pooled_metrics(pooled)
+        lo, hi = bootstrap_ci(pooled["actual"].values,
+                              pooled["predicted"].values,
+                              lambda a, b: mean_absolute_error(a, b))
+        plo, phi = bootstrap_ci(pooled["actual"].values,
+                                pooled["predicted"].values, _safe_pearson)
+        m["mae_ci95"] = [lo, hi]
+        m["pearson_ci95"] = [plo, phi]
+        m["mean_fold_mae"] = float(folds["mae"].mean())
+        m["max_fold_mae"] = float(folds["mae"].max())
+        summaries[name] = m
+        folds.insert(0, "config", name)
+        all_folds.append(folds)
+        print(f"  {name:32s} pooled MAE={m['mae']:.4f} r={m['pearson_r']:.4f} "
+              f"rho={m['spearman_r']:.4f} max_fold_MAE={m['max_fold_mae']:.4f}")
+    report["lofo_20fam"] = summaries
+
+    folds_df = pd.concat(all_folds, ignore_index=True)
+    tmp = PART5_FOLDS_CSV.with_suffix(".csv.tmp")
+    folds_df.to_csv(tmp, index=False)
+    tmp.replace(PART5_FOLDS_CSV)
+    print(f"[Save] {PART5_FOLDS_CSV}")
+
+    # ---- family-mean regression: n=15 (repro) vs n=20 ----
+    fam15 = _part5_family_mean_regression(data15, target)
+    fam20 = _part5_family_mean_regression(data20, target)
+    fam20_gated = _part5_family_mean_regression(data20, target,
+                                                use_v4_gate=True)
+    report["family_mean_regression"] = {
+        "protocol": ("RF (300 trees, depth 3, min_leaf 1) on family-mean "
+                     "combined features, leave-one-family-out; identical to "
+                     "Part 3b(a)"),
+        "n15_repro": fam15,
+        "n20_rf_only": fam20,
+        "n20_rf_plus_v4_gate": fam20_gated,
+        "previous_published_n15_r": 0.059,
+    }
+    print(f"[FamMean] n=15 r={fam15['pearson_r']:.3f} -> "
+          f"n=20 r={fam20['pearson_r']:.3f} (RF only); "
+          f"n=20 gated r={fam20_gated['pearson_r']:.3f}")
+
+    # ---- V4 gate behaviour per family (all 20, focus on the 5 new ones) ----
+    gate_rows = []
+    new_families = sorted(e27_df["family"].unique())
+    v4_folds = folds_df[folds_df["config"] == "v4_rule_gate_phase1_20fam"]
+    for fam in sorted(data20["family"].unique()):
+        sub = data20[data20["family"] == fam]
+        density = sub["phase1_action_density"].values
+        gate = 2.0 * density >= 1.0
+        fold = v4_folds[v4_folds["held_out_family"] == fam].iloc[0]
+        gate_rows.append({
+            "family": fam,
+            "is_new_family": fam in new_families,
+            "n_rows": int(len(sub)),
+            "mean_actual_reduction": float(sub[target].mean()),
+            "mean_phase1_action_density": float(density.mean()),
+            "max_phase1_action_density": float(density.max()),
+            "mean_structural_upper_bound":
+                float(sub["structural_upper_bound"].mean()),
+            "gate_fire_rate": float(gate.mean()),
+            "v4_fold_mae": float(fold["mae"]),
+            "v4_fold_pearson_r": float(fold["pearson_r"]),
+        })
+        print(f"  gate {fam:20s} fire={gate.mean():.2f} "
+              f"density_max={density.max():.3f} "
+              f"fold_MAE={fold['mae']:.4f}")
+    report["gate_behaviour_per_family"] = gate_rows
+
+    # ---- honest verdict ----
+    v0, v4 = summaries["v0_baseline_mech_rf_20fam"], summaries["v4_rule_gate_phase1_20fam"]
+    new_gate = [g for g in gate_rows if g["is_new_family"]]
+    new_fold_maes = {g["family"]: g["v4_fold_mae"] for g in new_gate}
+    bad_folds = {f: m for f, m in new_fold_maes.items() if m > 0.1}
+    false_gates = [g["family"] for g in new_gate
+                   if g["gate_fire_rate"] > 0 and g["mean_actual_reduction"] < 0.99]
+    report["verdict"] = {
+        "family_mean_r_improved_materially":
+            bool(fam20["pearson_r"] > fam15["pearson_r"] + 0.1),
+        "family_mean_r_delta_n20_vs_n15":
+            float(fam20["pearson_r"] - fam15["pearson_r"]),
+        "new_family_fold_maes": new_fold_maes,
+        "new_family_folds_mae_gt_0.1": bad_folds,
+        "new_family_gate_false_positive_candidates": false_gates,
+        "v4_vs_v0_on_20fam": {
+            "pooled_mae_delta": v0["mae"] - v4["mae"],
+            "pooled_r_delta": v4["pearson_r"] - v0["pearson_r"],
+        },
+    }
+
+    tmp = PART5_SUMMARY_JSON.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(report, indent=2, default=str))
+    tmp.replace(PART5_SUMMARY_JSON)
+    print(f"[Save] {PART5_SUMMARY_JSON}")
+    return report
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -582,11 +974,20 @@ def main():
     ap.add_argument("--regime", action="store_true",
                     help="run PART 4 (CNOT saturation-regime intervention) only; "
                          "uses cached mechanism_features.csv and writes new files")
+    ap.add_argument("--part5", action="store_true",
+                    help="run PART 5 (E27 new families join LOFO) only; "
+                         "uses cached mechanism_features.csv and writes new files")
     args = ap.parse_args()
 
     if args.regime:
         print("========== PART 4: CNOT SATURATION-REGIME INTERVENTION ==========")
         run_regime_intervention()
+        print("[Done]")
+        return
+
+    if args.part5:
+        print("========== PART 5: E27 NEW FAMILIES JOIN LOFO ==========")
+        run_part5_new_families()
         print("[Done]")
         return
 

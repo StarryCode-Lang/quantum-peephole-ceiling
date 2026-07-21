@@ -1,39 +1,378 @@
 [
   {
     "experiment_id": "E12",
-    "status": "NOT_RERUN",
     "canonical_file": "data\\v4\\e12\\e12_compiler_baseline_e12_full_20260626_000134_nocoupling.csv",
-    "note": "Rerun not completed within compute budget"
+    "rerun_file": "data\\v9\\e12\\e12_compiler_baseline_e12_full_20260721_072841_nocoupling.csv",
+    "canonical_rows": 568,
+    "rerun_rows": 560,
+    "same_columns": true,
+    "status": "DIVERGED",
+    "reason": "Row count mismatch: 568 vs 560",
+    "overlap": {
+      "keys": [
+        "circuit_id",
+        "optimizer"
+      ],
+      "canonical_key_rows": 142,
+      "rerun_key_rows": 140,
+      "common_key_rows": 140,
+      "input_circuit_identical": 140,
+      "input_circuit_changed": 0,
+      "output_circuit_identical": 140,
+      "output_circuit_changed": 0,
+      "numeric_comparison": {
+        "reduction": {
+          "max_diff": 0.0,
+          "n_match": 140,
+          "n_total": 140
+        },
+        "fidelity": {
+          "max_diff": 0.0,
+          "n_match": 108,
+          "n_total": 108
+        },
+        "runtime_seconds": {
+          "max_diff": 1.322185277938843,
+          "n_match": 0,
+          "n_total": 140
+        },
+        "gate_count_total": {
+          "max_diff": 0.0,
+          "n_match": 140,
+          "n_total": 140
+        },
+        "baseline_gate_count": {
+          "max_diff": 0.0,
+          "n_match": 140,
+          "n_total": 140
+        },
+        "optimized_gate_count": {
+          "max_diff": 0.0,
+          "n_match": 140,
+          "n_total": 140
+        },
+        "depth": {
+          "max_diff": 0.0,
+          "n_match": 140,
+          "n_total": 140
+        }
+      },
+      "worst_nonruntime_diff": 0.0,
+      "status": "OVERLAP_IDENTICAL"
+    }
   },
   {
     "experiment_id": "E13",
-    "status": "NOT_RERUN",
     "canonical_file": "data\\v4\\e13\\e13_structural_ceiling_e13_full_20260609_043322.csv",
-    "note": "Rerun not completed within compute budget"
+    "rerun_file": "data\\v9\\e13\\e13_structural_ceiling_e13_full_20260721_052604.csv",
+    "canonical_rows": 56,
+    "rerun_rows": 142,
+    "same_columns": false,
+    "status": "DIVERGED",
+    "reason": "Row count mismatch: 56 vs 142",
+    "overlap": {
+      "keys": [
+        "circuit_id"
+      ],
+      "canonical_key_rows": 56,
+      "rerun_key_rows": 142,
+      "common_key_rows": 56,
+      "input_circuit_identical": 56,
+      "input_circuit_changed": 0,
+      "numeric_comparison": {
+        "gate_count_total": {
+          "max_diff": 0.0,
+          "n_match": 56,
+          "n_total": 56
+        },
+        "depth": {
+          "max_diff": 0.0,
+          "n_match": 56,
+          "n_total": 56
+        },
+        "structural_upper_bound_reduction": {
+          "max_diff": 0.0,
+          "n_match": 56,
+          "n_total": 56
+        },
+        "observed_best_reduction": {
+          "max_diff": 0.0,
+          "n_match": 56,
+          "n_total": 56
+        },
+        "observed_best_gate_count": {
+          "max_diff": 0.0,
+          "n_match": 56,
+          "n_total": 56
+        },
+        "ceiling_gap": {
+          "max_diff": 0.0,
+          "n_match": 56,
+          "n_total": 56
+        },
+        "structural_lower_bound": {
+          "max_diff": 0.0,
+          "n_match": 56,
+          "n_total": 56
+        },
+        "cancellable_pair_count": {
+          "max_diff": 0.0,
+          "n_match": 56,
+          "n_total": 56
+        },
+        "mergeable_rotation_count": {
+          "max_diff": 0.0,
+          "n_match": 56,
+          "n_total": 56
+        },
+        "adjacent_commuting_pairs": {
+          "max_diff": 0.0,
+          "n_match": 56,
+          "n_total": 56
+        },
+        "commutation_enabled_inverse_pairs": {
+          "max_diff": 0.0,
+          "n_match": 56,
+          "n_total": 56
+        },
+        "commuting_block_count": {
+          "max_diff": 0.0,
+          "n_match": 56,
+          "n_total": 56
+        }
+      },
+      "worst_nonruntime_diff": 0.0,
+      "status": "OVERLAP_IDENTICAL"
+    }
   },
   {
     "experiment_id": "E14",
-    "status": "NOT_RERUN",
     "canonical_file": "data\\v5\\e14\\e14_extended_benchmark_e14_full_20260611_114726.csv",
-    "note": "Rerun not completed within compute budget"
+    "rerun_file": "data\\v9\\e14\\e14_extended_benchmark_e14_full_20260721_061816.csv",
+    "canonical_rows": 2130,
+    "rerun_rows": 2130,
+    "same_columns": true,
+    "numeric_comparison": {
+      "reduction": {
+        "max_diff": 0.1764705882352941,
+        "n_match": 2092,
+        "n_total": 2130
+      },
+      "fidelity": {
+        "max_diff": 1.0,
+        "n_match": 2110,
+        "n_total": 2130
+      },
+      "runtime_seconds": {
+        "max_diff": 11712.1229262352,
+        "n_match": 23,
+        "n_total": 2130
+      }
+    },
+    "status": "DIVERGED",
+    "reason": "Substantive differences in deterministic columns (max=1.000000)"
   },
   {
     "experiment_id": "E15",
-    "status": "NOT_RERUN",
     "canonical_file": "data\\v5\\e15\\e15_multi_compiler_e15_full_20260611_150934.csv",
-    "note": "Rerun not completed within compute budget"
+    "rerun_file": "data\\v9\\e15\\e15_multi_compiler_e15_full_20260721_075707.csv",
+    "canonical_rows": 994,
+    "rerun_rows": 986,
+    "same_columns": false,
+    "status": "DIVERGED",
+    "reason": "Row count mismatch: 994 vs 986",
+    "overlap": {
+      "keys": [
+        "circuit_id"
+      ],
+      "canonical_key_rows": 142,
+      "rerun_key_rows": 142,
+      "common_key_rows": 142,
+      "input_circuit_identical": 142,
+      "input_circuit_changed": 0,
+      "output_circuit_identical": 142,
+      "output_circuit_changed": 0,
+      "numeric_comparison": {
+        "reduction": {
+          "max_diff": 0.0,
+          "n_match": 142,
+          "n_total": 142
+        },
+        "fidelity": {
+          "max_diff": 2.8403945862010005e-12,
+          "n_match": 142,
+          "n_total": 142
+        },
+        "runtime_seconds": {
+          "max_diff": 4348.394509077072,
+          "n_match": 2,
+          "n_total": 142
+        },
+        "baseline_gate_count": {
+          "max_diff": 0.0,
+          "n_match": 142,
+          "n_total": 142
+        },
+        "optimized_gate_count": {
+          "max_diff": 0.0,
+          "n_match": 142,
+          "n_total": 142
+        },
+        "depth_reduction": {
+          "max_diff": 0.0,
+          "n_match": 142,
+          "n_total": 142
+        },
+        "two_qubit_reduction": {
+          "max_diff": 0.0,
+          "n_match": 142,
+          "n_total": 142
+        },
+        "cnot_reduction": {
+          "max_diff": 0.0,
+          "n_match": 142,
+          "n_total": 142
+        }
+      },
+      "worst_nonruntime_diff": 2.8403945862010005e-12,
+      "status": "OVERLAP_IDENTICAL"
+    }
   },
   {
     "experiment_id": "E16",
-    "status": "NOT_RERUN",
     "canonical_file": "data\\v5\\e16\\e16_window_scaling_e16_full_20260610_142547.csv",
-    "note": "Rerun not completed within compute budget"
+    "rerun_file": "data\\v9\\e16\\e16_window_scaling_e16_full_20260721_053236.csv",
+    "canonical_rows": 696,
+    "rerun_rows": 2130,
+    "same_columns": true,
+    "status": "DIVERGED",
+    "reason": "Row count mismatch: 696 vs 2130",
+    "overlap": {
+      "keys": [
+        "circuit_id",
+        "optimizer",
+        "window_size"
+      ],
+      "canonical_key_rows": 696,
+      "rerun_key_rows": 2130,
+      "common_key_rows": 696,
+      "input_circuit_identical": 648,
+      "input_circuit_changed": 48,
+      "output_circuit_identical": 632,
+      "output_circuit_changed": 64,
+      "numeric_comparison": {
+        "reduction": {
+          "max_diff": 0.1764705882352941,
+          "n_match": 680,
+          "n_total": 696
+        },
+        "fidelity": {
+          "max_diff": 1.0433875985427221e-12,
+          "n_match": 696,
+          "n_total": 696
+        },
+        "runtime_seconds": {
+          "max_diff": 857.8449313640594,
+          "n_match": 7,
+          "n_total": 696
+        },
+        "baseline_gate_count": {
+          "max_diff": 7.0,
+          "n_match": 648,
+          "n_total": 696
+        },
+        "optimized_gate_count": {
+          "max_diff": 7.0,
+          "n_match": 632,
+          "n_total": 696
+        },
+        "depth_reduction": {
+          "max_diff": 0.4545454545454546,
+          "n_match": 684,
+          "n_total": 696
+        },
+        "two_qubit_reduction": {
+          "max_diff": 0.75,
+          "n_match": 680,
+          "n_total": 696
+        },
+        "cnot_reduction": {
+          "max_diff": 0.0,
+          "n_match": 696,
+          "n_total": 696
+        }
+      },
+      "worst_nonruntime_diff": 7.0,
+      "status": "OVERLAP_DIVERGED"
+    }
   },
   {
     "experiment_id": "E17",
-    "status": "NOT_RERUN",
     "canonical_file": "data\\v5\\e17\\e17_connectivity_e17_full_20260610_150935.csv",
-    "note": "Rerun not completed within compute budget"
+    "rerun_file": "data\\v9\\e17\\e17_connectivity_e17_full_20260721_054304.csv",
+    "canonical_rows": 755,
+    "rerun_rows": 1189,
+    "same_columns": false,
+    "status": "DIVERGED",
+    "reason": "Row count mismatch: 755 vs 1189",
+    "overlap": {
+      "keys": [
+        "circuit_id",
+        "optimizer",
+        "topology"
+      ],
+      "canonical_key_rows": 741,
+      "rerun_key_rows": 1173,
+      "common_key_rows": 726,
+      "input_circuit_identical": 54,
+      "input_circuit_changed": 672,
+      "output_circuit_identical": 68,
+      "output_circuit_changed": 658,
+      "numeric_comparison": {
+        "reduction": {
+          "max_diff": 1.0,
+          "n_match": 594,
+          "n_total": 726
+        },
+        "fidelity": {
+          "max_diff": 2.9831692671677956e-12,
+          "n_match": 726,
+          "n_total": 726
+        },
+        "runtime_seconds": {
+          "max_diff": 93.94911336898804,
+          "n_match": 2,
+          "n_total": 726
+        },
+        "baseline_gate_count": {
+          "max_diff": 11944.0,
+          "n_match": 54,
+          "n_total": 726
+        },
+        "optimized_gate_count": {
+          "max_diff": 11944.0,
+          "n_match": 68,
+          "n_total": 726
+        },
+        "depth_reduction": {
+          "max_diff": 1.0,
+          "n_match": 604,
+          "n_total": 726
+        },
+        "two_qubit_reduction": {
+          "max_diff": 1.0,
+          "n_match": 594,
+          "n_total": 726
+        },
+        "cnot_reduction": {
+          "max_diff": 1.0,
+          "n_match": 594,
+          "n_total": 726
+        }
+      },
+      "worst_nonruntime_diff": 11944.0,
+      "status": "OVERLAP_DIVERGED"
+    }
   },
   {
     "experiment_id": "E18",
@@ -43,9 +382,40 @@
   },
   {
     "experiment_id": "E19",
-    "status": "NOT_RERUN",
     "canonical_file": "data\\v6\\e19\\e19_wcl_listing_full_e19_full_20260620_123825.csv",
-    "note": "Rerun not completed within compute budget"
+    "rerun_file": "data\\v9\\e19\\e19_wcl_listing_full_e19_full_20260721_071617.csv",
+    "canonical_rows": 10000,
+    "rerun_rows": 10000,
+    "same_columns": true,
+    "numeric_comparison": {
+      "reduction": {
+        "max_diff": 0.0,
+        "n_match": 10000,
+        "n_total": 10000
+      },
+      "fidelity": {
+        "max_diff": 0.0,
+        "n_match": 10000,
+        "n_total": 10000
+      },
+      "runtime_seconds": {
+        "max_diff": 0.30925607681274414,
+        "n_match": 0,
+        "n_total": 10000
+      },
+      "original_size": {
+        "max_diff": 0.0,
+        "n_match": 10000,
+        "n_total": 10000
+      },
+      "optimized_size": {
+        "max_diff": 0.0,
+        "n_match": 10000,
+        "n_total": 10000
+      }
+    },
+    "status": "EQUIVALENT",
+    "reason": "All scientific columns identical; only runtime_seconds differs (max=0.3093s)"
   },
   {
     "experiment_id": "E20",
@@ -55,9 +425,30 @@
   },
   {
     "experiment_id": "E21",
-    "status": "NOT_RERUN",
     "canonical_file": "data\\v6\\e21\\ceiling_aware_comparison.csv",
-    "note": "Rerun not completed within compute budget"
+    "rerun_file": "data\\v9\\e21\\ceiling_aware_comparison.csv",
+    "canonical_rows": 1140,
+    "rerun_rows": 1140,
+    "same_columns": true,
+    "numeric_comparison": {
+      "fidelity": {
+        "max_diff": 0.0,
+        "n_match": 1140,
+        "n_total": 1140
+      },
+      "original_size": {
+        "max_diff": 0.0,
+        "n_match": 1140,
+        "n_total": 1140
+      },
+      "optimized_size": {
+        "max_diff": 4.0,
+        "n_match": 1100,
+        "n_total": 1140
+      }
+    },
+    "status": "DIVERGED",
+    "reason": "Substantive differences in deterministic columns (max=4.000000)"
   },
   {
     "experiment_id": "E25",

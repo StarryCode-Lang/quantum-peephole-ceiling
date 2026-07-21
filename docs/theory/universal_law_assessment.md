@@ -353,3 +353,103 @@ describe explicitly, and the §7.6 "CNOT fold MAE 0.745" limitation would need
 rewording (residual closed by a mechanism rule; the learned-component limits
 — family-mean regression r = 0.059, 11/15 undefined-Pearson folds,
 classifier F1 = 0.075 — are unaffected by this intervention and still stand).
+
+---
+
+## Addendum 2026-07-21 (wave 6): PART 5 — five E27 families join the LOFO evaluation (n = 15 → 20 families)
+
+**Scope.** Wave 5 generated five new circuit families (QPE,
+TrotterHamiltonian, QuantumVolume, WState, RepetitionCode;
+`data/v8/e27_new_families/`) to lift the family-mean regression from n = 15
+to n = 20. `experiments/ceiling_model_repair.py --part5` now evaluates the
+wave-4 V4 hybrid model (mechanism saturation gate + RF) under LOFO on all 20
+families. Because E27 ran its three optimizers independently and never ran
+the E21 naive pipeline that defines the target, PART 5 regenerates every
+unique E27 circuit deterministically and re-runs the exact E21 naive
+pipeline (Phase1 → Phase2(window=10) → Phase1) to obtain identically defined
+`gate_reduction` labels. Regeneration was verified on all 225 circuit specs
+(size match + exact Phase-1-reduction reproduction against the CSV), and 103
+duplicate circuits (WState/QPE parameter invariance, RepetitionCode
+param_n = 3 ≡ 4) were dropped, leaving 122 unique circuits; combined
+dataset: 692 rows / 20 families. The V4 model on the original 15 families
+was reproduced exactly (MAE 0.017240047, r 0.976939886 — matches
+`regime_intervention_summary.json` to all printed digits) before any 20-family
+number was trusted.
+
+**Headline results (all LOFO, seed 42, mechanism features).**
+
+| Quantity | 15 families (wave-4 V4) | 20 families (PART 5 V4) |
+|---|---|---|
+| Pooled MAE [CI95] | 0.0172 [0.0129, 0.0218] | 0.0188 [0.0144, 0.0236] |
+| Pooled Pearson r [CI95] | 0.977 [0.963, 0.987] | 0.967 [0.948, 0.979] |
+| Pooled Spearman ρ | 0.853 | 0.654 |
+| Pooled R² | 0.954 | 0.934 |
+| CNOT fold MAE | 0.000 | 0.000 (unchanged) |
+| Worst fold MAE | 0.146 (RandomClifford) | 0.303 (RepetitionCode) |
+| Undefined-Pearson folds | 11/15 | 14/20 (QPE, QuantumVolume, WState add zero-variance folds) |
+| Family-mean regression r (RF, Part-3b(a) protocol) | 0.059 (n = 15) | 0.780 (n = 20) |
+| Family-mean regression MAE | 0.114 | 0.085 |
+| Family-mean r with V4 gate applied to family means | — | 0.887 |
+
+The Spearman drop is a ties artefact: the three incompressible new families
+contribute ~65 exact-zero actuals with near-zero predictions, which a rank
+statistic cannot order; Pearson and R² remain essentially at wave-4 levels.
+
+**Family-mean regression: material improvement, honestly qualified.** Under
+the identical leave-one-family-out RF protocol, r rises 0.059 → 0.780
+(ρ = 0.510, MAE 0.114 → 0.085) at n = 20. The gain is real but driven by the
+added low-end variance: QPE, QuantumVolume and WState are exactly
+incompressible and are predicted near zero. The two hard points remain hard
+— with pure RF, CNOT (actual 1.0) is predicted 0.30 and RepetitionCode
+(actual 0.486) is predicted 0.04. Applying the deterministic V4 gate to
+family-mean features fixes CNOT exactly (r → 0.887) but leaves
+RepetitionCode untouched. **The n = 15 statistical-power limitation is
+mitigated, not eliminated: per-family extrapolation to unseen high-reduction
+mechanisms is still the binding failure.**
+
+**New failure mode exposed (reported, not smoothed over).** The
+RepetitionCode fold fails: MAE 0.303 under both V0 and V4 (the V4 gate never
+fires), with a *negative* within-fold Pearson (−0.826). Attribution, all
+computed: (i) RepetitionCode reduction (0.466–0.496) comes entirely from
+adjacent H–H / CX inverse-pair cancellation — Phase-1-only reduction equals
+the full naive-pipeline reduction on all 12 rows; (ii) its Phase-1 action
+density (0.233–0.248) sits between the ordinary families (≤ 0.0345) and CNOT
+(0.5), so the V4 saturation rule (2d ≥ 1) correctly does not fire, but no
+training family occupies this density regime, and tree regressors cannot
+interpolate leaf averages to y ≈ 0.49 (predicted ≈ 0.18); (iii) the static
+structural upper bound tracks the realized reduction *exactly* on all 12
+rows (per-row equality to 1e-12) — an oracle-bound predictor would score
+MAE 0 on this fold, so the failure is in the learned mapping, not in the
+mechanism features. This is the same extrapolation limitation diagnosed for
+CNOT in wave 4, now shown to cover the entire mid-density regime, not only
+saturation.
+
+**Gate behaviour on new families.** The V4 rule fires on no new-family row
+(zero false positives; density maxima: RepetitionCode 0.248,
+TrotterHamiltonian 0.020, others 0.000). QPE, QuantumVolume and WState folds
+are essentially perfect (MAE ≤ 7e-6); TrotterHamiltonian is well predicted
+(MAE 0.0059, within-fold r = 0.835). Side observation: under pure RF (V0),
+adding RepetitionCode to the training pool halves the CNOT fold error
+(0.745 → 0.409), confirming that mechanism-similar families are what tree
+models need to interpolate.
+
+**Impact on manuscript §6.6 / §7.6 (decision deferred — this addendum does
+not modify the manuscript).** If the 20-family evaluation is adopted as the
+canonical number set:
+
+| Location | Quantity | Published / wave-4 (15 fam) | Wave-6 candidate (20 fam) |
+|---|---|---|---|
+| §6.6 Table 18, best row (V4 hybrid) | Pooled MAE | 0.0172 [0.0129, 0.0218] | 0.0188 [0.0144, 0.0236] |
+| §6.6 Table 18, best row | Pooled Pearson r | 0.977 [0.963, 0.987] | 0.967 [0.948, 0.979] |
+| §6.6 Table 18, best row | Pooled Spearman ρ | 0.853 | 0.654 (ties from incompressible families) |
+| §6.6 Table 18, best row | Pooled R² | 0.954 | 0.934 |
+| §6.6 prose; §7.6 item 6 | CNOT fold MAE | 0.000 (closed by gate) | 0.000 (still closed) |
+| §7.6 limitations | Family-mean regression | r = 0.059, n = 15, "insufficient power" | r = 0.780 (RF) / 0.887 (gated), n = 20; limitation softens to per-family extrapolation failure |
+| §7.6 limitations (NEW) | RepetitionCode fold | — | MAE 0.303, within-fold r = −0.826: mid-density Phase-1 regime is a new, documented extrapolation failure of the learned component |
+| §7.6 limitations | Undefined-Pearson folds | 11/15 | 14/20 |
+| §6.6/§7.6 | Dataset scope | 15 families / 570 rows | 20 families / 692 rows (122 unique E27 circuits, hash-deduplicated) |
+
+Canonical sources: `data/v6/ceiling_repair/part5_summary.json`,
+`part5_lofo_results.csv`, `part5_e27_features.csv`; report
+`docs/review/wave6/e27_part5.md`. Reproduce with
+`/d/Downloads/miniforge3/python experiments/ceiling_model_repair.py --part5`.

@@ -8,7 +8,7 @@
 
 ## Project Overview
 
-This project characterizes the boundaries of quantum circuit peephole optimization across 15 circuit families and 6 optimizer types, with 79,669 data rows across 36 canonical datasets. The central contribution is the discovery that the circuit listing model (the data-structure ordering of gates) is the key factor governing Phase-1 adjacent-cancellation optimizer behavior.
+This project characterizes the boundaries of quantum circuit peephole optimization across 15 circuit families and 6 optimizer types, with 82,721 data rows across 36 canonical datasets. The central contribution is the discovery that the circuit listing model (the data-structure ordering of gates) is the key factor governing Phase-1 adjacent-cancellation optimizer behavior.
 
 ### Core Scientific Question
 > When and why does peephole optimization succeed or fail across diverse circuit families?
@@ -17,8 +17,8 @@ This project characterizes the boundaries of quantum circuit peephole optimizati
 1. **Listing Model Sensitivity**: Layer-by-layer listing (LBL) structurally empties the Phase-1 action space for n >= 2 (Observation 1(b)); wire-consecutive listing (WCL) exposes ~7.8% reduction hidden under LBL (E19, 10,000 rows)
 2. **Empirical Trichotomy**: CNOT chains achieve 100% Phase-1 reduction; oracle/Clifford circuits yield 14-16% via Phase-2a commutation; 3 of 15 families at genuine structural ceiling (QFT/GHZ/SurfaceCode) + 7 of 15 at prototype action-space ceiling
 3. **Prototype vs Production**: Production peephole optimizers (t|ket> FullPeepholeOptimise) achieve 5-63% on 5 of 7 "ceiling" families, confirming the ceiling is prototype-specific, not a structural limit of peephole optimization
-4. **Theory-Experiment Validation**: 8 observables cross-validated; Theorem 9 (BV oracle Phase-2b advantage >= n/(4.5n+4)) validated at full scale: Phase-2b v2 reaches the exact k+2 optimum on all 80 BV instances, exceeding the rigorous bound by 3.1-4.2×; IQP 92.0%, Structured 42.3%, RandomClifford 48.2% mean reduction
-5. **Ceiling-Aware Optimization (Exploratory)**: 1.6x-228x speedup (aggregate 34.97×) with bitwise-identical reduction on the 15 training families; the original heuristic predictor failed held-out validation (MAE=0.2775, Pearson=NaN), but a repaired hybrid model (mechanism gate + random forest) reaches LOFO MAE 0.0172 [0.0129, 0.0218], pooled r=0.977 -- the gate was selected post hoc on a single dataset, so this is not a validated off-the-shelf predictor (family-mean prediction remains underpowered, n=15 folds)
+4. **Theory-Experiment Validation**: 8 observables cross-validated; Theorem 9 (BV oracle Phase-2b advantage >= n/(4.5n+4)) validated at full scale: Phase-2b v2 reaches the exact k+2 optimum on all 80 BV instances, exceeding the rigorous bound by 3.1-4.2×; IQP 92.0%, Structured 40.2%, RandomClifford 51.6% mean reduction
+5. **Ceiling-Aware Optimization (Exploratory)**: 1.6x-228x speedup (aggregate 34.97×) with bitwise-identical reduction on the 15 training families; the original heuristic predictor failed held-out validation (MAE=0.2775, Pearson=NaN), but a repaired hybrid model (mechanism gate + random forest) reaches LOFO MAE 0.0172 [0.0129, 0.0218], pooled r=0.977 -- the gate was selected post hoc on a single dataset, so this is not a validated off-the-shelf predictor (family-mean prediction remains underpowered at n=15 folds; wave-6 20-family robustness: pooled MAE 0.0188, r=0.967, family-mean r=0.780 pure-RF / 0.887 gated, but a RepetitionCode fold failure — MAE 0.303, r=-0.826 — marks the generalization boundary for unseen intermediate-density mechanisms)
 6. **Fidelity Verified**: Optimizations preserve unitary equivalence where exact/scalable checks are available; E18 includes documented decomposition/fidelity-failure rows (44.4% failure rate, survivorship-biased)
 
 ---
@@ -92,10 +92,10 @@ Q-research/
 | E22 | Gate Shuffle Ablation | COMPLETE | 2,240 | Shuffle 10.34% > original 6.30% (counterintuitive) |
 | E26 | BV Theory Validation | COMPLETE | 4 | Thm 9 bound exceeded 3.1-4.2× on BV n=3..10 |
 | E29 | Multi-Seed E04 | COMPLETE | 800 | E04 single-seed estimates not reproduced (RLS -176.5%) |
-| E10p2b-v2 | Phase-2b Full v2 | COMPLETE | 735 | Full-scale Phase-2b; pooled reduction 46.1% (95% CI [41.9, 50.1]) |
+| E10p2b-v2 | Phase-2b Full v2 | COMPLETE | 2,427 | Full-scale Phase-2b; full-factorial depth grid (56/56, wave 6); pooled reduction 48.5% (95% CI [46.5, 50.5]) |
 | EHW | Hardware Validation (noise-model) | COMPLETE | 288 | Noise-model only, NOT real hardware; BV 46.15% logical -> 0% physical L1 |
 
-**Total**: 79,669 data rows across 36 canonical datasets (see `release/release_manifest.json` and `data/DATA_CANONICAL.md` for the exact per-dataset counts).
+**Total**: 82,721 data rows across 36 canonical datasets (see `release/release_manifest.json` and `data/DATA_CANONICAL.md` for the exact per-dataset counts).
 
 ---
 
@@ -112,17 +112,19 @@ Q-research/
 
 ## Known Limitations
 
-> Full details in `docs/manuscript/manuscript.md` Section 7.5 (18 items).
+> Full details in `docs/manuscript/manuscript.md` Section 7.5 (20 items).
 
 Key limitations:
 - Trichotomy is empirical observation on 15 pre-selected families, not universal law
-- Held-out generalization: the original heuristic ceiling-aware model failed (MAE=0.2775, Pearson=NaN); the repaired hybrid model (mechanism gate + random forest) generalizes strongly per-circuit (LOFO MAE 0.0172 [0.0129, 0.0218], pooled r=0.977; gate selected post hoc) but family-mean prediction remains underpowered (n=15 folds, r=0.059)
-- Phase-2b v2 full-scale validation complete (1,707 rows; BV/IQP/Structured/RandomClifford exceed 30% mean reduction); residual limitations: partial factorial grid and no parity-gadget phase-polynomial templates (QAOA/VQE/HardwareEfficient remain 0%)
+- Held-out generalization: the original heuristic ceiling-aware model failed (MAE=0.2775, Pearson=NaN); the repaired hybrid model (mechanism gate + random forest) generalizes strongly per-circuit (LOFO MAE 0.0172 [0.0129, 0.0218], pooled r=0.977; gate selected post hoc) but family-mean prediction remains underpowered at n=15 folds (r=0.059; wave-6 20-family check: r=0.780 pure-RF / 0.887 gated, with a RepetitionCode fold failure MAE 0.303 / r=-0.826 as the generalization boundary)
+- Phase-2b v2 full-scale validation complete (2,427 rows; BV/IQP/Structured/RandomClifford exceed 30% mean reduction; depth grid closed to the full factorial, 56/56 combos, wave 6); residual limitation: no parity-gadget phase-polynomial templates (QAOA/VQE/HardwareEfficient remain 0%)
 - E18 Clifford+T results are survivorship-biased (44.4% failure rate)
 - WCL cross-family validation (E19-extended, 960 rows): 7 of 16 families show WCL advantage > 0 (BV +30.8pp, RandomClifford +22.3pp, Structured +12.9pp, UCCSD +10.7pp, IQP +7.2pp, Universal +6.8pp, Grover +3.7pp); the other 9 show no WCL benefit (including CNOT, saturated at 100% under both listings)
 - Gate-shuffler control (E22) complete -- counterintuitive: shuffled circuits yield higher greedy Phase-1 reduction than original (10.3% vs 6.3%)
 - E04 single-seed results failed E29 ten-seed replication (RLS -176.5%, SA -22.1%, GA -8.3%); E04 conclusions must be qualified as seed/config fragile
 - t|ket> RandomClifford correctness caveat: 14 of 30 SOTA outputs fail exact-unitary fidelity verification (see Appendix E)
+- Listing-sensitivity coverage complete (wave 6): 15/15 families, 6,652 rows, 168 combos; production compilers 0/126 sensitive, prototype 15/42 (6 sensitive families incl. UCCSD_inspired); honest gap: qwalk_8 has only 3/20 variants and its 12 rows skip the exact unitary check
+- Rerun reconciliation (wave 6): 8 experiments rerun under current code (E12-E17, E19, E21) and reconciled; canonical retained for all; IQP commutation/hybrid reductions in canonical E14/E15/E16/E21 are systematically conservative under the strengthened commutation predicate (optimizer-capability enhancement, not a data error); E18/E20 not rerun (budget)
 
 ---
 

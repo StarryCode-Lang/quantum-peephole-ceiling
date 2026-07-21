@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-07-21T04:23:47.371312+00:00",
+  "created_utc": "2026-07-21T09:02:47.949446+00:00",
   "datasets": [
     {
       "experiment_id": "E1",
@@ -244,20 +244,20 @@
     {
       "experiment_id": "E_listing_sensitivity_v8",
       "file": "data/v8/listing_sensitivity/listing_sensitivity_v8.csv",
-      "rows": 4320,
+      "rows": 6652,
       "schema": "results_v8",
-      "sha256": "61c435661bcba7038c3f0fd21980df9856e3e4b15cc5a3ebb7dc1d715cdc4bd9"
+      "sha256": "3d5cd3c4450e010af15a736c7a7db4e82e41230e750529b6f2d2f9118c6162ea"
     },
     {
       "experiment_id": "E26_phase2b_full_v8",
       "file": "data/v8/phase2b_full/phase2b_full_validation_v8.csv",
-      "rows": 1707,
+      "rows": 2427,
       "schema": "results_v8",
-      "sha256": "19cbf82f8c0487f6fc570058f53893bb794490656f4459c32f5beddebb15c6bf"
+      "sha256": "93c398f6aea16f3485f725d50eb95716110ead943b9b709a7c1071d50ae2492f"
     }
   ],
   "environment": {
-    "env_id": "q-research-9.0.0-wave5",
+    "env_id": "q-research-10.0.0-wave6",
     "packages": {
       "matplotlib": "3.9.0",
       "numpy": "1.26.4",
@@ -271,10 +271,10 @@
   },
   "git": {
     "branch": "master",
-    "commit": "0e3d10efba0daf56cf62c863478a5c59cf0f5125",
+    "commit": "dffcd3144ba34592bb5c02aadda197343a9ed344",
     "dirty": true
   },
-  "release_id": "q-research-9.0.0-wave5",
+  "release_id": "q-research-10.0.0-wave6",
   "reproduction": {
     "conda_env": "q-research",
     "entrypoints": [
