@@ -1,0 +1,7 @@
+experiment,run_id,chunk,optimizer,circuit_family,n_qubits,param_n,depth,original_size,optimized_size,reduction,fidelity,fidelity_method,success,runtime_seconds,seed,trial,template_rewrites,cz_conversions,mcz_conversions,hh_cancellations,local_cancellations,phase_merges,h_reorders,pair_gathers
+E26_phase2b_full_v8,e26v8_qw8_20260721_004322,qw8,greedy_phase1,QuantumWalk,9,8,59,106,106,0.0,1.0,sampled200,True,0.0010819435119628906,153,0,,,,,,,,
+E26_phase2b_full_v8,e26v8_qw8_20260721_004322,qw8,commutation_phase2a,QuantumWalk,9,8,59,106,106,0.0,1.0,sampled200,True,0.005077362060546875,153,0,,,,,,,,
+E26_phase2b_full_v8,e26v8_qw8_20260721_004322,qw8,template_phase2b,QuantumWalk,9,8,59,106,106,0.0,1.0,sampled200,True,0.015090465545654297,153,0,0.0,0.0,0.0,0.0,0.0,0.0,16.0,0.0
+E26_phase2b_full_v8,e26v8_qw8_20260721_004322,qw8,greedy_phase1,QuantumWalk,9,8,59,106,106,0.0,1.0,sampled200,True,0.0010519027709960938,253,1,,,,,,,,
+E26_phase2b_full_v8,e26v8_qw8_20260721_004322,qw8,commutation_phase2a,QuantumWalk,9,8,59,106,106,0.0,1.0,sampled200,True,0.003869295120239258,253,1,,,,,,,,
+E26_phase2b_full_v8,e26v8_qw8_20260721_004322,qw8,template_phase2b,QuantumWalk,9,8,59,106,106,0.0,1.0,sampled200,True,0.014765739440917969,253,1,0.0,0.0,0.0,0.0,0.0,0.0,16.0,0.0

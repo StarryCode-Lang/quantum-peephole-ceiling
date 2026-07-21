@@ -23,7 +23,10 @@ import seaborn as sns
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from phase1_statistics.multiple_comparison import benjamini_hochberg as _bh_dict
 from phase1_statistics.effect_size import cliffs_delta, hedges_g
-from phase1_statistics.bootstrap import bootstrap_ci
+# NOTE (wave-1): figure error bars use the vectorized percentile bootstrap in
+# bootstrap_ci_errors below (statistically equivalent to
+# phase1_statistics.bootstrap.bootstrap_ci; see its docstring), so the
+# loop-based reference implementation is no longer imported here.
 
 
 def benjamini_hochberg(p_values, alpha=0.05):
@@ -36,6 +39,52 @@ def benjamini_hochberg(p_values, alpha=0.05):
 # Use Agg backend for non-interactive plotting
 matplotlib.use('Agg')
 plt.style.use('seaborn-v0_8-whitegrid')
+
+# ---------------------------------------------------------------------------
+# Publication-grade configuration (review wave-1, Figures worker)
+# ---------------------------------------------------------------------------
+# Colorblind-safe palette: Okabe & Ito (2008), as recommended by Wong,
+# Nature Methods 8, 441 (2011). Replaces the legacy ad-hoc hex palette
+# (#2E86AB / #A23B72 / #F18F01 / #C73E1D), which is NOT colorblind-safe
+# (red-green and magenta-blue confusions under deuteranopia/protanopia).
+CB = {
+    'blue': '#0072B2',
+    'vermillion': '#D55E00',
+    'orange': '#E69F00',
+    'sky_blue': '#56B4E9',
+    'bluish_green': '#009E73',
+    'reddish_purple': '#CC79A7',
+    'yellow': '#F0E442',
+    'grey': '#999999',
+}
+# Stable role mapping so every figure uses the same semantic colors.
+C_PRIMARY = CB['blue']              # was #2E86AB (primary series)
+C_SECONDARY = CB['reddish_purple']  # was #A23B72 (magenta series)
+C_TERTIARY = CB['orange']           # was #F18F01 (orange series)
+C_QUATERNARY = CB['vermillion']     # was #C73E1D (red series / warnings)
+C_LIGHT = CB['sky_blue']            # was #5DA9C2 (secondary blue shade)
+C_ACCENT = CB['bluish_green']       # was #6A4C93 (purple reference line)
+# Ordered 4-series palette used by all grouped-bar figures.
+CB4 = [C_PRIMARY, C_SECONDARY, C_TERTIARY, C_QUATERNARY]
+
+plt.rcParams.update({
+    # Font sizes chosen to stay legible when figures are scaled to a
+    # single journal column (~3.4 in): smallest text >= 8 pt.
+    'font.size': 10,
+    'axes.titlesize': 12,
+    'axes.labelsize': 11,
+    'xtick.labelsize': 9,
+    'ytick.labelsize': 9,
+    'legend.fontsize': 9,
+    'axes.linewidth': 0.8,
+    # Axis labels support LaTeX-style math through mathtext ($...$) without
+    # requiring a system LaTeX install; match math font to body font.
+    'mathtext.fontset': 'dejavusans',
+    # Embed TrueType (Type 42) fonts — journals reject PDFs with Type-3 fonts.
+    'pdf.fonttype': 42,
+    'ps.fonttype': 42,
+    'figure.dpi': 150,
+})
 
 # Paths
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -82,13 +131,25 @@ def bootstrap_ci_errors(data_series: pd.Series, n_bootstrap: int = 10000) -> tup
     happen for skewed or zero-inflated distributions).  We now report
     the raw signed errors and emit a warning when clamping would have
     occurred, so downstream consumers can decide how to handle it.
+
+    NOTE (review wave-1, compute feasibility): vectorized percentile
+    bootstrap — all (n_bootstrap, n) resamples are drawn in a single numpy
+    operation. Statistically equivalent to
+    phase1_statistics.bootstrap.bootstrap_ci (same percentile method, same
+    B = 10,000, fixed seed 42); the loop-based reference additionally runs
+    a convergence diagnostic that roughly triples its cost, which is
+    unnecessary for figure error bars and pushed full regeneration of all
+    17 figures (~250 grouped CI calls) past interactive time budgets.
     """
     vals = data_series.dropna().values
     if len(vals) < 2:
         return (0.0, 0.0)
-    result = bootstrap_ci(vals, n_bootstrap=n_bootstrap, random_seed=42)
-    ci_low = result['ci_lower']
-    ci_high = result['ci_upper']
+    rng = np.random.default_rng(42)
+    n = len(vals)
+    boot_idx = rng.integers(0, n, size=(n_bootstrap, n))
+    boot_means = vals[boot_idx].mean(axis=1)
+    ci_low = float(np.percentile(boot_means, 2.5))
+    ci_high = float(np.percentile(boot_means, 97.5))
     mean_val = float(np.mean(vals))
     lower_err = mean_val - ci_low
     upper_err = ci_high - mean_val
@@ -179,7 +240,7 @@ for d in e1_summary['depth']:
 e1_red_lower = e1_summary['mean_reduction'] - np.array([e[0] for e in e1_reduction_errors])
 e1_red_upper = e1_summary['mean_reduction'] + np.array([e[1] for e in e1_reduction_errors])
 
-ax.plot(e1_summary['depth'], e1_summary['mean_reduction'] * 100, 'o-', color='#2E86AB',
+ax.plot(e1_summary['depth'], e1_summary['mean_reduction'] * 100, 'o-', color=C_PRIMARY,
         markersize=4, linewidth=1.5, label='Mean Reduction')
 # NOTE (M-20): Shaded band now uses bootstrap 95% CI (10,000 resamples) for
 # consistency with all other figures. Previously used sample std (trial-to-trial
@@ -188,9 +249,9 @@ ax.plot(e1_summary['depth'], e1_summary['mean_reduction'] * 100, 'o-', color='#2
 ax.fill_between(e1_summary['depth'],
                 e1_red_lower * 100,
                 e1_red_upper * 100,
-                alpha=0.2, color='#2E86AB')
-ax.axhline(y=0, color='red', linestyle='--', linewidth=1, alpha=0.7, label='Zero Reduction')
-ax.axhline(y=20, color='orange', linestyle='--', linewidth=1, alpha=0.7, label='20% Threshold')
+                alpha=0.2, color=C_PRIMARY)
+ax.axhline(y=0, color=C_QUATERNARY, linestyle='--', linewidth=1, alpha=0.7, label='Zero Reduction')
+ax.axhline(y=20, color=C_TERTIARY, linestyle='--', linewidth=1, alpha=0.7, label='20% Threshold')
 
 ax.set_xlabel('Circuit Depth', fontsize=12)
 ax.set_ylabel('Mean Gate Reduction (%)', fontsize=12)
@@ -244,7 +305,7 @@ e3_red_yerr = np.array(e3_reduction_errors).T * 100  # shape (2, n_qubits)
 e3_suc_yerr = np.array(e3_success_errors).T * 100
 
 axes[0].bar(e3_summary['n_qubits'], e3_summary['mean_reduction'] * 100,
-           color='#A23B72', alpha=0.8, edgecolor='black', linewidth=0.5,
+           color=C_SECONDARY, alpha=0.8, edgecolor='black', linewidth=0.5,
             yerr=e3_red_yerr, capsize=3, ecolor='black')
 axes[0].set_xlabel('Number of Qubits', fontsize=12)
 axes[0].set_ylabel('Mean Gate Reduction (%)', fontsize=12)
@@ -253,7 +314,7 @@ axes[0].set_xticks(range(3, 11))
 
 # Right: Success rate by qubit count
 axes[1].bar(e3_summary['n_qubits'], e3_summary['success_rate'] * 100,
-           color='#F18F01', alpha=0.8, edgecolor='black', linewidth=0.5,
+           color=C_TERTIARY, alpha=0.8, edgecolor='black', linewidth=0.5,
             yerr=e3_suc_yerr, capsize=3, ecolor='black')
 axes[1].set_xlabel('Number of Qubits', fontsize=12)
 axes[1].set_ylabel('Success Rate (%)', fontsize=12)
@@ -264,7 +325,7 @@ axes[1].set_xticks(range(3, 11))
 if (e3_summary['success_rate'] * 100).max() < 1e-6:
     axes[1].text(0.5, 0.5, 'No observable effect\n(success rate = 0% across all qubit counts)',
                  transform=axes[1].transAxes, fontsize=12, fontweight='bold',
-                 color='#C73E1D', ha='center', va='center',
+                 color=C_QUATERNARY, ha='center', va='center',
                  bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.7))
 
 plt.tight_layout()
@@ -307,20 +368,20 @@ e4_rt_yerr = np.array(e4_runtime_errors).T * 1000
 
 # Left: Mean reduction
 axes[0].bar(x_pos, e4_summary['mean_reduction'] * 100,
-           color=['#2E86AB', '#A23B72', '#F18F01', '#C73E1D'],
+           color=CB4,
            alpha=0.8, edgecolor='black', linewidth=0.5,
             yerr=e4_red_yerr, capsize=3, ecolor='black')
 axes[0].set_xticks(x_pos)
 axes[0].set_xticklabels(optimizers, fontsize=11)
 axes[0].set_ylabel('Mean Gate Reduction (%)', fontsize=12)
 axes[0].set_title('E4: Algorithm Comparison — Mean Reduction\n(n=5, depth=15, 100 trials)', fontsize=12)
-axes[0].axhline(y=0, color='red', linestyle='--', linewidth=1, alpha=0.7)
+axes[0].axhline(y=0, color=C_QUATERNARY, linestyle='--', linewidth=1, alpha=0.7)
 # Annotate the structural-ceiling zero-effect baseline so the panel is not
 # misread as a blank/broken chart (see Figure 1 docstring).
 if (e4_summary['mean_reduction'] * 100).max() < 1e-6:
     axes[0].text(0.5, 0.5, 'No observable effect\n(mean reduction = 0% for all optimizers)',
                  transform=axes[0].transAxes, fontsize=12, fontweight='bold',
-                 color='#C73E1D', ha='center', va='center',
+                 color=C_QUATERNARY, ha='center', va='center',
                  bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.7))
 
 # Statistical annotation: Kruskal-Wallis test across optimizers (E4)
@@ -337,7 +398,7 @@ axes[0].text(0.02, 0.95, f'Kruskal-Wallis: p = {_e4_kw_p:.4f}\n(BH-FDR corrected
 
 # Right: Runtime comparison
 axes[1].bar(x_pos, e4_summary['mean_runtime'] * 1000,
-           color=['#2E86AB', '#A23B72', '#F18F01', '#C73E1D'],
+           color=CB4,
            alpha=0.8, edgecolor='black', linewidth=0.5,
             yerr=e4_rt_yerr, capsize=3, ecolor='black')
 axes[1].set_xticks(x_pos)
@@ -377,7 +438,17 @@ e10_summary_main = e10_main.groupby(['circuit_family', 'optimizer']).agg({
 }).reset_index()
 
 families = e10_main['circuit_family'].unique()
-optimizers = ['Greedy', 'HybridCommuteRewrite']
+# wave-4 fix: optimizer literals must match the canonical E10 labels.
+# The previous display names ('Greedy' / 'HybridCommuteRewrite') matched
+# nothing in the data, so every main bar was silently zero while the CNOT
+# inset listed raw labels. Use canonical labels here and map to display
+# names for the legend/annotation.
+optimizers = ['greedy_phase1', 'hybrid_phase1_2']
+_E10_OPT_LABELS = {
+    'greedy_phase1': 'Greedy (Phase 1)',
+    'commutation_phase2': 'Commutation (Phase 2)',
+    'hybrid_phase1_2': 'Hybrid (Phase 1+2)',
+}
 x = np.arange(len(families))
 width = 0.35
 
@@ -396,8 +467,8 @@ for i, opt in enumerate(optimizers):
         else:
             yerrs.append((0.0, 0.0))
     yerr_array = np.array(yerrs).T  # shape (2, n_families)
-    ax.bar(x + i * width, reductions, width, label=opt, alpha=0.8,
-           color=['#2E86AB', '#F18F01'][i], edgecolor='black', linewidth=0.5,
+    ax.bar(x + i * width, reductions, width, label=_E10_OPT_LABELS.get(opt, opt), alpha=0.8,
+           color=[C_PRIMARY, C_TERTIARY][i], edgecolor='black', linewidth=0.5,
             yerr=yerr_array, capsize=2, ecolor='black')
 
 ax.set_xlabel('Circuit Family', fontsize=12)
@@ -406,14 +477,14 @@ ax.set_title('E10: Phase 1 (Greedy) vs Phase 2 (Hybrid Commutation)\nComparison 
 ax.set_xticks(x + width / 2)
 ax.set_xticklabels(families, fontsize=10, rotation=15)
 ax.legend(fontsize=11)
-ax.axhline(y=0, color='red', linestyle='--', linewidth=1, alpha=0.7)
+ax.axhline(y=0, color=C_QUATERNARY, linestyle='--', linewidth=1, alpha=0.7)
 ax.set_ylim(-1, 5)
 
 # Add CNOT chain as an inset annotation (excluded from main bars due to 100% outlier scale)
 if cnot_reductions:
     cnot_text_lines = ['CNOT chain (excluded from scale):']
     for opt_name, val in cnot_reductions.items():
-        cnot_text_lines.append(f'  {opt_name}: {val:.1f}% reduction')
+        cnot_text_lines.append(f'  {_E10_OPT_LABELS.get(opt_name, opt_name)}: {val:.1f}% reduction')
     cnot_text = '\n'.join(cnot_text_lines)
     ax.text(0.98, 0.98, cnot_text, transform=ax.transAxes, fontsize=9,
             verticalalignment='top', horizontalalignment='right',
@@ -429,6 +500,18 @@ plt.close()
 print("Generating Figure 5: Threshold Sensitivity...")
 fig, ax = plt.subplots(figsize=(10, 6))
 
+# NOTE (wave-4): fig05 intentionally recomputes success rates inline from
+# the canonical E1/E2/E3/E5 frames over an extended grid
+# {0.1, 0.5, 1, 5, 10, 20, 30 %} with log-log presentation. The standalone
+# pipeline analysis/phase2_threshold_sensitivity/run.py covers the
+# protocol grid {1, 5, 10, 20 %} and produces its own companion products
+# (threshold_sensitivity.csv/pdf/report.md). The two are independent by
+# design: fig05 is the manuscript figure (wider grid, unified manuscript
+# styling); the pipeline is a supplementary audit product. Both compute
+# the identical statistic (share of rows with reduction >= t) from the
+# same canonical CSVs, so no numeric divergence is possible beyond the
+# grid choice. Recorded here per the wave-1 statistics worker's broken-
+# link finding; no separate documentation is added.
 thresholds = [0.001, 0.005, 0.01, 0.05, 0.10, 0.20, 0.30]
 experiments = {
     'E1 (Phase Transition, n=25k)': e1,
@@ -437,7 +520,7 @@ experiments = {
     'E5 (Landscape, n=6k)': e5,
 }
 
-colors = ['#2E86AB', '#A23B72', '#F18F01', '#C73E1D']
+colors = CB4
 for (name, df), color in zip(experiments.items(), colors):
     success_rates = [df['reduction'].ge(t).mean() * 100 for t in thresholds]
     # Mask zero success rates so log-scale axes do not drop them silently
@@ -484,8 +567,8 @@ experiments_fid = [
 ]
 
 for ax, (name, df) in zip(axes.flat, experiments_fid):
-    ax.hist(df['fidelity'], bins=50, color='#2E86AB', alpha=0.7, edgecolor='black', linewidth=0.3)
-    ax.axvline(df['fidelity'].mean(), color='red', linestyle='--', linewidth=2,
+    ax.hist(df['fidelity'], bins=50, color=C_PRIMARY, alpha=0.7, edgecolor='black', linewidth=0.3)
+    ax.axvline(df['fidelity'].mean(), color=C_QUATERNARY, linestyle='--', linewidth=2,
                label=f'Mean: {df["fidelity"].mean():.6f}')
     ax.set_xlabel('Fidelity', fontsize=10)
     ax.set_ylabel('Frequency', fontsize=10)
@@ -505,11 +588,11 @@ fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 # Left: Reduction vs entropy difference
 e5_sample = e5.sample(min(2000, len(e5)), random_state=42)
 axes[0].scatter(e5_sample['entropy_diff'], e5_sample['reduction'] * 100,
-               alpha=0.3, s=10, color='#A23B72')
+               alpha=0.3, s=10, color=C_SECONDARY)
 axes[0].set_xlabel('Entropy Difference (perturbed - base)', fontsize=12)
 axes[0].set_ylabel('Gate Reduction (%)', fontsize=12)
 axes[0].set_title('E5: Reduction vs Perturbation Magnitude\n(2000 sample points)', fontsize=12)
-axes[0].axhline(y=0, color='red', linestyle='--', linewidth=1, alpha=0.7)
+axes[0].axhline(y=0, color=C_QUATERNARY, linestyle='--', linewidth=1, alpha=0.7)
 
 # Right: Reduction distribution by depth
 e5.boxplot(column='reduction', by='depth', ax=axes[1])
@@ -542,10 +625,15 @@ optimizer_display = {
 e14_matrix.columns = [optimizer_display.get(c, c) for c in e14_matrix.columns]
 
 fig, ax = plt.subplots(figsize=(10, 8))
-# Use a diverging colormap centered at 0 to distinguish zero (ceiling) from positive
-sns.heatmap(e14_matrix * 100, annot=True, fmt='.2f', cmap='RdYlGn',
+# review wave-1 (colorblind safety): 'RdYlGn' diverging red-green is the
+# worst possible choice for color-vision deficiency; switch to 'cividis',
+# a perceptually uniform, colorblind-safe sequential colormap consistent
+# with Figure 16 (project-wide heatmap convention). E14 reductions are
+# >= 0 by construction, so a sequential map with vmin=0 preserves the
+# "0.00% = ceiling" reading previously carried by center=0.
+sns.heatmap(e14_matrix * 100, annot=True, fmt='.2f', cmap='cividis',
             linewidths=0.5, linecolor='white', cbar_kws={'label': 'Mean Gate Reduction (%)'},
-            ax=ax, vmin=-5, vmax=100, center=0)
+            ax=ax, vmin=0, vmax=100)
 ax.set_xlabel('Optimizer', fontsize=12)
 ax.set_ylabel('Circuit Family', fontsize=12)
 ax.set_title('E14: Extended Benchmark - Mean Gate Reduction (%)\n15 Circuit Families x 3 Optimizers\n(0.00% = prototype action-space ceiling; genuine ceilings: QFT, GHZ, SurfaceCode)', fontsize=11)
@@ -557,7 +645,7 @@ ceiling_families = ['QFT', 'GHZ', 'SurfaceCode', 'VQE', 'HardwareEfficient', 'IQ
 for i, family in enumerate(e14_matrix.index):
     if family in ceiling_families:
         for j in range(len(e14_matrix.columns)):
-            ax.add_patch(plt.Rectangle((j, i), 1, 1, fill=False, edgecolor='red', lw=1.5, hatch='//'))
+            ax.add_patch(plt.Rectangle((j, i), 1, 1, fill=False, edgecolor=C_QUATERNARY, lw=1.5, hatch='//'))
 
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / 'fig11_extended_benchmark_heatmap.pdf', format=FIGURE_FORMAT, bbox_inches='tight')
@@ -582,7 +670,7 @@ e15_pivot = e15_pivot.sort_index()
 # Compiler display order and colors
 compiler_order = ['custom', 'qiskit', 'cirq', 'tket']
 compiler_labels = {'custom': 'Custom (Ours)', 'qiskit': 'Qiskit', 'cirq': 'Cirq', 'tket': 'tket'}
-compiler_colors = {'custom': '#2E86AB', 'qiskit': '#A23B72', 'cirq': '#F18F01', 'tket': '#C73E1D'}
+compiler_colors = {'custom': C_PRIMARY, 'qiskit': C_SECONDARY, 'cirq': C_TERTIARY, 'tket': C_QUATERNARY}
 
 families_15 = e15_pivot.index.tolist()
 compilers_present = [c for c in compiler_order if c in e15_pivot.columns]
@@ -608,7 +696,7 @@ for i, comp in enumerate(compilers_present):
            edgecolor='black', linewidth=0.5,
             yerr=e15_yerr_array, capsize=2, ecolor='black')
 
-ax.axhline(y=0, color='red', linestyle='--', linewidth=1, alpha=0.7)
+ax.axhline(y=0, color=C_QUATERNARY, linestyle='--', linewidth=1, alpha=0.7)
 ax.set_xlabel('Circuit Family', fontsize=12)
 ax.set_ylabel('Best Gate Reduction (%)', fontsize=12)
 ax.set_title('E15: Multi-Compiler Comparison — Best Reduction per Circuit Family\n(custom vs Qiskit vs Cirq vs tket)', fontsize=13)
@@ -633,18 +721,21 @@ e16_ws = e16_hybrid.groupby(['circuit_family', 'window_size'])['reduction'].mean
 families_16 = sorted(e16_ws['circuit_family'].unique())
 window_sizes = sorted(e16_ws['window_size'].unique())
 
-# Use a qualitative colormap for 15 families.
-# NOTE (M-21): tab20 is used as the best available qualitative colormap for 15+
-# categories. No standard qualitative colormap is fully colorblind-safe at this
-# category count; consider supplementing with distinct line markers in a future
-# revision for improved accessibility.
-cmap_16 = matplotlib.colormaps['tab20'].resampled(len(families_16))
+# review wave-1 (M-21 resolution): tab20 is NOT colorblind-safe. With 15
+# families, no qualitative colormap is; the accessible solution is redundant
+# encoding — cycle the 8-color Okabe-Ito palette together with distinct
+# markers so families are separable by (color, marker) even for CVD readers.
+_cb_cycle = [CB['blue'], CB['orange'], CB['bluish_green'], CB['reddish_purple'],
+             CB['sky_blue'], CB['vermillion'], CB['yellow'], CB['grey']]
+_cb_markers = ['o', 's']  # 8 colors x 2 markers = 16 unique codes >= 15 families
 
 fig, ax = plt.subplots(figsize=(12, 8))
 for i, fam in enumerate(families_16):
     fam_data = e16_ws[e16_ws['circuit_family'] == fam]
-    ax.plot(fam_data['window_size'], fam_data['reduction'] * 100, 'o-',
-            color=cmap_16(i), markersize=5, linewidth=1.5, label=fam, alpha=0.85)
+    ax.plot(fam_data['window_size'], fam_data['reduction'] * 100,
+            marker=_cb_markers[i // len(_cb_cycle)], linestyle='-',
+            color=_cb_cycle[i % len(_cb_cycle)],
+            markersize=5, linewidth=1.5, label=fam, alpha=0.85)
 
 ax.axhline(y=0, color='red', linestyle='--', linewidth=1, alpha=0.5)
 ax.set_xlabel('Window Size', fontsize=12)
@@ -676,7 +767,7 @@ e17_pivot = e17_pivot.sort_index()
 
 topology_order = ['linear', 'grid', 'heavy_hex']
 topology_labels = {'linear': 'Linear', 'grid': 'Grid', 'heavy_hex': 'Heavy-Hex'}
-topology_colors = {'linear': '#2E86AB', 'grid': '#A23B72', 'heavy_hex': '#F18F01'}
+topology_colors = {'linear': C_PRIMARY, 'grid': C_SECONDARY, 'heavy_hex': C_TERTIARY}
 
 families_17 = e17_pivot.index.tolist()
 topologies_present = [t for t in topology_order if t in e17_pivot.columns]
@@ -702,7 +793,7 @@ for i, topo in enumerate(topologies_present):
            edgecolor='black', linewidth=0.5,
             yerr=e17_yerr_array, capsize=2, ecolor='black')
 
-ax.axhline(y=0, color='red', linestyle='--', linewidth=1, alpha=0.7)
+ax.axhline(y=0, color=C_QUATERNARY, linestyle='--', linewidth=1, alpha=0.7)
 ax.set_xlabel('Circuit Family', fontsize=12)
 ax.set_ylabel('Best Gate Reduction (%)', fontsize=12)
 ax.set_title('E17: Connectivity Ceiling — Structural Reduction Limits\nunder Different Topology Constraints', fontsize=13)
@@ -886,10 +977,17 @@ if len(e10_opt_groups) >= 2:
     effect_size_collection.append(_pairwise_effect_sizes(e10_opt_groups))
 
 # E10 Universal subset: Mann-Whitney U — Greedy vs Hybrid (Phase 2 advantage)
+# wave-4 fix: the optimizer-name literals previously read 'Greedy' and
+# 'HybridCommuteRewrite', which never match the canonical E10 labels
+# ('greedy_phase1' / 'commutation_phase2' / 'hybrid_phase1_2'), so both
+# arrays were empty and this test was silently skipped (dead code reported
+# by the wave-1 statistics worker). Fixed to the canonical labels; with
+# non-empty groups the test now actually runs and joins the FDR family
+# (which therefore grows from 15 to 16 tests).
 e10_uni = e10[e10['circuit_family'] == 'Universal']
 if len(e10_uni) > 0:
-    greedy_vals = e10_uni[e10_uni['optimizer'] == 'Greedy']['reduction'].dropna().values
-    hybrid_vals = e10_uni[e10_uni['optimizer'] == 'HybridCommuteRewrite']['reduction'].dropna().values
+    greedy_vals = e10_uni[e10_uni['optimizer'] == 'greedy_phase1']['reduction'].dropna().values
+    hybrid_vals = e10_uni[e10_uni['optimizer'] == 'hybrid_phase1_2']['reduction'].dropna().values
     if len(greedy_vals) > 0 and len(hybrid_vals) > 0:
         u_stat, p_e10_uni = stats.mannwhitneyu(greedy_vals, hybrid_vals, alternative='less')
         p_e10_uni = 1.0 if np.isnan(p_e10_uni) else float(p_e10_uni)
@@ -1014,11 +1112,11 @@ raw_p_plot = [max(p, 1e-10) for p in raw_pvals]
 adj_p_plot = [max(p, 1e-10) for p in adj_pvals]
 
 bars1 = ax.barh(y_pos - bar_height / 2, raw_p_plot, bar_height,
-                label='Raw p-value', color='#2E86AB', alpha=0.8, edgecolor='black', linewidth=0.5)
+                label='Raw p-value', color=C_PRIMARY, alpha=0.8, edgecolor='black', linewidth=0.5)
 bars2 = ax.barh(y_pos + bar_height / 2, adj_p_plot, bar_height,
-                label='BH-adjusted p-value', color='#A23B72', alpha=0.8, edgecolor='black', linewidth=0.5)
+                label='BH-adjusted p-value', color=C_SECONDARY, alpha=0.8, edgecolor='black', linewidth=0.5)
 
-ax.axvline(x=0.05, color='red', linestyle='--', linewidth=1.5, alpha=0.8, label=r'$\alpha$ = 0.05')
+ax.axvline(x=0.05, color=C_QUATERNARY, linestyle='--', linewidth=1.5, alpha=0.8, label=r'$\alpha$ = 0.05')
 ax.set_xscale('log')
 ax.set_xlabel('p-value (log scale)', fontsize=12)
 ax.set_ylabel('Hypothesis Test', fontsize=11)
@@ -1033,7 +1131,7 @@ for i in range(len(test_labels)):
     marker = "SIG" if rejected[i] else ""
     if marker:
         ax.text(adj_p_plot[i] * 1.5, i, marker, va='center', fontsize=8,
-                color='#C73E1D', fontweight='bold')
+                color=C_QUATERNARY, fontweight='bold')
 
 ax.text(0.02, 0.02,
         f'BH-FDR correction applied to {len(pvalue_collection)} tests; '
@@ -1053,13 +1151,27 @@ print("\nGenerating Figure 8b: Real-Circuit Optimizer Comparison...")
 e11_e14 = pd.concat([e11, e14], ignore_index=True)
 if 'circuit_family' in e11_e14.columns and 'reduction' in e11_e14.columns:
     family_means = e11_e14.groupby('circuit_family')['reduction'].mean().sort_values(ascending=False)
+    # review wave-1: bootstrap 95% CI error bars (unified method, M-20) and a
+    # single colorblind-safe color — values are already encoded by bar height,
+    # so the previous 15-color 'husl' palette added no information and was not
+    # accessible to color-vision-deficient readers.
+    e8b_yerrs = []
+    for fam in family_means.index:
+        fam_data = e11_e14[e11_e14['circuit_family'] == fam]['reduction']
+        if len(fam_data.dropna()) >= 2:
+            lo_err, hi_err = bootstrap_ci_errors(fam_data)
+            e8b_yerrs.append((lo_err * 100, hi_err * 100))
+        else:
+            e8b_yerrs.append((0.0, 0.0))
+    e8b_yerr_array = np.clip(np.array(e8b_yerrs).T, 0.0, None)
     fig, ax = plt.subplots(figsize=(12, 6))
-    colors = sns.color_palette('husl', n_colors=min(len(family_means), 15))
-    bars = ax.bar(range(len(family_means)), family_means.values * 100, color=colors)
+    bars = ax.bar(range(len(family_means)), family_means.values * 100,
+                  color=C_PRIMARY, alpha=0.85, edgecolor='black', linewidth=0.5,
+                  yerr=e8b_yerr_array, capsize=2, ecolor='black')
     ax.set_xticks(range(len(family_means)))
     ax.set_xticklabels(family_means.index, rotation=45, ha='right', fontsize=8)
     ax.set_ylabel('Mean Gate Reduction (%)')
-    ax.set_title('Real-Circuit Optimizer Comparison (E11/E14)')
+    ax.set_title('Real-Circuit Optimizer Comparison (E11/E14)\n(mean gate reduction per family, bootstrap 95% CI)')
     ax.axhline(y=0, color='k', linewidth=0.5)
     plt.tight_layout()
     plt.savefig(OUTPUT_DIR / 'fig08b_real_circuit_optimizer_comparison.pdf', format=FIGURE_FORMAT, bbox_inches='tight')
@@ -1072,26 +1184,75 @@ print("Generating Figure 9: Compiler Baseline Comparison (E12)...")
 if 'circuit_family' in e12.columns and 'reduction' in e12.columns:
     opt_level_col = [c for c in e12.columns if 'optimization_level' in c.lower() or 'opt_level' in c.lower()]
     if opt_level_col:
-        e12_grouped = e12.groupby(['circuit_family', opt_level_col[0]])['reduction'].mean().reset_index()
-        fig, ax = plt.subplots(figsize=(14, 7))
-        pivot = e12_grouped.pivot_table(index='circuit_family', columns=opt_level_col[0], values='reduction', aggfunc='mean')
+        lvl_col = opt_level_col[0]
+        e12_grouped = e12.groupby(['circuit_family', lvl_col])['reduction'].mean().reset_index()
+        pivot = e12_grouped.pivot_table(index='circuit_family', columns=lvl_col, values='reduction', aggfunc='mean')
         if pivot is not None and not pivot.empty:
-            pivot.plot(kind='bar', ax=ax, width=0.8)
-            ax.set_ylabel('Mean Gate Reduction')
-            ax.set_title('Qiskit Optimization Levels vs Circuit Family (E12)')
-            ax.legend(title='Optimization Level')
-            plt.xticks(rotation=45, ha='right')
+            pivot = pivot.sort_index()
+            families_09 = pivot.index.tolist()
+            levels_09 = sorted(pivot.columns.tolist())
+            x = np.arange(len(families_09))
+            width = 0.8 / len(levels_09)
+            fig, ax = plt.subplots(figsize=(14, 7))
+            # Display window: QuantumWalk/Grover reach -5,761% because Qiskit's
+            # basis translation to {cx, id, rz, sx, x} inflates their gate counts
+            # by up to ~58x. Plotting the raw range would compress the other 13
+            # families into invisibility, so out-of-window bars are clipped,
+            # hatched, and annotated with their true values (publication-standard
+            # broken-range convention). Data: no-coupling-map mode (the fair
+            # comparison configuration; see E12 methodological note).
+            YMIN, YMAX = -110.0, 110.0
+            for i, lvl in enumerate(levels_09):
+                means = pivot[lvl].values * 100
+                # Bootstrap 95% CI error bars (unified method, M-20)
+                yerrs = []
+                for fam in families_09:
+                    grp = e12[(e12['circuit_family'] == fam) & (e12[lvl_col] == lvl)]['reduction']
+                    if len(grp.dropna()) >= 2:
+                        lo, hi = bootstrap_ci_errors(grp)
+                        yerrs.append((lo * 100, hi * 100))
+                    else:
+                        yerrs.append((0.0, 0.0))
+                yerr_arr = np.clip(np.array(yerrs).T, 0.0, None)
+                vals_plot = np.clip(means, YMIN, YMAX)
+                bars = ax.bar(x + i * width, vals_plot, width,
+                              label=f'Level {lvl}', color=CB4[i % len(CB4)], alpha=0.85,
+                              edgecolor='black', linewidth=0.5,
+                              yerr=yerr_arr, capsize=2, ecolor='black')
+                for rect, v_true in zip(bars, means):
+                    if v_true < YMIN or v_true > YMAX:
+                        rect.set_hatch('//')
+                        ax.text(rect.get_x() + rect.get_width() / 2,
+                                (YMIN + 2) if v_true < YMIN else (YMAX - 14),
+                                f'{v_true:,.0f}%', ha='center', va='bottom',
+                                fontsize=7, rotation=90, color='black')
+            ax.set_xticks(x + width * (len(levels_09) - 1) / 2)
+            ax.set_xticklabels(families_09, rotation=25, ha='right', fontsize=9)
+            ax.set_ylabel('Mean Gate Reduction (%)', fontsize=12)
+            ax.set_xlabel('Circuit Family', fontsize=12)
+            ax.set_title('E12: Qiskit Optimization Levels vs Circuit Family\n'
+                         '(no-coupling-map mode; mean with bootstrap 95% CI)', fontsize=13)
+            ax.set_ylim(YMIN, YMAX)
+            ax.axhline(y=0, color='k', linewidth=0.8)
+            ax.legend(title='Optimization Level', fontsize=10, loc='upper right')
+            ax.text(0.42, 0.98,
+                    'Hatched bars are clipped; true values annotated. Negative reductions on\n'
+                    r'QuantumWalk/Grover reflect basis-translation overhead to $\{cx, id, rz, sx, x\}$,'
+                    '\nnot optimization failure (see E12 methodological note).',
+                    transform=ax.transAxes, fontsize=9, verticalalignment='top',
+                    bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
             plt.tight_layout()
             plt.savefig(OUTPUT_DIR / 'fig09_compiler_baseline_comparison.pdf', format=FIGURE_FORMAT, bbox_inches='tight')
             plt.close()
     else:
         family_means = e12.groupby('circuit_family')['reduction'].mean().sort_values(ascending=False)
         fig, ax = plt.subplots(figsize=(12, 6))
-        ax.bar(range(len(family_means)), family_means.values * 100, color='steelblue')
+        ax.bar(range(len(family_means)), family_means.values * 100, color=C_PRIMARY,
+               alpha=0.85, edgecolor='black', linewidth=0.5)
         ax.set_xticks(range(len(family_means)))
-        ax.set_xticklabels(family_means.index, rotation=45, ha='right')
-        ax.set_ylabel('Mean Gate Reduction (%)')
-        ax.set_title('Qiskit Compiler Baseline (E12)')
+        ax.set_xticklabels(family_means.index, rotation=45, ha='right', fontsize=9)
+        ax.set_ylabel('Mean Gate Reduction (%)', fontsize=12)
+        ax.set_title('Qiskit Compiler Baseline (E12)', fontsize=13)
         plt.tight_layout()
         plt.savefig(OUTPUT_DIR / 'fig09_compiler_baseline_comparison.pdf', format=FIGURE_FORMAT, bbox_inches='tight')
         plt.close()
@@ -1101,23 +1262,56 @@ if 'circuit_family' in e12.columns and 'reduction' in e12.columns:
 # ============================================================
 print("Generating Figure 10: Structural Ceiling Gap (E13)...")
 if 'circuit_family' in e13.columns:
-    proxy_col = [c for c in e13.columns if 'proxy' in c.lower() or 'ceiling' in c.lower() or 'predicted' in c.lower()]
-    obs_col = [c for c in e13.columns if 'reduction' in c.lower() or 'observed' in c.lower()]
-    if proxy_col and obs_col:
+    # review wave-1 (data-reference fix): the previous fuzzy substring match
+    # picked 'ceiling_gap' (identically zero) as the proxy series and
+    # 'structural_upper_bound_reduction' as the observed series, so the old
+    # figure showed an all-zero left bar mislabeled "Ceiling Proxy". Use the
+    # canonical columns explicitly: the structural upper bound is the proxy,
+    # the best observed reduction across optimizers is the observation.
+    proxy_col = 'structural_upper_bound_reduction'
+    obs_col = 'observed_best_reduction'
+    if proxy_col in e13.columns and obs_col in e13.columns:
         e13_means = e13.groupby('circuit_family').agg({
-            proxy_col[0]: 'mean', obs_col[0]: 'mean'
-        }).sort_values(obs_col[0], ascending=False)
+            proxy_col: 'mean', obs_col: 'mean'
+        }).sort_values(obs_col, ascending=False)
+        families_10 = e13_means.index.tolist()
+        # Bootstrap 95% CI error bars per family (unified method, M-20)
+        e10_proxy_errs, e10_obs_errs = [], []
+        for fam in families_10:
+            grp = e13[e13['circuit_family'] == fam]
+            e10_proxy_errs.append(bootstrap_ci_errors(grp[proxy_col])
+                                  if len(grp[proxy_col].dropna()) >= 2 else (0.0, 0.0))
+            e10_obs_errs.append(bootstrap_ci_errors(grp[obs_col])
+                                if len(grp[obs_col].dropna()) >= 2 else (0.0, 0.0))
         fig, ax = plt.subplots(figsize=(12, 6))
         x = np.arange(len(e13_means))
         w = 0.35
-        ax.bar(x - w/2, e13_means[proxy_col[0]].values * 100, w, label='Ceiling Proxy', color='coral')
-        ax.bar(x + w/2, e13_means[obs_col[0]].values * 100, w, label='Observed Max', color='steelblue')
+        ax.bar(x - w/2, e13_means[proxy_col].values * 100, w,
+               label='Structural Upper Bound (proxy)', color=C_PRIMARY,
+               alpha=0.85, edgecolor='black', linewidth=0.5,
+               yerr=np.clip(np.array(e10_proxy_errs).T, 0.0, None) * 100, capsize=3, ecolor='black')
+        ax.bar(x + w/2, e13_means[obs_col].values * 100, w,
+               label='Observed Best Reduction', color=C_TERTIARY,
+               alpha=0.85, edgecolor='black', linewidth=0.5,
+               yerr=np.clip(np.array(e10_obs_errs).T, 0.0, None) * 100, capsize=3, ecolor='black')
         ax.set_xticks(x)
-        ax.set_xticklabels(e13_means.index, rotation=45, ha='right', fontsize=8)
-        ax.set_ylabel('Gate Reduction (%)')
-        ax.set_title('Structural Ceiling Proxy vs Observed Reduction (E13)')
-        ax.legend()
+        ax.set_xticklabels(e13_means.index, rotation=25, ha='right', fontsize=9)
+        ax.set_ylabel('Gate Reduction (%)', fontsize=12)
+        ax.set_xlabel('Circuit Family', fontsize=12)
+        ax.set_title('E13: Structural Ceiling Proxy vs Observed Best Reduction\n'
+                     '(mean with bootstrap 95% CI)', fontsize=13)
+        ax.legend(fontsize=10)
         ax.axhline(y=0, color='k', linewidth=0.5)
+        # Data-driven tightness annotation: ceiling_gap ~ 0 means the proxy
+        # exactly matches the best observed reduction on every family.
+        if 'ceiling_gap' in e13.columns:
+            _max_gap = float(e13['ceiling_gap'].abs().max())
+            ax.text(0.98, 0.98,
+                    f'Max |ceiling gap| = {_max_gap:.2e} gates across {len(e13)} circuits:\n'
+                    'the structural proxy is tight against observed best reductions.',
+                    transform=ax.transAxes, fontsize=9,
+                    verticalalignment='top', horizontalalignment='right',
+                    bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
         plt.tight_layout()
         plt.savefig(OUTPUT_DIR / 'fig10_structural_ceiling_gap.pdf', format=FIGURE_FORMAT, bbox_inches='tight')
         plt.close()
@@ -1126,14 +1320,188 @@ if 'circuit_family' in e13.columns:
         family_means = e13.groupby('circuit_family')['reduction'].mean().sort_values(ascending=False) if 'reduction' in e13.columns else pd.Series()
         if len(family_means) > 0:
             fig, ax = plt.subplots(figsize=(12, 6))
-            ax.bar(range(len(family_means)), family_means.values * 100, color='steelblue')
+            ax.bar(range(len(family_means)), family_means.values * 100, color=C_PRIMARY,
+                   alpha=0.85, edgecolor='black', linewidth=0.5)
             ax.set_xticks(range(len(family_means)))
-            ax.set_xticklabels(family_means.index, rotation=45, ha='right')
-            ax.set_ylabel('Mean Gate Reduction (%)')
-            ax.set_title('Structural Ceiling Analysis (E13)')
+            ax.set_xticklabels(family_means.index, rotation=45, ha='right', fontsize=9)
+            ax.set_ylabel('Mean Gate Reduction (%)', fontsize=12)
+            ax.set_title('Structural Ceiling Analysis (E13)', fontsize=13)
             plt.tight_layout()
             plt.savefig(OUTPUT_DIR / 'fig10_structural_ceiling_gap.pdf', format=FIGURE_FORMAT, bbox_inches='tight')
             plt.close()
+
+# ============================================================
+# Figures 15-17: Qiskit Pass Isolation Analysis
+# ============================================================
+# review wave-1: these figures previously regenerated only from
+# analysis/qiskit_pass_analysis.py. They are now produced here so that ALL
+# 17 manuscript figures regenerate from this single entry point. Data
+# helpers are imported from qiskit_pass_analysis (read-only reuse; the
+# module has no import-time side effects) so both scripts compute identical
+# matrices, while the plotting below applies the unified wave-1 style:
+# bootstrap 95% CI error bars (fig15 previously used SEM), the Okabe-Ito
+# colorblind-safe palette, perceptually uniform colormaps, and consistent
+# typography with Figures 1-14.
+import qiskit_pass_analysis as qpa
+
+qpa_pass_df, qpa_e15_df = qpa.load_data()
+
+# ------------------------------------------------------------
+# Figure 15: Pass Waterfall (per-pass effectiveness)
+# ------------------------------------------------------------
+print("Generating Figure 15: Qiskit Pass Waterfall...")
+_fam_order_15 = ["CNOT_chain", "QFT", "Oracle", "RandomClifford", "GHZ"]
+_fams_15 = [f for f in _fam_order_15 if f in qpa_pass_df["circuit_family"].values]
+_p15 = qpa_pass_df.groupby(["circuit_family", "pass_name"])["reduction"].mean().reset_index()
+_m15 = _p15.pivot(index="circuit_family", columns="pass_name", values="reduction")
+_m15 = _m15.loc[_fams_15].fillna(0.0)
+_pass_order_15 = ["greedy_phase1", "commutation_phase2",
+                  "CommutativeCancellation", "Optimize1qGates"]
+_passes_15 = [p for p in _pass_order_15 if p in _m15.columns]
+if "CXCancellation" in _m15.columns:
+    _passes_15.append("CXCancellation")
+_pass_colors_15 = {
+    "greedy_phase1": C_PRIMARY,
+    "commutation_phase2": C_LIGHT,
+    "CommutativeCancellation": C_SECONDARY,
+    "Optimize1qGates": C_TERTIARY,
+    "CXCancellation": C_QUATERNARY,
+}
+_n_fam15, _n_pass15 = len(_fams_15), len(_passes_15)
+_x15 = np.arange(_n_fam15)
+_w15 = 0.8 / _n_pass15
+fig, ax = plt.subplots(figsize=(14, 7))
+for i, pname in enumerate(_passes_15):
+    vals = _m15[pname].values * 100
+    # Bootstrap 95% CI error bars (unified method, M-20; replaces the SEM
+    # bars used by the standalone qiskit_pass_analysis.py version).
+    yerrs = []
+    for fam in _fams_15:
+        grp = qpa_pass_df[(qpa_pass_df["circuit_family"] == fam) &
+                          (qpa_pass_df["pass_name"] == pname)]["reduction"]
+        if len(grp.dropna()) >= 2:
+            lo, hi = bootstrap_ci_errors(grp)
+            yerrs.append((lo * 100, hi * 100))
+        else:
+            yerrs.append((0.0, 0.0))
+    label = qpa.PASS_DISPLAY_NAMES.get(pname, pname).replace("\n", " ")
+    ax.bar(_x15 + i * _w15, vals, _w15, label=label,
+           color=_pass_colors_15.get(pname, CB['grey']), alpha=0.85,
+           edgecolor="black", linewidth=0.5,
+           yerr=np.clip(np.array(yerrs).T, 0.0, None), capsize=2, ecolor="black")
+# Qiskit full-pipeline reference line (from E15, best of opt levels 1-3)
+if qpa_e15_df is not None:
+    _e15l = qpa_e15_df.copy()
+    _e15l["compiler_opt_level"] = _e15l["compiler_opt_level"].astype(str)
+    _e15q = _e15l[(_e15l["compiler"] == "qiskit") &
+                  (_e15l["compiler_opt_level"].isin(["1", "2", "3"]))].copy()
+    _fam_map_15 = {"CNOT": "CNOT_chain", "QFT": "QFT", "Oracle": "Oracle",
+                   "GHZ": "GHZ", "RandomClifford": "RandomClifford"}
+    _e15q["family_mapped"] = _e15q["circuit_family"].map(_fam_map_15)
+    for idx, fam in enumerate(_fams_15):
+        fam_data = _e15q[_e15q["family_mapped"] == fam]
+        if len(fam_data) > 0:
+            full_val = fam_data["reduction"].max() * 100
+            if full_val > 0.5:  # Only draw if meaningful
+                ax.plot([idx - 0.4, idx + 0.4 + (_n_pass15 - 1) * _w15],
+                        [full_val, full_val],
+                        color=C_ACCENT, linewidth=2.5, linestyle="--",
+                        alpha=0.9, zorder=10)
+    ax.plot([], [], color=C_ACCENT, linewidth=2.5, linestyle="--",
+            label="Qiskit Full Pipeline (best opt 1-3)", alpha=0.9)
+ax.axhline(y=0, color=C_QUATERNARY, linestyle="--", linewidth=1, alpha=0.5)
+# Headroom so the legend clears the 100% CNOT-chain bars.
+ax.set_ylim(0, 128)
+ax.set_xlabel("Circuit Family", fontsize=12)
+ax.set_ylabel("Mean Gate Reduction (%)", fontsize=12)
+ax.set_title("Qiskit Pass Isolation — Individual Pass Effectiveness per Circuit Family\n"
+             "(mean with bootstrap 95% CI; dashed line = Qiskit full pipeline, best of opt 1-3)",
+             fontsize=13)
+ax.set_xticks(_x15 + _w15 * (_n_pass15 - 1) / 2)
+ax.set_xticklabels([qpa.FAMILY_DISPLAY_NAMES.get(f, f).replace("\n", " ") for f in _fams_15],
+                   fontsize=10)
+ax.legend(fontsize=9, loc="upper left", framealpha=0.9)
+ax.text(0.98, 0.02,
+        "Gap between isolated passes and full pipeline\n"
+        "reveals synergy from template matching, routing,\n"
+        "and phase polynomial optimization.",
+        transform=ax.transAxes, fontsize=9, verticalalignment="bottom",
+        horizontalalignment="right",
+        bbox=dict(boxstyle="round,pad=0.5", facecolor="#FFFACD",
+                  edgecolor="#B8860B", alpha=0.9))
+plt.tight_layout()
+plt.savefig(OUTPUT_DIR / 'fig15_qiskit_pass_waterfall.pdf', format=FIGURE_FORMAT, bbox_inches='tight')
+plt.close()
+
+# ------------------------------------------------------------
+# Figure 16: Pass-Family Heatmap
+# ------------------------------------------------------------
+print("Generating Figure 16: Pass-Family Heatmap...")
+_m16 = qpa.compute_family_pass_matrix(qpa_pass_df)
+_col_labels_16 = [qpa.PASS_DISPLAY_NAMES.get(c, c).replace("\n", " ") for c in _m16.columns]
+_row_labels_16 = [qpa.FAMILY_DISPLAY_NAMES.get(r, r).replace("\n", " ") for r in _m16.index]
+fig, ax = plt.subplots(figsize=(10, 6))
+# cividis: perceptually uniform and colorblind-safe (matches Figure 11).
+sns.heatmap(_m16.values * 100, annot=True, fmt=".1f", cmap="cividis",
+            linewidths=0.8, linecolor="white",
+            cbar_kws={"label": "Mean Gate Reduction (%)"},
+            ax=ax, xticklabels=_col_labels_16, yticklabels=_row_labels_16, vmin=0)
+ax.set_xlabel("Transpiler Pass", fontsize=12)
+ax.set_ylabel("Circuit Family", fontsize=12)
+ax.set_title("Pass Effectiveness Heatmap — Mean Gate Reduction (%)\n"
+             "per circuit family per individual pass", fontsize=13)
+plt.xticks(fontsize=10, rotation=0)
+plt.yticks(fontsize=10, rotation=0)
+ax.text(0.5, -0.12,
+        "Key finding: CommutativeCancellation matches our Phase 2 on Oracle/RandomClifford "
+        "but both miss QFT/GHZ.\nNeither isolated pass explains the full-pipeline advantage "
+        "(template matching + routing + phase polynomial).",
+        transform=ax.transAxes, fontsize=9,
+        horizontalalignment="center", verticalalignment="top",
+        bbox=dict(boxstyle="round,pad=0.4", facecolor="lightyellow", alpha=0.8))
+plt.tight_layout()
+plt.savefig(OUTPUT_DIR / 'fig16_qiskit_pass_family_heatmap.pdf', format=FIGURE_FORMAT, bbox_inches='tight')
+plt.close()
+
+# ------------------------------------------------------------
+# Figure 17: Pass Interaction Matrix
+# ------------------------------------------------------------
+print("Generating Figure 17: Pass Interaction Matrix...")
+_synergy17, _cobenefit17 = qpa.compute_interaction_matrix(qpa_pass_df)
+_pass_labels_17 = [qpa.PASS_DISPLAY_NAMES.get(p, p).replace("\n", " ") for p in _synergy17.index]
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+# review wave-1: 'Blues'/'Greens' replaced by perceptually uniform,
+# colorblind-safe 'cividis'/'viridis', consistent with Figures 11 and 16.
+sns.heatmap(_synergy17.values * 100, annot=True, fmt=".1f", cmap="cividis",
+            linewidths=0.8, linecolor="white",
+            cbar_kws={"label": "Mean |Difference| in Reduction (%)"},
+            ax=axes[0], xticklabels=_pass_labels_17, yticklabels=_pass_labels_17, vmin=0)
+axes[0].set_title("Pass Divergence Matrix\n(higher = more complementary mechanisms)", fontsize=11)
+axes[0].set_xlabel("Pass", fontsize=10)
+axes[0].set_ylabel("Pass", fontsize=10)
+axes[0].tick_params(axis="x", rotation=25)
+axes[0].tick_params(axis="y", rotation=0)
+sns.heatmap(_cobenefit17.values, annot=True, fmt=".2f", cmap="viridis",
+            linewidths=0.8, linecolor="white",
+            cbar_kws={"label": "Co-benefit Fraction"},
+            ax=axes[1], xticklabels=_pass_labels_17, yticklabels=_pass_labels_17, vmin=0, vmax=1)
+axes[1].set_title("Pass Co-benefit Matrix\n(fraction of circuits where both passes achieve > 0 reduction)",
+                  fontsize=11)
+axes[1].set_xlabel("Pass", fontsize=10)
+axes[1].set_ylabel("Pass", fontsize=10)
+axes[1].tick_params(axis="x", rotation=25)
+axes[1].tick_params(axis="y", rotation=0)
+fig.suptitle("Pass Interaction Analysis — Divergence vs Co-benefit\n"
+             "(complementary vs redundant optimization mechanisms)", fontsize=13, y=1.02)
+plt.tight_layout()
+plt.savefig(OUTPUT_DIR / 'fig17_qiskit_pass_interaction.pdf', format=FIGURE_FORMAT, bbox_inches='tight')
+plt.close()
+
+# Refresh the pass-analysis summary CSV through the shared helper so the CSV
+# contract stays identical to analysis/qiskit_pass_analysis.py.
+_qpa_eff = qpa.compute_pass_effectiveness(qpa_pass_df)
+_qpa_gap = qpa.compute_qiskit_gap_analysis(qpa_pass_df, qpa_e15_df)
+qpa.save_summary_csv(qpa_pass_df, _qpa_eff, _qpa_gap)
 
 # ============================================================
 # Statistical Summary Table

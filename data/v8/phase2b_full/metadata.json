@@ -1,0 +1,122 @@
+{
+  "experiment_id": "E26_phase2b_full_v8",
+  "version": "2.0.0",
+  "description": "Phase-2b full-scale validation with the v2.0.0 template matcher (extended Clifford + phase-polynomial library). Stratified grid: BV full n=3..10 x 10 secrets; depth families n={3,5,8} x depth={20,35,50} x 3 seeds; other algorithmic families n={3,5,8} x 2 seeds.",
+  "timestamp": "2026-07-21T08:43:40.819695",
+  "canonical_data_file": "phase2b_full_validation_v8.csv",
+  "summary_files": [
+    "family_summary_v8.csv",
+    "core_question_v8.csv",
+    "bv_theory_v8.csv",
+    "bootstrap_ci_v8.csv"
+  ],
+  "chunk_files": [
+    "phase2b_v8_algo_20260721_000848.csv",
+    "phase2b_v8_bv_20260720_235617.csv",
+    "phase2b_v8_depth_20260720_235559.csv",
+    "phase2b_v8_qw8_20260721_084322.csv"
+  ],
+  "n_rows": 735,
+  "n_families": 16,
+  "families": [
+    "Adder",
+    "BV",
+    "CNOT_chain",
+    "GHZ",
+    "Grover",
+    "HardwareEfficient",
+    "IQP",
+    "QAOA",
+    "QFT",
+    "QuantumWalk",
+    "RandomClifford",
+    "Structured",
+    "SurfaceCode",
+    "UCCSD_inspired",
+    "Universal",
+    "VQE"
+  ],
+  "optimizers": [
+    "commutation_phase2a",
+    "greedy_phase1",
+    "template_phase2b"
+  ],
+  "grid": {
+    "bv_sizes": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "bv_secrets_per_size": 10,
+    "stratified_sizes": [
+      3,
+      5,
+      8
+    ],
+    "stratified_depths": [
+      20,
+      35,
+      50
+    ],
+    "depth_family_seeds": [
+      1,
+      2,
+      3
+    ],
+    "algo_seeds": [
+      1,
+      2
+    ],
+    "base_seed": 45
+  },
+  "coverage": {
+    "bv_theorem_family": "FULL grid n=3..10 (8 sizes) x 10 secrets/size",
+    "depth_parameterized_families": "n={3,5,8} x depth={20,35,50} x 3 seeds (stratified 3x3x3 of the n=3..10 x depth=20..50 space)",
+    "other_algorithmic_families": "n={3,5,8} x 2 seeds (stratified); QuantumWalk covered at n=[3, 5, 8] (full stratified grid); n=8 rows use sampled200 fidelity -- exact Operator fidelity measured at ~133 s/row for the 9-qubit, 36-MCX walk circuit exceeds the compute envelope (wave-4 gap-fill, chunk qw8)",
+    "fidelity_methods": {
+      "clifford_tableau": 60,
+      "exact": 663,
+      "sampled200": 12
+    }
+  },
+  "phase2b_template_matcher_version": "2.0.0",
+  "script_sha256": "ad8d50eb54be8410789bb480954b21f49ad6ca8a681d8ec744f6ac23ddfddb1d",
+  "provenance": {
+    "version": "2.0.0",
+    "run_id": "E26_phase2b_full_v8",
+    "git_commit": "d6f90a0b62409d9508c7ed1f99abccd401903697",
+    "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "package_versions": {
+      "qiskit": "2.4.1",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "pandas": "2.2.2"
+    },
+    "source_hashes": {
+      "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
+      "src/circuits/real_benchmarks.py": "5f137e8efaf872cc2205f2e2cac5e4420c014d7fa3ac0cf440e04dad7e4dd82a",
+      "src/optimisation/base.py": "9deebb58086c5afa39be961e3c55a38bbf68fb459a793444236becb76ed78e13",
+      "src/optimisation/_gate_predicates.py": "c7c0c6a7c985e5e4f19b2699323679f94b3f5040376b9a3224d40364b6bf83f2",
+      "src/optimisation/ceiling_aware.py": "53a29f2a065e69a460686b4b132f1b60aaf6899f097f556cfee270bef4fe373b",
+      "src/optimisation/phase1/greedy.py": "3f50c48d160161772e4fe4a0eb8b23d1c5fb3598a62c048788004a459072cd1a",
+      "src/optimisation/phase1/random_local_search.py": "1a44d4ced7903d0e57d56e55ac6b40fbe840f1a5f83fc9f38e48a2bf2c77873b",
+      "src/optimisation/phase1/simulated_annealing.py": "b7f23188aa6095ce4ad44179e5560d655c5b1183e18cba8462f5ca90e94bcd6e",
+      "src/optimisation/phase1/genetic_algorithm.py": "2fb72ff5056c11b369a3b8ecdda7a44139ebaca6893c85a37fd2f3d04c12ea22",
+      "src/optimisation/phase1/wire_traversal.py": "c78ce84f0ce8f5e5e1991d6322fed32817184959edb34569bdaa164126b457eb",
+      "src/optimisation/phase2/commutation_rewriter.py": "a53769804a1e7e5d6a1e02146e12dbe79774a011fca4fc0990755ced3475a83d",
+      "src/optimisation/phase2/template_matcher.py": "4df19a21b1b9f4ac344905e9f2239022a2ef0c343b4e649ac216d9ce15207e4e",
+      "analysis/structural_ceiling.py": "c36dbb5e951cf5fd7ea2e9655ada682d1bf05b9d2934e394ebba65bad57e5102",
+      "experiments/phase2b_full_validation.py": "ad8d50eb54be8410789bb480954b21f49ad6ca8a681d8ec744f6ac23ddfddb1d"
+    }
+  },
+  "schema_version": "v8",
+  "theorems_validated": {
+    "Thm_9_BV_oracle": "Phase-2b >= n/(4.5n+4): see bv_theory_v8.csv"
+  }
+}

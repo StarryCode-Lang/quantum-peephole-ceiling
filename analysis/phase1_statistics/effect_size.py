@@ -149,6 +149,144 @@ def cohens_d(x: Sequence[float], y: Sequence[float]) -> Dict[str, Any]:
     }
 
 
+def glass_delta(
+    x: Sequence[float],
+    y: Sequence[float],
+    control: str = "auto",
+) -> Dict[str, Any]:
+    """Calculate Glass's Delta (Glass, 1976) with explicit zero-variance handling.
+
+    Glass's Delta standardises the mean difference by the standard deviation
+    of a designated control group rather than the pooled SD:
+
+        Delta = (mean(x) - mean(y)) / sd_control
+
+    This is the effect-size measure required by the project statistical
+    protocol (README item 2) for comparisons in which the pooled standard
+    deviation is zero — the canonical case being Phase-1 reduction under
+    LBL listing, where every observation is exactly 0.0 and Cohen's d is
+    undefined.
+
+    Parameters
+    ----------
+    x, y : sequence of float
+        Two samples to compare. By convention ``x`` is the first (often
+        treatment) group and ``y`` the second (often baseline/control).
+    control : {'auto', 'x', 'y'}, default 'auto'
+        Which group supplies the denominator SD.
+
+        - ``'x'`` / ``'y'``: use that group's SD. If that group has zero
+          variance, Glass's Delta is undefined (returns NaN with a note),
+          because a zero-variance control cannot standardise anything.
+        - ``'auto'``: prefer ``y`` (the conventional control/baseline
+          position). If ``y`` has zero variance but ``x`` does not, fall
+          back to ``x``'s SD (the only non-degenerate denominator
+          available) and record the fallback in ``control_group``. This
+          reproduces the values previously produced by the retired
+          ``d / sqrt(2)`` approximation exactly for one-zero-variance,
+          equal-n comparisons, while remaining a properly defined Glass's
+          Delta when both groups have nonzero variance.
+
+    Returns
+    -------
+    dict
+        Dictionary with keys:
+        - 'delta': Glass's Delta (float; NaN when undefined)
+        - 'ci_lower', 'ci_upper': approximate 95% CI (NaN when undefined)
+        - 'control_group': which group's SD was used ('x', 'y', or None)
+        - 'control_sd': the denominator SD (NaN when undefined)
+        - 'magnitude': qualitative interpretation (Cohen 1988 thresholds),
+          or 'undefined (zero variance)' when not computable
+        - 'n1', 'n2': sample sizes
+        - 'note': human-readable description of any fallback/undefined case
+
+    Raises
+    ------
+    ValueError
+        If either sample is empty, has fewer than 2 observations, or
+        ``control`` is not one of 'auto'/'x'/'y'.
+
+    Reference
+    ---------
+        Glass, G. V. (1976). Primary, secondary, and meta-analysis of
+        research. Educational Researcher, 5(10), 3-8.
+    """
+    if control not in ("auto", "x", "y"):
+        raise ValueError("control must be 'auto', 'x', or 'y'.")
+
+    x_arr = np.asarray(x, dtype=float)
+    y_arr = np.asarray(y, dtype=float)
+    if x_arr.size == 0 or y_arr.size == 0:
+        raise ValueError("Both samples must be non-empty.")
+    n1, n2 = len(x_arr), len(y_arr)
+    if n1 < 2 or n2 < 2:
+        raise ValueError("Both samples must have at least 2 observations.")
+
+    m1, m2 = float(np.mean(x_arr)), float(np.mean(y_arr))
+    sd_x = float(np.std(x_arr, ddof=1))
+    sd_y = float(np.std(y_arr, ddof=1))
+
+    # Resolve the control group.
+    note = "control group: y (baseline convention)"
+    if control == "x":
+        control_group, control_sd = "x", sd_x
+        note = "control group: x (explicit)"
+    elif control == "y":
+        control_group, control_sd = "y", sd_y
+    else:  # auto
+        if sd_y > 0:
+            control_group, control_sd = "y", sd_y
+        elif sd_x > 0:
+            control_group, control_sd = "x", sd_x
+            note = (
+                "control group: x (fallback; y has zero variance, so the "
+                "only non-degenerate denominator was used)"
+            )
+        else:
+            control_group, control_sd = None, 0.0
+
+    # Undefined cases: zero-variance denominator.
+    if control_sd == 0.0:
+        if sd_x == 0.0 and sd_y == 0.0:
+            reason = "both groups have zero variance"
+        else:
+            reason = f"designated control group '{control_group}' has zero variance"
+        return {
+            "delta": float("nan"),
+            "ci_lower": float("nan"),
+            "ci_upper": float("nan"),
+            "control_group": control_group,
+            "control_sd": float("nan"),
+            "magnitude": "undefined (zero variance)",
+            "n1": n1,
+            "n2": n2,
+            "note": f"Glass's Delta undefined: {reason}.",
+        }
+
+    delta = (m1 - m2) / control_sd
+
+    # Approximate SE for Glass's Delta (Hedges 1981, eq. for Glass's estimator):
+    # Var(Delta) ~= (n1 + n2) / (n1 * n2) + Delta^2 / (2 * (n_c - 1))
+    n_c = n2 if control_group == "y" else n1
+    se = float(np.sqrt((n1 + n2) / (n1 * n2) + delta**2 / (2.0 * (n_c - 1))))
+    z = 1.96
+    ci_lower = float(delta - z * se)
+    ci_upper = float(delta + z * se)
+
+    return {
+        "delta": float(delta),
+        "ci_lower": ci_lower,
+        "ci_upper": ci_upper,
+        "control_group": control_group,
+        "control_sd": float(control_sd),
+        "magnitude": interpret_effect_size(float(delta), metric="cohens_d"),
+        "n1": n1,
+        "n2": n2,
+        "se": se,
+        "note": note,
+    }
+
+
 def interpret_effect_size(delta: float, metric: str = "auto") -> str:
     """Interpret the magnitude of an effect size.
 

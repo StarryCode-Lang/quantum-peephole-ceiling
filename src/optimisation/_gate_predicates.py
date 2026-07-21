@@ -15,6 +15,12 @@ Some valid commutation relations may be missing (e.g., SWAP gate partial commuta
 parameterized gate special angles). This may cause the optimizer to miss some
 optimization opportunities. See manuscript Section 4.1.5 for theoretical discussion.
 
+Complexity: every predicate is O(a) = O(1) per call -- a constant number of
+``circuit.find_bit`` dict lookups plus set/list comparisons over at most
+``a`` qubits, where a <= 2 is the max gate arity in the supported gate
+sets.  No predicate allocates or simulates unitary matrices, which is why
+the ceiling-aware proxies built on them are strict O(m) / O(m * w) scans.
+
 Version: 1.0.0
 """
 

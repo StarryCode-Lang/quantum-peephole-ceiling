@@ -124,8 +124,52 @@ _IDENTITY_PAIRS = ['h', 'x', 'y', 'z']
 # ============================================================================
 
 class BaseOptimizer(ABC):
-    """Abstract base class for all optimizers."""
-    
+    """Abstract base class for all optimizers.
+
+    Complexity model (shared by all subclasses)
+    -------------------------------------------
+    Notation:
+      m = gate count (``len(circuit.data)``); n = qubit count; d = 2**n;
+      a = max gate arity (a <= 2 for all gate sets used here);
+      S = fidelity sample count (``DEFAULT_FIDELITY_SAMPLES``);
+      F = cost of one fidelity evaluation (see below).
+
+    Per-call cost of shared primitives:
+
+    * ``_get_qubit_indices`` / ``_gates_on_disjoint_qubits`` /
+      ``_is_self_inverse_pair`` / ``_gates_commute`` (rule-based path):
+      O(a) = O(1).  Each performs a constant number of ``find_bit`` dict
+      lookups and small set/list comparisons over at most ``a`` qubits.
+      The optional numeric commutation fallback is bounded to a combined
+      support of <= 2 qubits (two 4x4 unitaries): still O(1).
+    * ``calculate_fidelity`` exact path (n <= MAX_EXACT_FIDELITY_QUBITS,
+      default 12): O(m * d**2 + d**3) = O(m * 4**n + 8**n) time and
+      O(4**n) memory.  The m * 4**n term applies each gate matrix to the
+      running unitary; the 8**n term is the d-by-d matrix product inside
+      ``Tr(U1^dagger U2)``.  This dominates the runtime of every
+      stochastic optimizer whose fitness function calls it.
+    * ``_estimate_fidelity`` (n > 12): Clifford shortcut O(m * n**2)
+      when both circuits are Clifford; otherwise Haar product-state
+      sampling, O(S * m * 2**n) time and O(2**n) memory.
+    * Move primitives (``_move_removal`` / ``_move_swap`` /
+      ``_move_commutation`` / ``_move_insertion``): each scans the O(m)
+      adjacent gate pairs once with O(1) predicates and deep-copies the
+      circuit: O(m) per call.
+    * ``_generate_neighbor``: O(m) (up to four move attempts, first
+      success wins).
+    * ``_fitness``: one ``calculate_fidelity`` call plus an O(m)
+      cancellation-potential scan: O(F + m).  For n <= 12,
+      F = O(m * 4**n + 8**n), which is the dominant term in the RLS / SA
+      / GA runtimes (see the per-optimizer docstrings and
+      docs/analysis/algorithmic_complexity.md for measured values).
+
+    Subclass ``optimize`` complexity is documented per optimizer:
+    greedy O(m) typical (phase1/greedy.py); RLS O(I * N * (m + F));
+    SA O(I * (m + F)); GA O(G * P * (m + F)); WCL preprocessing
+    O(m log m) (phase1/wire_traversal.py); ceiling-aware O(m * w) proxy
+    overhead plus only the phases that execute (ceiling_aware.py).
+    """
+
     def __init__(self, fidelity_threshold: float = 0.99, success_reduction: float = 0.05,
                  random_seed: int | None = None, enable_numeric_commutation: bool = False,
                  commutation_tolerance: float = DEFAULT_PRECISION):
@@ -186,6 +230,16 @@ class BaseOptimizer(ABC):
         For circuits with n > MAX_EXACT_FIDELITY_QUBITS (default 12), constructing the
         full unitary matrix would require O(4^n) memory. In that case, a lightweight
         sampling-based estimate is used instead.
+
+        Complexity: the exact path costs O(m * 4**n + 8**n) time and O(4**n)
+        memory (m = gate count): m * 4**n to apply each gate matrix to the
+        running unitary, 8**n for the d-by-d product inside the trace.  See
+        the ``BaseOptimizer`` class docstring for the full shared complexity
+        model.  Note this cost is incurred inside every optimizer whose
+        ``optimize``/``_fitness`` passes a target: in E21, a single exact
+        call on an mcx-heavy QuantumWalk circuit at n <= 6 took ~2 s,
+        dominating naive-pipeline phase timings
+        (docs/analysis/algorithmic_complexity.md).
         """
         try:
             if circuit.num_qubits != target.num_qubits:

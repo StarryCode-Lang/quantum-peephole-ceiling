@@ -181,6 +181,30 @@ class CeilingAwareOptimizer(BaseOptimizer):
 
     The ceiling proxy adds O(m) overhead per check, which is
     negligible compared to the cost of a full optimization phase.
+
+    Complexity
+    ----------
+    Let m = gate count, w = ``window_size`` (default 10).
+
+    * Proxy overhead: ``count_phase1_actions`` is a single O(m) scan;
+      ``count_phase2_actions`` is O(m * w) worst case (inner loops
+      short-circuit on the first non-commuting intermediate and at most
+      one opportunity is counted per anchor, so it is effectively O(m)
+      for fixed w).  Measured log-log slopes vs m: 0.99 and 1.06
+      respectively (docs/analysis/algorithmic_complexity.md, Part A1).
+    * Overall: O(m * w) proxy cost plus the cost of the phases that
+      actually execute.  When both proxies are zero (ceiling families),
+      the pipeline is O(m * w) total with no optimizer-phase and no
+      per-phase fidelity cost; when phases execute, add their own cost
+      (greedy: O(m) typical; Phase-2a: O(I * m * w^2) worst case).
+      Measured full-pipeline slope vs m is 0.98 on the reducible CNOT
+      chain (Phase 1 runs, Phase 2a skipped); see
+      docs/analysis/algorithmic_complexity.md, Part A2.
+    * The resulting speedup over the naive always-on pipeline is
+      instance-dependent: it equals the cost of the skipped phases,
+      including any fidelity verification those phases would have
+      triggered (E21 measurement caveat documented in
+      docs/analysis/algorithmic_complexity.md).
     """
 
     def __init__(self, max_iterations: int = 100,

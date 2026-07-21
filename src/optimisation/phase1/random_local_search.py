@@ -20,11 +20,27 @@ from ..base import BaseOptimizer, OptimizationResult
 class RandomLocalSearch(BaseOptimizer):
     """
     Random Local Search optimizer.
-    
+
     Explores the neighborhood of the current circuit by applying
     random modifications and accepting improvements.
-    
+
     Uses the expanded move set: REMOVAL, SWAP, COMMUTATION, INSERTION.
+
+    Complexity
+    ----------
+    Per iteration: N = ``neighborhood_size`` (default 5) neighbors, each
+    O(m) to generate (``_generate_neighbor``) and O(F + m) to score
+    (``_fitness``), where m = gate count and F is the fidelity cost
+    (for n <= 12 qubits, F = O(m * 4**n + 8**n); see the
+    ``BaseOptimizer`` complexity model).  One iteration costs
+    O(N * (m + F)).
+
+    Overall: O(I * N * (m + F)) time with I = ``max_iterations``
+    (default 100; early stopping after 50 non-improving iterations),
+    O(N * m) memory for the neighbor batch plus O(4**n) per exact
+    fidelity call.  Fidelity dominates: in E04 (n=5, m~75) RLS averaged
+    6.15 s/trial (data/v2_fixed/e04;
+    docs/analysis/algorithmic_complexity.md).
     """
     
     def __init__(self, max_iterations: int = 100, neighborhood_size: int = 5,

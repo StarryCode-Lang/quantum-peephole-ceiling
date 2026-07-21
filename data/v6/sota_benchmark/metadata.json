@@ -1,0 +1,20 @@
+{
+  "experiment_id": "SOTA_BENCHMARK",
+  "description": "SOTA compiler benchmark: Qiskit/Cirq/t|ket>/custom default optimizers across 15 circuit families (experiments/sota_benchmark.py).",
+  "canonical_data_file": "aggregated/sota_comparison_aggregated.csv",
+  "timestamp": "2026-07-18T18:13:36",
+  "n_rows": 105,
+  "seed": 42,
+  "python_version": "3.12.12",
+  "qiskit_version": "2.4.1",
+  "git_commit": null,
+  "notes": [
+    "n_rows backfilled from canonical CSV row count (20260720-230058).",
+    "seed defaulted to 42 (project default); original not recorded (20260720-230058).",
+    "python_version backfilled from project-pinned interpreter (3.12.12); original not recorded (20260720-230058).",
+    "qiskit_version backfilled from project-pinned dependency (2.4.1); original not recorded (20260720-230058).",
+    "git_commit not recorded at generation time (pre-provenance era); left null.",
+    "raw/ holds per-tool primary run CSVs (qiskit/cirq/tket/custom; see metadata/ for per-run metadata). aggregated/sota_comparison_aggregated.csv is the canonical analysis dataset. derived/ holds predictive_advantage_{predictions,results}.csv and predictive_advantage_summary.json produced by experiments/predictive_advantage.py.",
+    "n_rows updated 60 -> 105 (20260721): aggregated CSV regenerated in wave 1 from the expanded raw set (adds canonical qiskit level0/1/2 runs and the fixed cirq run); raw/ remains non-canonical input, aggregated/ stays the single canonical dataset."
+  ]
+}

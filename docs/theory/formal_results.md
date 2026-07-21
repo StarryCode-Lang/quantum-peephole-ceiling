@@ -473,7 +473,7 @@ These are the paper's central formal claims, supported by strong empirical evide
 |----|------|-----------|----------|-----------------|
 | OP1 | Open Problem | CODP is QMA-hard | Weak -- reduction sketch incomplete | Complete the Kitaev reduction |
 | OP2 | Open Problem | No PTAS for CODP | Updated -- conflict resolution is in P (Prop 1); hardness source unclear | Identify true hardness source |
-| **C1** | **Conjecture** | **Phase 1 ceiling is structural (listing-conditional)** | **Strong -- Thm 2 + Thm 5 + Thm 6 (Clifford) + Thm 8 (Haar, asymptotic) + 45,500 trials (LBL). Ceiling is listing-conditional: WCL exposes ~18% Phase-1 reduction on the same circuits.** | **Formalize invariant for general circuit families; characterize WCL vs LBL gap** |
+| **C1** | **Conjecture** | **Phase 1 ceiling is structural (listing-conditional)** | **Strong -- Thm 2 + Thm 5 + Thm 6 (Clifford) + Thm 8 (Haar, asymptotic) + 45,500 trials (LBL). Ceiling is listing-conditional: WCL exposes ~7.8% Phase-1 reduction on the same circuits.** | **Formalize invariant for general circuit families; characterize WCL vs LBL gap** |
 | **C2** | **Conjecture** | **Phase-2 (a+b) is context-dependent super-constant** | **Proven (Phase-2a and Phase-2b) -- Thm 7 (artificial, Phase-2a, $\Gamma \ge 1/6$, validated by E24) + Thm 9 (BV natural, Phase-2b, $\Gamma \ge 2/13$). E10/E11 empirical (Phase-2a): ~3% random, ~20% Oracle.** | **(1) Phase-2a bound for BV / natural families; (2) characterize all families with super-constant $\Gamma$; (3) bridge theory (2b) $\leftrightarrow$ experiment (2a)** |
 
 ---
@@ -528,9 +528,9 @@ R_1^{\text{WCL}}(C) \approx 2 p_{\text{cancel}}(n, \rho) \quad \text{(Observatio
 R_1^{\text{DAG}}(C) \approx R_1^{\text{WCL}}(C) \quad \text{(DAG sees wire-level adjacency, like WCL)}
 $$
 
-The empirical ~0% Phase-1 reduction in E1--E5 is explained by Observation 1(b) (the LBL listing structurally empties the action space), **not** by any intrinsic incompressibility of the circuits. Under WCL or DAG representation, the same circuits would exhibit a small but non-zero Phase-1 reduction (~18% in our WCL experiment, consistent with Observation 1(a)).
+The empirical ~0% Phase-1 reduction in E1--E5 is explained by Observation 1(b) (the LBL listing structurally empties the action space), **not** by any intrinsic incompressibility of the circuits. Under WCL or DAG representation, the same circuits would exhibit a small but non-zero Phase-1 reduction (~7.8% in our WCL experiment — E19, 10,000 rows: mean 7.83%, std 3.95%, fidelity 1.0 — consistent with Observation 1(a)).
 
-**This is not a flaw in the framework -- it is a feature.** The framework's value is in *characterizing* how the listing model affects peephole optimization. The LBL$\to$WCL gap (~18% vs 0%) is itself a measurable, theoretically-grounded result about the sensitivity of peephole optimization to circuit representation.
+**This is not a flaw in the framework -- it is a feature.** The framework's value is in *characterizing* how the listing model affects peephole optimization. The LBL$\to$WCL gap (~7.8% vs 0%) is itself a measurable, theoretically-grounded result about the sensitivity of peephole optimization to circuit representation.
 
 ### 5.3 Relationship to Production DAG Compilers
 
@@ -554,7 +554,7 @@ Production compilers (Qiskit `transpile`, Cirq, t|ket>) use DAG representations 
 
 #### 5.3.3 Honest scope statement
 
-The structural-ceiling framework should be read as: **"For listing-based peephole optimizers operating on LBL representations, Phase-1 reduction is structurally zero; the gap to WCL/DAG representations is ~18%, explainable by Observation 1(a). Production DAG compilers operate in a different regime and are not bounded by this ceiling."**
+The structural-ceiling framework should be read as: **"For listing-based peephole optimizers operating on LBL representations, Phase-1 reduction is structurally zero; the gap to WCL/DAG representations is ~7.8%, explainable by Observation 1(a). Production DAG compilers operate in a different regime and are not bounded by this ceiling."**
 
 This is a narrower, more honest claim than "quantum circuits cannot be optimized by peephole methods." The narrower claim is defensible and useful; the broader claim is not supported.
 
@@ -585,7 +585,7 @@ Based on this analysis, the manuscript should:
 
 1. **Add a "Scope and Representation" subsection** in the Methodology chapter, explicitly stating that the structural ceiling is listing-conditional (LBL) and that DAG-based compilers operate in a different regime.
 
-2. **Reframe the central claim** from "Phase-1 peephole optimization achieves ~0% on random circuits" to "Phase-1 peephole optimization on LBL representations achieves ~0% on random circuits; under WCL/DAG representations, ~18% is achievable, consistent with Observation 1(a)."
+2. **Reframe the central claim** from "Phase-1 peephole optimization achieves ~0% on random circuits" to "Phase-1 peephole optimization on LBL representations achieves ~0% on random circuits; under WCL/DAG representations, ~7.8% is achievable, consistent with Observation 1(a)."
 
 3. **Include a DAG comparison discussion** noting that production compilers (Qiskit O3 ~23%) exceed the prototype's Phase-1+2 (~11%) because they operate on DAGs and employ passes beyond the prototype's scope. This is not a failure of the framework -- it is a difference in representation and pass sophistication.
 
@@ -597,11 +597,11 @@ Based on this analysis, the manuscript should:
 
 | Question | Answer |
 |----------|--------|
-| Is the structural ceiling listing-conditional? | **Yes.** Observation 1(b) is an LBL property; WCL/DAG expose ~18% reduction. |
+| Is the structural ceiling listing-conditional? | **Yes.** Observation 1(b) is an LBL property; WCL/DAG expose ~7.8% reduction. |
 | Does the framework bound DAG-compiler performance? | **No.** DAG compilers bypass Observation 1(b). The framework does not claim to bound them. |
 | Is the LBL$\to$WCL gap a real finding? | **Yes.** It quantifies representation sensitivity of peephole optimization. |
 | Is the Qiskit pass-isolation complete? | **No.** Only 5/15 families isolated; the rest must be downgraded to Future Work. |
-| Should the central claim be reframed? | **Yes.** From "0% on random circuits" to "0% under LBL; ~18% under WCL/DAG." |
+| Should the central claim be reframed? | **Yes.** From "0% on random circuits" to "0% under LBL; ~7.8% under WCL/DAG." |
 
 ---
 

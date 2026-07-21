@@ -1,0 +1,45 @@
+{
+  "recorded_at_utc": "2026-07-20T15:10:34.658732+00:00",
+  "recorded_by": "experiments/sota_benchmark.py audit (benchmark engineer worker)",
+  "hardware": {
+    "cpu_model": "11th Gen Intel(R) Core(TM) i7-11370H @ 3.30GHz",
+    "cpu_arch": "AMD64",
+    "cpu_physical_cores": 4,
+    "cpu_logical_cores": 8,
+    "cpu_max_freq_mhz": 3302.0,
+    "ram_total_gb": 15.8,
+    "gpu": "none",
+    "os": "Windows-11-10.0.26200-SP0",
+    "cpu_model_source": "/proc/cpuinfo model name (Git Bash)"
+  },
+  "software": {
+    "python": "3.12.12",
+    "python_implementation": "CPython"
+  },
+  "package_versions": {
+    "qiskit": "2.4.1",
+    "pytket": "2.18.0",
+    "pytket-qiskit": "0.77.0",
+    "cirq-core": "1.6.1",
+    "cirq": "1.6.1",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "pandas": "2.2.2",
+    "tqdm": "4.66.4"
+  },
+  "benchmark_protocol": {
+    "seed": 42,
+    "trial_seed_stride": 1000,
+    "n_trials_per_cell": 10,
+    "timeout_s_qiskit_cirq_custom": 120.0,
+    "timeout_s_tket": 60.0,
+    "fidelity_exact_max_qubits": 8,
+    "fidelity_success_threshold": 0.999,
+    "target_qubits_standard": [
+      4,
+      6,
+      8
+    ],
+    "suite": "generate_extended_suite(mode='full', seed=trial_seed)"
+  }
+}

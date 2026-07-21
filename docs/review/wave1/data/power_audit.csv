@@ -1,0 +1,15 @@
+experiment,unit,measured_unit,doc_n,measured_min_n,measured_median_n,doc_power,doc_reproduced_power,achieved_power_parametric,achieved_power_mwu_are,power_target,status
+E1,per depth,per depth,500,500,500.0,0.999,1.0,1.0,0.955,0.8,adequate
+E2,per density level,per density level,233,100,100.0,0.9997,0.9997,0.9404,0.8981,0.8,adequate
+E3,per qubit count,per qubit count,1500,1500,1500.0,0.999,1.0,1.0,0.955,0.8,adequate
+E4,per optimizer,per optimizer,100,100,100.0,0.94,0.9404,0.9404,0.8981,0.8,adequate
+E5,per depth,per depth,1000,1000,1000.0,0.999,1.0,1.0,0.955,0.8,adequate
+E10,overall per cell,overall per optimizer,42,635,635.0,0.62,0.6196,1.0,0.955,0.8,adequate
+E10,per family,per family x optimizer cell,9,5,5.0,0.17,0.1696,0.1077,0.1028,0.8,underpowered
+E11,per family,per family cell,24,3,11.0,0.396,0.396,0.0768,0.0734,0.8,underpowered
+E12,per optimization level,per optimization level,8,142,142.0,0.154,0.154,0.9874,0.943,0.8,adequate
+E14,per family x optimizer cell,per family x optimizer cell,17,15,55.0,0.293,0.293,0.2624,0.2506,0.8,underpowered
+E15,per compiler,per compiler,196,426,497.0,0.999,0.9985,1.0,0.955,0.8,adequate
+E16,per window size,per window size,174,174,174.0,0.996,0.9964,0.9964,0.9516,0.8,adequate
+E17,per topology,per topology,252,233,261.0,0.999,0.9999,0.9997,0.9547,0.8,adequate
+E18,per family,per family (surviving rows),48,3,33.0,0.679,0.6788,0.0768,0.0734,0.8,underpowered

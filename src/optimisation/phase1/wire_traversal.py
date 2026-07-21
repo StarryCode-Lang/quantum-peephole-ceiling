@@ -58,6 +58,18 @@ class WireTraversalPreprocessor:
        in wire-consecutive order while respecting all dependency constraints.
     5. Build a new circuit with the reordered gate list.
 
+    Complexity
+    ----------
+    Steps 1-3 (per-gate qubit sets, dependency DAG, primary wires): O(m)
+    with m = gate count, because every gate touches at most a = 2 qubits
+    and edges are added only between consecutive gates on each qubit
+    (at most m - 1 edges before deduplication).
+    Step 4 (heap-based Kahn topological sort): each of the m gates is
+    pushed and popped once at O(log m) per heap operation: O(m log m).
+    Step 5 (rebuild output circuit): O(m).
+    Total: O(m log m) time, O(m) auxiliary space.  This matches the
+    complexity stated in manuscript Section 3.3.
+
     Usage
     -----
     >>> preprocessor = WireTraversalPreprocessor()

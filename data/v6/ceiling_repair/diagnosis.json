@@ -1,0 +1,35 @@
+{
+  "n_rows": 570,
+  "n_families": 15,
+  "target": "gate_reduction",
+  "target_mean": 0.096311835261987,
+  "target_std": 0.26369264778101104,
+  "n_degenerate_folds_zero_variance": 11,
+  "degenerate_families": [
+    "Adder",
+    "CNOT",
+    "GHZ",
+    "HaarRandom",
+    "HardwareEfficient",
+    "IQP",
+    "QAOA",
+    "QFT",
+    "QuantumWalk",
+    "SurfaceCode",
+    "VQE"
+  ],
+  "reducible_families_mean_gt_0.1pct": [
+    "CNOT",
+    "Grover",
+    "Oracle",
+    "RandomClifford"
+  ],
+  "eta2_family_identity_on_target": 0.9393721116680978,
+  "eta2_family_identity_on_generic_features": {
+    "n_qubits": 0.03061224489795917,
+    "original_size": 0.8656628843128398,
+    "original_depth": 0.9648926259933102,
+    "original_cnot": 0.8901261558097917
+  },
+  "interpretation": "Family identity explains eta^2 of the target variance; per-fold Pearson is undefined on zero-variance folds; LOFO removes the one variable (family) that carries the signal, so success depends entirely on whether features expose the *mechanism* of reducibility rather than correlates of family identity."
+}

@@ -1,0 +1,363 @@
+{
+  "timestamp": "2026-07-20T15:04:26.487177+00:00",
+  "dataset": "data/v6/e21/ceiling_aware_comparison.csv (naive rows)",
+  "seed": 42,
+  "diagnosis": {
+    "n_rows": 570,
+    "n_families": 15,
+    "target": "gate_reduction",
+    "target_mean": 0.096311835261987,
+    "target_std": 0.26369264778101104,
+    "n_degenerate_folds_zero_variance": 11,
+    "degenerate_families": [
+      "Adder",
+      "CNOT",
+      "GHZ",
+      "HaarRandom",
+      "HardwareEfficient",
+      "IQP",
+      "QAOA",
+      "QFT",
+      "QuantumWalk",
+      "SurfaceCode",
+      "VQE"
+    ],
+    "reducible_families_mean_gt_0.1pct": [
+      "CNOT",
+      "Grover",
+      "Oracle",
+      "RandomClifford"
+    ],
+    "eta2_family_identity_on_target": 0.9393721116680978,
+    "eta2_family_identity_on_generic_features": {
+      "n_qubits": 0.03061224489795917,
+      "original_size": 0.8656628843128398,
+      "original_depth": 0.9648926259933102,
+      "original_cnot": 0.8901261558097917
+    },
+    "interpretation": "Family identity explains eta^2 of the target variance; per-fold Pearson is undefined on zero-variance folds; LOFO removes the one variable (family) that carries the signal, so success depends entirely on whether features expose the *mechanism* of reducibility rather than correlates of family identity."
+  },
+  "ceiling_proxy_tightness": {
+    "pearson_r": 0.9878469738446185,
+    "spearman_r": 0.9280270460168598,
+    "mae": 0.009022649509318525,
+    "note": "structural_upper_bound vs actual gate_reduction, pooled"
+  },
+  "family_mean_regression": {
+    "n_families": 15,
+    "mae": 0.11408757628491381,
+    "pearson_r": 0.05879992845693669,
+    "spearman_r": 0.5081656903972619,
+    "per_family": {
+      "Adder": {
+        "actual": 0.0,
+        "predicted": 0.009149139989398704
+      },
+      "CNOT": {
+        "actual": 1.0,
+        "predicted": 0.05572564255651835
+      },
+      "GHZ": {
+        "actual": 0.0,
+        "predicted": 0.23493751494760184
+      },
+      "Grover": {
+        "actual": 0.019384806546351163,
+        "predicted": 0.051524575940656736
+      },
+      "HaarRandom": {
+        "actual": 0.0,
+        "predicted": 0.025201069127907837
+      },
+      "HardwareEfficient": {
+        "actual": 0.0,
+        "predicted": 0.001739528179955706
+      },
+      "IQP": {
+        "actual": 0.0,
+        "predicted": 0.07566448178255776
+      },
+      "Oracle": {
+        "actual": 0.1584744856107085,
+        "predicted": 0.026312124015298224
+      },
+      "QAOA": {
+        "actual": 0.0,
+        "predicted": 0.02339252657527657
+      },
+      "QFT": {
+        "actual": 0.0,
+        "predicted": 0.0233658599086099
+      },
+      "QuantumWalk": {
+        "actual": 0.0,
+        "predicted": 0.024590682697356404
+      },
+      "RandomClifford": {
+        "actual": 0.1935843603262552,
+        "predicted": 0.10860132076751318
+      },
+      "SurfaceCode": {
+        "actual": 0.0,
+        "predicted": 0.0415314948706724
+      },
+      "UCCSD": {
+        "actual": 0.001,
+        "predicted": 0.046044569198449944
+      },
+      "VQE": {
+        "actual": 0.0,
+        "predicted": 0.013137249003980575
+      }
+    }
+  },
+  "ceiling_classification_mechanism": {
+    "mean_balanced_acc": 0.76875,
+    "mean_f1": 0.07450980392156863,
+    "mean_mcc": 0.598058067569092,
+    "per_family": [
+      {
+        "family": "Adder",
+        "n_reducible_test": 0,
+        "balanced_acc": 1.0,
+        "f1": 0.0,
+        "mcc": NaN
+      },
+      {
+        "family": "CNOT",
+        "n_reducible_test": 40,
+        "balanced_acc": 0.0,
+        "f1": 0.0,
+        "mcc": NaN
+      },
+      {
+        "family": "GHZ",
+        "n_reducible_test": 0,
+        "balanced_acc": 1.0,
+        "f1": 0.0,
+        "mcc": NaN
+      },
+      {
+        "family": "Grover",
+        "n_reducible_test": 16,
+        "balanced_acc": 0.53125,
+        "f1": 0.11764705882352941,
+        "mcc": 0.19611613513818402
+      },
+      {
+        "family": "HaarRandom",
+        "n_reducible_test": 0,
+        "balanced_acc": 1.0,
+        "f1": 0.0,
+        "mcc": NaN
+      },
+      {
+        "family": "HardwareEfficient",
+        "n_reducible_test": 0,
+        "balanced_acc": 1.0,
+        "f1": 0.0,
+        "mcc": NaN
+      },
+      {
+        "family": "IQP",
+        "n_reducible_test": 0,
+        "balanced_acc": 0.5,
+        "f1": 0.0,
+        "mcc": NaN
+      },
+      {
+        "family": "Oracle",
+        "n_reducible_test": 16,
+        "balanced_acc": 1.0,
+        "f1": 1.0,
+        "mcc": 1.0
+      },
+      {
+        "family": "QAOA",
+        "n_reducible_test": 0,
+        "balanced_acc": 1.0,
+        "f1": 0.0,
+        "mcc": NaN
+      },
+      {
+        "family": "QFT",
+        "n_reducible_test": 0,
+        "balanced_acc": 1.0,
+        "f1": 0.0,
+        "mcc": NaN
+      },
+      {
+        "family": "QuantumWalk",
+        "n_reducible_test": 0,
+        "balanced_acc": 1.0,
+        "f1": 0.0,
+        "mcc": NaN
+      },
+      {
+        "family": "RandomClifford",
+        "n_reducible_test": 40,
+        "balanced_acc": 0.0,
+        "f1": 0.0,
+        "mcc": NaN
+      },
+      {
+        "family": "SurfaceCode",
+        "n_reducible_test": 0,
+        "balanced_acc": 1.0,
+        "f1": 0.0,
+        "mcc": NaN
+      },
+      {
+        "family": "UCCSD",
+        "n_reducible_test": 1,
+        "balanced_acc": 0.5,
+        "f1": 0.0,
+        "mcc": NaN
+      },
+      {
+        "family": "VQE",
+        "n_reducible_test": 0,
+        "balanced_acc": 1.0,
+        "f1": 0.0,
+        "mcc": NaN
+      }
+    ]
+  },
+  "within_family_magnitude": {
+    "CNOT": {
+      "note": "insufficient variance or rows",
+      "n": 40
+    },
+    "Grover": {
+      "n": 40,
+      "pearson_r": 0.8675034256385324,
+      "spearman_r": 0.9325847327740096,
+      "mae": 0.0042539099866228626,
+      "target_std": 0.029090427025052545
+    },
+    "Oracle": {
+      "n": 40,
+      "pearson_r": 0.9203406469083204,
+      "spearman_r": 0.9098432791591401,
+      "mae": 0.0236126276871692,
+      "target_std": 0.23009693920599478
+    },
+    "RandomClifford": {
+      "n": 40,
+      "pearson_r": 0.7751322423990362,
+      "spearman_r": 0.7562166012309531,
+      "mae": 0.04011678037192545,
+      "target_std": 0.07901710413959118
+    }
+  },
+  "lofo_summaries": {
+    "baseline_predict_zero": {
+      "mae": 0.096311835261987,
+      "pearson_r": NaN,
+      "spearman_r": NaN,
+      "r2": -0.13340228701488943
+    },
+    "baseline_global_mean": {
+      "mae": 0.16849706021688945,
+      "pearson_r": -0.9685206999469258,
+      "spearman_r": -0.7160760390256361,
+      "r2": -0.14686039331218037
+    },
+    "generic+two_stage_rf": {
+      "mae": 0.11818396065958506,
+      "pearson_r": -0.059575871174170215,
+      "spearman_r": 0.3167704562107508,
+      "r2": -0.29289270094143505,
+      "mae_ci95": [
+        0.09573420572974235,
+        0.14162059415085781
+      ],
+      "pearson_ci95": [
+        -0.08625899537094005,
+        -0.02825448464012926
+      ],
+      "mean_fold_mae": 0.1122747626266058,
+      "n_nan_pearson_folds": 13
+    },
+    "generic+single_stage_rf": {
+      "mae": 0.116445630810513,
+      "pearson_r": -0.054290349427501175,
+      "spearman_r": 0.22257328938198964,
+      "r2": -0.15865639941302745,
+      "mae_ci95": [
+        0.09553580730232289,
+        0.13918271700536317
+      ],
+      "pearson_ci95": [
+        -0.09675906608411775,
+        -0.00022530671370862973
+      ],
+      "mean_fold_mae": 0.11065919120489612,
+      "n_nan_pearson_folds": 11
+    },
+    "mechanism+two_stage_rf": {
+      "mae": 0.09267164540889072,
+      "pearson_r": 0.18409702937189398,
+      "spearman_r": 0.18439507382921386,
+      "r2": -0.0730608365931249,
+      "mae_ci95": [
+        0.07203614550362564,
+        0.11539504054615636
+      ],
+      "pearson_ci95": [
+        0.10079403086492779,
+        0.27385824939825526
+      ],
+      "mean_fold_mae": 0.08803806313844617,
+      "n_nan_pearson_folds": 13
+    },
+    "mechanism+single_stage_rf": {
+      "mae": 0.06954296572607763,
+      "pearson_r": 0.7215221586303515,
+      "spearman_r": 0.8469362494496526,
+      "r2": 0.3928863763500601,
+      "mae_ci95": [
+        0.05393292100344717,
+        0.08651073774933707
+      ],
+      "pearson_ci95": [
+        0.6662643935657762,
+        0.7936823078043398
+      ],
+      "mean_fold_mae": 0.06606581743977376,
+      "n_nan_pearson_folds": 11
+    },
+    "combined+two_stage_rf": {
+      "mae": 0.09937696400024175,
+      "pearson_r": -0.05081675760012614,
+      "spearman_r": -0.02537824123770843,
+      "r2": -0.13760365916652262,
+      "mae_ci95": [
+        0.07795738371678775,
+        0.12226619124797364
+      ],
+      "pearson_ci95": [
+        -0.07362471179143996,
+        -0.028163193967394813
+      ],
+      "mean_fold_mae": 0.09440811580022965,
+      "n_nan_pearson_folds": 13
+    },
+    "combined+single_stage_rf": {
+      "mae": 0.07495415073681164,
+      "pearson_r": 0.6125922585943937,
+      "spearman_r": 0.7974014597199673,
+      "r2": 0.2840042446425821,
+      "mae_ci95": [
+        0.05787416216744332,
+        0.09341474868762763
+      ],
+      "pearson_ci95": [
+        0.5599142918649177,
+        0.6905880069840508
+      ],
+      "mean_fold_mae": 0.07120644319997108,
+      "n_nan_pearson_folds": 11
+    }
+  }
+}

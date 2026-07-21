@@ -51,5 +51,13 @@
   "version": "1.0.0",
   "window": 10,
   "qiskit_version": "2.4.1",
-  "timestamp": null
+  "timestamp": "2026-07-09T08:55:23",
+  "canonical_data_file": "ceiling_aware_comparison.csv",
+  "notes": [
+    "canonical_data_file backfilled by wave-1 data-integrity normalization (20260720-230058); see data/DATA_CANONICAL.md for the canonical-file policy.",
+    "timestamp recovered from run_id 'e21_full_20260709_085523' (20260720-230058).",
+    "canonical_data_file backfilled: ceiling_aware_comparison.csv (1140 rows) is the primary per-trial dataset. derived/ holds ceiling_aware_summary.csv (per-family aggregate, 30 rows) and e21_paired_statistics.csv (paired tests, 57 rows) produced by experiments/e21_ceiling_aware/run.py and analyze.py.",
+    "fidelity_source caveat (wave-4): for n_qubits in {8, 10} the label 'exact_average_gate_fidelity' is a misnomer. The run passed target=None to the optimizers for those sizes (the effective exact-fidelity threshold in this run was 6 qubits; see next note), so fidelity = 1.0 is a placeholder default, not an exact average-gate-fidelity computation. Evidence in ceiling_aware_comparison.csv: all 560 rows with n_qubits >= 8 have fidelity exactly 1.0, including 98 rows with real gate reduction (optimized_size < original_size), whereas reduced rows at n_qubits <= 6 show fidelity < 1.0 (min 0.9999999999999578). The mislabel arises because fidelity_source() in experiments/e21_ceiling_aware/run.py thresholds on the module constant MAX_EXACT_FIDELITY_QUBITS (= 12) instead of the run parameter.",
+    "max_exact_fidelity_qubits caveat (wave-4): the value 12 recorded here is the module constant src/optimisation/constants.py:MAX_EXACT_FIDELITY_QUBITS (written by experiments/e21_ceiling_aware/run.py line ~478, which overwrites the parameter value recorded earlier at line ~275). It is NOT the threshold actually used for the target=None decision in this run: run() and the argparse CLI both default to 6 (run.py lines ~252 and ~518), and the decision at line ~318 uses that parameter. The effective exact-fidelity threshold for this dataset was therefore 6 qubits."
+  ]
 }

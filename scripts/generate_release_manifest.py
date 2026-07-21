@@ -43,8 +43,10 @@ KNOWN_DUPLICATES = {
 
 # Legacy datasets superseded by a newer version in a later data directory.
 # These are still listed in the manifest for provenance but marked as superseded.
+# Maps (root_name, dir_name) -> superseded_by label.
 SUPERSEDED_DIRS = {
-    # v3 e10 (627 rows) → superseded by v5 e10 (1905 rows)
+    # v6 e29 smoke (80 rows, 2 seeds) → superseded by v7 e29 full (800 rows, 10 seeds)
+    ("v6", "e29_multi_seed_e04"): "v7/e29 (800 rows)",
 }
 
 STANDALONE_IDS = {
@@ -52,55 +54,101 @@ STANDALONE_IDS = {
     "qiskit_pass_isolation.csv": "ISOLATION",
 }
 
+# Directory names that never hold canonical datasets:
+#   derived/  - analysis artifacts regenerated from the canonical CSV
+#   metadata/ - per-run metadata sidecars (sota_benchmark)
+#   raw/      - primary per-tool run CSVs (sota_benchmark); inputs, not the
+#               canonical analysis dataset (aggregated/ is canonical there)
+#   logs/     - run logs
+#   scholar/  - reference-verification artifacts (owned by the references
+#               workstream); not experiment datasets
+NON_CANONICAL_DIR_NAMES = {"derived", "metadata", "raw", "logs", "scholar"}
+
+SCHEMA_BY_ROOT = {
+    "v2_fixed": "legacy_v2_v3",
+    "v4": "results_v1",
+    "v5": "results_v2",
+    "v6": "results_v6",
+    "v7": "results_v7",
+    "v8": "results_v8",
+}
+
+# Canonical-file override for directories that have no metadata.json (their
+# contents are owned by another workstream and must not be modified). The
+# override applies only while metadata.json is absent; a metadata.json with
+# canonical_data_file always takes precedence.
+CANONICAL_FILE_OVERRIDES = {
+    # data/v8/hardware_validation: ehw_runs_*.csv is the primary per-run
+    # dataset; ehw_summary_*.csv is a derived aggregate of it.
+    # Wave-3 decision (final_verification): the 288-row FULL run is canonical
+    # (the wave-1 hardware worker designated it canonical in
+    # docs/review/wave1/hardware_validation.md). The two smoke runs
+    # (48 and 96 rows) are earlier partial runs kept for provenance only;
+    # ehw_summary_*.csv files are derived aggregates of their sibling runs.
+    ("v8", "hardware_validation"): "ehw_runs_full_20260720_150931.csv",
+}
+
 
 def dataset_entries(data_root: Path) -> List[Dict[str, object]]:
-    """Collect canonical active CSV datasets under data/v2_fixed, data/v4, data/v5, data/v6, and data/v7."""
+    """Collect canonical CSV datasets under data/v2_fixed .. data/v8.
+
+    Only the file declared by each directory's ``canonical_data_file`` (or, for
+    directories without metadata, the single top-level CSV) is emitted. Files
+    under derived/, metadata/, raw/ and logs/ subdirectories are excluded.
+    """
     entries: List[Dict[str, object]] = []
-    for root_name in ["v2_fixed", "v4", "v5", "v6", "v7"]:
+    claimed: set[str] = set()
+    for root_name in ["v2_fixed", "v4", "v5", "v6", "v7", "v8"]:
         root = data_root / root_name
         if not root.exists():
             continue
         for exp_dir in sorted(path for path in root.glob("**") if path.is_dir()):
+            rel_parts = exp_dir.relative_to(root).parts
+            if any(part in NON_CANONICAL_DIR_NAMES for part in rel_parts):
+                continue
             if (root_name, exp_dir.name) in KNOWN_DUPLICATES:
                 continue
             metadata_path = exp_dir / "metadata.json"
+            metadata = {}
             if metadata_path.exists():
                 try:
                     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
                 except Exception:
                     metadata = {}
-                canonical = metadata.get("canonical_data_file")
-                csv_paths = [exp_dir / canonical] if canonical else sorted(exp_dir.glob("*.csv"))
+            canonical = metadata.get("canonical_data_file")
+            if not canonical:
+                canonical = CANONICAL_FILE_OVERRIDES.get((root_name, exp_dir.name))
+            if canonical:
+                csv_paths = [exp_dir / canonical]
             else:
+                # No metadata: only treat direct children CSVs as canonical
+                # candidates (subdirectory files belong to raw/derived roles).
                 csv_paths = sorted(exp_dir.glob("*.csv"))
             for csv_path in csv_paths:
                 if not csv_path or not csv_path.exists():
                     continue
+                rel_file = csv_path.relative_to(PROJECT_ROOT).as_posix()
+                if rel_file in claimed:
+                    continue
+                claimed.add(rel_file)
                 try:
                     rows = int(len(pd.read_csv(csv_path)))
                 except Exception:
                     rows = None
-                exp_id = STANDALONE_IDS.get(csv_path.name, exp_dir.name.upper())
-                is_superseded = (root_name, exp_dir.name) in SUPERSEDED_DIRS
-                schema = (
-                    "results_v6"
-                    if root_name == "v6"
-                    else "results_v2"
-                    if root_name == "v5"
-                    else "results_v1"
-                    if root_name == "v4"
-                    else "legacy_v2_v3"
+                exp_id = metadata.get("experiment_id") or STANDALONE_IDS.get(
+                    csv_path.name, exp_dir.name.upper()
                 )
+                superseded_by = SUPERSEDED_DIRS.get((root_name, exp_dir.name))
                 entry = {
-                    "file": csv_path.relative_to(PROJECT_ROOT).as_posix(),
+                    "file": rel_file,
                     "sha256": file_sha256(csv_path),
                     "rows": rows,
-                    "schema": schema,
+                    "schema": SCHEMA_BY_ROOT.get(root_name, "legacy_v2_v3"),
                     "experiment_id": exp_id,
                 }
-                if is_superseded:
+                if superseded_by:
                     entry["superseded"] = True
-                    entry["superseded_by"] = "v5/e10 (1905 rows)"
+                    entry["superseded_by"] = superseded_by
                 entries.append(entry)
     return entries
 
@@ -144,7 +192,7 @@ def generate_manifest(release_id: str) -> Dict[str, object]:
         "reproduction": {
             "conda_env": "q-research",
             "entrypoints": [
-                "conda run -n q-research python tests/test_core.py",
+                "conda run -n q-research python -m pytest tests/ -q",
                 "conda run -n q-research python scripts/reproduce_all.py --verify",
                 "conda run -n q-research python experiments/e11_real_circuit_benchmark/run.py --mode smoke",
                 "conda run -n q-research python experiments/e12_compiler_baseline/run.py --mode smoke",

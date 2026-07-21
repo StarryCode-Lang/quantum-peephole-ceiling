@@ -21,9 +21,24 @@ from ..base import BaseOptimizer, OptimizationResult
 class SimulatedAnnealingOptimizer(BaseOptimizer):
     """
     Simulated Annealing optimizer.
-    
+
     Uses temperature-based acceptance criterion to escape local minima.
     All moves preserve unitary equivalence via the expanded move set.
+
+    Complexity
+    ----------
+    Per iteration: one ``_generate_neighbor`` call O(m) plus one
+    ``_fitness`` evaluation O(F + m), where m = gate count and F is the
+    fidelity cost (for n <= 12 qubits, F = O(m * 4**n + 8**n); see the
+    ``BaseOptimizer`` complexity model).  Temperature update and the
+    Metropolis-Hastings acceptance test are O(1).
+
+    Overall: O(I * (m + F)) time with I = ``max_iterations``
+    (default 100), O(m) memory for circuit copies plus O(4**n) per exact
+    fidelity call.  Runtime is dominated by exact fidelity evaluation:
+    in E04 (n=5, m~75) SA averaged 2.38 s/trial versus 2.3 ms for the
+    fidelity-free greedy scan (data/v2_fixed/e04, see
+    docs/analysis/algorithmic_complexity.md).
     """
     
     def __init__(self, max_iterations: int = 100, initial_temp: float = 1.0,

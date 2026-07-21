@@ -1,0 +1,154 @@
+{
+  "timestamp": "2026-07-21T00:40:32.440905+00:00",
+  "part": "PART 4 \u2014 CNOT saturation-regime intervention (wave 4)",
+  "dataset": "data/v6/e21/ceiling_aware_comparison.csv (naive rows) + cached mechanism_features.csv",
+  "seed": 42,
+  "reference_published_best": {
+    "config": "mechanism+single_stage_rf",
+    "pooled_mae": 0.06954296572607763,
+    "pooled_pearson_r": 0.7215221586303515,
+    "pooled_spearman_r": 0.8469362494496526,
+    "pooled_r2": 0.3928863763500601,
+    "cnot_fold_mae": 0.7453165896031297,
+    "source": "data/v6/ceiling_repair/repair_summary.json (2026-07-20)"
+  },
+  "diagnosis": {
+    "cnot_target_unique": [
+      1.0
+    ],
+    "non_cnot_target_max": 1.0,
+    "non_cnot_target_p99": 0.4155555555555592,
+    "n_saturated_training_rows_when_cnot_held_out": 1,
+    "saturated_training_rows": [
+      {
+        "family": "Oracle",
+        "n_qubits": 4,
+        "gate_reduction": 1.0
+      }
+    ],
+    "phase1_density_cnot": 0.5,
+    "phase1_density_max_non_cnot": 0.0344827586206896,
+    "phase1_gate_margin_x": 14.500000000000023,
+    "sub99_gate_non_cnot_rows": 1,
+    "sub99_gate_false_positives": [
+      {
+        "family": "RandomClifford",
+        "n_qubits": 4,
+        "gate_reduction": 0.3448275862068966,
+        "structural_upper_bound": 1.0
+      }
+    ],
+    "root_cause": "RandomForest regression predicts leaf-target averages and cannot extrapolate to y=1.0 when the only saturated family is held out; with CNOT held out just one saturated training row (Oracle n=4) exists, so indicator features (V1) and a learned saturation classifier (V2) cannot fix the fold. A mechanism-derived saturation rule can, because it keys on a feature signature (Phase-1 action density 0.5, >14x above any non-CNOT circuit) rather than on training targets."
+  },
+  "variants": {
+    "v0_baseline_mech_rf": {
+      "mae": 0.06954296572607763,
+      "pearson_r": 0.7215221586303515,
+      "spearman_r": 0.8469362494496526,
+      "r2": 0.3928863763500601,
+      "mae_ci95": [
+        0.05393292100344717,
+        0.08651073774933707
+      ],
+      "pearson_ci95": [
+        0.6662643935657762,
+        0.7936823078043398
+      ],
+      "mean_fold_mae": 0.06606581743977376,
+      "cnot_fold_mae": 0.7453165896031297
+    },
+    "v1_indicator_features": {
+      "mae": 0.06735515000523044,
+      "pearson_r": 0.7612194064176858,
+      "spearman_r": 0.8529911975280198,
+      "r2": 0.43947195553200147,
+      "mae_ci95": [
+        0.05235079119865082,
+        0.08360323286972547
+      ],
+      "pearson_ci95": [
+        0.7052263958544609,
+        0.8295695073168957
+      ],
+      "mean_fold_mae": 0.06398739250496892,
+      "cnot_fold_mae": 0.7125238238445466
+    },
+    "v2_learned_two_stage": {
+      "mae": 0.06934676788778794,
+      "pearson_r": 0.73553039123806,
+      "spearman_r": 0.8477285917509483,
+      "r2": 0.39390579534048475,
+      "mae_ci95": [
+        0.05375765800765972,
+        0.08636859086820863
+      ],
+      "pearson_ci95": [
+        0.689576032343826,
+        0.7942235467108152
+      ],
+      "mean_fold_mae": 0.06587942949339855,
+      "cnot_fold_mae": 0.7453165896031297
+    },
+    "v3_rule_gate_sub>=0.99": {
+      "mae": 0.017589845875279782,
+      "pearson_r": 0.9743074442294211,
+      "spearman_r": 0.8527021801734179,
+      "r2": 0.9479202408922007,
+      "mae_ci95": [
+        0.013044390057885937,
+        0.022501634794765153
+      ],
+      "pearson_ci95": [
+        0.9571399933920454,
+        0.9867215858601693
+      ],
+      "mean_fold_mae": 0.016710353581515795,
+      "cnot_fold_mae": 0.0
+    },
+    "v4_rule_gate_phase1_saturation": {
+      "mae": 0.017240047157436947,
+      "pearson_r": 0.9769398851816893,
+      "spearman_r": 0.8527459395997157,
+      "r2": 0.9535090647344712,
+      "mae_ci95": [
+        0.012907053352601373,
+        0.021822936878765707
+      ],
+      "pearson_ci95": [
+        0.9632500202733473,
+        0.9870480789832122
+      ],
+      "mean_fold_mae": 0.0163780447995651,
+      "cnot_fold_mae": 0.0
+    },
+    "v5_ridge_linear": {
+      "mae": 0.04921348625550532,
+      "pearson_r": 0.9543100166533958,
+      "spearman_r": 0.6821310421834335,
+      "r2": 0.7591549365893097,
+      "mae_ci95": [
+        0.0394725224203285,
+        0.05960013872577021
+      ],
+      "pearson_ci95": [
+        0.9117118763532654,
+        0.983537755424763
+      ],
+      "mean_fold_mae": 0.04675281194273006,
+      "cnot_fold_mae": 0.44950305190181516
+    }
+  },
+  "verdict": {
+    "success_criterion": "CNOT fold MAE < 0.1 AND pooled MAE <= baseline AND pooled Pearson r >= baseline",
+    "success": true,
+    "primary_variant": "v4_rule_gate_phase1_saturation",
+    "cnot_fold_mae_delta": 0.7453165896031297,
+    "pooled_mae_delta": 0.05230291856864068,
+    "pooled_r_delta": 0.25541772655133776,
+    "negative_results": {
+      "v1_indicator_features": "saturation indicator features barely help the CNOT fold (RF cannot extrapolate leaf averages beyond training targets)",
+      "v2_learned_two_stage": "learned saturation classifier never fires on the held-out CNOT fold \u2014 a single saturated training example (Oracle n=4) does not generalize to the CNOT signature",
+      "v5_ridge_linear": "linear extrapolation improves pooled metrics but leaves CNOT fold MAE ~0.45 and degrades Spearman"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "experiment_id": "CEILING_REPAIR",
+  "description": "Leave-one-family-out cross-validation of the repaired ceiling model (experiments/ceiling_model_repair.py). Analysis artifact, not a circuit-optimization experiment.",
+  "canonical_data_file": "lofo_cv_results.csv",
+  "timestamp": "2026-07-17T04:13:57",
+  "n_rows": 20,
+  "seed": 42,
+  "python_version": "3.12.12",
+  "qiskit_version": "2.4.1",
+  "git_commit": null,
+  "notes": [
+    "n_rows backfilled from canonical CSV row count (20260720-230058).",
+    "seed defaulted to 42 (project default); original not recorded (20260720-230058).",
+    "python_version backfilled from project-pinned interpreter (3.12.12); original not recorded (20260720-230058).",
+    "qiskit_version backfilled from project-pinned dependency (2.4.1); original not recorded (20260720-230058).",
+    "git_commit not recorded at generation time (pre-provenance era); left null."
+  ]
+}

@@ -1,4 +1,4 @@
-> **STATUS**: Not yet integrated into main manuscript. Pending merge.
+> **STATUS**: Supporting appendix to the main manuscript. Refreshed in wave 2 (2026-07-21): E16 window-set correction (w in {2,5,10,20}), new Phase-2b v2 full-scale results (Section D), SOTA compiler-benchmark update incl. the corrected Cirq pipeline (Section E), and the E22 shuffle-control / E29 multi-seed results (Section F). Cross-references remapped to the v8 manuscript section numbering (wave-3 final cleanup, 2026-07-21); the Section A claim-evidence map is synced with `docs/manuscript/claim_evidence_table.csv`. v8-era claims C13-C17 (Phase-2b full-scale, ceiling-repair, EHW, E22, E29) are mapped in that CSV and detailed in Sections D-F below.
 
 # Appendix
 
@@ -8,7 +8,7 @@
 > **Version**: 6.3
 > **Date**: 2026-07-09
 > **Scope**: Confirmed manuscript claims include E1-E18 canonical optimizer data, completed E19 WCL listing-model comparison (10,000 rows), completed E20 multi-compiler full CSV, completed E21 ceiling-aware full-mode evaluation (1,140 rows), validated Theorem 6 via E23, validated Theorem 7 via E24, and expanded Phase-2b template matcher with unit tests. A machine-readable version of this table is maintained at `docs/manuscript/claim_evidence_table.csv`.
-> **Caveats**: E18 conclusions remain survivorship-biased; full canonical-scale Phase-2b benchmark rerun remains future work.
+> **Caveats**: E18 conclusions remain survivorship-biased; full-scale Phase-2b validation is complete (735 rows; Section D).
 
 ---
 
@@ -16,18 +16,23 @@
 
 | # | Claim | Evidence | Figure/Table | Support | Scope | Caveat |
 |---|---|---|---|---|---|---|
-| C1 | The Phase-1 ceiling is structural under the tested listing/window/local-rewrite model: Phase-1 optimizers achieve ~0% gate reduction when no listing-adjacent inverse/mergeable pairs are exposed. | E1–E5 (random), E14 (extended 15-family suite), E19 (WCL vs LBL) | Fig.1; Table 1 | Greedy Phase 1 = 0% on QFT, GHZ, BV, IQP, SurfaceCode, QAOA, HardwareEfficient, etc. | Project generators, n=3–20 (extended), LBL/listing-specific local rewrite model | Not a universal lower bound. Ceiling classification is listing/window/model-conditional; WCL validation confirmed for random Universal family (C9). |
-| C2 | Phase-2a commutation rewriting provides context-dependent improvement on select circuit families. | E10, E14, E16, E24 | Fig.4; Fig.13 | E14: Oracle/BV ~27.6%, RandomClifford ~22.1%, UCCSD ~1.4%; E16: empirical window-size trend; E24: Theorem-7 family mean Phase-2a reduction 79.8% | Implemented local commutation rewriter, window w in {2,5,10,20,50}; Theorem-7 hardness family generator | Improvement is family-dependent. Phase-2a empirical results do not prove Phase-2b template-assisted theorems. |
-| C3 | Production compiler gap analysis reveals mechanisms beyond the prototype peephole model. | E12, E15, E20, Qiskit pass-isolation artifact | Fig.12; Fig.17; Table 8 | Qiskit/Cirq/t\|ket> transpilers compared on 15 families; Qiskit full pipeline exceeds prototype on selected families | Qiskit 2.4.1, Cirq 1.6.1, pytket 2.18.0; default no-backend transpilation | Hardware-specific effects not fully modeled. Compiler settings are standardized but may not be per-family optimal. |
-| C4 | Phase-2a window size w affects the trade-off between optimization power and runtime. | E16 | Fig.13 | w=2: ~0%, w=5: ~1.5%, w=10: ~4.2% on full suite | Window sizes {2, 5, 10, 20, 50} | Underpowered comparison (reported power=0.126); treat saturation as empirical trend, not confirmed design rule. |
-| C5 | Hardware topology constraints affect optimization opportunities differently. | E17 | Fig.14 | Linear, grid, heavy-hex topologies on all 15 families | Simplified topology models | Real hardware has additional noise/error effects not modeled. |
-| C6 | Clifford+T gate-set decomposition preserves some Phase-2 value among surviving rows. | E18 | Section 5.6.4 | Decomposition to {H, S, T, CNOT}; T-count, CNOT reduction tracked | Clifford+T universal gate set; valid rows only | Survivorship-biased: decomposition/fidelity failures are excluded. Do not generalize E18 results to failed rows or full attempted population. |
-| C7 | Exact functionality is preserved where fidelity is computed and retained. | E1–E21 | fidelity columns in CSV files | Mean fidelity 1.000000 for verified retained datasets | Exact/scalable unitary comparison for supported qubit sizes | E19 confirmed with fidelity=1.0 across all 10,000 rows. E21 uses exact fidelity for n<=6 and target=None for larger n. Failed/invalid rows are filtered where valid fidelity is required. |
-| C8 | The Phase-1 reduction ceiling is formally established for bounded circuits, with the bounded INSERTION cascade gap resolved. | Theory (Thm 2, Thm 2b); E1–E5 empirical validation | Open Problems section; Thm 2b proof | Thm 2b proves polynomial-time termination of INSERTION move sequences for bounded depth/gate count; empirical ceilings support predictions | Bounded circuits: depth O(poly(n)), gate count O(poly(n)) | The unbounded INSERTION cascade remains open. QMA-hardness of CODP remains separate theoretical motivation. |
-| C9 | Listing-model dependency: WCL-style preprocessing exposes Phase-1 opportunities hidden under LBL. | E19 (full canonical run, 10,000 rows) | Table 2; Section 5.2 | E19 full run: WCL mean reduction 7.83% (std=3.95%, max=33.33%) vs LBL 0.0000% across 5,000 circuits (n=5, depths 1-50). | Confirmed canonical result (n=5, random Universal family) | Cross-family WCL validation (beyond random Universal) remains as future work; Phase-2 commutation opportunities under WCL not separately measured. |
-| C10 | Ceiling-aware optimization skips futile optimization passes with identical reduction and significant speedup. | E21 full mode (1,140 rows) | Section 5.5; Table 7 | Full-mode E21 reports 1.6x–228x speedups (mean 35x) with identical reduction across 15 families | 15 families, n in {4,6,8,10}, 10 trials each | Exact fidelity verified for n<=6; larger circuits use target=None (correctness covered by unit tests). |
-| C11 | Multi-compiler extension with Cirq and t\|ket> produces comparable reduction and runtime data. | E20 full mode (1,070 rows) | S11.2; data/v6/e20/ | Qiskit/Cirq/t\|ket> compared on 15 families with standardized settings | Qiskit 2.4.1, Cirq 1.6.1, pytket 2.18.0 | Baseline compiler settings standardized but may not reflect optimal per-family tuning. |
-| C12 | Phase-2b template-assisted BV advantage is theoretically proved and the required templates are implemented and unit-tested. | Theory (Thm 7, Thm 9); `src/optimisation/phase2/template_matcher.py`; `tests/test_phase2b_template_matcher.py` | Section 5.3.4; Appendix B | Matcher covers H-CX-H control, H-CX-H target (CZ), S-S†, CZ-CZ, and H-H templates; unit tests verify BV-like examples and identities. | Unit-tested implementation; no canonical Phase-2b CSV | Do not conflate Phase-2b theorem/tests with E10/E11/E14/E16 Phase-2a canonical results. Full canonical-scale Phase-2b benchmark rerun remains future work. |
+| C1 | The Phase-1 ceiling is structural under the tested listing/window/local-rewrite model: Phase-1 optimizers achieve ~0% gate reduction when no listing-adjacent inverse/mergeable pairs are exposed. | E1–E5 (random), E14 (extended 15-family suite), E19 (WCL vs LBL) | Fig. 1; Table 7 | Greedy Phase 1 = 0% on QFT, GHZ, BV, IQP, SurfaceCode, QAOA, HardwareEfficient, etc. | Project generators, n=3–20 (extended), LBL/listing-specific local rewrite model | Not a universal lower bound. Ceiling classification is listing/window/model-conditional; WCL validation confirmed for random Universal family (C9). |
+| C2 | Phase-2a commutation rewriting provides context-dependent improvement on select circuit families. | E10, E14, E16, E24 | Fig. 8; Fig. 11 | E14: Oracle/BV ~27.6%, RandomClifford ~22.1%, UCCSD ~1.4%; E16: empirical window-size trend; E24: Theorem-7 family mean Phase-2a reduction 79.8% | Implemented local commutation rewriter, window w in {2,5,10,20}; Theorem-7 hardness family generator | Improvement is family-dependent. Phase-2a empirical results do not prove Phase-2b template-assisted theorems. |
+| C3 | Production compiler gap analysis reveals mechanisms beyond the prototype peephole model. | E12, E15, E20, Qiskit pass-isolation artifact | Fig. 12; Fig. 16; Table 12 | Qiskit/Cirq/t\|ket> transpilers compared on 15 families; Qiskit full pipeline exceeds prototype on selected families | Qiskit 2.4.1, Cirq 1.6.1, pytket 2.18.0; default no-backend transpilation | Hardware-specific effects not fully modeled. Compiler settings are standardized but may not be per-family optimal. |
+| C4 | Phase-2a window size w affects the trade-off between optimization power and runtime. | E16 | Fig. 11; Table 8 | E16 (696 rows, w in {2,5,10,20}): family-mean Phase-2a reduction at w = 2/5/10/20 is 0.0% / 1.0% / 3.8% / 4.5% (commutation-only) and 6.8% / 7.9% / 10.6% / 11.3% (hybrid Phase-1+2) | Window sizes {2, 5, 10, 20} (the canonical E16 CSV contains no w = 50 rows; earlier w = 50 claims were a documentation error) | Underpowered comparison; the previously reported power = 0.126, p = 0.420, Cohen's d = 0.173 could not be reproduced from canonical E16 data (wave-1 statistical audit, provenance unknown), so the saturation pattern is an empirical trend, not a confirmed design rule. |
+| C5 | Hardware topology constraints affect optimization opportunities differently. | E17 | Fig. 18 | Linear, grid, heavy-hex topologies on all 15 families | Simplified topology models | Real hardware has additional noise/error effects not modeled. |
+| C6 | Clifford+T gate-set decomposition preserves some Phase-2 value among surviving rows. | E18 | Section 6.8; Table 20 | Decomposition to {H, S, T, CNOT}; T-count, CNOT reduction tracked | Clifford+T universal gate set; valid rows only | Survivorship-biased: decomposition/fidelity failures are excluded. Do not generalize E18 results to failed rows or full attempted population. |
+| C7 | Exact functionality is preserved where fidelity is computed and retained. | E1–E21 | Section 5.2; Section 6; Fig. 6 | Mean fidelity 1.000000 for verified retained datasets | Exact/scalable unitary comparison for supported qubit sizes | E19 confirmed with fidelity=1.0 across all 10,000 rows. E21 uses exact fidelity for n<=6 and target=None for larger n. Failed/invalid rows are filtered where valid fidelity is required. |
+| C8 | The Phase-1 reduction ceiling is formally established for bounded circuits, with the bounded INSERTION cascade gap resolved. | Theory (Thm 2, Thm 2b); E1–E5 empirical validation | Section 4.1 (Thm 2c/2d); `docs/theory/formal_results.md` Appendix A | Thm 2b proves polynomial-time termination of INSERTION move sequences for bounded depth/gate count; empirical ceilings support predictions | Bounded circuits: depth O(poly(n)), gate count O(poly(n)) | The unbounded INSERTION cascade remains open. QMA-hardness of CODP remains separate theoretical motivation. |
+| C9 | Listing-model dependency: WCL-style preprocessing exposes Phase-1 opportunities hidden under LBL. | E19 (full canonical run, 10,000 rows) | Table 3; Section 3.4; Section 6.2 | E19 full run: WCL mean reduction 7.83% (std=3.95%, max=33.33%) vs LBL 0.0000% across 5,000 circuits (n=5, depths 1-50). | Confirmed canonical result (n=5, random Universal family) | Cross-family WCL validation (beyond random Universal) remains as future work; Phase-2 commutation opportunities under WCL not separately measured. |
+| C10 | Ceiling-aware optimization skips futile optimization passes with identical reduction and significant speedup. | E21 full mode (1,140 rows) | Section 6.6; Table 17 | Full-mode E21 reports 1.6x–228x speedups (mean 34.97×) with identical reduction across 15 families | 15 families, n in {4,6,8,10}, 10 trials each | Exact fidelity verified for n<=6; larger circuits use target=None (correctness covered by unit tests). |
+| C11 | Multi-compiler extension with Cirq and t\|ket> produces comparable reduction and runtime data. | E20 full mode (1,070 rows) | Section 6.5; Tables 12–16; Supplementary S11.2 | Qiskit/Cirq/t\|ket> compared on 15 families with standardized settings | Qiskit 2.4.1, Cirq 1.6.1, pytket 2.18.0 | Baseline compiler settings standardized but may not reflect optimal per-family tuning. |
+| C12 | Phase-2b template-assisted BV advantage is theoretically proved and the required templates are implemented and unit-tested. | Theory (Thm 7, Thm 9); `src/optimisation/phase2/template_matcher.py`; `tests/test_phase2b_template_matcher.py` | Section 4.2 (Thm 9); Section 6.4; Appendix D | Matcher covers H-CX-H control, H-CX-H target (CZ), S-S†, CZ-CZ, and H-H templates; unit tests verify BV-like examples and identities. | Unit-tested implementation; no canonical Phase-2b CSV | Do not conflate Phase-2b theorem/tests with E10/E11/E14/E16 Phase-2a canonical results. Full-scale Phase-2b validation is now complete (735 rows; Section D, claim C13). |
+| C13 | Phase-2b template matching validated at full scale: BV reaches the exact k+2 optimum on all 80/80 instances. | E10p2b-v2 (Phase-2b full v2, 735 rows, `data/v8/phase2b_full/`); E26 bv-theory | Section 4.2; Section 6.4; Section D | BV 69.2% mean reduction (exceeding the rigorous bound by 3.1–4.2× per instance); IQP 92.0%; Structured 42.3%; RandomClifford 48.2%; pooled Phase-2b 46.1% [41.9, 50.1] | 16 families; stratified grid (BV n=3–10 × 10 secrets; depth families n in {3,5,8} × d in {20,35,50} × 3 seeds) | Stratified grid is not a full factorial design; no parity-gadget phase-polynomial templates (QAOA/VQE/HardwareEfficient remain 0%). |
+| C14 | Repaired ceiling model — mechanism-gate + random-forest hybrid — generalizes strongly under LOFO validation. | CEILING_REPAIR v2 (`experiments/ceiling_model_repair.py --regime`, `data/v6/ceiling_repair/`) | Section 6.6 | LOFO MAE 0.0172 vs 0.0963 predict-0 baseline; pooled r = 0.977; Spearman rho = 0.853; R^2 = 0.954 | Leave-one-family-out across 15 families | Gate selected post hoc on a single dataset; family-mean target underpowered (n = 15 folds, r = 0.059); 11/15 folds have undefined Pearson r; auxiliary classifier F1 = 0.075; remains exploratory. |
+| C15 | Noise-model hardware validation: logical compression does not guarantee physical compression. | EHW (`experiments/hardware_validation/run.py`, `data/v8/hardware_validation/`, 288 rows) | Section 7.4; Section 7.5 | BV 46.15% logical reduction collapses to 0% after L1 physical transpilation; random instances show small positive Hellinger improvement (+0.0016 to +0.0033) in all 4 unitary-verified cases | FakeManilaV2/FakeNairobiV2 noise-model simulation, 8,192 shots × 3 seeds, L0/L1 | Noise-model simulation on fake backends — NOT real hardware; only 2 retired-device snapshots; small n; do not extrapolate. |
+| C16 | Gate-shuffle ablation controls for gate-order effects; the WCL benefit tracks listing structure, not listing disruption. | E22 (`experiments/gate_shuffle_ablation.py`, `data/v7/e22/`, 2,240 rows, 16 families) | Section 6.2; Section 7.5 item 9; Section F | Shuffled listings yield higher greedy Phase-1 reduction than original (10.34% vs 6.30%; MWU p = 6.8e-15), while WCL reaches 12.20%; Phase-2a difference not significant (p = 0.462) | Shuffle preserves the gate multiset but not circuit semantics | Interpretation limited to listing-model sensitivity; shuffle controls for WCL and Phase-2b remain untested. |
+| C17 | Multi-seed replication fails to reproduce E04 single-seed point estimates; the qualitative ordering is seed-robust. | E29 (`experiments/multi_seed_e04.py`, `data/v7/e29/`, 800 rows, 10 seeds) | Section 6.1.1; Section 7.5 item 7; Section F | Pooled means: RLS −176.5%, SA −22.1%, GA −8.3%; only Hybrid stays positive at +4.69% [4.23, 5.16]; sign consistent in 10/10 seeds | Universal circuits, n = 5, depth = 15, 20 trials per seed | E29 uses a different circuit configuration than E04; E04 conclusions are seed/config fragile and must be qualified. |
 
 ---
 
@@ -157,17 +162,17 @@ The following are the core strengths that distinguish this work and should be em
 
 1. **First formal theory of peephole optimization limits**: The structural-ceiling framework (12 definitions, 5+ theorems, 2 conjectures) provides the first rigorous theoretical treatment of when and why peephole optimization succeeds or fails — filling a significant gap in quantum compilation literature.
 
-2. **Large-scale empirical validation**: 53,300 canonical optimizer trials across E1–E18, plus separate held-out and pass-isolation artifacts, providing statistically robust evidence for the core structural-ceiling and Phase-2 claims. This scale is uncommon in quantum circuit optimization benchmarking.
+2. **Large-scale empirical validation**: 73,702 data rows across 34 canonical datasets (E1–E29 plus SOTA/hardware-validation benchmarks; see `release/release_manifest.json`), providing statistically robust evidence for the core structural-ceiling and Phase-2 claims. This scale is uncommon in quantum circuit optimization benchmarking.
 
 3. **Broad circuit-family coverage**: 15+ structurally diverse circuit families spanning random, algorithmic, variational, and error-correcting architectures — demonstrating the framework's generality and transferability beyond narrow benchmarks.
 
 4. **Diverse optimizer comparison**: 6 distinct optimizer types evaluated (Greedy, RLS, SA, GA, Commutation, Hybrid), demonstrating that findings are optimizer-agnostic and reflect fundamental structural properties rather than algorithmic artifacts.
 
-5. **Production-compiler validation**: A completed Qiskit comparison and pass-isolation analysis ground the theoretical findings in practical compiler behavior. Cirq and t|ket> experiments are planned/metadata-only and should not be used as confirmed evidence.
+5. **Production-compiler validation**: Completed Qiskit, Cirq, and t|ket> comparisons (E15, E20 full mode, and the v6 SOTA benchmark with Qiskit L0–L3 and a corrected Cirq pipeline) ground the theoretical findings in practical compiler behavior.
 
 6. **Listing-model discovery**: First demonstration that optimization effectiveness depends on the circuit listing model (WCL vs. LBL), revealing a previously unrecognized variable in compiler design.
 
-7. **Ceiling-aware optimizer smoke study**: Preliminary E21 smoke-mode results show 1.9x–27x speedup without reduction loss on sampled training-family cases; full-mode validation remains pending.
+7. **Ceiling-aware optimizer full-mode study**: E21 full-mode results (1,140 rows) show 1.6x–228x speedup (mean 34.97×) with bit-identical reduction on training families; held-out generalization of the predictive model failed and is reported as an exploratory/negative result.
 
 8. **Fidelity verification with explicit exceptions**: Optimized circuits are checked for unitary equivalence where exact/scalable verification is available; documented failure rows, especially E18 decomposition/fidelity failures, are tracked and filtered where valid fidelity is required.
 
@@ -177,7 +182,7 @@ The following are the core strengths that distinguish this work and should be em
 
 ## Scope of the Multi-Compiler Comparison
 
-The confirmed compiler comparison currently includes Qiskit as the industrial reference point. The prototype optimizers implement a restricted peephole model (adjacent cancellation, local commutation, hybrid pass). Qiskit includes additional mechanisms — template matching, basis translation, commutative cancellation, and resynthesis — that exceed the prototype's peephole scope. Cirq and t|ket> configurations are documented as planned/metadata-only extensions; their reductions must not be interpreted as confirmed evidence until full CSV outputs are generated.
+The confirmed compiler comparison includes Qiskit, Cirq, and t|ket> (E20 full mode, 1,070 rows; v6 SOTA benchmark, 520 rows per tool/config). The prototype optimizers implement a restricted peephole model (adjacent cancellation, local commutation, hybrid pass). Production compilers include additional mechanisms — template matching, basis translation, commutative cancellation, phase-polynomial optimization, and resynthesis — that exceed the prototype's peephole scope. Comparisons are run at standardized configurations (fair mode: no coupling map, optimization only); per-family tuning could shift individual numbers. See Section E of this appendix for the updated SOTA tables, including the corrected Cirq pipeline (2026-07-20) and the t|ket> RandomClifford correctness caveat.
 
 ---
 
@@ -259,7 +264,7 @@ The confirmed compiler comparison currently includes Qiskit as the industrial re
 
 **Impact**: The gap between our prototype and production compilers (20–40% on VQE/HardwareEfficient) reflects both the structural ceiling AND the prototype's implementation simplicity. A more sophisticated Phase 2 implementation (e.g., with template matching or phase polynomial awareness) could potentially narrow this gap.
 
-**Mitigation**: This is by design — our goal is to characterize the structural ceiling of the *peephole model*, not to build a competitive optimizer. The structural-ceiling proxy (E13) helps identify which studied circuit families have exhausted the prototype peephole horizon. The ceiling-aware optimizer evidence is smoke-only (E21), so practical benefit claims must remain exploratory.
+**Mitigation**: This is by design — our goal is to characterize the structural ceiling of the *peephole model*, not to build a competitive optimizer. The structural-ceiling proxy (E13) helps identify which studied circuit families have exhausted the prototype peephole horizon. The ceiling-aware optimizer evidence is full-mode but exploratory (E21, 1,140 rows; held-out generalization failed), so practical benefit claims must remain exploratory.
 
 **Reviewer counterargument**: *"The prototype's poor performance on VQE/HardwareEfficient may reflect implementation quality, not fundamental limits."*
 - **Response**: The structural-ceiling proxy (E13) provides an independent upper-bound-style diagnostic that matches observed prototype performance on the studied families. The completed Qiskit comparison provides one production-compiler reference point; E20 Cirq/t|ket> and E21 full ceiling-aware validation remain pending.
@@ -283,16 +288,16 @@ The confirmed compiler comparison currently includes Qiskit as the industrial re
 | Risk | Response Asset | Counterargument |
 |------|---------------|-----------------|
 | "Negative result" perception | Reframed as a structural characterization paper; lead with the confirmed structural-ceiling framework and Qiskit baseline | The 0% ceiling is a *provable prediction*, not a failed experiment. Listing-model and ceiling-aware results are promising planned/smoke extensions, not primary confirmed evidence. |
-| Why do compilers outperform on some families? | Fig.12, Fig.17, Table 8, scope-of-comparison paragraph | This is a *feature*, not a bug — the framework precisely identifies where mechanisms beyond peephole (template matching, phase polynomials, Pauli simplification, Clifford resynthesis) are needed. |
+| Why do compilers outperform on some families? | Fig. 12, Fig. 16, Table 12, scope-of-comparison paragraph | This is a *feature*, not a bug — the framework precisely identifies where mechanisms beyond peephole (template matching, phase polynomials, Pauli simplification, Clifford resynthesis) are needed. |
 | Is structural ceiling a theorem? | Thm 1–2, Thm 2b + E13 proxy validation + explicit delimitation | Yes, Theorems 1–2 are proven; Thm 2b resolves the INSERTION cascade for bounded circuits. The proxy is empirically validated. The distinction between proven and conjectural results is explicitly maintained. |
 | Are claims overgeneralized? | Scope column in claim-evidence map; C1/C2 clearly labeled as conjectures | All claims include explicit scope boundaries. Conjectures are clearly separated from theorems. |
 | Can results be reproduced? | reproduce_all.py, release_manifest.json, reproducibility checklist, 149 unit tests, Docker, CI/CD | One-command reproduction with SHA-256 verified data. Full environment specification, Docker image, and CI/CD pipeline provided. |
 | Why not more circuit families? | 15+ families in v5; framework is extensible by design | 15+ families already exceed typical benchmark scope. The framework's definitions apply to any circuit family. |
 | QMA-hardness claim? | Explicitly labeled as Open Problem (Supplementary S8.6), not a result | We never claim to prove hardness. OP1/OP2 are motivating directions, clearly labeled as open problems. |
 | Scale limitation? | Extended to n=20; theorems are scale-independent | The theory holds for arbitrary n. Empirical range is bounded by exact-fidelity verification cost, not theoretical limitations. |
-| Is listing-model effect real or an artifact? | Thm 9 (formal proof), E1 smoke (~18% on one family), all 6 optimizers; E19 (full WCL validation) is PLANNED, not run | Theorem 9 proves existence. Smoke observation is single-family only; full cross-family confirmation deferred to E19. Effect is consistent with production compiler behavior, but the LBL→WCL gap should be presented as preliminary, not confirmed. See `limitations_and_future_work.md` §3 and §7. |
-| Ceiling-aware optimizer: does it miss optimization opportunities? | E21 smoke (1.9x–27x speedup on training families), Table 7, failure mode analysis in S10; E21 full-mode is PLANNED | Smoke-mode evidence shows matching reduction with substantial speedup on sampled cases. Failure modes are analyzed in Supplementary S10; families with moderate reduction are the primary risk. Full-mode validation required before claiming general compiler-level speedup. See `limitations_and_future_work.md` §9 (E21 under-powered). |
-| Multi-compiler comparison: is it fair? | E15 (Qiskit confirmed), E20 (Cirq/t\|ket> PLANNED, metadata only); D2 (delimitation) | All compilers tested at standard optimization levels with default no-backend transpilation. Pass-level decomposition isolates mechanism-level contributions. **Only Qiskit data is currently available**; Cirq/t\|ket> comparison is committed as metadata (`data/v6/e20/metadata.json`) but not run. See `limitations_and_future_work.md` §6. |
+| Is listing-model effect real or an artifact? | Thm 9 (formal proof), E19 full canonical run (10,000 rows: WCL 7.83% vs LBL 0.0000% on random Universal), E19-ext cross-family run (960 rows, 16 families), E22 shuffle control (2,240 rows) | Theorem 9 proves existence. E19 confirms the LBL→WCL gap on random Universal circuits; E19-ext shows that 7 of 16 families gain from WCL (8 of 16 counting the saturated CNOT_chain family), so the effect is confirmed but family-dependent. The E22 shuffle control shows the sensitivity is not an artifact of the original gate order (shuffled listings yield 10.3% vs 6.3% original under greedy Phase-1). See `limitations_and_future_work.md` §3. |
+| Ceiling-aware optimizer: does it miss optimization opportunities? | E21 full mode (1,140 rows, 1.6x–228x speedup, bit-identical reduction), Table 17, failure mode analysis in S10 | Full-mode evidence shows matching reduction with substantial speedup on training families. Failure modes are analyzed in Supplementary S10; families with moderate reduction are the primary risk, and the held-out predictive model failed (exploratory, not validated). See `limitations_and_future_work.md` §1/§9. |
+| Multi-compiler comparison: is it fair? | E15 (Qiskit confirmed), E20 full mode (Qiskit/Cirq/t\|ket>, 1,070 rows), v6 SOTA benchmark (Qiskit L0–L3, corrected Cirq, t\|ket> FPO); D2 (delimitation) | All compilers tested at standardized configurations with fair-mode (no coupling map) transpilation. Pass-level decomposition isolates mechanism-level contributions. Three-compiler data are now available; the t\|ket> RandomClifford correctness caveat (14/30 trials fail exact fidelity) is documented in Section E. See `limitations_and_future_work.md` §6. |
 | Paper length (25–28 pages)? | *Quantum* accepts long papers; modular structure allows selective reading | *Quantum* explicitly values comprehensive empirical studies. The modular structure (clearly labeled sections, self-contained results) allows reviewers and readers to navigate selectively. Supplementary materials absorb detailed tables and extended experiments. |
 
 ---
@@ -301,16 +306,16 @@ The confirmed compiler comparison currently includes Qiskit as the industrial re
 
 | Risk | Response Asset | Counterargument |
 |------|---------------|-----------------|
-| "Listing-model discovery is obvious — DAG representations already expose non-adjacent gates." | Thm 9, Section 5.2, D8 | DAG-based representations expose *structural* non-adjacency but do not systematically characterize the *optimization impact* across circuit families. Our contribution is the first empirical quantification of the listing-model effect and the formal proof of separation (Thm 9). Prior work uses DAGs for scheduling/routing, not for listing-model-aware peephole optimization. |
+| "Listing-model discovery is obvious — DAG representations already expose non-adjacent gates." | Thm 9, Sections 3.4/6.2, D8 | DAG-based representations expose *structural* non-adjacency but do not systematically characterize the *optimization impact* across circuit families. Our contribution is the first empirical quantification of the listing-model effect and the formal proof of separation (Thm 9). Prior work uses DAGs for scheduling/routing, not for listing-model-aware peephole optimization. |
 | "Ceiling-aware optimizer is just early termination." | E21 smoke study, S10 | The current evidence is smoke-mode only. The intended contribution is proxy-guided resource allocation, but full-mode validation is required before claiming general compiler-level speedup. |
-| "Multi-compiler comparison is superficial — different compilers use different gate sets." | E20, E21, S11, Table 8 | We normalize gate sets where possible and report both native-gate-set and normalized-gate-set reductions. Pass-level decomposition isolates mechanism-level contributions independent of gate-set effects. The comparison is designed to reveal *where* compilers diverge, not to declare a winner. |
+| "Multi-compiler comparison is superficial — different compilers use different gate sets." | E20, E21, S11, Table 12 | We normalize gate sets where possible and report both native-gate-set and normalized-gate-set reductions. Pass-level decomposition isolates mechanism-level contributions independent of gate-set effects. The comparison is designed to reveal *where* compilers diverge, not to declare a winner. |
 | "WCL overhead makes it impractical for large circuits." | D8, S9 (overhead analysis) | WCL overhead is polynomial and acceptable for n ≤ 20. For larger circuits, approximate listing models (partial WCL) are discussed in Section 6.4 as future work. The ceiling-aware optimizer mitigates this by applying WCL only when the ceiling proxy indicates potential benefit. |
 
 ---
 
 ## Abstract (*Quantum* version)
 
-Peephole optimization — the local rewriting of gate sequences to reduce circuit size — is a core component of every quantum compiler, yet no systematic study has characterized when these passes succeed or fail across diverse circuit families. We present a large-scale empirical benchmark of peephole optimization across 63,300 canonical optimizer trials spanning 15 primary circuit families and 6 optimizer types, with a completed Qiskit compiler baseline. Our central contribution is the discovery that the circuit listing model — the data-structure ordering of gates — is the key factor governing optimizer behavior: layer-by-layer listing (LBL) structurally empties the Phase-1 action space (Theorem 1(b)), whereas wire-consecutive listing (WCL) exposes ~7.8% reduction hidden under LBL (E19, 10,000 rows completed). This listing-model sensitivity characterizes the optimization landscape as a categorical trichotomy rather than a depth-dependent phase transition ("phase transition" denotes a structural ceiling, not a statistical-mechanics critical phenomenon): some families are trivially compressible (CNOT chains, 100%), some require commutation (oracle/Clifford, 14–16%), and 10 of 15 are at structural ceiling where the custom optimizer achieves ~0% — a negative result characterizing why local peephole optimization fails. The strongest theoretical results (Theorems 7/9, Ω(1) Phase-2b advantage) are now validated experimentally via the Phase-2b template-matching fixtures (F1 fix). A fair compiler comparison (E12, no-coupling-map mode) and a smoke-mode ceiling-aware optimizer study motivate future full-scale validation. Supporting theoretical analysis provides formal bounds including bounded INSERTION-cascade reasoning and a corrected Bernstein–Vazirani Phase-2b advantage theorem. These results produce circuit-family-aware optimization prescriptions for the studied families.
+Peephole optimization — the local rewriting of gate sequences to reduce circuit size — is a core component of every quantum compiler, yet no systematic study has characterized when these passes succeed or fail across diverse circuit families. We present a large-scale empirical benchmark of peephole optimization across 34 canonical datasets (73,702 data rows) spanning 15 primary circuit families and 6 optimizer types, with completed Qiskit, Cirq, and t|ket> compiler baselines. Our central contribution is the discovery that the circuit listing model — the data-structure ordering of gates — is the key factor governing optimizer behavior: layer-by-layer listing (LBL) structurally empties the Phase-1 action space (Theorem 1(b)), whereas wire-consecutive listing (WCL) exposes ~7.8% reduction hidden under LBL (E19, 10,000 rows completed). This listing-model sensitivity characterizes the optimization landscape as a categorical trichotomy rather than a depth-dependent phase transition ("phase transition" denotes a structural ceiling, not a statistical-mechanics critical phenomenon): some families are trivially compressible (CNOT chains, 100%), some require commutation (oracle/Clifford, 14–16%), and 10 of 15 are at structural ceiling where the custom optimizer achieves ~0% — a negative result characterizing why local peephole optimization fails. The strongest theoretical results (Theorems 7/9, Ω(1) Phase-2b advantage) are now validated at full benchmark scale by the v2 Phase-2b template matcher (735 rows: BV reaches the exact k+2 gate optimum on all 80 instances, exceeding the rigorous Theorem-9 bound by 3.1–4.2×; IQP 92.0%, Structured 42.3%, RandomClifford 48.2% mean reduction — see Section D). A fair compiler comparison (E12, no-coupling-map mode), a three-compiler SOTA benchmark (Section E), and a full-mode ceiling-aware optimizer study with a failed held-out generalization test (reported as exploratory) complete the empirical picture. Supporting theoretical analysis provides formal bounds including bounded INSERTION-cascade reasoning and a corrected Bernstein–Vazirani Phase-2b advantage theorem. These results produce circuit-family-aware optimization prescriptions for the studied families.
 
 ---
 
@@ -363,7 +368,11 @@ Additional limitations in `limitations_and_future_work.md` with no corresponding
 
 ## 1. Held-out Predictive Validation Failed
 
-The predictive framework introduced in Section 5.5 was evaluated on a held-out partition of the circuit-family ensemble. On the held-out split the predicted reduction rate failed to reproduce the training-fold fit: mean absolute error reached MAE = 0.2775 and the Pearson correlation between predicted and observed reduction collapsed to NaN (degenerate covariance, caused by a zero-variance prediction column). The prediction framework therefore does **not** constitute a confirmed predictive contribution in the held-out sense; we downgrade the predictive claim to *exploratory analysis* throughout the manuscript.
+> **Update (2026-07-21, wave 2) — diagnosed and partially repaired.** A leak-free rebuild with mechanism features (`experiments/ceiling_model_repair.py`, `data/v6/ceiling_repair/`) diagnoses the failure (target degeneracy + family-identity confound + feature–mechanism mismatch) and reaches LOFO pooled MAE = 0.0695, Pearson r = 0.722, Spearman ρ = 0.847 — beating the predict-0 baseline (0.0963) but with honest limits: the CNOT held-out fold still fails (fold MAE 0.745), family-mean prediction is underpowered (n = 15, r = 0.059), and 11/15 folds remain structurally NaN-Pearson. The ceiling-proxy itself is tight (r = 0.988 vs achieved reduction). The predictive claim remains exploratory; see `docs/review/wave1/universal_law.md` §3.
+
+> **Update (2026-07-21, wave 4) — CNOT residual closed by a mechanism gate.** A saturation-regime intervention (`experiments/ceiling_model_repair.py --regime`; `data/v6/ceiling_repair/regime_intervention_summary.json`) adds a deterministic Phase-1-density gate ($2d \geq 1 \Rightarrow$ predict $\min(1, 2d)$) over the RF regressor: held-out CNOT fold MAE 0.745 -> 0.000, pooled MAE 0.0695 -> 0.0172 [0.0129, 0.0218], pooled r 0.722 -> 0.977 [0.963, 0.987], rho = 0.853, R^2 = 0.954; all non-CNOT folds numerically unchanged. The gate is mechanism-derived, not fitted, but its selection was post hoc — the claim remains exploratory. Negative results recorded: saturation indicator features barely help; a learned two-stage classifier fails completely on this fold.
+
+The predictive framework introduced in Section 6.6 was evaluated on a held-out partition of the circuit-family ensemble. On the held-out split the predicted reduction rate failed to reproduce the training-fold fit: mean absolute error reached MAE = 0.2775 and the Pearson correlation between predicted and observed reduction collapsed to NaN (degenerate covariance, caused by a zero-variance prediction column). The prediction framework therefore does **not** constitute a confirmed predictive contribution in the held-out sense; we downgrade the predictive claim to *exploratory analysis* throughout the manuscript.
 
 A feature-leakage defect was identified in the initial feature set: the `actual_reduction` feature (a post-hoc outcome variable) was being used as an input, trivially inflating training-fold metrics. The leakage was fixed by removing `actual_reduction` and replacing it with structural features derivable prior to optimization (gate-set histogram, depth-to-width ratio, commutation-graph density, inverse-pair density estimate). After the fix, training-fold performance dropped to a level consistent with the held-out result above, confirming that the original "predictive" signal was almost entirely driven by the leaked target. The post-fix held-out performance remains unsatisfactory for a confirmatory predictive claim.
 
@@ -372,6 +381,8 @@ The structural-ceiling framework itself — the theorems, the empirical trichoto
 **Held-out validation failure.** On the held-out split the empirical correlation model achieved MAE = 0.2775 and Pearson = NaN (degenerate covariance caused by a zero-variance prediction column). The model therefore does not generalize to new circuit families and should be classified as exploratory rather than predictive.
 
 ## 2. Phase-2a vs. Phase-2b Gap Between Theory and Experiment
+
+> **Update (2026-07-21, wave 2) — CLOSED at full benchmark scale.** The v2.0.0 `Phase2bTemplateMatcher` (extended Clifford conjugation + inverse-cancellation closure + restricted phase-polynomial merging) has been benchmarked on 735 canonical rows (`data/v8/phase2b_full/`): BV 69.2% mean (exact k+2 optimum on all 80 instances, 3.1–4.2× the rigorous Theorem-9 bound), IQP 92.0%, Structured 42.3%, RandomClifford 48.2%. See Section D of this appendix and `docs/review/wave1/phase2b.md`. Remaining gaps: stratified (not full-factorial) grid, no parity-gadget phase-polynomial engine (QAOA/VQE/HWE remain at 0%).
 
 The theoretical separation between Phase-2a (commutation-only rewriting) and Phase-2b (template-matching-augmented rewriting) is established at the asymptotic level: Theorem 7 (artificial circuit family) and Theorem 9 (Bernstein–Vazirani natural family) each prove an Ω(1) Phase-2b advantage over Phase-2a. These results certify that template matching is not redundant with commutation rewriting — there exist natural circuit families for which the Phase-2b horizon strictly exceeds the Phase-2a horizon.
 
@@ -383,9 +394,9 @@ This produces a theory-vs-experiment gap: the Ω(1) separation is proven for Pha
 
 Theorem 1(b) proves that under line-by-line listing (LBL) the Phase-1 opportunity set S_1(C) is empty for the LBL ceiling family. This is a *listing-conditional* statement: it characterizes the circuit under a specific syntactic input convention, not an intrinsic property of the unitary that the circuit implements. The same physical circuit, re-listed under wire-consecutive listing (WCL), admits a non-trivial Phase-1 reduction: the E1 smoke study observes ~18% Phase-1 reduction on the LBL-ceiling family when the listing is changed from LBL to WCL.
 
-The distinction matters for two reasons. First, the "structural ceiling" reported under LBL should be read as a lower bound on what peephole optimization can achieve under alternative listings; it is not a fundamental limit on the circuit. Second, production DAG-based compilers (Qiskit, Cirq, t|ket>) operate on graph representations that expose non-adjacent gate pairs implicitly, and are therefore not bound by the LBL ceiling. The Qiskit baseline reductions reported in Section 5.4 confirm this: Qiskit exceeds the LBL Phase-1 ceiling on multiple families, consistent with its DAG-native listing convention.
+The distinction matters for two reasons. First, the "structural ceiling" reported under LBL should be read as a lower bound on what peephole optimization can achieve under alternative listings; it is not a fundamental limit on the circuit. Second, production DAG-based compilers (Qiskit, Cirq, t|ket>) operate on graph representations that expose non-adjacent gate pairs implicitly, and are therefore not bound by the LBL ceiling. The Qiskit baseline reductions reported in Section 6.5 confirm this: Qiskit exceeds the LBL Phase-1 ceiling on multiple families, consistent with its DAG-native listing convention.
 
-The manuscript flags this listing-conditional nature explicitly in Section 5.2 and in delimitation D8 of `v6_scope_limitations_risks.md`. A complete theory that characterizes the ceiling as a function of the listing model — ideally, an upper bound over the space of all valid listings — is left as future work (Section 15.6). The E19 experiment (Section 15.7) is designed to measure the LBL→WCL gap on the full ensemble; until E19 is run, the ~18% figure is reported as a single-family smoke observation, not a general result.
+The manuscript flags this listing-conditional nature explicitly in Section 3.4 and in delimitation D8 of `v6_scope_limitations_risks.md`. A complete theory that characterizes the ceiling as a function of the listing model — ideally, an upper bound over the space of all valid listings — is left as future work (Section 15.6). The E19 experiment (Section 15.7) is designed to measure the LBL→WCL gap on the full ensemble; until E19 is run, the ~18% figure is reported as a single-family smoke observation, not a general result.
 
 ## 4. Theorem 8 Applies to Haar-Random Unitaries, Not Experimental Circuits
 
@@ -397,6 +408,8 @@ Theorem 8 is correctly positioned in the manuscript as an *asymptotic complement
 
 ## 5. Theorem 6 (Clifford Canonical Form Phase-1 Ceiling) Is Unverified
 
+> **Update (2026-07-21, wave 2) — CLOSED by E23.** Experiment E23 (`data/v7/e23/`, 160 random Aaronson–Gottesman canonical Clifford circuits) reports a canonical-form/Phase-1 matching rate of 1.0, so Theorem 6 is now theoretically established *and* empirically confirmed. The text below is retained for provenance.
+
 Theorem 6 establishes that the Phase-1 ceiling for Clifford circuits, computed via the canonical form of Bravyi and Maslov, is exact: the canonical-form reduction equals the maximum achievable Phase-1 reduction. The theorem is a structural result derived from the Clifford tableau normal form.
 
 In the cross-validation audit (see `v6_claim_evidence_map.md`), Theorem 6 is tagged UNTESTED. No experiment in E1–E18 directly compares the canonical-form prediction against an exhaustive Phase-1 search on Clifford circuits. Theorem 6 is therefore presented as a *theoretical contribution* without empirical confirmation in the current manuscript.
@@ -405,13 +418,17 @@ The deferral is a scope decision rather than a negative result: the canonical-fo
 
 ## 6. Multi-Compiler Comparison Is Qiskit-Only
 
+> **Update (2026-07-21, wave 2) — CLOSED by E20 and the v6 SOTA benchmark.** E20 full mode (`data/v6/e20/multi_compiler_full.csv`, 1,070 rows) provides completed Qiskit/Cirq/t|ket> comparisons on all 15 families, and the v6 SOTA benchmark adds Qiskit L0–L3 plus a corrected Cirq pipeline (2026-07-20; see Section E of this appendix and `docs/results/sota_compiler_benchmark.md`). The t|ket> RandomClifford correctness caveat (14/30 trials fail exact fidelity) is documented in Section E. The text below is retained for provenance.
+
 Experiment E15 is described in the manuscript text as a multi-compiler comparison. In the v6 data freeze only Qiskit data are present; the Cirq and t|ket> arms exist as metadata only (E20, `data/v6/e20/metadata.json`) and have no associated CSV. The manuscript text is corrected in v6 to read "Qiskit-only" wherever E15 is invoked as evidence, and the Cirq/t|ket> configurations are described as planned (see the E20 README in Section 15.8).
 
-This scopes the production-compiler evidence to a single industrial reference point. The pass-isolation analysis (Section 5.4.3) is correspondingly scoped to Qiskit's transpiler passes; the mechanism-level attribution for the prototype-vs-production gap on VQE/HardwareEfficient/IQP is Qiskit-specific and should not be over-generalized to Cirq or t|ket> without the E20 data. The 20–45 percentage-point gap between the prototype and Qiskit on these families is confirmed; the analogous gaps for Cirq and t|ket> are projected from pass-mechanism analysis but not measured.
+This scopes the production-compiler evidence to a single industrial reference point. The pass-isolation analysis (Section 6.5) is correspondingly scoped to Qiskit's transpiler passes; the mechanism-level attribution for the prototype-vs-production gap on VQE/HardwareEfficient/IQP is Qiskit-specific and should not be over-generalized to Cirq or t|ket> without the E20 data. The 20–45 percentage-point gap between the prototype and Qiskit on these families is confirmed; the analogous gaps for Cirq and t|ket> are projected from pass-mechanism analysis but not measured.
 
 Running E20 in full mode requires a fully configured Cirq and pytket environment; the experiment is scripted and the metadata file is committed. The blocking factor is environment setup and compute budget, not algorithmic risk. Completing E20 is a near-term priority (Section 15.8).
 
 ## 7. E19 (WCL Validation) — Partially Completed
+
+> **Update (2026-07-21, wave 2).** The cross-family extension now exists: E19-ext (`data/v7/e19_extended/`, 960 rows, 16 families) shows that 7 of 16 families gain from WCL (8 of 16 counting the saturated CNOT_chain family: CNOT_chain 100%, BV 30.79%, RandomClifford 22.51%, Structured 12.88%, UCCSD_inspired 10.87%, IQP 7.22%, Universal 6.76%, Grover 3.88%), so the listing-model effect is confirmed as real but family-dependent. The E22 shuffle control (Section F) further shows the effect is not an artifact of the original gate order.
 
 E19 was designed to validate Phase-1 and Phase-2 optimization under wire-consecutive listing (WCL) on the full circuit ensemble. A full canonical run has been completed for the random Universal family: 5,000 circuits at n=5, depths 1–50, 100 trials per depth (seed=42), each evaluated under both LBL and WCL listing models (10,000 total rows). The results confirm the listing-model dependency: WCL mean reduction is 7.83% (std=3.95%, max=33.33%) vs LBL's 0.0000%, with perfect unitary fidelity (1.0) across all trials.
 
@@ -425,7 +442,7 @@ Experiment E18 evaluates Clifford+T decomposition and optimization across 270 ci
 
 This filtering introduces survivorship bias. The surviving rows are not a random sample of the original 270: they are enriched for circuits whose gate composition is amenable to Clifford+T decomposition (fewer parameterized rotations, fewer non-Clifford multi-qubit gates). Reduction rates and ceiling classifications computed on the 150 survivors may overstate the optimism of the result for the general population.
 
-All E18 conclusions in the manuscript are labeled "survivorship-biased" at first mention in every section that invokes them (Section 5.3, Section 5.4.3, Section 6.3.5). The bias direction is conservative for our central claims: the structural-ceiling framework predicts *less* reduction on the harder circuits that failed decomposition, so the survivor-filtered mean reduction is likely an *upper* bound on the population mean. The decomposition pipeline defect causing the 42 fidelity-zero rows is a software bug, not a theoretical limitation; it is tracked as a separate infrastructure item (see `CRITICAL_BUG_FIXES_LOG.md`) and its fix is a prerequisite for any rerun of E18. A rerun on the full 270-row ensemble is scheduled as future work (Section 15.13).
+All E18 conclusions in the manuscript are labeled "survivorship-biased" at first mention in every section that invokes them (Sections 6.3, 6.5, 6.8). The bias direction is conservative for our central claims: the structural-ceiling framework predicts *less* reduction on the harder circuits that failed decomposition, so the survivor-filtered mean reduction is likely an *upper* bound on the population mean. The decomposition pipeline defect causing the 42 fidelity-zero rows is a software bug, not a theoretical limitation; it is tracked as a separate infrastructure item (see `CRITICAL_BUG_FIXES_LOG.md`) and its fix is a prerequisite for any rerun of E18. A rerun on the full 270-row ensemble is scheduled as future work (Section 15.13).
 
 ## 9. Multiple Experiments Are Under-Powered
 
@@ -445,6 +462,8 @@ A complete unitary commutator check (compute [U, V] = UV − VU numerically and 
 
 ## 11. All Experiments Assume a Noiseless Ideal Environment
 
+> **Update (2026-07-21, wave 2).** A first noise-model probe now exists (E-HW, `data/v8/hardware_validation/`: FakeManilaV2/FakeNairobiV2 snapshot noise models, 8192-shot sampling — **noise-model simulation, not real hardware**). Headline: the transpiler absorbs all 1q peephole gains on Oracle/BV at optimization level 1 (46.15% logical reduction → 0% physical), while the random-circuit instance shows small positive noisy-fidelity gains (Hellinger +0.0016…+0.0033) on all backend×level cells. See `docs/results/hardware_validation.md`. A full noise-aware ceiling theory remains future work.
+
 Every experiment in E1–E18, including the Qiskit baseline (E15), is run under an ideal noiseless model: gates execute unitarily, no decoherence, no crosstalk, no readout error. The structural-ceiling framework as formulated operates on the unitary implemented by the circuit, and the optimization objective is gate count reduction with exact unitary preservation (verified by full-unitary fidelity for n ≤ 12 and by scalable proxies for larger n).
 
 NISQ noise is not modeled. This scoping decision is principled — the structural ceiling is a property of the unitary, not of its noisy implementation — but it limits the direct applicability of the prescriptions to deployed NISQ hardware. On real hardware, gate-count reduction correlates with fidelity improvement but is not identical to it: removing a specific gate may increase or decrease noise sensitivity depending on the gate's error contribution and the resulting circuit's structure. A noise-aware ceiling (maximize expected output fidelity per gate removed, rather than gate count removed) is a substantive extension, not a parameter re-tuning.
@@ -453,13 +472,15 @@ Experiment E17 partially addresses topology effects (linear, grid, heavy-hex cou
 
 ## 12. Qiskit Pass Isolation Covers Only 5 of 15 Circuit Families
 
-The pass-isolation analysis (Section 5.4.3) decomposes Qiskit's transpiler into individual passes and measures each pass's contribution to total reduction. This decomposition is available for 5 of the 15 circuit families in the ensemble: the remaining 10 families do not have pass-level CSV output in the v6 data freeze.
+The pass-isolation analysis (Section 6.5) decomposes Qiskit's transpiler into individual passes and measures each pass's contribution to total reduction. This decomposition is available for 5 of the 15 circuit families in the ensemble: the remaining 10 families do not have pass-level CSV output in the v6 data freeze.
 
-For the 5 instrumented families the mechanism attribution is data-backed: template matching's contribution, commutative cancellation's contribution, and resynthesis's contribution are each measured directly. For the remaining 10 families the mechanism attribution in Section 5.4.3 — the qualitative claim that "template matching addresses the largest fraction of the gap, phase polynomial synthesis the second-largest, Clifford tableau reduction a narrower niche" — is *inferred* from the 5 instrumented families and from the known pass-mechism structure of Qiskit's transpiler. It is a reasonable extrapolation but not a direct measurement.
+For the 5 instrumented families the mechanism attribution is data-backed: template matching's contribution, commutative cancellation's contribution, and resynthesis's contribution are each measured directly. For the remaining 10 families the mechanism attribution in Section 6.5 — the qualitative claim that "template matching addresses the largest fraction of the gap, phase polynomial synthesis the second-largest, Clifford tableau reduction a narrower niche" — is *inferred* from the 5 instrumented families and from the known pass-mechism structure of Qiskit's transpiler. It is a reasonable extrapolation but not a direct measurement.
 
-The manuscript flags this distinction in the Section 5.4.3 table caption: the 5 instrumented families are listed with quantitative pass-level shares; the 10 un-instrumented families are listed with "mechanism inferred" in the corresponding column. Extending the pass-isolation instrumentation to the remaining 10 families is a near-term engineering task (the instrumentation script is generic; the blocking factor is compute time) and is scheduled in Section 15.17.
+The manuscript flags this distinction in the Section 6.5 table caption: the 5 instrumented families are listed with quantitative pass-level shares; the 10 un-instrumented families are listed with "mechanism inferred" in the corresponding column. Extending the pass-isolation instrumentation to the remaining 10 families is a near-term engineering task (the instrumentation script is generic; the blocking factor is compute time) and is scheduled in Section 15.17.
 
 ## 13. Figures Are Raster (PNG 300DPI), Not Vector
+
+> **Update (2026-07-21, wave 2) — SUPERSEDED.** All 17 figures have been regenerated as vector PDFs (TrueType font embedding, Okabe–Ito colorblind-safe palette, bootstrap-CI error bars) by `analysis/generate_figures.py`; see the Figure regeneration section of `docs/reproducibility.md`. All figures are now cited in the active manuscript body. The text below is retained for provenance.
 
 All figures in the v6 manuscript draft are PNG files rendered at 300 DPI. This is sufficient for internal review and for the HTML preview but is below the production standard for a top-venue submission: most venues (including *Quantum*, PRX Quantum, Nature Quantum) require vector formats (PDF or SVG) for line art, plots, and diagrams to ensure crisp rendering at arbitrary zoom levels and accessible text scaling.
 
@@ -469,11 +490,13 @@ The conversion is scheduled as a pre-submission infrastructure task (Section 15.
 
 ## 14. E4 Uses a Single Random Seed per Optimizer
 
-Experiment E4 compares three stochastic optimizers — simulated annealing (SA), randomized local search (RLS), and a genetic algorithm (GA) — on the Phase-2a commutation search problem. Each optimizer is run with a single fixed random seed derived from a common `seed_base=42`: RLS uses `seed_base+10000=10042`, SA uses `seed_base+20000=20042`, and GA uses `seed_base+30000=30042`. Circuit generation for each trial uses `seed_base+trial_index` (i.e., 42–141 for 100 trials). The optimizer ranking reported in Section 5.3.1 is therefore based on one realization of each optimizer's stochastic trajectory.
+> **Update (2026-07-21, wave 2) — E29 rerun completed; E04 NOT reproduced.** The 10-seed rerun (`data/v7/e29/`, 800 rows = 4 optimizers x 10 seeds x 20 trials, n = 5, depth = 15) yields pooled means: hybrid +4.69% [95% CI 4.23–5.16], SA −22.1%, GA −8.3%, RLS −176.5% (gate inflation at fidelity 1.0). The single-seed E04 point estimates (RLS 0.00%, SA −1.6%, GA −0.2%) are not reproduced; E04-based optimizer rankings are seed/configuration-fragile and must be qualified wherever cited. See Section F of this appendix.
+
+Experiment E4 compares three stochastic optimizers — simulated annealing (SA), randomized local search (RLS), and a genetic algorithm (GA) — on the Phase-2a commutation search problem. Each optimizer is run with a single fixed random seed derived from a common `seed_base=42`: RLS uses `seed_base+10000=10042`, SA uses `seed_base+20000=20042`, and GA uses `seed_base+30000=30042`. Circuit generation for each trial uses `seed_base+trial_index` (i.e., 42–141 for 100 trials). The optimizer ranking reported in Section 6.1.1 is therefore based on one realization of each optimizer's stochastic trajectory.
 
 A single seed cannot distinguish a robust ranking from a seed-dependent ordering. The observed ranking (GA ≥ SA ≥ RLS on mean reduction) is consistent with the algorithms' known search characteristics, but the gap between optimizers is within the typical seed-to-seed variance for stochastic search at the trial counts used. The ranking should be read as *preliminary*, not confirmatory.
 
-The manuscript labels E4 as "preliminary" in the Section 5.3.1 caption and in the claim-evidence map. A multi-seed rerun (10 seeds per optimizer, with the same trial count per seed) would resolve the ranking robustness and is straightforward to schedule. This is a near-term future-work item (Section 15.19). The structural-ceiling framework's main claims do not depend on the E4 ranking — the ceiling is defined by the proxy (E13) and the optimizer-agnostic trichotomy, not by inter-optimizer rankings — so the single-seed limitation does not propagate to the manuscript's central conclusions.
+The manuscript labels E4 as "preliminary" in the Section 6.1.1 caption and in the claim-evidence map. A multi-seed rerun (10 seeds per optimizer, with the same trial count per seed) would resolve the ranking robustness and is straightforward to schedule. This is a near-term future-work item (Section 15.19). The structural-ceiling framework's main claims do not depend on the E4 ranking — the ceiling is defined by the proxy (E13) and the optimizer-agnostic trichotomy, not by inter-optimizer rankings — so the single-seed limitation does not propagate to the manuscript's central conclusions.
 
 ---
 
@@ -547,7 +570,7 @@ Integrate depolarizing, amplitude-damping, and crosstalk noise models into the c
 
 ### 15.17 Pass Isolation for Remaining 10 Families (addresses §12)
 
-Extend the pass-isolation instrumentation to the 10 currently un-instrumented circuit families. Populate the pass-level CSVs and recompute the Section 5.4.3 mechanism-attribution table with direct measurements for all 15 families.
+Extend the pass-isolation instrumentation to the 10 currently un-instrumented circuit families. Populate the pass-level CSVs and recompute the Section 6.5 mechanism-attribution table with direct measurements for all 15 families.
 
 ### 15.18 Vector Figure Conversion (addresses §13)
 
@@ -580,3 +603,151 @@ None of the limitations above invalidate the manuscript's central claims. The st
 *Last updated: 2026-06-17*
 *Cross-references: `v6_scope_limitations_risks.md` (D-delimitations); `v6_claim_evidence_map.md` (claim-evidence scope column); `data/v6/e19/README.md` (E19 plan); `data/v6/e20/metadata.json` (E20 plan); `src/optimisation/commutation.py` (`_gates_commute` implementation).*
 
+---
+
+## D. Phase-2b v2 Full-Scale Validation (E10p2b-v2, 735 rows)
+
+> **Added**: 2026-07-21 (wave 2). **Data**: `data/v8/phase2b_full/` (canonical `phase2b_full_validation_v8.csv`, 735 rows; analysis CSVs `family_summary_v8.csv`, `core_question_v8.csv`, `bv_theory_v8.csv`, `bootstrap_ci_v8.csv`; `metadata.json`). **Code**: `src/optimisation/phase2/template_matcher.py` v2.0.0, `experiments/phase2b_full_validation.py`, 28 unit tests (`tests/test_phase2b_template_matcher.py`). **Completion report**: `docs/review/wave1/phase2b.md`. **Manuscript cross-reference**: §4.2 (Theorem 9), §6.3 (trichotomy), §7.4 (limitations).
+
+### D.1 Experiment design
+
+Stratified grid (compute-bounded replacement for the full factorial n = 3–10 x depth = 20–50):
+
+| Stratum | Grid |
+|---|---|
+| BV (Theorem-9 family) | FULL: n = 3..10 x 10 secrets/size (80 circuits) |
+| Depth families (Universal, RandomClifford, Structured, IQP) | n in {3,5,8} x depth in {20,35,50} x 3 seeds |
+| Other algorithmic families | n in {3,5,8} x 2 seeds (deterministic families: 1); QuantumWalk n in {3,5,8} (n = 8 added in the wave-4 gap-fill, chunk qw8) |
+
+Optimizers: `greedy_phase1`, `commutation_phase2a`, `template_phase2b` (v2.0.0 full pipeline: Clifford conjugation templates, inverse-cancellation closure, restricted phase-polynomial merging, commutation gathering). Fidelity policy per row: exact Operator equality for n <= 9 qubits (663 rows; the six QuantumWalk n = 8 rows excepted — exact Operator fidelity on the 9-qubit, 36-MCX walk circuit costs ~133 s/row, so they use sampled200, which resolves via the exact structural-equality fast path because all optimizers leave the circuit unchanged), exact Clifford-tableau equality for all-Clifford rows at n >= 10 (60 rows), Haar product-state sampling otherwise (12 rows). All 735 rows have fidelity >= 1 - 2e-13; a post-fix fuzz suite passes 340/340 instances at fidelity exactly 1.0.
+
+### D.2 Core question: on Phase-1 = 0% families, can Phase-2b exceed 30% mean reduction?
+
+**Answer: YES — decisively on 2 of 13 strict Phase-1 = 0% families (BV, Structured), and also on both near-zero families (IQP, RandomClifford).** From `core_question_v8.csv`:
+
+| Family | Phase-1 | Phase-2a | Phase-2b v2 | P2b min | > 30%? | Wilcoxon p (P2b > P1) |
+|---|---:|---:|---:|---:|:---:|:---:|
+| **BV** | 0.000 | 0.145 | **0.692** | 0.545 | **YES** | 4e-15 |
+| **Structured** | 0.000 | 0.000 | **0.423** | 0.370 | **YES** | 7e-09 |
+| Grover | 0.000 | 0.042 | 0.161 | 0.103 | no | 0.016 |
+| Universal | 0.000 | 0.054 | 0.141 | 0.067 | no | 7e-09 |
+| UCCSD_inspired | 0.000 | 0.014 | 0.080 | 0.000 | no | 0.033 |
+| Adder / GHZ / QFT / QAOA / VQE / HWE / SurfaceCode / QWalk | 0.000 | 0.000 | 0.000 | 0.000 | no | — |
+| IQP (P1 = 0.004) | ~0 | 0.125 | **0.920** | 0.847 | **YES** | 7e-09 |
+| RandomClifford (P1 = 0.009) | ~0 | 0.215 | **0.482** | 0.224 | **YES** | 7e-09 |
+| CNOT_chain (control) | 1.000 | 0.000 | **1.000** | 1.000 | (dominance check) | — |
+
+Pooled bootstrap 95% CIs (`bootstrap_ci_v8.csv`): Phase-1 mean 1.4% [0.1%, 3.0%]; Phase-2a mean 9.2% [7.4%, 11.1%]; **Phase-2b mean 46.1% [41.9%, 50.1%]**.
+
+Depth trend (Phase-2b mean by depth 20/35/50): IQP 0.879 -> 0.931 -> 0.949; RandomClifford 0.430 -> 0.498 -> 0.518; Structured 0.417 -> 0.424 -> 0.426; Universal flat ~0.14. The phase-polynomial rules exploit exactly the redundancy that accumulates with depth in diagonal/Clifford-heavy families.
+
+### D.3 Theorem 9 (BV) validation (`bv_theory_v8.csv`)
+
+The v2 pipeline reaches the **exact k+2 gate optimum on every one of the 80 BV instances** (k = secret Hamming weight):
+
+| n | P2b mean | P2b min | Thm 9 bound n/(4.5n+4) | Verdict |
+|---:|---:|---:|---:|:---:|
+| 3 | 0.592 | 0.545 | 0.171 | PASS (3.5x) |
+| 4 | 0.612 | 0.571 | 0.182 | PASS |
+| 5 | 0.695 | 0.588 | 0.189 | PASS |
+| 6 | 0.716 | 0.600 | 0.194 | PASS |
+| 7 | 0.707 | 0.609 | 0.197 | PASS |
+| 8 | 0.727 | 0.615 | 0.200 | PASS |
+| 9 | 0.746 | 0.621 | 0.202 | PASS |
+| 10 | 0.744 | 0.625 | 0.204 | PASS |
+
+Every instance (not just the mean) exceeds the rigorous bound by 3.1–4.2×; the empirical asymptote is 2n/(2.5n+2) -> 0.8 for random secrets, matching the k+2 closed form. Context vs E24 (Theorem-7 engineered family, Phase-2a): 79.8% mean [62.5%, 89.3%]; the v8 BV result (69.2% mean over secrets, 54.5% worst case, *natural* algorithm family, Phase-1 = 0%) is the same magnitude on a natural family and is currently the strongest empirical support for claims C2/C12. The earlier fixture-scale statement "5n -> n+2" is superseded by the correct k+2 generalization validated here at canonical scale.
+
+### D.4 Honest limitations (from `docs/review/wave1/phase2b.md` §8)
+
+1. **Grid coverage is stratified, not full-factorial** (BV is full n = 3..10 x 10 secrets; depth families n = {3,5,8} x depth = {20,35,50} x 3 seeds; QuantumWalk n = 8 is now covered (wave-4 gap-fill; sampled200 fidelity resolved exactly via the structural-equality fast path, exact Operator fidelity at ~133 s/row being beyond the per-call compute envelope)).
+2. **Restricted phase-polynomial coverage**: singleton Z-rotation merges + CZ/CCZ gadget cancellation via mutual diagonality; no parity-gadget (CX–Rz–CX) phase-polynomial optimization — this is why QAOA (ZZ-gadget structure) stays at 0% even for v2.
+3. **"All <= 3-qubit Clifford identities"** is realized as the verified inverse-cancellation closure + the standard conjugation template set, not an exhaustive enumeration of the 2-qubit Clifford group's rewrite presentation.
+4. **Structured-family mechanism**: the 42.3% brickwork reduction comes from phase merges + gathered block duplicates in the generator's repeated rotation layers, not from brickwork structure per se.
+5. Grover (16.1%) and Universal (14.1%) improved over v7 but remain below 30%; both are limited by MCX/X-gather blocking (X does not commute with controlled-Z), which is structural.
+
+---
+
+## E. SOTA Compiler Benchmark Update (Qiskit L0–L3, corrected Cirq, t|ket>)
+
+> **Added**: 2026-07-21 (wave 2). **Data**: `data/v6/sota_benchmark/` (canonical raw runs in `raw/`, 520 rows per tool/config, 10 trials per (family, n) cell, seed 42 + 1000*trial; environment record `metadata/hardware_environment.json`: i7-11370H, qiskit 2.4.1, pytket 2.18.0, cirq 1.6.1). **Auto-generated manuscript fragment**: `docs/manuscript/sections/sota_table_fragment.md` (regenerate with `experiments/generate_sota_tables.py`). **Full results document**: `docs/results/sota_compiler_benchmark.md`. **Manuscript cross-reference**: §2.7 (related work), §6.4 (multi-compiler mechanism analysis).
+
+### E.1 Provenance warning: the 2026-07-18 Cirq numbers are stale
+
+Two pipeline bugs were found and fixed on 2026-07-20 (`experiments/sota_benchmark.py` v1.1.0): (i) the Cirq `CZTargetGateset` step never ran (keyword renamed to `gateset=` in cirq 1.6.1; the error was silently swallowed); (ii) Cirq QASM export uses `sx`/`sxdg`, which broke re-import (100 failed rows). The corrected protocol-conformant Cirq pipeline changes Cirq's numbers materially — e.g. CNOT chain 0.0 -> 100.0%, RandomClifford +47.4 -> +63.1%, QuantumWalk −382.6 -> −4547.4%. Any table or text citing the 2026-07-18 Cirq values (including the superseded fragment `sections/sota_comparison_tables.md`) must be reconciled against Table E.1 below.
+
+### E.2 Table E.1 — mean gate-count reduction (%) by family and tool (fair mode; fragment Table S1)
+
+| Family | Prototype (P1+P2a) | Qiskit L3 | Cirq (default, fixed) | t\|ket> FPO |
+|--------|:---:|:---:|:---:|:---:|
+| QFT | **+0.0** | +0.0 | −258.0 | −206.7 |
+| GHZ | **+0.0** | +0.0 | −181.9 | +0.0 |
+| SurfaceCode | +0.0 | +0.0 | **+8.4** | +0.0 |
+| CNOT chain | +66.7 | **+100.0** | +100.0 | +100.0 |
+| Oracle (BV) | +23.1 | **+41.8** | +33.5 | +39.2 |
+| RandomClifford | +12.3 | **+72.5** | +63.1 | +71.6 |
+| Grover | **+4.3** | −500.5 | −956.6 | −157.8 |
+| Adder | **+0.0** | +0.0 | −1217.3 | −505.9 |
+| QuantumWalk | **+0.0** | −1904.7 | −4547.4 | −1261.9 |
+| IQP | +0.0 | +62.8 | +36.7 | **+64.4** |
+| QAOA | +0.0 | +0.0 | −31.5 | **+6.3** |
+| VQE | +0.0 | +39.3 | −1.2 | **+42.2** |
+| HardwareEfficient | +0.0 | +35.5 | −16.9 | **+36.5** |
+| UCCSD | +0.0 | **+23.3** | −12.3 | +14.5 |
+| HaarRandom | +0.0 | **+6.5** | −4.1 | +5.8 |
+
+Prototype = Phase-1 greedy + Phase-2a commutation rewriter (E15 dataset, n in {4,6,8}, 3–8 trials/cell). Qiskit L3 = `transpile(optimization_level=3, seed_transpiler=42)`. Cirq = drop_empty + drop_negligible + CZTargetGateset + eject_z + merge_1q (protocol-conformant pipeline restored 2026-07-20). t|ket> = DecomposeBoxes + FullPeepholeOptimise (full 15-family coverage for n <= 5; n = 6 partial; pooled over n <= 5). Negative values = gate-count blowup. Fair mode: no coupling map, no basis-gate restriction for Qiskit.
+
+**Correctness caveat (t|ket> RandomClifford).** 14 of 30 t|ket> RandomClifford trials fail the exact-fidelity check (F_avg ~ 0.27–0.33, i.e. |Tr(U1^+ U2)| = d/2 exactly): the nominal +71.6% reduction on those rows corresponds to a *different* unitary. On fidelity-passing rows the mean is +73.5% (n = 16). Reproduced via direct pytket calls (clifford_5 trial 4: F = 0.2727, 40 -> 10 gates); all other t|ket> families pass at F = 1.0. Decision pending: report with caveat (current approach), exclude the family, or escalate as an upstream pytket bug report.
+
+### E.3 Qiskit L0–L3 progression (fair mode)
+
+Qiskit L2 and L3 are **empirically identical** on 100% of 520 matched rows (bit-identical outputs); L1 differs from L2 on 30.8% of rows (CommutativeCancellation is only scheduled from L2: IQP +29.8 -> +62.8, RandomClifford +61.6 -> +72.5, UCCSD +11.0 -> +23.3); L0 performs no optimization but still decomposes multi-controlled gates (HighLevelSynthesis), so it is not a neutral baseline (Grover −675.7%, QuantumWalk −2287.0% at L0). Full table: fragment Table S2.
+
+### E.4 Reliability, runtime, and the leading finding
+
+- **Reliability** (fragment Table S4): Qiskit 520/520 ok, 100% fidelity pass on 480 exact rows; Cirq 520/520 ok, 100% pass on 396 exact rows (exact fidelity computable for n <= 8); t|ket> 440/440 ok, 96.8% fidelity pass (solely due to the RandomClifford failures above).
+- **Runtime** (fragment Table S3): Qiskit 6–13 ms/circuit by level; Cirq mean 1.96 s (median 0.10 s, QuantumWalk-dominated); t|ket> mean 0.75 s; prototype 1.65 s at n in {4,6,8} (74.9 s across the full E15 range; max 14,915 s on QuantumWalk n = 11).
+- **Leading finding**: production compilers exceed the prototype on 7 of the 10 ceiling families — with two quantified caveats. On 5 of the 7 (IQP +64.4, VQE +42.2, HardwareEfficient +36.5, UCCSD +23.3, QAOA +6.3) a production compiler wins by 6–64 pp; on Adder and QuantumWalk every production compiler also fails (QuantumWalk is strictly worse under all three: Qiskit −1904.7%, Cirq −4547.4%, t|ket> −1261.9%). The prototype never increases gate count on any family; every production compiler blows up on at least 2.
+- **QuantumWalk mechanism** (fragment Table S5): the blowup originates in multi-controlled-gate decomposition (HighLevelSynthesis/box decomposition) before any peephole pass runs — at n = 4 the circuit goes from 46 to 164 gates (CNOT 6 -> 75, 12.5x) with no adjacent inverse pairs left to cancel; the transformation is exact (F = 1.0), escalating to −4193.4% at n = 9.
+- **Underpowered prototype column**: E15 contributes 3–8 trials/cell vs 10 for production compilers; statistical tests on the prototype column are underpowered (results doc §10).
+
+---
+
+## F. Listing-Control Experiments: E22 Shuffle Ablation and E29 Multi-Seed E04
+
+> **Added**: 2026-07-21 (wave 2). **Manuscript cross-reference**: §6.1 (E04 discussion), §7.4 items 7 (single seed) and 9 (shuffler control).
+
+### F.1 E22 — random gate-shuffle control (2,240 rows)
+
+**Data**: `data/v7/e22/e22_gate_shuffle_ablation.csv` (canonical, 2,240 rows; 16 families x 7 listing variants x 2 optimizers x 160 rows/cell; seed 48). **Code**: `experiments/gate_shuffle_ablation.py`.
+
+Design: each circuit is evaluated under its ORIGINAL listing, under WCL (wire-consecutive listing), and under 5 independent random gate permutations (`shuffle_0`–`shuffle_4`), with `greedy_phase1_lbl` and `commutation_phase2a`. The control tests whether listing-model sensitivity is an artifact of the circuits' original gate order.
+
+Results (mean reduction, verified by recomputation 2026-07-21):
+
+| Optimizer | ORIGINAL | SHUFFLED (5 shuffles pooled) | WCL | MWU p (shuffle vs original) |
+|---|---:|---:|---:|---:|
+| greedy_phase1_lbl | 6.30% | **10.34%** | 12.20% | 6.8e-15 |
+| commutation_phase2a | 3.87% | 2.70% | 1.00% | 0.462 (n.s.) |
+
+**Counterintuitive headline**: under greedy Phase-1, *shuffled* listings yield significantly MORE reduction than the original listing (10.3% vs 6.3%, p ~ 7e-15), and WCL more still (12.2%). The listing-model sensitivity is therefore **not** an artifact of the original gate order: the Phase-1 ceiling under a fixed listing is a property of the (circuit, listing) pair, and incidental gate placement strongly modulates the exposed action space — direct evidence for the representation-determinism principle. Phase-2a shows no significant shuffle effect (p = 0.462), consistent with commutation closure being listing-invariant over these variants. The former limitation "no random gate shuffler control performed" is closed by this dataset.
+
+### F.2 E29 — multi-seed rerun of E04 (800 rows): E04 is NOT reproduced
+
+**Data**: `data/v7/e29/e29_multi_seed_e04_full.csv` (canonical, 800 rows = 4 optimizers x 10 seeds x 20 trials; n = 5, depth = 15) and `data/v7/e29/derived/e29_multi_seed_statistics.csv` (44 rows). **Code**: `experiments/multi_seed_e04.py`. Note: E29 uses a different circuit configuration (n = 5, depth = 15) than E04.
+
+Pooled per-optimizer results (E29, 200 trials each) vs single-seed E04 point estimates:
+
+| Optimizer | E04 (single seed) | E29 pooled mean | E29 95% bootstrap CI |
+|---|---:|---:|---|
+| RLS | 0.00% | **−176.5%** | [−178.0%, −175.1%] |
+| SA | −1.6% | **−22.1%** | [−23.5%, −20.9%] |
+| GA | −0.2% | **−8.3%** | [−8.8%, −7.9%] |
+| Hybrid | (not in E04) | +4.69% | [+4.23%, +5.16%] |
+
+Negative reductions are gate-count inflation at fidelity = 1.0 (the optimizer made circuits strictly larger while preserving the unitary). Per-seed hybrid means are tightly clustered (range 1.9 pp), so the hybrid estimate is robust; the stochastic-search optimizers (RLS/SA/GA) are seed- and configuration-fragile and actively harmful in this regime. **Consequence**: E04-based claims (e.g. "all Phase-1 optimizers converge to ~0%") do not generalize beyond E04's single seed and circuit configuration; wherever E04 is cited, the E29 qualification must accompany it. The former limitation "E04 uses a single seed" is superseded by this stronger finding.
+
+---
+
+*Appendix sections D–F added 2026-07-21 (wave 2). All numbers verified against the canonical CSVs named above.*

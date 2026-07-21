@@ -77,7 +77,7 @@ Peephole optimization was introduced by **McKeeman (1965)** as a final pass in c
 
 #### 2.2.5 T-Count Optimization via Clifford+T Synthesis
 
-**Kliuchnikov, Maslov & Mosca (2013)** introduced a fast and efficient algorithm for the **optimal synthesis of Clifford+T circuits**:
+**Kliuchnikov, Maslov & Mosca (2013)** introduced a fast and efficient algorithm for the **exact synthesis of single-qubit unitaries over the Clifford+T gate set**:
 - The algorithm finds the minimal T-count representation of a unitary within the Clifford+T gate set, which is the standard gate set for fault-tolerant quantum computing.
 - Uses a meet-in-the-middle approach combined with number-theoretic techniques to achieve exponential speedup over brute-force search for optimal T-count synthesis.
 - **Complexity**: The algorithm runs in polynomial time for single-qubit unitaries and provides exact optimal decompositions.
@@ -97,14 +97,14 @@ Peephole optimization was introduced by **McKeeman (1965)** as a final pass in c
 
 **What they did NOT do**: The ZX-calculus simplification pipeline does not characterize the **theoretical ceiling** of achievable reduction — i.e., it does not answer when no further ZX-based simplification is possible. The circuit extraction step (converting optimized ZX-diagrams back to circuits) can introduce overhead that partially negates the diagrammatic reduction. The method does not systematically analyze *which circuit families* are amenable to ZX-based optimization versus those that resist it, nor does it provide a formal theory linking circuit structural properties to ZX-calculus optimizability. Our structural ceiling framework addresses these analytical gaps for the tested listing models and local rewrite classes; it does not claim a rewrite-system-independent global limit.
 
-**de Beaudrap, Glendinning & Zhang (2022)** extended the ZX-calculus approach to achieve **faster circuit resynthesis**:
-- The work focuses on the **resynthesis** step in the ZX-calculus pipeline: after a ZX-diagram has been simplified, how efficiently can it be converted back into a low-gate-count circuit?
-- Introduces algorithmic improvements to the extraction procedure that reduce the computational overhead and produce circuits with fewer gates compared to prior extraction methods.
-- The approach combines ZX-calculus simplification with improved **phase polynomial** tracking during extraction, achieving better optimization with lower computational cost.
+**de Beaudrap, Kissinger & van de Wetering (2022)** proved a fundamental hardness result for the **circuit extraction** step of the ZX-calculus pipeline:
+- After a circuit has been simplified as a ZX-diagram, the diagram must be converted back ("extracted") into an equivalent circuit. The authors prove that this extraction problem is **#P-hard** in general — at least as hard as strong simulation of quantum circuits.
+- Efficient extraction is therefore possible only for restricted diagram families (e.g., those equipped with generalized flow), not in general.
+- *(Corrected 2026-07-21, wave 2: an earlier version of this review cited here a "de Beaudrap, Glendinning & Zhang — faster resynthesis" paper that does not exist; the arXiv number it referenced resolves to an unrelated machine-learning paper. The correct reference is the ICALP 2022 extraction-hardness paper, arXiv:2202.09194.)*
 
-**What they achieved**: de Beaudrap et al. addressed a key practical bottleneck in the ZX-calculus optimization pipeline — the extraction step — and demonstrated that faster and higher-quality resynthesis is achievable. Their improvements make ZX-calculus-based optimization more practical for integration into compiler pipelines and demonstrate that the choice of extraction algorithm significantly affects the final circuit quality. This work highlights that optimization effectiveness depends not only on the simplification power of the rewrite system but also on the quality of the circuit-to-circuit round-trip.
+**What they achieved**: de Beaudrap et al. established the first worst-case complexity result for the extraction step of the ZX-calculus optimization pipeline, explaining *why* ZX-based optimizers must restrict to flow-equipped diagram classes. This is a complexity-boundary result in the same spirit as our own work: it characterizes where an entire class of optimization methods becomes computationally hard, rather than proposing yet another optimizer. Far from offering "faster resynthesis," it shows that high-quality resynthesis is intractable in the general case.
 
-**What they did NOT do**: The work focuses narrowly on the extraction/resynthesis step and does not analyze the fundamental limits of ZX-calculus-based optimization as a whole. It does not characterize when the ZX-calculus pipeline (simplification + extraction combined) reaches a ceiling, does not study the relationship between circuit structure and ZX-calculus optimizability, and does not provide a comparative analysis across diverse circuit families. Our work's structural ceiling framework is orthogonal to the ZX-calculus approach: we characterize listing- and window-conditional limits for local circuit-to-circuit rewrites, not a global limit for all diagrammatic reasoning methods.
+**What they did NOT do**: The result is a worst-case hardness statement about diagram-to-circuit extraction; it does not characterize average-case or family-conditional optimizability, does not address gate-level (non-ZX) peephole models, and does not quantify achievable reduction ceilings under specified listing models and local rewrite classes. Our structural ceiling framework is complementary: we provide listing- and window-conditional empirical and theoretical limits for local circuit-to-circuit rewrites, while de Beaudrap et al. bound the diagrammatic extraction step.
 
 ---
 
@@ -232,7 +232,7 @@ Peephole optimization was introduced by **McKeeman (1965)** as a final pass in c
 
 | Gap | Current State | Our Contribution |
 |-----|--------------|----------------|
-| **QMA-hardness of peephole optimization** | Conjectured (C1) but not proven | Empirical evidence from 45,527 trials; formal conjecture with reduction sketch |
+| **QMA-hardness of peephole optimization** | Conjectured (C1) but not proven | Empirical evidence from 73,000+ benchmark records; formal conjecture with reduction sketch |
 | **Structural ceiling characterization** | Not studied (absent from Quartz, Quanto, Qarl, AlphaTensor-Quantum, ZX+RL) | Formal definition (D9–D10); empirical measurement across 6 experiments |
 | **Phase 2 advantage quantification** | Qualitative ("commutation helps") | Quantitative: 3.26% on random, 0% on structured; context-dependent characterization |
 | **Threshold sensitivity** | Fixed 20% threshold in literature | Systematic analysis showing 20% is self-defeating; context-dependent thresholds proposed |
@@ -248,7 +248,7 @@ Peephole optimization was introduced by **McKeeman (1965)** as a final pass in c
 | **Circuit family diversity** | 1–2 families | **5 families** (Universal, Clifford, Structured, QFT, GHZ) |
 | **Fidelity verification** | Often omitted | Fidelity verification performed where exact/scalable checks are available; documented failure rows are tracked and filtered where required |
 | **Data versioning** | Ad-hoc | **v1→v2→v3** with metadata, bug documentation, and re-run protocol |
-| **Benchmark suite scale** | Micro-Benchmark Suite (Merilehto, 2025): 6 circuits, 3–8 qubits | **45,527 trials** across diverse scales and families |
+| **Benchmark suite scale** | Micro-Benchmark Suite (Merilehto, 2025): 6 circuits, 3–8 qubits | **73,000+ records (34 canonical datasets)** across diverse scales and families |
 
 ### 6.3 Practical Gaps
 
@@ -283,12 +283,12 @@ Micro-benchmarks (Merilehto)            →    We provide theory to interpret em
 
 ### 7.2 Novel Contributions
 
-Our contributions are distinct from all recent quantum circuit optimization frameworks surveyed in Section 10 (Quartz, Quanto, Qarl, AlphaTensor-Quantum, Relaxed Peephole Optimization, ZX-Calculus+RL, and the Micro-Benchmark Suite). None of these works provides a structural ceiling characterization, quantifies context-dependent Phase 2 advantage, or offers a systematic multi-compiler benchmark with formal theory.
+Our contributions are distinct from all recent quantum circuit optimization frameworks surveyed in Section 10 (Quartz, Quanto, Qarl, AlphaTensor-Quantum, Relaxed Peephole Optimization, ZX-Calculus+RL, the Micro-Benchmark Suite, VOQC, Quasar, and SSR). None of these works provides a structural ceiling characterization, quantifies context-dependent Phase 2 advantage, or offers a systematic multi-compiler benchmark with formal theory.
 
 1. **Structural Ceiling Framework**: Formal characterization of listing- and model-conditional limits for Phase 1 peephole optimization. Unlike Quartz, Quanto, and Qarl — which seek to *extend* the optimization reach — our work asks the complementary question: *within a specified listing model and rewrite class, what reduction is reachable, and when are additional local passes futile?*
 2. **Context-Dependent Phase 2 Advantage**: First quantitative measurement showing that commutation-based optimization is not universally beneficial (3.26% on random circuits, 0% on structured circuits). Prior works such as Relaxed Peephole Optimization and ZX-Calculus+RL assume that larger windows or richer rewrite systems are unconditionally advantageous; we provide the first empirical refutation.
 3. **Threshold Sensitivity Analysis**: First systematic study showing that the 20% success threshold is inappropriate for random circuits. We propose context-dependent thresholds (1–5% for random, 10% for structured, 20% for real-world circuits), a distinction absent from all prior frameworks.
-4. **Large-Scale Empirical Validation**: 45,527 trials across 5 circuit families and 6 optimizers — the largest systematic study of quantum circuit peephole optimization to date. This exceeds the scale of Quartz (~100 benchmarks), Qarl (~50 benchmarks), and the Micro-Benchmark Suite (6 circuits) by two orders of magnitude.
+4. **Large-Scale Empirical Validation**: 73,000+ benchmark records across 34 canonical datasets, spanning 15 circuit families and 6 optimizer types — the largest systematic study of quantum circuit peephole optimization to date. This exceeds the scale of Quartz (~100 benchmarks), Qarl (~50 benchmarks), and the Micro-Benchmark Suite (6 circuits) by two orders of magnitude.
 5. **Multi-Compiler Comparison Framework**: First principled comparison of quantum compilers (Qiskit, Cirq, t|ket>) grounded in structural theory rather than ad-hoc benchmarking. The Micro-Benchmark Suite (Merilehto, 2025) provides useful tooling but no theoretical framework for interpreting inter-compiler differences.
 6. **Data Integrity Protocol**: First quantum optimization study with full data versioning (v1→v2→v3), bug documentation, and re-run protocol — addressing a reproducibility gap noted across the Quartz, Quanto, Qarl, and AlphaTensor-Quantum literature.
 
@@ -337,9 +337,9 @@ Our contributions are distinct from all recent quantum circuit optimization fram
 10. Amy, M., & Mosca, M. (2019). "T-count optimization and Reed-Muller codes." *IEEE TIT*, 65(8), 4771–4784.
 11. Wille, R., Große, D., Teuber, L., Dueck, G. W., & Drechsler, R. (2008). "RevLib: An online resource for reversible functions and reversible circuits." *ISMVL*, 220–225.
 12. Wille, R., & Drechsler, R. (2009). "BDD-based synthesis of reversible logic for large functions." *DAC*, 270–275.
-13. Kliuchnikov, V., Maslov, D., & Mosca, M. (2013). "Fast and efficient optimal synthesis of Clifford+T circuits." *Physical Review Letters*, 111(8), 080502.
+13. Kliuchnikov, V., Maslov, D., & Mosca, M. (2013). "Fast and efficient exact synthesis of single-qubit unitaries generated by Clifford and T gates." *Quantum Information & Computation*, 13(7–8), 607–630. arXiv:1206.5236.
 14. Duncan, R., Kissinger, A., Perdrix, S., & van de Wetering, J. (2020). "Graph-theoretic Simplification of Quantum Circuits with the ZX-calculus." *Quantum*, 4, 279.
-15. de Beaudrap, N., Glendinning, S., & Zhang, Q. (2022). "Faster resynthesis with the ZX-calculus." *Proceedings of the 19th International Conference on Quantum Physics and Logic* (QPL 2022).
+15. de Beaudrap, N., Kissinger, A., & van de Wetering, J. (2022). "Circuit extraction for ZX-diagrams can be #P-hard." *49th International Colloquium on Automata, Languages, and Programming* (ICALP 2022), LIPIcs 229, 119:1–119:19. arXiv:2202.09194.
 
 ### 9.3 Complexity Theory
 
@@ -380,14 +380,17 @@ Our contributions are distinct from all recent quantum circuit optimization fram
 38. Li, Z., Peng, J., Mei, Y., Lin, S., Wu, Y., Padon, O., & Jia, Z. (2024). "Quarl: A learning-based quantum circuit optimizer." *Proceedings of the ACM on Programming Languages* (PACMPL), 8(OOPSLA2), 1570–1598. arXiv:2307.10120.
 39. Ruiz, F. J. R., Laakkonen, T., Bausch, J., Balog, M., Barekatain, M., Heras, F. J. H., Novikov, A., Fitzpatrick, N., Romera-Paredes, B., van de Wetering, J., Fawzi, A., Meichanetzidis, K., & Kohli, P. (2025). "Quantum circuit optimization with AlphaTensor." *Nature Machine Intelligence*, 7(3), 406–419. arXiv:2402.14396.
 40. Liu, J., Bello, L., & Zhou, H. (2021). "Relaxed peephole optimization: A novel compiler optimization for quantum circuits." *Proceedings of the IEEE/ACM International Symposium on Code Generation and Optimization* (CGO), 2021, 145–156.
-41. Riu, J., Nogué, J., Vilaplana, G., Garcia-Saez, A., & Estarellas, M. P. (2025). "Reinforcement learning based quantum circuit optimization via ZX-calculus." *Quantum*, 9, 1634. arXiv:2312.11597.
+41. Riu, J., Nogué, J., Vilaplana, G., Garcia-Saez, A., & Estarellas, M. P. (2025). "Reinforcement learning based quantum circuit optimization via ZX-calculus." *Quantum*, 9, 1758. arXiv:2312.11597.
 42. Merilehto, J. (2025). "A 200-line Python micro-benchmark suite for NISQ circuit compilers." *arXiv:2509.16205*.
+43. Hietala, K., Rand, R., Hung, S.-H., Wu, X., & Hicks, M. (2021). "A verified optimizer for quantum circuits." *Proceedings of the ACM on Programming Languages* (PACMPL), 5(POPL), 1–29. arXiv:1912.02250.
+44. Yang, G., Raun, P., Tao, R., & Gu, R. (2026). "Equality saturation for quantum circuit optimization." *Proceedings of the ACM on Programming Languages* (PACMPL), PLDI. DOI 10.1145/3808254.
+45. Huang, Y., Zhou, X., Meng, F., Zhu, P., Luo, Y., & Du, Z. (2026). "SSR: A Swapping-Sweeping-and-Rewriting optimizer for quantum circuit transformation." *ACM Transactions on Design Automation of Electronic Systems* (TODAES). DOI 10.1145/3828549. arXiv:2503.03227 (2025).
 
 ---
 
-## 10. Recent Advances in Quantum Circuit Optimization (2021–2025)
+## 10. Recent Advances in Quantum Circuit Optimization (2021–2026)
 
-The period 2021–2025 has witnessed a surge of activity in quantum circuit optimization, driven by the growing gap between algorithmic circuit complexity and the limited gate budgets of near-term and fault-tolerant hardware. This section surveys seven significant works that collectively span automated identity generation, learning-based optimization, reinforcement learning, diagrammatic reasoning, and benchmarking infrastructure. For each work, we state what was achieved and — critically — what was *not* addressed, thereby sharpening the positioning of our own contributions (cf. Section 7.2).
+The period 2021–2026 has witnessed a surge of activity in quantum circuit optimization, driven by the growing gap between algorithmic circuit complexity and the limited gate budgets of near-term and fault-tolerant hardware. This section surveys ten significant works that collectively span automated identity generation, learning-based optimization, reinforcement learning, diagrammatic reasoning, verified optimization, equality saturation, transformation-stage depth recovery, and benchmarking infrastructure. For each work, we state what was achieved and — critically — what was *not* addressed, thereby sharpening the positioning of our own contributions (cf. Section 7.2).
 
 ### 10.1 Quartz: Superoptimization of Quantum Circuits
 
@@ -441,7 +444,7 @@ The period 2021–2025 has witnessed a surge of activity in quantum circuit opti
 
 ### 10.6 Reinforcement Learning Based Quantum Circuit Optimization via ZX-Calculus
 
-**Citation**: Riu, Nogue, Vilaplana, Garcia-Saez & Estarellas. Quantum, 9, 1634, 2025. arXiv:2312.11597 [41].
+**Citation**: Riu, Nogue, Vilaplana, Garcia-Saez & Estarellas. Quantum, 9, 1758, 2025. arXiv:2312.11597 [41].
 
 **What they did**: Riu et al. propose a method that combines **ZX-calculus** — a diagrammatic reasoning framework for quantum computation — with **reinforcement learning**. The approach converts quantum circuits into ZX-diagrams, then formulates optimization as a Markov Decision Process (MDP) where:
 - **State space**: ZX-diagram structure (graph topology and node types).
@@ -462,9 +465,39 @@ The RL agent is trained using **Proximal Policy Optimization (PPO)** with **Grap
 
 **What they achieved**: The suite identifies concrete trade-offs between compilers: Amazon Braket achieved significantly lower circuit depths (mean 8.8 vs. 22.5) and fewer two-qubit gates (7.2 vs. 16.3) compared to Qiskit, while Qiskit offered faster compilation times (mean 112.2 ms vs. 224.3 ms). The tool runs in under three minutes, outputs reproducible CSV data and plots, and is released under the MIT license. It provides a high signal-to-noise ratio for rapid prototyping and nightly regression testing.
 
-**What they did NOT do**: The micro-benchmark is a *measurement tool*, not an *optimization method* or a *theoretical framework*. It reports empirical metrics but does not explain *why* different compilers produce different results, does not characterize the structural properties of circuits that determine optimizability, and does not analyze the gap between empirical performance and theoretical optima. The benchmark corpus (6 small circuits, 3–8 qubits) is orders of magnitude smaller than our study (45,527 trials across 5 circuit families at larger scales). Our work provides the theoretical and empirical framework that would enable *interpreting* the measurements that tools like microbench.py produce.
+**What they did NOT do**: The micro-benchmark is a *measurement tool*, not an *optimization method* or a *theoretical framework*. It reports empirical metrics but does not explain *why* different compilers produce different results, does not characterize the structural properties of circuits that determine optimizability, and does not analyze the gap between empirical performance and theoretical optima. The benchmark corpus (6 small circuits, 3–8 qubits) is orders of magnitude smaller than our study (73,000+ records across 34 canonical datasets at larger scales). Our work provides the theoretical and empirical framework that would enable *interpreting* the measurements that tools like microbench.py produce.
 
-### 10.8 Comparative Analysis: Optimization Approaches vs. Our Contributions
+### 10.8 VOQC: A Verified Optimizer for Quantum Circuits
+
+**Citation**: Hietala, Rand, Hung, Wu & Hicks. *Proceedings of the ACM on Programming Languages* (PACMPL), 5(POPL), 2021. arXiv:1912.02250 [43].
+
+**What they did**: Hietala et al. present **VOQC**, a quantum circuit optimizer written and verified in the Coq proof assistant. VOQC implements a library of standard optimizations — including gate cancellation, commutation-based rotation merging, and Hadamard reduction — whose correctness (semantics preservation) is *machine-checked*: every rewrite is proved to preserve the denotational semantics of the circuit. VOQC is extracted to OCaml and achieves performance comparable to unverified compilers on standard benchmarks.
+
+**What they achieved**: VOQC demonstrated that full formal verification of a circuit optimizer is feasible without sacrificing practical performance, setting the gold standard for optimizer correctness. It showed that common peephole-style rewrites (cancellation, commutation) can be certified end-to-end, and it identified cases where unverified state-of-the-art compilers produced incorrect results.
+
+**What they did NOT do**: VOQC proves that its rewrites are *correct*, but not *complete* or *optimal*: it does not characterize how much reduction is reachable within its rewrite library, nor when additional passes must be futile. Its rewrite set is essentially the same local cancellation/commutation class that our Phase-1/Phase-2a prototype implements, but VOQC offers no theory of context-dependent effectiveness across circuit families and no listing-model analysis. Our structural ceiling framework asks precisely the complementary question — within such a verified local rewrite class, what reduction is structurally reachable?
+
+### 10.9 Quasar: Equality Saturation for Quantum Circuit Optimization
+
+**Citation**: Yang, Raun, Tao & Gu. *Proceedings of the ACM on Programming Languages* (PACMPL), PLDI, 2026. DOI 10.1145/3808254 [44].
+
+**What they did**: Yang et al. present **Quasar**, a quantum circuit optimizer based on **equality saturation**. Instead of applying rewrites destructively (as all peephole-style optimizers, including ours, do), Quasar constructs two complementary e-graphs over the circuit's graph and sequence representations, saturates them with an inferred atomic rewrite set, and then extracts the lowest-cost circuit reachable within a given rewrite-step bound — a *step-limited optimal* circuit.
+
+**What they achieved**: Across standard benchmarks, Quasar reports geometric-mean reductions of 20.2% in two-qubit gate count, 33.5% in total gate count, and 24.2% in circuit depth, outperforming or matching state-of-the-art rewrite-based optimizers on the majority of circuits. It is the first quantum circuit optimizer to bring equality-saturation techniques to practical scale with soundness guarantees.
+
+**What they did NOT do**: Quasar's optimality is *step-limited* — optimal within the k-step closure of its rewrite set — not a structural statement about what fraction of a circuit is removable by a given rewrite class. It does not analyze listing-model sensitivity (the e-graph construction abstracts away the gate-ordering data structure that we show is decisive), does not quantify per-family context dependence, and its benchmarks do not isolate *why* some circuits saturate at high reduction while others saturate near zero. Our structural ceiling characterization supplies exactly this explanatory layer for the tested local rewrite model.
+
+### 10.10 SSR: A Swapping-Sweeping-and-Rewriting Optimizer for Quantum Circuit Transformation
+
+**Citation**: Huang, Zhou, Meng, Zhu, Luo & Du. *ACM Transactions on Design Automation of Electronic Systems* (TODAES), 2026. DOI 10.1145/3828549; arXiv:2503.03227 (2025) [45].
+
+**What they did**: Huang et al. target the **post-mapping (QCT) stage**: after a circuit has been transformed to respect hardware connectivity, remaining SWAP gates inflate depth. SSR iterates three steps — SWAP commutation reordered by a genetic algorithm, subcircuit *sweeping* that extracts CNOT-only blocks, and SAT-based rewriting of each block into a functionally equivalent, depth-optimal circuit.
+
+**What they achieved**: SSR reduces the depth of QCT-compiled circuits by up to 26.68% (12.18% on average) across benchmarks, showing that significant depth is recoverable *after* hardware mapping — a stage most gate-count optimizers ignore.
+
+**What they did NOT do**: SSR operates at the transformation stage (depth recovery for hardware-compliant circuits), not on logical-level gate reduction, and provides no analysis of when its GA/SAT pipeline will fail or saturate. Its SAT-based depth optimality applies to small extracted CNOT subcircuits, not to whole-circuit reduction ceilings. Our work complements SSR at the logical level: we characterize listing- and window-conditional ceilings for local rewrites *before* mapping, while our E17 experiment (connectivity constraints) quantifies the topology-related "tax" that SSR-style post-processing then partially recovers.
+
+### 10.11 Comparative Analysis: Optimization Approaches vs. Our Contributions
 
 **Table 5**: Comparison of recent quantum circuit optimization approaches across five analytical dimensions. A check ($\checkmark$) indicates that the work provides the stated capability; a dash ($-$) indicates it does not.
 
@@ -477,6 +510,9 @@ The RL agent is trained using **Proximal Policy Optimization (PPO)** with **Grap
 | Relaxed Peephole Opt. | [40] | 2021 | $-$ | $-$ | $-$ | $-$ | $-$ |
 | ZX-Calculus + RL | [41] | 2025 | $-$ | $-$ | $-$ | Partial (ZX rewrite theory) | $-$ |
 | Micro-Benchmark Suite | [42] | 2025 | $-$ | $-$ | $\checkmark$ (tool) | $-$ | $\checkmark$ (empirical) |
+| VOQC | [43] | 2021 | $-$ | $-$ | $-$ | $\checkmark$ (machine-checked correctness) | $-$ |
+| Quasar (Equality Saturation) | [44] | 2026 | $-$ | $-$ | $-$ | Partial (step-limited optimality) | $-$ |
+| SSR | [45] | 2026 | $-$ | $-$ | $-$ | Partial (SAT depth-optimality, subcircuit level) | $-$ |
 | **This work** | — | 2026 | $\checkmark$ | $\checkmark$ | $\checkmark$ | $\checkmark$ | $\checkmark$ |
 
 **Key observations from Table 5**:
@@ -485,15 +521,15 @@ The RL agent is trained using **Proximal Policy Optimization (PPO)** with **Grap
 
 2. **Context-dependent characterization** — the empirical demonstration that optimization effectiveness depends systematically on circuit structure (random vs. structured, Clifford vs. universal) — is unique to our work.
 
-3. **Systematic benchmark suites** at scale are rare. The Micro-Benchmark Suite [42] provides tooling but covers only 6 circuits (3–8 qubits). Our study encompasses 45,527 trials across 5 circuit families, providing statistical power two orders of magnitude greater.
+3. **Systematic benchmark suites** at scale are rare. The Micro-Benchmark Suite [42] provides tooling but covers only 6 circuits (3–8 qubits). Our study encompasses 73,000+ records across 34 canonical datasets, providing statistical power two orders of magnitude greater.
 
 4. **Formal theory** linking circuit structure to optimizability is provided only in partial form by Quartz/Quanto (ECC correctness), AlphaTensor-Quantum (tensor decomposition), and ZX+RL (diagrammatic soundness). None develops a theory of *optimization ceilings* or *average-case complexity* for peephole optimization.
 
 5. **Multi-compiler comparison** grounded in structural theory (rather than raw benchmark numbers) is unique to our work. The Micro-Benchmark Suite compares compilers empirically but provides no framework for explaining the observed differences.
 
-### 10.9 Summary of Positioning
+### 10.12 Summary of Positioning
 
-The seven works surveyed above represent significant advances in *how* to optimize quantum circuits — through larger search spaces (Quartz, Quanto), learned policies (Qarl, ZX+RL), domain-specific RL (AlphaTensor-Quantum), relaxed matching (RPO), and better tooling (Micro-Benchmark). However, they do not systematically address the complementary question of *why* optimization succeeds or fails on particular circuits under a specified local rewrite model.
+The ten works surveyed above represent significant advances in *how* to optimize quantum circuits — through larger search spaces (Quartz, Quanto, Quasar), learned policies (Qarl, ZX+RL), domain-specific RL (AlphaTensor-Quantum), relaxed matching (RPO), verified rewrites (VOQC), post-mapping depth recovery (SSR), and better tooling (Micro-Benchmark). However, they do not systematically address the complementary question of *why* optimization succeeds or fails on particular circuits under a specified local rewrite model.
 
 Our work occupies a unique position: we provide the **boundary characterization** — the structural, empirical, and theoretical framework for understanding the *limits* of peephole optimization. This is not in competition with the works above; rather, it is the missing analytical layer that would enable practitioners to predict *a priori* whether investing computational resources in optimization (via Quartz, Qarl, AlphaTensor-Quantum, or any other method) is worthwhile for a given circuit.
 
@@ -508,18 +544,19 @@ This literature review establishes the research context for our work on the **Bo
 3. **Existing compilers** (Qiskit, Cirq, t|ket>) achieve practical reductions (10–40%) but provide no optimality guarantees or structural understanding.
 4. **Random circuits** are maximally entangling and approach Haar-random unitaries, suggesting they should be incompressible — our empirical results confirm this.
 5. **Clifford circuits** are polynomial-time optimizable via the stabilizer formalism — our empirical results confirm 0% peephole reduction (already optimal).
-6. **Recent optimization frameworks** (Quartz, Quanto, Qarl, AlphaTensor-Quantum, Relaxed Peephole Optimization, ZX+RL) push the frontier of achievable reduction but do not characterize listing/window/model-conditional ceilings or context-dependent local-rewrite advantage — gaps that our work directly addresses.
+6. **Recent optimization frameworks** (Quartz, Quanto, Qarl, AlphaTensor-Quantum, Relaxed Peephole Optimization, ZX+RL, VOQC, Quasar, SSR) push the frontier of achievable reduction but do not characterize listing/window/model-conditional ceilings or context-dependent local-rewrite advantage — gaps that our work directly addresses.
 
 **Our work fills the gap** between theoretical complexity results and practical compiler performance by:
 - Characterizing the **structural ceiling** of Phase 1 optimization
 - Quantifying the **context-dependent advantage** of Phase 2 optimization
-- Providing the **largest empirical study** to date (45,527 trials)
+- Providing the **largest empirical study** to date (73,000+ records, 34 canonical datasets)
 - Establishing a **data integrity protocol** for reproducible quantum optimization research
 - Offering the **first multi-compiler comparison** grounded in structural theory
 - Developing a **formal framework** that complements and contextualizes recent optimization advances (Quartz, Qarl, AlphaTensor-Quantum, and others)
 
 ---
 
-*Document version: 1.1*  
-*Last updated: 2026-06-10*  
+*Document version: 1.2*  
+*Last updated: 2026-07-21*  
+*v1.2 changes (wave 2): corrected fabricated/wrong references ([13] Kliuchnikov venue, [15] replaced with the real ICALP 2022 extraction-hardness paper, [41] Quantum page 1634→1758); added VOQC, Quasar (equality saturation) and SSR surveys (10.8–10.10) with Table 5 rows and refs [43]–[45]; updated study scale to the then-current release-manifest total. v1.3 changes (wave 3): study scale resynced to the wave-3 release-manifest total (73,000+ records / 34 canonical datasets).*  
 *Author: Q-Research Literature Review Team*

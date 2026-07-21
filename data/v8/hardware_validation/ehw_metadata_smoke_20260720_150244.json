@@ -1,0 +1,73 @@
+{
+  "version": "1.0.0",
+  "run_id": "ehw_smoke_20260720_150244",
+  "git_commit": "d6f90a0b62409d9508c7ed1f99abccd401903697",
+  "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "package_versions": {
+    "qiskit": "2.4.1",
+    "qiskit-aer": "0.17.2",
+    "qiskit-ibm-runtime": "0.47.0",
+    "numpy": "1.26.4",
+    "pandas": "2.2.2"
+  },
+  "source_hashes": {
+    "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
+    "src/circuits/real_benchmarks.py": "5f137e8efaf872cc2205f2e2cac5e4420c014d7fa3ac0cf440e04dad7e4dd82a",
+    "src/optimisation/base.py": "8e8f16c377adb4f1a72616707d3fe20ea1715dba20e49c2bc4960dfd73dacba2",
+    "src/optimisation/_gate_predicates.py": "45253fbaa97ecf791cce41ff23c8e73708c708a460c3f37a18c97ba5124937df",
+    "src/optimisation/ceiling_aware.py": "37c4fd77b5098d4369b8f68d898fc988748b03f98582f82fec46b050df76ce8f",
+    "src/optimisation/phase1/greedy.py": "59d506439d44b5d0503a71d67f1589418c32c3363705e2093d9ebe9650476e60",
+    "src/optimisation/phase1/random_local_search.py": "26cc47fddaeca2fc9f8dbd72bf2a69117ac06eb31ae02e7a582d0f3e70a6fea6",
+    "src/optimisation/phase1/simulated_annealing.py": "d6fd7b9c239c9bc3c6afdd9a74adf6d83d41f73dbcd56faa36088a82d745d318",
+    "src/optimisation/phase1/genetic_algorithm.py": "421507ab16fd5ded8b8436e5240adb89bc1c2812dad00d715e3361e1acb47756",
+    "src/optimisation/phase1/wire_traversal.py": "e4d2214746f4a771e1c370a61e62a984d26012a74ed529c33b9f983a6df3fbf2",
+    "src/optimisation/phase2/commutation_rewriter.py": "a53769804a1e7e5d6a1e02146e12dbe79774a011fca4fc0990755ced3475a83d",
+    "src/optimisation/phase2/template_matcher.py": "f79dda42eb40fc051429ef090d3eeb262945cb962f2184236eda8dc303ea0eb7",
+    "analysis/structural_ceiling.py": "c36dbb5e951cf5fd7ea2e9655ada682d1bf05b9d2934e394ebba65bad57e5102",
+    "experiments/hardware_validation/run.py": "6c8b5d9b1b44546ac64d069c9f237d846c033b4c2c52df25b73eccefb7c4d53c"
+  },
+  "mode": "smoke",
+  "shots": 2048,
+  "seed_reps": 1,
+  "sampling_seeds": [
+    101
+  ],
+  "seed_transpiler": 12345,
+  "transpile_optimization_level": 1,
+  "circuits": [
+    {
+      "circuit_id": "ghz_n4",
+      "family": "GHZ",
+      "n_qubits": 4,
+      "sha256": "632a65a86fd9bfab17ccedbd10b32b45490cc33030a23af0d675ad3e8ad7a445"
+    },
+    {
+      "circuit_id": "oracle_bv_n4",
+      "family": "Oracle/BV",
+      "n_qubits": 5,
+      "sha256": "4621ef48fbfa81d505e50e099d2d9bb268c3bcebb00ba5aac807e68b83d47cc6"
+    },
+    {
+      "circuit_id": "random_uni_n4_d16",
+      "family": "Random/UNIVERSAL",
+      "n_qubits": 4,
+      "sha256": "2712dd65a04afe32bd9016289d97ff886f0bc33374caf50bdb0adb71272a268e"
+    }
+  ],
+  "backends": {
+    "FakeManilaV2": {
+      "num_qubits": 5,
+      "source": "qiskit_ibm_runtime.fake_provider (calibration snapshot)"
+    },
+    "FakeNairobiV2": {
+      "num_qubits": 7,
+      "source": "qiskit_ibm_runtime.fake_provider (calibration snapshot)"
+    }
+  },
+  "credential_audit": {
+    "env_QISKIT_IBM_TOKEN_present": false,
+    "qiskitrc_present": false,
+    "route": "3b_noise_model_simulation_NOT_real_hardware"
+  }
+}

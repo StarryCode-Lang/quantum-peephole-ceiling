@@ -126,10 +126,14 @@ N_TRIALS = 10
 N_TRIALS_CANONICAL = 50  # review M9: canonical mode for publishable data
 
 
-def fidelity_source(n_qubits: int, fidelity: float) -> str:
+def fidelity_source(n_qubits: int, fidelity: float,
+                    max_exact_qubits: int = MAX_EXACT_FIDELITY_QUBITS) -> str:
     if pd.isna(fidelity):
         return "unavailable"
-    if n_qubits <= MAX_EXACT_FIDELITY_QUBITS:
+    # Threshold must be the *run* parameter (which gates `target=None`),
+    # not the module constant — otherwise large-n rows whose fidelity is a
+    # placeholder estimate are mislabeled as exact (wave-4 fix).
+    if n_qubits <= max_exact_qubits:
         return "exact_average_gate_fidelity"
     return "base_optimizer_large_circuit_estimate"
 
@@ -364,7 +368,7 @@ def run(mode: str = "smoke", seed: int = 42, window: int = 10,
                     'depth_reduction': naive['depth_reduction'],
                     'cnot_reduction': naive['cnot_reduction'],
                     'fidelity': naive_fidelity,
-                    'fidelity_source': fidelity_source(n_qubits, naive_fidelity),
+                    'fidelity_source': fidelity_source(n_qubits, naive_fidelity, max_exact_fidelity_qubits),
                     'optimized_size': naive['optimized_size'],
                     'phase1_time_ms': naive['phase1_time_ms'],
                     'phase2_time_ms': naive['phase2_time_ms'],
@@ -382,7 +386,7 @@ def run(mode: str = "smoke", seed: int = 42, window: int = 10,
                     'depth_reduction': depth_red_ca,
                     'cnot_reduction': cnot_red_ca,
                     'fidelity': ca_fidelity,
-                    'fidelity_source': fidelity_source(n_qubits, ca_fidelity),
+                    'fidelity_source': fidelity_source(n_qubits, ca_fidelity, max_exact_fidelity_qubits),
                     'optimized_size': ca['optimized_size'],
                     'phase1_time_ms': ca['phase1_time_ms'],
                     'phase2_time_ms': ca['phase2_time_ms'],
@@ -475,7 +479,7 @@ def run(mode: str = "smoke", seed: int = 42, window: int = 10,
         "n_processed": processed,
         "fidelity_field": "fidelity",
         "fidelity_sources": sorted(df['fidelity_source'].dropna().unique().tolist()) if not df.empty else [],
-        "max_exact_fidelity_qubits": MAX_EXACT_FIDELITY_QUBITS,
+        "max_exact_fidelity_qubits": max_exact_fidelity_qubits,
         "comparison_file": csv_path.name,
         "summary_file": summary_path.name,
     })

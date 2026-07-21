@@ -34,6 +34,27 @@ class GreedyGateCancellation(BaseOptimizer):
     expands the Phase 1 action space by making same-qubit gates adjacent
     in the listing, potentially exposing cancellations that LBL listing
     hides (Theorem 1(b)).
+
+    Complexity
+    ----------
+    Let m = gate count, c = cancellations performed in one pass.
+
+    * Per step: the cancellation scan is one pass over the O(m) adjacent
+      pairs with O(1) predicate checks (see ``BaseOptimizer`` complexity
+      model); each cancellation is two ``list.pop(i)`` operations at
+      O(m) each, so one pass costs O(m + c * m) = O((c + 1) * m).
+      The rotation-merge scan is O(m) comparisons; each merge is O(m)
+      (two pops), and it is retried until no further merge exists.
+    * Overall: each improving pass removes >= 1 gate, so there are at
+      most m passes; measured convergence is 1-3 passes on the benchmark
+      families (manuscript Section 5.1).  Worst case O(m^2) per pass
+      when c = Theta(m), O(m^3) pathological overall; typical case O(m)
+      with a small constant (measured log-log slope ~1.0 vs m; see
+      docs/analysis/algorithmic_complexity.md Part A2).
+    * With ``wire_traversal=True``: plus O(m log m) WCL preprocessing
+      (see ``WireTraversalPreprocessor``).
+    * Plus one final ``calculate_fidelity`` call when a target is given:
+      O(m * 4**n + 8**n) for n <= 12 (see ``BaseOptimizer``).
     """
     
     def __init__(self, max_iterations: int = 100, fidelity_threshold: float = 0.99,

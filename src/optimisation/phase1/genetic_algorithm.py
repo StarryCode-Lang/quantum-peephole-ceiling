@@ -32,12 +32,30 @@ def _fast_copy(circuit: QuantumCircuit) -> QuantumCircuit:
 class GeneticAlgorithmOptimizer(BaseOptimizer):
     """
     Genetic Algorithm optimizer.
-    
+
     Uses evolutionary strategies: selection, crossover, mutation.
     All moves preserve unitary equivalence via the expanded move set.
-    
+
     Crossover strategy: Uses the fitter parent as base and applies
     transformation patches derived from the other parent's gate operations.
+
+    Complexity
+    ----------
+    Let m = gate count, P = ``population_size``, G = ``generations``,
+    F = fidelity cost (for n <= 12 qubits, F = O(m * 4**n + 8**n); see
+    the ``BaseOptimizer`` complexity model).
+
+    * Initialization: P individuals with 1-3 random moves each: O(P * m).
+    * Per generation: P fitness evaluations O(P * (m + F)); tournament
+      selection O(P); P/2 crossovers, each O(m) segment surgery plus up
+      to two child fidelity verifications O(F); mutation at rate
+      ``mutation_rate`` expected O(P * m * mutation_rate).
+    * Overall: O(G * P * (m + F)) time, O(P * m) memory for the
+      population plus O(4**n) per exact fidelity call.
+
+    Fidelity evaluation dominates: in E04 (n=5, m~75, defaults P=10,
+    G=10) GA averaged 7.26 s/trial, the slowest Phase-1 optimizer
+    (data/v2_fixed/e04; docs/analysis/algorithmic_complexity.md).
     """
     
     def __init__(self, population_size: int = 10, generations: int = 10,

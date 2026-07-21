@@ -1,5 +1,4 @@
 {
-  "experiment": "E24",
   "description": "Instantiation and validation of Theorem 7 hardness family.",
   "timestamp": "2026-07-11T19:00:55.235264",
   "n_min": 4,
@@ -18,5 +17,15 @@
   "_seed_note": "defaulted; original not recorded",
   "python_version": "3.12.12",
   "qiskit_version": "2.4.1",
-  "git_commit": null
+  "git_commit": null,
+  "experiment_id": "E24",
+  "canonical_data_file": "e24_theorem7_results.csv",
+  "n_rows": 75,
+  "notes": [
+    "Renamed legacy key 'experiment' -> 'experiment_id'.",
+    "canonical_data_file backfilled by wave-1 data-integrity normalization (20260720-230058); see data/DATA_CANONICAL.md for the canonical-file policy.",
+    "n_rows backfilled from canonical CSV row count (20260720-230058).",
+    "git_commit not recorded at generation time (pre-provenance era); left null.",
+    "derived/ holds e24_theorem7_summary.csv (per-size aggregate) produced by experiments/e24_theorem7/run.py."
+  ]
 }

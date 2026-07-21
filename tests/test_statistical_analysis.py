@@ -37,6 +37,7 @@ from analysis.phase1_statistics.bootstrap import (
 from analysis.phase1_statistics.effect_size import (
     cliffs_delta as cliffs_delta_mod,
     cohens_d as cohens_d_mod,
+    glass_delta as glass_delta_mod,
     interpret_effect_size as interpret_mod,
 )
 
@@ -569,6 +570,127 @@ def test_cohens_d_zero_variance_raises():
 
 
 # ===================================================================
+# 3b. Glass's Delta  (effect_size.py, statistical protocol item 2)
+# ===================================================================
+
+def test_glass_delta_known_value():
+    """Verify Glass's Delta with manually computed values (control=y)."""
+    x = np.array([10.0, 12.0, 14.0, 16.0, 18.0])   # mean 14, sd ~3.1623
+    y = np.array([5.0, 7.0, 9.0, 11.0, 13.0])       # mean 9, sd ~3.1623
+    result = glass_delta_mod(x, y, control="y")
+
+    expected = (14.0 - 9.0) / np.std(y, ddof=1)
+    assert abs(result["delta"] - expected) < 1e-10, (
+        f"Expected Glass's Delta ~ {expected:.4f}, got {result['delta']:.4f}"
+    )
+    assert result["control_group"] == "y"
+    assert result["magnitude"] == "large"
+    assert result["ci_lower"] < result["delta"] < result["ci_upper"]
+
+
+def test_glass_delta_zero_variance_baseline_falls_back():
+    """Zero-variance y (LBL Phase-1 case): auto falls back to x's SD.
+
+    For equal-n comparisons with one zero-variance group this must
+    reproduce the retired d/sqrt(2) approximation exactly:
+    pooled_sd = sd_x / sqrt(2)  =>  d = sqrt(2) * diff / sd_x
+    =>  d / sqrt(2) = diff / sd_x = Glass's Delta with x as denominator.
+    """
+    rng = np.random.default_rng(7)
+    x = rng.normal(loc=0.08, scale=0.04, size=100)   # WCL-like: nonzero variance
+    y = np.zeros(100)                                # LBL-like: zero variance
+    result = glass_delta_mod(x, y, control="auto")
+
+    expected = (x.mean() - 0.0) / x.std(ddof=1)
+    assert result["control_group"] == "x", (
+        f"Expected fallback to x, got {result['control_group']}"
+    )
+    assert abs(result["delta"] - expected) < 1e-10
+    # Cross-check against the d/sqrt(2) identity.
+    d_res = cohens_d_mod(x, y)
+    assert abs(result["delta"] - d_res["d"] / np.sqrt(2)) < 1e-10, (
+        "auto fallback must match the legacy d/sqrt(2) approximation for "
+        "one-zero-variance equal-n comparisons"
+    )
+
+
+def test_glass_delta_both_zero_variance_undefined():
+    """Both groups constant -> Glass's Delta undefined (NaN), not an exception."""
+    result = glass_delta_mod([5.0, 5.0, 5.0], [5.0, 5.0, 5.0])
+    assert np.isnan(result["delta"]), (
+        f"Expected NaN for two zero-variance groups, got {result['delta']}"
+    )
+    assert result["magnitude"] == "undefined (zero variance)"
+    assert np.isnan(result["ci_lower"]) and np.isnan(result["ci_upper"])
+
+
+def test_glass_delta_both_zero_variance_different_constants():
+    """Two different constants: still undefined (no valid denominator)."""
+    result = glass_delta_mod([1.0, 1.0, 1.0], [2.0, 2.0, 2.0])
+    assert np.isnan(result["delta"])
+    assert "zero variance" in result["note"]
+
+
+def test_glass_delta_explicit_control_x():
+    """control='x' must use x's SD regardless of y's variance."""
+    x = np.array([2.0, 4.0, 6.0, 8.0, 10.0])  # mean 6, sd ~3.1623
+    y = np.array([1.0, 1.0, 1.0, 1.0, 1.0])   # mean 1, sd 0
+    result = glass_delta_mod(x, y, control="x")
+    expected = (6.0 - 1.0) / np.std(x, ddof=1)
+    assert abs(result["delta"] - expected) < 1e-10
+    assert result["control_group"] == "x"
+
+
+def test_glass_delta_explicit_zero_variance_control_undefined():
+    """Explicitly naming a zero-variance control yields NaN, not a fallback."""
+    x = np.array([2.0, 4.0, 6.0, 8.0, 10.0])
+    y = np.array([1.0, 1.0, 1.0, 1.0, 1.0])
+    result = glass_delta_mod(x, y, control="y")
+    assert np.isnan(result["delta"]), (
+        "Explicit zero-variance control must be undefined, not silently fall back"
+    )
+
+
+def test_glass_delta_sign_and_swap():
+    """Swapping groups (with symmetric control choice) negates the delta."""
+    x = np.array([10.0, 12.0, 14.0, 16.0, 18.0])
+    y = np.array([5.0, 7.0, 9.0, 11.0, 13.0])
+    r_xy = glass_delta_mod(x, y, control="y")
+    r_yx = glass_delta_mod(y, x, control="y")
+    # Same data, denominators are the respective second groups; SDs equal here,
+    # so deltas must be exact negatives.
+    assert abs(r_xy["delta"] + r_yx["delta"]) < 1e-10
+
+
+def test_glass_delta_empty_raises():
+    """Empty samples must raise ValueError."""
+    for bad_x, bad_y in [([], [1.0, 2.0]), ([1.0, 2.0], [])]:
+        try:
+            glass_delta_mod(bad_x, bad_y)
+            assert False, "Should have raised ValueError for empty sample"
+        except ValueError:
+            pass
+
+
+def test_glass_delta_single_observation_raises():
+    """Fewer than 2 observations per group must raise ValueError (SD undefined)."""
+    try:
+        glass_delta_mod([1.0], [2.0, 3.0])
+        assert False, "Should have raised ValueError for n=1"
+    except ValueError:
+        pass
+
+
+def test_glass_delta_invalid_control_raises():
+    """Invalid control argument must raise ValueError."""
+    try:
+        glass_delta_mod([1.0, 2.0], [3.0, 4.0], control="z")
+        assert False, "Should have raised ValueError for control='z'"
+    except ValueError:
+        pass
+
+
+# ===================================================================
 # 4. Core statistics  (core.py)
 # ===================================================================
 
@@ -988,6 +1110,20 @@ if __name__ == "__main__":
     _run(test_effect_size_empty_y_raises)
     _run(test_cohens_d_empty_raises)
     _run(test_cohens_d_zero_variance_raises)
+    print()
+
+    # ---- 3b. Glass's Delta ----
+    print("--- Glass's Delta (effect_size) ---")
+    _run(test_glass_delta_known_value)
+    _run(test_glass_delta_zero_variance_baseline_falls_back)
+    _run(test_glass_delta_both_zero_variance_undefined)
+    _run(test_glass_delta_both_zero_variance_different_constants)
+    _run(test_glass_delta_explicit_control_x)
+    _run(test_glass_delta_explicit_zero_variance_control_undefined)
+    _run(test_glass_delta_sign_and_swap)
+    _run(test_glass_delta_empty_raises)
+    _run(test_glass_delta_single_observation_raises)
+    _run(test_glass_delta_invalid_control_raises)
     print()
 
     # ---- 4. Core statistics ----

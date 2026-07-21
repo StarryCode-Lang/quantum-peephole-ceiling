@@ -1,16 +1,17 @@
 Test,Raw_p_value,Adjusted_p_value_BH,Significant_at_0.05,Rejected,Cliffs_delta,Cliffs_delta_CI95,Hedges_g,Hedges_g_CI95,Effect_size_note
-E1: Reduction across depths (Kruskal-Wallis),1.0,1.0,not significant,False,,,,,error: Pooled standard deviation is zero; cannot compute Cohen's d.
+E1: Reduction across depths (Kruskal-Wallis),1.0,1.0,not significant,False,0.0,"[0.0000, 0.0000]",,,max pairwise (pair 0 vs 1); Hedges g undefined (zero variance)
 E2: Entanglement-reduction correlation (Pearson),1.0,1.0,not significant,False,,,,,Pearson r=undefined (zero variance)
-E3: Reduction across qubit counts (Kruskal-Wallis),1.0,1.0,not significant,False,,,,,error: Pooled standard deviation is zero; cannot compute Cohen's d.
-E4: Reduction across optimizers (Kruskal-Wallis),6.121211146717873e-12,1.1477270900096011e-11,significant,True,0.28,"[0.1873, 0.3727]",0.6766855240886117,"[0.3915, 0.9618]",max pairwise (pair 1 vs 3)
-E4: Runtime across optimizers (Kruskal-Wallis),1.726875121246584e-74,6.47578170467469e-74,significant,True,1.0,"[1.0000, 1.0000]",3.787281660902025,"[3.3214, 4.2532]",max pairwise (pair 0 vs 1)
-E5: Reduction across depths (Kruskal-Wallis),6.476212108849583e-11,1.0793686848082638e-10,significant,True,-0.059847,"[-0.0799, -0.0398]",-0.0016567966793307163,"[-0.0893, 0.0860]",max pairwise (pair 0 vs 3)
-E10: Reduction across circuit families (Kruskal-Wallis),8.483150758396029e-166,6.362363068797021e-165,significant,True,-0.6816666666666666,"[-0.7190, -0.6444]",-1.2297087886309506,"[-1.7467, -0.7127]",max pairwise (pair 0 vs 6)
-E10: Reduction across optimizers (Kruskal-Wallis),3.159160337542533e-109,1.5795801687712664e-108,significant,True,-0.5548614297228595,"[-0.5953, -0.5144]",-0.586480399932338,"[-0.6988, -0.4741]",max pairwise (pair 1 vs 2)
-"E11: Reduction across circuit families (KW, H7)",4.777787324875702e-34,1.4333361974627103e-33,significant,True,-0.6666666666666666,"[-0.8300, -0.5033]",-1.8007316959073953,"[-2.4275, -1.1739]",max pairwise (pair 0 vs 1)
-"E12: Reduction across optimization levels (KW, H8)",7.981331232873719e-18,1.9953328082184295e-17,significant,True,-0.47381471930172586,"[-0.5784, -0.3692]",-0.07015657401159352,"[-0.3028, 0.1625]",max pairwise (pair 0 vs 1)
-"E14: Reduction across families x optimizers (KW, H9)",1.0169427525604771e-280,1.5254141288407157e-279,significant,True,,,,,error: Pooled standard deviation is zero; cannot compute Cohen's d.
-"E15: Reduction across compilers (KW, H10)",2.8286698289730817e-07,3.8572770395087477e-07,significant,True,-0.16189744098393177,"[-0.2217, -0.1021]",0.29816568829571444,"[0.1719, 0.4245]",2-group direct
-"E16: Reduction across window sizes (KW, H11)",1.1374165943163696e-07,1.7061248914745546e-07,significant,True,-0.2061368740916898,"[-0.2780, -0.1343]",-0.24042661806123794,"[-0.4513, -0.0295]",max pairwise (pair 0 vs 3)
-"E17: Reduction across topologies (KW, H12)",1.0,1.0,not significant,False,,,,,error: Pooled standard deviation is zero; cannot compute Cohen's d.
-"E18: Reduction across families in Clifford+T (KW, H13)",2.3967389836188042e-14,5.135869250611724e-14,significant,True,-1.0,"[-1.0000, -1.0000]",-10.509309240661397,"[-13.5795, -7.4391]",max pairwise (pair 2 vs 3)
+E3: Reduction across qubit counts (Kruskal-Wallis),1.0,1.0,not significant,False,0.0,"[0.0000, 0.0000]",,,max pairwise (pair 0 vs 1); Hedges g undefined (zero variance)
+E4: Reduction across optimizers (Kruskal-Wallis),6.121211146717873e-12,1.0882153149720663e-11,significant,True,0.28,"[0.1873, 0.3727]",0.6766855240886117,"[0.3915, 0.9618]",max pairwise (pair 1 vs 3)
+E4: Runtime across optimizers (Kruskal-Wallis),1.726875121246584e-74,6.907500484986336e-74,significant,True,1.0,"[1.0000, 1.0000]",3.787281660902025,"[3.3214, 4.2532]",max pairwise (pair 0 vs 1)
+E5: Reduction across depths (Kruskal-Wallis),6.476212108849583e-11,1.0361939374159334e-10,significant,True,-0.059847,"[-0.0799, -0.0398]",-0.0016567966793307163,"[-0.0893, 0.0860]",max pairwise (pair 0 vs 3)
+E10: Reduction across circuit families (Kruskal-Wallis),8.483150758396029e-166,6.786520606716823e-165,significant,True,-0.6816666666666666,"[-0.7190, -0.6444]",-1.2297087886309506,"[-1.7467, -0.7127]",max pairwise (pair 0 vs 6)
+E10: Reduction across optimizers (Kruskal-Wallis),3.159160337542533e-109,1.6848855133560175e-108,significant,True,-0.5548614297228595,"[-0.5953, -0.5144]",-0.586480399932338,"[-0.6988, -0.4741]",max pairwise (pair 1 vs 2)
+E10 Universal: Greedy vs Hybrid (Mann-Whitney U),1.7586662178084e-56,5.62773189698688e-56,significant,True,-0.805,"[-0.8600, -0.7500]",-1.7421090615099997,"[-1.9726, -1.5116]",2-group direct
+"E11: Reduction across circuit families (KW, H7)",1.5520644450541643e-34,4.138838520144438e-34,significant,True,-0.6666666666666666,"[-0.8300, -0.5033]",-1.8007316959073953,"[-2.4275, -1.1739]",max pairwise (pair 0 vs 1)
+"E12: Reduction across optimization levels (KW, H8)",7.981331232873719e-18,1.8243042817997072e-17,significant,True,-0.47381471930172586,"[-0.5784, -0.3692]",-0.07015657401159352,"[-0.3028, 0.1625]",max pairwise (pair 0 vs 1)
+"E14: Reduction across families x optimizers (KW, H9)",1.0169427525604771e-280,1.6271084040967633e-279,significant,True,-1.0,"[-1.0000, -1.0000]",,,max pairwise (pair 0 vs 4); Hedges g undefined (zero variance)
+"E15: Reduction across compilers (KW, H10)",2.8286698289730817e-07,3.771559771964109e-07,significant,True,-0.16189744098393177,"[-0.2217, -0.1021]",0.29816568829571444,"[0.1719, 0.4245]",2-group direct
+"E16: Reduction across window sizes (KW, H11)",1.1374165943163696e-07,1.6544241371874467e-07,significant,True,-0.2061368740916898,"[-0.2780, -0.1343]",-0.24042661806123794,"[-0.4513, -0.0295]",max pairwise (pair 0 vs 3)
+"E17: Reduction across topologies (KW, H12)",1.0,1.0,not significant,False,0.0,"[0.0000, 0.0000]",,,max pairwise (pair 0 vs 1); Hedges g undefined (zero variance)
+"E18: Reduction across families in Clifford+T (KW, H13)",2.3967389836188042e-14,4.7934779672376084e-14,significant,True,-1.0,"[-1.0000, -1.0000]",-10.509309240661397,"[-13.5795, -7.4391]",max pairwise (pair 2 vs 3)

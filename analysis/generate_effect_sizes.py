@@ -24,6 +24,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from analysis.phase1_statistics.effect_size import (
     cliffs_delta,
     cohens_d,
+    glass_delta,
     interpret_effect_size,
 )
 
@@ -83,6 +84,16 @@ def compute_comparison(comparison_name, experiment, metric, x, y):
         g_val = float("nan")
         cohens_mag = "undefined (zero variance)"
 
+    # Glass's Delta - canonical module (statistical protocol item 2:
+    # required for zero-variance comparisons where Cohen's d is undefined).
+    # control="auto" uses group 2 (y) as the baseline denominator, falling
+    # back to group 1 when y has zero variance.
+    try:
+        gd_res = glass_delta(x, y, control="auto")
+        gd_val = float(gd_res["delta"])
+    except ValueError:
+        gd_val = float("nan")
+
     # Cliff's delta - canonical module.
     try:
         cd_res = cliffs_delta(x, y)
@@ -107,6 +118,7 @@ def compute_comparison(comparison_name, experiment, metric, x, y):
         "mean_2": float(np.mean(y)),
         "cohens_d": d_val,
         "hedges_g": g_val,
+        "glass_delta": gd_val,
         "cliffs_delta": delta_val,
         "bootstrap_ci_lower": ci_low,
         "bootstrap_ci_upper": ci_high,
@@ -247,6 +259,7 @@ CSV_COLUMNS = [
     "mean_2",
     "cohens_d",
     "hedges_g",
+    "glass_delta",
     "cliffs_delta",
     "bootstrap_ci_lower",
     "bootstrap_ci_upper",
@@ -293,9 +306,9 @@ def write_summary_md(rows, csv_path, md_path):
     lines.append("")
     header = (
         "| Comparison | Exp | mean_1 | mean_2 | Cohen's d | Hedges' g | "
-        "Cliff's delta | Bootstrap 95% CI (diff) | n_1 | n_2 |"
+        "Glass's Delta | Cliff's delta | Bootstrap 95% CI (diff) | n_1 | n_2 |"
     )
-    sep = "|---|---|---|---|---|---|---|---|---|---|"
+    sep = "|---|---|---|---|---|---|---|---|---|---|---|"
     lines.append(header)
     lines.append(sep)
     for _, r in key_df.iterrows():
@@ -305,6 +318,7 @@ def write_summary_md(rows, csv_path, md_path):
             f"{r['mean_1']:.4f} | {r['mean_2']:.4f} | "
             f"{r['cohens_d']:+.3f} ({r['cohens_magnitude']}) | "
             f"{r['hedges_g']:+.3f} | "
+            f"{r['glass_delta']:+.3f} | "
             f"{r['cliffs_delta']:+.3f} ({r['cliffs_magnitude']}) | "
             f"{ci} | {r['n_1']} | {r['n_2']} |"
         )
@@ -312,8 +326,9 @@ def write_summary_md(rows, csv_path, md_path):
     lines.append("")
     lines.append("## Magnitude conventions")
     lines.append("")
-    lines.append("- **Cohen's d / Hedges' g**: negligible < 0.2, small 0.2-0.5, medium 0.5-0.8, large >= 0.8")
+    lines.append("- **Cohen's d / Hedges' g / Glass's Delta**: negligible < 0.2, small 0.2-0.5, medium 0.5-0.8, large >= 0.8")
     lines.append("- **Cliff's delta**: negligible < 0.147, small 0.147-0.33, medium 0.33-0.474, large >= 0.474")
+    lines.append("- **Glass's Delta denominator**: SD of group 2 (baseline); falls back to group 1 SD when group 2 has zero variance (e.g., LBL Phase-1).")
     lines.append("")
 
     other_df = df[~df["comparison"].isin(key_names)]
@@ -328,6 +343,7 @@ def write_summary_md(rows, csv_path, md_path):
                 f"| {r['comparison']} | {r['experiment']} | "
                 f"{r['mean_1']:.4f} | {r['mean_2']:.4f} | "
                 f"{r['cohens_d']:+.3f} | {r['hedges_g']:+.3f} | "
+                f"{r['glass_delta']:+.3f} | "
                 f"{r['cliffs_delta']:+.3f} | {ci} | {r['n_1']} | {r['n_2']} |"
             )
         lines.append("")
@@ -336,7 +352,11 @@ def write_summary_md(rows, csv_path, md_path):
     print(f"Wrote summary -> {md_path}")
 
 
-def main():
+def main(out_dir=None):
+    if out_dir is not None:
+        global OUT_DIR
+        OUT_DIR = Path(out_dir)
+
     rows = []
     rows.extend(comparisons_e1())
     rows.extend(comparisons_e4())
@@ -351,10 +371,21 @@ def main():
 
     print("\n=== Key comparison summary ===")
     key_df = pd.DataFrame(rows)
-    key_cols = ["comparison", "experiment", "cohens_d", "cliffs_delta", "bootstrap_ci_lower", "bootstrap_ci_upper"]
+    key_cols = ["comparison", "experiment", "cohens_d", "glass_delta", "cliffs_delta", "bootstrap_ci_lower", "bootstrap_ci_upper"]
     key_names = {"Greedy vs RLS", "Greedy vs SA", "Greedy vs GA", "Phase-1 vs Phase-2a", "WCL vs LBL", "Random vs Structured"}
     print(key_df[key_df["comparison"].isin(key_names)][key_cols].to_string(index=False))
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Generate effect size reports.")
+    parser.add_argument(
+        "--out-dir",
+        default=None,
+        help="Output directory (default: analysis/figures). Use an alternate "
+             "directory for verification runs that must not touch the "
+             "canonical figure artifacts.",
+    )
+    args = parser.parse_args()
+    main(out_dir=args.out_dir)

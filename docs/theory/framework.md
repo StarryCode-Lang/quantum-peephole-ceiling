@@ -115,7 +115,7 @@ Unitary equivalence up to tolerance $\epsilon$: $C \equiv_\epsilon C'$ if $\| U 
 
 4. **Critical caveat: Haar-random unitaries vs. random gate sequences.** Theorem 8 proves incompressibility for Haar-random *unitaries*, but all experiments use random *gate sequences* of depth d=poly(n). For n=10, d=50, the circuit has ~500 gates while the Haar-random complexity threshold is ~4^n/n^2 $\approx$ 10,486 gates. Random gate sequences at these depths produce unitaries far from Haar-random. Therefore, Thm 8's bounds do not directly explain the experimental results -- the empirical ~0% reduction on random circuits is explained by the combinatorial sparsity of inverse pairs (Thm 1), not by Haar-random incompressibility. Thm 8 provides a *complementary* information-theoretic argument for the asymptotic regime that is not reached in our experiments. Note: The empirical optimization desert observed in E1-E5 is explained by Theorem 1 (combinatorial sparsity of inverse pairs), not by Theorem 8 (which applies to Haar-random unitaries, a regime not reached in our experiments). Corollary 8.1 provides a complementary information-theoretic perspective for the asymptotic regime.
 
-5. **Appropriate interpretation.** The framework's value lies in its systematic empirical methodology (45,000+ controlled trials) and its unification of several known observations (adjacent cancellation limits, commutation-based advantage, compiler comparisons) into a coherent predictive model. The theorems provide rigorous support for empirical patterns, but the patterns themselves are about *software behavior* (compiler optimization passes), not *physics*.
+5. **Appropriate interpretation.** The framework's value lies in its systematic empirical methodology (73,702 controlled result rows across 34 canonical datasets; `release/release_manifest.json`) and its unification of several known observations (adjacent cancellation limits, commutation-based advantage, compiler comparisons) into a coherent predictive model. The theorems provide rigorous support for empirical patterns, but the patterns themselves are about *software behavior* (compiler optimization passes), not *physics*.
 
 This framing is not a limitation but a clarification: the framework occupies a well-defined niche at the intersection of quantum software engineering and combinatorial optimization, and its claims should be evaluated accordingly.
 
@@ -165,7 +165,7 @@ This framing is not a limitation but a clarification: the framework occupies a w
 | Qiskit O3 mean reduction (real circuits) | 23.42% | E12 |
 | Our best optimizer mean (real circuits) | 11.48% | E11 |
 | Fidelity preservation | 1.000000 (all trials) | All experiments |
-| WCL listing enables Phase-1 reduction | 18% (vs 0% LBL) | E1 under WCL vs LBL; Thm 1(b) |
+| WCL listing enables Phase-1 reduction | 7.8% (vs 0% LBL) | E1 under WCL vs LBL; E19; Thm 1(b) |
 
 ### The Structural Ceiling Explained
 
@@ -206,7 +206,7 @@ Phase-2a (commutation rewriting) provides additional reduction only when:
 
 **Proof sketch.** Under LBL, the gate on qubit $q$ at layer $L$ is at listing index $L \cdot n + q$. The next gate on the same qubit is at index $(L+1) \cdot n + q$, a gap of $n \ge 2$. Since Phase-1 requires listing adjacency (gap = 1) on the same qubit(s), no Phase-1 action is possible.
 
-**WCL discovery and empirical implications.** When circuits are represented in WCL instead of LBL, the Phase-1 action space becomes non-empty for circuits that contain wire-consecutive inverse pairs. Empirically, WCL listing enables approximately 18% Phase-1 reduction on the same random circuit ensemble where LBL yields exactly 0%. This 18% figure is consistent with the density bound from Theorem 1(a): $\mathbb{E}[|\mathcal{A}_{\text{adj}}(C)|] = n(d-1) \cdot p_{\text{cancel}}(n, \rho)$, which for typical parameters yields a small but non-zero number of adjacent inverse pairs.
+**WCL discovery and empirical implications.** When circuits are represented in WCL instead of LBL, the Phase-1 action space becomes non-empty for circuits that contain wire-consecutive inverse pairs. Empirically, WCL listing enables approximately 7.8% Phase-1 reduction (E19, 10,000 rows: mean 7.83%, std 3.95%) on the same random circuit ensemble where LBL yields exactly 0%. This figure is consistent with the density bound from Theorem 1(a): $\mathbb{E}[|\mathcal{A}_{\text{adj}}(C)|] = n(d-1) \cdot p_{\text{cancel}}(n, \rho)$, which for typical parameters yields a small but non-zero number of adjacent inverse pairs.
 
 **Interpretation.** The zero Phase-1 reduction observed in experiments E1--E5 is **not** a fundamental property of the random circuits themselves, but a consequence of the LBL listing model used by the generator. The circuits contain wire-level inverse pairs; LBL merely hides them from listing-adjacent Phase-1 detection. Phase-2a commutation rewriters (which operate on the circuit graph rather than the listing) are unaffected by this listing-model dependency, since they reason about wire-level adjacency rather than listing adjacency.
 

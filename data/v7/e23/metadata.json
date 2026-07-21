@@ -1,5 +1,4 @@
 {
-  "experiment": "E23",
   "description": "Empirical validation of Theorem 6: AG canonical form Clifford circuits have R1=0.",
   "timestamp": "2026-07-09T16:30:50.772579",
   "n_min": 3,
@@ -14,5 +13,14 @@
   "_seed_note": "defaulted; original not recorded",
   "python_version": "3.12.12",
   "qiskit_version": "2.4.1",
-  "git_commit": null
+  "git_commit": null,
+  "experiment_id": "E23",
+  "canonical_data_file": "e23_ag_canonical_results.csv",
+  "n_rows": 160,
+  "notes": [
+    "Renamed legacy key 'experiment' -> 'experiment_id'.",
+    "canonical_data_file backfilled by wave-1 data-integrity normalization (20260720-230058); see data/DATA_CANONICAL.md for the canonical-file policy.",
+    "n_rows backfilled from canonical CSV row count (20260720-230058).",
+    "git_commit not recorded at generation time (pre-provenance era); left null."
+  ]
 }

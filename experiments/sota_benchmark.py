@@ -53,10 +53,25 @@ from src.provenance import file_sha256, run_metadata  # noqa: E402
 
 SCHEMA_VERSION = "1.0.0"
 EXPERIMENT_ID = "SOTA-BENCH"
-VERSION = "1.0.0"
+VERSION = "1.1.0"  # 2026-07-20: cirq gateset/sx-sxdg fixes, explicit qiskit levels, CLI filters
 DEFAULT_TIMEOUT_S = 120.0
 DEFAULT_N_TRIALS = 10
 TARGET_QUBITS = {4, 6, 8}
+
+# Qiskit optimization_level per tool_config.  "default" is kept at level 3 for
+# backward compatibility with the canonical 2026-07-18 runs.
+QISKIT_LEVELS = {
+    "level0": 0, "level1": 1, "level2": 2, "level3": 3,
+    "default": 3, "tuned": 3,
+}
+
+# OpenQASM 2.0 gate definitions for sx/sxdg (identical to qiskit's qelib1.inc).
+# qiskit.qasm2's builtin qelib1 gate set does NOT include sx/sxdg, so QASM text
+# emitted by Cirq (which uses them) fails to re-import without explicit defs.
+QASM2_SX_DEFS = (
+    'gate sx a { sdg a; h a; sdg a; }\n'
+    'gate sxdg a { s a; h a; s a; }\n'
+)
 
 # Gate categories for unified metric extraction
 T_GATES = {"t", "tdg"}
@@ -106,6 +121,25 @@ def cliffs_delta(a: List[float], b: List[float]) -> float:
 # Timeout wrapper
 # ---------------------------------------------------------------------------
 
+def _atomic_write_text(path: Path, text: str) -> None:
+    """Write text to path atomically (tmp file + os.replace)."""
+    import os
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(text, encoding="utf-8")
+    os.replace(tmp, path)
+
+
+def _backup_if_exists(path: Path) -> Optional[Path]:
+    """If path exists, copy it to path.with_suffix(path.suffix + '.bak-<ts>')."""
+    import shutil
+    if not path.exists():
+        return None
+    ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    bak = path.with_name(path.name + f".bak-{ts}")
+    shutil.copy2(path, bak)
+    return bak
+
+
 def run_with_timeout(fn: Callable, *args, timeout: float = DEFAULT_TIMEOUT_S, **kwargs):
     """Run fn with a timeout. Returns (result, elapsed_s, status)."""
     result_container: List[Any] = [None]
@@ -150,16 +184,34 @@ def tket_optimize(circuit, config: str = "default"):
 
 
 def qiskit_optimize(circuit, config: str = "default", seed: int = 42):
-    """Qiskit transpile (fair mode: no coupling map)."""
+    """Qiskit transpile (fair mode: no coupling map).
+
+    config selects the optimization level explicitly:
+    "level0".."level3", or "default"/"tuned" (both map to level 3).
+    """
     from qiskit import transpile
-    level = 3 if config in ("default", "tuned") else 0
+    level = QISKIT_LEVELS.get(config, 3)
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         return transpile(circuit, optimization_level=level, seed_transpiler=seed)
 
 
 def cirq_optimize(circuit, config: str = "default"):
-    """Cirq optimization pipeline."""
+    """Cirq optimization pipeline.
+
+    Pipeline (SOTA_BENCHMARK_PROTOCOL.md Sec. 4.1):
+    drop_empty_moments -> drop_negligible_operations ->
+    optimize_for_target_gateset(CZTargetGateset) -> eject_z ->
+    merge_single_qubit_gates_to_phased_x_and_z -> drop_empty_moments.
+
+    Fixes (2026-07-20, v1.1.0):
+      * cirq 1.6.1 renamed the keyword to ``gateset=``; the previous
+        ``target_gateset=`` call raised TypeError and was silently swallowed,
+        so the CZTargetGateset step never ran in the 2026-07-18 data.
+      * Cirq's QASM export emits ``sx``/``sxdg`` gates, which qiskit.qasm2's
+        builtin qelib1 set does not define; explicit gate definitions are
+        injected after the include line (identical to qiskit's qelib1.inc).
+    """
     import cirq
     from cirq.contrib.qasm_import import circuit_from_qasm
     from qiskit.qasm2 import dumps as qasm2_dumps, loads as qasm2_loads
@@ -173,13 +225,22 @@ def cirq_optimize(circuit, config: str = "default"):
     cirq_circ = drop_empty_moments(cirq_circ)
     cirq_circ = drop_negligible_operations(cirq_circ)
     try:
-        cirq_circ = optimize_for_target_gateset(cirq_circ, target_gateset=cirq.CZTargetGateset())
+        cirq_circ = optimize_for_target_gateset(cirq_circ, gateset=cirq.CZTargetGateset())
     except Exception:
         pass
     cirq_circ = eject_z(cirq_circ)
     cirq_circ = merge_single_qubit_gates_to_phased_x_and_z(cirq_circ)
     cirq_circ = drop_empty_moments(cirq_circ)
     qasm_out = cirq.qasm(cirq_circ)
+    # Inject sx/sxdg definitions right after the qelib1 include so that
+    # qiskit.qasm2.loads can resolve them.
+    if "sx" in qasm_out and "gate sx " not in qasm_out:
+        marker = 'include "qelib1.inc";'
+        if marker in qasm_out:
+            qasm_out = qasm_out.replace(marker, marker + "\n" + QASM2_SX_DEFS, 1)
+        else:
+            qasm_out = qasm_out.replace(
+                "OPENQASM 2.0;", "OPENQASM 2.0;\n" + QASM2_SX_DEFS, 1)
     return qasm2_loads(qasm_out)
 
 
@@ -314,6 +375,8 @@ def run_tool(
     tool: str, config: str = "default", mode: str = "full",
     n_trials: int = DEFAULT_N_TRIALS, seed: int = 42,
     timeout_s: float = DEFAULT_TIMEOUT_S,
+    families: Optional[List[str]] = None,
+    target_qubits: Optional[set] = None,
 ) -> pd.DataFrame:
     """Run a single tool on the 15-family benchmark."""
     available, version_or_err = check_tool_available(tool)
@@ -321,6 +384,8 @@ def run_tool(
         print(f"Tool '{tool}' not available: {version_or_err}")
         return pd.DataFrame()
 
+    if target_qubits is None:
+        target_qubits = TARGET_QUBITS
     run_id = f"{tool}_{config}_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
     script_path = Path(__file__).resolve()
     output_dir = PROJECT_ROOT / "data" / "v6" / "sota_benchmark" / "raw"
@@ -335,8 +400,11 @@ def run_tool(
         trial_seed = seed + trial * 1000
         circuits = generate_extended_suite(mode=mode, seed=trial_seed)
         # Filter to target qubit sizes for controlled comparison
-        circuits = [b for b in circuits if b.circuit.num_qubits in TARGET_QUBITS or
-                     int(b.circuit_id.rsplit("_", 1)[-1]) in TARGET_QUBITS]
+        circuits = [b for b in circuits if b.circuit.num_qubits in target_qubits or
+                     int(b.circuit_id.rsplit("_", 1)[-1]) in target_qubits]
+        if families:
+            fam_set = {f.lower() for f in families}
+            circuits = [b for b in circuits if b.family.lower() in fam_set]
 
         for bench in circuits:
             circuit = bench.circuit
@@ -371,7 +439,7 @@ def run_tool(
 
     df = pd.DataFrame(all_rows)
     csv_path = output_dir / f"{run_id}.csv"
-    df.to_csv(csv_path, index=False)
+    _atomic_write_text(csv_path, df.to_csv(index=False))
 
     # Metadata
     metadata = run_metadata(PROJECT_ROOT, script_path, VERSION, run_id)
@@ -384,14 +452,16 @@ def run_tool(
         "n_trials": n_trials,
         "seed": seed,
         "timeout_s": timeout_s,
+        "families": families,
+        "target_qubits": sorted(target_qubits),
         "canonical_data_file": csv_path.name,
         "n_rows": len(df),
         "n_ok": int((df["compiler_status"] == "ok").sum()),
         "n_timeouts": int((df["compiler_status"] == "timeout").sum()),
         "n_errors": int(df["compiler_status"].str.contains("error").sum()),
     })
-    with (meta_dir / f"{tool}_{config}_metadata.json").open("w", encoding="utf-8") as f:
-        json.dump(metadata, f, indent=2, sort_keys=True)
+    _atomic_write_text(meta_dir / f"{tool}_{config}_metadata.json",
+                       json.dumps(metadata, indent=2, sort_keys=True))
 
     print(f"SOTA-BENCH [{tool}/{config}] complete: {len(df)} rows -> {csv_path}")
     print(f"  OK: {metadata['n_ok']}, Timeouts: {metadata['n_timeouts']}, "
@@ -404,7 +474,12 @@ def run_tool(
 # ---------------------------------------------------------------------------
 
 def aggregate_results() -> pd.DataFrame:
-    """Aggregate all raw CSV files and compute statistics."""
+    """Aggregate canonical raw CSV files and compute statistics.
+
+    Canonical selection: raw filenames are ``{tool}_{config}_{run_id}.csv``
+    where run_id is a UTC timestamp; only the NEWEST file per (tool, config)
+    is used, so superseded smoke/partial runs never double-count trials.
+    """
     raw_dir = PROJECT_ROOT / "data" / "v6" / "sota_benchmark" / "raw"
     agg_dir = PROJECT_ROOT / "data" / "v6" / "sota_benchmark" / "aggregated"
     agg_dir.mkdir(parents=True, exist_ok=True)
@@ -413,11 +488,24 @@ def aggregate_results() -> pd.DataFrame:
         print("No raw data found. Run benchmarks first.")
         return pd.DataFrame()
 
-    dfs = []
+    # Select newest file per (tool, config).  Filename layout:
+    # {tool}_{config}_{YYYYMMDD}_{HHMMSS}.csv where config may itself
+    # contain underscores (e.g. "level0"); tool never does.
+    by_key: Dict[Tuple[str, str], Path] = {}
     for csv_file in raw_dir.glob("*.csv"):
+        parts = csv_file.stem.split("_")
+        if len(parts) < 4:
+            continue
+        key = (parts[0], "_".join(parts[1:-2]))
+        if key not in by_key or csv_file.name > by_key[key].name:
+            by_key[key] = csv_file
+
+    dfs = []
+    for key, csv_file in sorted(by_key.items()):
         try:
             df = pd.read_csv(csv_file)
             dfs.append(df)
+            print(f"  canonical[{key[0]}/{key[1]}]: {csv_file.name} ({len(df)} rows)")
         except Exception as e:
             print(f"  Skipping {csv_file.name}: {e}")
 
@@ -426,28 +514,36 @@ def aggregate_results() -> pd.DataFrame:
         return pd.DataFrame()
 
     combined = pd.concat(dfs, ignore_index=True)
-    # Only keep successful runs for aggregation
+    combined["tool_key"] = combined["tool"] + "/" + combined["tool_config"].astype(str)
+    # Success rate per cell over ALL rows (including errors/timeouts)
+    cell_total = combined.groupby(["tool_key", "circuit_family"]).size().rename("cell_rows")
+    cell_ok = (combined[combined["compiler_status"] == "ok"]
+               .groupby(["tool_key", "circuit_family"]).size().rename("cell_ok_rows"))
+    # Only keep successful runs for metric aggregation
     ok = combined[combined["compiler_status"] == "ok"].copy()
 
     if ok.empty:
         print("No successful runs to aggregate.")
         return pd.DataFrame()
 
-    # Per-family, per-tool aggregation
+    # Per-family, per-(tool, config) aggregation (tool_key inherited from combined)
     agg_rows = []
-    tools = ok["tool"].unique()
+    tool_keys = sorted(ok["tool_key"].unique())
     families = ok["circuit_family"].unique()
     n_comparisons = len(families)
     holm_alpha = 0.05 / n_comparisons
+    custom_ok = ok[ok["tool"] == "custom"]
 
-    for tool in tools:
-        tool_df = ok[ok["tool"] == tool]
+    for tool_key in tool_keys:
+        tool_df = ok[ok["tool_key"] == tool_key]
+        tool_name = str(tool_df["tool"].iloc[0])
+        tool_cfg = str(tool_df["tool_config"].iloc[0])
         for family in families:
             fam_df = tool_df[tool_df["circuit_family"] == family]
             if fam_df.empty:
                 continue
             # Get custom tool data for comparison (if custom exists)
-            custom_df = ok[(ok["tool"] == "custom") & (ok["circuit_family"] == family)]
+            custom_df = custom_ok[custom_ok["circuit_family"] == family]
             tool_reductions = fam_df["gate_reduction_pct"].tolist()
             custom_reductions = custom_df["gate_reduction_pct"].tolist()
 
@@ -457,7 +553,7 @@ def aggregate_results() -> pd.DataFrame:
             delta = None
             holm_sig = False
 
-            if tool != "custom" and len(tool_reductions) >= 3 and len(custom_reductions) >= 3:
+            if tool_name != "custom" and len(tool_reductions) >= 3 and len(custom_reductions) >= 3:
                 try:
                     _, mw_p = stats.mannwhitneyu(tool_reductions, custom_reductions,
                                                  alternative="two-sided")
@@ -470,8 +566,17 @@ def aggregate_results() -> pd.DataFrame:
                 delta = cliffs_delta(tool_reductions, custom_reductions)
                 holm_sig = (mw_p is not None and mw_p < holm_alpha)
 
+            # Fidelity pass rate among rows with exact unitary comparison only
+            exact_rows = fam_df[fam_df["fidelity_source"] == "exact"]
+            fid_pass = (float((exact_rows["fidelity"] >= 0.999).mean())
+                        if len(exact_rows) else None)
+            # True success rate over all rows (ok + error + timeout) in the cell
+            tot = int(cell_total.get((tool_key, family), len(fam_df)))
+            ok_n = int(cell_ok.get((tool_key, family), len(fam_df)))
+
             agg_rows.append({
-                "tool": tool,
+                "tool": tool_name,
+                "tool_config": tool_cfg,
                 "circuit_family": family,
                 "n_qubits_median": float(fam_df["n_qubits"].median()),
                 "n_trials": len(fam_df),
@@ -484,7 +589,11 @@ def aggregate_results() -> pd.DataFrame:
                 "mean_cnot_reduction": round(float(fam_df["cnot_reduction_pct"].mean()), 4),
                 "mean_depth_reduction": round(float(fam_df["depth_reduction_pct"].mean()), 4),
                 "mean_runtime_seconds": round(float(fam_df["runtime_seconds"].mean()), 6),
-                "fidelity_pass_rate": round(
+                "median_runtime_seconds": round(float(fam_df["runtime_seconds"].median()), 6),
+                "n_cell_rows": tot,
+                "success_rate": round(ok_n / tot, 4) if tot else None,
+                "fidelity_pass_rate": round(fid_pass, 4) if fid_pass is not None else None,
+                "fidelity_exact_rate": round(
                     float((fam_df["fidelity_source"] == "exact").mean()), 4),
                 "mann_whitney_p_vs_custom": mw_p,
                 "wilcoxon_p_vs_custom": wilcox_p,
@@ -495,7 +604,10 @@ def aggregate_results() -> pd.DataFrame:
 
     agg_df = pd.DataFrame(agg_rows)
     agg_csv = agg_dir / "sota_comparison_aggregated.csv"
-    agg_df.to_csv(agg_csv, index=False)
+    bak = _backup_if_exists(agg_csv)
+    if bak:
+        print(f"  backup: {bak.name}")
+    _atomic_write_text(agg_csv, agg_df.to_csv(index=False))
     print(f"Aggregated {len(agg_df)} rows -> {agg_csv}")
     return agg_df
 
@@ -517,20 +629,26 @@ def main():
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--timeout", type=float, default=DEFAULT_TIMEOUT_S)
     parser.add_argument("--aggregate", action="store_true",
-                        help="Aggregate all raw CSVs and compute statistics")
+                        help="Aggregate canonical raw CSVs and compute statistics")
+    parser.add_argument("--families", nargs="*", default=None,
+                        help="Optional family filter, e.g. --families QFT QuantumWalk")
+    parser.add_argument("--target-qubits", type=int, nargs="*", default=None,
+                        help="Optional qubit-count filter, e.g. --target-qubits 3 4")
     args = parser.parse_args()
 
     if args.aggregate:
         aggregate_results()
         return
 
+    tq = set(args.target_qubits) if args.target_qubits else None
     if args.tool == "all":
         for tool in TOOL_REGISTRY:
             available, _ = check_tool_available(tool)
             if available:
                 run_tool(tool, config=args.config, mode=args.mode,
                          n_trials=args.n_trials, seed=args.seed,
-                         timeout_s=args.timeout)
+                         timeout_s=args.timeout, families=args.families,
+                         target_qubits=tq)
             else:
                 print(f"Skipping {tool}: not available")
         # Auto-aggregate after all runs
@@ -538,7 +656,8 @@ def main():
     else:
         run_tool(args.tool, config=args.config, mode=args.mode,
                  n_trials=args.n_trials, seed=args.seed,
-                 timeout_s=args.timeout)
+                 timeout_s=args.timeout, families=args.families,
+                 target_qubits=tq)
 
 
 if __name__ == "__main__":

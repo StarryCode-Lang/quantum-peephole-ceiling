@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.10", "3.12"]
+        python-version: ["3.12"]
 
     steps:
       - uses: actions/checkout@v4
@@ -41,7 +41,6 @@ jobs:
       - name: Run full test suite with coverage
         shell: bash -l {0}
         run: |
-          pip install pytest-cov
           python -m pytest tests/ -q --timeout=600 --cov=src --cov-report=term-missing
 
       - name: Verify canonical data
@@ -56,7 +55,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.12"
       - name: Install linters
         run: pip install flake8
       - name: Lint with flake8
@@ -73,7 +72,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: conda-incubator/setup-miniconda@v3
         with:
-          python-version: "3.10"
+          python-version: "3.12"
           environment-file: environment.yml
           activate-environment: q-research
           auto-activate-base: false

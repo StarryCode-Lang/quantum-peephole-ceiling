@@ -6,7 +6,7 @@
 > **Scope**: Additional data, proofs, algorithms, and analysis not included in the main manuscript.  
 > **Changes from v2.0**: Rewrote S8.3 to remove invalid quantum supremacy connection (non sequitur). Added known limitations disclosures.
 
-> **IMPORTANT DISCLAIMER (2026-06-15)**: The Cirq and t|ket> multi-compiler comparison data referenced in this document is **NOT yet available** in the canonical dataset. The current E15 canonical data contains results for Qiskit and custom peephole optimizers only. All claims regarding "multi-compiler comparison with Cirq and t|ket>" should be interpreted as **[PRELIMINARY — only metadata available]** — only compiler configuration metadata (version numbers, pass names, parameter ranges) has been collected; no actual optimization output data exists for Cirq or t|ket>. See S11.2 for details on the status of the multi-compiler comparison.
+> **DISCLAIMER (updated 2026-07-21, wave 2)**: The Cirq and t|ket> multi-compiler comparison data is now available. The original E15 canonical dataset (994 records) contains Qiskit and custom peephole optimizers only; Cirq and t|ket> results were subsequently collected in E20 full mode (`multi_compiler_full.csv`, 1,070 records) and the v6 SOTA benchmark (`sota_comparison_aggregated.csv`, corrected Cirq pipeline as of 2026-07-20). Remaining caveats — the 2026-07-18 Cirq pipeline bug and t|ket> RandomClifford fidelity failures — are documented in S11.2 and Appendix E. (This note supersedes the 2026-06-15 disclaimer.)
 
 ---
 
@@ -321,53 +321,63 @@ Output: OptimizationResult (C', reduction, fidelity)
 
 ### S5.1 Data File Inventory
 
-> Canonical file inventory. For the authoritative list with full SHA-256 checksums, see `release/release_manifest.json`.
+> Canonical file inventory, refreshed from `release/release_manifest.json` on 2026-07-21 (34 canonical datasets, 73,702 rows). For the authoritative list with full SHA-256 checksums, see `release/release_manifest.json`. Derived (non-canonical) analysis files live under each experiment's `derived/` directory and are intentionally excluded from the manifest — e.g. `data/v6/e21/derived/{ceiling_aware_summary.csv, e21_paired_statistics.csv}`, `data/v7/e24/derived/e24_theorem7_summary.csv`, `data/v7/e29/derived/e29_multi_seed_statistics.csv`, and the E18 bias artifacts in `data/v5/e18/derived/`.
 
 | Experiment | File | Records | SHA-256 (prefix) |
 |------------|------|---------|-------------------|
-| E01 | e01_phase_transition_v2_20260613_132653.csv | 25,000 | - | 97efc30d5c6c3840... |
-| E02 | e02_entanglement_density_v2_20260613_130455.csv | 2,100 | - | 72ec3fc0d32aa98b... |
-| E03 | e03_scaling_v2_20260611_224540.csv | 12,000 | - | c08cf5ef5927df4b... |
-| E04 | e04_algorithm_comparison_v2_20260613_132653.csv | 400 | - | 496a5917dbb401a0... |
-| E05 | e05_landscape_v2_20260613_130355.csv | 6,000 | - | e09ab43749ef39e4... |
-| E11 | e11_merged_powered.csv | 519 | - | 3fe9f79934a1ed5e... |
-| E12 | e12_compiler_baseline_e12_full_20260626_000134_nocoupling.csv | 568 | - | 798e6d81ec8f327d... |
-| E13 | e13_structural_ceiling_e13_full_20260609_043322.csv | 56 | - | 5169ff846f45de43... |
-| HELDOU | new_families_heldout.csv | 125 | - | 7ae795207c673820... |
-| ISOLATION | qiskit_pass_isolation.csv | 100 | - | 29780f1aa0ac81d3... |
-| E10 | e10_expanded_phase1_vs_phase2_20260613_131601.csv | 1,905 | - | 4c8a28f45d99d6f4... |
-| E14 | e14_extended_benchmark_e14_full_20260611_114726.csv | 2,130 | - | bbd4acb346ae31c9... |
-| E15 | e15_multi_compiler_e15_full_20260611_150934.csv | 994 | - | 5d24d8fd595b738d... |
-| E16 | e16_window_scaling_e16_full_20260610_142547.csv | 696 | - | e54973f6a5bcc489... |
-| E17 | e17_connectivity_e17_full_20260610_150935.csv | 755 | - | 2a82d9e97de5fd6a... |
-| E18 | e18_clifford_t_e18_full_20260610_052140.csv | 270 | - | 1929e1f6a70ca43d... |
-| E10_PHASE2B | e10_phase2b_validation_20260622_115818.csv | 1,017 | - | f3f75237708d845a... |
-| E10_REAL_VARIANCE | e10_real_variance_20260623_012636.csv | 700 | - | cca42a3c783da29f... |
-| E19 | e19_wcl_listing_full_e19_full_20260620_123825.csv | 10,000 | - | cbc2b78823a9e67c... |
-| E20 | multi_compiler_full.csv | 1,070 | - | dfa892cfc74b65d4... |
-| E21 | ceiling_aware_comparison.csv | 1,140 | - | d8dc3953e74136e6... |
-| E21 | ceiling_aware_summary.csv | 30 | - | 88d9534a28130bdb... |
-| E21 | e21_paired_statistics.csv | 57 | - | a45c9a7b3c72d320... |
-| E25 | e25_industry_benchmarks_e25_industry_proxies_20260711_042550.csv | 66 | - | 5545e6a199e5e3da... |
-| E23 | e23_ag_canonical_results.csv | 160 | - | eecf3c52f30b2d19... |
-| E24 | e24_theorem7_results.csv | 75 | - | cdeb08e6a326d8b0... |
-| E24 | e24_theorem7_summary.csv | 15 | - | 8cb9444f0c76c583... |
-| **Total** | **27 datasets** | **67,948** | |
+| E1 | e01_phase_transition_v2_20260613_132653.csv | 25,000 | 97efc30d5c6c3840... |
+| E2 | e02_entanglement_density_v2_20260613_130455.csv | 2,100 | 72ec3fc0d32aa98b... |
+| E3 | e03_scaling_v2_20260611_224540.csv | 12,000 | c08cf5ef5927df4b... |
+| E4 | e04_algorithm_comparison_v2_20260613_132653.csv | 400 | 496a5917dbb401a0... |
+| E5 | e05_landscape_v2_20260613_130355.csv | 6,000 | e09ab43749ef39e4... |
+| E11 | e11_merged_powered.csv | 519 | 3fe9f79934a1ed5e... |
+| E12 | e12_compiler_baseline_e12_full_20260626_000134_nocoupling.csv | 568 | 798e6d81ec8f327d... |
+| E13 | e13_structural_ceiling_e13_full_20260609_043322.csv | 56 | 5169ff846f45de43... |
+| HELDOU | new_families_heldout.csv | 125 | 7ae795207c673820... |
+| ISOLATION | qiskit_pass_isolation.csv | 100 | 29780f1aa0ac81d3... |
+| E10 | e10_expanded_phase1_vs_phase2_20260613_131601.csv | 1,905 | 4c8a28f45d99d6f4... |
+| E14 | e14_extended_benchmark_e14_full_20260611_114726.csv | 2,130 | bbd4acb346ae31c9... |
+| E15 | e15_multi_compiler_e15_full_20260611_150934.csv | 994 | 5d24d8fd595b738d... |
+| E16 | e16_window_scaling_e16_full_20260610_142547.csv | 696 | e54973f6a5bcc489... |
+| E17 | e17_connectivity_e17_full_20260610_150935.csv | 755 | 2a82d9e97de5fd6a... |
+| E18 | e18_clifford_t_e18_full_20260610_052140.csv | 270 | 1929e1f6a70ca43d... |
+| CEILING_REPAIR | lofo_cv_results.csv | 20 | 19e64945c25cff87... |
+| E10_phase2b | e10_phase2b_validation_20260622_115818.csv | 1,017 | f3f75237708d845a... |
+| E10_real_variance | e10_real_variance_20260623_012636.csv | 700 | cca42a3c783da29f... |
+| WCL-E19 | e19_wcl_listing_full_e19_full_20260620_123825.csv | 10,000 | cbc2b78823a9e67c... |
+| MC-E20 | multi_compiler_full.csv | 1,070 | dfa892cfc74b65d4... |
+| E21 | ceiling_aware_comparison.csv | 1,140 | d8dc3953e74136e6... |
+| E25 | e25_industry_benchmarks_e25_industry_proxies_20260711_042550.csv | 66 | 5545e6a199e5e3da... |
+| E29_multi_seed_e04 | e29_multi_seed_smoke_20260717_121732.csv | 80 (superseded by v7/e29) | 178df9790f9fd5e5... |
+| SOTA_BENCHMARK | sota_comparison_aggregated.csv | 105 | bfcaaa47588109fe... |
+| E10_PHASE2B_FULL | e10_phase2b_full_validation.csv | 624 | a499d8f1e680d31f... |
+| E19_EXTENDED | e19_wcl_full_family.csv | 960 | fbbae5095f32239a... |
+| E22 | e22_gate_shuffle_ablation.csv | 2,240 | 4bb3ad28aa0882bf... |
+| E23 | e23_ag_canonical_results.csv | 160 | eecf3c52f30b2d19... |
+| E24 | e24_theorem7_results.csv | 75 | cdeb08e6a326d8b0... |
+| E26 | e26_bv_theory_results.csv | 4 | ce044aa13a63735f... |
+| E29 | e29_multi_seed_e04_full.csv | 800 | 68a814a853d95b9a... |
+| E26_phase2b_full_v8 | phase2b_full_validation_v8.csv | 735 | 2a0a863a657ad8d1... |
+| HARDWARE_VALIDATION | ehw_runs_full_20260720_150931.csv | 288 | e6537e0ee9b59ca5... |
+| **Total** | **34 datasets** | **73,702** | |
 
 Checksums and file paths are canonical in `release/release_manifest.json`. Per-experiment metadata is in each `data/v*/e*/metadata.json`.
 
+**Post-manifest reconciliation (2026-07-21, wave 3):** the three former post-manifest additions are now all in the release manifest — the Phase-2b full v2 dataset (`data/v8/phase2b_full/`, 735 rows), the EHW full run (`ehw_runs_full_20260720_150931.csv`, 288 rows, which supersedes the 48-row smoke file as canonical; noise-model simulation on fake backends, **not real hardware**), and the regenerated SOTA aggregate (105 rows, protocol-conformant schema after the 2026-07-20 Cirq pipeline fix). No pending manifest additions remain.
+
 ### S5.2 Data Format Specification
 
-The project uses 5 schema families across data versions. For the canonical schema definitions, field descriptions, and version mapping, see `docs/data_dictionary.md`.
+The project uses 6 schema families across data versions. For the canonical schema definitions, field descriptions, and version mapping, see `docs/data_dictionary.md`.
 
 **Schema families:**
-- `legacy_v2_v3`: E1-E5 (early experiments, v2/v3 format)
+- `legacy_v2_v3`: E1-E5, E10 (early experiments, v2/v3 format)
 - `results_v1`: E11-E13 (real-circuit benchmarks)
-- `results_v2`: E10, E14-E18, held-out, isolation (expanded benchmarks)
-- `results_v6`: E19-E21 (listing model, multi-compiler, ceiling-aware)
-- `results_v7`: E23-E25 (theory validation, industry benchmarks)
+- `results_v2`: E14-E18, held-out, isolation (expanded benchmarks)
+- `results_v6`: E19-E21, E25, E10p2b, E10-variance, E29-smoke, SOTA, ceiling-repair (listing model, multi-compiler, ceiling-aware, industry benchmarks, review-driven supplements)
+- `results_v7`: E22-E24, E26, E29, E10p2b-full, E19-extended (theory validation and full-mode re-runs superseding v6 smoke data)
+- `results_v8`: EHW (hardware validation, noise-model simulation), Phase-2b full v2
 
-Each CSV file's schema is recorded in its experiment's `metadata.json` under the `schema` field.
+Each CSV file's schema is recorded in its experiment's `metadata.json` under the `schema_version` field.
 
 ---
 
@@ -563,7 +573,7 @@ Fault-tolerant quantum computing uses **logical circuits** composed of Clifford+
 **Open Problem OP1 (Complexity of CODP)**:
 Is CODP QMA-hard for the restricted peephole rewrite rule set $\mathcal{R} = \{\text{adjacent cancellation, commutation-enabled cancellation}\}$?
 
-*Motivation from our results*: The structural ceiling framework provides empirical evidence that for random circuits under the tested LBL/local-rewrite setting, the answer may be "no" — because the observed optimization landscape is flat and Theorems 1-2 explain the sparse action space, suggesting that hard instances of CODP may require algebraically structured circuits. Our 45,000+ trials show that, in this setting, the difficulty is not in search (all algorithms converge to the same ceiling) but in the action space itself.
+*Motivation from our results*: The structural ceiling framework provides empirical evidence that for random circuits under the tested LBL/local-rewrite setting, the answer may be "no" — because the observed optimization landscape is flat and Theorems 1-2 explain the sparse action space, suggesting that hard instances of CODP may require algebraically structured circuits. Our 72,000+ benchmark records show that, in this setting, the difficulty is not in search (all algorithms converge to the same ceiling) but in the action space itself.
 
 **Open Problem OP2 (Phase Transition in Optimization Complexity)**:
 Does there exist a circuit-family-dependent phase transition in the computational complexity of optimal peephole optimization, analogous to SAT phase transitions?
@@ -604,7 +614,7 @@ Does there exist a circuit-family-dependent phase transition in the computationa
 - Qubit sizes: n in {3,4,5} (smoke); n in {3,...,10,12,15,20} (full)
 - Optimizers: Greedy Phase 1, Commutation Phase 2, Hybrid Phase 1+2
 - Metrics: Gate reduction, depth reduction, 2Q-gate reduction, CNOT reduction
-- Window sizes: {2,5,10,20,50} (full mode)
+- Window sizes: {2,5,10,20} (full mode)
 
 ### S9.2 Experiment E15: Multi-Compiler Baseline
 
@@ -613,10 +623,10 @@ Does there exist a circuit-family-dependent phase transition in the computationa
 **Compilers tested**:
 - Custom: Greedy, Commutation, Hybrid (v5.0.0)
 - Qiskit transpiler: optimization levels 0, 1, 2, 3 (v2.4.1)
-- Cirq: built-in optimizers (DropEmptyMoments, DropNegligibleOperations, MergeSingleQubitGates) — **[NOT YET EXECUTED]**
-- t|ket>: FullPeepholeOptimise — **[NOT YET EXECUTED]**
+- Cirq: built-in optimizers (see S11.2 for the executed pass configuration)
+- t|ket>: FullPeepholeOptimise
 
-> **Current status**: The canonical E15 dataset (994 records) contains results for Qiskit and custom peephole optimizers only. Cirq and t|ket> were listed in the experiment design but have not yet been run. **[PRELIMINARY — only metadata available]** for Cirq and t|ket>: only version numbers and pass configuration parameters are available. No optimization output data exists. See S11.2 for details.
+> **Status (updated 2026-07-21, wave 2)**: The canonical E15 dataset (994 records) covers Qiskit and custom peephole optimizers. Cirq and t|ket> have since been executed in two follow-up datasets: (1) E20 full mode (`multi_compiler_full.csv`, 1,070 records, data/v6), and (2) the v6 SOTA benchmark (`sota_comparison_aggregated.csv`), which includes Qiskit L0–L3, the corrected Cirq pipeline (fixed 2026-07-20), and t|ket> FullPeepholeOptimise. See S11.2 for configurations and remaining caveats.
 
 **Metrics**: Gate/depth/CNOT/2Q reduction, fidelity, runtime, compiler metadata
 
@@ -625,22 +635,19 @@ Does there exist a circuit-family-dependent phase transition in the computationa
 **Research Question**: How does Phase 2 optimization power scale with the search window size w?
 
 **Design**:
-- Window sizes: w in {2, 5, 10, 20, 50}
+- Window sizes: w in {2, 5, 10, 20}
 - Optimizers: CommutationRewriter, HybridCommuteRewrite
 - Circuits: Same as E14
 
-**Note**: Earlier design documents listed only window sizes [5, 10, 20]; the full experiment expanded this to {2, 5, 10, 20, 50} to capture the saturation curve at both extremes.
+**Note**: Earlier design documents listed only window sizes [5, 10, 20]; the full experiment expanded this to {2, 5, 10, 20}. (Earlier versions of this section also listed w = 50; the canonical E16 dataset contains no w = 50 rows — corrected in the 2026-07-21 wave-2 pass.)
 
-**Preliminary empirical trend**: Window scaling suggests a possible saturation pattern:
-- w=2: ~0% Phase 2 advantage (too local)
-- w=5: ~1.5% marginal improvement
-- w=10: ~4.2% (default, captures most observed commutation opportunities)
-- w=20: ~4.5% (diminishing returns)
-- w=50: ~4.6% (apparent saturation)
+**Empirical trend** (family-mean Phase 2 gate-reduction advantage over Phase 1, computed from the canonical E16 dataset):
+- Commutation-only (mean over commutation-enabled families): w=2: 0.0%, w=5: 1.0%, w=10: 3.8%, w=20: 4.5%
+- Hybrid (Phase 1+2): w=2: 6.8%, w=5: 7.9%, w=10: 10.6%, w=20: 11.3%
 
-This suggests that **w=10 may be a practical default** for Phase 2 optimization, but the result should not be treated as a statistically confirmed design rule.
+This suggests diminishing returns beyond w ≈ 10–20 and that **w=10 may be a practical default** for Phase 2 optimization, but the result should not be treated as a statistically confirmed design rule.
 
-**Statistical caveat**: The window scaling comparison (w=2 vs w=20) is underpowered (power=0.126, p=0.420, Cohen's d=0.173). The saturation pattern should be interpreted as an empirical trend, not a statistically confirmed result.
+**Statistical caveat**: An earlier version of this section quoted an underpowered w=2 vs w=20 comparison (power=0.126, p=0.420, Cohen's d=0.173). The wave-1 statistical review could not reproduce those statistics from the canonical E16 dataset (provenance unclear), so they have been removed. The saturation pattern should be interpreted as an empirical trend, not a statistically confirmed result.
 
 ### S9.4 Experiment E17: Hardware Connectivity Constraints
 
@@ -699,22 +706,28 @@ Levels 0-3 correspond to increasingly aggressive optimization passes, including 
 
 ### S11.2 Status of Multi-Compiler Comparison
 
-> **Important caveat (2026-06-12)**: The current E15 dataset includes only Qiskit and custom peephole optimizers. Cirq and t|ket> were listed in the experiment design but have not yet been executed. **[PRELIMINARY — only metadata available]**: Only compiler configuration metadata (version numbers, pass names, parameter ranges) is available for Cirq and t|ket>. No optimization output data has been generated. The configuration snippets below describe the *planned* setup, not yet-run experiments.
+> **Status (updated 2026-07-21, wave 2)**: Cirq and t|ket> have been executed. Two datasets now cover the full multi-compiler comparison: (1) E20 full mode (`multi_compiler_full.csv`, 1,070 records, data/v6); (2) the v6 SOTA benchmark (`sota_comparison_aggregated.csv`), which includes Qiskit L0–L3, the corrected Cirq pipeline (fixed 2026-07-20, `sota_benchmark.py` v1.1.0), and t|ket> FullPeepholeOptimise. The configurations below are the *executed* setups.
 
-**Planned Cirq configuration**:
-1. `DropEmptyMoments()` — remove idle time steps
-2. `DropNegligibleOperations()` — remove near-identity gates
-3. `MergeSingleQubitGates()` — fuse consecutive single-qubit gates
-4. `EjectZ()` / `MergeInteractions()` — phase polynomial optimization
+**Executed Cirq configuration** (`experiments/sota_benchmark.py::cirq_optimize`):
+1. `drop_empty_moments` — remove idle time steps
+2. `drop_negligible_operations` — remove near-identity gates
+3. `optimize_for_target_gateset(CZTargetGateset)` — retarget to CZ + single-qubit gates
+4. `eject_z` — phase-polynomial optimization
+5. `merge_single_qubit_gates_to_phased_x_and_z` — fuse consecutive single-qubit gates
+6. `drop_empty_moments` — final cleanup
 
-**Planned t|ket> configuration**:
+> **Cirq fix caveat**: the 2026-07-18 Cirq data silently skipped the CZTargetGateset step (a `target_gateset=`/`gateset=` keyword rename in cirq 1.6.1 raised a swallowed TypeError). The corrected pipeline above was re-run on 2026-07-20; only post-fix Cirq numbers should be cited (see Appendix E).
+
+**Executed t|ket> configuration** (`experiments/sota_benchmark.py::tket_optimize`):
 ```python
 from pytket.passes import FullPeepholeOptimise, DecomposeBoxes
 DecomposeBoxes().apply(tk_circ)
 FullPeepholeOptimise().apply(tk_circ)
 ```
 
-All claims about "multi-compiler comparison" in this document should be interpreted as "custom peephole vs Qiskit" until Cirq/t|ket> data is collected.
+> **t|ket> correctness caveat**: on RandomClifford instances, 14/30 t|ket> outputs fail exact-unitary fidelity verification (see Appendix E for the failure table). t|ket> RandomClifford rows should be treated as unreliable pending root-cause analysis.
+
+Multi-compiler claims in this document now rest on the E20-full and SOTA datasets; the older E15 dataset (994 records) remains the canonical source for the Qiskit-only comparison.
 
 ---
 
@@ -735,7 +748,7 @@ If $w_0 \approx 5$ (as suggested by preliminary runs), then:
 - $w = 3w_0 = 15$ would capture $\sim 95\%$ of $\Gamma_{\max}$ under the fitted saturation model
 - $w = 5w_0 = 25$ would capture $\sim 99\%$ of $\Gamma_{\max}$ under the fitted saturation model
 
-This provides a **hypothesis** for compiler designers: $w = 10$–$15$ may offer a good cost-benefit tradeoff. The window scaling comparison (w=2 vs w=20) is underpowered (power=0.126, p=0.420, Cohen's d=0.173), so the saturation claim should be interpreted as an empirical trend rather than a statistically confirmed result.
+This provides a **hypothesis** for compiler designers: $w = 10$–$15$ may offer a good cost-benefit tradeoff. (An earlier version quoted an underpowered w=2 vs w=20 comparison — power=0.126, p=0.420, Cohen's d=0.173 — but the wave-1 statistical review could not reproduce those statistics from the canonical E16 dataset, so they have been removed.) The saturation claim should be interpreted as an empirical trend rather than a statistically confirmed result.
 
 ---
 

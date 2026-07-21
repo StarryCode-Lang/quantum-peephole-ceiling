@@ -8,10 +8,15 @@ Usage:
     python scripts/reproduce_all.py [--experiments E1 E2 ...] [--figures] [--tests] [--verify]
 
 Options:
-    --experiments: Space-separated list of experiments to run (default: all)
+    --experiments: Space-separated list of experiments to run (default: none unless --all).
+        Experiments that expose a ``--mode`` flag are pinned to ``smoke`` here;
+        run the scripts directly with ``--mode full`` for full-scale reruns.
     --figures: Generate publication-quality figures
-    --tests: Run unit test suite
-    --verify: Verify data integrity and checksums
+    --tests: Run the unit test suite via ``pytest tests/ -q`` (mirrors CI)
+    --verify: Verify data integrity — every canonical CSV listed in
+        release/release_manifest.json must exist with a matching SHA-256
+        checksum and row count, followed by per-experiment structural checks
+        (metadata, required columns, source-hash drift warnings)
 """
 
 import sys
@@ -27,6 +32,11 @@ PROJECT_ROOT = Path(__file__).parent.parent.resolve()
 sys.path.insert(0, str(PROJECT_ROOT))
 
 # Experiment registry
+# Entries with a ``--mode`` CLI flag are pinned explicitly to ``smoke`` so that
+# ``--all`` stays a fast reproduction check and never silently escalates to a
+# multi-hour full run if an experiment's default changes. Full-scale reruns
+# remain available by invoking each experiment script directly (see
+# release/release_manifest.json ``full_experiment_entrypoints``).
 EXPERIMENTS = {
     "E1": {
         "script": "experiments/e01_phase_transition/run.py",
@@ -72,69 +82,87 @@ EXPERIMENTS = {
     },
     "E11": {
         "script": "experiments/e11_real_circuit_benchmark/run.py",
-        "description": "Real-circuit optimizer benchmark (smoke default)",
+        "args": ["--mode", "smoke"],
+        "description": "Real-circuit optimizer benchmark (pinned smoke mode)",
         "estimated_time": "~1 minute smoke / longer full",
         "output": "data/v4/e11/"
     },
     "E12": {
         "script": "experiments/e12_compiler_baseline/run.py",
-        "description": "Qiskit compiler baseline (smoke default, supports --no-coupling-map)",
+        "args": ["--mode", "smoke"],
+        "description": "Qiskit compiler baseline (pinned smoke mode, supports --no-coupling-map)",
         "estimated_time": "~1 minute smoke / longer full",
         "output": "data/v4/e12/"
     },
     "E13": {
         "script": "experiments/e13_structural_ceiling/run.py",
-        "description": "Structural ceiling/action-space analysis (smoke default)",
+        "args": ["--mode", "smoke"],
+        "description": "Structural ceiling/action-space analysis (pinned smoke mode)",
         "estimated_time": "~1 minute smoke / longer full",
         "output": "data/v4/e13/"
     },
     "E14": {
         "script": "experiments/e14_extended_benchmark/run.py",
-        "description": "Extended benchmark suite (v5, 15 families, smoke default)",
+        "args": ["--mode", "smoke"],
+        "description": "Extended benchmark suite (v5, 15 families, pinned smoke mode)",
         "estimated_time": "~2 minutes smoke / ~30 minutes full",
         "output": "data/v5/e14/"
     },
     "E15": {
         "script": "experiments/e15_multi_compiler/run.py",
-        "description": "Multi-compiler baseline (Qiskit+Cirq+t|ket>, smoke default)",
+        "args": ["--mode", "smoke"],
+        "description": "Multi-compiler baseline (Qiskit+Cirq+t|ket>, pinned smoke mode)",
         "estimated_time": "~2 minutes smoke / ~20 minutes full",
         "output": "data/v5/e15/"
     },
     "E16": {
         "script": "experiments/e16_window_scaling/run.py",
-        "description": "Window-size scaling study (smoke default)",
+        "args": ["--mode", "smoke"],
+        "description": "Window-size scaling study (pinned smoke mode)",
         "estimated_time": "~2 minutes smoke / ~20 minutes full",
         "output": "data/v5/e16/"
     },
     "E17": {
         "script": "experiments/e17_connectivity/run.py",
-        "description": "Hardware connectivity constraints (smoke default)",
+        "args": ["--mode", "smoke"],
+        "description": "Hardware connectivity constraints (pinned smoke mode)",
         "estimated_time": "~2 minutes smoke / ~20 minutes full",
         "output": "data/v5/e17/"
     },
     "E18": {
         "script": "experiments/e18_clifford_t/run.py",
-        "description": "Clifford+T gate-set experiment (smoke default)",
+        "args": ["--mode", "smoke"],
+        "description": "Clifford+T gate-set experiment (pinned smoke mode)",
         "estimated_time": "~1 minute smoke / ~15 minutes full",
         "output": "data/v5/e18/"
     },
     "E19": {
         "script": "experiments/e19_wcl_listing/run.py",
-        "description": "WCL vs LBL listing model comparison (review fix M10)",
-        "estimated_time": "~5 minutes",
+        "args": ["--mode", "smoke"],
+        "description": "WCL vs LBL listing model comparison (review fix M10, pinned smoke mode)",
+        "estimated_time": "~1 minute smoke / ~5 minutes full",
         "output": "data/v6/e19/"
     },
     "E20": {
         "script": "experiments/e20_multi_compiler_full/run.py",
-        "description": "Multi-compiler full comparison (Qiskit/Cirq/t|ket>)",
-        "estimated_time": "~5 minutes",
+        "args": ["--mode", "smoke"],
+        "description": "Multi-compiler full comparison (Qiskit/Cirq/t|ket>, pinned smoke mode)",
+        "estimated_time": "~1 minute smoke / ~5 minutes full",
         "output": "data/v6/e20/"
     },
     "E21": {
         "script": "experiments/e21_ceiling_aware/run.py",
-        "description": "Ceiling-aware optimizer (smoke default, review fix M10)",
+        "args": ["--mode", "smoke"],
+        "description": "Ceiling-aware optimizer (pinned smoke mode, review fix M10)",
         "estimated_time": "~1 minute smoke / ~10 minutes full",
         "output": "data/v6/e21/"
+    },
+    "E22": {
+        "script": "experiments/gate_shuffle_ablation.py",
+        "args": ["--mode", "smoke"],
+        "description": "Gate-shuffle ablation (v7, pinned smoke mode)",
+        "estimated_time": "~2 minutes smoke / longer full",
+        "output": "data/v7/e22/"
     },
     "E23": {
         "script": "experiments/e23_ag_canonical/run.py",
@@ -153,6 +181,20 @@ EXPERIMENTS = {
         "description": "Industry benchmark proxy circuits",
         "estimated_time": "~1 minute",
         "output": "data/v6/e25/"
+    },
+    "E26": {
+        "script": "experiments/phase2b_full_validation.py",
+        "args": ["--mode", "smoke"],
+        "description": "Theorem-9 BV theory-bounds validation (v7, pinned smoke mode)",
+        "estimated_time": "~2 minutes smoke / longer full",
+        "output": "data/v7/e26/"
+    },
+    "E29": {
+        "script": "experiments/multi_seed_e04.py",
+        "args": ["--mode", "smoke"],
+        "description": "Multi-seed E04 robustness study (v7, pinned smoke mode)",
+        "estimated_time": "~2 minutes smoke / ~1 hour full",
+        "output": "data/v7/e29/"
     },
 }
 
@@ -185,17 +227,14 @@ def run_command(cmd, description, cwd=None):
 
 
 def run_tests():
-    """Run unit test suite."""
-    all_ok = True
-    test_scripts = [
-        "tests/test_core.py",
-        "tests/test_statistical_analysis.py",
-    ]
-    for script in test_scripts:
-        cmd = [sys.executable, script]
-        if not run_command(cmd, f"Unit Tests ({script})"):
-            all_ok = False
-    return all_ok
+    """Run the unit test suite through pytest, mirroring CI.
+
+    Previously this invoked ``tests/test_core.py`` directly, but that file no
+    longer exists in the repository, so ``--tests`` failed immediately. Running
+    ``pytest tests/`` matches the CI workflow exactly.
+    """
+    cmd = [sys.executable, "-m", "pytest", "tests/", "-q"]
+    return run_command(cmd, "Unit Tests (pytest tests/ -q)")
 
 
 def run_experiment(exp_id):
@@ -204,15 +243,15 @@ def run_experiment(exp_id):
         print(f"❌ Unknown experiment: {exp_id}")
         print(f"Available: {', '.join(EXPERIMENTS.keys())}")
         return False
-    
+
     exp = EXPERIMENTS[exp_id]
     script_path = PROJECT_ROOT / exp["script"]
-    
+
     if not script_path.exists():
         print(f"❌ Script not found: {script_path}")
         return False
-    
-    cmd = [sys.executable, exp["script"]]
+
+    cmd = [sys.executable, exp["script"], *exp.get("args", [])]
     return run_command(cmd, f"Experiment {exp_id}: {exp['description']}")
 
 
@@ -227,12 +266,103 @@ def generate_figures():
     return run_command(cmd, "Figure Generation")
 
 
-def verify_data():
-    """Verify data integrity."""
+def verify_release_manifest():
+    """Verify every canonical dataset against release/release_manifest.json.
+
+    Each manifest dataset entry pins the file path, expected row count, and
+    SHA-256 checksum. A missing file, unreadable CSV, row-count mismatch, or
+    checksum mismatch fails verification. This is the authoritative integrity
+    gate for the released canonical data.
+    """
+    import hashlib
+    import pandas as pd
+
     print(f"\n{'='*60}")
-    print("Verifying Data Integrity")
+    print("Verifying Canonical Datasets vs Release Manifest")
     print(f"{'='*60}")
-    
+
+    manifest_path = PROJECT_ROOT / "release" / "release_manifest.json"
+    if not manifest_path.exists():
+        print(f"❌ Release manifest not found: {manifest_path}")
+        return False
+
+    def sha256_of(path):
+        h = hashlib.sha256()
+        with open(path, "rb") as f:
+            for chunk in iter(lambda: f.read(1 << 20), b""):
+                h.update(chunk)
+        return h.hexdigest()
+
+    try:
+        with open(manifest_path) as f:
+            manifest = json.load(f)
+    except Exception as e:
+        print(f"❌ Release manifest is not valid JSON: {e}")
+        return False
+
+    datasets = manifest.get("datasets", [])
+    if not datasets:
+        print("❌ Release manifest contains no dataset entries")
+        return False
+
+    all_ok = True
+    for ds in datasets:
+        rel = ds.get("file")
+        expected_sha = ds.get("sha256")
+        expected_rows = ds.get("rows")
+        label = f"{ds.get('experiment_id', '?'):>16} | {rel}"
+        path = PROJECT_ROOT / rel if rel else None
+
+        if path is None or not path.exists():
+            print(f"❌ {label}: file missing")
+            all_ok = False
+            continue
+
+        actual_sha = sha256_of(path)
+        if actual_sha != expected_sha:
+            print(f"❌ {label}: SHA-256 mismatch")
+            print(f"   Expected: {expected_sha}")
+            print(f"   Actual:   {actual_sha}")
+            all_ok = False
+            continue
+
+        try:
+            n_rows = len(pd.read_csv(path))
+        except Exception as e:
+            print(f"❌ {label}: unreadable CSV ({e})")
+            all_ok = False
+            continue
+
+        if expected_rows is not None and n_rows != expected_rows:
+            print(f"❌ {label}: row-count mismatch (expected {expected_rows}, got {n_rows})")
+            all_ok = False
+            continue
+
+        print(f"✅ {label} | SHA-256 OK | Rows: {n_rows}")
+
+    if all_ok:
+        print(f"\n✅ All {len(datasets)} manifest dataset checksums verified")
+    else:
+        print(f"\n❌ Manifest dataset verification failed")
+
+    return all_ok
+
+
+def verify_data():
+    """Verify data integrity.
+
+    Two phases, both must pass:
+    1. Authoritative check: every canonical CSV in release/release_manifest.json
+       must exist with matching SHA-256 checksum and row count.
+    2. Structural check: per-experiment metadata.json, required CSV columns,
+       and (warning-only) source-hash drift since data generation.
+    """
+    manifest_ok = verify_release_manifest()
+
+    print(f"\n{'='*60}")
+    print("Verifying Per-Experiment Outputs (structural checks)")
+    print(f"{'='*60}")
+
     all_ok = True
     for exp_id, exp in EXPERIMENTS.items():
         output_dir = PROJECT_ROOT / exp["output"]
@@ -281,6 +411,9 @@ def verify_data():
                 elif exp_id == "E21":
                     # Ceiling-aware optimizer summary — may have different schema
                     required_cols = []  # accept any columns
+                elif exp_id == "E22":
+                    # Gate-shuffle ablation — per-trial results schema
+                    required_cols = ['n_qubits', 'reduction', 'fidelity']
                 elif exp_id == "E23":
                     required_cols = ['n_qubits', 'reduction', 'fidelity']
                 elif exp_id == "E24":
@@ -291,6 +424,9 @@ def verify_data():
                 elif exp_id == "E10p2b":
                     # Phase-2b validation — has optimizer + reduction columns
                     required_cols = ['optimizer', 'reduction']
+                elif exp_id == "E26":
+                    # Theorem-9 theory-bounds table — non-standard schema
+                    required_cols = []  # accept any columns
                 else:
                     required_cols = ['n_qubits', 'depth', 'reduction', 'fidelity']
                     if 'experiment' not in df.columns and 'experiment_id' not in df.columns:
@@ -336,11 +472,17 @@ def verify_data():
             all_ok = False
     
     if all_ok:
-        print(f"\n✅ All data integrity checks passed")
+        print(f"\n✅ All per-experiment structural checks passed")
     else:
-        print(f"\n❌ Some data integrity checks failed")
-    
-    return all_ok
+        print(f"\n❌ Some per-experiment structural checks failed")
+
+    combined = manifest_ok and all_ok
+    if combined:
+        print(f"\n✅ All data integrity checks passed (manifest + structural)")
+    else:
+        print(f"\n❌ Data integrity verification failed")
+
+    return combined
 
 
 def main():
