@@ -194,7 +194,7 @@
 
 ## L. Recent Advances in Quantum Circuit Optimization (2021-2026)
 
-[62] M. Xu, Z. Li, O. Padon, S. Lin, J. Pointing, A. Hirth, H. Ma, A. Aiken, U. A. Acar, Z. Jia, and J. Palsberg, "Quartz: Superoptimization of quantum circuits," Proceedings of the ACM on Programming Languages (PACMPL), vol. 6, no. PLDI, pp. 625-650, 2022.
+[62] M. Xu, Z. Li, O. Padon, S. Lin, J. Pointing, A. Hirth, H. Ma, A. Aiken, U. A. Acar, Z. Jia, and J. Palsberg, "Quartz: Superoptimization of quantum circuits," Proceedings of the ACM on Programming Languages (PACMPL), vol. 6, no. PLDI, pp. 625-650, 2022. Extended version: arXiv:2204.09033.
 
 [63] J. Pointing, O. Padon, Z. Jia, A. Hirth, H. Ma, J. Palsberg, and A. Aiken, "Quanto: Optimizing quantum circuits with automatic generation of circuit identities," Quantum Science and Technology, vol. 9, no. 3, 035045, 2024.
 
@@ -204,7 +204,7 @@
 
 [66] J. Liu, L. Bello, and H. Zhou, "Relaxed peephole optimization: A novel compiler optimization for quantum circuits," Proceedings of the IEEE/ACM International Symposium on Code Generation and Optimization (CGO), 2021, pp. 145-156. arXiv:2012.07711
 
-[67] J. Riu, J. Nogue, G. Vilaplana, A. Garcia-Saez, and M. P. Estarellas, "Reinforcement learning based quantum circuit optimization via ZX-calculus," Quantum, vol. 9, 1634, 2025. arXiv:2312.11597
+[67] J. Riu, J. Nogue, G. Vilaplana, A. Garcia-Saez, and M. P. Estarellas, "Reinforcement learning based quantum circuit optimization via ZX-calculus," Quantum, vol. 9, 1758, 2025. arXiv:2312.11597
 
 [85] A. Xu, A. Molavi, L. Pick, S. Tannu, and A. Albarghouthi, "Synthesizing quantum-circuit optimizers," Proceedings of the ACM on Programming Languages (PACMPL), vol. 7, no. PLDI, pp. 140-165, 2023. arXiv:2211.09691
 
@@ -234,7 +234,7 @@
 
 [75] K. Chandrasekaran, A. Hashmi, M. Roetteler, and K. M. Svore, "PEephole REwrite: An Optimizer for Quantum Programs (PERE)," 2023.
 
-[76] K. Hietala, R. Martinez, S.-H. Hung, S. Peyton Jones, and M. Silberstein, "Quartz: Superoptimization of Quantum Circuits," Proceedings of the ACM on Programming Languages (PLDI), vol. 6, 2022. arXiv:2205.00125
+[76] M. Xu, Z. Li, O. Padon, S. Lin, J. Pointing, A. Hirth, H. Ma, A. Aiken, U. A. Acar, Z. Jia, and J. Palsberg, "Quartz: Superoptimization of Quantum Circuits (Extended Version)," arXiv:2204.09033, 2022. Proceedings of the ACM on Programming Languages (PLDI), vol. 6, 2022.
 
 [77] Ravi, R. and Gokhale, P. and Smith, K. and Brown, J. and others, "QUASAR: An architecture-aware quantum compiler," Proceedings of the ACM on Programming Languages (PACMPL), 2022.
 

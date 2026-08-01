@@ -12,7 +12,7 @@ Options:
         Experiments that expose a ``--mode`` flag are pinned to ``smoke`` here;
         run the scripts directly with ``--mode full`` for full-scale reruns.
     --figures: Generate publication-quality figures
-    --tests: Run the unit test suite via ``pytest tests/ -q`` (mirrors CI)
+    --tests: Run the unit test suite via ``pytest tests/ -q``
     --verify: Verify data integrity — every canonical CSV listed in
         release/release_manifest.json must exist with a matching SHA-256
         checksum and row count, followed by per-experiment structural checks
@@ -227,11 +227,11 @@ def run_command(cmd, description, cwd=None):
 
 
 def run_tests():
-    """Run the unit test suite through pytest, mirroring CI.
+    """Run the unit test suite through pytest.
 
     Previously this invoked ``tests/test_core.py`` directly, but that file no
     longer exists in the repository, so ``--tests`` failed immediately. Running
-    ``pytest tests/`` matches the CI workflow exactly.
+    ``pytest tests/`` is the repository-level test gate.
     """
     cmd = [sys.executable, "-m", "pytest", "tests/", "-q"]
     return run_command(cmd, "Unit Tests (pytest tests/ -q)")

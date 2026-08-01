@@ -1,7 +1,11 @@
 # Analysis Summary
 
 > **Document Status**: Consolidated analysis document merging Phase 1 vs Phase 2 comparison, Qiskit pass mechanism analysis, and theory-experiment cross-validation.
-> **Date**: 2026-06-17
+> **Date**: 2026-08-01
+>
+> **Active-status note**: This is a consolidated historical analysis. For
+> current Phase-2b, listing-sensitivity, row-count, and source-drift status use
+> `docs/review/publication_readiness_2026-08.md` and the active evidence files.
 
 ---
 

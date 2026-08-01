@@ -151,11 +151,11 @@ OVERLAP_IDENTICAL / OVERLAP_EQUIVALENT / OVERLAP_DIVERGED。
 | E17 qwalk_8×3 拓扑（9 对） | **延期** | 在 canonical 范围内（n=9）。transpile 后 41,468 门，忠实优化单次 >250 s；canonical 当年该行三优化器耗时 145/145/581 s。估计需 ~1-2 小时（分对断点可续）。 |
 | E17 qwalk_9/10、grover_10、adder_10、cnot_chain_20(grid/hh)、surface_code_20（12 对） | 延期 | 均不在 canonical（n≥10 新行），不影响重叠对账；补跑只为 v9 数据完整。 |
 | E12, E15, E18, E19, E20, E21 | 未重跑 | 批 2/3 处理；警告维持已接受状态。 |
-| e17_partial/ | 保留 | 断点现场 partial.csv（已修复为统一 29 列 schema：修复前有 3 种列布局，备份 `partial_backup_20260721_broken.csv`）；如需续跑延期对可直接复用。 |
+| e17_partial/ | 保留 | 断点现场 `partial.csv`（已修复为统一 29 列 schema：修复前有 3 种列布局）。原损坏备份已在 2026-08-01 确认无法解析并删除；当前 partial.csv 保留用于续跑延期对。 |
 
 ## 6. 铁律遵守
 
-- 原子写 + 时间戳备份：遵守（断点 chunk 先写 tmp 再追加；最终 CSV 先 tmp 再 os.replace；损坏现场已备份）
+- 原子写 + 时间戳备份：遵守（断点 chunk 先写 tmp 再追加；最终 CSV 先 tmp 再 os.replace；损坏现场已审计并清理）
 - 禁止 git 操作：遵守（归因全部基于 metadata.json source_hashes 对比与源码注释，未调用 git）
 - 未重新生成 release manifest：遵守
 - 未修改 canonical（data/v2_fixed–v8）与 manuscript：遵守（重跑输出仅在 data/v9/）

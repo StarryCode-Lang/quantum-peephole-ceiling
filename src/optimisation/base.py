@@ -148,9 +148,9 @@ class BaseOptimizer(ABC):
       running unitary; the 8**n term is the d-by-d matrix product inside
       ``Tr(U1^dagger U2)``.  This dominates the runtime of every
       stochastic optimizer whose fitness function calls it.
-    * ``_estimate_fidelity`` (n > 12): Clifford shortcut O(m * n**2)
-      when both circuits are Clifford; otherwise Haar product-state
-      sampling, O(S * m * 2**n) time and O(2**n) memory.
+     * ``_estimate_fidelity`` (n > 12): Clifford shortcut O(m * n**2)
+       when both circuits are Clifford; otherwise global-Haar state
+       sampling, O(S * m * 2**n) time and O(2**n) memory.
     * Move primitives (``_move_removal`` / ``_move_swap`` /
       ``_move_commutation`` / ``_move_insertion``): each scans the O(m)
       adjacent gate pairs once with O(1) predicates and deep-copies the
@@ -272,30 +272,24 @@ class BaseOptimizer(ABC):
         Estimate average gate fidelity via Haar-random product-state sampling
         for n > MAX_EXACT_FIDELITY_QUBITS.
 
-        Generates random input states by applying independent Haar-random
-        single-qubit unitaries to the |0>^n state. Each single-qubit state
-        is drawn exactly from the Haar measure on SU(2), ensuring correct
-        4th moments (E[|alpha|^4] = 1/3 per qubit) that match the Haar
-        distribution. This makes each qubit's marginal an exact single-qubit
-        spherical 2-design.
+        Generates globally Haar-random n-qubit pure states.  For a fixed
+        relative unitary V = U(circuit)^dagger U(target),
 
-        The previous implementation used uniform Ry(theta) + Rz(phi) rotations
-        applied to random computational basis states, which yields
-        E[|alpha|^4] = 3/8 != 1/3 (Haar), violating the 2-design property
-        and causing the estimator to converge to an incorrect value.
+            E_psi[|<psi|V|psi>|^2] = F_avg(V).
 
-        While the tensor product of single-qubit Haar states is not a full
-        n-qubit 2-design, the dominant contributions to the fidelity integral
-        arise from local terms where the per-qubit 2-design property suffices.
-        The residual bias from cross-qubit correlations is O(1/d) where
-        d = 2^n, making it negligible for the large circuits where this
-        estimator is used (n > 12).
+        Sampling independent single-qubit Haar states is not sufficient: their
+        tensor products are not an n-qubit projective 2-design and can
+        dramatically overestimate fidelity for errors acting on a small
+        subsystem.  Global Haar sampling keeps the fallback estimate aligned
+        with the average-gate-fidelity definition, at the cost of O(2^n)
+        state storage and O(n_samples) circuit evaluations.
 
         For Clifford circuits, falls back to exact tableau comparison first.
 
-        NOTE: This estimator has ~1/sqrt(n_samples) standard error. For
-        n_samples=1000, expect ~3% uncertainty. Use exact fidelity (n <= 12)
-        whenever possible for publication-quality results.
+        NOTE: Monte Carlo uncertainty is outcome-dependent and should be
+        reported from the sampled variance; ``n_samples=1000`` is not a
+        universal 3% guarantee. Use exact fidelity whenever possible for
+        publication-quality results.
         """
         if circuit == target:
             return 1.0
@@ -325,20 +319,18 @@ class BaseOptimizer(ABC):
 
         # Random-state sampling fidelity estimate
         try:
-            from qiskit.quantum_info import Statevector, random_unitary
+            from qiskit.quantum_info import Statevector
             
             n = circuit.num_qubits
+            dimension = 2 ** n
             overlaps = []
             for _ in range(n_samples):
-                # Create Haar-random product input state: apply independent
-                # Haar-random single-qubit unitaries to |0>^n.
-                # Each qubit's state is drawn from the exact Haar measure on
-                # the single-qubit Bloch sphere (a 2-design), ensuring correct
-                # 4th moments E[|alpha|^4] = 1/3 per qubit.
-                psi_in = Statevector.from_label('0' * n)
-                for i in range(n):
-                    u_i = random_unitary(2, seed=int(self.rng.randint(0, 2**31)))
-                    psi_in = psi_in.evolve(u_i, qargs=[i])
+                # A normalized complex Gaussian vector is globally Haar
+                # distributed on the n-qubit unit sphere.
+                vector = (self.rng.normal(size=dimension)
+                          + 1j * self.rng.normal(size=dimension))
+                vector /= np.linalg.norm(vector)
+                psi_in = Statevector(vector)
                 
                 # Evolve through both circuits
                 sv1 = psi_in.evolve(circuit)

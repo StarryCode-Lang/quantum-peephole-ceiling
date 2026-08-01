@@ -10,7 +10,7 @@
 
 For base notation ($n$, $d$, $\mathcal{G}$, $C(n,d,\rho)$, $|C|$, $F_{\text{avg}}$, etc.) and all formal definitions D1--D10 (quantum circuit, unitary equivalence, peephole optimization, Phase 1/2, ceilings, action spaces), see `framework.md`.
 
-> **Notation**: Phase-2a refers to commutation-based rewriting (implemented in `commutation_rewriter.py`). Phase-2b refers to template-assisted rewriting (limited implementation in `template_matcher.py`, not part of canonical experiments). When we write "Phase-2" without a suffix, we refer to Phase-2a, which is the canonical implementation.
+> **Notation**: Phase-2a refers to commutation-based rewriting (implemented in `commutation_rewriter.py`). Phase-2b refers to template-assisted rewriting (implemented in `template_matcher.py` and evaluated at full scale in the v2 validation dataset). When we write "Phase-2" without a suffix, we refer to Phase-2a; Phase-2b results are labeled explicitly.
 
 Notation specific to this document:
 
@@ -444,13 +444,13 @@ These are the paper's central formal claims, supported by strong empirical evide
 - **Theorem 7** constructs an *artificial* circuit family with $\Gamma^{\text{(2a)}} \ge 1/6 = \Omega(1)$ via **Phase-2a commutation rewriting** + separator-cancellation.  Experiment E24 validates this bound empirically (mean reduction $0.7980$ for $n = 4, 6, \dots, 12$).
 - **Theorem 9** (Appendix B) proves $\Gamma^{\text{(2b)}}(BV_n) \ge n/(4.5n+4) \ge 2/13 = \Omega(1)$ for the *natural* Bernstein--Vazirani oracle family, via the $H$-CNOT-$H$ template identity (**Phase-2b**).
 
-**Phase coverage caveat.** Theorem 7 is a **Phase-2a** result and is both implemented and validated.  Theorem 9 is a **Phase-2b** result; the current `Phase2bTemplateMatcher` implements the required $H$-CNOT-$H$ template and validates the rewrite identity, but a full large-scale experimental replication of E11 with Phase-2b remains future work.  The experimental Phase-2a reductions reported in E10/E11 are complementary to the Phase-2b theoretical bound of Theorem 9.
+**Phase coverage caveat.** Theorem 7 is a **Phase-2a** result and is both implemented and validated. Theorem 9 is a **Phase-2b** result; the current `Phase2bTemplateMatcher` implements the required $H$-CNOT-$H$ template and the full-scale v2 benchmark validates the recorded BV grid. This does not validate an unrestricted template universe, and it must not be conflated with the Phase-2a reductions reported in E10/E11.
 
 **Evidence:**
 
 1. **Random Universal circuits (E10, Phase-2a).** Phase 1 achieves $\approx 0\%$; Phase-2a achieves $\approx 3.26\%$ additional reduction. Effect size: see `analysis/phase1_statistics/effect_size.py` for Cliff's $\delta$ / Hedges' $g$ (integrated into figure generation in the v6 remediation).
 
-2. **Oracle / Bernstein--Vazirani circuits (E11, Phase-2a).** Phase 1 achieves $0\%$; Phase-2a achieves $\sim 20\%$ reduction via commutation of redundant H/X gates exposed by the Oracle circuit structure. This empirical Phase-2a reduction is attributable to the algebraic structure of the oracle, but its mechanism is *not* the $H$-CNOT-$H$ template of Theorem 9 (which is unimplemented Phase-2b).
+2. **Oracle / Bernstein--Vazirani circuits (E11, Phase-2a).** Phase 1 achieves $0\%$; Phase-2a achieves $\sim 20\%$ reduction via commutation of redundant H/X gates exposed by the Oracle circuit structure. This empirical Phase-2a reduction is attributable to the algebraic structure of the oracle, but its mechanism is distinct from the $H$-CNOT-$H$ template of Theorem 9.
 
 3. **CNOT-chain validation circuits (E11).** Phase 1 alone achieves $100\%$ reduction, confirming that the Phase-2 (a+b) advantage is circuit-family dependent rather than universal.
 
@@ -987,7 +987,7 @@ Theorem 7 establishes the existence of an explicit circuit family $\{C_n\}$ with
 
 This appendix proves that the **Bernstein--Vazirani (BV) oracle circuit** family exhibits a constant-factor Phase-2 (a+b) advantage, establishing that the Phase-1/Phase-2 (a+b) optimization gap is not merely an artifact of artificial constructions but arises in standard quantum algorithmic primitives.
 
-> **Important scope note.** The Phase-2b advantage established here relies on **Phase-2b template matching** (the $H$-CNOT-$H$ identity), which is *not* implemented in the current experimental codebase. The current codebase implements only **Phase-2a commutation rewriting** (`commutation_rewriter.py`). Under pure Phase-2a, the achievable bound for BV remains an **open question**. See "Phase-2a vs. Phase-2b" below. All experimental results labeled "Phase 2" in the manuscript refer to Phase-2a unless explicitly stated otherwise.
+> **Important scope note.** The Phase-2b advantage established here relies on **Phase-2b template matching** (the $H$-CNOT-$H$ identity), implemented in `template_matcher.py` and evaluated in the v2 full-scale benchmark. Under pure Phase-2a, the achievable bound for BV remains a separate question. All experimental results labeled "Phase 2" in the manuscript refer to Phase-2a unless explicitly stated otherwise.
 
 ### Preliminaries
 
@@ -1028,7 +1028,7 @@ R_{1+2}^{\text{(2b)}}(BV_n) \ge \frac{n}{4.5n+4} \ge \frac{2}{13} \quad \text{fo
 $$
 In particular $R_{1+2}^{\text{(2b)}}(BV_n) = \Omega(1)$, and the optimization gap satisfies $\Gamma^{\text{(2b)}}(BV_n) \ge \frac{2}{13}$ for all $n \ge 2$.
 
-**Remark on the bound.** The exact reduction achievable by Phase-2 (a+b) depends on the listing order and the specific commutation/template sequence applied. We prove a lower bound of $n/(4.5n+4)$, which for $n \ge 2$ yields at least $2/13 \approx 0.154$, and which approaches $1/4.5 \approx 0.222$ as $n \to \infty$. The bound uses Phase-2b template matching (the $H$-CNOT-$H$ identity) and accounts for the gate-overhead of the template transformation. Under pure Phase-2a commutation rewriting (the mechanism implemented in the current codebase), the achievable bound for BV remains an **open question** -- see "Phase-2a vs. Phase-2b" below.
+**Remark on the bound.** The exact reduction achievable by Phase-2 (a+b) depends on the listing order and the specific commutation/template sequence applied. We prove a lower bound of $n/(4.5n+4)$, which for $n \ge 2$ yields at least $2/13 \approx 0.154$, and which approaches $1/4.5 \approx 0.222$ as $n \to \infty$. The bound uses the implemented Phase-2b template matcher (the $H$-CNOT-$H$ identity) and accounts for the gate-overhead of the template transformation. It is a bound for this stated template model, not for all quantum compilers.
 
 > **Audit note (review Stage 2 -- "Thm 10 calculation inconsistency").** An external review flagged an apparent inconsistency between a "45.5%" figure and a recomputed "66.7%". This note resolves the confusion:
 >
@@ -1234,7 +1234,7 @@ Theorem 9's bound $n/(4.5n+4) = \Omega(1)$ relies on the $H$-CNOT-$H$ template (
 
 Therefore, under Phase-2a alone, the *provable* reduction for $BV_n$ is currently $0$ (matching Phase-1). Whether a clever Phase-2a commutation sequence can achieve non-zero reduction on $BV_n$ is left as an open question.
 
-**Experimental status.** The manuscript's reported "~20% Phase-2 reduction on Oracle/BV circuits" (E11) was obtained with Phase-2a. The mechanism behind this empirical reduction is **not** the $H$-CNOT-$H$ template of Theorem 9 (which is unimplemented), but rather the commutation of redundant $H/X$ gates exposed by the specific Oracle circuit structure in E11's test suite. The relationship between the theoretical Phase-2b bound (Theorem 9) and the empirical Phase-2a reduction (E11) is therefore indirect, and the manuscript must state this clearly.
+**Experimental status.** The manuscript's reported "~20% Phase-2 reduction on Oracle/BV circuits" (E11) was obtained with Phase-2a. The mechanism behind this empirical reduction is **not** the $H$-CNOT-$H$ template of Theorem 9, but rather the commutation of redundant $H/X$ gates exposed by the specific Oracle circuit structure in E11's test suite. The relationship between the theoretical Phase-2b bound (Theorem 9) and the empirical Phase-2a reduction (E11) is therefore indirect, and the manuscript must state this clearly.
 
 ### Listing-model dependency
 
@@ -1256,7 +1256,7 @@ The Phase-2b result is also listing-independent in the sense that the rewrite pr
 | Asymptotic gap $\Gamma^{\text{(2b)}}$ | $\Omega(1)$ | $\Omega(1)$ (specifically $\to 1/4.5$) |
 | Implemented in codebase? | Phase-2a only | Phase-2b **not** implemented |
 
-Theorem 9 strengthens the case for Conjecture C2 by demonstrating Phase-2b advantage on a circuit family that arises naturally in quantum complexity theory, rather than on an artificial construction. However, because the bound relies on Phase-2b (unimplemented), Theorem 9 should be read as a **theoretical existence result**, not as a direct explanation of the experimental Phase-2a reductions.
+Theorem 9 strengthens the case for Conjecture C2 by demonstrating Phase-2b advantage on a circuit family that arises naturally in quantum complexity theory, rather than on an artificial construction. Because the bound relies on a stated template model, it should be read as a **model-specific theoretical result**, not as a direct explanation of the experimental Phase-2a reductions.
 
 ---
 

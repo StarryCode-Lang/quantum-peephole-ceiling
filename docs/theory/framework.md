@@ -17,7 +17,7 @@ This document is the **central hub** of the theoretical framework for the QIP ma
 
 For detailed formal results, see the companion document `formal_results.md` which contains all theorems, lemmas, propositions, conjectures, and proof appendices.
 
-> **Notation**: Phase-2a refers to commutation-based rewriting (implemented in `commutation_rewriter.py`). Phase-2b refers to template-assisted rewriting (limited implementation in `template_matcher.py`, not part of canonical experiments). When we write "Phase-2" without a suffix, we refer to Phase-2a, which is the canonical implementation.
+> **Notation**: Phase-2a refers to commutation-based rewriting (implemented in `commutation_rewriter.py`). Phase-2b refers to template-assisted rewriting (implemented in `template_matcher.py` and evaluated at full scale in the v2 validation dataset). When we write "Phase-2" without a suffix, we refer to Phase-2a; Phase-2b results are always labeled explicitly.
 
 > **Honest assessment of theoretical contribution (updated 2026-06-13).** Of the 11 labeled theorems, 3--4 serve as primary theoretical contributions, with the remaining results providing formal backing for the empirical patterns observed:
 > - **Thm 2** (Phase-1 Reduction Ceiling): The core structural result. The INSERTION cascade gap is now **resolved** (bounded version) via Thm 2c/2d, which prove that INSERTION cannot achieve net reduction beyond the Phase-2 (a+b) action space.
@@ -66,13 +66,13 @@ Throughout this document and its companions, we use the following standard notat
 
 - **Phase-2a (Commutation Rewriting)**: Uses only disjoint-qubit commutation and known algebraic commutation rules (e.g., Z-family commutation with CNOT) to reorder gates. This is the mechanism implemented in `commutation_rewriter.py`.
 
-- **Phase-2b (Template Matching)**: Uses pre-computed circuit identity templates (e.g., H-CNOT-H $\to$ CNOT_reversed) to apply multi-gate rewrite rules. This mechanism is NOT implemented in the current codebase but is referenced in Theorem 9.
+- **Phase-2b (Template Matching)**: Uses pre-computed circuit identity templates (e.g., H-CNOT-H $\to$ CNOT_reversed) to apply multi-gate rewrite rules. The current implementation is `template_matcher.py`; its full-scale v2 validation is recorded in `data/v8/phase2b_full/`.
 
 Unless otherwise specified, "Phase 2" in the experimental results refers to Phase-2a (commutation rewriting only).
 
 **Definition 6 (Phase 1 Action Space $\mathcal{S}_1(C)$).** The set of all adjacent gate pairs $(g_i, g_{i+1})$ in $C$ such that $g_{i+1} = g_i^{-1}$ and both act on the same qubit(s).
 
-**Definition 7 (Phase 2 Action Space $\mathcal{S}_{1+2}(C)$).** The extended action space including all pairs that can be brought into adjacency via a sequence of commutation rewrites. By construction, $\mathcal{S}_1(C) \subseteq \mathcal{S}_{1+2}(C)$. In the current implementation, $\mathcal{S}_{1+2}(C)$ is computed using Phase-2a (commutation rewriting) only; Phase-2b (template matching) would extend this action space further but is not implemented.
+**Definition 7 (Phase 2 Action Space $\mathcal{S}_{1+2}(C)$).** The extended action space including pairs exposed by commutation rewrites and patterns transformed by the implemented template library. By construction, $\mathcal{S}_1(C) \subseteq \mathcal{S}_{1+2}(C)$. Phase-2a and Phase-2b are distinct evidence layers; the v8 full-scale dataset evaluates the implemented Phase-2b pipeline, not an unrestricted template universe.
 
 ### D8–D10: Ceilings, Gaps, and Fidelity
 
@@ -115,7 +115,7 @@ Unitary equivalence up to tolerance $\epsilon$: $C \equiv_\epsilon C'$ if $\| U 
 
 4. **Critical caveat: Haar-random unitaries vs. random gate sequences.** Theorem 8 proves incompressibility for Haar-random *unitaries*, but all experiments use random *gate sequences* of depth d=poly(n). For n=10, d=50, the circuit has ~500 gates while the Haar-random complexity threshold is ~4^n/n^2 $\approx$ 10,486 gates. Random gate sequences at these depths produce unitaries far from Haar-random. Therefore, Thm 8's bounds do not directly explain the experimental results -- the empirical ~0% reduction on random circuits is explained by the combinatorial sparsity of inverse pairs (Thm 1), not by Haar-random incompressibility. Thm 8 provides a *complementary* information-theoretic argument for the asymptotic regime that is not reached in our experiments. Note: The empirical optimization desert observed in E1-E5 is explained by Theorem 1 (combinatorial sparsity of inverse pairs), not by Theorem 8 (which applies to Haar-random unitaries, a regime not reached in our experiments). Corollary 8.1 provides a complementary information-theoretic perspective for the asymptotic regime.
 
-5. **Appropriate interpretation.** The framework's value lies in its systematic empirical methodology (73,702 controlled result rows across 34 canonical datasets; `release/release_manifest.json`) and its unification of several known observations (adjacent cancellation limits, commutation-based advantage, compiler comparisons) into a coherent predictive model. The theorems provide rigorous support for empirical patterns, but the patterns themselves are about *software behavior* (compiler optimization passes), not *physics*.
+5. **Appropriate interpretation.** The framework's value lies in its systematic empirical methodology (82,789 controlled result rows across 36 canonical datasets; `release/release_manifest.json`) and its unification of several known observations (adjacent cancellation limits, commutation-based advantage, compiler comparisons) into a coherent, representation-conditioned model. The theorems provide support for selected empirical patterns, but the patterns themselves are about *software behavior* (compiler optimization passes), not *new physical phenomena*.
 
 This framing is not a limitation but a clarification: the framework occupies a well-defined niche at the intersection of quantum software engineering and combinatorial optimization, and its claims should be evaluated accordingly.
 

@@ -1,0 +1,66 @@
+{
+  "method": "global_Haar_state_sampling",
+  "n_values": [
+    3,
+    5,
+    8
+  ],
+  "samples_per_row": 1000,
+  "seed": 42,
+  "rows": [
+    {
+      "n_qubits": 3,
+      "case": "local_x",
+      "samples": 1000,
+      "seed": 45,
+      "exact_fidelity": 0.1111111111111111,
+      "estimated_fidelity": 0.1146881536928199,
+      "absolute_error": 0.0035770425817087947
+    },
+    {
+      "n_qubits": 3,
+      "case": "entangling_cx",
+      "samples": 1000,
+      "seed": 45,
+      "exact_fidelity": 0.3333333333333333,
+      "estimated_fidelity": 0.33153423800812276,
+      "absolute_error": 0.0017990953252105535
+    },
+    {
+      "n_qubits": 5,
+      "case": "local_x",
+      "samples": 1000,
+      "seed": 47,
+      "exact_fidelity": 0.030303030303030304,
+      "estimated_fidelity": 0.030241355959713754,
+      "absolute_error": 6.167434331654995e-05
+    },
+    {
+      "n_qubits": 5,
+      "case": "entangling_cx",
+      "samples": 1000,
+      "seed": 47,
+      "exact_fidelity": 0.2727272727272727,
+      "estimated_fidelity": 0.27913262021173285,
+      "absolute_error": 0.006405347484460144
+    },
+    {
+      "n_qubits": 8,
+      "case": "local_x",
+      "samples": 1000,
+      "seed": 50,
+      "exact_fidelity": 0.0038910505836575876,
+      "estimated_fidelity": 0.00369644416409898,
+      "absolute_error": 0.00019460641955860742
+    },
+    {
+      "n_qubits": 8,
+      "case": "entangling_cx",
+      "samples": 1000,
+      "seed": 50,
+      "exact_fidelity": 0.2529182879377432,
+      "estimated_fidelity": 0.2551233565936587,
+      "absolute_error": 0.002205068655915521
+    }
+  ]
+}

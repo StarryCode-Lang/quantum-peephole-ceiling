@@ -1,5 +1,10 @@
 # Wave-6 Report: Listing-sensitivity fill (5 remaining families)
 
+> **Historical report note (2026-08-01):** This document records the pre-qwalk_8
+> fill state. Final status is in `listing_qwalk8.md`; all 31 merged chunk files
+> and timestamped backups were deleted after exact row-level matching against
+> the 6,720-row canonical dataset.
+
 > **Task ID**: wave6 / listing_fill
 > **Date**: 2026-07-21
 > **Status**: COMPLETE (15/15 families; qwalk_8 partial 3/20 variants)
@@ -73,7 +78,7 @@ wave5 报告将 5 族缺失归因于「n=5/8 编译耗时超限」。完整根�
 
 ## 5. 铁律遵守
 
-- 原子写 + 时间戳备份：遵守（`*.bak-20260721_141836` 三件套 + 14 个 chunk 文件保留）
+- 原子写 + 时间戳备份：遵守；intermediate chunks/backups were later removed after canonical matching.
 - 禁止 git 操作：遵守
 - 未重新生成 release manifest：遵守
 - 未改 manuscript 及其他文档：遵守（仅 compiler_listing_audit.md 追加 §9）

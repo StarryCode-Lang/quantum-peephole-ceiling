@@ -1,5 +1,10 @@
 # Production Compiler Listing Audit
 
+> **Active update (2026-08-01):** The listing-sensitivity dataset now contains
+> 6,720 rows with qwalk_8 complete at 20/20 variants. All qwalk_8 rows use the
+> documented structural-preservation route instead of exact nine-qubit Operator
+> checks. Earlier 6,652-row and 3/20 statements below are wave history.
+
 > **Date**: 2026-07-21 (wave 4)
 > **Auditor**: CompilerAudit worker
 > **Question under audit**: the manuscript's flagship premise — *"the listing model

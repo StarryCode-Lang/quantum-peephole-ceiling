@@ -33,10 +33,20 @@ CANONICAL_MAP = {
 
 RERUN_DIR = PROJECT_ROOT / "data" / "v9"
 
-NUMERIC_COLS = ["reduction", "fidelity", "runtime_seconds", "original_size", "optimized_size"]
-# runtime_seconds is inherently non-deterministic; exclude from IDENTICAL check
-DETERMINISTIC_COLS = ["reduction", "fidelity", "original_size", "optimized_size"]
-SORT_KEYS = ["circuit_family", "circuit_id", "n_qubits", "optimizer"]
+NUMERIC_COLS = [
+    "reduction", "fidelity", "runtime_seconds", "original_size", "optimized_size",
+    # E20 schema aliases (same physical meaning, different column names)
+    "gate_reduction", "compilation_time_seconds",
+    "original_gate_count", "optimized_gate_count",
+]
+# runtime_seconds is inherently non-deterministic; exclude from IDENTICAL check.
+# compilation_time_seconds is the E20 alias for runtime_seconds.
+DETERMINISTIC_COLS = [
+    "reduction", "fidelity", "original_size", "optimized_size",
+    "gate_reduction", "original_gate_count", "optimized_gate_count",
+]
+SORT_KEYS = ["circuit_family", "circuit_id", "n_qubits",
+             "optimizer", "compiler_name", "trial"]
 
 
 def find_rerun(exp_id: str) -> Path | None:
@@ -174,14 +184,23 @@ def reconcile(exp_id: str) -> dict:
     only_runtime_differs = True
     for col in NUMERIC_COLS:
         if col in canon.columns and col in rerun.columns:
-            c = canon[col].values
-            r = rerun[col].values
+            c = pd.to_numeric(canon[col], errors="coerce").values
+            r = pd.to_numeric(rerun[col], errors="coerce").values
             if len(c) == len(r):
-                diff = np.abs(c - r)
+                # Skip NaN-NaN pairs; only compare rows where both are finite
+                both = ~(np.isnan(c) | np.isnan(r))
+                if both.sum() == 0:
+                    continue
+                diff = np.abs(c[both] - r[both])
                 max_d = float(diff.max()) if len(diff) else 0.0
                 n_match = int((diff < 1e-9).sum())
-                diffs[col] = {"max_diff": max_d, "n_match": n_match, "n_total": len(diff)}
-                if col in DETERMINISTIC_COLS and n_match < len(diff):
+                n_total = int(both.sum())
+                # Rows where both are NaN count as "matching" (both missing)
+                n_both_nan = int((np.isnan(c) & np.isnan(r)).sum())
+                n_match += n_both_nan
+                n_total += n_both_nan
+                diffs[col] = {"max_diff": max_d, "n_match": n_match, "n_total": n_total}
+                if col in DETERMINISTIC_COLS and n_match < n_total:
                     all_identical = False
                     only_runtime_differs = False
 

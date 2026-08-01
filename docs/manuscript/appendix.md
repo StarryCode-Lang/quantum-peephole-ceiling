@@ -1,5 +1,13 @@
 > **STATUS**: Supporting appendix to the main manuscript. Refreshed in wave 2 (2026-07-21): E16 window-set correction (w in {2,5,10,20}), new Phase-2b v2 full-scale results (Section D), SOTA compiler-benchmark update incl. the corrected Cirq pipeline (Section E), and the E22 shuffle-control / E29 multi-seed results (Section F). Cross-references remapped to the v8 manuscript section numbering (wave-3 final cleanup, 2026-07-21); the Section A claim-evidence map is synced with `docs/manuscript/claim_evidence_table.csv`. v8-era claims C13-C17 (Phase-2b full-scale, ceiling-repair, EHW, E22, E29) are mapped in that CSV and detailed in Sections D-F below.
 
+> **Active-status note (2026-08-01):** This appendix contains wave-history
+> tables. Current evidence is governed by `docs/manuscript/claim_evidence_table.csv`,
+> `data/DATA_CANONICAL.md`, and `release/release_manifest.json`. The active release
+> has 36 canonical datasets and 82,789 rows; Phase-2b v2 is full-scale evidence,
+> while qwalk_8 listing rows use structural-preservation evidence rather than
+> exact 9-qubit Operator checks. Historical “planned” and “metadata-only” wording
+> below is retained as provenance and is not an active status statement.
+
 # Appendix
 
 ## A. Claim-Evidence Map

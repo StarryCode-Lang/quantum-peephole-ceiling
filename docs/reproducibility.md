@@ -29,7 +29,7 @@ python -m pytest tests/ -q
 python -m py_compile src/optimisation/base.py src/optimisation/phase2/commutation_rewriter.py scripts/reproduce_all.py
 ```
 
-Data integrity verification (the same command CI runs in the `verify-data-integrity` job):
+Data integrity verification:
 
 ```bash
 python scripts/reproduce_all.py --verify
@@ -70,7 +70,7 @@ Coverage for the primary experiments: E4 (6 pairwise optimizer comparisons), E10
 
 ## Fidelity fallback characterization
 
-Fidelity is estimated by random-state overlap sampling where feasible. When that path fails — for example for circuits larger than `max_qubits_fidelity`, where exact comparison is infeasible — `BaseOptimizer` falls back to a clearly labeled Jaccard-style structural heuristic in `src/optimisation/base.py`. The code comments there state explicitly that this heuristic ignores gate order, qubit assignment, and angles, and that its correlation with true average gate fidelity has not been characterized. A standalone characterization script (`scripts/characterize_fidelity_fallback.py`, writing reports to `docs/verification/`) is planned but is **not shipped in this release**; treat fallback-path fidelity values as heuristic estimates, not verified fidelities.
+For circuits larger than `MAX_EXACT_FIDELITY_QUBITS`, `BaseOptimizer` uses global Haar-random state sampling in `src/optimisation/base.py`. Global sampling is required: independent single-qubit product states can substantially overestimate fidelity for local errors. The calibration harness is `scripts/characterize_fidelity_fallback.py`; its checked-in output is under `docs/verification/`. The fallback remains a Monte Carlo estimate, not an exact certificate, so sample size, seed, confidence interval, and `fidelity_metric` must be reported whenever it is used.
 
 ## Numerical commutation fallback
 
@@ -100,25 +100,25 @@ python -m piptools compile --generate-hashes --output-file=requirements-lock.txt
 
 - Full experiment reruns are expensive and were not run as part of lightweight engineering verification.
 - Optional compiler dependencies such as `pytket` may be platform-sensitive.
-- The standalone fidelity-fallback characterization script is not yet shipped; fallback-path fidelities are heuristic estimates (see above).
+- Sampled fidelity remains approximate for circuits above the exact-unitary limit; publication claims requiring exact equivalence must use exact checks or an independently justified scalable certificate.
 - Numerical commutation fallback can change optimization opportunities and should be reported separately from rule-based baseline results.
-- Some planned experiments and multi-compiler comparisons are documented as deferred or metadata-only in project docs.
+- Historical wave documents may describe experiments as planned or metadata-only; the active status is defined by `data/DATA_CANONICAL.md`, `release/release_manifest.json`, and `docs/manuscript/claim_evidence_table.csv`.
 - `scripts/reproduce_all.py --verify` reports "source file(s) modified since data generation" warnings for 11 experiments (E12–E21 and E25; 10–11 source files each, all under `src/optimisation/`). These stem from legitimate improvements to optimizer/analysis code made after the canonical data was generated, not from data tampering. They have been evaluated and are accepted as-is: the canonical datasets are anchored by the numbers quoted in the manuscript and are intentionally not rerun, so the warnings remain visible in verification output by design.
 
 ## Figure regeneration
 
-All 17 manuscript figure PDFs (plus the companion summary CSVs) regenerate from a single entry point:
+All 18 PDF artifacts (17 numbered figures plus the `8b` companion figure, plus summary CSVs) regenerate from a single entry point:
 
 ```bash
-# Git Bash, from the repo root
-/d/Downloads/miniforge3/python analysis/generate_figures.py
+# From the repo root, inside the pinned environment
+conda run -n q-research python analysis/generate_figures.py
 ```
 
-- Runtime: ~51 s on the reference machine (Windows, Python 3.12). Exit code 0 and the final log section `ALL FIGURES GENERATED` listing `fig01` ... `fig17` indicate success.
-- **Do not use the bare `python` on PATH** — that is a different runtime without the project dependencies (qiskit etc.). The project interpreter is `/d/Downloads/miniforge3/python`.
+- Runtime: ~51 s on the reference machine (Windows, Python 3.12). Exit code 0 and the final log section `ALL FIGURES GENERATED` listing `fig01` ... `fig17` plus `fig08b` indicate success.
+- Use `conda run -n q-research python ...` or the activated `q-research` environment; do not rely on an unrelated system Python.
 - All outputs land in `analysis/figures/` (resolved via `src/config.py`: `PROJECT_ROOT/analysis/figures`; no absolute paths are hard-coded).
 
-### Figure PDFs (17)
+### Figure PDFs (18 artifacts: 17 numbered figures plus 8b)
 
 | # | File | Experiment / data | Content |
 |---|------|-------------------|---------|

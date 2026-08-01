@@ -36,17 +36,17 @@
           "n_match": 0,
           "n_total": 140
         },
+        "optimized_gate_count": {
+          "max_diff": 0.0,
+          "n_match": 140,
+          "n_total": 140
+        },
         "gate_count_total": {
           "max_diff": 0.0,
           "n_match": 140,
           "n_total": 140
         },
         "baseline_gate_count": {
-          "max_diff": 0.0,
-          "n_match": 140,
-          "n_total": 140
-        },
-        "optimized_gate_count": {
           "max_diff": 0.0,
           "n_match": 140,
           "n_total": 140
@@ -167,10 +167,15 @@
         "max_diff": 11712.1229262352,
         "n_match": 23,
         "n_total": 2130
+      },
+      "optimized_gate_count": {
+        "max_diff": 6.0,
+        "n_match": 2092,
+        "n_total": 2130
       }
     },
     "status": "DIVERGED",
-    "reason": "Substantive differences in deterministic columns (max=1.000000)"
+    "reason": "Substantive differences in deterministic columns (max=6.000000)"
   },
   {
     "experiment_id": "E15",
@@ -208,12 +213,12 @@
           "n_match": 2,
           "n_total": 142
         },
-        "baseline_gate_count": {
+        "optimized_gate_count": {
           "max_diff": 0.0,
           "n_match": 142,
           "n_total": 142
         },
-        "optimized_gate_count": {
+        "baseline_gate_count": {
           "max_diff": 0.0,
           "n_match": 142,
           "n_total": 142
@@ -276,14 +281,14 @@
           "n_match": 7,
           "n_total": 696
         },
-        "baseline_gate_count": {
-          "max_diff": 7.0,
-          "n_match": 648,
-          "n_total": 696
-        },
         "optimized_gate_count": {
           "max_diff": 7.0,
           "n_match": 632,
+          "n_total": 696
+        },
+        "baseline_gate_count": {
+          "max_diff": 7.0,
+          "n_match": 648,
           "n_total": 696
         },
         "depth_reduction": {
@@ -344,14 +349,14 @@
           "n_match": 2,
           "n_total": 726
         },
-        "baseline_gate_count": {
-          "max_diff": 11944.0,
-          "n_match": 54,
-          "n_total": 726
-        },
         "optimized_gate_count": {
           "max_diff": 11944.0,
           "n_match": 68,
+          "n_total": 726
+        },
+        "baseline_gate_count": {
+          "max_diff": 11944.0,
+          "n_match": 54,
           "n_total": 726
         },
         "depth_reduction": {
@@ -376,9 +381,70 @@
   },
   {
     "experiment_id": "E18",
-    "status": "NOT_RERUN",
     "canonical_file": "data\\v5\\e18\\e18_clifford_t_e18_full_20260610_052140.csv",
-    "note": "Rerun not completed within compute budget"
+    "rerun_file": "data\\v9\\e18\\e18_clifford_t_e18_full_20260721_131939.csv",
+    "canonical_rows": 270,
+    "rerun_rows": 231,
+    "same_columns": false,
+    "status": "DIVERGED",
+    "reason": "Row count mismatch: 270 vs 231",
+    "overlap": {
+      "keys": [
+        "circuit_id",
+        "optimizer"
+      ],
+      "canonical_key_rows": 192,
+      "rerun_key_rows": 231,
+      "common_key_rows": 192,
+      "input_circuit_identical": 150,
+      "input_circuit_changed": 42,
+      "output_circuit_identical": 152,
+      "output_circuit_changed": 40,
+      "numeric_comparison": {
+        "reduction": {
+          "max_diff": 0.0481744902797535,
+          "n_match": 172,
+          "n_total": 192
+        },
+        "fidelity": {
+          "max_diff": 1.0,
+          "n_match": 150,
+          "n_total": 192
+        },
+        "runtime_seconds": {
+          "max_diff": 126.45608234405518,
+          "n_match": 0,
+          "n_total": 192
+        },
+        "optimized_gate_count": {
+          "max_diff": 83.0,
+          "n_match": 168,
+          "n_total": 192
+        },
+        "baseline_gate_count": {
+          "max_diff": 79.0,
+          "n_match": 168,
+          "n_total": 192
+        },
+        "depth_reduction": {
+          "max_diff": 0.1060606060606061,
+          "n_match": 172,
+          "n_total": 192
+        },
+        "two_qubit_reduction": {
+          "max_diff": 0.2857142857142857,
+          "n_match": 172,
+          "n_total": 192
+        },
+        "cnot_reduction": {
+          "max_diff": 0.2857142857142857,
+          "n_match": 172,
+          "n_total": 192
+        }
+      },
+      "worst_nonruntime_diff": 83.0,
+      "status": "OVERLAP_DIVERGED"
+    }
   },
   {
     "experiment_id": "E19",
@@ -419,9 +485,39 @@
   },
   {
     "experiment_id": "E20",
-    "status": "NOT_RERUN",
     "canonical_file": "data\\v6\\e20\\multi_compiler_full.csv",
-    "note": "Rerun not completed within compute budget"
+    "rerun_file": "data\\v9\\e20\\multi_compiler_full.csv",
+    "canonical_rows": 1070,
+    "rerun_rows": 1070,
+    "same_columns": true,
+    "numeric_comparison": {
+      "fidelity": {
+        "max_diff": 0.0,
+        "n_match": 1070,
+        "n_total": 1070
+      },
+      "gate_reduction": {
+        "max_diff": 0.0,
+        "n_match": 1070,
+        "n_total": 1070
+      },
+      "compilation_time_seconds": {
+        "max_diff": 6.262030601501465,
+        "n_match": 0,
+        "n_total": 1070
+      },
+      "original_gate_count": {
+        "max_diff": 0.0,
+        "n_match": 1070,
+        "n_total": 1070
+      },
+      "optimized_gate_count": {
+        "max_diff": 0.0,
+        "n_match": 1070,
+        "n_total": 1070
+      }
+    },
+    "status": "IDENTICAL"
   },
   {
     "experiment_id": "E21",
@@ -443,6 +539,11 @@
       },
       "optimized_size": {
         "max_diff": 4.0,
+        "n_match": 1100,
+        "n_total": 1140
+      },
+      "gate_reduction": {
+        "max_diff": 0.1904761904761904,
         "n_match": 1100,
         "n_total": 1140
       }

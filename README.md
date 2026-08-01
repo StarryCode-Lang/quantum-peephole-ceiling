@@ -1,14 +1,14 @@
-# Q-research: Listing Model Sensitivity and Prototype Action-Space Ceilings in Quantum Circuit Optimization
+# Quantum Peephole Ceiling: Representation-Conditioned Optimization in Quantum Circuits
 
-**Project Version**: 9.0.0  
-**Date**: 2026-07-21  
-**Release ID**: q-research-9.0.0-wave5  
+**Project Version**: 10.0.0  
+**Date**: 2026-08-01  
+**Release ID**: q-research-10.0.0-wave6  
 
 ---
 
 ## Project Overview
 
-This project characterizes the boundaries of quantum circuit peephole optimization across 15 circuit families and 6 optimizer types, with 82,721 data rows across 36 canonical datasets. The central contribution is the discovery that the circuit listing model (the data-structure ordering of gates) is the key factor governing Phase-1 adjacent-cancellation optimizer behavior.
+This project characterizes the boundaries of quantum circuit peephole optimization across 15 circuit families and 6 optimizer types, with 82,789 data rows across 36 canonical datasets. The central contribution is a representation-conditioned analysis of the action space available to bounded local rewrites.
 
 ### Core Scientific Question
 > When and why does peephole optimization succeed or fail across diverse circuit families?
@@ -24,6 +24,9 @@ This project characterizes the boundaries of quantum circuit peephole optimizati
 ---
 
 ## Directory Structure
+
+Detailed source-of-truth and cleanup policy: `PROJECT_STRUCTURE.md`. Publication
+readiness and remaining blockers: `docs/review/publication_readiness_2026-08.md`.
 
 ```
 Q-research/
@@ -45,7 +48,7 @@ Q-research/
 │   └── provenance.py            # Data provenance tracking
 │
 ├── experiments/                  # Experiment scripts (by ID)
-├── data/                         # Data (versioned: v2_fixed through v8)
+├── data/                         # Canonical data (v2_fixed through v8; v9 reruns are non-canonical evidence)
 ├── analysis/                     # Analysis scripts, figures, statistics
 ├── docs/                         # Documentation
 │   ├── theory/                  # Theoretical framework + formal results
@@ -55,11 +58,11 @@ Q-research/
 │   └── data_dictionary.md       # Canonical data dictionary
 ├── scripts/                      # Reproduction scripts
 ├── release/                      # Machine-readable release manifest
-├── tests/                        # 268 unit + statistical tests
+├── tests/                        # Unit, integration, and statistical tests
 ├── environment.yml              # Conda environment (Python 3.10+)
 ├── requirements.txt             # Pip requirements
 ├── Dockerfile                   # Docker container
-└── .github/workflows/ci.yml    # CI pipeline
+└── docs/review/                 # Audit reports, evidence maps, and wave history
 ```
 
 ---
@@ -95,7 +98,7 @@ Q-research/
 | E10p2b-v2 | Phase-2b Full v2 | COMPLETE | 2,427 | Full-scale Phase-2b; full-factorial depth grid (56/56, wave 6); pooled reduction 48.5% (95% CI [46.5, 50.5]) |
 | EHW | Hardware Validation (noise-model) | COMPLETE | 288 | Noise-model only, NOT real hardware; BV 46.15% logical -> 0% physical L1 |
 
-**Total**: 82,721 data rows across 36 canonical datasets (see `release/release_manifest.json` and `data/DATA_CANONICAL.md` for the exact per-dataset counts).
+**Total**: 82,789 data rows across 36 canonical datasets (see `release/release_manifest.json` and `data/DATA_CANONICAL.md` for the exact per-dataset counts).
 
 ---
 
@@ -123,7 +126,7 @@ Key limitations:
 - Gate-shuffler control (E22) complete -- counterintuitive: shuffled circuits yield higher greedy Phase-1 reduction than original (10.3% vs 6.3%)
 - E04 single-seed results failed E29 ten-seed replication (RLS -176.5%, SA -22.1%, GA -8.3%); E04 conclusions must be qualified as seed/config fragile
 - t|ket> RandomClifford correctness caveat: 14 of 30 SOTA outputs fail exact-unitary fidelity verification (see Appendix E)
-- Listing-sensitivity coverage complete (wave 6): 15/15 families, 6,652 rows, 168 combos; production compilers 0/126 sensitive, prototype 15/42 (6 sensitive families incl. UCCSD_inspired); honest gap: qwalk_8 has only 3/20 variants and its 12 rows skip the exact unitary check
+- Listing-sensitivity coverage complete (wave 6): 15/15 families, 6,720 rows, 168 combos; production compilers 0/126 sensitive, prototype 15/42 (6 sensitive families incl. UCCSD_inspired); qwalk_8 has 20/20 variants and all 80 rows use the documented structural-preservation route instead of exact 9-qubit Operator checks
 - Rerun reconciliation (wave 6): 8 experiments rerun under current code (E12-E17, E19, E21) and reconciled; canonical retained for all; IQP commutation/hybrid reductions in canonical E14/E15/E16/E21 are systematically conservative under the strengthened commutation predicate (optimizer-capability enhancement, not a data error); E18/E20 not rerun (budget)
 
 ---

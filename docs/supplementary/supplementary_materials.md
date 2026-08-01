@@ -1,12 +1,17 @@
 # Supplementary Materials
 
 > **Document Status**: Supplementary materials for publication-quality manuscript submission.  
-> **Version**: 2.1  
-> **Date**: 2026-06-11  
+> **Version**: 2.2  
+> **Date**: 2026-08-01  
 > **Scope**: Additional data, proofs, algorithms, and analysis not included in the main manuscript.  
 > **Changes from v2.0**: Rewrote S8.3 to remove invalid quantum supremacy connection (non sequitur). Added known limitations disclosures.
 
 > **DISCLAIMER (updated 2026-07-21, wave 2)**: The Cirq and t|ket> multi-compiler comparison data is now available. The original E15 canonical dataset (994 records) contains Qiskit and custom peephole optimizers only; Cirq and t|ket> results were subsequently collected in E20 full mode (`multi_compiler_full.csv`, 1,070 records) and the v6 SOTA benchmark (`sota_comparison_aggregated.csv`, corrected Cirq pipeline as of 2026-07-20). Remaining caveats — the 2026-07-18 Cirq pipeline bug and t|ket> RandomClifford fidelity failures — are documented in S11.2 and Appendix E. (This note supersedes the 2026-06-15 disclaimer.)
+
+> **Active release note (2026-08-01)**: The current manifest contains 36 canonical
+> datasets and 82,789 rows. Phase-2b v2 is full-scale evidence; historical
+> “planned” wording below is retained only for provenance. Noise-model results
+> are not real-hardware results, and sampled fidelity is not an exact certificate.
 
 ---
 
@@ -321,7 +326,7 @@ Output: OptimizationResult (C', reduction, fidelity)
 
 ### S5.1 Data File Inventory
 
-> Canonical file inventory, refreshed from `release/release_manifest.json` on 2026-07-21 (36 canonical datasets, 82,721 rows). For the authoritative list with full SHA-256 checksums, see `release/release_manifest.json`. Derived (non-canonical) analysis files live under each experiment's `derived/` directory and are intentionally excluded from the manifest — e.g. `data/v6/e21/derived/{ceiling_aware_summary.csv, e21_paired_statistics.csv}`, `data/v7/e24/derived/e24_theorem7_summary.csv`, `data/v7/e29/derived/e29_multi_seed_statistics.csv`, and the E18 bias artifacts in `data/v5/e18/derived/`.
+> Canonical file inventory, refreshed from `release/release_manifest.json` on 2026-08-01 (36 canonical datasets, 82,789 rows). For the authoritative list with full SHA-256 checksums, see `release/release_manifest.json`. Derived (non-canonical) analysis files live under each experiment's `derived/` directory and are intentionally excluded from the manifest — e.g. `data/v6/e21/derived/{ceiling_aware_summary.csv, e21_paired_statistics.csv}`, `data/v7/e24/derived/e24_theorem7_summary.csv`, `data/v7/e29/derived/e29_multi_seed_statistics.csv`, and the E18 bias artifacts in `data/v5/e18/derived/`.
 
 | Experiment | File | Records | SHA-256 (prefix) |
 |------------|------|---------|-------------------|
@@ -357,15 +362,15 @@ Output: OptimizationResult (C', reduction, fidelity)
 | E24 | e24_theorem7_results.csv | 75 | cdeb08e6a326d8b0... |
 | E26 | e26_bv_theory_results.csv | 4 | ce044aa13a63735f... |
 | E29 | e29_multi_seed_e04_full.csv | 800 | 68a814a853d95b9a... |
-| E26_phase2b_full_v8 | phase2b_full_validation_v8.csv | 2,427 | 2a0a863a657ad8d1... |
-| E_listing_sensitivity_v8 | listing_sensitivity_v8.csv | 6,652 | (wave-5) |
+| E26_phase2b_full_v8 | phase2b_full_validation_v8.csv | 2,427 | 93c398f6aea16f34... |
+| E_listing_sensitivity_v8 | listing_sensitivity_v8.csv | 6,720 | (wave-6 qwalk_8 fill) |
 | E27_new_families | e27_new_families_v8.csv | 675 | (wave-5) |
 | HARDWARE_VALIDATION | ehw_runs_full_20260720_150931.csv | 288 | e6537e0ee9b59ca5... |
-| **Total** | **36 datasets** | **82,721** | |
+| **Total** | **36 datasets** | **82,789** | |
 
 Checksums and file paths are canonical in `release/release_manifest.json`. Per-experiment metadata is in each `data/v*/e*/metadata.json`.
 
-**Post-manifest reconciliation (2026-07-21, wave 3):** the three former post-manifest additions are now all in the release manifest — the Phase-2b full v2 dataset (`data/v8/phase2b_full/`, 735 rows), the EHW full run (`ehw_runs_full_20260720_150931.csv`, 288 rows, which supersedes the 48-row smoke file as canonical; noise-model simulation on fake backends, **not real hardware**), and the regenerated SOTA aggregate (105 rows, protocol-conformant schema after the 2026-07-20 Cirq pipeline fix). No pending manifest additions remain.
+**Post-manifest reconciliation (2026-08-01):** the Phase-2b full v2 dataset (`data/v8/phase2b_full/`, 2,427 rows), the EHW full run (`ehw_runs_full_20260720_150931.csv`, 288 rows, noise-model simulation on fake backends, **not real hardware**), the regenerated SOTA aggregate (105 rows), and the completed listing-sensitivity fill (6,720 rows) are the active manifest evidence. No pending manifest additions remain after the release manifest is regenerated.
 
 ### S5.2 Data Format Specification
 

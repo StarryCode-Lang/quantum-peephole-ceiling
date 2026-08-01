@@ -1,5 +1,11 @@
 # Experiment Execution Guide
 
+> **Status (2026-08-01):** This document preserves the original review-gap
+> protocol. Active dataset status and canonical paths are defined by
+> `data/DATA_CANONICAL.md`, `release/release_manifest.json`, and the individual
+> experiment scripts. Do not treat v6 output paths below as current release
+> paths.
+
 This document describes the four new experiments designed to close the
 critical review gaps identified in the Q-research quantum circuit
 optimization project. Each experiment targets a specific Fatal/Medium
@@ -22,7 +28,7 @@ packages required).
 ## Experiment 1: Phase-2b Full 15-Family Validation
 
 **Script**: `experiments/phase2b_full_validation.py`
-**Output**: `data/v6/e26_phase2b_full/`
+**Output**: `data/v8/phase2b_full/`
 **Review gap closed**: FATAL — Phase-2b (Thm 9) not validated at canonical scale
 
 ### Purpose
@@ -98,8 +104,8 @@ python experiments/phase2b_full_validation.py --mode full --families BV,QFT,GHZ
 
 ## Experiment 2: WCL Full 15-Family Validation
 
-**Script**: `experiments/wcl_full_family.py`
-**Output**: `data/v6/e27_wcl_full_family/`
+**Script**: `experiments/listing_sensitivity_check.py` plus the checkpointed fill scripts
+**Output**: `data/v8/listing_sensitivity/`
 **Review gap closed**: MEDIUM→FATAL — WCL validation limited to random Universal
 
 ### Purpose
@@ -168,8 +174,8 @@ for complex families (Grover, Adder, QuantumWalk at n=10).
 ### Command
 
 ```bash
-python experiments/wcl_full_family.py --mode smoke
-python experiments/wcl_full_family.py --mode full
+python experiments/listing_sensitivity_check.py --mode smoke
+python experiments/listing_sensitivity_check.py --mode full
 ```
 
 ---
@@ -177,7 +183,7 @@ python experiments/wcl_full_family.py --mode full
 ## Experiment 3: Gate-Order Shuffle Ablation
 
 **Script**: `experiments/gate_shuffle_ablation.py`
-**Output**: `data/v6/e28_gate_shuffle_ablation/`
+**Output**: `data/v7/e22/`
 **Review gap closed**: MEDIUM→FATAL — No random gate shuffler control (Sec 6.3.11)
 
 ### Purpose

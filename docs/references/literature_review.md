@@ -3,10 +3,17 @@
 > **This file contains the narrative literature review (42 core references). For the authoritative reference list used in the manuscript, see unified_references.md.**
 
 > **Document Status**: Comprehensive literature review for publication-quality manuscript.  
-> **Version**: 1.1  
-> **Date**: 2026-06-10  
+> **Version**: 1.2  
+> **Date**: 2026-08-01  
 > **Scope**: Systematic review of quantum circuit optimization, peephole optimization, complexity theory, compiler frameworks, and recent advances (2021–2025).  
 > **Method**: Structured review following PRISMA guidelines adapted for theoretical computer science.
+
+> **Primary-record verification (2026-08-01):** Quartz is verified at
+> <https://arxiv.org/abs/2204.09033>; arXiv:2205.00125 is an unrelated
+> telecloning paper. Quarl, AlphaTensor-Quantum, SSR, and ZX-RL were checked
+> against their primary arXiv records. A complete systematic update to a
+> submission-grade search packet remains required because the repository does
+> not include a reproducible database search ledger.
 
 ---
 

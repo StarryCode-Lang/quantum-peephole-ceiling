@@ -1,11 +1,11 @@
 # Canonical Data Files
 
-> **Version**: 2.2.0  
-> **Date**: 2026-07-21  
+> **Version**: 2.3.0  
+> **Date**: 2026-08-01  
 > **Purpose**: Define, for every experiment, the single **canonical** CSV used
 > for analysis and manuscript figures, the layout of derived artifacts, and the
 > data-version policy. Aligned with `release/release_manifest.json` (36 canonical
-> datasets, 82,721 rows as of 2026-07-21).
+> datasets, 82,789 rows as of 2026-08-01).
 
 ## Roles
 
@@ -74,10 +74,10 @@ Fields that were not recorded at generation time were backfilled during the
 | Isolation | `v5/qiskit_pass_isolation.csv` | 100 | results_v2 | Phase 7 Qiskit pass isolation |
 | EHW | `v8/hardware_validation/ehw_runs_full_20260720_150931.csv` | 288 | results_v8 | Hardware-validation full run (FakeManilaV2/FakeNairobiV2 noise-model simulation, **not** real hardware); supersedes the 48-row smoke; summary CSV in same dir is derived |
 | E10p2b-v2 | `v8/phase2b_full/phase2b_full_validation_v8.csv` | 2,427 | results_v8 | Phase-2b v2 full-scale validation (wave-6 full-factorial grid: depth families n=3..10 x depth={20..50 step 5}, 56/56 combos; 0 fidelity failures); BV reaches exact k+2 optimum on all 80 instances; analysis CSVs in same dir |
-| E_listing_sensitivity_v8 | `v8/listing_sensitivity/listing_sensitivity_v8.csv` | 6,652 | results_v8 | Listing-sensitivity check (wave-6 full coverage): 15/15 families x 20-50 relisting variants; production compilers 0/126 sensitive, prototype 15/42 (6 sensitive families); qwalk_8 partial (3/20 variants; its 12 rows skip the exact unitary check) |
+| E_listing_sensitivity_v8 | `v8/listing_sensitivity/listing_sensitivity_v8.csv` | 6,720 | results_v8 | Listing-sensitivity check (wave-6 full coverage): 15/15 families x 20-50 relisting variants; production compilers 0/126 sensitive, prototype 15/42 (6 sensitive families); qwalk_8 complete (20/20 variants, 80 rows; exact 9-qubit Operator checks skipped under the documented budget) |
 | E27_new_families | `v8/e27_new_families/e27_new_families_v8.csv` | 675 | results_v8 | 5 new circuit families (QPE, TrotterHamiltonian, QuantumVolume, WState, RepetitionCode) for family-mean statistical power; wave-6 PART-5 LOFO evaluation in `v6/ceiling_repair/part5_*` (docs/review/wave6/e27_part5.md) |
 
-**Totals**: 36 canonical datasets, 82,721 rows (2026-07-21).
+**Totals**: 36 canonical datasets, 82,789 rows (2026-08-01).
 
 ## derived/ directories
 
