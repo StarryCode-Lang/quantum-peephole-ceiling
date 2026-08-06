@@ -1,10 +1,10 @@
 # Unified References for Q-Research Project
 
-> **This is the SINGLE AUTHORITATIVE reference list for the Q-research project. All manuscript citations must resolve to entries in this file. The literature_review.md file is retained as a narrative companion but is NOT authoritative for citation count.**
+> **This is the project-level master reference CATALOG for Q-research. The manuscript's own References section (docs/manuscript/manuscript.md) carries the submission numbering [1]-[47] after the wave-1 repair and contiguous renumbering; where numbers differ, the manuscript numbering governs citations in the paper, and this catalog governs bibliographic correctness. The literature_review.md file is retained as a narrative companion but is NOT authoritative for citation count.**
 >
 > **Document Status**: Comprehensive, unified reference list for the Q-research manuscript.
-> **Version**: 2.1
-> **Date**: 2026-07-10
+> **Version**: 2.2
+> **Date**: 2026-08-06
 > **Scope**: Consolidates all references from `literature_review.md` (42 refs), `phase7_related_work.md` (12 refs), `v5_full_manuscript_part1/2/3.md`, and adds missing key works.
 >
 > **Pending additions**: References are actively maintained in this file. All verifiable entries from earlier drafts have been merged with corrected bibliographic details.
@@ -76,7 +76,7 @@
 
 [21] R. Duncan, A. Kissinger, S. Perdrix, and J. van de Wetering, "Graph-theoretic Simplification of Quantum Circuits with the ZX-calculus," Quantum, vol. 4, 279, 2020. arXiv:1902.03178
 
-[22] N. de Beaudrap, S. Glendinning, and Q. Zhang, "Faster resynthesis with the ZX-calculus," Proceedings of the 19th International Conference on Quantum Physics and Logic (QPL 2022), 2022. arXiv:2206.10843
+[22] N. de Beaudrap, A. Kissinger, and J. van de Wetering, "Circuit extraction for ZX-diagrams can be #P-hard," Proc. ICALP, 2022. arXiv:2202.09194 (2026-08-06: replaced a suspected fabrication — the former entry "Faster resynthesis with the ZX-calculus", QPL 2022, arXiv:2206.10843 could not be verified; that arXiv ID resolves to an unrelated paper and no work under that title was found. See docs/references/search_ledger.md.)
 
 [23] A. Kissinger and J. van de Wetering, "Reducing T-count with the ZX-calculus," arXiv:1903.10477, 2019.
 

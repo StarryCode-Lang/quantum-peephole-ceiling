@@ -185,7 +185,14 @@ EXPERIMENTS = {
     "E26": {
         "script": "experiments/phase2b_full_validation.py",
         "args": ["--mode", "smoke"],
-        "description": "Theorem-9 BV theory-bounds validation (v7, pinned smoke mode)",
+        "description": "Phase-2b v2 full-scale validation (E26 canonical, v8; pinned smoke mode)",
+        "estimated_time": "~2 minutes smoke / longer full",
+        "output": "data/v8/phase2b_full/"
+    },
+    "E26-pilot": {
+        "script": "experiments/phase2b_full_validation.py",
+        "args": ["--mode", "smoke"],
+        "description": "Theorem-9 BV theory-bounds pilot (v7, superseded by bv_theory_v8 in E26)",
         "estimated_time": "~2 minutes smoke / longer full",
         "output": "data/v7/e26/"
     },
@@ -195,6 +202,12 @@ EXPERIMENTS = {
         "description": "Multi-seed E04 robustness study (v7, pinned smoke mode)",
         "estimated_time": "~2 minutes smoke / ~1 hour full",
         "output": "data/v7/e29/"
+    },
+    "E30": {
+        "script": "experiments/e30_thm1a_wcl/run.py",
+        "description": "Thm 1(a) WCL adjacent-pair density validation (v10)",
+        "estimated_time": "~2 minutes",
+        "output": "data/v10/e30/"
     },
 }
 
@@ -424,9 +437,15 @@ def verify_data():
                 elif exp_id == "E10p2b":
                     # Phase-2b validation — has optimizer + reduction columns
                     required_cols = ['optimizer', 'reduction']
-                elif exp_id == "E26":
-                    # Theorem-9 theory-bounds table — non-standard schema
+                elif exp_id == "E26-pilot":
+                    # Theorem-9 theory-bounds pilot table — non-standard schema
                     required_cols = []  # accept any columns
+                elif exp_id == "E26":
+                    # Phase-2b v2 full-scale validation (v8)
+                    required_cols = ['n_qubits', 'reduction', 'fidelity']
+                elif exp_id == "E30":
+                    # Thm 1(a) WCL density validation (v10)
+                    required_cols = ['n_qubits', 'depth', 'rho', 'a_adj_raw']
                 else:
                     required_cols = ['n_qubits', 'depth', 'reduction', 'fidelity']
                     if 'experiment' not in df.columns and 'experiment_id' not in df.columns:

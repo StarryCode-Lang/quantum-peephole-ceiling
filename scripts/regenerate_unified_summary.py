@@ -46,7 +46,30 @@ EXPERIMENT_DIRS = {
     "E17": "v5/e17",
     "E18": "v5/e18",
     "E19": "v6/e19",
+    "E19-ext": "v7/e19_extended",
+    "E20": "v6/e20",
     "E21": "v6/e21",
+    "E22": "v7/e22",
+    "E23": "v7/e23",
+    "E24": "v7/e24",
+    "E25": "v6/e25",
+    "E26": "v8/phase2b_full",
+    "E26-pilot": "v7/e26",
+    "E27": "v8/e27_new_families",
+    "E29": "v7/e29",
+    "E30": "v10/e30",
+    "E10p2b": "v6/e10_phase2b",
+    "E10var": "v6/e10_real_variance",
+    "E10p2b-full": "v7/e10_phase2b_full",
+    "EHW": "v8/hardware_validation",
+    "E_listing": "v8/listing_sensitivity",
+    "SOTA": "v6/sota_benchmark",
+}
+
+# Canonical-file override for directories without a metadata.json (kept in
+# sync with scripts/generate_release_manifest.py CANONICAL_FILE_OVERRIDES).
+CANONICAL_FILE_OVERRIDES = {
+    ("v8", "hardware_validation"): "ehw_runs_full_20260720_150931.csv",
 }
 
 
@@ -63,6 +86,14 @@ def _resolve_canonical_csv(exp_dir: Path) -> Path | None:
                     return candidate
         except Exception:
             pass
+    # Explicit override for directories without metadata.json.
+    try:
+        rel = exp_dir.relative_to(DATA_ROOT)
+        override = CANONICAL_FILE_OVERRIDES.get((rel.parts[0], rel.parts[1]))
+        if override and (exp_dir / override).exists():
+            return exp_dir / override
+    except (ValueError, IndexError):
+        pass
     # Fall back to the most recently modified CSV.
     csvs = sorted(exp_dir.glob("*.csv"), key=lambda p: p.stat().st_mtime, reverse=True)
     return csvs[0] if csvs else None

@@ -19,7 +19,7 @@ def test_manifest_and_listing_dataset_are_synchronized():
     rows = len(pd.read_csv(path))
     metadata = json.loads((path.parent / "metadata.json").read_text(encoding="utf-8"))
 
-    assert len(manifest["datasets"]) == 36
-    assert sum(item["rows"] or 0 for item in manifest["datasets"]) == 82789
+    assert len(manifest["datasets"]) == 37
+    assert sum(item["rows"] or 0 for item in manifest["datasets"]) == 96289
     assert digest == entry["sha256"]
     assert rows == entry["rows"] == metadata["n_rows"] == 6720

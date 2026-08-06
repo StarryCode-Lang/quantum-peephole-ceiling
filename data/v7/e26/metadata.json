@@ -1,5 +1,5 @@
 {
-  "experiment_id": "E26",
+  "experiment_id": "E26-pilot",
   "description": "Bernstein-Vazirani oracle theory validation: Theorem 9 rigorous and idealized gate-count reduction bounds for BV oracle circuits at n=3..7 qubits.",
   "timestamp": "2026-07-18T22:13:28",
   "source_file": "experiments/outputs/e26_bv_theory_20260718_221328.csv",
@@ -14,6 +14,7 @@
   "notes": [
     "canonical_data_file backfilled by wave-1 data-integrity normalization (20260720-230058); see data/DATA_CANONICAL.md for the canonical-file policy.",
     "git_commit not recorded at generation time (pre-provenance era); left null.",
-    "source_file pointed into experiments/outputs/, which held uncurated run outputs; the file was archived to _agent_work/orphan_outputs/ during wave-1 data-integrity cleanup. The canonical dataset is the CSV in this directory."
+    "source_file pointed into experiments/outputs/, which held uncurated run outputs; the file was archived to _agent_work/orphan_outputs/ during wave-1 data-integrity cleanup. The canonical dataset is the CSV in this directory.",
+    "2026-08-06 ID normalization: renamed from E26 to E26-pilot; this 4-row BV theory-bounds pilot (n=3..7) is superseded by bv_theory_v8.csv (n=3..10) inside data/v8/phase2b_full (experiment E26)."
   ]
 }

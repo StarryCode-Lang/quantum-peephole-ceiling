@@ -106,6 +106,18 @@ def run(seeds: list[int] | None = None, n_trials: int | None = None,
     if n_trials is None:
         n_trials = DEFAULT_N_TRIALS_SMOKE if mode == "smoke" else DEFAULT_N_TRIALS_FULL
 
+    # Seed-spacing guard (2026-08-06): circuit seeds are ``base + trial``,
+    # so two bases closer than n_trials apart produce overlapping circuit
+    # seed sets and confound the multi-seed comparison.
+    if len(seeds) > 1:
+        sorted_seeds = sorted(seeds)
+        min_spacing = min(b - a for a, b in zip(sorted_seeds, sorted_seeds[1:]))
+        if min_spacing < n_trials:
+            raise ValueError(
+                f"E29 seed bases must be spaced >= n_trials ({n_trials}) apart "
+                f"to keep circuit seed sets disjoint; got minimum spacing {min_spacing}."
+            )
+
     if output_dir is None:
         output_dir = PROJECT_ROOT / "experiments" / "outputs"
     output_dir.mkdir(parents=True, exist_ok=True)

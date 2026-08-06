@@ -47,11 +47,23 @@ KNOWN_DUPLICATES = {
 SUPERSEDED_DIRS = {
     # v6 e29 smoke (80 rows, 2 seeds) → superseded by v7 e29 full (800 rows, 10 seeds)
     ("v6", "e29_multi_seed_e04"): "v7/e29 (800 rows)",
+    # v7 e26 BV-theory pilot (4 rows, n=3..7) → superseded by bv_theory_v8.csv
+    # (n=3..10) inside v8/phase2b_full (experiment E26); renamed E26-pilot
+    # during the 2026-08-06 ID normalization.
+    ("v7", "e26"): "bv_theory_v8.csv in v8/phase2b_full (E26, n=3..10)",
 }
 
 STANDALONE_IDS = {
-    "new_families_heldout.csv": "HELDOU",
+    "new_families_heldout.csv": "HELDOUT",
     "qiskit_pass_isolation.csv": "ISOLATION",
+}
+
+# Directories that hold non-canonical supporting evidence and must not appear
+# in the release manifest (mirrors the v9 rerun/reconciliation policy).
+EXCLUDED_DIRS = {
+    # E23 verification rerun under the corrected AG generator (2026-08-06);
+    # canonical E23 remains data/v7/e23.
+    ("v10", "e23_fixed_generator"),
 }
 
 # Directory names that never hold canonical datasets:
@@ -62,7 +74,11 @@ STANDALONE_IDS = {
 #   logs/     - run logs
 #   scholar/  - reference-verification artifacts (owned by the references
 #               workstream); not experiment datasets
-NON_CANONICAL_DIR_NAMES = {"derived", "metadata", "raw", "logs", "scholar"}
+#   chunks/   - intermediate fill/chunk CSVs superseded by the merged
+#               canonical file (2026-08-06 tidy-up)
+#   superseded/ - earlier partial/smoke runs kept for provenance only
+NON_CANONICAL_DIR_NAMES = {"derived", "metadata", "raw", "logs", "scholar",
+                           "chunks", "superseded"}
 
 SCHEMA_BY_ROOT = {
     "v2_fixed": "legacy_v2_v3",
@@ -71,6 +87,7 @@ SCHEMA_BY_ROOT = {
     "v6": "results_v6",
     "v7": "results_v7",
     "v8": "results_v8",
+    "v10": "results_v10",
 }
 
 # Canonical-file override for directories that have no metadata.json (their
@@ -90,15 +107,16 @@ CANONICAL_FILE_OVERRIDES = {
 
 
 def dataset_entries(data_root: Path) -> List[Dict[str, object]]:
-    """Collect canonical CSV datasets under data/v2_fixed .. data/v8.
+    """Collect canonical CSV datasets under data/v2_fixed .. data/v10.
 
     Only the file declared by each directory's ``canonical_data_file`` (or, for
     directories without metadata, the single top-level CSV) is emitted. Files
-    under derived/, metadata/, raw/ and logs/ subdirectories are excluded.
+    under derived/, metadata/, raw/ and logs/ subdirectories are excluded,
+    as are directories listed in ``EXCLUDED_DIRS``.
     """
     entries: List[Dict[str, object]] = []
     claimed: set[str] = set()
-    for root_name in ["v2_fixed", "v4", "v5", "v6", "v7", "v8"]:
+    for root_name in ["v2_fixed", "v4", "v5", "v6", "v7", "v8", "v10"]:
         root = data_root / root_name
         if not root.exists():
             continue
@@ -107,6 +125,8 @@ def dataset_entries(data_root: Path) -> List[Dict[str, object]]:
             if any(part in NON_CANONICAL_DIR_NAMES for part in rel_parts):
                 continue
             if (root_name, exp_dir.name) in KNOWN_DUPLICATES:
+                continue
+            if (root_name, exp_dir.name) in EXCLUDED_DIRS:
                 continue
             metadata_path = exp_dir / "metadata.json"
             metadata = {}

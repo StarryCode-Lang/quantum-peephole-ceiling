@@ -60,7 +60,12 @@ class GeneticAlgorithmOptimizer(BaseOptimizer):
     
     def __init__(self, population_size: int = 10, generations: int = 10,
                  mutation_rate: float = 0.1, fidelity_threshold: float = 0.99,
-                 success_reduction: float = 0.20, random_seed: Optional[int] = None):
+                 success_reduction: float = 0.05, random_seed: Optional[int] = None):
+        # success_reduction default aligned with BaseOptimizer bug #5 fix
+        # (2026-08-06): the legacy 0.20 subclass default contradicted the
+        # base class. Canonical v2_fixed..v8 runs used 0.20; the `success`
+        # column is documented as non-informative (DATA_CANONICAL Known
+        # Issue 7), so aligning the default does not affect frozen data.
         super().__init__(fidelity_threshold, success_reduction, random_seed)
         self.population_size = population_size
         self.generations = generations
@@ -96,16 +101,22 @@ class GeneticAlgorithmOptimizer(BaseOptimizer):
                 best = _fast_copy(population[gen_best_idx])
                 best_fitness = fitnesses[gen_best_idx]
             
-            # Selection (tournament)
+            # Selection (tournament) — returns (circuit, fitness) tuples so
+            # _crossover can reuse the already-computed fitness values
+            # (perf fix 2026-08-06: previously _crossover recomputed both
+            # parent fitnesses every call, ~P expensive fidelity evaluations
+            # per generation).
             selected = self._tournament_select(population, fitnesses)
             
             # Crossover and mutation
             new_population = []
             for i in range(0, len(selected), 2):
-                parent1 = selected[i]
-                parent2 = selected[(i + 1) % len(selected)]
+                parent1, fitness1 = selected[i]
+                parent2, fitness2 = selected[(i + 1) % len(selected)]
                 
-                child1, child2 = self._crossover(parent1, parent2, target)
+                child1, child2 = self._crossover(parent1, parent2, target,
+                                                 fitness1=fitness1,
+                                                 fitness2=fitness2)
                 child1 = self._mutate(child1)
                 child2 = self._mutate(child2)
                 
@@ -129,18 +140,24 @@ class GeneticAlgorithmOptimizer(BaseOptimizer):
             metadata={'algorithm': 'ga', 'population_size': self.population_size}
         )
     
-    def _tournament_select(self, population: List[QuantumCircuit], fitnesses: List[float]) -> List[QuantumCircuit]:
-        """Tournament selection."""
+    def _tournament_select(self, population: List[QuantumCircuit], fitnesses: List[float]) -> List[Tuple[QuantumCircuit, float]]:
+        """Tournament selection returning (circuit, fitness) tuples."""
         if len(population) <= 1:
-            return [_fast_copy(population[0])] if population else []
+            if not population:
+                return []
+            fit = fitnesses[0] if fitnesses else self._fitness(population[0], population[0])
+            return [(_fast_copy(population[0]), fit)]
         selected = []
         for _ in range(len(population)):
             i, j = self.rng.choice(len(population), 2, replace=False)
-            selected.append(_fast_copy(population[i] if fitnesses[i] > fitnesses[j] else population[j]))
+            winner = i if fitnesses[i] > fitnesses[j] else j
+            selected.append((_fast_copy(population[winner]), fitnesses[winner]))
         return selected
     
     def _crossover(self, parent1: QuantumCircuit, parent2: QuantumCircuit,
-                   target: QuantumCircuit) -> Tuple[QuantumCircuit, QuantumCircuit]:
+                   target: QuantumCircuit,
+                   fitness1: Optional[float] = None,
+                   fitness2: Optional[float] = None) -> Tuple[QuantumCircuit, QuantumCircuit]:
         """
         Gate-segment crossover that preserves unitary equivalence.
         
@@ -151,9 +168,16 @@ class GeneticAlgorithmOptimizer(BaseOptimizer):
         
         This is a genuine recombination operator that combines structural
         features from both parents.
+
+        ``fitness1`` / ``fitness2`` may be supplied by the caller (the
+        generation loop already evaluates the whole population); they are
+        computed here only when absent, keeping behavior identical while
+        avoiding ~P redundant fidelity evaluations per generation.
         """
-        fitness1 = self._fitness(parent1, target)
-        fitness2 = self._fitness(parent2, target)
+        if fitness1 is None:
+            fitness1 = self._fitness(parent1, target)
+        if fitness2 is None:
+            fitness2 = self._fitness(parent2, target)
         
         n1 = len(parent1.data)
         n2 = len(parent2.data)

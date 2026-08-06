@@ -209,8 +209,9 @@ class CeilingAwareOptimizer(BaseOptimizer):
 
     def __init__(self, max_iterations: int = 100,
                  fidelity_threshold: float = 0.99,
-                 success_reduction: float = 0.20,
+                 success_reduction: float = 0.05,
                  window_size: int = 10):
+        # success_reduction aligned with BaseOptimizer bug #5 fix (2026-08-06).
         super().__init__(fidelity_threshold, success_reduction)
         self.max_iterations = max_iterations
         self.window_size = window_size

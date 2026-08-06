@@ -8,16 +8,16 @@
 
 ## Project Overview
 
-This project characterizes the boundaries of quantum circuit peephole optimization across 15 circuit families and 6 optimizer types, with 82,789 data rows across 36 canonical datasets. The central contribution is a representation-conditioned analysis of the action space available to bounded local rewrites.
+This project characterizes the boundaries of quantum circuit peephole optimization across 15 circuit families and 6 optimizer types, with 96,289 data rows across 37 canonical datasets. The central contribution is a representation-conditioned analysis of the action space available to bounded local rewrites.
 
 ### Core Scientific Question
 > When and why does peephole optimization succeed or fail across diverse circuit families?
 
-### Key Findings (v6.0.0)
+### Key Findings
 1. **Listing Model Sensitivity**: Layer-by-layer listing (LBL) structurally empties the Phase-1 action space for n >= 2 (Observation 1(b)); wire-consecutive listing (WCL) exposes ~7.8% reduction hidden under LBL (E19, 10,000 rows)
 2. **Empirical Trichotomy**: CNOT chains achieve 100% Phase-1 reduction; oracle/Clifford circuits yield 14-16% via Phase-2a commutation; 3 of 15 families at genuine structural ceiling (QFT/GHZ/SurfaceCode) + 7 of 15 at prototype action-space ceiling
 3. **Prototype vs Production**: Production peephole optimizers (t|ket> FullPeepholeOptimise) achieve 5-63% on 5 of 7 "ceiling" families, confirming the ceiling is prototype-specific, not a structural limit of peephole optimization
-4. **Theory-Experiment Validation**: 8 observables cross-validated; Theorem 9 (BV oracle Phase-2b advantage >= n/(4.5n+4)) validated at full scale: Phase-2b v2 reaches the exact k+2 optimum on all 80 BV instances, exceeding the rigorous bound by 3.1-4.2×; IQP 92.0%, Structured 40.2%, RandomClifford 51.6% mean reduction
+4. **Theory-Experiment Validation**: 17-row theory-experiment scorecard (14 MATCH / 3 PARTIAL / 0 MISMATCH as of 2026-08-06). Theorem 1(a)'s corrected WCL density formula directly validated by E30 (13,500 trials, max |z| = 2.86). Theorem 9 (BV oracle Phase-2b advantage >= n/(4.5n+4)) validated at full scale: Phase-2b v2 reaches the exact k+2 optimum on all 80 BV instances, exceeding the rigorous bound by 3.1-4.2×; IQP 92.0%, Structured 40.2%, RandomClifford 51.6% mean reduction
 5. **Ceiling-Aware Optimization (Exploratory)**: 1.6x-228x speedup (aggregate 34.97×) with bitwise-identical reduction on the 15 training families; the original heuristic predictor failed held-out validation (MAE=0.2775, Pearson=NaN), but a repaired hybrid model (mechanism gate + random forest) reaches LOFO MAE 0.0172 [0.0129, 0.0218], pooled r=0.977 -- the gate was selected post hoc on a single dataset, so this is not a validated off-the-shelf predictor (family-mean prediction remains underpowered at n=15 folds; wave-6 20-family robustness: pooled MAE 0.0188, r=0.967, family-mean r=0.780 pure-RF / 0.887 gated, but a RepetitionCode fold failure — MAE 0.303, r=-0.826 — marks the generalization boundary for unseen intermediate-density mechanisms)
 6. **Fidelity Verified**: Optimizations preserve unitary equivalence where exact/scalable checks are available; E18 includes documented decomposition/fidelity-failure rows (44.4% failure rate, survivorship-biased)
 
@@ -47,22 +47,24 @@ Q-research/
 │   │       └── template_matcher.py      # Phase-2b (full-scale v2)
 │   └── provenance.py            # Data provenance tracking
 │
-├── experiments/                  # Experiment scripts (by ID)
-├── data/                         # Canonical data (v2_fixed through v8; v9 reruns are non-canonical evidence)
+├── experiments/                  # Experiment scripts (by ID, E1-E30)
+├── data/                         # Canonical data (v2_fixed-v8, v10; v9 reruns are non-canonical evidence)
 ├── analysis/                     # Analysis scripts, figures, statistics
 ├── docs/                         # Documentation
-│   ├── theory/                  # Theoretical framework + formal results
+│   ├── theory/                  # Theoretical framework + formal results + proof audits
 │   ├── results/                 # Experimental design + analysis summary
 │   ├── manuscript/              # Manuscript (active draft) + supporting docs
+│   ├── references/              # Unified references + literature review + search ledger
+│   ├── review/                  # Audit reports, evidence maps, and wave history
 │   ├── supplementary/           # Supplementary materials
 │   └── data_dictionary.md       # Canonical data dictionary
 ├── scripts/                      # Reproduction scripts
 ├── release/                      # Machine-readable release manifest
 ├── tests/                        # Unit, integration, and statistical tests
-├── environment.yml              # Conda environment (Python 3.10+)
-├── requirements.txt             # Pip requirements
-├── Dockerfile                   # Docker container
-└── docs/review/                 # Audit reports, evidence maps, and wave history
+├── environment.yml              # Conda environment (Python 3.12)
+├── requirements.txt             # Pip requirements (pinned)
+├── pyproject.toml               # Modern packaging metadata
+└── Dockerfile                   # Docker container
 ```
 
 ---
@@ -93,12 +95,14 @@ Q-research/
 | E24 | Theorem 7 Hardness | COMPLETE | 75 | Phase-2a reduction = 79.8% (exceeds 1/6 bound) |
 | E25 | Industry Benchmarks | COMPLETE | 66 | Industry proxy circuit benchmarks |
 | E22 | Gate Shuffle Ablation | COMPLETE | 2,240 | Shuffle 10.34% > original 6.30% (counterintuitive) |
-| E26 | BV Theory Validation | COMPLETE | 4 | Thm 9 bound exceeded 3.1-4.2× on BV n=3..10 |
+| E26 | Phase-2b Full v2 | COMPLETE | 2,427 | Full-scale Phase-2b; full-factorial depth grid (56/56, wave 6); pooled reduction 48.5% (95% CI [46.5, 50.5]); BV exact k+2 optimum 80/80 |
+| E26-pilot | BV Theory Pilot | SUPERSEDED | 4 | Thm 9 bound pilot (n=3..7), superseded by bv_theory_v8.csv inside E26 |
+| E27 | New Families | COMPLETE | 675 | QPE/Trotter/QuantumVolume/WState/RepetitionCode (robustness suite) |
 | E29 | Multi-Seed E04 | COMPLETE | 800 | E04 single-seed estimates not reproduced (RLS -176.5%) |
-| E10p2b-v2 | Phase-2b Full v2 | COMPLETE | 2,427 | Full-scale Phase-2b; full-factorial depth grid (56/56, wave 6); pooled reduction 48.5% (95% CI [46.5, 50.5]) |
-| EHW | Hardware Validation (noise-model) | COMPLETE | 288 | Noise-model only, NOT real hardware; BV 46.15% logical -> 0% physical L1 |
+| E30 | Thm 1(a) WCL Validation | COMPLETE | 13,500 | Corrected WCL density formula: 27 cells, max |z| = 2.86, median rel. err. 1.4% |
+| EHW | Noise-Model Validation (fake backends) | COMPLETE | 288 | Noise-model only, NOT real hardware; BV 46.15% logical -> 0% physical L1 |
 
-**Total**: 82,789 data rows across 36 canonical datasets (see `release/release_manifest.json` and `data/DATA_CANONICAL.md` for the exact per-dataset counts).
+**Total**: 96,289 data rows across 37 canonical datasets (see `release/release_manifest.json` and `data/DATA_CANONICAL.md` for the exact per-dataset counts).
 
 ---
 

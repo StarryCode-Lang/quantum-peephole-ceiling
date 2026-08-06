@@ -58,9 +58,11 @@ class GreedyGateCancellation(BaseOptimizer):
     """
     
     def __init__(self, max_iterations: int = 100, fidelity_threshold: float = 0.99,
-                 success_reduction: float = 0.20, wire_traversal: bool = False,
+                 success_reduction: float = 0.05, wire_traversal: bool = False,
                  enable_numeric_commutation: bool = False,
                  commutation_tolerance: float = DEFAULT_PRECISION):
+        # success_reduction aligned with BaseOptimizer bug #5 fix (2026-08-06);
+        # canonical v2_fixed..v8 runs used the legacy 0.20 default.
         super().__init__(fidelity_threshold, success_reduction,
                          enable_numeric_commutation=enable_numeric_commutation,
                          commutation_tolerance=commutation_tolerance)

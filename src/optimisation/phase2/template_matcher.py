@@ -780,10 +780,3 @@ class Phase2bTemplateMatcher(BaseOptimizer):
         if not isinstance(a, (int, float, np.floating)) or not isinstance(b, (int, float, np.floating)):
             return None
         return float(a), float(b)
-
-    def _cx_qubits(self, circuit: QuantumCircuit, inst) -> tuple[int, int]:
-        """Extract (control, target) qubit indices from a CX instruction."""
-        qubits = self._get_qubit_indices(circuit, inst)
-        if len(qubits) != 2:
-            return (-1, -1)
-        return (qubits[0], qubits[1])

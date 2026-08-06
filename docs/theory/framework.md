@@ -25,7 +25,7 @@ For detailed formal results, see the companion document `formal_results.md` whic
 > - **Thm 7** (Explicit Phase-2a advantage): Constructive but uses an artificial circuit family.
 > - **Thm 9** (Phase-2b advantage for BV oracle circuits): Proves $\Omega(1)$ Phase-2b advantage for the natural Bernstein--Vazirani oracle family, strengthening Thm 7 from artificial to natural circuits.
 >
-> The remaining theorems are supporting: Thm 1(a) (birthday-paradox calculation), Thm 1(b) (listing-model structural result, important for methodology), Thm 2c/2d (INSERTION cascade closure), Lemma 3 (1-line associativity), Lemma 4 (trivially narrow special case), Thm 5 (standard McDiarmid application), Thm 6 (untested on actual circuits), Thm 8 Part c (trivially true for any circuit). They provide formal backing but are not themselves novel contributions.
+> The remaining theorems are supporting: Thm 1(a) (birthday-paradox calculation; constants corrected and directly validated by E30 on 2026-08-06), Thm 1(b) (listing-model structural result, important for methodology), Thm 2c/2d (INSERTION cascade closure), Lemma 3 (1-line associativity), Lemma 4 (trivially narrow special case), Thm 5 (standard McDiarmid application), Thm 6 (validated by E23 on 160 AG-canonical Clifford circuits), Thm 8 Part c (trivially true for any circuit). They provide formal backing but are not themselves novel contributions.
 
 ---
 
@@ -115,7 +115,7 @@ Unitary equivalence up to tolerance $\epsilon$: $C \equiv_\epsilon C'$ if $\| U 
 
 4. **Critical caveat: Haar-random unitaries vs. random gate sequences.** Theorem 8 proves incompressibility for Haar-random *unitaries*, but all experiments use random *gate sequences* of depth d=poly(n). For n=10, d=50, the circuit has ~500 gates while the Haar-random complexity threshold is ~4^n/n^2 $\approx$ 10,486 gates. Random gate sequences at these depths produce unitaries far from Haar-random. Therefore, Thm 8's bounds do not directly explain the experimental results -- the empirical ~0% reduction on random circuits is explained by the combinatorial sparsity of inverse pairs (Thm 1), not by Haar-random incompressibility. Thm 8 provides a *complementary* information-theoretic argument for the asymptotic regime that is not reached in our experiments. Note: The empirical optimization desert observed in E1-E5 is explained by Theorem 1 (combinatorial sparsity of inverse pairs), not by Theorem 8 (which applies to Haar-random unitaries, a regime not reached in our experiments). Corollary 8.1 provides a complementary information-theoretic perspective for the asymptotic regime.
 
-5. **Appropriate interpretation.** The framework's value lies in its systematic empirical methodology (82,789 controlled result rows across 36 canonical datasets; `release/release_manifest.json`) and its unification of several known observations (adjacent cancellation limits, commutation-based advantage, compiler comparisons) into a coherent, representation-conditioned model. The theorems provide support for selected empirical patterns, but the patterns themselves are about *software behavior* (compiler optimization passes), not *new physical phenomena*.
+5. **Appropriate interpretation.** The framework's value lies in its systematic empirical methodology (96,289 controlled result rows across 37 canonical datasets; `release/release_manifest.json`) and its unification of several known observations (adjacent cancellation limits, commutation-based advantage, compiler comparisons) into a coherent, representation-conditioned model. The theorems provide support for selected empirical patterns, but the patterns themselves are about *software behavior* (compiler optimization passes), not *new physical phenomena*.
 
 This framing is not a limitation but a clarification: the framework occupies a well-defined niche at the intersection of quantum software engineering and combinatorial optimization, and its claims should be evaluated accordingly.
 
@@ -421,7 +421,7 @@ This provides a *complexity-theoretic* explanation for the exponential decay of 
 | Lemma 3 | Commutation preserves equivalence | [PROVEN -- 1-line, supporting lemma] | formal_results.md Lemmas |
 | Lemma 4 | Greedy optimality for non-conflicting pairs | [PROVEN -- narrow scope, supporting lemma] | formal_results.md Lemmas |
 | Thm 5 | High-probability bound on inverse pairs (McDiarmid) | [PROVEN -- standard] | formal_results.md Theorems |
-| Thm 6 | Phase-1 ceiling exact for Clifford in canonical form | [PROVEN -- untested] | formal_results.md Theorems |
+| Thm 6 | Phase-1 ceiling exact for Clifford in canonical form | [PROVEN -- validated by E23] | formal_results.md Theorems |
 | Thm 7 | Explicit circuit family with $\Omega(1)$ Phase-2a advantage | [PROVEN -- artificial] | formal_results.md Theorems |
 | Thm 8 | Haar-random incompressibility + bounded-window limit | [PROVEN -- Parts a-b substantive; Part c trivial] | formal_results.md Theorems |
 | Thm 9 | Phase-2b/template-assisted advantage $\ge n/(4.5n+4)$ for BV oracle circuits | [PROVEN -- natural circuit family; pure Phase-2a bound open] | formal_results.md Appendix B |

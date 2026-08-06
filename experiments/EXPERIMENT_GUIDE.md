@@ -360,6 +360,7 @@ python experiments/multi_seed_e04.py --seeds 42,142,242 --n-trials 50
 | E27 | wcl_full_family.py | WCL limited to random Universal | MEDIUM→FATAL | Closes gap |
 | E28 | gate_shuffle_ablation.py | No random gate shuffler control | MEDIUM→FATAL | Closes gap |
 | E29 | multi_seed_e04.py | E04 single seed | MEDIUM | Closes gap |
+| E30 | e30_thm1a_wcl/run.py | Theorem 1(a) WCL density never directly tested | MAJOR | Closes gap (2026-08-06, corrected formula) |
 
 ## Running All Experiments
 

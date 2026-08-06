@@ -6,6 +6,13 @@ reproducibility, manuscript readiness, and cleanup safety.
 **Standard:** Nature/Science-level skepticism first; quantum-software venue
 readiness assessed separately.
 
+> **Status (2026-08-06):** The findings of this audit were addressed in the
+> 2026-08-06 revision wave — E26 ID normalization, corrected Theorem 1(a)
+> validated by E30, AG-generator fix, search ledger + reference repairs,
+> documentation resync, and infra (pyproject + CI). This document is retained
+> as the audit record; treat the manuscript, `data/DATA_CANONICAL.md` (v2.4.0)
+> and `release/release_manifest.json` as the current state.
+
 ## Executive Verdict
 
 The project contains a potentially valuable quantum-compilation methodology

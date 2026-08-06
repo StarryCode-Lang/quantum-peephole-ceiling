@@ -1,0 +1,46 @@
+[project]
+name = "q-research"
+version = "10.1.0"
+description = "Representation-conditioned peephole ceilings in quantum circuit optimization (listing-model sensitivity, search-space stratification, Phase-2b template validation)"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.12,<3.13"
+authors = [
+    { name = "Q-research authors (see docs/manuscript/manuscript.md Declarations)" },
+]
+
+# Runtime dependencies are pinned in requirements.txt / requirements-lock.txt;
+# this table mirrors requirements.txt for modern tooling (uv, pip install -e .).
+dependencies = [
+    "qiskit==2.4.1",
+    "numpy==1.26.4",
+    "pandas==2.2.2",
+    "matplotlib==3.9.0",
+    "scipy==1.13.1",
+    "tqdm==4.66.4",
+    "seaborn==0.13.2",
+    "scikit-learn==1.8.0",
+    "cirq-core==1.6.1",
+    "pytket==2.18.0",
+    "pytket-qiskit==0.77.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest==8.2.2",
+    "pytest-cov==5.0.0",
+    "pytest-timeout==2.3.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+namespaces = true
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"

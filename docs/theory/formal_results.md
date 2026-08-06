@@ -27,6 +27,17 @@ Notation specific to this document:
 
 ### Observation 1 (formerly Theorem 1): Adjacent Inverse Pair Density in Random Circuits
 
+> **CORRECTION (2026-08-06).** Part (a) below, as originally written, contains
+> two constant errors: the one-qubit term omits the discrete-gate count
+> $k_1$ (the correct probability is $k_1/g_1^2$, and the claimed bound
+> $2/g_1^2$ fails for $g_1 \ge 3$), and the two-qubit term double-counts
+> pairs per endpoint wire. The corrected statement —
+> $\mathbb{E}[|\mathcal{A}_{\text{adj}}|] = n(d-1)\left[(1-\rho)^2 k_1/g_1^2 + \rho^2/(2 g_2 (n-1))\right]$
+> for even $n$, with odd-$n$ finite-size corrections — appears in manuscript
+> §3.2 and is **directly validated by experiment E30** (`data/v10/e30/`,
+> 13,500 trials, 27 cells, max $|z| = 2.86$, median relative error 1.4%).
+> See `docs/theory/proof_audit_2026-08-06.md` for the full audit.
+
 > **Listing-model note (added 2026-06-13).** The number of adjacent inverse pairs depends critically on the **circuit listing model** -- how gates are ordered in the circuit data structure. We distinguish two models:
 >
 > - **Wire-consecutive listing (WCL):** Gates on the same qubit wire are placed consecutively in the listing. This is the natural model for circuit diagrams and some synthesis tools.
@@ -607,45 +618,36 @@ Based on this analysis, the manuscript should:
 
 ## Section 6: Phase-2b Template Matcher Implementation
 
-### Implemented scope
+> **Supersession note (2026-08-06).** An earlier version of this section
+> (footer v4.0, 2026-06-17) described the **v1 minimal prototype**, which
+> implemented only the single $H$-CNOT-$H$ conjugation template plus adjacent
+> $H$-$H$ cleanup. That description is obsolete. The current implementation is
+> `Phase2bTemplateMatcher` **v2.0.0**, validated at full scale by experiment
+> E26 (`data/v8/phase2b_full/`, 2,427 rows).
 
-`Phase2bTemplateMatcher` implements a deterministic, local Clifford template pass:
+### Implemented scope (v2.0.0)
+
+`Phase2bTemplateMatcher` v2.0.0 implements a deterministic template pipeline with three mechanism groups:
+
+1. **Inverse-cancellation closure.** Iterated cancellation of self-inverse gate pairs, named inverse pairs ($S$-$S^\dagger$, $T$-$T^\dagger$), and parametric pairs ($R_\alpha(\theta)$-$R_\alpha(-\theta)$), including pairs exposed by earlier rewrites (closure to fixpoint per pass).
+2. **Phase-polynomial merging.** Commuting diagonal-phase structure on shared wires is merged where the rewrite is unitary-preserving.
+3. **Standard conjugation templates.** The $\leq 3$-qubit Clifford conjugation template set, including the original v1 template
 
 $$
-H(c)\;\mathrm{CNOT}(c,t)\;H(c) \rightarrow H(t)\;\mathrm{CNOT}(t,c)\;H(t).
+H(c)\;\mathrm{CNOT}(c,t)\;H(c) \rightarrow H(t)\;\mathrm{CNOT}(t,c)\;H(t),
 $$
 
-The pass also performs safe adjacent Hadamard-pair cleanup:
+together with adjacent $H(q)H(q) \rightarrow I$ cleanup exposed by rewrites.
 
-$$
-H(q)\;H(q) \rightarrow I.
-$$
+The template library is the inverse-closure-plus-conjugation set; it is **not** an exhaustive enumeration of the 11,520-element two-qubit Clifford group (a deliberate delimitation stated in the manuscript). All transformations are unitary-preserving and verified per row in E26 (fidelity $\geq 1 - 10^{-9}$ on all 2,427 rows; exact Operator equality for $n \leq 9$).
 
-Both transformations are unitary-preserving and act only on explicit adjacent instruction windows in the circuit list. The implementation is intentionally conservative: it does not reorder unrelated gates, infer non-adjacent matches, or introduce identities.
+### Empirical status
 
-### Test coverage
-
-The focused unittest suite covers:
-
-- the basic three-gate template shape and qubit reversal;
-- unitary preservation against Qiskit's exact `Operator` for small circuits;
-- adjacent `H-H` cleanup exposed by the template rewrite;
-- BV-like template pipelines for $n = 2, 3, 5$, where each data qubit contributes one matched template and one adjacent `H-H` cancellation.
-
-For the implemented BV-like fixture, the input size is $5n$ and the optimized size is $n + 2$, because the local template exposes both in-block and cross-block adjacent `H-H` pairs on the shared ancilla. This preserves the exact unitary.
+E26 reaches the exact $k+2$ gate optimum on all 80 Bernstein–Vazirani instances ($n = 3$–$10$, 10 secrets per size), exceeding Theorem 9's rigorous lower bound by 3.1–4.2×, and breaks the prototype ceilings on IQP (92.0%), RandomClifford (51.6%), and Structured brickwork (40.2%). On the Theorem-7 engineered family, Phase-2b v1 achieves only 2.5% versus Phase-2a's 79.8% — the Phase-2a/2b gap is family-dependent (manuscript §4.2, Limitation 13).
 
 ### Remaining gap
 
-This is not a complete Phase-2 (a+b) optimizer. It does not yet implement:
-
-- non-adjacent template matching through commutation-aware movement;
-- multi-template search or cost-guided template selection;
-- insertion-based cascades;
-- full Clifford tableau/canonical-form synthesis;
-- topology-aware template variants;
-- measurement/classical-bit-preserving circuit rewrites.
-
-The current module should therefore be interpreted as a minimal Phase-2b template-matching prototype rather than a complete compiler pass.
+Still not implemented: exhaustive small-Clifford template enumeration, phase-gadget / ZX-calculus extraction, topology-aware template variants, and measurement/classical-bit-preserving rewrites. These are listed as future work (manuscript §7.6).
 
 ---
 
@@ -1264,13 +1266,13 @@ Theorem 9 strengthens the case for Conjecture C2 by demonstrating Phase-2b advan
 
 | ID | Type | Statement | Status |
 |----|------|-----------|--------|
-| **Thm 1(a)** | Theorem | Adjacent inverse pair density bound under WCL (expectation) | [PROVEN -- elementary] |
+| **Thm 1(a)** | Theorem | Adjacent inverse pair density bound under WCL (expectation) | [CORRECTED 2026-08-06 -- constants fixed (k1 factor; 2-qubit double count) and directly validated by E30] |
 | **Thm 1(b)** | Theorem | LBL listing model yields $\mathcal{S}_1(C) = \emptyset$ for $n \ge 2$ | [PROVEN -- structural, explains E1 zero-std] |
 | **Thm 2** | Theorem | Phase-1 reduction ceiling (SWAP/INSERTION clarified) | [PROVEN -- INSERTION cascade resolved (bounded version), see Thm 2c/2d] |
 | **Lemma 3** | Lemma | Commutation rewriting preserves equivalence | [PROVEN -- 1-line, supporting lemma] |
 | **Lemma 4** | Lemma | Greedy optimality for non-conflicting pairs | [PROVEN -- narrow scope, supporting lemma] |
 | **Thm 5** | Theorem | High-probability bound on adjacent inverse pairs (McDiarmid) | [PROVEN -- standard concentration] |
-| **Thm 6** | Theorem | Phase-1 ceiling exact for Clifford circuits in canonical form | [PROVEN -- not empirically tested] |
+| **Thm 6** | Theorem | Phase-1 ceiling exact for Clifford circuits in canonical form | [PROVEN -- empirically validated by E23 (160 circuits, matching rate 1.0)] |
 | **Thm 7** | Theorem | Explicit circuit family with $\Omega(1)$ Phase-2a advantage | [PROVEN -- artificial construction] |
 | **Thm 8** | Theorem | Haar-random circuit incompressibility and bounded-window limit | [PROVEN -- Parts a-b substantive; Part c trivial; does not apply to experimental regime] |
 | **Thm 2c** | Theorem | Bounded INSERTION cascade lemma: $R_{\text{removal}}(C') \le 2k$ | [PROVEN -- insertion-debt invariant, see Appendix A] |

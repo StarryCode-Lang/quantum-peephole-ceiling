@@ -1,11 +1,11 @@
 # Canonical Data Files
 
-> **Version**: 2.3.0  
-> **Date**: 2026-08-01  
+> **Version**: 2.4.0  
+> **Date**: 2026-08-06  
 > **Purpose**: Define, for every experiment, the single **canonical** CSV used
 > for analysis and manuscript figures, the layout of derived artifacts, and the
-> data-version policy. Aligned with `release/release_manifest.json` (36 canonical
-> datasets, 82,789 rows as of 2026-08-01).
+> data-version policy. Aligned with `release/release_manifest.json` (37 canonical
+> datasets, 96,289 rows as of 2026-08-06).
 
 ## Roles
 
@@ -60,7 +60,7 @@ Fields that were not recorded at generation time were backfilled during the
 | E23 | `v7/e23/e23_ag_canonical_results.csv` | 160 | results_v7 | Thm 6: Phase-1 = 0% on AG-canonical Clifford |
 | E24 | `v7/e24/e24_theorem7_results.csv` | 75 | results_v7 | Thm 7 hardness family; per-size summary in `derived/` |
 | E25 | `v6/e25/e25_industry_benchmarks_e25_industry_proxies_20260711_042550.csv` | 66 | results_v6 | Qiskit-based industry proxy circuits |
-| E26 | `v7/e26/e26_bv_theory_results.csv` | 4 | results_v7 | Thm 9 BV-oracle bounds, n = 3..7 |
+| E26-pilot | `v7/e26/e26_bv_theory_results.csv` | 4 | results_v7 | Thm 9 BV-oracle bounds pilot, n = 3..7. **Superseded** by `bv_theory_v8.csv` (n = 3..10) inside E26 (`v8/phase2b_full/`); renamed from "E26" on 2026-08-06 |
 | E29 | `v7/e29/e29_multi_seed_e04_full.csv` | 800 | results_v7 | 10-seed E04 extension; per-optimizer statistics in `derived/` |
 | E10p2b | `v6/e10_phase2b/e10_phase2b_validation_20260622_115818.csv` | 1,017 | results_v6 | Phase-2b validation on the E10 suite; companion theory CSV in same dir |
 | E10var | `v6/e10_real_variance/e10_real_variance_20260623_012636.csv` | 700 | results_v6 | 5-seed real-family variance; summary CSV in same dir |
@@ -73,11 +73,12 @@ Fields that were not recorded at generation time were backfilled during the
 | Heldout | `v5/new_families_heldout.csv` | 125 | results_v2 | Phase 7 held-out validation |
 | Isolation | `v5/qiskit_pass_isolation.csv` | 100 | results_v2 | Phase 7 Qiskit pass isolation |
 | EHW | `v8/hardware_validation/ehw_runs_full_20260720_150931.csv` | 288 | results_v8 | Hardware-validation full run (FakeManilaV2/FakeNairobiV2 noise-model simulation, **not** real hardware); supersedes the 48-row smoke; summary CSV in same dir is derived |
-| E10p2b-v2 | `v8/phase2b_full/phase2b_full_validation_v8.csv` | 2,427 | results_v8 | Phase-2b v2 full-scale validation (wave-6 full-factorial grid: depth families n=3..10 x depth={20..50 step 5}, 56/56 combos; 0 fidelity failures); BV reaches exact k+2 optimum on all 80 instances; analysis CSVs in same dir |
+| E26 | `v8/phase2b_full/phase2b_full_validation_v8.csv` | 2,427 | results_v8 | Phase-2b v2 full-scale validation (wave-6 full-factorial grid: depth families n=3..10 x depth={20..50 step 5}, 56/56 combos; 0 fidelity failures); BV reaches exact k+2 optimum on all 80 instances; analysis CSVs in same dir. Renamed from "E10p2b-v2" (manifest: "E26_phase2b_full_v8") on 2026-08-06 to match the manuscript's E26 |
+| E30 | `v10/e30/e30_thm1a_wcl_results.csv` | 13,500 | results_v10 | Direct quantitative validation of Theorem 1(a) under WCL with corrected constants (k1 factor; no per-wire double counting): 27 cells (n∈{4,5,8} × d∈{10,20,40} × ρ∈{0,0.3,0.6}, 500 trials each), max \|z\| = 2.86, median \|rel err\| (ρ>0) = 1.4%; per-cell theory comparison in `derived/` |
 | E_listing_sensitivity_v8 | `v8/listing_sensitivity/listing_sensitivity_v8.csv` | 6,720 | results_v8 | Listing-sensitivity check (wave-6 full coverage): 15/15 families x 20-50 relisting variants; production compilers 0/126 sensitive, prototype 15/42 (6 sensitive families); qwalk_8 complete (20/20 variants, 80 rows; exact 9-qubit Operator checks skipped under the documented budget) |
 | E27_new_families | `v8/e27_new_families/e27_new_families_v8.csv` | 675 | results_v8 | 5 new circuit families (QPE, TrotterHamiltonian, QuantumVolume, WState, RepetitionCode) for family-mean statistical power; wave-6 PART-5 LOFO evaluation in `v6/ceiling_repair/part5_*` (docs/review/wave6/e27_part5.md) |
 
-**Totals**: 36 canonical datasets, 82,789 rows (2026-08-01).
+**Totals**: 37 listed datasets, 96,289 rows (2026-08-06); of these, **35 are active canonical** (96,205 rows) and 2 are superseded provenance entries (E29-smoke 80 rows; E26-pilot 4 rows). The 2026-08-01 totals were 36 listed datasets / 82,789 rows; the increase is the 13,500-row E30 dataset (the E26/E26-pilot renames change no file content or row counts).
 
 ## derived/ directories
 
@@ -89,6 +90,7 @@ Fields that were not recorded at generation time were backfilled during the
 | `v6/sota_benchmark/derived/` | `predictive_advantage_predictions.csv`, `predictive_advantage_results.csv`, `predictive_advantage_summary.json` | `experiments/predictive_advantage.py` |
 | `v7/e24/derived/` | `e24_theorem7_summary.csv` | `experiments/e24_theorem7/run.py` |
 | `v7/e29/derived/` | `e29_multi_seed_statistics.csv` | `experiments/multi_seed_e04.py` |
+| `v10/e30/derived/` | `e30_thm1a_cell_summary.csv` (per-cell empirical mean vs corrected Theorem 1(a) prediction, z-scores) | `experiments/e30_thm1a_wcl/run.py` |
 
 Note: the generator scripts write derived files next to the canonical CSV when
 re-run; the checked-in copies live under `derived/`. Content is identical as of
@@ -123,6 +125,13 @@ Version meanings:
   simulation on fake backends; 48-row smoke superseded by the 288-row full
   run). Real hardware (IBM Quantum) runs also belong here. Never reuse v8 for
   simulator re-runs of existing simulator experiments.
+- **v9** — non-canonical current-code reruns used for the wave-6
+  reconciliation evidence (never cited as manuscript evidence; see Known
+  Issue 8 and `docs/review/wave6/reconciliation_disposition.md`).
+- **v10** — post-audit correction wave (2026-08-06): E30 (canonical; direct
+  validation of the corrected Theorem 1(a)) and the E23 fixed-generator
+  verification rerun (non-canonical supporting evidence; canonical E23 stays
+  in v7).
 
 ## Known Issues
 
@@ -155,18 +164,49 @@ Version meanings:
    as an analysis variable; it is retained for schema continuity across data
    versions. (Datasets whose schema has no `success` column — e.g. E20, E21,
    E23, E24, E26, SOTA, CeilingRepair, EHW — are unaffected.)
-8. **Wave-6 rerun reconciliation (E12–E17, E19, E21)** — 8 experiments rerun
-   under current code and reconciled row-by-row; canonical retained for all
-   (owner decision), E14/E15/E17/E21 annotated. Unified IQP sensitivity:
+8. **Wave-6 rerun reconciliation (E12–E17, E19–E21)** — all eleven experiments
+   carrying 'source modified since run' warnings were rerun under current code
+   and reconciled row-by-row; canonical retained for all (owner decision),
+   E14/E15/E17/E21 annotated. **Correction (2026-08-06):** an earlier version
+   of this issue stated that E18/E20 were not rerun; batch 4
+   (`docs/review/wave6/rerun_batch4.md`, 2026-07-21) completed both — E20 is
+   bit-for-bit IDENTICAL (1070/1070 rows), E18 DIVERGED due to canonical-vs-
+   rerun generator drift (Qiskit BasisTranslator now decomposes families that
+   previously errored; 192 shared ok rows agree on 172/192 reductions; decision:
+   adopt rerun metadata, keep canonical data). Unified IQP sensitivity:
    IQP-family commutation/hybrid reductions in canonical E14/E15/E16/E21 are
    systematically lower than current-code values (strengthened commutation
    predicate, review FATAL-1 repair direction — optimizer-capability
    enhancement, not a data error). E14 canonical also carries 20 fidelity = 0.0
    artifact rows on unchanged circuits (current code correctly reports 1.0).
-   E18/E20 not rerun (single-machine budget); their 'source modified since run'
-   warnings stand as accepted. Details: `docs/review/wave6/rerun_batch1.md`,
-   `rerun_batch2.md`, `rerun_batch3.md`; rerun outputs live in `data/v9/`
-   (non-canonical).
+   Details: `docs/review/wave6/rerun_batch1.md` … `rerun_batch4.md` and the
+   consolidated disposition in `docs/review/wave6/reconciliation_disposition.md`;
+   rerun outputs live in `data/v9/` (non-canonical).
+9. **`success_reduction` default aligned (2026-08-06)** — `BaseOptimizer`
+   defaults to 0.05 (bug #5 fix) while GA/RLS/SA/Greedy/CeilingAware subclass
+   defaults were 0.20; the subclasses were aligned to 0.05 on 2026-08-06.
+   All canonical v2_fixed..v8 runs were generated under the effective 0.20
+   default. The `success` column is non-informative anyway (Known Issue 7), so
+   no canonical values change; future reruns will report `success` under 0.05.
+10. **AG canonical generator S/Sdg fix (2026-08-06)** — `ag_canonical.py`
+    sampled S with probability 0.3 but Sdg with 0.21 (two sequential
+    `rng.random() < 0.3` draws). Fixed to symmetric single-draw sampling with
+    a regression test (`tests/test_ag_canonical.py`). Canonical E23 (v7) was
+    generated under the buggy distribution; a verification rerun under the
+    fixed generator (`data/v10/e23_fixed_generator/`, non-canonical) reproduces
+    matching_rate = 1.0, confirming Theorem 6's R1 = 0 prediction is
+    distribution-invariant (it follows from the AG stage structure, not the
+    gate probabilities). Canonical E23 retained.
+11. **Theorem 1(a) constants corrected and validated (2026-08-06)** — the
+    theorem as originally stated omitted the discrete-gate count k1 in the
+    one-qubit term (actual p_inv^(1q) = k1/g1^2, not ≤ 2/g1^2) and double-
+    counted two-qubit pairs per wire. The corrected statement is validated
+    directly by E30 (v10): 27 cells, max |z| = 2.86, median |rel err| 1.4%.
+    See `docs/theory/formal_results.md` correction note.
+12. **Schema notes** — two column structures coexist under the `results_v2`
+    label (v5/e10 lacks `schema_version`; v5/e14, v5/e15 carry it); both are
+    frozen and documented rather than rewritten. `v6/e21/ceiling_aware_comparison.csv`
+    (results_v6) lacks `timestamp_utc`. Neither affects any analysis column.
 
 ## Optimizer Naming Convention Map
 

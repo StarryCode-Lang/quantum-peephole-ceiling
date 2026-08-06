@@ -1,17 +1,21 @@
 # Supplementary Materials
 
 > **Document Status**: Supplementary materials for publication-quality manuscript submission.  
-> **Version**: 2.2  
-> **Date**: 2026-08-01  
+> **Version**: 2.3  
+> **Date**: 2026-08-06  
 > **Scope**: Additional data, proofs, algorithms, and analysis not included in the main manuscript.  
 > **Changes from v2.0**: Rewrote S8.3 to remove invalid quantum supremacy connection (non sequitur). Added known limitations disclosures.
 
 > **DISCLAIMER (updated 2026-07-21, wave 2)**: The Cirq and t|ket> multi-compiler comparison data is now available. The original E15 canonical dataset (994 records) contains Qiskit and custom peephole optimizers only; Cirq and t|ket> results were subsequently collected in E20 full mode (`multi_compiler_full.csv`, 1,070 records) and the v6 SOTA benchmark (`sota_comparison_aggregated.csv`, corrected Cirq pipeline as of 2026-07-20). Remaining caveats — the 2026-07-18 Cirq pipeline bug and t|ket> RandomClifford fidelity failures — are documented in S11.2 and Appendix E. (This note supersedes the 2026-06-15 disclaimer.)
 
-> **Active release note (2026-08-01)**: The current manifest contains 36 canonical
-> datasets and 82,789 rows. Phase-2b v2 is full-scale evidence; historical
-> “planned” wording below is retained only for provenance. Noise-model results
-> are not real-hardware results, and sampled fidelity is not an exact certificate.
+> **Active release note (2026-08-06)**: The current manifest contains 37 listed
+> datasets and 96,289 rows (35 active canonical, 96,205 rows, excluding the
+> superseded E29-smoke and E26-pilot provenance entries; experiments E1–E30).
+> Phase-2b v2 (experiment E26, 2,427 rows) is full-scale evidence, and E30
+> (13,500 rows) directly validates the corrected Theorem 1(a) WCL density
+> formula. Historical “planned” wording below is retained only for provenance.
+> Noise-model results are not real-hardware results, and sampled fidelity is
+> not an exact certificate.
 
 ---
 

@@ -172,7 +172,8 @@ class BaseOptimizer(ABC):
 
     def __init__(self, fidelity_threshold: float = 0.99, success_reduction: float = 0.05,
                  random_seed: int | None = None, enable_numeric_commutation: bool = False,
-                 commutation_tolerance: float = DEFAULT_PRECISION):
+                 commutation_tolerance: float = DEFAULT_PRECISION, *,
+                 insertion_bonus_coeff: float = 0.01):
         """
         Args:
             fidelity_threshold: Minimum fidelity to consider optimization valid
@@ -201,6 +202,11 @@ class BaseOptimizer(ABC):
         self.random_seed = random_seed
         self.enable_numeric_commutation = enable_numeric_commutation
         self.commutation_tolerance = commutation_tolerance
+        # Coefficient of the cancellation-potential bonus in ``_fitness``.
+        # Default 0.01 preserves historical behavior; set to 0.0 to disable
+        # the insertion reward (see manuscript Limitation 19: this bonus lets
+        # RLS accumulate identity-pair insertions, inflating gate counts).
+        self.insertion_bonus_coeff = insertion_bonus_coeff
         self.rng = np.random.RandomState(random_seed)
         self.logger = logging.getLogger(self.__class__.__name__)
     
@@ -768,14 +774,16 @@ class BaseOptimizer(ABC):
         # Count adjacent self-inverse / mergeable pairs that could be
         # cancelled in the next move.  This gives INSERTION moves a
         # positive gradient when they bring inverse gates together.
-        # The coefficient is deliberately small (0.01) so the bonus
-        # never dominates the primary reduction objective.
+        # The coefficient (default 0.01, configurable via
+        # ``insertion_bonus_coeff``) is deliberately small so the bonus
+        # never dominates the primary reduction objective; set it to 0.0
+        # to disable the bonus entirely (manuscript Limitation 19).
         potential_bonus = 0.0
-        if len(circuit.data) >= 2:
+        if self.insertion_bonus_coeff > 0.0 and len(circuit.data) >= 2:
             cancellable = 0
             for i in range(len(circuit.data) - 1):
                 if self._is_self_inverse_pair(circuit, circuit.data[i], circuit.data[i + 1]):
                     cancellable += 1
-            potential_bonus = 0.01 * cancellable * penalty
+            potential_bonus = self.insertion_bonus_coeff * cancellable * penalty
 
         return float(reduction * penalty + reward + potential_bonus)

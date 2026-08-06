@@ -3,8 +3,8 @@
 > **This file contains the narrative literature review (42 core references). For the authoritative reference list used in the manuscript, see unified_references.md.**
 
 > **Document Status**: Comprehensive literature review for publication-quality manuscript.  
-> **Version**: 1.2  
-> **Date**: 2026-08-01  
+> **Version**: 1.4  
+> **Date**: 2026-08-06  
 > **Scope**: Systematic review of quantum circuit optimization, peephole optimization, complexity theory, compiler frameworks, and recent advances (2021–2025).  
 > **Method**: Structured review following PRISMA guidelines adapted for theoretical computer science.
 
@@ -239,7 +239,7 @@ Peephole optimization was introduced by **McKeeman (1965)** as a final pass in c
 
 | Gap | Current State | Our Contribution |
 |-----|--------------|----------------|
-| **QMA-hardness of peephole optimization** | Conjectured (C1) but not proven | Empirical evidence from 73,000+ benchmark records; formal conjecture with reduction sketch |
+| **QMA-hardness of peephole optimization** | Conjectured (C1) but not proven | Empirical evidence from 96,289 benchmark records; formal conjecture with reduction sketch |
 | **Structural ceiling characterization** | Not studied (absent from Quartz, Quanto, Qarl, AlphaTensor-Quantum, ZX+RL) | Formal definition (D9–D10); empirical measurement across 6 experiments |
 | **Phase 2 advantage quantification** | Qualitative ("commutation helps") | Quantitative: 3.26% on random, 0% on structured; context-dependent characterization |
 | **Threshold sensitivity** | Fixed 20% threshold in literature | Systematic analysis showing 20% is self-defeating; context-dependent thresholds proposed |
@@ -255,7 +255,7 @@ Peephole optimization was introduced by **McKeeman (1965)** as a final pass in c
 | **Circuit family diversity** | 1–2 families | **5 families** (Universal, Clifford, Structured, QFT, GHZ) |
 | **Fidelity verification** | Often omitted | Fidelity verification performed where exact/scalable checks are available; documented failure rows are tracked and filtered where required |
 | **Data versioning** | Ad-hoc | **v1→v2→v3** with metadata, bug documentation, and re-run protocol |
-| **Benchmark suite scale** | Micro-Benchmark Suite (Merilehto, 2025): 6 circuits, 3–8 qubits | **73,000+ records (34 canonical datasets)** across diverse scales and families |
+| **Benchmark suite scale** | Micro-Benchmark Suite (Merilehto, 2025): 6 circuits, 3–8 qubits | **96,289 records (37 canonical datasets, experiments E1–E30)** across diverse scales and families |
 
 ### 6.3 Practical Gaps
 
@@ -295,7 +295,7 @@ Our contributions are distinct from all recent quantum circuit optimization fram
 1. **Structural Ceiling Framework**: Formal characterization of listing- and model-conditional limits for Phase 1 peephole optimization. Unlike Quartz, Quanto, and Qarl — which seek to *extend* the optimization reach — our work asks the complementary question: *within a specified listing model and rewrite class, what reduction is reachable, and when are additional local passes futile?*
 2. **Context-Dependent Phase 2 Advantage**: First quantitative measurement showing that commutation-based optimization is not universally beneficial (3.26% on random circuits, 0% on structured circuits). Prior works such as Relaxed Peephole Optimization and ZX-Calculus+RL assume that larger windows or richer rewrite systems are unconditionally advantageous; we provide the first empirical refutation.
 3. **Threshold Sensitivity Analysis**: First systematic study showing that the 20% success threshold is inappropriate for random circuits. We propose context-dependent thresholds (1–5% for random, 10% for structured, 20% for real-world circuits), a distinction absent from all prior frameworks.
-4. **Large-Scale Empirical Validation**: 73,000+ benchmark records across 34 canonical datasets, spanning 15 circuit families and 6 optimizer types — the largest systematic study of quantum circuit peephole optimization to date. This exceeds the scale of Quartz (~100 benchmarks), Qarl (~50 benchmarks), and the Micro-Benchmark Suite (6 circuits) by two orders of magnitude.
+4. **Large-Scale Empirical Validation**: 96,289 benchmark records across 37 canonical datasets (experiments E1–E30), spanning 15 circuit families and 6 optimizer types — the largest systematic study of quantum circuit peephole optimization to date. This exceeds the scale of Quartz (~100 benchmarks), Qarl (~50 benchmarks), and the Micro-Benchmark Suite (6 circuits) by two orders of magnitude.
 5. **Multi-Compiler Comparison Framework**: First principled comparison of quantum compilers (Qiskit, Cirq, t|ket>) grounded in structural theory rather than ad-hoc benchmarking. The Micro-Benchmark Suite (Merilehto, 2025) provides useful tooling but no theoretical framework for interpreting inter-compiler differences.
 6. **Data Integrity Protocol**: First quantum optimization study with full data versioning (v1→v2→v3), bug documentation, and re-run protocol — addressing a reproducibility gap noted across the Quartz, Quanto, Qarl, and AlphaTensor-Quantum literature.
 
@@ -472,7 +472,7 @@ The RL agent is trained using **Proximal Policy Optimization (PPO)** with **Grap
 
 **What they achieved**: The suite identifies concrete trade-offs between compilers: Amazon Braket achieved significantly lower circuit depths (mean 8.8 vs. 22.5) and fewer two-qubit gates (7.2 vs. 16.3) compared to Qiskit, while Qiskit offered faster compilation times (mean 112.2 ms vs. 224.3 ms). The tool runs in under three minutes, outputs reproducible CSV data and plots, and is released under the MIT license. It provides a high signal-to-noise ratio for rapid prototyping and nightly regression testing.
 
-**What they did NOT do**: The micro-benchmark is a *measurement tool*, not an *optimization method* or a *theoretical framework*. It reports empirical metrics but does not explain *why* different compilers produce different results, does not characterize the structural properties of circuits that determine optimizability, and does not analyze the gap between empirical performance and theoretical optima. The benchmark corpus (6 small circuits, 3–8 qubits) is orders of magnitude smaller than our study (73,000+ records across 34 canonical datasets at larger scales). Our work provides the theoretical and empirical framework that would enable *interpreting* the measurements that tools like microbench.py produce.
+**What they did NOT do**: The micro-benchmark is a *measurement tool*, not an *optimization method* or a *theoretical framework*. It reports empirical metrics but does not explain *why* different compilers produce different results, does not characterize the structural properties of circuits that determine optimizability, and does not analyze the gap between empirical performance and theoretical optima. The benchmark corpus (6 small circuits, 3–8 qubits) is orders of magnitude smaller than our study (96,289 records across 37 canonical datasets at larger scales). Our work provides the theoretical and empirical framework that would enable *interpreting* the measurements that tools like microbench.py produce.
 
 ### 10.8 VOQC: A Verified Optimizer for Quantum Circuits
 
@@ -496,7 +496,7 @@ The RL agent is trained using **Proximal Policy Optimization (PPO)** with **Grap
 
 ### 10.10 SSR: A Swapping-Sweeping-and-Rewriting Optimizer for Quantum Circuit Transformation
 
-**Citation**: Huang, Zhou, Meng, Zhu, Luo & Du. *ACM Transactions on Design Automation of Electronic Systems* (TODAES), 2026. DOI 10.1145/3828549; arXiv:2503.03227 (2025) [45].
+**Citation**: Huang, Zhou, Meng, Zhu, Luo & Du. *ACM Transactions on Design Automation of Electronic Systems* (TODAES), 2026. DOI 10.1145/3828549; arXiv:2503.03227 (2025) [45]. *(Venue verified 2026-08-06: Crossref resolution of DOI 10.1145/3828549 confirms publication in ACM TODAES, 2026; arXiv:2503.03227 is the preprint. TODAES 2026 is therefore the authoritative venue. Note `unified_references.md` does not yet contain an SSR entry — see `search_ledger.md` §5.1.)*
 
 **What they did**: Huang et al. target the **post-mapping (QCT) stage**: after a circuit has been transformed to respect hardware connectivity, remaining SWAP gates inflate depth. SSR iterates three steps — SWAP commutation reordered by a genetic algorithm, subcircuit *sweeping* that extracts CNOT-only blocks, and SAT-based rewriting of each block into a functionally equivalent, depth-optimal circuit.
 
@@ -528,7 +528,7 @@ The RL agent is trained using **Proximal Policy Optimization (PPO)** with **Grap
 
 2. **Context-dependent characterization** — the empirical demonstration that optimization effectiveness depends systematically on circuit structure (random vs. structured, Clifford vs. universal) — is unique to our work.
 
-3. **Systematic benchmark suites** at scale are rare. The Micro-Benchmark Suite [42] provides tooling but covers only 6 circuits (3–8 qubits). Our study encompasses 73,000+ records across 34 canonical datasets, providing statistical power two orders of magnitude greater.
+3. **Systematic benchmark suites** at scale are rare. The Micro-Benchmark Suite [42] provides tooling but covers only 6 circuits (3–8 qubits). Our study encompasses 96,289 records across 37 canonical datasets (experiments E1–E30), providing statistical power two orders of magnitude greater.
 
 4. **Formal theory** linking circuit structure to optimizability is provided only in partial form by Quartz/Quanto (ECC correctness), AlphaTensor-Quantum (tensor decomposition), and ZX+RL (diagrammatic soundness). None develops a theory of *optimization ceilings* or *average-case complexity* for peephole optimization.
 
@@ -556,14 +556,14 @@ This literature review establishes the research context for our work on the **Bo
 **Our work fills the gap** between theoretical complexity results and practical compiler performance by:
 - Characterizing the **structural ceiling** of Phase 1 optimization
 - Quantifying the **context-dependent advantage** of Phase 2 optimization
-- Providing the **largest empirical study** to date (73,000+ records, 34 canonical datasets)
+- Providing the **largest empirical study** to date (96,289 records, 37 canonical datasets, experiments E1–E30)
 - Establishing a **data integrity protocol** for reproducible quantum optimization research
 - Offering the **first multi-compiler comparison** grounded in structural theory
 - Developing a **formal framework** that complements and contextualizes recent optimization advances (Quartz, Qarl, AlphaTensor-Quantum, and others)
 
 ---
 
-*Document version: 1.2*  
-*Last updated: 2026-07-21*  
-*v1.2 changes (wave 2): corrected fabricated/wrong references ([13] Kliuchnikov venue, [15] replaced with the real ICALP 2022 extraction-hardness paper, [41] Quantum page 1634→1758); added VOQC, Quasar (equality saturation) and SSR surveys (10.8–10.10) with Table 5 rows and refs [43]–[45]; updated study scale to the then-current release-manifest total. v1.3 changes (wave 3): study scale resynced to the wave-3 release-manifest total (73,000+ records / 34 canonical datasets).*  
+*Document version: 1.4*  
+*Last updated: 2026-08-06*  
+*v1.2 changes (wave 2): corrected fabricated/wrong references ([13] Kliuchnikov venue, [15] replaced with the real ICALP 2022 extraction-hardness paper, [41] Quantum page 1634→1758); added VOQC, Quasar (equality saturation) and SSR surveys (10.8–10.10) with Table 5 rows and refs [43]–[45]; updated study scale to the then-current release-manifest total. v1.3 changes (wave 3): study scale resynced to the wave-3 release-manifest total (73,000+ records / 34 canonical datasets). v1.4 changes (2026-08-06, search-ledger pass): study scale resynced to the current release-manifest total (96,289 records / 37 canonical datasets, experiments E1–E30) per docs/references/search_ledger.md; SSR venue annotated as verified (TODAES 2026, DOI 10.1145/3828549).*  
 *Author: Q-Research Literature Review Team*

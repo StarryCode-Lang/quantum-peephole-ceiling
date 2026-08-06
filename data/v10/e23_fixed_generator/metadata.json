@@ -1,0 +1,19 @@
+{
+  "experiment": "E23",
+  "description": "Empirical validation of Theorem 6: AG canonical form Clifford circuits have R1=0.",
+  "timestamp": "2026-08-06T19:11:51.253648",
+  "n_min": 3,
+  "n_max": 10,
+  "n_circuits_per_n": 20,
+  "total_circuits": 160,
+  "matching_rate": 1.0,
+  "mean_reduction": 0.0,
+  "max_reduction": 0.0,
+  "csv_path": "data\\v10\\e23_fixed_generator\\e23_ag_canonical_results.csv",
+  "status": "verification_rerun_non_canonical",
+  "notes": [
+    "Verification rerun of E23 under the corrected AG generator (S/Sdg single-draw sampling, src/circuits/ag_canonical.py bug fix 2026-08-06).",
+    "matching_rate = 1.0 confirms the Theorem-6 result (R1 = 0 on AG-canonical Clifford circuits) is invariant to the S/Sdg sampling distribution.",
+    "Canonical E23 remains data/v7/e23 (frozen); this directory is supporting evidence only."
+  ]
+}

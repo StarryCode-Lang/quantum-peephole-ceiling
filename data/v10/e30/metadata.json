@@ -1,0 +1,60 @@
+{
+  "experiment_id": "E30",
+  "description": "Direct quantitative validation of Theorem 1(a) (WCL adjacent inverse-pair density) under the corrected constants: p_inv^(1q) = k1/g1^2 with k1 = 8 discrete gates, g1 = 11; two-qubit term without per-wire double counting (rho^2 / (2 g2 (n-1)), g2 = 2).",
+  "timestamp": "2026-08-06T19:08:01.643376",
+  "version": "1.0.0",
+  "parameters": {
+    "ns": [
+      4,
+      5,
+      8
+    ],
+    "depths": [
+      10,
+      20,
+      40
+    ],
+    "rhos": [
+      0.0,
+      0.3,
+      0.6
+    ],
+    "n_trials": 500,
+    "seed_base": 300000
+  },
+  "theory_constants": {
+    "g1": 11,
+    "k1_discrete": 8,
+    "g2": 2,
+    "g1_labels": [
+      "h",
+      "t",
+      "tdg",
+      "s",
+      "sdg",
+      "rx",
+      "ry",
+      "rz",
+      "x",
+      "y",
+      "z"
+    ]
+  },
+  "n_rows": 13500,
+  "n_cells": 27,
+  "max_abs_z_score": 2.864028929372341,
+  "median_abs_rel_err_rho_positive": 0.013620823337205046,
+  "canonical_data_file": "e30_thm1a_wcl_results.csv",
+  "derived_files": [
+    "derived/e30_thm1a_cell_summary.csv"
+  ],
+  "seed": 300000,
+  "python_version": "3.12.12",
+  "git_commit": "bf8e8ae58897626c37364d57e07e658860a0d83e",
+  "script_sha256": "037091f174060f0f0f635944557f31ca94923aebaa736d60a6ffa5aca5943592",
+  "notes": [
+    "Generator implements the exact layer model assumed by Thm 1(a): per layer, random pairing; each pair gets a 2-qubit gate with probability rho (cx directed min->max for direction-invariant identity); unpaired slots get a uniform 1-qubit gate from the 11-label set (rotations theta ~ U(0, 2pi)).",
+    "Adjacent inverse pairs are counted once per distinct pair (two-qubit pairs on the lower-index endpoint wire only).",
+    "Corrects the two constant errors in the original theorem statement (missing k1 factor; double-counted 2-qubit term); see docs/theory/formal_results.md correction note 2026-08-06."
+  ]
+}

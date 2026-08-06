@@ -97,8 +97,12 @@ def _guard_canonical_csv(df: pd.DataFrame, csv_path: Path) -> bool:
     sys.exit(1)
 
 
-def run_e23(n_min: int = 3, n_max: int = 10, n_circuits_per_n: int = 20, seed_base: int = 2026):
-    output_dir = PROJECT_ROOT / "data/v7/e23"
+def run_e23(n_min: int = 3, n_max: int = 10, n_circuits_per_n: int = 20, seed_base: int = 2026,
+            output_dir: Path | None = None):
+    if output_dir is None:
+        output_dir = PROJECT_ROOT / "data/v7/e23"
+    else:
+        output_dir = Path(output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
 
     optimizer = GreedyGateCancellation()
@@ -162,4 +166,11 @@ def run_e23(n_min: int = 3, n_max: int = 10, n_circuits_per_n: int = 20, seed_ba
 
 
 if __name__ == "__main__":
-    run_e23()
+    import argparse
+
+    parser = argparse.ArgumentParser(description="E23: AG canonical Thm 6 validation")
+    parser.add_argument("--output-dir", type=Path, default=None,
+                        help="Override output directory (verification reruns); "
+                             "defaults to the canonical data/v7/e23")
+    args = parser.parse_args()
+    run_e23(output_dir=args.output_dir)

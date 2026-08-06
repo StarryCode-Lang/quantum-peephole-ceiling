@@ -44,8 +44,10 @@ class RandomLocalSearch(BaseOptimizer):
     """
     
     def __init__(self, max_iterations: int = 100, neighborhood_size: int = 5,
-                 fidelity_threshold: float = 0.99, success_reduction: float = 0.20,
+                 fidelity_threshold: float = 0.99, success_reduction: float = 0.05,
                  random_seed: Optional[int] = None):
+        # success_reduction aligned with BaseOptimizer bug #5 fix (2026-08-06);
+        # canonical v2_fixed..v8 runs used the legacy 0.20 default.
         super().__init__(fidelity_threshold, success_reduction, random_seed)
         self.max_iterations = max_iterations
         self.neighborhood_size = neighborhood_size

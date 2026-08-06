@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-08-01T14:47:04.186797+00:00",
+  "created_utc": "2026-08-06T11:21:30.483562+00:00",
   "datasets": [
     {
       "experiment_id": "E1",
@@ -58,7 +58,7 @@
       "sha256": "5169ff846f45de437227540e7a6c2757d60710fcbfd35549731c4ff4cfd205bf"
     },
     {
-      "experiment_id": "HELDOU",
+      "experiment_id": "HELDOUT",
       "file": "data/v5/new_families_heldout.csv",
       "rows": 125,
       "schema": "results_v2",
@@ -214,11 +214,13 @@
       "sha256": "cdeb08e6a326d8b0edfcd7a633b0ee80f34facfed2ad8b5016fdb1bf028d8033"
     },
     {
-      "experiment_id": "E26",
+      "experiment_id": "E26-pilot",
       "file": "data/v7/e26/e26_bv_theory_results.csv",
       "rows": 4,
       "schema": "results_v7",
-      "sha256": "ce044aa13a63735fc6005de7ed7c657a3be9dac7bf3602e79b12bb3d7f479e58"
+      "sha256": "ce044aa13a63735fc6005de7ed7c657a3be9dac7bf3602e79b12bb3d7f479e58",
+      "superseded": true,
+      "superseded_by": "bv_theory_v8.csv in v8/phase2b_full (E26, n=3..10)"
     },
     {
       "experiment_id": "E29",
@@ -249,15 +251,22 @@
       "sha256": "faaf482648007366dff68705c35d001eca6b6e1103db6392f114f906eadfba12"
     },
     {
-      "experiment_id": "E26_phase2b_full_v8",
+      "experiment_id": "E26",
       "file": "data/v8/phase2b_full/phase2b_full_validation_v8.csv",
       "rows": 2427,
       "schema": "results_v8",
       "sha256": "93c398f6aea16f3485f725d50eb95716110ead943b9b709a7c1071d50ae2492f"
+    },
+    {
+      "experiment_id": "E30",
+      "file": "data/v10/e30/e30_thm1a_wcl_results.csv",
+      "rows": 13500,
+      "schema": "results_v10",
+      "sha256": "e7195d2b3fa68f6b5b9552a3fec34ce077d2893d1bbfe64898d6d3691ba3f318"
     }
   ],
   "environment": {
-    "env_id": "q-research-10.0.0-wave6",
+    "env_id": "q-research-10.1.0-audit-fixes",
     "packages": {
       "matplotlib": "3.9.0",
       "numpy": "1.26.4",
@@ -271,10 +280,10 @@
   },
   "git": {
     "branch": "master",
-    "commit": "c6a05bc0ca3750bece8118596b9582b4a291e538",
-    "dirty": false
+    "commit": "bf8e8ae58897626c37364d57e07e658860a0d83e",
+    "dirty": true
   },
-  "release_id": "q-research-10.0.0-wave6",
+  "release_id": "q-research-10.1.0-audit-fixes",
   "reproduction": {
     "conda_env": "q-research",
     "entrypoints": [
@@ -307,18 +316,18 @@
     "experiments/e12_compiler_baseline/run.py": "10f7595c9adbe703d05441e503aea4ad795eaacfc60f43ce1fc71f9253dfbf1e",
     "experiments/e13_structural_ceiling/run.py": "97948883da9a12095d926ac796187d617a7329e2b6c007cb270aa9d203961141",
     "experiments/e19_wcl_listing/run.py": "32f8a9a46eda191a90dd0e49470db5281d475a314419fb9ad08a671285928bf4",
-    "scripts/generate_release_manifest.py": "8a4671cb373ff729ea2dd9400620a7d82025b34716c9b32834e9be63128afa13",
+    "scripts/generate_release_manifest.py": "e485bdcd9f1f8c364ee015a9d234319b7b521ab7ffe43073341263ca967b00ee",
     "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
     "src/circuits/real_benchmarks.py": "5f137e8efaf872cc2205f2e2cac5e4420c014d7fa3ac0cf440e04dad7e4dd82a",
     "src/optimisation/_gate_predicates.py": "c7c0c6a7c985e5e4f19b2699323679f94b3f5040376b9a3224d40364b6bf83f2",
-    "src/optimisation/base.py": "457c8cf997b3680832cd41f6c826664b59abe2c8e5d559a6d0904476fc71ac80",
-    "src/optimisation/ceiling_aware.py": "53a29f2a065e69a460686b4b132f1b60aaf6899f097f556cfee270bef4fe373b",
-    "src/optimisation/phase1/genetic_algorithm.py": "2fb72ff5056c11b369a3b8ecdda7a44139ebaca6893c85a37fd2f3d04c12ea22",
-    "src/optimisation/phase1/greedy.py": "3f50c48d160161772e4fe4a0eb8b23d1c5fb3598a62c048788004a459072cd1a",
-    "src/optimisation/phase1/random_local_search.py": "1a44d4ced7903d0e57d56e55ac6b40fbe840f1a5f83fc9f38e48a2bf2c77873b",
-    "src/optimisation/phase1/simulated_annealing.py": "b7f23188aa6095ce4ad44179e5560d655c5b1183e18cba8462f5ca90e94bcd6e",
+    "src/optimisation/base.py": "5e5926e2766a28560a113efe048b94f152180fd1f60d8df7c5be1a7ba8161da2",
+    "src/optimisation/ceiling_aware.py": "f0f8268617d0cd04459fcfaa767625eade353abe695286fd6ec78961af75cd4d",
+    "src/optimisation/phase1/genetic_algorithm.py": "8d6f49439efa1af2b7eff090513870448a6bae0c05e908c5288cef6914498d88",
+    "src/optimisation/phase1/greedy.py": "b98c2139ca49ca8829024acff8bc18c46d7cbbd176163b90fa97c2ef98102fb1",
+    "src/optimisation/phase1/random_local_search.py": "6a80965d806a5d6f7432612dbb2d47b4e73f864e034d33c2ad339c9b107a3bba",
+    "src/optimisation/phase1/simulated_annealing.py": "d0d41781d939165d515bd875fbe496ec1f09ed233faf311a5eeac9bc60faa18c",
     "src/optimisation/phase1/wire_traversal.py": "c78ce84f0ce8f5e5e1991d6322fed32817184959edb34569bdaa164126b457eb",
     "src/optimisation/phase2/commutation_rewriter.py": "a53769804a1e7e5d6a1e02146e12dbe79774a011fca4fc0990755ced3475a83d",
-    "src/optimisation/phase2/template_matcher.py": "4df19a21b1b9f4ac344905e9f2239022a2ef0c343b4e649ac216d9ce15207e4e"
+    "src/optimisation/phase2/template_matcher.py": "ca20a31e266fa0640a11b157f948f9826fa7baac02f230fe4983207d6b1997c8"
   }
 }

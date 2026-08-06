@@ -1,5 +1,5 @@
 {
-  "experiment_id": "E26_phase2b_full_v8",
+  "experiment_id": "E26",
   "version": "2.0.0",
   "description": "Phase-2b full-scale validation with the v2.0.0 template matcher (extended Clifford + phase-polynomial library). Grid: BV full n=3..10 x 10 secrets; depth families full factor n=3..10 x depth={20..50 step 5} x 3 seeds (wave-6 complete); other algorithmic families n={3,5,8} x 2 seeds.",
   "timestamp": "2026-07-21T13:31:59.584361",
@@ -127,5 +127,8 @@
   "schema_version": "v8",
   "theorems_validated": {
     "Thm_9_BV_oracle": "Phase-2b >= n/(4.5n+4): see bv_theory_v8.csv"
-  }
+  },
+  "notes": [
+    "2026-08-06 ID normalization: renamed from E26_phase2b_full_v8 to E26 to match manuscript numbering; former DATA_CANONICAL alias E10p2b-v2 retired. The v7 BV-theory pilot formerly named E26 is now E26-pilot (superseded)."
+  ]
 }

@@ -74,10 +74,14 @@ def generate_ag_canonical_circuit(
             if not apply_s:
                 continue
             # Each S layer applies S or Sdg to a random subset of qubits.
+            # Single-draw sampling (bug fix 2026-08-06): the previous
+            # two-stage ``if rng.random()<0.3 / elif rng.random()<0.3``
+            # made P(Sdg) = 0.7*0.3 = 0.21, breaking the S/Sdg symmetry.
             for q in range(n_qubits):
-                if rng.random() < 0.3:
+                r = rng.random()
+                if r < 0.3:
                     qc.s(q)
-                elif rng.random() < 0.3:
+                elif r < 0.6:
                     qc.sdg(q)
         elif stage == "C":
             # CNOT layer: disjoint pairs.
