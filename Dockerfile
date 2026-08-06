@@ -5,9 +5,10 @@ FROM continuumio/miniconda3:26.5.3-1
 
 WORKDIR /app
 
-# Dependency layer first: copy only the environment spec and create the
+# Dependency layer first: copy only the environment specs and create the
 # conda env so this layer is cached unless dependencies change.
-COPY environment.yml .
+# environment.yml installs from requirements.txt (single source of truth).
+COPY environment.yml requirements.txt ./
 RUN conda env create -f environment.yml && conda clean -afy
 
 # Code and data layer after dependencies.
@@ -19,7 +20,7 @@ COPY tests/ ./tests/
 COPY data/ ./data/
 COPY docs/ ./docs/
 COPY release/ ./release/
-COPY requirements.txt requirements-lock.txt README.md environment.yml ./
+COPY requirements-lock.txt README.md ./
 
 # Activate conda env by default
 SHELL ["conda", "run", "-n", "q-research", "/bin/bash", "-c"]
