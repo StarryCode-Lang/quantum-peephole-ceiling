@@ -14,7 +14,7 @@
 - WCL mean reduction: 0.078285 (7.83% average, max 33.3%)
 - Both models maintain perfect fidelity (1.0)
 - WCL > LBL at all depths >= 2
-- **CONCLUSION**: WCL produces non-zero Phase 1 reduction. The structural ceiling is listing-dependent. This confirms Theorem 1(a).
+- **CONCLUSION**: WCL produces non-zero Phase-1 reduction. The structural ceiling is listing-dependent. The corrected Theorem 1(a) density formula is validated separately by E30.
 
 **Run parameters**:
 - Mode: full

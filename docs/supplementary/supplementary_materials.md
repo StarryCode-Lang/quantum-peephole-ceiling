@@ -2,7 +2,7 @@
 
 > **Document Status**: Supplementary materials for publication-quality manuscript submission.  
 > **Version**: 2.3  
-> **Date**: 2026-08-06  
+> **Date**: 2026-08-07
 > **Scope**: Additional data, proofs, algorithms, and analysis not included in the main manuscript.  
 > **Changes from v2.0**: Rewrote S8.3 to remove invalid quantum supremacy connection (non sequitur). Added known limitations disclosures.
 
@@ -14,6 +14,8 @@
 > Phase-2b v2 (experiment E26, 2,427 rows) is full-scale evidence, and E30
 > (13,500 rows) directly validates the corrected Theorem 1(a) WCL density
 > formula. Historical “planned” wording below is retained only for provenance.
+> The v11 E20 corrected rerun and E31 listing x Phase-2b pilot are supporting
+> non-canonical evidence and do not change the release totals.
 > Noise-model results are not real-hardware results, and sampled fidelity is
 > not an exact certificate.
 

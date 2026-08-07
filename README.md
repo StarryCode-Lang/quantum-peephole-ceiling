@@ -53,6 +53,7 @@ Q-research/
 ├── docs/                         # Documentation
 │   ├── theory/                  # Theoretical framework + formal results + proof audits
 │   ├── results/                 # Experimental design + analysis summary
+│   ├── analysis/                # Issue-specific analyses and bounded diagnostics
 │   ├── manuscript/              # Manuscript (active draft) + supporting docs
 │   ├── references/              # Unified references + literature review + search ledger
 │   ├── review/                  # Audit reports, evidence maps, and wave history
@@ -76,9 +77,11 @@ Q-research/
 - `data/DATA_CANONICAL.md`: canonical dataset policy and active file list.
 - `release/release_manifest.json`: SHA-256 and row-count release gate for canonical datasets.
 - `docs/manuscript/`: active manuscript and claim-evidence map.
+- `docs/analysis/`: reproducible issue-specific analyses and non-canonical diagnostics.
 - `docs/theory/`: definitions, proofs, conjectures, scope notes, and proof audits.
 - `docs/supplementary/`: supplementary methods, tables, and provenance context.
 - `docs/review/`: audit reports and historical wave decisions; historical files are not active evidence unless referenced by the current claim map.
+- `docs/**/archive/` and `docs/review/wave*/`: historical provenance only; they are not synchronized claim sources.
 - `docs/verification/`: reproducibility and calibration artifacts.
 - `scripts/`: repository-level verification, manifest, and calibration entrypoints.
 

@@ -414,7 +414,10 @@ This matrix shows which experiments provide evidence for which theoretical resul
 | E14 (extended) | 2,130 | X | X | X | | | | X | X |
 | E16 (window) | 696 | | | X | | | | | X |
 
-**Not covered by this historical table**: E30's corrected WCL pair-count validation and E26's full-scale Phase-2b grid are outside this pre-E30 table. Thm 8a-b remain contextual asymptotic results rather than direct experimental validations.
+**Not covered by this historical table**: E26's full-scale Phase-2b grid and
+E30's corrected WCL pair-count and aggregate-distribution diagnostics were
+added after this pre-E30 table. Thm 8a-b remain contextual asymptotic results
+rather than direct experimental validations.
 
 ---
 
@@ -422,7 +425,7 @@ This matrix shows which experiments provide evidence for which theoretical resul
 
 | Gap | Priority | Recommended Action |
 |-----|----------|-------------------|
-| **Thm 1a distribution validation** (WCL model) | Closed for mean | E30 (`data/v10/e30/`, 13,500 trials, 27 cells) directly validates the corrected expectation formula; a full distribution-level test remains an explicit future extension. |
+| **Thm 1a distribution validation** (WCL model) | Closed at aggregate level | E30 (`data/v10/e30/`, 13,500 trials, 27 cells) directly validates the corrected expectation formula; `docs/analysis/e30_distribution_p10.md` records 27 aggregate Poisson diagnostics with wire-level independence explicitly untested. |
 | **Thm 6 untested** (AG canonical form) | CLOSED | **Closed by E23** (data/v7/e23/, 160 rows, 2026-07-09). AG canonical form generator implemented (`src/circuits/ag_canonical.py`); R_1 = 0.0% confirmed across n=3-10. |
 | **Thm 7 construction not instantiated** | CLOSED | **Closed by E24** (data/v7/e24/, 75 rows, 2026-07-11). Direct instantiation gives R_1 = 0.0% and Phase-2a mean reduction = 79.8% (>> 1/6 bound). Phase-2b v1 remains a separate engineered-family template-coverage gap. |
 | **Thm 8 not in experimental regime** | Low | Not addressable with current n <= 20 experiments. The Haar-random threshold 4^n/n^2 is unreachable for meaningful n. Document the caveat clearly (already done in `framework.md`). |
@@ -435,7 +438,7 @@ This matrix shows which experiments provide evidence for which theoretical resul
 *Author: Q-research Cross-Validation Analysis*
 *Source files: `docs/theory/formal_results.md`, `docs/theory/framework.md`, `docs/results/experimental_design.md`, `docs/manuscript/manuscript.md`*
 
-*Changelog: v1.1 (2026-06-17) — Added E18 survivorship-bias caveat. Updated C2 row to reflect Phase-2a vs Phase-2b distinction (theoretical proofs use Phase-2b; experiments use Phase-2a). Cross-referenced limitations_and_future_work.md.*
+*Changelog: v1.1 (2026-06-17) — Added E18 survivorship-bias caveat. Updated C2 row to reflect Phase-2a vs Phase-2b distinction (theoretical proofs use Phase-2b; experiments use Phase-2a). Current limitations are maintained in `docs/manuscript/manuscript.md` and the dated residual disposition under `docs/review/`.*
 
 ---
 
@@ -451,7 +454,7 @@ This matrix shows which experiments provide evidence for which theoretical resul
 
 **Bias direction**: The bias is *conservative* — circuits that fail decomposition likely have *higher* structural complexity, and their exclusion means the reported mean reduction is likely an *overestimate* of the true population mean. The bias direction is stated to prevent misinterpretation, not to dismiss the finding.
 
-**Manuscript requirement**: All E18-related claims in the manuscript must carry the annotation "(survivorship-biased; 44.4% failure rate)" or equivalent. See `limitations_and_future_work.md` §8 for the full discussion.
+**Manuscript requirement**: All E18-related claims in the manuscript must carry the annotation "(survivorship-biased; 44.4% failure rate)" or equivalent. See manuscript §7.5 and the active evidence map for the current discussion.
 
 ---
 

@@ -48,6 +48,20 @@ python scripts/reproduce_all.py --experiments E10 E11 E12
 
 Individual experiment scripts under `experiments/` may expose their own smoke/full flags. Check each script before running full-scale jobs.
 
+## Supporting non-canonical pilots
+
+E31 is reproducible from the repository root but is not part of the release
+manifest or canonical totals:
+
+```bash
+python experiments/e31_listing_phase2b_interaction.py
+python analysis/e31_listing_phase2b_analysis.py
+```
+
+Outputs are written to `data/v11/e31_listing_phase2b/`. The pilot reports paired
+descriptive contrasts only; it does not establish the full WCL x Phase-2b
+factorial interaction.
+
 ## Full reproduction
 
 A full rerun should use a clean environment, fixed package versions, and explicit hardware/runtime notes:
@@ -56,7 +70,7 @@ A full rerun should use a clean environment, fixed package versions, and explici
 python scripts/reproduce_all.py --tests --figures --verify
 ```
 
-Full E1-E29 reruns are compute-sensitive. `python scripts/reproduce_all.py --all` runs the test suite, every registered experiment in pinned `--mode smoke`, figure generation, and data verification; it is a fast end-to-end check, not a full-data regeneration. For full-scale reruns, invoke the individual experiment scripts directly with `--mode full` (see the `full_experiment_entrypoints` list in `release/release_manifest.json`). Record CPU, RAM, OS, Python version, Qiskit version, command lines, runtime, and any skipped optional compiler dependencies.
+Full registered experiment reruns are compute-sensitive. `python scripts/reproduce_all.py --all` runs the test suite, every registered experiment in pinned `--mode smoke`, figure generation, and data verification; it is a fast end-to-end check, not a full-data regeneration. For full-scale reruns, invoke the individual experiment scripts directly with `--mode full` (see the `full_experiment_entrypoints` list in `release/release_manifest.json`). Record CPU, RAM, OS, Python version, Qiskit version, command lines, runtime, and any skipped optional compiler dependencies.
 
 ## Effect size reporting
 
@@ -114,7 +128,7 @@ All 19 PDF artifacts (18 numbered figures plus the `8b` companion figure, plus s
 conda run -n q-research python analysis/generate_figures.py
 ```
 
-- Runtime: ~51 s on the reference machine (Windows, Python 3.12). Exit code 0 and the final log section `ALL FIGURES GENERATED` listing `fig01` ... `fig17` plus `fig08b` indicate success.
+- Runtime: ~51 s on the reference machine (Windows, Python 3.12). Exit code 0 and the final log section `ALL FIGURES GENERATED` listing `fig01` ... `fig18` plus `fig08b` indicate success.
 - Use `conda run -n q-research python ...` or the activated `q-research` environment; do not rely on an unrelated system Python.
 - All outputs land in `analysis/figures/` (resolved via `src/config.py`: `PROJECT_ROOT/analysis/figures`; no absolute paths are hard-coded).
 
