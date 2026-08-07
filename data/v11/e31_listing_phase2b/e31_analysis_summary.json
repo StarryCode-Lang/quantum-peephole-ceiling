@@ -1,0 +1,275 @@
+{
+  "cell_summary": [
+    {
+      "listing_model": "LBL",
+      "maximum": 1.0,
+      "mean": 0.0699300699,
+      "median": 0.0,
+      "minimum": 0.0,
+      "n": 44,
+      "n_circuits": 44,
+      "phase": "phase1",
+      "std": 0.2547569619
+    },
+    {
+      "listing_model": "LBL",
+      "maximum": 0.375,
+      "mean": 0.0436057947,
+      "median": 0.0,
+      "minimum": 0.0,
+      "n": 44,
+      "n_circuits": 44,
+      "phase": "phase2a",
+      "std": 0.0959319615
+    },
+    {
+      "listing_model": "LBL",
+      "maximum": 1.0,
+      "mean": 0.180675394,
+      "median": 0.0,
+      "minimum": 0.0,
+      "n": 44,
+      "n_circuits": 44,
+      "phase": "phase2b",
+      "std": 0.3052023521
+    },
+    {
+      "listing_model": "SHUFFLE",
+      "maximum": 1.0,
+      "mean": 0.0895827368,
+      "median": 0.0,
+      "minimum": 0.0,
+      "n": 44,
+      "n_circuits": 44,
+      "phase": "phase1",
+      "std": 0.2441370335
+    },
+    {
+      "listing_model": "SHUFFLE",
+      "maximum": 0.3125,
+      "mean": 0.0375622739,
+      "median": 0.0,
+      "minimum": 0.0,
+      "n": 44,
+      "n_circuits": 44,
+      "phase": "phase2a",
+      "std": 0.0810730444
+    },
+    {
+      "listing_model": "SHUFFLE",
+      "maximum": 1.0,
+      "mean": 0.1824236457,
+      "median": 0.0,
+      "minimum": 0.0,
+      "n": 44,
+      "n_circuits": 44,
+      "phase": "phase2b",
+      "std": 0.3052654034
+    },
+    {
+      "listing_model": "WCL",
+      "maximum": 1.0,
+      "mean": 0.1271725589,
+      "median": 0.0,
+      "minimum": 0.0,
+      "n": 44,
+      "n_circuits": 44,
+      "phase": "phase1",
+      "std": 0.2610878986
+    },
+    {
+      "listing_model": "WCL",
+      "maximum": 0.0833333333,
+      "mean": 0.0047451791,
+      "median": 0.0,
+      "minimum": 0.0,
+      "n": 44,
+      "n_circuits": 44,
+      "phase": "phase2a",
+      "std": 0.0183124207
+    },
+    {
+      "listing_model": "WCL",
+      "maximum": 1.0,
+      "mean": 0.1795098928,
+      "median": 0.0,
+      "minimum": 0.0,
+      "n": 44,
+      "n_circuits": 44,
+      "phase": "phase2b",
+      "std": 0.30540504
+    }
+  ],
+  "confirmatory_interaction_test": false,
+  "contrasts": [
+    {
+      "contrast": "phase1_vs_LBL",
+      "listing_model": "WCL",
+      "max": 0.4,
+      "mean": 0.0572424889,
+      "median": 0.0,
+      "min": 0.0,
+      "n_circuits": 44,
+      "std": 0.1057482466
+    },
+    {
+      "contrast": "phase2a_vs_LBL",
+      "listing_model": "WCL",
+      "max": 0.0,
+      "mean": -0.0388606157,
+      "median": 0.0,
+      "min": -0.375,
+      "n_circuits": 44,
+      "std": 0.088721244
+    },
+    {
+      "contrast": "phase2b_vs_LBL",
+      "listing_model": "WCL",
+      "max": 0.0,
+      "mean": -0.0011655012,
+      "median": 0.0,
+      "min": -0.0512820513,
+      "n_circuits": 44,
+      "std": 0.0077310601
+    },
+    {
+      "contrast": "phase2a_over_phase1",
+      "listing_model": "WCL",
+      "max": 0.0,
+      "mean": -0.0961031046,
+      "median": 0.0,
+      "min": -0.75,
+      "n_circuits": 44,
+      "std": 0.1893281904
+    },
+    {
+      "contrast": "phase2b_over_phase1",
+      "listing_model": "WCL",
+      "max": 0.0,
+      "mean": -0.0584079901,
+      "median": 0.0,
+      "min": -0.4,
+      "n_circuits": 44,
+      "std": 0.1065390192
+    },
+    {
+      "contrast": "phase1_vs_LBL",
+      "listing_model": "SHUFFLE",
+      "max": 0.1818181818,
+      "mean": 0.0196526669,
+      "median": 0.0,
+      "min": -0.125,
+      "n_circuits": 44,
+      "std": 0.0576912577
+    },
+    {
+      "contrast": "phase2a_vs_LBL",
+      "listing_model": "SHUFFLE",
+      "max": 0.3125,
+      "mean": -0.0060435209,
+      "median": 0.0,
+      "min": -0.1666666667,
+      "n_circuits": 44,
+      "std": 0.0661240847
+    },
+    {
+      "contrast": "phase2b_vs_LBL",
+      "listing_model": "SHUFFLE",
+      "max": 0.0769230769,
+      "mean": 0.0017482517,
+      "median": 0.0,
+      "min": 0.0,
+      "n_circuits": 44,
+      "std": 0.0115965902
+    },
+    {
+      "contrast": "phase2a_over_phase1",
+      "listing_model": "SHUFFLE",
+      "max": 0.4375,
+      "mean": -0.0256961877,
+      "median": 0.0,
+      "min": -0.3333333333,
+      "n_circuits": 44,
+      "std": 0.1171231452
+    },
+    {
+      "contrast": "phase2b_over_phase1",
+      "listing_model": "SHUFFLE",
+      "max": 0.125,
+      "mean": -0.0179044151,
+      "median": 0.0,
+      "min": -0.1818181818,
+      "n_circuits": 44,
+      "std": 0.0594396818
+    }
+  ],
+  "experiment_id": "E31-pilot",
+  "input_csv": "D:\\Desktop\\Q-research\\data\\v11\\e31_listing_phase2b\\e31_listing_phase2b_pilot.csv",
+  "interpretation": "Descriptive paired contrasts only; smoke-scale pilot does not establish a listing x phase interaction.",
+  "n_families": 15,
+  "n_rows": 396,
+  "n_source_circuits": 44,
+  "phase_delta_summary": [
+    {
+      "contrast": "phase2a_over_phase1",
+      "listing_model": "LBL",
+      "max": 0.375,
+      "mean": -0.0263242752,
+      "median": 0.0,
+      "min": -1.0,
+      "n_circuits": 44,
+      "std": 0.2829653286
+    },
+    {
+      "contrast": "phase2b_over_phase1",
+      "listing_model": "LBL",
+      "max": 0.75,
+      "mean": 0.110745324,
+      "median": 0.0,
+      "min": 0.0,
+      "n_circuits": 44,
+      "std": 0.2093351663
+    },
+    {
+      "contrast": "phase2a_over_phase1",
+      "listing_model": "WCL",
+      "max": 0.0416666667,
+      "mean": -0.1224273798,
+      "median": 0.0,
+      "min": -1.0,
+      "n_circuits": 44,
+      "std": 0.2598283187
+    },
+    {
+      "contrast": "phase2b_over_phase1",
+      "listing_model": "WCL",
+      "max": 0.5,
+      "mean": 0.052337334,
+      "median": 0.0,
+      "min": 0.0,
+      "n_circuits": 44,
+      "std": 0.121155189
+    },
+    {
+      "contrast": "phase2a_over_phase1",
+      "listing_model": "SHUFFLE",
+      "max": 0.2857142857,
+      "mean": -0.0520204629,
+      "median": 0.0,
+      "min": -1.0,
+      "n_circuits": 44,
+      "std": 0.237216133
+    },
+    {
+      "contrast": "phase2b_over_phase1",
+      "listing_model": "SHUFFLE",
+      "max": 0.7142857143,
+      "mean": 0.0928409089,
+      "median": 0.0,
+      "min": 0.0,
+      "n_circuits": 44,
+      "std": 0.1748591738
+    }
+  ],
+  "status": "supporting_noncanonical_pilot"
+}

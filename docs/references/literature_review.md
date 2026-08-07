@@ -496,7 +496,7 @@ The RL agent is trained using **Proximal Policy Optimization (PPO)** with **Grap
 
 ### 10.10 SSR: A Swapping-Sweeping-and-Rewriting Optimizer for Quantum Circuit Transformation
 
-**Citation**: Huang, Zhou, Meng, Zhu, Luo & Du. *ACM Transactions on Design Automation of Electronic Systems* (TODAES), 2026. DOI 10.1145/3828549; arXiv:2503.03227 (2025) [45]. *(Venue verified 2026-08-06: Crossref resolution of DOI 10.1145/3828549 confirms publication in ACM TODAES, 2026; arXiv:2503.03227 is the preprint. TODAES 2026 is therefore the authoritative venue. Note `unified_references.md` does not yet contain an SSR entry — see `search_ledger.md` §5.1.)*
+**Citation**: Huang, Zhou, Meng, Zhu, Luo & Du. *ACM Transactions on Design Automation of Electronic Systems* (TODAES), 2026. DOI 10.1145/3828549; arXiv:2503.03227 (2025) [45]. *(Venue verified 2026-08-06: Crossref resolution of DOI 10.1145/3828549 confirms publication in ACM TODAES, 2026; arXiv:2503.03227 is the preprint. TODAES 2026 is therefore the authoritative venue. The project-level catalog records this as unified [89].)*
 
 **What they did**: Huang et al. target the **post-mapping (QCT) stage**: after a circuit has been transformed to respect hardware connectivity, remaining SWAP gates inflate depth. SSR iterates three steps — SWAP commutation reordered by a genetic algorithm, subcircuit *sweeping* that extracts CNOT-only blocks, and SAT-based rewriting of each block into a functionally equivalent, depth-optimal circuit.
 

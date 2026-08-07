@@ -6,12 +6,15 @@ reproducibility, manuscript readiness, and cleanup safety.
 **Standard:** Nature/Science-level skepticism first; quantum-software venue
 readiness assessed separately.
 
-> **Status (2026-08-06):** The findings of this audit were addressed in the
-> 2026-08-06 revision wave — E26 ID normalization, corrected Theorem 1(a)
-> validated by E30, AG-generator fix, search ledger + reference repairs,
-> documentation resync, and infra (pyproject + CI). This document is retained
-> as the audit record; treat the manuscript, `data/DATA_CANONICAL.md` (v2.4.0)
-> and `release/release_manifest.json` as the current state.
+> **Status (2026-08-07):** The 2026-08-06 revision wave addressed E26 ID
+> normalization, corrected Theorem 1(a) validation by E30, the AG-generator
+> fix, search-ledger/reference repairs, documentation resync, and project
+> infrastructure. This follow-up audit additionally fixes E20's reusable Cirq
+> QASM pipeline and active-document drift. Treat the manuscript,
+> `data/DATA_CANONICAL.md` (v2.4.0), and `release/release_manifest.json` as the
+> current evidence boundary; canonical data remain frozen historical evidence.
+> E31 is a non-canonical smoke pilot for the still-open listing x Phase-2b
+> factorial and must not be read as a canonical release dataset.
 
 ## Executive Verdict
 
@@ -37,10 +40,10 @@ validated.
 
 | Area | Current evidence | Assessment |
 |---|---|---|
-| Repository scale | 36 manifest datasets; 82,721 rows in the stale manifest, 82,789 after the completed qwalk-8 listing fill | Large but scale is not a substitute for independent design validity |
-| Unit tests | 298 tests passed in 369.24 s with the project Python 3.12.12 environment | Strong engineering baseline; warnings remain |
+| Repository scale | 37 listed manifest datasets; 96,289 rows, including 35 active canonical datasets and 2 superseded provenance entries | Large but scale is not a substitute for independent design validity |
+| Unit tests | 317 tests passed with the project Python 3.12.12 environment | Strong engineering baseline; dependency deprecation warnings remain |
 | Syntax | `python -m compileall -q src experiments scripts analysis` passed | Clean syntax evidence |
-| Data integrity | Initial verification failed only on the changed listing-sensitivity checksum; per-experiment structural checks passed | Manifest must be regenerated after accepting the 6,720-row canonical file |
+| Data integrity | `python scripts/reproduce_all.py --verify` passes all 37 checksums/row counts and structural checks; source-hash drift is warning-only historical provenance | Keep canonical files frozen and cite the reconciliation layer separately |
 | Fidelity fallback | Original product-state estimator overestimated an `n=8` local-X mismatch (`~0.347` vs exact `0.0039`) | Critical scientific defect; fixed to global Haar sampling and calibrated |
 | Theory | Listing-conditional Phase-1 result is plausible and partly formal; Theorems 5 and 8 require independent proof review | Do not present all labeled theorems as equally established |
 | Hardware evidence | Fake-backend noise-model simulation only | Not real-hardware validation |
@@ -137,33 +140,36 @@ targeted rerun or an explicit exclusion.
 ### F2. The release manifest was stale relative to accepted data
 
 The current listing-sensitivity file contains 6,720 rows and qwalk-8 has 20/20
-variants. The manifest still pins 6,652 rows and the old SHA-256. The initial
-`scripts/reproduce_all.py --verify` run therefore failed.
+variants. The manifest was regenerated in the 2026-08-06 wave and
+`scripts/reproduce_all.py --verify` now passes all 37 checksum and row-count
+entries. The qwalk-8 rows intentionally skip exact unitary construction at nine
+qubits, as recorded in the active evidence map.
 
-**Action required:** regenerate the manifest after all source/data/document
-changes, verify the new checksum, update all active documents from 82,721 to
-82,789 rows, and record that the qwalk-8 rows intentionally skip exact unitary
-construction at nine qubits.
+**Release rule:** rerun this gate after any canonical-data change. Non-canonical
+corrected reruns, including `data/v11/e20_corrected/`, must not be added to the
+manifest without an explicit evidence-version decision.
 
 ### F3. Active documents disagree about experiment status
 
 Examples:
 
-- `docs/theory/framework.md` and `docs/theory/formal_results.md` still say
-  Phase-2b is not implemented or remains future work, while
-  `src/optimisation/phase2/template_matcher.py`, E10p2b-v2, and the manuscript
-  report a full-scale v2 pipeline.
-- `docs/manuscript/claim_evidence_table.csv` still says full-scale Phase-2b is
-  future work.
-- `docs/manuscript/appendix.md`, `docs/supplementary/supplementary_materials.md`,
-  and older result summaries retain pre-E20 and pre-E25 statements.
+- Active theory, manuscript, claim-map, appendix, supplementary, and result
+  documents now distinguish Phase-2a from the full-scale E26 Phase-2b evidence.
+  Historical snapshots remain explicitly marked as provenance.
+- `docs/manuscript/appendix.md` and `docs/supplementary/supplementary_materials.md`
+  retain old tables under historical-status notes; they are not active evidence.
 - `experiments/EXPERIMENT_GUIDE.md` points current experiments to v6/v6-era
   output directories even though the active Phase-2b and listing artifacts are
   in v8.
-- README still references the deleted GitHub workflow.
+- The experiment guide's historical output paths remain a documentation cleanup
+  item; the active release paths are defined by `DATA_CANONICAL.md` and the
+  manifest.
 
-**Consequence:** a reviewer cannot identify one authoritative state of the
-project. This is a publication blocker independent of algorithm quality.
+**Consequence:** active evidence is now routed through the manifest, canonical
+data policy, claim map, and manuscript. Historical review files remain useful
+as an audit trail but are not release evidence. Independent proof review,
+held-out preregistration, and final clean-checkout replication remain open
+publication requirements.
 
 ### F4. Theory requires independent proof audit
 
@@ -208,19 +214,19 @@ source commit used for every primary table or a reproducible source snapshot.
 | Requirement before submission | Status | Required action |
 |---|---|---|
 | Single precise title and central claim | Needs revision | Rename around representation-conditioned peephole ceilings; remove “columnar representation example” wording |
-| Current literature search | Incomplete | Verify at least 3 independent sources for each novelty claim; confirm all 2025-2026 citations and venues |
+| Current literature search | Ledger reconstructed; catalog corrections propagated | Verify at least 3 independent sources for each novelty claim; complete remaining primary-source checks before submission |
 | Falsifiable hypotheses | Present but post hoc | Label as post-registered/reanalysis; add a genuinely held-out preregistered phase |
-| Theory proof audit | Incomplete | Obtain independent quantum-compilation/complexity review; downgrade unsupported theorems |
+| Theory proof audit | Automated audit complete; external review open | Obtain independent quantum-compilation/complexity review; downgrade unsupported theorems |
 | Direct theory-experiment alignment | Partial | Separate Phase-2a, Phase-2b, and full-pipeline results in every table |
-| Baselines | Partial | Add current Qiskit, Cirq, t|ket>, and at least one verified open-source optimizer under identical inputs; document target/gate-set settings |
+| Baselines | Three production compilers present; independent optimizer review open | Keep Qiskit, Cirq, and t|ket> settings explicit; VOQC/Quartz remain unavailable on this environment |
 | Realistic hardware validation | Missing | Optional for a software venue; required for any hardware-impact claim. Current EHW is simulator-only |
 | Statistical plan | Mostly present | Add cluster-aware treatment of repeated circuits/seeds, pre-specify primary endpoints, and report CIs/effect sizes rather than only p-values |
 | Fidelity correctness | Fixed for future runs | Recalibrate or exclude historical rows produced through the old product-state fallback |
 | Missingness and survivorship | E18 documented | Keep ITT/MNAR sensitivity as primary; never foreground survivor-only means |
 | Held-out generalization | Fails for some mechanisms | Present the failure as a boundary; do not market the model as universal |
-| Data manifest | Failing before update | Regenerate after the 6,720-row listing dataset is accepted |
-| Reproducible clean checkout | Not yet | Commit source/data/docs, regenerate manifest, run tests/verify/figures from clean checkout |
-| Data/code availability | Incorrect placeholders | Replace wrong GitHub URL, remove Zenodo placeholder, add final archive DOI only after deposit |
+| Data manifest | Passing | Re-run after any canonical-data decision; do not regenerate for non-canonical corrected reruns |
+| Reproducible clean checkout | Pending final commit gate | Commit source/data/docs, then run tests/verify/figures from the resulting clean checkout |
+| Data/code availability | Repository URL corrected; no archive DOI claimed | Keep `https://github.com/StarryCode-Lang/quantum-peephole-ceiling`; add an archival DOI only after a real deposit |
 | Author declarations | Placeholder | Complete authors, contributions, funding, conflicts, and acknowledgements before submission |
 | Figure QA | Partial | Render all PDFs, inspect fonts/labels/captions, and ensure every figure maps to current canonical data |
 | Independent replication | Missing | Ask a separate researcher to run the clean-checkout protocol and reproduce headline tables |
@@ -258,10 +264,13 @@ publication program is a small, preregistered, mechanism-focused extension:
 - Detected and documented machine resources: 4 physical CPU cores, 3.07 GB
   available RAM, no GPU; future runs must be bounded and checkpointed.
 - Ran syntax compilation successfully.
-- Ran the complete test suite: 300 passed, 46 deprecation warnings, 312.77 s.
+- Ran the complete test suite: 317 tests passed; only dependency deprecation warnings remain.
 - Replaced the invalid product-state fidelity fallback with global Haar sampling.
 - Added fidelity fallback calibration script, artifacts, and regression test.
-- Regenerated the figure suite successfully: 18 one-page PDF artifacts (17
+- Added zero-inflated inference summaries, P7 monotone-bound diagnostics, and P10 E30 distribution diagnostics with tests and derived artifacts.
+- Fixed the E20 Cirq pipeline and completed a 1,070-row non-canonical corrected rerun under `data/v11/e20_corrected/`.
+- Added the non-canonical E31 listing x Phase-2b smoke pilot, paired analysis, and explicit residual-scope report under `data/v11/e31_listing_phase2b/`.
+- Regenerated the figure suite successfully: 19 one-page PDF artifacts (18
   numbered figures plus `fig08b`), with no zero-byte files and no `/Type3` font
   markers in the PDF byte streams. Visual spot review of every panel is still a
   human submission step.

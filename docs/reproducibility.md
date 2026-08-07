@@ -107,7 +107,7 @@ python -m piptools compile --generate-hashes --output-file=requirements-lock.txt
 
 ## Figure regeneration
 
-All 18 PDF artifacts (17 numbered figures plus the `8b` companion figure, plus summary CSVs) regenerate from a single entry point:
+All 19 PDF artifacts (18 numbered figures plus the `8b` companion figure, plus summary CSVs) regenerate from a single entry point:
 
 ```bash
 # From the repo root, inside the pinned environment
@@ -118,7 +118,7 @@ conda run -n q-research python analysis/generate_figures.py
 - Use `conda run -n q-research python ...` or the activated `q-research` environment; do not rely on an unrelated system Python.
 - All outputs land in `analysis/figures/` (resolved via `src/config.py`: `PROJECT_ROOT/analysis/figures`; no absolute paths are hard-coded).
 
-### Figure PDFs (18 artifacts: 17 numbered figures plus 8b)
+### Figure PDFs (19 artifacts: 18 numbered figures plus 8b)
 
 | # | File | Experiment / data | Content |
 |---|------|-------------------|---------|
@@ -140,6 +140,7 @@ conda run -n q-research python analysis/generate_figures.py
 | 15 | `fig15_qiskit_pass_waterfall.pdf` | `data/v5/qiskit_pass_isolation.csv` + E15 | Per-pass effectiveness per family; full-pipeline reference line |
 | 16 | `fig16_qiskit_pass_family_heatmap.pdf` | pass isolation CSV | Pass x family mean-reduction heatmap, cividis |
 | 17 | `fig17_qiskit_pass_interaction.pdf` | pass isolation CSV | Pass divergence + co-benefit matrices, cividis / viridis |
+| 18 | `fig18_e30_thm1a_validation.pdf` | E30 (`data/v10/e30`) | Corrected Theorem 1(a) empirical mean-vs-theory validation across 27 cells |
 
 ### Companion CSVs
 

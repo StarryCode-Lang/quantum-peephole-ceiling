@@ -185,22 +185,22 @@ currently has **no SSR entry** — this is a gap, not an authority to defer to.
 
 ## 7. Findings of This Verification Pass & Follow-Ups
 
-**Statistics (manuscript [1]–[47])**: ✅ verified 42 · ⚠️ mismatch 5 (all corrected in manuscript 2026-08-06) · ❓ unverified 0.
+**Statistics (manuscript [1]–[47])**: ✅ verified 42 · ⚠️ mismatch 5 (corrected in manuscript and propagated to the unified catalog on 2026-08-07) · ❓ unverified 0.
 
-**Mismatches requiring correction in `unified_references.md` / manuscript** (corrections recorded here; propagation to those files is the next step and was out of scope for this ledger pass):
+**Mismatches corrected in `unified_references.md` / manuscript:**
 
 1. **[7] / unified [13]** Amy et al. meet-in-the-middle: arXiv ID **1206.07563 → 1206.0758**.
-2. **[9]** Amy & Mosca entry is conflated: title/venue/year/ID all mixed (see §5 row [9]). Split into (a) Amy/Maslov/Mosca/Roetteler TCAD 2014, arXiv:1303.2042 and (b) Amy & Mosca "T-count optimization and Reed-Muller codes," IEEE TIT 65(8):4771–4784, 2019, **arXiv:1601.07363** (unified [15]'s ID 1601.07369 resolves to an unrelated Majorana paper).
-3. **[12] / unified [12]** Janzing et al.: arXiv ID **quant-ph/0306054 → quant-ph/0305050**.
-4. **[26] / unified [45]** Shepherd & Bremner: correct record is Proc. R. Soc. A **465**, 1413–1439, **2009**, DOI 10.1098/rspa.2008.0443, arXiv:0809.0847 (not vol. 475/2019/1807.04084).
+2. **[9]** Amy & Mosca entry was conflated; unified [14] retains the 2014 matroid-partitioning paper and unified [15] now uses **arXiv:1601.07363** for the 2019 Reed–Muller paper.
+3. **[12] / unified [25]** Janzing et al.: arXiv ID **quant-ph/0306054 → quant-ph/0305050**.
+4. **[26] / unified [45]** Shepherd & Bremner: corrected to Proc. R. Soc. A **465**, 1413–1439, **2009**, DOI 10.1098/rspa.2008.0443, arXiv:0809.0847.
 5. **[33] / unified [61]** Iten et al.: arXiv ID **1909.09119 → 1909.05270**.
 
 **Additional cross-checks on `unified_references.md`** (documented only; not part of manuscript [1]–[47]):
 
 - **unified [22]** "de Beaudrap, Glendinning & Zhang — Faster resynthesis with the ZX-calculus, QPL 2022, arXiv:2206.10843": ⚠️ arXiv:2206.10843 resolves to an unrelated NeurIPS 2022 ML paper ("Learning Debiased Classifier with Biased Committee"), and no paper with the claimed title was located on arXiv or the open web. **Suspected same fabrication lineage as the wave-2 incident.** Recommend removing unified [22] or replacing with the verified ICALP 2022 extraction-hardness paper (arXiv:2202.09194), which the manuscript already cites as [11].
-- **unified [20]** Amy, Glaudell, Ross (npj QI 2018): cited arXiv:1606.02729 resolves to an astrophysics paper; correct preprint ID not located this session — needs manual check against the npj QI DOI.
-- **unified cross-reference table O** lists MQT Bench as "Nitsch et al." — correct author is Quetschlich et al. (typo).
-- **unified has no entries for SSR, Quasar (equality saturation), or VOQC author-list variants** that the manuscript cites — manuscript numbering is independent; keep §5.1 as the SSR authority until unified gains an entry.
+- **unified [20]** Amy, Glaudell, Ross (npj QI 2018): the incorrect arXiv:1606.02729 identifier was removed; the article remains catalogued without a preprint ID pending DOI-level primary-source confirmation.
+- **unified cross-reference table O** now lists MQT Bench as Quetschlich, Burgholzer, and Wille.
+- **unified catalog coverage**: Quasar is normalized to Yang, Raun, Tao, and Gu; SSR is now recorded as unified [89]. VOQC author-list variants remain a catalog-cleanup item; manuscript numbering is independent.
 
 **Resolved 2026-08-06**: manuscript [32] Yamashita — verified against the Rinton Press DOI page as QIC 10(9–10) pp. 721–734 (2010), not IEICE; manuscript corrected. [3] Massalin remains canonical (not re-queried; low risk).
 

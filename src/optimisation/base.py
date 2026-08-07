@@ -275,7 +275,7 @@ class BaseOptimizer(ABC):
     def _estimate_fidelity(self, circuit: QuantumCircuit, target: QuantumCircuit,
                            n_samples: int = DEFAULT_FIDELITY_SAMPLES) -> float:
         """
-        Estimate average gate fidelity via Haar-random product-state sampling
+        Estimate average gate fidelity via global Haar-random state sampling
         for n > MAX_EXACT_FIDELITY_QUBITS.
 
         Generates globally Haar-random n-qubit pure states.  For a fixed

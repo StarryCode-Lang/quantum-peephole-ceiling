@@ -330,7 +330,7 @@ Output: OptimizationResult (C', reduction, fidelity)
 
 ### S5.1 Data File Inventory
 
-> Canonical file inventory, refreshed from `release/release_manifest.json` on 2026-08-01 (36 canonical datasets, 82,789 rows). For the authoritative list with full SHA-256 checksums, see `release/release_manifest.json`. Derived (non-canonical) analysis files live under each experiment's `derived/` directory and are intentionally excluded from the manifest — e.g. `data/v6/e21/derived/{ceiling_aware_summary.csv, e21_paired_statistics.csv}`, `data/v7/e24/derived/e24_theorem7_summary.csv`, `data/v7/e29/derived/e29_multi_seed_statistics.csv`, and the E18 bias artifacts in `data/v5/e18/derived/`.
+> Canonical file inventory, refreshed from `release/release_manifest.json` on 2026-08-06 (37 listed datasets, 96,289 rows; 35 active canonical datasets). For the authoritative list with full SHA-256 checksums, see `release/release_manifest.json`. Derived (non-canonical) analysis files live under each experiment's `derived/` directory and are intentionally excluded from the manifest — e.g. `data/v6/e21/derived/{ceiling_aware_summary.csv, e21_paired_statistics.csv}`, `data/v7/e24/derived/e24_theorem7_summary.csv`, `data/v7/e29/derived/e29_multi_seed_statistics.csv`, and the E18 bias artifacts in `data/v5/e18/derived/`.
 
 | Experiment | File | Records | SHA-256 (prefix) |
 |------------|------|---------|-------------------|
@@ -364,13 +364,14 @@ Output: OptimizationResult (C', reduction, fidelity)
 | E22 | e22_gate_shuffle_ablation.csv | 2,240 | 4bb3ad28aa0882bf... |
 | E23 | e23_ag_canonical_results.csv | 160 | eecf3c52f30b2d19... |
 | E24 | e24_theorem7_results.csv | 75 | cdeb08e6a326d8b0... |
-| E26 | e26_bv_theory_results.csv | 4 | ce044aa13a63735f... |
+| E26-pilot | e26_bv_theory_results.csv | 4 (superseded by E26 v2) | ce044aa13a63735f... |
 | E29 | e29_multi_seed_e04_full.csv | 800 | 68a814a853d95b9a... |
-| E26_phase2b_full_v8 | phase2b_full_validation_v8.csv | 2,427 | 93c398f6aea16f34... |
+| E26 | phase2b_full_validation_v8.csv | 2,427 | 93c398f6aea16f34... |
 | E_listing_sensitivity_v8 | listing_sensitivity_v8.csv | 6,720 | (wave-6 qwalk_8 fill) |
 | E27_new_families | e27_new_families_v8.csv | 675 | (wave-5) |
 | HARDWARE_VALIDATION | ehw_runs_full_20260720_150931.csv | 288 | e6537e0ee9b59ca5... |
-| **Total** | **36 datasets** | **82,789** | |
+| E30 | e30_thm1a_wcl_results.csv | 13,500 | e7195d2b3fa68f6b... |
+| **Total** | **37 datasets** | **96,289** | |
 
 Checksums and file paths are canonical in `release/release_manifest.json`. Per-experiment metadata is in each `data/v*/e*/metadata.json`.
 
@@ -561,11 +562,11 @@ Random circuit sampling is a leading candidate for demonstrating quantum computa
 
    **Limitation**: All experiments assume noiseless (perfect) gates. The impact of noise on optimization effectiveness remains unexplored.
 
-5. **~~Single compiler baseline~~** *(addressed in v5)*: Multi-compiler comparison with Qiskit (completed) and Cirq and t|ket> (planned, not yet executed) (E15). Remaining gap: standardized benchmark suite adoption.
+5. **~~Single compiler baseline~~** *(addressed in v5)*: Multi-compiler comparison with Qiskit (E15) and Cirq/t|ket> (E20 and SOTA; canonical E20 retains its as-executed Cirq errors, corrected rerun in `data/v11/e20_corrected/`). Remaining gap: standardized benchmark suite adoption.
 
 6. **E11/E12 comparability**: E11 and E12 cannot be directly compared circuit-by-circuit due to different schemas (E11 uses project optimizers; E12 uses Qiskit compiler levels). Cross-experiment comparisons require schema harmonization and per-circuit normalization.
 
-6. **Phase-2b template matching not canonical-benchmarked**: A limited `Phase2bTemplateMatcher` implementation and unit tests exist, but the canonical E10/E11/E14/E16 Phase-2 results use Phase-2a commutation rewriting. Template matching at full benchmark scale may achieve additional reduction on circuits with known patterns and remains outside the confirmed canonical CSV evidence.
+6. **Phase-2b scope**: The canonical E10/E11/E14/E16 Phase-2 results use Phase-2a commutation rewriting. E26 now provides full-scale evidence for the implemented v2 template library (2,427 rows); parity-gadget/phase-polynomial coverage and unrestricted template completeness remain outside the evidence.
 
 ### S8.5 Connection to Quantum Error Correction
 

@@ -42,11 +42,11 @@
 
 [12] R. Wille and R. Drechsler, "BDD-based synthesis of reversible logic for large functions," DAC, pp. 270-275, 2009.
 
-[13] M. Amy, D. Maslov, M. Mosca, and M. Roetteler, "A meet-in-the-middle algorithm for fast synthesis of depth-optimal quantum circuits," IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems (TCAD), vol. 32, no. 6, pp. 818-830, 2013. arXiv:1206.07563
+[13] M. Amy, D. Maslov, M. Mosca, and M. Roetteler, "A meet-in-the-middle algorithm for fast synthesis of depth-optimal quantum circuits," IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems (TCAD), vol. 32, no. 6, pp. 818-830, 2013. arXiv:1206.0758
 
 [14] M. Amy, D. Maslov, M. Mosca, and M. Roetteler, "Polynomial-time T-depth optimization of Clifford+T circuits via matroid partitioning," IEEE TCAD, vol. 33, no. 10, pp. 1476-1489, 2014. arXiv:1303.2042
 
-[15] M. Amy and M. Mosca, "T-count optimization and Reed-Muller codes," IEEE Transactions on Information Theory (TIT), vol. 65, no. 8, pp. 4771-4784, 2019. arXiv:1601.07369
+[15] M. Amy and M. Mosca, "T-count optimization and Reed-Muller codes," IEEE Transactions on Information Theory (TIT), vol. 65, no. 8, pp. 4771-4784, 2019. arXiv:1601.07363
 
 [16] V. Kliuchnikov, D. Maslov, and M. Mosca, "Fast and efficient optimal synthesis of Clifford+T circuits," Physical Review Letters, vol. 111, no. 8, 080502, 2013. arXiv:1206.5236
 
@@ -66,7 +66,7 @@
 
 ## C. Commutation-Based and Phase Polynomial Optimization
 
-[20] M. Amy, P. Glaudell, and N. J. Ross, "Number-theoretic constructions of optimal quantum circuits for diagonal unitaries," npj Quantum Information, vol. 4, article 43, 2018. arXiv:1606.02729
+[20] M. Amy, P. Glaudell, and N. J. Ross, "Number-theoretic constructions of optimal quantum circuits for diagonal unitaries," npj Quantum Information, vol. 4, article 43, 2018. *(The previously listed arXiv:1606.02729 resolves to an unrelated paper and is intentionally omitted pending primary-source verification.)*
 
 [83] J. Liu, A. Gonzales, B. Huang, Z. H. Saleem, and P. Hovland, "QuCLEAR: Clifford extraction and absorption for quantum circuit optimization," arXiv:2408.13316, 2024.
 
@@ -88,7 +88,7 @@
 
 ## E. Computational Complexity of Quantum Circuit Optimization
 
-[25] D. Janzing, P. Wocjan, and T. Beth, "Non-identity-check is QMA-complete," International Journal of Quantum Information, vol. 1, no. 4, pp. 507-518, 2003. arXiv:quant-ph/0306054
+[25] D. Janzing, P. Wocjan, and T. Beth, "Non-identity-check is QMA-complete," International Journal of Quantum Information, vol. 1, no. 4, pp. 507-518, 2003. arXiv:quant-ph/0305050
 
 [26] J. Kempe, A. Kitaev, and O. Regev, "The Complexity of the Local Hamiltonian Problem," SIAM Journal on Computing, vol. 35, no. 5, pp. 1070-1097, 2006. arXiv:quant-ph/0406180
 
@@ -136,7 +136,7 @@
 
 [44] Y. Aharonov, L. Davidovich, and N. Zagury, "Quantum random walks," Physical Review A, vol. 48, no. 2, pp. 1687-1690, 1993.
 
-[45] D. Shepherd and M. J. Bremner, "Temporally unstructured quantum computation," Proceedings of the Royal Society A, vol. 475, no. 2225, 20180527, 2019. arXiv:1807.04084
+[45] D. Shepherd and M. J. Bremner, "Temporally unstructured quantum computation," Proceedings of the Royal Society A, vol. 465, pp. 1413-1439, 2009. DOI: 10.1098/rspa.2008.0443; arXiv:0809.0847
 
 ---
 
@@ -170,7 +170,7 @@
 
 ## I. Equivalence Checking and Simulation
 
-[56] S. Yamashita, S. Tanishima, T. Matsumoto, and N. N. Masuda, "Fast equivalence checking of quantum circuits," IEICE Transactions on Fundamentals of Electronics, Communications and Computer Sciences, vol. E94-A, no. 1, pp. 251-258, 2011.
+[56] S. Yamashita and I. L. Markov, "Fast equivalence-checking for quantum circuits," Quantum Information and Computation, vol. 10, no. 9-10, pp. 721-734, 2010. DOI: 10.26421/qic10.9-10-1; arXiv:0909.4119
 
 [57] I. L. Markov and Y. Shi, "Simulating quantum computation by contracting tensor networks," SIAM Journal on Computing, vol. 38, no. 3, pp. 963-981, 2008. arXiv:quant-ph/0511069
 
@@ -188,7 +188,7 @@
 
 [60] R. de Griend and R. Duncan, "Architecture-aware synthesis of nearest neighbour compliant quantum circuits," Quantum Science and Technology, vol. 5, 035004, 2020. arXiv:1809.02718
 
-[61] Iten, R. and Moyard, R. and Metger, T. and Sutter, D. and Woerner, S., "Exact and practical pattern matching for quantum circuit optimization," ACM Transactions on Quantum Computing, vol. 3, no. 1, pp. 1-44, 2022. arXiv:1909.09119
+[61] Iten, R. and Moyard, R. and Metger, T. and Sutter, D. and Woerner, S., "Exact and practical pattern matching for quantum circuit optimization," ACM Transactions on Quantum Computing, vol. 3, no. 1, pp. 1-44, 2022. arXiv:1909.05270
 
 ---
 
@@ -236,7 +236,9 @@
 
 [76] M. Xu, Z. Li, O. Padon, S. Lin, J. Pointing, A. Hirth, H. Ma, A. Aiken, U. A. Acar, Z. Jia, and J. Palsberg, "Quartz: Superoptimization of Quantum Circuits (Extended Version)," arXiv:2204.09033, 2022. Proceedings of the ACM on Programming Languages (PLDI), vol. 6, 2022.
 
-[77] Ravi, R. and Gokhale, P. and Smith, K. and Brown, J. and others, "QUASAR: An architecture-aware quantum compiler," Proceedings of the ACM on Programming Languages (PACMPL), 2022.
+[77] G. Yang, P. Raun, R. Tao, and R. Gu, "Equality saturation for quantum circuit optimization," Proceedings of the ACM on Programming Languages, vol. 10, no. PLDI, 2026. DOI: 10.1145/3808254.
+
+[89] Y. Huang, X. Zhou, F. Meng, P. Zhu, Y. Luo, and Z. Du, "SSR: A Swapping-Sweeping-and-Rewriting Optimizer for Quantum Circuit Transformation," ACM Transactions on Design Automation of Electronic Systems, 2026. DOI: 10.1145/3828549; arXiv:2503.03227.
 
 ---
 
@@ -297,7 +299,7 @@
 | [2] | [48] | Sivarajah et al. (tket, 2020) |
 | [3] | [47] | Cirq Contributors (2023) |
 | [4] | [35] | Shende, Bullock, Markov (2006) |
-| [5] | [69] | Nitsch et al. (MQT Bench, 2023) |
+| [5] | [69] | Quetschlich, Burgholzer, and Wille (MQT Bench, 2023) |
 | [6] | [70] | Wang et al. (QASMBench, 2021) |
 | [7] | [71] | IBM (Benchpress, 2024) |
 | [8] | [72] | QCircuitBench (NeurIPS 2025) |

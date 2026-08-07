@@ -21,7 +21,7 @@
 > **Version**: 6.3
 > **Date**: 2026-07-09
 > **Scope**: Confirmed manuscript claims include E1-E18 canonical optimizer data, completed E19 WCL listing-model comparison (10,000 rows), completed E20 multi-compiler full CSV, completed E21 ceiling-aware full-mode evaluation (1,140 rows), validated Theorem 6 via E23, validated Theorem 7 via E24, and expanded Phase-2b template matcher with unit tests. A machine-readable version of this table is maintained at `docs/manuscript/claim_evidence_table.csv`.
-> **Caveats**: E18 conclusions remain survivorship-biased; full-scale Phase-2b validation is complete (2,427 rows; Section D). Wave 6: the Phase-2b depth grid is closed to the full factorial (56/56 combos), and rerun reconciliation retained canonical data for all eight rerun experiments (E12–E17, E19, E21) with a unified IQP sensitivity statement (manuscript §7.5, item 20).
+> **Caveats**: E18 conclusions remain survivorship-biased; full-scale Phase-2b validation is complete (2,427 rows; Section D). Wave 6: the Phase-2b depth grid is closed to the full factorial (56/56 combos), and rerun reconciliation covered eleven experiments (E12–E21 plus E25), retaining canonical data with a unified IQP sensitivity statement (manuscript §7.5, item 20).
 
 ---
 
@@ -40,7 +40,7 @@
 | C9 | Listing-model dependency: WCL-style preprocessing exposes Phase-1 opportunities hidden under LBL. | E19 (full canonical run, 10,000 rows) | Table 3; Section 3.4; Section 6.2 | E19 full run: WCL mean reduction 7.83% (std=3.95%, max=33.33%) vs LBL 0.0000% across 5,000 circuits (n=5, depths 1-50). | Confirmed canonical result (n=5, random Universal family) | Cross-family WCL validation (beyond random Universal) remains as future work; Phase-2 commutation opportunities under WCL not separately measured. |
 | C10 | Ceiling-aware optimization skips futile optimization passes with identical reduction and significant speedup. | E21 full mode (1,140 rows) | Section 6.6; Table 17 | Full-mode E21 reports 1.6x–228x speedups (mean 34.97×) with identical reduction across 15 families | 15 families, n in {4,6,8,10}, 10 trials each | Exact fidelity verified for n<=6; larger circuits use target=None (correctness covered by unit tests). |
 | C11 | Multi-compiler extension with Cirq and t\|ket> produces comparable reduction and runtime data. | E20 full mode (1,070 rows) | Section 6.5; Tables 12–16; Supplementary S11.2 | Qiskit/Cirq/t\|ket> compared on 15 families with standardized settings | Qiskit 2.4.1, Cirq 1.6.1, pytket 2.18.0 | Baseline compiler settings standardized but may not reflect optimal per-family tuning. |
-| C12 | Phase-2b template-assisted BV advantage is theoretically proved and the required templates are implemented and unit-tested. | Theory (Thm 7, Thm 9); `src/optimisation/phase2/template_matcher.py`; `tests/test_phase2b_template_matcher.py` | Section 4.2 (Thm 9); Section 6.4; Appendix D | Matcher covers H-CX-H control, H-CX-H target (CZ), S-S†, CZ-CZ, and H-H templates; unit tests verify BV-like examples and identities. | Unit-tested implementation; no canonical Phase-2b CSV | Do not conflate Phase-2b theorem/tests with E10/E11/E14/E16 Phase-2a canonical results. Full-scale Phase-2b validation is now complete (2,427 rows; Section D, claim C13). |
+| C12 | Phase-2b template-assisted BV advantage is theoretically proved and the required templates are implemented and unit-tested. | Theory (Thm 7, Thm 9); `src/optimisation/phase2/template_matcher.py`; `tests/test_phase2b_template_matcher.py` | Section 4.2 (Thm 9); Section 6.4; Appendix D | Matcher covers H-CX-H control, H-CX-H target (CZ), S-S†, CZ-CZ, and H-H templates; unit tests verify BV-like examples and identities. | Unit-tested implementation; full-scale validation is reported separately as C13 | Do not conflate Phase-2b theorem/tests with E10/E11/E14/E16 Phase-2a canonical results. Full-scale Phase-2b validation is now complete (2,427 rows; Section D, claim C13). |
 | C13 | Phase-2b template matching validated at full scale: BV reaches the exact k+2 optimum on all 80/80 instances. | E26 (Phase-2b full v2, 2,427 rows, `data/v8/phase2b_full/`); E26 bv-theory | Section 4.2; Section 6.4; Section D | BV 69.2% mean reduction (exceeding the rigorous bound by 3.1–4.2× per instance); IQP 92.0%; Structured 40.2%; RandomClifford 51.6%; pooled Phase-2b 48.5% [46.5, 50.5] | 16 families; full-factorial depth grid (BV n=3–10 × 10 secrets; depth families n=3–10 × d in {20..50 step 5} × 3 seeds, 56/56 combos closed in wave 6) | Depth grid closed to the full factorial in wave 6 (`docs/review/wave6/phase2b_crossfill.md`); no parity-gadget phase-polynomial templates (QAOA/VQE/HardwareEfficient remain 0%). |
 | C14 | Repaired ceiling model — mechanism-gate + random-forest hybrid — generalizes strongly under LOFO validation. | CEILING_REPAIR v2 (`experiments/ceiling_model_repair.py --regime`, `data/v6/ceiling_repair/`) | Section 6.6 | LOFO MAE 0.0172 vs 0.0963 predict-0 baseline; pooled r = 0.977; Spearman rho = 0.853; R^2 = 0.954 | Leave-one-family-out across 15 families | Gate selected post hoc on a single dataset; family-mean target underpowered (n = 15 folds, r = 0.059); 11/15 folds have undefined Pearson r; auxiliary classifier F1 = 0.075; remains exploratory. Wave-6 20-family robustness (`docs/review/wave6/e27_part5.md`): pooled MAE 0.0188, r = 0.967; family-mean r = 0.780 (pure RF) / 0.887 (gated) at n = 20; RepetitionCode fold failure (MAE 0.303, r = -0.826, intermediate-density extrapolation); remains exploratory. |
 | C15 | Noise-model hardware validation: logical compression does not guarantee physical compression. | EHW (`experiments/hardware_validation/run.py`, `data/v8/hardware_validation/`, 288 rows) | Section 7.4; Section 7.5 | BV 46.15% logical reduction collapses to 0% after L1 physical transpilation; random instances show small positive Hellinger improvement (+0.0016 to +0.0033) in all 4 unitary-verified cases | FakeManilaV2/FakeNairobiV2 noise-model simulation, 8,192 shots × 3 seeds, L0/L1 | Noise-model simulation on fake backends — NOT real hardware; only 2 retired-device snapshots; small n; do not extrapolate. |
@@ -85,7 +85,7 @@
 | E23 | AG canonical form validation (Thm 6) | data/v7/e23/ | Thm 6 | Completed (160 circuits, matching rate = 1.0) |
 | E24 | Theorem 7 hardness family instantiation | data/v7/e24/ | Thm 7 | Completed (75 circuits, Phase-2a mean = 79.8%) |
 | E25 | Industry benchmarks | data/v6/e25/ | C3 | Completed (66 circuits) |
-| Phase-2b unit tests | Template-assisted matcher sanity tests | tests/test_phase2b_template_matcher.py | C12 | Unit-tested, no full canonical CSV |
+| Phase-2b unit tests | Template-assisted matcher sanity tests | tests/test_phase2b_template_matcher.py | C12 | Unit-tested; full-scale E26 evidence is recorded separately in C13 |
 
 ---
 
@@ -147,7 +147,7 @@ C7 (Fidelity for retained verified rows) ← retained verified datasets only
 | C9 | Listing dependency hypothesis | E19 confirmed (full canonical run) | WCL mean 7.83% vs LBL 0.0000% across 5,000 circuits; listing-model dependency confirmed |
 | C10 | Ceiling-aware optimizer | E21 smoke-only | No full validation claimed |
 | C11 | Multi-compiler analysis | E20 metadata-only/planned | No completed multi-compiler CSV claimed |
-| C12 | Not explicit | Phase-2b theory + limited implementation/unit tests | Records pending full benchmark status |
+| C12 | Not explicit | Phase-2b theory + implementation/unit tests | Full benchmark status is recorded by C13; engineered-family coverage remains incomplete |
 
 ---
 
@@ -280,7 +280,7 @@ The confirmed compiler comparison includes Qiskit, Cirq, and t|ket> (E20 full mo
 **Mitigation**: This is by design — our goal is to characterize the structural ceiling of the *peephole model*, not to build a competitive optimizer. The structural-ceiling proxy (E13) helps identify which studied circuit families have exhausted the prototype peephole horizon. The ceiling-aware optimizer evidence is full-mode but exploratory (E21, 1,140 rows; held-out generalization failed), so practical benefit claims must remain exploratory.
 
 **Reviewer counterargument**: *"The prototype's poor performance on VQE/HardwareEfficient may reflect implementation quality, not fundamental limits."*
-- **Response**: The structural-ceiling proxy (E13) provides an independent upper-bound-style diagnostic that matches observed prototype performance on the studied families. The completed Qiskit comparison provides one production-compiler reference point; E20 Cirq/t|ket> and E21 full ceiling-aware validation remain pending.
+- **Response**: The structural-ceiling proxy (E13) provides an independent upper-bound-style diagnostic that matches observed prototype performance on the studied families. E20 supplies the completed three-compiler comparison, while E21 supplies full-mode ceiling-aware validation; both retain their documented scope and correctness caveats.
 
 ---
 
@@ -300,11 +300,11 @@ The confirmed compiler comparison includes Qiskit, Cirq, and t|ket> (E20 full mo
 
 | Risk | Response Asset | Counterargument |
 |------|---------------|-----------------|
-| "Negative result" perception | Reframed as a structural characterization paper; lead with the confirmed structural-ceiling framework and Qiskit baseline | The 0% ceiling is a *provable prediction*, not a failed experiment. Listing-model and ceiling-aware results are promising planned/smoke extensions, not primary confirmed evidence. |
+| "Negative result" perception | Reframed as a structural characterization paper; lead with the confirmed structural-ceiling framework and multi-compiler baselines | The 0% ceiling is a *provable prediction*, not a failed experiment. E19/E20/E21 provide scoped completed evidence; E31 remains a non-canonical pilot for the still-open WCL x Phase-2b interaction. |
 | Why do compilers outperform on some families? | Fig. 12, Fig. 16, Table 12, scope-of-comparison paragraph | This is a *feature*, not a bug — the framework precisely identifies where mechanisms beyond peephole (template matching, phase polynomials, Pauli simplification, Clifford resynthesis) are needed. |
 | Is structural ceiling a theorem? | Thm 1–2, Thm 2b + E13 proxy validation + explicit delimitation | Yes, Theorems 1–2 are proven; Thm 2b resolves the INSERTION cascade for bounded circuits. The proxy is empirically validated. The distinction between proven and conjectural results is explicitly maintained. |
 | Are claims overgeneralized? | Scope column in claim-evidence map; C1/C2 clearly labeled as conjectures | All claims include explicit scope boundaries. Conjectures are clearly separated from theorems. |
-| Can results be reproduced? | reproduce_all.py, release_manifest.json, reproducibility checklist, 149 unit tests, Docker, CI/CD | One-command reproduction with SHA-256 verified data. Full environment specification, Docker image, and CI/CD pipeline provided. |
+| Can results be reproduced? | reproduce_all.py, release_manifest.json, reproducibility checklist, pytest suite, Docker, CI/CD | One-command reproduction with SHA-256 verified data. Full environment specification, Docker image, and CI/CD pipeline provided. |
 | Why not more circuit families? | 15+ families in v5; framework is extensible by design | 15+ families already exceed typical benchmark scope. The framework's definitions apply to any circuit family. |
 | QMA-hardness claim? | Explicitly labeled as Open Problem (Supplementary S8.6), not a result | We never claim to prove hardness. OP1/OP2 are motivating directions, clearly labeled as open problems. |
 | Scale limitation? | Extended to n=20; theorems are scale-independent | The theory holds for arbitrary n. Empirical range is bounded by exact-fidelity verification cost, not theoretical limitations. |
@@ -401,17 +401,17 @@ The structural-ceiling framework itself — the theorems, the empirical trichoto
 
 The theoretical separation between Phase-2a (commutation-only rewriting) and Phase-2b (template-matching-augmented rewriting) is established at the asymptotic level: Theorem 7 (artificial circuit family) and Theorem 9 (Bernstein–Vazirani natural family) each prove an Ω(1) Phase-2b advantage over Phase-2a. These results certify that template matching is not redundant with commutation rewriting — there exist natural circuit families for which the Phase-2b horizon strictly exceeds the Phase-2a horizon.
 
-The canonical experimental pipeline, however, implements Phase-2a only. The function `_gates_commute()` in `src/optimisation/phase2/commutation_rewriter.py` performs a sufficient-condition commutativity check. A limited `Phase2bTemplateMatcher` now exists in `src/optimisation/phase2/template_matcher.py` with unit tests for the core H-CX-H control-template mechanism, but it has not been used to generate full canonical E1–E18 benchmark CSVs. All Phase-2 reductions reported in E1–E18 are therefore Phase-2a reductions unless explicitly labeled otherwise. The Phase-2b advantage predicted by Theorems 7 and 9 is not directly measured at canonical benchmark scale.
+The canonical E1–E18 pipeline implements Phase-2a only. The function `_gates_commute()` in `src/optimisation/phase2/commutation_rewriter.py` performs a sufficient-condition commutativity check. The v2 `Phase2bTemplateMatcher` is implemented in `src/optimisation/phase2/template_matcher.py`, covered by unit tests, and evaluated at full scale in E26. All Phase-2 reductions reported in E1–E18 are therefore Phase-2a reductions unless explicitly labeled otherwise. E26 directly measures the implemented Phase-2b library on the recorded full-factorial grid; it does not establish completeness of the template universe.
 
-This produces a theory-vs-experiment gap: the Ω(1) separation is proven for Phase-2b but not empirically demonstrated at manuscript scale, and the tight upper bound for Phase-2a alone is an open theoretical question (the Phase-2a analogue of Theorem 7 is not known). The manuscript is explicit about this gap: the Phase-2 experimental results are labeled "Phase-2a (commutation only)" in every relevant table and figure caption, and the Phase-2b theorems are framed as a separation guarantee rather than a measured speedup. Closing the gap requires expanding the limited template matcher into a benchmark-ready Phase-2b pass and re-running the canonical pipeline; this is a high-priority item in the Future Work agenda (Section 15.10).
+The remaining theory-vs-experiment gap is narrower: the Ω(1) constructions are measured for the implemented Phase-2b library on natural families in E26, but the engineered Theorem-7 family still shows a large Phase-2a/Phase-2b gap and the tight upper bound for Phase-2a alone remains open. The manuscript labels E1–E18 results as Phase-2a and E26 results as Phase-2b. Future work should expand parity-gadget and phase-polynomial coverage rather than describe the completed E26 benchmark as pending.
 
 ## 3. Structural Ceiling Is Listing-Conditional, Not Intrinsic
 
-Theorem 1(b) proves that under line-by-line listing (LBL) the Phase-1 opportunity set S_1(C) is empty for the LBL ceiling family. This is a *listing-conditional* statement: it characterizes the circuit under a specific syntactic input convention, not an intrinsic property of the unitary that the circuit implements. The same physical circuit, re-listed under wire-consecutive listing (WCL), admits a non-trivial Phase-1 reduction: the E1 smoke study observes ~18% Phase-1 reduction on the LBL-ceiling family when the listing is changed from LBL to WCL.
+Theorem 1(b) proves that under line-by-line listing (LBL) the Phase-1 opportunity set S_1(C) is empty for the LBL ceiling family. This is a *listing-conditional* statement: it characterizes the circuit under a specific syntactic input convention, not an intrinsic property of the unitary that the circuit implements. The same physical circuit, re-listed under wire-consecutive listing (WCL), admits a non-trivial Phase-1 reduction: E19 measures 7.83% on the random Universal family, while E19-ext supplies the first cross-family extension.
 
 The distinction matters for two reasons. First, the "structural ceiling" reported under LBL should be read as a lower bound on what peephole optimization can achieve under alternative listings; it is not a fundamental limit on the circuit. Second, production DAG-based compilers (Qiskit, Cirq, t|ket>) operate on graph representations that expose non-adjacent gate pairs implicitly, and are therefore not bound by the LBL ceiling. The Qiskit baseline reductions reported in Section 6.5 confirm this: Qiskit exceeds the LBL Phase-1 ceiling on multiple families, consistent with its DAG-native listing convention.
 
-The manuscript flags this listing-conditional nature explicitly in Section 3.4 and in delimitation D8 of `v6_scope_limitations_risks.md`. A complete theory that characterizes the ceiling as a function of the listing model — ideally, an upper bound over the space of all valid listings — is left as future work (Section 15.6). The E19 experiment (Section 15.7) is designed to measure the LBL→WCL gap on the full ensemble; until E19 is run, the ~18% figure is reported as a single-family smoke observation, not a general result.
+The manuscript flags this listing-conditional nature explicitly in Section 3.4 and in delimitation D8. A complete theory that characterizes the ceiling as a function of the listing model — ideally, an upper bound over the space of all valid listings — is left as future work (Section 15.6). E19 and E19-ext establish the measured single-family and first cross-family evidence; WCL × Phase-2b interactions and larger listing spaces remain open.
 
 ## 4. Theorem 8 Applies to Haar-Random Unitaries, Not Experimental Circuits
 
@@ -447,9 +447,9 @@ Running E20 in full mode requires a fully configured Cirq and pytket environment
 
 E19 was designed to validate Phase-1 and Phase-2 optimization under wire-consecutive listing (WCL) on the full circuit ensemble. A full canonical run has been completed for the random Universal family: 5,000 circuits at n=5, depths 1–50, 100 trials per depth (seed=42), each evaluated under both LBL and WCL listing models (10,000 total rows). The results confirm the listing-model dependency: WCL mean reduction is 7.83% (std=3.95%, max=33.33%) vs LBL's 0.0000%, with perfect unitary fidelity (1.0) across all trials.
 
-**What remains**: The current E19 run covers only the random Universal family. Three extensions remain as future work: (i) cross-family WCL validation on all 15 circuit families from E14; (ii) measurement of Phase-2 commutation opportunities exposed by WCL; (iii) larger qubit counts (n=3–20). The 7.83% figure is therefore confirmed for random Universal circuits but should not be generalized to all circuit families without the cross-family extension.
+**What remains**: E19-ext provides the first cross-family check: 7 of 16 families gain from WCL, with CNOT already saturated at 100%. E31 supplies a non-canonical smoke probe of WCL/SHUFFLE crossed with Phase-2b; the full factorial interaction, larger qubit counts, and multi-seed coverage remain open. The 7.83% figure remains specific to random Universal circuits and should not be generalized to all families.
 
-The manuscript's claims about WCL are scoped accordingly: the 7.83% figure is a confirmed result for random Universal circuits; the WCL-related theorems (Theorem 1(a), Theorem 9) are supported by this empirical confirmation. The cross-family extension is a high-priority item in the Future Work schedule (Section 15.7).
+The manuscript's claims about WCL are scoped accordingly: the 7.83% figure is a confirmed result for random Universal circuits; the WCL-related theorems (Theorem 1(a), Theorem 9) are supported by this empirical confirmation. The remaining full-factorial listing/Phase-2b interaction is tracked in the Future Work schedule (Section 15.7); E31 is supporting pilot evidence only.
 
 ## 8. E18 (Clifford+T) Survivorship Bias
 
@@ -495,7 +495,7 @@ The manuscript flags this distinction in the Section 6.5 table caption: the 5 in
 
 ## 13. Figures Are Raster (PNG 300DPI), Not Vector
 
-> **Update (2026-07-21, wave 2) — SUPERSEDED.** All 17 figures have been regenerated as vector PDFs (TrueType font embedding, Okabe–Ito colorblind-safe palette, bootstrap-CI error bars) by `analysis/generate_figures.py`; see the Figure regeneration section of `docs/reproducibility.md`. All figures are now cited in the active manuscript body. The text below is retained for provenance.
+> **Update (2026-07-21, wave 2) — SUPERSEDED.** The figure set was regenerated as vector PDFs (TrueType font embedding, Okabe–Ito colorblind-safe palette, bootstrap-CI error bars) by `analysis/generate_figures.py`; the active release now contains 18 numbered figures plus the `fig08b` companion. See the Figure regeneration section of `docs/reproducibility.md`. All figures are now cited in the active manuscript body. The text below is retained for provenance.
 
 All figures in the v6 manuscript draft are PNG files rendered at 300 DPI. This is sufficient for internal review and for the HTML preview but is below the production standard for a top-venue submission: most venues (including *Quantum*, PRX Quantum, Nature Quantum) require vector formats (PDF or SVG) for line art, plots, and diagrams to ensure crisp rendering at arbitrary zoom levels and accessible text scaling.
 
@@ -523,9 +523,9 @@ The fourteen limitations above define a concrete forward agenda. Each item below
 
 Re-engineer the predictive model with leakage-free structural features and a pre-registered held-out evaluation protocol. Candidate feature families: Pauli-spectrum descriptors, entanglement entropy proxies, learned circuit embeddings (small graph neural networks over the commutation graph). Candidate regressors: gradient-boosted trees, MLPs with dropout. Success criterion: held-out MAE ≤ 0.10 and Pearson ≥ 0.60. On success, the predictive claim is upgraded from exploratory to confirmatory.
 
-### 15.2 Phase-2b Template Matching Expansion (addresses §2)
+### 15.2 Phase-2b Template Matching Expansion (residual scope; addresses §2)
 
-Expand the limited `Phase2bTemplateMatcher` in `src/optimisation/phase2/template_matcher.py` from the core H-CX-H control-template mechanism into a benchmark-ready template-matching pass, ideally with a broader template library comparable to Qiskit's template mechanisms. Re-run the canonical pipeline on E1–E18. Compare measured Phase-2b reductions against the Theorem 7 / Theorem 9 Ω(1) separation predictions. On success, upgrade the Phase-2b separation theorems from "structural existence plus unit-tested core mechanism" to "empirically demonstrated at benchmark scale."
+Expand the current `Phase2bTemplateMatcher` in `src/optimisation/phase2/template_matcher.py` beyond its inverse-closure and standard conjugation templates, especially for parity-gadget and phase-polynomial structure. E26 already provides full-scale Phase-2b evidence on its recorded grid; the remaining target is broader template coverage and head-to-head validation on the engineered Theorem-7 family without silently replacing canonical data.
 
 ### 15.3 Phase-2a Tight Bound (addresses §2)
 
@@ -543,21 +543,21 @@ Formalize the held-out evaluation protocol as a pre-registered study: feature se
 
 Extend Theorem 1 to characterize the ceiling over the space of listings, not just for LBL and WCL. A natural target is a theorem of the form "for any listing in class L, S_1(C) ⊆ S_1^L(C)," where S_1^L is the listing-class-specific opportunity set.
 
-### 15.7 E19: WCL Cross-Family Extension (addresses §3, §7)
+### 15.7 E19: WCL Cross-Family and Interaction Extension (residual scope; addresses §3, §7)
 
-The E19 full canonical run for the random Universal family (n=5, 10,000 rows) is complete and confirms the listing-model dependency (WCL 7.83% vs LBL 0.0000%). The remaining extension is cross-family: re-list all 15 circuit families from E14 under WCL, re-run all six optimizers, and measure: (i) the LBL→WCL Phase-1 gap across all 15 families; (ii) new Phase-2 commutation opportunities exposed by WCL; (iii) whether the 7.83% figure generalizes or varies by family. On success, upgrade the WCL claim from single-family confirmed to cross-family confirmed.
+The E19 full canonical run for the random Universal family (n=5, 10,000 rows) and E19-ext cross-family check are complete. The remaining extension is the full factorial interaction: vary listing, optimizer phase, family, qubit count, depth, and seed to measure whether WCL or other valid listings expose additional Phase-2b opportunities. The non-canonical E31 smoke pilot provides design evidence only; it does not upgrade the WCL or Phase-2b claims.
 
-### 15.8 E20: Multi-Compiler Full Comparison (addresses §6)
+### 15.8 E20: Multi-Compiler Full Comparison (closed; residual correction)
 
-Complete the E20 experiment. Configure the Cirq and pytket environments, run the three compilers (Qiskit, Cirq, t|ket>) on the extended 15-family suite with target qubit counts [4, 6, 8] and 10 trials per cell, and populate `data/v6/e20/multi_compiler_full.csv`. On success, upgrade the multi-compiler comparison from Qiskit-only to three-compiler confirmed.
+E20 full mode is complete and frozen at `data/v6/e20/multi_compiler_full.csv` (1,070 rows); batch 4 reproduced it bit-for-bit. The canonical run intentionally retains 70 Cirq QASM-import errors from the old pipeline. A corrected implementation now shares the SOTA `sx`/`sxdg` definitions and `gateset=` call; corrected reruns must be written to a non-canonical output directory and compared against the frozen evidence before any release decision.
 
 ### 15.9 Finite-Depth Incompressibility (addresses §4)
 
 Investigate finite-depth incompressibility results that bridge Theorem 8 (Haar-random, depth ~4^n) to the experimental depth regime (poly(n)). Candidate approaches: concentration-of-measure arguments on the random circuit ensemble, lower bounds via unitary t-designs at finite depth, or direct circuit-counting arguments.
 
-### 15.10 Phase-2a vs. Phase-2b Empirical Separation (addresses §2)
+### 15.10 Phase-2a vs. Phase-2b Empirical Separation (residual scope; addresses §2)
 
-Once the limited Phase-2b implementation is expanded into a benchmark-ready pass (Section 15.2), run the artificial (Theorem 7) and Bernstein–Vazirani (Theorem 9) circuit families head-to-head under Phase-2a and Phase-2b. Confirm the Ω(1) separation empirically and measure the constant.
+E26 establishes the Phase-2a/Phase-2b separation on several natural families, including BV, IQP, RandomClifford, and Structured. The remaining test is the engineered Theorem-7 family and broader parity/phase-gadget coverage, with explicit distinction between the implemented template library and the complete rewrite universe.
 
 ### 15.11 Theorem 6 Empirical Validation (addresses §5)
 

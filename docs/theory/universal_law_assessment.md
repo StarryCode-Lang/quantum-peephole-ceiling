@@ -207,7 +207,7 @@ fetches, and web search (all on 2026-07-20). Criteria: (a) the work exists;
 | [67] Riu et al. | Real: Quantum **9**, **1758** (2025); arXiv:2312.11597 is correct. The active bibliography is now corrected; the older 1634 entry is retained only in archived wave history. |
 | [69] MQT Bench | Real first author is **N. Quetschlich** (with L. Burgholzer, R. Wille); arXiv:2204.13719 as cited is correct. Manuscript cites "C. Nitsch" — wrong author. |
 | [20] Amy/Glaudell/Ross | Author–topic real (phase-polynomial synthesis series), but the "npj Quantum Information 4:43 (2018)" venue/title combination is unverified; the verified series member is Quantum 4, 252 (2020). Recheck against the intended paper. |
-| [61] Iten et al. | Real (ACM TQC 3(1), 2022; arXiv:1909.09119 correct). Normative page range seen in the wild is 1–41; manuscript cites 1–44. Low priority. |
+| [61] Iten et al. | Real (ACM TQC 3(1), 2022; arXiv:1909.05270). Normative page range seen in the wild is 1–41; manuscript cites 1–44. Low priority. |
 
 **Verified true (30+ spot-checked):** [1], [2], [4], [8], [9], [13], [25],
 [27], [28], [29], [30], [33], [35], [38], [40], [41], [42], [43], [45], [48],

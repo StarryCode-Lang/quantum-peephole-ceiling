@@ -238,7 +238,7 @@ These are active research questions in quantum complexity theory and are beyond 
 
 ## 4. References
 
-- [Janzing, Wocjan, Beth 2003] D. Janzing, P. Wocjan, and T. Beth. "Non-identity-check is QMA-complete." Int. J. Quantum Information 1(4), 507-518, 2003. arXiv:quant-ph/0306054.
+- [Janzing, Wocjan, Beth 2003] D. Janzing, P. Wocjan, and T. Beth. "Non-identity-check is QMA-complete." Int. J. Quantum Information 1(4), 507-518, 2003. arXiv:quant-ph/0305050.
 - [Kitaev 1997] A. Kitaev. "Quantum computations: algorithms and error correction." Russian Math. Surveys 52(6), 1191-1249, 1997.
 - [Kempe, Kitaev, Regev 2006] J. Kempe, A. Kitaev, and O. Regev. "The complexity of the local Hamiltonian problem." SIAM J. Computing 35(5), 1085-1097, 2006.
 - [Aharonov, Ben-Or 2007] D. Aharonov and M. Ben-Or. "Fault-tolerant quantum computation with constant error rate." SIAM J. Computing 38(4), 1207-1236, 2008.

@@ -1,0 +1,96 @@
+{
+  "basis_gate_sets": {
+    "cirq": "CZTargetGateset (PhasedXZ + CZ)",
+    "qiskit": "default transpiler basis (cx, u, h, s, t where selected by transpiler)",
+    "tket": "pytket FullPeepholeOptimise default basis"
+  },
+  "canonical_data_file": "multi_compiler_full.csv",
+  "circuit_families": [
+    "Adder",
+    "CNOT",
+    "GHZ",
+    "Grover",
+    "HaarRandom",
+    "HardwareEfficient",
+    "IQP",
+    "Oracle",
+    "QAOA",
+    "QFT",
+    "QuantumWalk",
+    "RandomClifford",
+    "SurfaceCode",
+    "UCCSD_inspired",
+    "VQE"
+  ],
+  "compiler_availability_report": {
+    "cirq": "available",
+    "qiskit": "available",
+    "tket": "available"
+  },
+  "compiler_versions": {
+    "cirq": "1.6.1",
+    "qiskit": "2.4.1",
+    "tket": "2.18.0"
+  },
+  "compilers_available": {
+    "cirq": true,
+    "qiskit": true,
+    "tket": true
+  },
+  "compilers_run": [
+    "qiskit",
+    "cirq",
+    "tket"
+  ],
+  "custom_optimizers": [
+    "greedy_phase1",
+    "commutation_phase2",
+    "hybrid_phase1_2"
+  ],
+  "description": "Full multi-compiler comparison (Qiskit opt_level=3, Cirq optimize_for_target_gateset+eject_z+merge_1q, t|ket> FullPeepholeOptimise, custom Phase-1/Phase-2 optimizers) across 15 circuit families",
+  "experiment_id": "MC-E20",
+  "git_commit": "bd6f79524f9a4c5ee4e319e31ea0f9544a6138ac",
+  "max_qubits_fidelity": 10,
+  "mode": "full",
+  "n_circuits_per_trial": 43,
+  "n_rows": 1070,
+  "n_total_circuit_runs": 430,
+  "n_trials": 10,
+  "package_versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "qiskit": "2.4.1",
+    "scipy": "1.13.1"
+  },
+  "per_circuit_timeout_seconds": 60.0,
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+  "run_id": "e20_full_20260807_074417",
+  "schema_version": "2.1.0",
+  "seed": 42,
+  "skip_cirq": false,
+  "skip_custom": true,
+  "skip_tket": false,
+  "source_hashes": {
+    "analysis/structural_ceiling.py": "c36dbb5e951cf5fd7ea2e9655ada682d1bf05b9d2934e394ebba65bad57e5102",
+    "experiments/e20_multi_compiler_full/run.py": "359d4060c67ca5d924d143122aab556b53579c5255965144a009fa0a7759908c",
+    "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
+    "src/circuits/real_benchmarks.py": "5f137e8efaf872cc2205f2e2cac5e4420c014d7fa3ac0cf440e04dad7e4dd82a",
+    "src/optimisation/_gate_predicates.py": "c7c0c6a7c985e5e4f19b2699323679f94b3f5040376b9a3224d40364b6bf83f2",
+    "src/optimisation/base.py": "5e5926e2766a28560a113efe048b94f152180fd1f60d8df7c5be1a7ba8161da2",
+    "src/optimisation/ceiling_aware.py": "f0f8268617d0cd04459fcfaa767625eade353abe695286fd6ec78961af75cd4d",
+    "src/optimisation/phase1/genetic_algorithm.py": "8d6f49439efa1af2b7eff090513870448a6bae0c05e908c5288cef6914498d88",
+    "src/optimisation/phase1/greedy.py": "b98c2139ca49ca8829024acff8bc18c46d7cbbd176163b90fa97c2ef98102fb1",
+    "src/optimisation/phase1/random_local_search.py": "6a80965d806a5d6f7432612dbb2d47b4e73f864e034d33c2ad339c9b107a3bba",
+    "src/optimisation/phase1/simulated_annealing.py": "d0d41781d939165d515bd875fbe496ec1f09ed233faf311a5eeac9bc60faa18c",
+    "src/optimisation/phase1/wire_traversal.py": "c78ce84f0ce8f5e5e1991d6322fed32817184959edb34569bdaa164126b457eb",
+    "src/optimisation/phase2/commutation_rewriter.py": "a53769804a1e7e5d6a1e02146e12dbe79774a011fca4fc0990755ced3475a83d",
+    "src/optimisation/phase2/template_matcher.py": "ca20a31e266fa0640a11b157f948f9826fa7baac02f230fe4983207d6b1997c8"
+  },
+  "target_qubits": [
+    4,
+    6,
+    8
+  ],
+  "version": "1.1.0"
+}

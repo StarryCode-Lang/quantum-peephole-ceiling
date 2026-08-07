@@ -1219,14 +1219,14 @@ The Phase-2b procedure above uses four operations, all within the Phase-2b toolk
 
 1. **Disjoint-qubit commutation** (to bring $H$ gates next to their CNOTs in B-1) -- standard.
 2. **CNOT--CNOT commutation on a shared target** (Lemma A1, to reorder Layer 2) -- standard, proven above.
-3. **$H$-CNOT-$H$ template identity** (Lemma A2, the core of B-2) -- a Phase-2b template-matching rule, equivalent to the well-known CNOT direction-reversal identity $(H \otimes H)\, \text{CNOT}\, (H \otimes H) = \text{CNOT}_{\text{reversed}}$. This rule is **not** implemented in the current codebase's `commutation_rewriter.py` (which implements only Phase-2a).
+3. **$H$-CNOT-$H$ template identity** (Lemma A2, the core of B-2) -- a Phase-2b template-matching rule, equivalent to the well-known CNOT direction-reversal identity $(H \otimes H)\, \text{CNOT}\, (H \otimes H) = \text{CNOT}_{\text{reversed}}$. This rule is implemented in the Phase-2b `template_matcher.py`; `commutation_rewriter.py` remains Phase-2a only.
 4. **Adjacent $H$-$H$ cancellation** ($H \cdot H = I$, used in B-3) -- standard Phase-1 REMOVAL.
 
 ### Phase-2a vs. Phase-2b
 
 > **Critical clarification for matching theory to experiments.**
 
-The experimental codebase implements **Phase-2a only** (`commutation_rewriter.py`): disjoint-qubit commutation + a small set of algebraic commutation rules (Z-family on CNOT control, same-axis rotations). It does **not** implement Phase-2b template matching.
+The experimental codebase separates **Phase-2a** (`commutation_rewriter.py`: disjoint-qubit commutation plus a small set of algebraic commutation rules) from **Phase-2b** (`template_matcher.py`: inverse closure, phase-polynomial merging, and bounded Clifford-conjugation templates). E26 evaluates the implemented Phase-2b library at full scale; it is not an exhaustive template universe.
 
 Theorem 9's bound $n/(4.5n+4) = \Omega(1)$ relies on the $H$-CNOT-$H$ template (Phase-2b). **Under pure Phase-2a, the achievable reduction for $BV_n$ is an open question.** Concretely:
 
@@ -1256,7 +1256,7 @@ The Phase-2b result is also listing-independent in the sense that the rewrite pr
 | Phase-2 (a+b) mechanism | CNOT--CNOT cancellation via $S$-commutation | $H$-CNOT-$H$ template (Phase-2b) + ancilla $H$-cancellation |
 | Practical relevance | Low (designed for proof) | High (BV is a standard oracle algorithm) |
 | Asymptotic gap $\Gamma^{\text{(2b)}}$ | $\Omega(1)$ | $\Omega(1)$ (specifically $\to 1/4.5$) |
-| Implemented in codebase? | Phase-2a only | Phase-2b **not** implemented |
+| Implemented in codebase? | Phase-2a only | Phase-2b v2 implemented and evaluated in E26 |
 
 Theorem 9 strengthens the case for Conjecture C2 by demonstrating Phase-2b advantage on a circuit family that arises naturally in quantum complexity theory, rather than on an artificial construction. Because the bound relies on a stated template model, it should be read as a **model-specific theoretical result**, not as a direct explanation of the experimental Phase-2a reductions.
 

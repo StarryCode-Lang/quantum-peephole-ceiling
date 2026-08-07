@@ -61,6 +61,26 @@ TARGET_QUBITS = {4, 6, 8}
 DEFAULT_N_TRIALS = 10
 SMOKE_N_TRIALS = 1
 
+# Cirq 1.6.1 may emit these gates in its OpenQASM 2 export, while Qiskit's
+# built-in qelib1 definitions do not declare them for re-import.
+QASM2_SX_DEFS = (
+    "gate sx a { sdg a; h a; sdg a; }\n"
+    "gate sxdg a { s a; h a; s a; }\n"
+)
+
+
+def _inject_qasm2_sx_definitions(qasm: str) -> str:
+    """Add missing ``sx``/``sxdg`` OpenQASM 2 definitions exactly once."""
+    if "sx" not in qasm and "sxdg" not in qasm:
+        return qasm
+    if "gate sx " in qasm and "gate sxdg " in qasm:
+        return qasm
+
+    marker = 'include "qelib1.inc";'
+    if marker in qasm:
+        return qasm.replace(marker, marker + "\n" + QASM2_SX_DEFS, 1)
+    return qasm.replace("OPENQASM 2.0;", "OPENQASM 2.0;\n" + QASM2_SX_DEFS, 1)
+
 
 def _safe_ratio(original: int, optimized: int) -> float:
     """Safe reduction ratio: 1 - optimized/original, or 0.0 if original==0."""
@@ -198,7 +218,7 @@ def _cirq_optimize(circuit):
     # Phase 2: re-synthesize two-qubit gates for CZ target
     try:
         cirq_circ = optimize_for_target_gateset(
-            cirq_circ, target_gateset=cirq.CZTargetGateset()
+            cirq_circ, gateset=cirq.CZTargetGateset()
         )
     except Exception:
         # Fallback: some circuits may not be compatible with CZTargetGateset
@@ -214,7 +234,7 @@ def _cirq_optimize(circuit):
     cirq_circ = drop_empty_moments(cirq_circ)
 
     # Cirq -> OpenQASM2 -> Qiskit
-    qasm_out = cirq.qasm(cirq_circ)
+    qasm_out = _inject_qasm2_sx_definitions(cirq.qasm(cirq_circ))
     return qasm2_loads(qasm_out)
 
 
@@ -360,13 +380,16 @@ def run(
     skip_tket: bool = False,
     skip_custom: bool = False,
     per_circuit_timeout: float = 120.0,
+    output_dir: Path | str | None = None,
 ) -> pd.DataFrame:
     """Run E20 multi-compiler full comparison and return the result table."""
     if n_trials is None:
         n_trials = SMOKE_N_TRIALS if mode == "smoke" else DEFAULT_N_TRIALS
     run_id = f"e20_{mode}_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
     script_path = Path(__file__).resolve()
-    output_dir = PROJECT_ROOT / "data" / "v6" / "e20"
+    output_dir = Path(output_dir) if output_dir is not None else PROJECT_ROOT / "data" / "v6" / "e20"
+    if not output_dir.is_absolute():
+        output_dir = PROJECT_ROOT / output_dir
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # -- Check compiler availability and versions --
@@ -807,6 +830,10 @@ def main() -> None:
         "--timeout", type=float, default=120.0,
         help="Per-circuit compiler timeout in seconds (default: 120)"
     )
+    parser.add_argument(
+        "--output-dir", type=Path, default=None,
+        help="Output directory; defaults to canonical data/v6/e20 (use a new path for reruns)",
+    )
     args = parser.parse_args()
 
     run(
@@ -818,6 +845,7 @@ def main() -> None:
         skip_tket=args.skip_tket,
         skip_custom=args.skip_custom,
         per_circuit_timeout=args.timeout,
+        output_dir=args.output_dir,
     )
 
 

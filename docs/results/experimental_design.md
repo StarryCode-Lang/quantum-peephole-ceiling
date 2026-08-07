@@ -434,11 +434,11 @@ All optimizations are verified for **exact unitary equivalence**:
 
 **Impact.** Reported differences between L1/L2/L3 in topology-free mode may understate the true differentiation between optimization levels. Results should be interpreted as "optimization level performance on abstract (fully-connected) hardware." The E17 connectivity experiment partially addresses this by imposing explicit topologies.
 
-### 12.3 E15: Cirq 17.2% Failure Rate Due to sx Gate Incompatibility
+### 12.3 E20: Canonical Cirq QASM Round-Trip Failure
 
-**Limitation.** In Experiment E15 (Multi-Compiler Baseline), the Cirq optimizer exhibited a **17.2% circuit failure rate** caused by incompatibility with Qiskit's `sx` (sqrt-X) gate in the transpiled circuit representation. Cirq's `MergeSingleQubitGates` pass does not natively handle `sx` gates, leading to decomposition failures or silent errors.
+**Limitation.** In canonical Experiment E20 (Multi-Compiler Full), the Cirq arm has **70 error rows out of 390 attempted rows (17.9%)**. The failure occurs on the Cirq-to-Qiskit OpenQASM 2 round trip because Cirq emits `sx`/`sxdg` definitions that the Qiskit loader does not define by default. The corrected SOTA pipeline injects equivalent definitions and uses Cirq 1.6.1's `gateset=` keyword; the frozen E20 CSV remains as-executed evidence.
 
-**Impact.** Cirq optimization results are biased toward circuits that do not contain `sx` gates after Qiskit transpilation. The 17.2% failure rate means the Cirq comparison is not fully representative. Results for Cirq should be interpreted as "Cirq performance on Qiskit-compatible gate subsets" rather than a head-to-head comparison on equal footing.
+**Impact.** Canonical E20 Cirq summaries must exclude error rows and report the unequal successful-row coverage. Corrected reruns belong in a separate non-canonical evidence layer until their input/output hashes and release disposition are reviewed.
 
 ### 12.4 E15: t|ket> -183% Inflation on QFT_3
 

@@ -22,6 +22,12 @@
 - **Smoke** — quick validation runs; never used as manuscript evidence. A smoke
   dataset is marked `superseded` in the manifest once a full run exists
   (e.g. v6 E29 smoke → v7 E29 full).
+- **Rerun evidence** — `data/v9/` and `data/v11/e20_corrected/`; current-code
+  reconciliation outputs are non-canonical and must not replace frozen release
+  data without an explicit version decision.
+- **Supporting pilot** — `data/v11/e31_listing_phase2b/` contains 396 E31
+  rows for a non-canonical WCL/SHUFFLE x Phase-2b smoke pilot; it is not in the
+  release manifest or canonical totals.
 - **Legacy** — earlier versions kept for provenance only (see *Legacy Data*).
 
 ## Metadata minimal schema
@@ -91,6 +97,8 @@ Fields that were not recorded at generation time were backfilled during the
 | `v7/e24/derived/` | `e24_theorem7_summary.csv` | `experiments/e24_theorem7/run.py` |
 | `v7/e29/derived/` | `e29_multi_seed_statistics.csv` | `experiments/multi_seed_e04.py` |
 | `v10/e30/derived/` | `e30_thm1a_cell_summary.csv` (per-cell empirical mean vs corrected Theorem 1(a) prediction, z-scores) | `experiments/e30_thm1a_wcl/run.py` |
+| `v10/e30/derived/` | `e30_distribution_validation.csv`, `e30_distribution_validation.json` (aggregate Poisson goodness-of-fit diagnostic; not wire-independence evidence) | `analysis/e30_distribution_validation.py` |
+| `v6/ceiling_repair/` | `p7_monotone_lofo.csv`, `p7_monotone_summary.json` (E21/E27 monotone-bound diagnostic; not canonical evidence) | `analysis/monotone_ceiling_p7.py` |
 
 Note: the generator scripts write derived files next to the canonical CSV when
 re-run; the checked-in copies live under `derived/`. Content is identical as of
@@ -132,6 +140,12 @@ Version meanings:
   validation of the corrected Theorem 1(a)) and the E23 fixed-generator
   verification rerun (non-canonical supporting evidence; canonical E23 stays
   in v7).
+- **v11/e20_corrected** — current-code supporting rerun of MC-E20 after the
+  Cirq `gateset=` and `sx`/`sxdg` QASM fixes (non-canonical; not in the release
+  manifest; canonical v6 E20 remains frozen).
+- **v11/e31_listing_phase2b** — non-canonical E31 smoke pilot crossing listing
+  variants with Phase-2b; paired summaries are supporting diagnostics only and
+  do not update the canonical release totals.
 
 ## Known Issues
 

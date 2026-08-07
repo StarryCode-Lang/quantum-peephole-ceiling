@@ -12,6 +12,8 @@ bootstrap
     Bootstrap confidence intervals with convergence diagnostics.
 fidelity_distribution
     Full distributional summaries and outlier detection.
+zero_inflated
+    Zero-mass and conditional-nonzero summaries for degenerate reductions.
 """
 
 from .multiple_comparison import (
@@ -32,6 +34,7 @@ from .power_analysis import (
 )
 from .bootstrap import bootstrap_ci, bootstrap_convergence, bootstrap_distribution
 from .fidelity_distribution import fidelity_summary, fidelity_outliers, fidelity_by_circuit_family
+from .zero_inflated import summarize_zero_inflated, compare_zero_inflated
 
 __all__ = [
     "benjamini_hochberg",
@@ -55,4 +58,6 @@ __all__ = [
     "fidelity_summary",
     "fidelity_outliers",
     "fidelity_by_circuit_family",
+    "summarize_zero_inflated",
+    "compare_zero_inflated",
 ]

@@ -279,9 +279,18 @@ These findings directly motivate the Phase 3 extension of our framework, which w
 
 _Source: `theory_experiment_crossvalidation.md`_
 
-> **Document Status**: Comprehensive mapping of theoretical predictions to experimental observations.
+> **Historical snapshot notice (2026-08-07).** This v1.0 table was written before
+> the E30 correction wave and is retained for provenance. It is not the active
+> scorecard. Current evidence is governed by `docs/manuscript/manuscript.md`,
+> `docs/manuscript/claim_evidence_table.csv`, `data/DATA_CANONICAL.md`, and
+> `release/release_manifest.json`. E30 validates the corrected Theorem 1(a),
+> E23/E24 close previously open validation rows, and E26 is full-scale Phase-2b
+> evidence. Do not quote pre-E30 counts or statuses from this historical table
+> without reconciling them against those active sources.
+>
+> **Document Status**: Historical mapping of theoretical predictions to experimental observations; superseded for active release claims.
 > **Version**: 1.0
-> **Date**: 2026-06-13
+> **Date**: 2026-06-13 (historical snapshot; notice added 2026-08-07)
 > **Scope**: All theorems, lemmas, propositions, observations, and conjectures from `lemmas.md` and `conjectures.md` mapped against experiments E1-E18.
 > **Methodology**: For each result, we state the quantitative/qualitative prediction, identify the corresponding experiment(s), report the observed value, compare against the predicted value, and render an honest consistency verdict.
 
@@ -405,7 +414,7 @@ This matrix shows which experiments provide evidence for which theoretical resul
 | E14 (extended) | 2,130 | X | X | X | | | | X | X |
 | E16 (window) | 696 | | | X | | | | | X |
 
-**Not covered by any experiment**: Thm 1a (WCL model), Thm 6 (AG canonical form), Thm 7 (explicit construction), Thm 8a-b (Haar-random regime).
+**Not covered by this historical table**: E30's corrected WCL pair-count validation and E26's full-scale Phase-2b grid are outside this pre-E30 table. Thm 8a-b remain contextual asymptotic results rather than direct experimental validations.
 
 ---
 
@@ -413,9 +422,9 @@ This matrix shows which experiments provide evidence for which theoretical resul
 
 | Gap | Priority | Recommended Action |
 |-----|----------|-------------------|
-| **Thm 1a untested** (WCL model) | Medium | WCL circuit generator implemented (E19, 10,000 rows, data/v6/e19/) - confirms WCL exposes 7.83% reduction vs LBL 0%. Direct validation of the E[\|A_adj\|] = n(d-1)*p_cancel formula still pending (E19 measures aggregate reduction, not pair counts). |
+| **Thm 1a distribution validation** (WCL model) | Closed for mean | E30 (`data/v10/e30/`, 13,500 trials, 27 cells) directly validates the corrected expectation formula; a full distribution-level test remains an explicit future extension. |
 | **Thm 6 untested** (AG canonical form) | CLOSED | **Closed by E23** (data/v7/e23/, 160 rows, 2026-07-09). AG canonical form generator implemented (`src/circuits/ag_canonical.py`); R_1 = 0.0% confirmed across n=3-10. |
-| **Thm 7 construction not instantiated** | CLOSED | **Closed by E24** (data/v7/e24/, 75 rows, 2026-07-11). Direct instantiation of the Thm 7 construction; R_1 = 0.0%, Phase-2a mean reduction = 79.8% (>> 1/6 bound). Phase-2b = 2.5% (fixture-scale, separate concern). |
+| **Thm 7 construction not instantiated** | CLOSED | **Closed by E24** (data/v7/e24/, 75 rows, 2026-07-11). Direct instantiation gives R_1 = 0.0% and Phase-2a mean reduction = 79.8% (>> 1/6 bound). Phase-2b v1 remains a separate engineered-family template-coverage gap. |
 | **Thm 8 not in experimental regime** | Low | Not addressable with current n <= 20 experiments. The Haar-random threshold 4^n/n^2 is unreachable for meaningful n. Document the caveat clearly (already done in `framework.md`). |
 | **Prop 1 not directly tested** | Medium | Construct circuits with known conflicting adjacent inverse pairs and compare Greedy matching vs. Edmonds' blossom algorithm output. |
 
@@ -448,7 +457,7 @@ This matrix shows which experiments provide evidence for which theoretical resul
 
 ### Addendum: Phase-2a vs Phase-2b in C2 (added 2026-06-17)
 
-The C2 row in the primary table reports Phase-2a empirical results (from E10/E11/E14/E16). The theoretical proofs of C2 (Theorem 7 artificial, Theorem 9 BV natural) use **Phase-2b template matching**, which is *not implemented* in the experimental codebase. The Phase-2a achievable bound is an **open question**. The empirical Phase-2a reductions (~3% random, ~20% Oracle) are *complementary* to but not direct validations of the Phase-2b theoretical bounds. See `thm7_natural_bv.md` §"Phase-2a vs Phase-2b" and `conjectures.md` C2 status for details.
+The C2 row in the primary table reports Phase-2a empirical results (from E10/E11/E14/E16). The theoretical proofs of C2 (Theorem 7 artificial, Theorem 9 BV natural) use **Phase-2b template matching**; that matcher is implemented and evaluated at full scale in E26. The Phase-2a achievable bound remains an **open question**, and E24 shows that Phase-2b coverage is family-dependent. The empirical Phase-2a reductions are complementary to, not direct validations of, the Phase-2b bound.
 
 ---
 

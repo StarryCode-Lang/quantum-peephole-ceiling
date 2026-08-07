@@ -1,15 +1,30 @@
 # Experiment Execution Guide
 
-> **Status (2026-08-01):** This document preserves the original review-gap
+> **Status (2026-08-07):** This document preserves the original review-gap
 > protocol. Active dataset status and canonical paths are defined by
 > `data/DATA_CANONICAL.md`, `release/release_manifest.json`, and the individual
 > experiment scripts. Do not treat v6 output paths below as current release
 > paths.
 
-This document describes the four new experiments designed to close the
-critical review gaps identified in the Q-research quantum circuit
-optimization project. Each experiment targets a specific Fatal/Medium
-gap flagged in the manuscript's limitations section (Section 6.3).
+This document preserves four historical review-gap protocols and their
+reproduction commands. The gaps have since been closed or narrowed by the
+recorded E26, E19-extended, E22, E29, and E30 evidence. The current residual
+listing/Phase-2b pilot is E31 and is documented below as non-canonical support.
+
+## Current Evidence Map
+
+| Evidence | Current status | Active artifact |
+|---|---|---|
+| E26 Phase-2b full validation | Complete; canonical full-scale evidence | `data/v8/phase2b_full/` |
+| E19/E19-extended WCL validation | Complete for recorded Universal and cross-family matrices | `data/v6/e19/`, `data/v7/e19_extended/` |
+| E22 shuffle control | Complete for Phase-1/Phase-2a | `data/v7/e22/` |
+| E29 multi-seed replication | Complete; 800-row run | `data/v7/e29/` |
+| E30 corrected Theorem 1(a) validation | Complete; 27 cells / 13,500 trials | `data/v10/e30/` |
+| E31 listing x Phase-2b pilot | Non-canonical smoke support only; full factorial remains open | `data/v11/e31_listing_phase2b/` |
+
+Canonical status is governed by `data/DATA_CANONICAL.md` and
+`release/release_manifest.json`. E31 must not be added to the manifest without
+an explicit evidence-version decision.
 
 ## Environment
 
@@ -29,7 +44,7 @@ packages required).
 
 **Script**: `experiments/phase2b_full_validation.py`
 **Output**: `data/v8/phase2b_full/`
-**Review gap closed**: FATAL — Phase-2b (Thm 9) not validated at canonical scale
+**Review gap closed**: FATAL — E26 now validates the implemented Phase-2b library at full scale; the protocol below is retained for reproduction.
 
 ### Purpose
 
@@ -110,9 +125,9 @@ python experiments/phase2b_full_validation.py --mode full --families BV,QFT,GHZ
 
 ### Purpose
 
-E19 (WCL vs LBL) was run only on random Universal circuits (10,000 rows).
-If WCL changes the Phase-1 ceiling on structured families, the LBL-based
-trichotomy (100% / 14-16% / 0%) may be partially a listing artifact.
+E19 (WCL vs LBL) was run on random Universal circuits (10,000 rows), and
+E19-ext adds the first cross-family extension (960 rows). The full listing
+space and WCL × Phase-2b interaction remain open.
 This experiment:
 
 1. Runs WCL vs LBL comparison across ALL 15 circuit families at sizes
@@ -352,15 +367,40 @@ python experiments/multi_seed_e04.py --seeds 42,142,242 --n-trials 50
 
 ---
 
+## Supporting Pilot: E31 Listing x Phase-2b
+
+**Script**: `experiments/e31_listing_phase2b_interaction.py`
+**Analysis**: `analysis/e31_listing_phase2b_analysis.py`
+**Output**: `data/v11/e31_listing_phase2b/`
+**Status**: supporting non-canonical pilot; not a confirmatory interaction test
+
+E31 crosses the original listing, WCL, and one seeded random topological listing
+with Phase-1, Phase-2a, and Phase-2b on 44 smoke-scale source circuits. It
+checks listing fidelity, preserves source-circuit pairing, and writes
+descriptive cell summaries and paired contrasts. It does not estimate the full
+listing space or establish a WCL x Phase-2b interaction across families,
+qubit counts, depths, and seeds.
+
+```bash
+python experiments/e31_listing_phase2b_interaction.py
+python analysis/e31_listing_phase2b_analysis.py
+```
+
+See `docs/analysis/e31_listing_phase2b_p3.md` for the recorded result and
+limitations.
+
+---
+
 ## Summary: Review Gaps Closed
 
 | Experiment | Script | Gap | Severity | Status |
 |-----------|--------|-----|----------|--------|
 | E26 | phase2b_full_validation.py | Phase-2b not at canonical scale | FATAL | Closes gap |
-| E27 | wcl_full_family.py | WCL limited to random Universal | MEDIUM→FATAL | Closes gap |
-| E28 | gate_shuffle_ablation.py | No random gate shuffler control | MEDIUM→FATAL | Closes gap |
-| E29 | multi_seed_e04.py | E04 single seed | MEDIUM | Closes gap |
+| E19-ext | wcl_full_family.py | WCL limited to random Universal | MEDIUM→FATAL | First cross-family extension; broader listing factorial remains open |
+| E22 | gate_shuffle_ablation.py | No random gate shuffler control | MEDIUM→FATAL | Closes gap |
+| E29 | multi_seed_e04.py | E04 single seed | MEDIUM | Closes gap (800-row full run) |
 | E30 | e30_thm1a_wcl/run.py | Theorem 1(a) WCL density never directly tested | MAJOR | Closes gap (2026-08-06, corrected formula) |
+| E31 | e31_listing_phase2b_interaction.py | WCL x Phase-2b interaction | MAJOR | Smoke pilot only; full factorial remains open |
 
 ## Running All Experiments
 
@@ -377,6 +417,10 @@ python experiments/phase2b_full_validation.py --mode full
 python experiments/wcl_full_family.py --mode full
 python experiments/gate_shuffle_ablation.py --mode full
 python experiments/multi_seed_e04.py --mode full
+
+# Supporting non-canonical pilot
+python experiments/e31_listing_phase2b_interaction.py
+python analysis/e31_listing_phase2b_analysis.py
 ```
 
 ## Statistical Methods Summary

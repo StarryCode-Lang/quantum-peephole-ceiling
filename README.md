@@ -86,7 +86,8 @@ Q-research/
 
 - Canonical evidence: files listed in `release/release_manifest.json`.
 - Derived evidence: regenerated summaries under experiment `derived/` directories or `analysis/figures/`.
-- Rerun evidence: `data/v9/`; current-code reconciliation outputs are non-canonical and must not replace frozen release data without an explicit version decision.
+- Rerun evidence: `data/v9/` and `data/v11/e20_corrected/`; current-code reconciliation outputs are non-canonical and must not replace frozen release data without an explicit version decision.
+- Supporting pilot: `data/v11/e31_listing_phase2b/` contains 396 non-canonical E31 rows; it is not part of the release manifest or canonical totals.
 - Disposable local state: Python caches, timestamped backups, agent sessions, and logs. These are ignored and removed during final cleanup.
 
 ### Required Gates
@@ -164,7 +165,8 @@ Key limitations:
 - E04 single-seed results failed E29 ten-seed replication (RLS -176.5%, SA -22.1%, GA -8.3%); E04 conclusions must be qualified as seed/config fragile
 - t|ket> RandomClifford correctness caveat: 14 of 30 SOTA outputs fail exact-unitary fidelity verification (see Appendix E)
 - Listing-sensitivity coverage complete (wave 6): 15/15 families, 6,720 rows, 168 combos; production compilers 0/126 sensitive, prototype 15/42 (6 sensitive families incl. UCCSD_inspired); qwalk_8 has 20/20 variants and all 80 rows use the documented structural-preservation route instead of exact 9-qubit Operator checks
-- Rerun reconciliation (wave 6): 8 experiments rerun under current code (E12-E17, E19, E21) and reconciled; canonical retained for all; IQP commutation/hybrid reductions in canonical E14/E15/E16/E21 are systematically conservative under the strengthened commutation predicate (optimizer-capability enhancement, not a data error); E18/E20 not rerun (budget)
+- Rerun reconciliation (wave 6): 11 experiments rerun under current code (E12-E21 plus E25) and reconciled; canonical retained for all; IQP commutation/hybrid reductions in canonical E14/E15/E16/E21 are systematically conservative under the strengthened commutation predicate (optimizer-capability enhancement, not a data error); E20 is bit-for-bit identical, while E18 diverges because current BasisTranslator coverage differs from the frozen generator snapshot (see `docs/review/wave6/reconciliation_disposition.md`)
+- E31 listing/Phase-2b interaction: 396-row smoke pilot only; the full family x size/depth/seed factorial remains open and does not alter canonical conclusions.
 
 ---
 
