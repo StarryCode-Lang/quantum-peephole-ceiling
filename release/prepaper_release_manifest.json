@@ -1,10 +1,10 @@
 {
   "counts": {
     "evidence_files": 194,
-    "project_evidence_files": 34274,
-    "source_files": 218
+    "project_evidence_files": 34275,
+    "source_files": 219
   },
-  "created_utc": "2026-08-30T15:11:07.652133+00:00",
+  "created_utc": "2026-08-30T15:47:04.681012+00:00",
   "evidence": [
     {
       "bytes": 1385,
@@ -2764,7 +2764,7 @@
     }
   ],
   "git": {
-    "commit": "d463d7a04ae22ec3ee9df9c97166ce5f007b36c0",
+    "commit": "0a1951c90e366738a5b6c2c52899bd11366baa69",
     "dirty": true
   },
   "project_evidence": [
@@ -174979,7 +174979,7 @@
       "sha256": "60a888c73b6d4554793bf98e9b5110d68694c33aa7f178dea60c9e20ffb1fabd"
     },
     {
-      "bytes": 1077562,
+      "bytes": 1080277,
       "columns": [
         "metric_id",
         "section",
@@ -175004,22 +175004,22 @@
       ],
       "file": "docs/review/metric_audit_ledger_2026-08-24.csv",
       "rows": 592,
-      "sha256": "d78140572ae170cc61f8f7829c826063b22ac490c4008f084b0aa334bebc3f29"
+      "sha256": "578bbdfa5234c1569e05766cb6532c2e693a108fd541ba88bc4f109ae0dde2ce"
     },
     {
       "bytes": 887,
       "file": "docs/review/metric_audit_resolution_2026-08-24.md",
-      "sha256": "fce53ee3be296cb7a50981d3ec1f05c80ecb7d0385cdd31bf5ef1e5bbd6d101f"
+      "sha256": "9de219739d251820bf2b27e4930dc1a6d7c482d0787360f595618b1ce036a298"
     },
     {
       "bytes": 822,
       "file": "docs/review/metric_audit_summary_2026-08-24.json",
-      "sha256": "2413a77c136f6d57bfb2a5f438ad7811656657ee89a572329d24c57a29220a98"
+      "sha256": "9ed0d4753cc15a0362e55809e4facb39f761762e85648eaf7f0d23cea086196b"
     },
     {
-      "bytes": 1496003,
+      "bytes": 1499134,
       "file": "docs/review/metric_evidence_registry_2026-08-26.json",
-      "sha256": "a38384b13a43e1c16bdfbe420b2aa4fb795c5b0d951c46aaa5a3ac607f5c0df4"
+      "sha256": "c1b2c2878402f97c7fb79407894b6dea3cd315cb706745d64dc41d4dda6b2091"
     },
     {
       "bytes": 301749,
@@ -175090,6 +175090,11 @@
       "bytes": 86616296,
       "file": "release/prepaper_restore_capsule.zip",
       "sha256": "597f1995f2c2c4e84a70e4e14af57f088744a07c88327bd063443d571dbd287b"
+    },
+    {
+      "bytes": 4588,
+      "file": "release/prepaper_retrospective_binding_audit.json",
+      "sha256": "11a8dff38614cdd3c29376477e307e4ca675d3e0bb6b43e0459b4e6273bea2fe"
     },
     {
       "bytes": 21413,
@@ -175751,6 +175756,11 @@
       "sha256": "c66dd80ab273c183850fe76da0aa0f350cc1e23f267f8bc22570b7c02039ad4e"
     },
     {
+      "bytes": 10610,
+      "file": "analysis/prepaper_retrospective_binding_audit.py",
+      "sha256": "06734dcff68d1274ff239777fdc8df5be1c5bb0cf8724983e0417ce644eb04e1"
+    },
+    {
       "bytes": 171,
       "file": "src/integrations/__init__.py",
       "sha256": "7dfb9827ef77722da2ade41faa58135087e88958d9f53ba5726e0bf866ffcc48"
@@ -175761,9 +175771,9 @@
       "sha256": "75deed9c3ea0f0dce711f23304315254e14ad1b5107d165f9836be1df95fed46"
     },
     {
-      "bytes": 39621,
+      "bytes": 39734,
       "file": "scripts/generate_prepaper_release_manifest.py",
-      "sha256": "bbae7d1b43697d73dc3fc6a4cf31a982e26eca32eef65d8a4c25c468e7045601"
+      "sha256": "d2748b8fc9ecb42197b32991761075e9cc389dff2875503d5f21dbe1c93c3cf4"
     },
     {
       "bytes": 16413,
@@ -175846,9 +175856,9 @@
       "sha256": "4c7ea48f6ccb8af6bcbb09e04ec5677652cc1e2ecdea0b960cabdd1c5d795eeb"
     },
     {
-      "bytes": 56503,
+      "bytes": 58862,
       "file": "scripts/merge_metric_registry_fragments.py",
-      "sha256": "5c246c2d54882ad156049c4dfd84d03255611e813a10c5faa71a2dc5deed1103"
+      "sha256": "d5b2208dc36036a69a3641896dcd6de606a0461ec163ad07d06119bbde102571"
     },
     {
       "bytes": 16256,

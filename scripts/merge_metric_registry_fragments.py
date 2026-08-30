@@ -457,6 +457,30 @@ DIRECT_DISPOSITION_OVERLAYS = {
         "PASS",
         "The frozen layered capsule (34,685 pinned payload files plus its inner manifest) was restored into a fresh temporary directory, every member was byte/hash re-validated against the inner manifest closure, and the restored release verifier passed under isolated Python mode, including the full 592-row metric ledger re-verification; the receipt is stored outside the ZIP and pins the finished archive hash, avoiding any self-hash cycle. Claim boundary: this proves byte-complete restoration and executable verification of one frozen local release capsule on the current Windows/Python dependency stack, not off-site durability, media longevity, cross-OS disaster recovery, or future dependency availability.",
     ),
+    "13.14": (
+        "release/prepaper_retrospective_binding_audit.json",
+        "PARTIAL: the frozen 7-environment, 15-family, 105-row panel shows all version pairs structurally identical and numerically exact-equivalent (Qiskit 2.3.1/2.4.1, Cirq 1.6.0/1.6.1, pytket 2.17.0/2.18.0), with an independent 105/105 QASM semantic replay, but this is not a full benchmark rerun, not cross-platform, and external tool versions are not varied",
+        "PARTIAL",
+        "Cross-compiler-version evidence exists and is independently replayed, but it is a bounded 15-family, 4-5-qubit, single-platform panel; it does not establish broad cross-version generalization.",
+    ),
+    "16.23": (
+        "release/prepaper_retrospective_binding_audit.json",
+        "PARTIAL: mechanism conclusions are version-stable across the exact tested compiler version pairs on the frozen 15-family panel, but the evidence covers only those versions on one Windows host; custom-current has a single version and future or external versions remain untested",
+        "PARTIAL",
+        "Mechanism conclusions are stable across the exact tested tool versions, but only those versions on one host are covered; future or external version updates remain untested.",
+    ),
+    "3.12": (
+        "release/prepaper_retrospective_binding_audit.json",
+        "PASS: the sealed E31 full factorial is itself a direct listing/order sensitivity experiment; listing_model (LBL/WCL/RANDOM_TOPOLOGICAL) is a first-class factor in all 28,152 rows, with sealed coefficient and post-hoc marginal-contrast tables plus an exhaustive listing fragility audit",
+        "PASS",
+        "A direct listing/order sensitivity experiment exists: the sealed E31 full factorial varies listing_model as a first-class factor across all 28,152 rows, with sealed coefficient, marginal-contrast, and listing-fragility analyses.",
+    ),
+    "16.16": (
+        "release/prepaper_retrospective_binding_audit.json",
+        "PARTIAL: bounded fake-backend routing-overhead evidence shows mapped native two-qubit reductions for two optimizer variants in paired cells, but no real-QPU hardware-aware objective, duration, or calibration is measured",
+        "PARTIAL",
+        "Bounded fake-backend routing evidence partially answers hardware-aware extension, but no real-QPU hardware-aware objective is measured.",
+    ),
     "13.19": (
         "data/v10/prepaper/heldout_v2/analysis/generalization_ood/generalization_ood_audit.json",
         "PASS: covariate shift is quantified from training-only feature geometry at instance and family levels",

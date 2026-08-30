@@ -1,6 +1,6 @@
 {
   "schema_version": "metric-evidence-registry-v2",
-  "created_utc": "2026-08-30T15:06:55.581023+00:00",
+  "created_utc": "2026-08-30T15:38:12.867536+00:00",
   "catalog_path": "docs/review/metric_catalog_2026-08-11.md",
   "catalog_sha256": "eb5f039ae5cfcd97e205afae9febb25f7b69bd52e57f4af4cdb8997d0393d36b",
   "source_attachment_sha256": "eb5f039ae5cfcd97e205afae9febb25f7b69bd52e57f4af4cdb8997d0393d36b",
@@ -2993,9 +2993,9 @@
       "catalog_text_sha256": "c897a54760594a7541d1d91cdfda0834cf59d513675b1f8e8c0e9ac9bfbe98ff",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "NO_ITEM_SPECIFIC_SATISFACTION_EVIDENCE_REGISTERED",
-      "criterion_met": false,
-      "status": "EXTERNAL",
+      "observed_value": "A direct listing/order sensitivity experiment exists: the sealed E31 full factorial varies listing_model as a first-class factor across all 28,152 rows, with sealed coefficient, marginal-contrast, and listing-fragility analyses.",
+      "criterion_met": true,
+      "status": "PASS",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -3011,15 +3011,27 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "satisfaction",
+          "metric_id": "3.12",
+          "path": "release/prepaper_retrospective_binding_audit.json",
+          "sha256": "11a8dff38614cdd3c29376477e307e4ca675d3e0bb6b43e0459b4e6273bea2fe",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/3.12",
+            "expected": "PASS: the sealed E31 full factorial is itself a direct listing/order sensitivity experiment; listing_model (LBL/WCL/RANDOM_TOPOLOGICAL) is a first-class factor in all 28,152 rows, with sealed coefficient and post-hoc marginal-contrast tables plus an exhaustive listing fragility audit"
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "EXTERNAL"
+        "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "None for the explicitly bounded audit scope; retain the recorded claim boundary.",
       "assessed_utc": "2026-08-26T14:27:51.682201+00:00",
       "legacy_status_2026_08_24": "EXTERNAL",
       "legacy_status_is_authoritative": false
@@ -24044,9 +24056,9 @@
       "catalog_text_sha256": "a07620a346d4008ef50fc10439fa1177af63a7d97c1eab94d4321d65fd630edd",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=FAIL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "Cross-compiler-version evidence exists and is independently replayed, but it is a bounded 15-family, 4-5-qubit, single-platform panel; it does not establish broad cross-version generalization.",
       "criterion_met": false,
-      "status": "FAIL",
+      "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -24062,15 +24074,27 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "13.14",
+          "path": "release/prepaper_retrospective_binding_audit.json",
+          "sha256": "11a8dff38614cdd3c29376477e307e4ca675d3e0bb6b43e0459b4e6273bea2fe",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/13.14",
+            "expected": "PARTIAL: the frozen 7-environment, 15-family, 105-row panel shows all version pairs structurally identical and numerically exact-equivalent (Qiskit 2.3.1/2.4.1, Cirq 1.6.0/1.6.1, pytket 2.17.0/2.18.0), with an independent 105/105 QASM semantic replay, but this is not a full benchmark rerun, not cross-platform, and external tool versions are not varied"
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "FAIL"
+        "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "FAIL",
       "legacy_status_is_authoritative": false
@@ -28659,9 +28683,9 @@
       "catalog_text_sha256": "f04ff2ccf42145d1782d8f1fb9c70abdaa7e0fa405d5ce5e637ccd0c801b6a8c",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=FAIL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "Bounded fake-backend routing evidence partially answers hardware-aware extension, but no real-QPU hardware-aware objective is measured.",
       "criterion_met": false,
-      "status": "FAIL",
+      "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -28677,15 +28701,27 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "16.16",
+          "path": "release/prepaper_retrospective_binding_audit.json",
+          "sha256": "11a8dff38614cdd3c29376477e307e4ca675d3e0bb6b43e0459b4e6273bea2fe",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/16.16",
+            "expected": "PARTIAL: bounded fake-backend routing-overhead evidence shows mapped native two-qubit reductions for two optimizer variants in paired cells, but no real-QPU hardware-aware objective, duration, or calibration is measured"
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "FAIL"
+        "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "FAIL",
       "legacy_status_is_authoritative": false
@@ -28958,9 +28994,9 @@
       "catalog_text_sha256": "83c9f81bb2d254a213c306dcc9fec131863ca1611e6b43e3d3509bd4a2893173",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=FAIL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "Mechanism conclusions are stable across the exact tested tool versions, but only those versions on one host are covered; future or external version updates remain untested.",
       "criterion_met": false,
-      "status": "FAIL",
+      "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -28976,15 +29012,27 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "16.23",
+          "path": "release/prepaper_retrospective_binding_audit.json",
+          "sha256": "11a8dff38614cdd3c29376477e307e4ca675d3e0bb6b43e0459b4e6273bea2fe",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/16.23",
+            "expected": "PARTIAL: mechanism conclusions are version-stable across the exact tested compiler version pairs on the frozen 15-family panel, but the evidence covers only those versions on one Windows host; custom-current has a single version and future or external versions remain untested"
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "FAIL"
+        "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "FAIL",
       "legacy_status_is_authoritative": false

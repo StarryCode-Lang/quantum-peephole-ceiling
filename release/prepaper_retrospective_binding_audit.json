@@ -1,0 +1,76 @@
+{
+  "claim_boundary": "Retrospective binding only registers item-specific evidence that already exists; it does not extend any claim. 13.14/16.23 remain bounded PARTIAL because the version panel is small, single-platform, and excludes external tools; 3.12 is PASS only for the existence of a direct listing/order experiment on the fixed E31 panel, not for listing insensitivity in general; 16.16 remains PARTIAL without real-QPU hardware-aware evidence.",
+  "created_utc": "2026-08-30T15:36:17.523407+00:00",
+  "evidence_bindings": {
+    "data/v10/prepaper/analysis/hardware_routing_overhead/hardware_routing_overhead_audit.json": {
+      "metrics": [
+        "16.16"
+      ],
+      "required_status": "PASS_BOUNDED_FAKE_BACKEND_ROUTING_AUDIT",
+      "sha256": "752781b6315bd7f8bb19b3450447ed4e4c84b9637fa99be82163453f3efc03f9"
+    },
+    "data/v11/compiler_version_sensitivity/compiler_version_sensitivity_audit.json": {
+      "metrics": [
+        "13.14",
+        "16.23"
+      ],
+      "required_status": "PASS_BOUNDED_COMPILER_VERSION_PANEL",
+      "sha256": "43fedc68b21e78af28eb2a69d644911476c41d8e663eac0a74842c105e0a5be9"
+    },
+    "data/v11/compiler_version_sensitivity/independent_verification.json": {
+      "metrics": [
+        "13.14",
+        "16.23"
+      ],
+      "required_status": "PASS_INDEPENDENT_COMPILER_VERSION_REPLAY",
+      "sha256": "bf8ef5c627696fac28d75e9f6a5a669b86fe5a3b9d9fbd6711cdb8d9a0cbf94d"
+    },
+    "data/v11/e31_factorial_pareto/design_metadata.json": {
+      "metrics": [
+        "3.12"
+      ],
+      "required_fact": "scheduled_rows == 28152",
+      "sha256": "35101a775b9989f587127a2a301c9f1a67597d18ed28ed1d32c09fd55553e3da"
+    },
+    "data/v11/e31_factorial_pareto/formal_run/analysis/fragility_listing/fragility_listing_audit.json": {
+      "metrics": [
+        "3.12"
+      ],
+      "required_status": "PASS_BOUNDED_E31_FRAGILITY_AND_LISTING_AUDIT",
+      "sha256": "b9bd7a53f17e78d55bed56babb614968675ded0bdbbb8fd7d5c088abca1c60f0"
+    },
+    "data/v11/e31_factorial_pareto/formal_run/analysis/full_factorial_model_coefficients.csv": {
+      "metrics": [
+        "3.12"
+      ],
+      "required_fact": "48 listing_model coefficient terms present",
+      "sha256": "13e39f9a3f991b4844b211a71b2890c0d3fc4cf21f8a91a4567805fe8325e88a"
+    },
+    "data/v11/e31_factorial_pareto/formal_run/analysis/posthoc_marginal_contrasts.csv": {
+      "metrics": [
+        "3.12"
+      ],
+      "required_fact": "13 MARGINAL::listing_model contrasts present",
+      "sha256": "f3e26a194e46e147deb693f4394831c9c52203cb6018a349d52292363bf56e0b"
+    },
+    "experiments/e31_factorial_pareto_protocol.json": {
+      "metrics": [
+        "3.12"
+      ],
+      "required_fact": "factors.listing_model == [LBL, WCL, RANDOM_TOPOLOGICAL]",
+      "sha256": "2464d1d531032a71c2947e9e8abd2b6b84de9fc6f048239944ee9357097365e8"
+    }
+  },
+  "method": "read-only retrospective binding: sealed evidence files are re-hashed and their internal status/design facts re-checked; no experiment is rerun and no sealed artifact is modified",
+  "metric_dispositions": {
+    "13.14": "PARTIAL: the frozen 7-environment, 15-family, 105-row panel shows all version pairs structurally identical and numerically exact-equivalent (Qiskit 2.3.1/2.4.1, Cirq 1.6.0/1.6.1, pytket 2.17.0/2.18.0), with an independent 105/105 QASM semantic replay, but this is not a full benchmark rerun, not cross-platform, and external tool versions are not varied",
+    "16.16": "PARTIAL: bounded fake-backend routing-overhead evidence shows mapped native two-qubit reductions for two optimizer variants in paired cells, but no real-QPU hardware-aware objective, duration, or calibration is measured",
+    "16.23": "PARTIAL: mechanism conclusions are version-stable across the exact tested compiler version pairs on the frozen 15-family panel, but the evidence covers only those versions on one Windows host; custom-current has a single version and future or external versions remain untested",
+    "3.12": "PASS: the sealed E31 full factorial is itself a direct listing/order sensitivity experiment; listing_model (LBL/WCL/RANDOM_TOPOLOGICAL) is a first-class factor in all 28,152 rows, with sealed coefficient and post-hoc marginal-contrast tables plus an exhaustive listing fragility audit"
+  },
+  "schema_version": "1.0.0",
+  "source_bindings": {
+    "analysis/prepaper_retrospective_binding_audit.py": "06734dcff68d1274ff239777fdc8df5be1c5bb0cf8724983e0417ce644eb04e1"
+  },
+  "status": "PASS_RETROSPECTIVE_EVIDENCE_BINDING"
+}
