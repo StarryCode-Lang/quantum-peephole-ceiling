@@ -1,0 +1,49 @@
+{
+  "archive": {
+    "archive_members": 34686,
+    "bytes": 86616296,
+    "inner_manifest_sha256": "72924041af35851fb243428b29f8b2517e4e1203a2a4c2e31dbb04222b3afdb9",
+    "path": "release/prepaper_restore_capsule.zip",
+    "payload_entries": 34685,
+    "sha256": "597f1995f2c2c4e84a70e4e14af57f088744a07c88327bd063443d571dbd287b",
+    "uncompressed_payload_bytes": 404037769
+  },
+  "claim_boundary": "This proves byte-complete restoration and executable verification of one frozen local release capsule on the current Windows/Python dependency stack. It does not prove off-site durability, media longevity, disaster recovery on another operating system, or future dependency availability.",
+  "created_utc": "2026-08-30T15:00:49.526878+00:00",
+  "layering_contract": {
+    "inner_layer": "immutable ZIP containing the pre-registration pre-paper manifest and its complete pinned file closure",
+    "outer_layer": "this audit receipt, stored outside the ZIP, pins the completed archive and inner manifest hashes",
+    "registry_epoch_note": "the archived metric registry is the internally consistent snapshot immediately before metric 15.41 registers this outer receipt",
+    "self_reference_avoided": true
+  },
+  "metric_dispositions": {
+    "15.41": "PASS: a layered release capsule was unpacked into a temporary directory, its inner manifest and complete hash closure were validated, and the restored release verifier passed under isolated Python mode"
+  },
+  "restore_test": {
+    "archive_members_extracted": 34686,
+    "inner_manifest_sha256": "72924041af35851fb243428b29f8b2517e4e1203a2a4c2e31dbb04222b3afdb9",
+    "isolated_python_flag": "-I",
+    "python_no_user_site": true,
+    "pythonpath_removed": true,
+    "temporary_directory_removed_after_test": true,
+    "temporary_directory_used": true,
+    "verifier_exit_code": 0,
+    "verifier_receipt": {
+      "csv_rows": 510373,
+      "e31_formal_checks": 34134,
+      "e31_independent_receipt_checks": 24,
+      "e31_structural_semantic_cells_recomputed": 6858,
+      "external_lineage_checks": 15,
+      "files": 34685,
+      "manifest_sha256": "72924041af35851fb243428b29f8b2517e4e1203a2a4c2e31dbb04222b3afdb9",
+      "metric_ledger_rows_verified": 592,
+      "nested_audit_hashes_verified": 31,
+      "numeric_columns_checked_for_infinity": 1559,
+      "python_files_dependency_audited": 106,
+      "status": "verified"
+    },
+    "verifier_relative_path": "scripts/verify_prepaper_release_manifest.py"
+  },
+  "schema_version": "1.0.0",
+  "status": "PASS_LAYERED_ARCHIVE_RESTORE_TEST"
+}
