@@ -266,6 +266,7 @@ PROJECT_EVIDENCE_FILES = (
     "release/prepaper_archive_restore_audit.json",
     "release/prepaper_retrospective_binding_audit.json",
     "release/prepaper_external_blockers.csv",
+    "release/prepaper_readiness_verdict.json",
 )
 SOURCE_FILES = (
     ".github/workflows/tests.yml",
@@ -344,6 +345,7 @@ SOURCE_FILES = (
     "analysis/compiler_integration_audit.py",
     "analysis/prepaper_retrospective_binding_audit.py",
     "scripts/generate_prepaper_external_blockers.py",
+    "scripts/generate_prepaper_readiness_verdict.py",
     "src/integrations/__init__.py",
     "src/integrations/qiskit_pass.py",
     "scripts/generate_prepaper_release_manifest.py",

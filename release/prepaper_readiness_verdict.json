@@ -1,0 +1,148 @@
+{
+  "blockers_sha256": "2e4664db5501d5b2be5f8474cf3240066b4b8c41463b3022198a2171b48b7d00",
+  "core_claim_pass_ids_sections_1_2": [
+    "1.02",
+    "1.09",
+    "1.10",
+    "1.12",
+    "1.13",
+    "1.14",
+    "1.17",
+    "2.01",
+    "2.02",
+    "2.03",
+    "2.04",
+    "2.05",
+    "2.07",
+    "2.08",
+    "2.09",
+    "2.10",
+    "2.12",
+    "2.13",
+    "2.14",
+    "2.16",
+    "2.19",
+    "2.21",
+    "2.22",
+    "2.24",
+    "2.25"
+  ],
+  "created_utc": "2026-08-30T17:28:30.507344+00:00",
+  "gates": {
+    "engineering_verification": {
+      "evidence": [
+        "full pytest 546 passed / 0 failed / 0 skipped",
+        "compileall clean across analysis/experiments/scripts/src/tests",
+        "CycloneDX SBOM rebuilt and verified (94 components)",
+        "workspace coverage scan: 176,406 files byte-read, 0 unreadable",
+        "layered archive restore test PASS (34,686 members, isolated Python)",
+        "outer pre-paper manifest verified (592-row ledger re-verified)"
+      ],
+      "state": "COMPLETE"
+    },
+    "external_real_hardware_gates": {
+      "metric_ids": [
+        "14.06",
+        "14.10",
+        "14.11",
+        "14.16",
+        "14.17",
+        "14.18",
+        "14.20",
+        "14.27",
+        "14.28",
+        "14.29",
+        "14.33",
+        "13.15"
+      ],
+      "required": "user-provided QPU account, budget, target device, authorization",
+      "state": "OPEN"
+    },
+    "release_authority_gates": {
+      "metric_ids": [
+        "15.09",
+        "15.10",
+        "15.40"
+      ],
+      "required": "user license decision, Zenodo publication authorization, release commit authorization",
+      "state": "OPEN"
+    },
+    "scientific_evidence_scope": {
+      "boundary": [
+        "fixed-panel conclusions are descriptive only",
+        "15-family results are supportive family-level inference only",
+        "unseen-family generalization remains BLOCKED",
+        "structural equivalence is not quantum semantic fidelity",
+        "over-budget verification fails closed",
+        "timeout/error/invalid remain in the ITT denominator"
+      ],
+      "state": "BOUNDED"
+    }
+  },
+  "item_specific_pass_coverage": {
+    "denominator": 592,
+    "numerator": 175
+  },
+  "ledger_sha256": "4aac01f2d29baa6adf29c4cd247d9c8fd7b7f99d3e984c66eeaa3f42179d5490",
+  "registry_sha256": "d999bd6edf5f84b3e9c62d770cf801a4028c7865d326215700e90b3aa14929df",
+  "remaining_non_pass": {
+    "EXTERNAL": [
+      "1.20",
+      "18.09",
+      "18.12",
+      "8.35"
+    ],
+    "FAIL": [
+      "1.19",
+      "10.07",
+      "10.08",
+      "13.12",
+      "13.15",
+      "13.16",
+      "13.17",
+      "14.06",
+      "14.10",
+      "14.11",
+      "14.16",
+      "14.17",
+      "14.18",
+      "14.20",
+      "14.27",
+      "14.28",
+      "14.29",
+      "14.33",
+      "15.09",
+      "15.10",
+      "15.28",
+      "15.29",
+      "15.40",
+      "16.19",
+      "16.20",
+      "17.19",
+      "17.21",
+      "17.29",
+      "17.30",
+      "18.04",
+      "18.06",
+      "3.30",
+      "5.28",
+      "5.29",
+      "9.52",
+      "9.53"
+    ],
+    "NA_count": 29,
+    "PARTIAL_count": 348
+  },
+  "schema_version": "1.0.0",
+  "status": "PRE_PAPER_READINESS_VERDICT",
+  "status_counts": {
+    "EXTERNAL": 4,
+    "FAIL": 36,
+    "NA": 29,
+    "PARTIAL": 348,
+    "PASS": 175
+  },
+  "summary_sha256": "64265df066c7eba189317887e28b2d75f9f80516faf6a50e5ab69b2f67b4e712",
+  "verdict": "READY_FOR_PAPER_WRITING_WITH_BOUNDARIES",
+  "verdict_rationale": "All core-claim metrics carry item-specific, hash-pinned, machine-checkable satisfaction evidence and every key verifier passes; the release chain is independently restorable. Remaining FAIL/EXTERNAL items are genuine external, real-hardware, user-authorization, or new-frozen-protocol-experiment gaps and are honestly retained in release/prepaper_external_blockers.csv rather than fabricated to PASS. Paper writing may proceed on the bounded descriptive and supportive claims; it must not claim unseen-family universality, real-QPU results, or algorithm-independent ceilings."
+}
