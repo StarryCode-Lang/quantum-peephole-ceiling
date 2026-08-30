@@ -1,0 +1,41 @@
+metric_id,status,metric,actor,action,required_input,acceptance_evidence
+1.20,EXTERNAL,新颖性碰撞风险,independent reviewer (pre-submission),novelty red-team per frozen search protocol,frozen search protocol + independent reviewer,dated search record and novelty judgment
+18.09,EXTERNAL,**独立冷启动复现**  ,"independent reproducer (non-author, new machine)",cold-start reproduction from the layered archive,layered archive + clean machine,full log from empty env to key tables/verification receipts
+18.12,EXTERNAL,**预投稿最新文献刷新**  ,local agent (pre-submission only),refresh the latest literature,frozen search date/databases/queries/inclusion-exclusion,last-6-12-month results record
+8.35,EXTERNAL,是否邀请外部作者核查运行配置？,external method authors,verify the exact run configuration,version/commit/CLI/budget/input hashes sent to authors,"author confirmation or objection, archived"
+1.19,FAIL,独立复现率,independent reproducer (non-developer),cold-start reproduction on a clean machine,clean machine + the layered archive,full reproduction log from empty env to key tables/receipts
+10.07,FAIL,energy consumption。,local agent (new telemetry experiment),measure energy consumption,frozen energy metering methodology,per-run energy measurements
+10.08,FAIL,monetary cost。,local agent (new telemetry experiment),measure monetary cost,frozen cost accounting methodology,per-run cost records
+13.12,FAIL,是否有跨 qubit 范围外推？,local agent (new frozen experiment),test cross-qubit-range extrapolation beyond training 4-10,frozen >10-qubit panel + fail-closed verification path,out-of-range panel results with declared fail-closed path
+13.15,FAIL,是否有跨硬件平台泛化？,user/QPU provider,run the frozen cross-platform panel on >=2 real QPU backends,"QPU accounts, budget, target devices, authorization",per-device ITT results + semantic verification + hardware run logs
+13.16,FAIL,是否有跨研究组独立数据？,independent research group,provide independent cross-group data,external group + their dataset,independent dataset + provenance + results
+13.17,FAIL,是否有真正真实世界电路？,local agent (new frozen experiment),add traceable real-world circuits,"real-application sources, license, provenance",real-world circuit panel layered with custom generators
+14.06,FAIL,是否记录 calibration 时间？,user/QPU provider,record calibration time on a real QPU,QPU access + timing telemetry,timestamped calibration records
+14.10,FAIL,是否报告 idle time？,user/QPU provider,report idle time on a real QPU,QPU access + timing telemetry,idle-time measurements per circuit
+14.11,FAIL,是否报告 crosstalk-sensitive concurrency？,user/QPU provider,run crosstalk-sensitive concurrency experiment,QPU with concurrent execution + crosstalk data,concurrency vs crosstalk measurements
+14.16,FAIL,是否在至少一个真实 QPU 上执行？,user/QPU provider,execute the frozen panel on at least one real QPU,"QPU account, budget, device, authorization",real-hardware execution records + results
+14.17,FAIL,是否有多个日期的重复硬件实验？,user/QPU provider,repeat the hardware experiment on multiple dates,QPU access across >=2 dates,dated run records + drift analysis
+14.18,FAIL,是否随机化执行顺序以减小 drift？,user/QPU provider,randomize execution order to resist drift,QPU access + randomized schedule,randomized-order run log + drift-bound analysis
+14.20,FAIL,shots 数是否由精度目标决定？,user/QPU provider,set shots by a precision target,QPU access + precision spec,shots-vs-precision justification + records
+14.27,FAIL,是否出现 depth 更短但 crosstalk 更强？,user/QPU provider,test depth-shorter-but-crosstalk-stronger tradeoff,QPU with crosstalk characterization,depth vs crosstalk measurements
+14.28,FAIL,是否报告 queue time 和纯执行时间？,user/QPU provider,report queue time vs pure execution time,QPU access + queue telemetry,queue/execution time split per job
+14.29,FAIL,是否报告 end-to-end time-to-solution？,user/QPU provider,report end-to-end time-to-solution,QPU access + end-to-end timing,end-to-end wall-time records
+14.33,FAIL,是否考虑 pulse-aware 编译？,user/QPU provider,run pulse-aware compilation comparison,QPU pulse access + pulse compiler,pulse-aware vs gate-level results
+15.09,FAIL,数据是否有许可证？,user (rights holder),choose a compatible data license,user legal/licensing decision,license file + decision record
+15.10,FAIL,是否有 DOI/Zenodo 归档？,user (account holder),publish DOI/Zenodo archive,user Zenodo account + publication authorization,DOI + Zenodo deposit record
+15.28,FAIL,是否在干净机器验证？,independent verifier (clean machine),verify the release on a clean machine,clean machine + archive,clean-machine verification receipt
+15.29,FAIL,是否由非作者验证？,non-author verifier,verify the release as a non-author,non-author + archive,non-author verification receipt
+15.40,FAIL,是否能从固定 commit 重建 release？,user (release authority),authorize a release commit and candidate SHA,user commit authorization + candidate SHA,release rebuilt from the fixed commit
+16.19,FAIL,是否有真实用户或外部研究组需求？,real user / external research group,state a real need for the tool,external user/group,documented external requirement
+16.20,FAIL,是否有外部复用证据？,external party,provide reuse evidence,external reuser,documented external reuse
+17.19,FAIL,是否让独立研究者攻击 theorem？,independent researcher,attack the theorem,independent researcher + theorem statement,recorded attack attempts and outcome
+17.21,FAIL,是否让外部工具作者检查配置？,external tool author,check the run configuration,tool author + version/commit/CLI/budget/input hashes,"author confirmation or objection, archived"
+17.29,FAIL,如果删除自定义 benchmark，结果是否仍成立？,local agent (new frozen experiment),rerun core comparison without the custom benchmark,"external/real panel, same estimand",custom-benchmark-free comparison results
+17.30,FAIL,如果只看真实线路，结果是否仍成立？,local agent (new frozen experiment),estimate results on real circuits only,real-circuit subset,independent estimate + interval + worst family + ITT
+18.04,FAIL,**第三个可执行独立强工件**  ,local agent (new frozen experiment),build a third executable independent strong artifact,"a distinct executable external method, fixed version/config",third artifact + semantic audit
+18.06,FAIL,**大型线路层级**  ,local agent (new frozen experiment),add a large-circuit tier,"pre-registered scale, resource budget, verification tier, failure accounting",large-tier results with failure accounting
+3.30,FAIL,是否有匿名同行进行一次 novelty red-team？,anonymous peer reviewer,perform a novelty red-team search,frozen search protocol,"dated search queries, databases, and novelty judgment"
+5.28,FAIL,是否与 MQT Bench 之类跨抽象层数据对齐？,local agent (new frozen experiment),align with MQT Bench cross-abstraction data,"frozen MQT Bench version, license, input hashes, abstraction mapping",ITT results + semantic verification on the aligned panel
+5.29,FAIL,是否运行 Benchpress 风格的大型软件压力测试？,local agent (new frozen experiment),run a Benchpress-style large software stress test,"pre-frozen scale tiers, timeout/memory caps, failure taxonomy","time-to-solution + failure classification, not a smoke test"
+9.52,FAIL,time-to-first-valid。,local agent (new telemetry experiment),measure time-to-first-valid with event-level traces,frozen event-level trace schema + sampling clock,per-run time-to-first-valid from event traces
+9.53,FAIL,time-to-best。,local agent (new telemetry experiment),measure time-to-best with event-level traces,frozen event-level trace schema + sampling clock,per-run time-to-best from event traces
