@@ -4,7 +4,7 @@
     "project_evidence_files": 34275,
     "source_files": 219
   },
-  "created_utc": "2026-08-30T15:47:04.681012+00:00",
+  "created_utc": "2026-08-30T17:10:14.518247+00:00",
   "evidence": [
     {
       "bytes": 1385,
@@ -279,21 +279,21 @@
     {
       "bytes": 1105,
       "file": "data/v10/prepaper/audit/workspace_coverage.json",
-      "sha256": "41a0d964eca03ca986e69d0d9abfe913e5fa143a2015aea3bbe4a6f696b0d050"
+      "sha256": "d9aa1ad46e96503467f0c36761a95f50035f0bddbf7cb4438a58bc1afd9641a4"
     },
     {
-      "bytes": 3738447,
+      "bytes": 3750203,
       "columns": [
         "relative_directory",
         "direct_files",
         "direct_subdirectories"
       ],
       "file": "data/v10/prepaper/audit/workspace_directory_inventory.csv",
-      "rows": 32585,
-      "sha256": "330fe9a296623c275c2efc37979b8eae30bd59a18583b1197cb9cf7cf8719cf9"
+      "rows": 32687,
+      "sha256": "cc2c6da1bb9dbc4c324a6e81ce460ab7fae45071961675824ac6af023d55b78d"
     },
     {
-      "bytes": 37993925,
+      "bytes": 38096542,
       "columns": [
         "relative_path",
         "bytes",
@@ -302,8 +302,8 @@
         "lines"
       ],
       "file": "data/v10/prepaper/audit/workspace_file_inventory.csv",
-      "rows": 175898,
-      "sha256": "30dc1dfae3e644ef823705d8bdaf88da7bcf793094b58df38b46d878a215e26e"
+      "rows": 176406,
+      "sha256": "8b3f9bba7811a1d3c2e75c7eb7736c4e92c55d477bc39570575ad5b8b02c55c7"
     },
     {
       "bytes": 1563503,
@@ -2764,7 +2764,7 @@
     }
   ],
   "git": {
-    "commit": "0a1951c90e366738a5b6c2c52899bd11366baa69",
+    "commit": "0774a12a76a33cdab071b2ec8273f5a14a84fc3f",
     "dirty": true
   },
   "project_evidence": [
@@ -174979,7 +174979,7 @@
       "sha256": "60a888c73b6d4554793bf98e9b5110d68694c33aa7f178dea60c9e20ffb1fabd"
     },
     {
-      "bytes": 1080277,
+      "bytes": 1081687,
       "columns": [
         "metric_id",
         "section",
@@ -175004,22 +175004,22 @@
       ],
       "file": "docs/review/metric_audit_ledger_2026-08-24.csv",
       "rows": 592,
-      "sha256": "578bbdfa5234c1569e05766cb6532c2e693a108fd541ba88bc4f109ae0dde2ce"
+      "sha256": "39cbfefd8fa0329087e99d34446db93650f58a12c47264669fb16e038a15aad0"
     },
     {
       "bytes": 887,
       "file": "docs/review/metric_audit_resolution_2026-08-24.md",
-      "sha256": "9de219739d251820bf2b27e4930dc1a6d7c482d0787360f595618b1ce036a298"
+      "sha256": "81d2bd08de26b08401cf0d458dfddf7cf69bfd4cdfeae4eb4006dc44dab89472"
     },
     {
       "bytes": 822,
       "file": "docs/review/metric_audit_summary_2026-08-24.json",
-      "sha256": "9ed0d4753cc15a0362e55809e4facb39f761762e85648eaf7f0d23cea086196b"
+      "sha256": "a04bd833563f93e17126b651fe39953915508f057dfce4dd78309b72f62bc350"
     },
     {
-      "bytes": 1499134,
+      "bytes": 1500752,
       "file": "docs/review/metric_evidence_registry_2026-08-26.json",
-      "sha256": "c1b2c2878402f97c7fb79407894b6dea3cd315cb706745d64dc41d4dda6b2091"
+      "sha256": "2aff0cc729383a72123ee07b6e532d2c44d79dac0df0bd01589e7f58e1fc9ee2"
     },
     {
       "bytes": 301749,
@@ -175092,9 +175092,9 @@
       "sha256": "597f1995f2c2c4e84a70e4e14af57f088744a07c88327bd063443d571dbd287b"
     },
     {
-      "bytes": 4588,
+      "bytes": 5842,
       "file": "release/prepaper_retrospective_binding_audit.json",
-      "sha256": "11a8dff38614cdd3c29376477e307e4ca675d3e0bb6b43e0459b4e6273bea2fe"
+      "sha256": "7ad1350e90cbb04833f3ebec1f5d658b3b81c7f4a60d8296f41692a10b8d37be"
     },
     {
       "bytes": 21413,
@@ -175756,9 +175756,9 @@
       "sha256": "c66dd80ab273c183850fe76da0aa0f350cc1e23f267f8bc22570b7c02039ad4e"
     },
     {
-      "bytes": 10610,
+      "bytes": 13527,
       "file": "analysis/prepaper_retrospective_binding_audit.py",
-      "sha256": "06734dcff68d1274ff239777fdc8df5be1c5bb0cf8724983e0417ce644eb04e1"
+      "sha256": "a53e034fd1a02d97f8a521d532c6ce10185a576f6a20b1bef0740678cc5bb425"
     },
     {
       "bytes": 171,
@@ -175856,9 +175856,9 @@
       "sha256": "4c7ea48f6ccb8af6bcbb09e04ec5677652cc1e2ecdea0b960cabdd1c5d795eeb"
     },
     {
-      "bytes": 58862,
+      "bytes": 60108,
       "file": "scripts/merge_metric_registry_fragments.py",
-      "sha256": "d5b2208dc36036a69a3641896dcd6de606a0461ec163ad07d06119bbde102571"
+      "sha256": "1d03867b0001fc9938021543eb95cd4d835e10b2dd8a3de21e7e4a745af6479c"
     },
     {
       "bytes": 16256,

@@ -14,11 +14,15 @@ def _audit() -> dict:
 def test_retrospective_binding_status_and_metrics():
     audit = _audit()
     assert audit["status"] == "PASS_RETROSPECTIVE_EVIDENCE_BINDING"
-    assert set(audit["metric_dispositions"]) == {"13.14", "16.23", "3.12", "16.16"}
+    assert set(audit["metric_dispositions"]) == {
+        "13.14", "16.23", "3.12", "16.16", "16.18", "13.13",
+    }
     assert audit["metric_dispositions"]["3.12"].startswith("PASS:")
     assert audit["metric_dispositions"]["13.14"].startswith("PARTIAL:")
     assert audit["metric_dispositions"]["16.23"].startswith("PARTIAL:")
     assert audit["metric_dispositions"]["16.16"].startswith("PARTIAL:")
+    assert audit["metric_dispositions"]["16.18"].startswith("PARTIAL:")
+    assert audit["metric_dispositions"]["13.13"].startswith("PARTIAL:")
 
 
 def test_retrospective_binding_hashes_match_workspace():

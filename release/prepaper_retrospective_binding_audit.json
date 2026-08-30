@@ -1,10 +1,18 @@
 {
-  "claim_boundary": "Retrospective binding only registers item-specific evidence that already exists; it does not extend any claim. 13.14/16.23 remain bounded PARTIAL because the version panel is small, single-platform, and excludes external tools; 3.12 is PASS only for the existence of a direct listing/order experiment on the fixed E31 panel, not for listing insensitivity in general; 16.16 remains PARTIAL without real-QPU hardware-aware evidence.",
-  "created_utc": "2026-08-30T15:36:17.523407+00:00",
+  "claim_boundary": "Retrospective binding only registers item-specific evidence that already exists; it does not extend any claim. 13.14/16.23 remain bounded PARTIAL because the version panel is small, single-platform, and excludes external tools; 3.12 is PASS only for the existence of a direct listing/order experiment on the fixed E31 panel, not for listing insensitivity in general; 16.16 remains PARTIAL without real-QPU hardware-aware evidence; 16.18 remains PARTIAL because the Clifford+T T-depth evidence is not a fault-tolerant architecture estimate; 13.13 remains PARTIAL because only two fake-backend coupling graphs are covered.",
+  "created_utc": "2026-08-30T17:08:04.117450+00:00",
   "evidence_bindings": {
+    "data/v10/prepaper/analysis/cost_vector_scope/cost_vector_scope_audit.json": {
+      "metrics": [
+        "16.18"
+      ],
+      "required_status": "PASS_BOUNDED_COST_VECTOR_AND_SCOPE_AUDIT",
+      "sha256": "3ef031f924d8b798a4dd55cee451666c179d28b5de4771969b55a58b7ed58ba2"
+    },
     "data/v10/prepaper/analysis/hardware_routing_overhead/hardware_routing_overhead_audit.json": {
       "metrics": [
-        "16.16"
+        "16.16",
+        "13.13"
       ],
       "required_status": "PASS_BOUNDED_FAKE_BACKEND_ROUTING_AUDIT",
       "sha256": "752781b6315bd7f8bb19b3450447ed4e4c84b9637fa99be82163453f3efc03f9"
@@ -63,14 +71,16 @@
   },
   "method": "read-only retrospective binding: sealed evidence files are re-hashed and their internal status/design facts re-checked; no experiment is rerun and no sealed artifact is modified",
   "metric_dispositions": {
+    "13.13": "PARTIAL: the sealed hardware routing-overhead audit pairs two frozen coupling graphs (FakeManilaV2, FakeNairobiV2) on identical inputs with the same routing budget and reports native two-qubit gate/depth overhead across 48 design cells, but this is two fake-backend snapshots, not broad topology coverage or real-QPU routing",
     "13.14": "PARTIAL: the frozen 7-environment, 15-family, 105-row panel shows all version pairs structurally identical and numerically exact-equivalent (Qiskit 2.3.1/2.4.1, Cirq 1.6.0/1.6.1, pytket 2.17.0/2.18.0), with an independent 105/105 QASM semantic replay, but this is not a full benchmark rerun, not cross-platform, and external tool versions are not varied",
     "16.16": "PARTIAL: bounded fake-backend routing-overhead evidence shows mapped native two-qubit reductions for two optimizer variants in paired cells, but no real-QPU hardware-aware objective, duration, or calibration is measured",
+    "16.18": "PARTIAL: the sealed E18 Clifford+T analysis reconstructs all 1,080 rows from 360 native Clifford+T inputs with exact equivalence and reports dependency-preserving emitted-circuit T-depth reductions (up to ~51% mean relative reduction for hybrid_phase1_2), but this is not globally minimized T-depth, magic-state factory demand, logical qubit overhead, or a fault-tolerant architecture estimate",
     "16.23": "PARTIAL: mechanism conclusions are version-stable across the exact tested compiler version pairs on the frozen 15-family panel, but the evidence covers only those versions on one Windows host; custom-current has a single version and future or external versions remain untested",
     "3.12": "PASS: the sealed E31 full factorial is itself a direct listing/order sensitivity experiment; listing_model (LBL/WCL/RANDOM_TOPOLOGICAL) is a first-class factor in all 28,152 rows, with sealed coefficient and post-hoc marginal-contrast tables plus an exhaustive listing fragility audit"
   },
   "schema_version": "1.0.0",
   "source_bindings": {
-    "analysis/prepaper_retrospective_binding_audit.py": "06734dcff68d1274ff239777fdc8df5be1c5bb0cf8724983e0417ce644eb04e1"
+    "analysis/prepaper_retrospective_binding_audit.py": "a53e034fd1a02d97f8a521d532c6ce10185a576f6a20b1bef0740678cc5bb425"
   },
   "status": "PASS_RETROSPECTIVE_EVIDENCE_BINDING"
 }

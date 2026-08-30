@@ -481,6 +481,18 @@ DIRECT_DISPOSITION_OVERLAYS = {
         "PARTIAL",
         "Bounded fake-backend routing evidence partially answers hardware-aware extension, but no real-QPU hardware-aware objective is measured.",
     ),
+    "16.18": (
+        "release/prepaper_retrospective_binding_audit.json",
+        "PARTIAL: the sealed E18 Clifford+T analysis reconstructs all 1,080 rows from 360 native Clifford+T inputs with exact equivalence and reports dependency-preserving emitted-circuit T-depth reductions (up to ~51% mean relative reduction for hybrid_phase1_2), but this is not globally minimized T-depth, magic-state factory demand, logical qubit overhead, or a fault-tolerant architecture estimate",
+        "PARTIAL",
+        "Bounded Clifford+T T-depth evidence partially answers fault-tolerant resource reduction, but it is not a full fault-tolerant architecture estimate.",
+    ),
+    "13.13": (
+        "release/prepaper_retrospective_binding_audit.json",
+        "PARTIAL: the sealed hardware routing-overhead audit pairs two frozen coupling graphs (FakeManilaV2, FakeNairobiV2) on identical inputs with the same routing budget and reports native two-qubit gate/depth overhead across 48 design cells, but this is two fake-backend snapshots, not broad topology coverage or real-QPU routing",
+        "PARTIAL",
+        "Bounded two-topology fake-backend evidence partially answers cross-topology generalization, but it is not broad topology coverage.",
+    ),
     "13.19": (
         "data/v10/prepaper/heldout_v2/analysis/generalization_ood/generalization_ood_audit.json",
         "PASS: covariate shift is quantified from training-only feature geometry at instance and family levels",

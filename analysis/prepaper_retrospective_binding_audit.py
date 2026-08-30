@@ -17,6 +17,13 @@ Metrics bound:
   manipulation, plus the sealed coefficient and marginal-contrast tables.
 - 16.16 hardware-aware objectives: bounded PARTIAL from the fake-backend
   routing-overhead audit; no real-QPU objective is measured.
+- 16.18 fault-tolerant T resources: bounded PARTIAL from the sealed E18
+  Clifford+T dependency T-depth analysis; not a full fault-tolerant
+  architecture estimate.
+- 13.13 cross-topology generalization: bounded PARTIAL from the sealed
+  hardware routing-overhead audit, which pairs two frozen coupling graphs
+  (FakeManilaV2, FakeNairobiV2) on identical inputs and reports native
+  two-qubit overhead; not broad topology coverage.
 """
 
 from __future__ import annotations
@@ -40,6 +47,7 @@ FRAGILITY_AUDIT = ROOT / "data/v11/e31_factorial_pareto/formal_run/analysis/frag
 COEFFICIENTS = ROOT / "data/v11/e31_factorial_pareto/formal_run/analysis/full_factorial_model_coefficients.csv"
 MARGINAL = ROOT / "data/v11/e31_factorial_pareto/formal_run/analysis/posthoc_marginal_contrasts.csv"
 HARDWARE_AUDIT = ROOT / "data/v10/prepaper/analysis/hardware_routing_overhead/hardware_routing_overhead_audit.json"
+COST_VECTOR_AUDIT = ROOT / "data/v10/prepaper/analysis/cost_vector_scope/cost_vector_scope_audit.json"
 
 
 def sha256(path: Path) -> str:
@@ -95,6 +103,20 @@ def build_audit(output: Path = DEFAULT_OUTPUT) -> dict:
         raise RuntimeError("hardware routing overhead audit is not PASS")
     if "16.17" not in hardware.get("metric_dispositions", {}):
         raise RuntimeError("hardware routing audit lacks its 16.17 disposition")
+    design = hardware.get("design", {})
+    if set(design.get("backend_snapshots", [])) != {"FakeManilaV2", "FakeNairobiV2"}:
+        raise RuntimeError("hardware routing audit lacks the two frozen coupling graphs")
+    if int(design.get("design_cells", -1)) != 48:
+        raise RuntimeError("hardware routing audit is not the 48-cell paired design")
+
+    cost_vector = _load_json(COST_VECTOR_AUDIT)
+    if cost_vector.get("status") != "PASS_BOUNDED_COST_VECTOR_AND_SCOPE_AUDIT":
+        raise RuntimeError("cost vector scope audit is not PASS")
+    clifford_t = cost_vector.get("native_clifford_t", {})
+    if int(clifford_t.get("n_reconstructed_rows", -1)) != 1080:
+        raise RuntimeError("E18 Clifford+T reconstruction is not the 1,080-row set")
+    if clifford_t.get("all_rows_recorded_exact_equivalence_valid") is not True:
+        raise RuntimeError("E18 Clifford+T rows are not all exact-equivalence valid")
 
     dispositions = {
         "13.14": (
@@ -123,6 +145,21 @@ def build_audit(output: Path = DEFAULT_OUTPUT) -> dict:
             "native two-qubit reductions for two optimizer variants in paired cells, "
             "but no real-QPU hardware-aware objective, duration, or calibration is "
             "measured"
+        ),
+        "16.18": (
+            "PARTIAL: the sealed E18 Clifford+T analysis reconstructs all 1,080 rows "
+            "from 360 native Clifford+T inputs with exact equivalence and reports "
+            "dependency-preserving emitted-circuit T-depth reductions (up to ~51% "
+            "mean relative reduction for hybrid_phase1_2), but this is not globally "
+            "minimized T-depth, magic-state factory demand, logical qubit overhead, "
+            "or a fault-tolerant architecture estimate"
+        ),
+        "13.13": (
+            "PARTIAL: the sealed hardware routing-overhead audit pairs two frozen "
+            "coupling graphs (FakeManilaV2, FakeNairobiV2) on identical inputs with "
+            "the same routing budget and reports native two-qubit gate/depth overhead "
+            "across 48 design cells, but this is two fake-backend snapshots, not broad "
+            "topology coverage or real-QPU routing"
         ),
     }
 
@@ -174,7 +211,12 @@ def build_audit(output: Path = DEFAULT_OUTPUT) -> dict:
             "data/v10/prepaper/analysis/hardware_routing_overhead/hardware_routing_overhead_audit.json": {
                 "sha256": sha256(HARDWARE_AUDIT),
                 "required_status": "PASS_BOUNDED_FAKE_BACKEND_ROUTING_AUDIT",
-                "metrics": ["16.16"],
+                "metrics": ["16.16", "13.13"],
+            },
+            "data/v10/prepaper/analysis/cost_vector_scope/cost_vector_scope_audit.json": {
+                "sha256": sha256(COST_VECTOR_AUDIT),
+                "required_status": "PASS_BOUNDED_COST_VECTOR_AND_SCOPE_AUDIT",
+                "metrics": ["16.18"],
             },
         },
         "metric_dispositions": dispositions,
@@ -184,7 +226,10 @@ def build_audit(output: Path = DEFAULT_OUTPUT) -> dict:
             "because the version panel is small, single-platform, and excludes external "
             "tools; 3.12 is PASS only for the existence of a direct listing/order "
             "experiment on the fixed E31 panel, not for listing insensitivity in "
-            "general; 16.16 remains PARTIAL without real-QPU hardware-aware evidence."
+            "general; 16.16 remains PARTIAL without real-QPU hardware-aware evidence; "
+            "16.18 remains PARTIAL because the Clifford+T T-depth evidence is not a "
+            "fault-tolerant architecture estimate; 13.13 remains PARTIAL because only "
+            "two fake-backend coupling graphs are covered."
         ),
         "source_bindings": {
             "analysis/prepaper_retrospective_binding_audit.py": sha256(Path(__file__)),
