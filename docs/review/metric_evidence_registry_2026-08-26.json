@@ -1,6 +1,6 @@
 {
   "schema_version": "metric-evidence-registry-v2",
-  "created_utc": "2026-08-30T17:08:05.239099+00:00",
+  "created_utc": "2026-08-30T17:15:30.613568+00:00",
   "catalog_path": "docs/review/metric_catalog_2026-08-11.md",
   "catalog_sha256": "eb5f039ae5cfcd97e205afae9febb25f7b69bd52e57f4af4cdb8997d0393d36b",
   "source_attachment_sha256": "eb5f039ae5cfcd97e205afae9febb25f7b69bd52e57f4af4cdb8997d0393d36b",
@@ -3016,7 +3016,7 @@
           "role": "satisfaction",
           "metric_id": "3.12",
           "path": "release/prepaper_retrospective_binding_audit.json",
-          "sha256": "7ad1350e90cbb04833f3ebec1f5d658b3b81c7f4a60d8296f41692a10b8d37be",
+          "sha256": "55396594062418383d3b726bcaf07900bb5f0cf0d9e12f2a2be2f546015ae481",
           "selector": {
             "type": "json_pointer_equals",
             "pointer": "/metric_dispositions/3.12",
@@ -5067,9 +5067,9 @@
       "catalog_text_sha256": "e5ec3a81dde6840dae0692c3630d9de5c846e2a971b6529deaa0376ddfb483bb",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "NO_ITEM_SPECIFIC_SATISFACTION_EVIDENCE_REGISTERED",
+      "observed_value": "The parameterized-gate theorem boundary is explicitly declared and fail-closed with executable tests, but not proved or counterexampled beyond the unitary scope.",
       "criterion_met": false,
-      "status": "FAIL",
+      "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -5085,15 +5085,27 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "4.30",
+          "path": "release/prepaper_retrospective_binding_audit.json",
+          "sha256": "55396594062418383d3b726bcaf07900bb5f0cf0d9e12f2a2be2f546015ae481",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/4.30",
+            "expected": "PARTIAL: the fail-closed circuit-semantics scope audit explicitly defines the theorem domain as fixed-width bound-parameter unitary circuits and rejects free parameters, measurement, reset, and dynamic control with executable scenario tests, but no theorem or counterexample is established for parameterized gates, partial initialization, or observational equivalence beyond that declared scope"
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "FAIL"
+        "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-26T14:27:51.682201+00:00",
       "legacy_status_2026_08_24": "FAIL",
       "legacy_status_is_authoritative": false
@@ -24038,7 +24050,7 @@
           "role": "supporting",
           "metric_id": "13.13",
           "path": "release/prepaper_retrospective_binding_audit.json",
-          "sha256": "7ad1350e90cbb04833f3ebec1f5d658b3b81c7f4a60d8296f41692a10b8d37be",
+          "sha256": "55396594062418383d3b726bcaf07900bb5f0cf0d9e12f2a2be2f546015ae481",
           "selector": {
             "type": "json_pointer_equals",
             "pointer": "/metric_dispositions/13.13",
@@ -24091,7 +24103,7 @@
           "role": "supporting",
           "metric_id": "13.14",
           "path": "release/prepaper_retrospective_binding_audit.json",
-          "sha256": "7ad1350e90cbb04833f3ebec1f5d658b3b81c7f4a60d8296f41692a10b8d37be",
+          "sha256": "55396594062418383d3b726bcaf07900bb5f0cf0d9e12f2a2be2f546015ae481",
           "selector": {
             "type": "json_pointer_equals",
             "pointer": "/metric_dispositions/13.14",
@@ -28654,9 +28666,9 @@
       "catalog_text_sha256": "7ac761da1f38ffd7bd36ee8b6650d3e6691b061da38434b0bdaf55d3f768aa66",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=FAIL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "Parameterized circuits are handled fail-closed with an explicit documented boundary, but no extension protocol exists.",
       "criterion_met": false,
-      "status": "FAIL",
+      "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -28672,15 +28684,27 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "16.15",
+          "path": "release/prepaper_retrospective_binding_audit.json",
+          "sha256": "55396594062418383d3b726bcaf07900bb5f0cf0d9e12f2a2be2f546015ae481",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/16.15",
+            "expected": "PARTIAL: the sealed scope audit shows parameterized circuits are handled fail-closed (free parameters are rejected rather than silently bound or sampled), which is an explicit documented boundary with executable tests, but no symbolic or multi-point sampling protocol extends the optimizer to parameterized circuits"
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "FAIL"
+        "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "FAIL",
       "legacy_status_is_authoritative": false
@@ -28718,7 +28742,7 @@
           "role": "supporting",
           "metric_id": "16.16",
           "path": "release/prepaper_retrospective_binding_audit.json",
-          "sha256": "7ad1350e90cbb04833f3ebec1f5d658b3b81c7f4a60d8296f41692a10b8d37be",
+          "sha256": "55396594062418383d3b726bcaf07900bb5f0cf0d9e12f2a2be2f546015ae481",
           "selector": {
             "type": "json_pointer_equals",
             "pointer": "/metric_dispositions/16.16",
@@ -28824,7 +28848,7 @@
           "role": "supporting",
           "metric_id": "16.18",
           "path": "release/prepaper_retrospective_binding_audit.json",
-          "sha256": "7ad1350e90cbb04833f3ebec1f5d658b3b81c7f4a60d8296f41692a10b8d37be",
+          "sha256": "55396594062418383d3b726bcaf07900bb5f0cf0d9e12f2a2be2f546015ae481",
           "selector": {
             "type": "json_pointer_equals",
             "pointer": "/metric_dispositions/16.18",
@@ -29041,7 +29065,7 @@
           "role": "supporting",
           "metric_id": "16.23",
           "path": "release/prepaper_retrospective_binding_audit.json",
-          "sha256": "7ad1350e90cbb04833f3ebec1f5d658b3b81c7f4a60d8296f41692a10b8d37be",
+          "sha256": "55396594062418383d3b726bcaf07900bb5f0cf0d9e12f2a2be2f546015ae481",
           "selector": {
             "type": "json_pointer_equals",
             "pointer": "/metric_dispositions/16.23",
@@ -30882,9 +30906,9 @@
       "catalog_text_sha256": "ddebb24dc843e33f81cb4c24bbf1f16ff6b9a686f3eafcf9e9ee18739b2939a8",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=FAIL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "Parameterized-circuit equivalence is bounded by the fail-closed scope audit, but no independent artifact exists beyond the unitary scope.",
       "criterion_met": false,
-      "status": "FAIL",
+      "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -30900,15 +30924,27 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "18.07",
+          "path": "release/prepaper_retrospective_binding_audit.json",
+          "sha256": "55396594062418383d3b726bcaf07900bb5f0cf0d9e12f2a2be2f546015ae481",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/18.07",
+            "expected": "PARTIAL: parameterized-circuit equivalence is bounded by the same fail-closed scope audit (free parameters rejected, bound-parameter unitaries verified exactly), but no independent parameterized-equivalence artifact exists beyond the declared unitary scope"
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "FAIL"
+        "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:51:55.8123868+08:00",
       "legacy_status_2026_08_24": "FAIL",
       "legacy_status_is_authoritative": false

@@ -24,6 +24,10 @@ Metrics bound:
   hardware routing-overhead audit, which pairs two frozen coupling graphs
   (FakeManilaV2, FakeNairobiV2) on identical inputs and reports native
   two-qubit overhead; not broad topology coverage.
+- 4.30 / 16.15 / 18.07 parameterized-circuit boundary: bounded PARTIAL from
+  the fail-closed circuit-semantics scope audit, which explicitly defines the
+  fixed-width bound-parameter unitary contract and rejects free parameters;
+  no theorem or counterexample under parameterization is established.
 """
 
 from __future__ import annotations
@@ -48,6 +52,7 @@ COEFFICIENTS = ROOT / "data/v11/e31_factorial_pareto/formal_run/analysis/full_fa
 MARGINAL = ROOT / "data/v11/e31_factorial_pareto/formal_run/analysis/posthoc_marginal_contrasts.csv"
 HARDWARE_AUDIT = ROOT / "data/v10/prepaper/analysis/hardware_routing_overhead/hardware_routing_overhead_audit.json"
 COST_VECTOR_AUDIT = ROOT / "data/v10/prepaper/analysis/cost_vector_scope/cost_vector_scope_audit.json"
+SEMANTICS_SCOPE_AUDIT = ROOT / "release/circuit_semantics_scope_audit.json"
 
 
 def sha256(path: Path) -> str:
@@ -118,6 +123,14 @@ def build_audit(output: Path = DEFAULT_OUTPUT) -> dict:
     if clifford_t.get("all_rows_recorded_exact_equivalence_valid") is not True:
         raise RuntimeError("E18 Clifford+T rows are not all exact-equivalence valid")
 
+    semantics_scope = _load_json(SEMANTICS_SCOPE_AUDIT)
+    if semantics_scope.get("status") != "PASS_EXPLICIT_FAIL_CLOSED_CIRCUIT_SEMANTICS_SCOPE":
+        raise RuntimeError("circuit semantics scope audit is not PASS")
+    if "free_parameters" not in semantics_scope.get("policy", []):
+        raise RuntimeError("semantics scope audit lacks the free-parameter policy")
+    if "free_parameter" not in semantics_scope.get("scenarios", []):
+        raise RuntimeError("semantics scope audit lacks the free-parameter scenario")
+
     dispositions = {
         "13.14": (
             "PARTIAL: the frozen 7-environment, 15-family, 105-row panel shows all "
@@ -160,6 +173,27 @@ def build_audit(output: Path = DEFAULT_OUTPUT) -> dict:
             "the same routing budget and reports native two-qubit gate/depth overhead "
             "across 48 design cells, but this is two fake-backend snapshots, not broad "
             "topology coverage or real-QPU routing"
+        ),
+        "4.30": (
+            "PARTIAL: the fail-closed circuit-semantics scope audit explicitly defines "
+            "the theorem domain as fixed-width bound-parameter unitary circuits and "
+            "rejects free parameters, measurement, reset, and dynamic control with "
+            "executable scenario tests, but no theorem or counterexample is "
+            "established for parameterized gates, partial initialization, or "
+            "observational equivalence beyond that declared scope"
+        ),
+        "16.15": (
+            "PARTIAL: the sealed scope audit shows parameterized circuits are handled "
+            "fail-closed (free parameters are rejected rather than silently bound or "
+            "sampled), which is an explicit documented boundary with executable tests, "
+            "but no symbolic or multi-point sampling protocol extends the optimizer to "
+            "parameterized circuits"
+        ),
+        "18.07": (
+            "PARTIAL: parameterized-circuit equivalence is bounded by the same "
+            "fail-closed scope audit (free parameters rejected, bound-parameter "
+            "unitaries verified exactly), but no independent parameterized-equivalence "
+            "artifact exists beyond the declared unitary scope"
         ),
     }
 
@@ -218,6 +252,11 @@ def build_audit(output: Path = DEFAULT_OUTPUT) -> dict:
                 "required_status": "PASS_BOUNDED_COST_VECTOR_AND_SCOPE_AUDIT",
                 "metrics": ["16.18"],
             },
+            "release/circuit_semantics_scope_audit.json": {
+                "sha256": sha256(SEMANTICS_SCOPE_AUDIT),
+                "required_status": "PASS_EXPLICIT_FAIL_CLOSED_CIRCUIT_SEMANTICS_SCOPE",
+                "metrics": ["4.30", "16.15", "18.07"],
+            },
         },
         "metric_dispositions": dispositions,
         "claim_boundary": (
@@ -229,7 +268,9 @@ def build_audit(output: Path = DEFAULT_OUTPUT) -> dict:
             "general; 16.16 remains PARTIAL without real-QPU hardware-aware evidence; "
             "16.18 remains PARTIAL because the Clifford+T T-depth evidence is not a "
             "fault-tolerant architecture estimate; 13.13 remains PARTIAL because only "
-            "two fake-backend coupling graphs are covered."
+            "two fake-backend coupling graphs are covered; 4.30/16.15/18.07 remain "
+            "PARTIAL because the parameterized boundary is only declared and "
+            "fail-closed, not proved or counterexampled."
         ),
         "source_bindings": {
             "analysis/prepaper_retrospective_binding_audit.py": sha256(Path(__file__)),

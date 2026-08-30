@@ -493,6 +493,24 @@ DIRECT_DISPOSITION_OVERLAYS = {
         "PARTIAL",
         "Bounded two-topology fake-backend evidence partially answers cross-topology generalization, but it is not broad topology coverage.",
     ),
+    "4.30": (
+        "release/prepaper_retrospective_binding_audit.json",
+        "PARTIAL: the fail-closed circuit-semantics scope audit explicitly defines the theorem domain as fixed-width bound-parameter unitary circuits and rejects free parameters, measurement, reset, and dynamic control with executable scenario tests, but no theorem or counterexample is established for parameterized gates, partial initialization, or observational equivalence beyond that declared scope",
+        "PARTIAL",
+        "The parameterized-gate theorem boundary is explicitly declared and fail-closed with executable tests, but not proved or counterexampled beyond the unitary scope.",
+    ),
+    "16.15": (
+        "release/prepaper_retrospective_binding_audit.json",
+        "PARTIAL: the sealed scope audit shows parameterized circuits are handled fail-closed (free parameters are rejected rather than silently bound or sampled), which is an explicit documented boundary with executable tests, but no symbolic or multi-point sampling protocol extends the optimizer to parameterized circuits",
+        "PARTIAL",
+        "Parameterized circuits are handled fail-closed with an explicit documented boundary, but no extension protocol exists.",
+    ),
+    "18.07": (
+        "release/prepaper_retrospective_binding_audit.json",
+        "PARTIAL: parameterized-circuit equivalence is bounded by the same fail-closed scope audit (free parameters rejected, bound-parameter unitaries verified exactly), but no independent parameterized-equivalence artifact exists beyond the declared unitary scope",
+        "PARTIAL",
+        "Parameterized-circuit equivalence is bounded by the fail-closed scope audit, but no independent artifact exists beyond the unitary scope.",
+    ),
     "13.19": (
         "data/v10/prepaper/heldout_v2/analysis/generalization_ood/generalization_ood_audit.json",
         "PASS: covariate shift is quantified from training-only feature geometry at instance and family levels",

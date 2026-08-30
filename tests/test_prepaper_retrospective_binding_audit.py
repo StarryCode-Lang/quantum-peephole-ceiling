@@ -16,6 +16,7 @@ def test_retrospective_binding_status_and_metrics():
     assert audit["status"] == "PASS_RETROSPECTIVE_EVIDENCE_BINDING"
     assert set(audit["metric_dispositions"]) == {
         "13.14", "16.23", "3.12", "16.16", "16.18", "13.13",
+        "4.30", "16.15", "18.07",
     }
     assert audit["metric_dispositions"]["3.12"].startswith("PASS:")
     assert audit["metric_dispositions"]["13.14"].startswith("PARTIAL:")
@@ -23,6 +24,9 @@ def test_retrospective_binding_status_and_metrics():
     assert audit["metric_dispositions"]["16.16"].startswith("PARTIAL:")
     assert audit["metric_dispositions"]["16.18"].startswith("PARTIAL:")
     assert audit["metric_dispositions"]["13.13"].startswith("PARTIAL:")
+    assert audit["metric_dispositions"]["4.30"].startswith("PARTIAL:")
+    assert audit["metric_dispositions"]["16.15"].startswith("PARTIAL:")
+    assert audit["metric_dispositions"]["18.07"].startswith("PARTIAL:")
 
 
 def test_retrospective_binding_hashes_match_workspace():
