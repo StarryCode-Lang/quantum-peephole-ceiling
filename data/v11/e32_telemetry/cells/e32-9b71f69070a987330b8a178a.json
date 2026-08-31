@@ -1,0 +1,110 @@
+{
+  "best_event_index": 4,
+  "best_valid_gate_count": 11,
+  "best_valid_reduction_pct_itt": 0.0,
+  "budget_seconds": 60.0,
+  "circuit_family": "SurfaceCode",
+  "event_count": 6,
+  "events": [
+    {
+      "elapsed_ns": 1094734300,
+      "elapsed_seconds": 1.0947343,
+      "event": "cell_python_started",
+      "event_index": 0
+    },
+    {
+      "elapsed_ns": 1096475600,
+      "elapsed_seconds": 1.0964756,
+      "event": "input_loaded",
+      "event_index": 1,
+      "input_circuit_sha256": "14da3f908abda6229c65d0aec602aaf53fad733479c969be7e0504eaa5dacae0",
+      "input_gate_count": 11,
+      "n_qubits": 8
+    },
+    {
+      "elapsed_ns": 1121816500,
+      "elapsed_seconds": 1.1218165,
+      "event": "listing_validated",
+      "event_index": 2,
+      "exact_fidelity": 0.9999999999999998,
+      "listed_circuit_sha256": "14da3f908abda6229c65d0aec602aaf53fad733479c969be7e0504eaa5dacae0",
+      "listed_gate_count": 11
+    },
+    {
+      "elapsed_ns": 1122055800,
+      "elapsed_seconds": 1.1220558,
+      "event": "optimizer_initialized",
+      "event_index": 3
+    },
+    {
+      "elapsed_ns": 1152924400,
+      "elapsed_seconds": 1.1529244,
+      "event": "iteration_candidate_validated",
+      "event_index": 4,
+      "exact_fidelity": 0.9999999999999998,
+      "gate_count": 11,
+      "iteration": 0,
+      "no_progress": true,
+      "output_circuit_sha256": "14da3f908abda6229c65d0aec602aaf53fad733479c969be7e0504eaa5dacae0",
+      "rewrite_counts": {
+        "cz_conversions": 0,
+        "h_reorders": 0,
+        "hh_cancellations": 0,
+        "local_cancellations": 0,
+        "mcz_conversions": 0,
+        "pair_gathers": 0,
+        "phase_merges": 0,
+        "template_rewrites": 0
+      },
+      "valid_equivalent_output": true
+    },
+    {
+      "elapsed_ns": 1152941900,
+      "elapsed_seconds": 1.1529419,
+      "event": "cell_finished",
+      "event_index": 5,
+      "status": "success"
+    }
+  ],
+  "first_valid_event_index": 4,
+  "input_circuit_sha256": "14da3f908abda6229c65d0aec602aaf53fad733479c969be7e0504eaa5dacae0",
+  "input_gate_count": 11,
+  "listing_model": "LBL",
+  "measurement_clock": "time.perf_counter_ns",
+  "measurement_origin": "first executed Python instruction in worker module",
+  "n_qubits": 8,
+  "rule_set": "COMMUTATION_PLUS_TEMPLATES",
+  "run_id": "e32-9b71f69070a987330b8a178a",
+  "run_order": 73,
+  "schema_version": "1.0.0",
+  "status": "success",
+  "time_to_best_ns": 1152924400,
+  "time_to_best_seconds": 1.1529244,
+  "time_to_first_valid_ns": 1152924400,
+  "time_to_first_valid_seconds": 1.1529244,
+  "timing_includes": [
+    "module imports",
+    "QASM parsing",
+    "listing construction and exact validation",
+    "optimizer setup",
+    "rewrite iterations",
+    "per-iteration exact candidate validation"
+  ],
+  "total_rewrite_counts": {
+    "cz_conversions": 0,
+    "h_reorders": 0,
+    "hh_cancellations": 0,
+    "local_cancellations": 0,
+    "mcz_conversions": 0,
+    "pair_gathers": 0,
+    "phase_merges": 0,
+    "template_rewrites": 0
+  },
+  "valid_equivalent_output": true,
+  "window_gates": 16,
+  "worker_environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python_executable": "D:\\Downloads\\miniforge3\\python.exe",
+    "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]"
+  }
+}

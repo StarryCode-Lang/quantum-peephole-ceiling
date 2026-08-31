@@ -1,0 +1,26 @@
+{
+  "artifact_manifest_sha256": "f9c12df9873a0a458ba6cba38d64a3b98c26c5e681c43bc90c24d5c6491e2cdf",
+  "claim_boundary": "Bounded five-file Benchpress-derived stress panel on one 16-GB Windows host, not the complete >1000-test Benchpress campaign or its 96-GB recommended environment.",
+  "itt_cells": 5,
+  "large_cells_observed": 4,
+  "large_cells_successful": 2,
+  "maximum_declared_qubits": 400,
+  "metric_dispositions": {
+    "18.06": {
+      "disposition": "A direct large-circuit software tier covers declared widths 28, 37, 320, and 400 with all four terminal outcomes retained; 2/4 completed the full bounded parser/WCL/one-iteration workload. No large-width semantic-effect claim is made.",
+      "status": "PASS"
+    },
+    "5.29": {
+      "disposition": "A frozen five-file Benchpress-derived multi-tier stress schedule ran with cold-process timeout/memory/error retention; it is not the complete Benchpress campaign.",
+      "status": "PARTIAL"
+    }
+  },
+  "protocol_sha256": "147645adabbe5308cc29d65edfe7e1aa30e8455edb7da624176c214a0c56961d",
+  "semantic_boundary": "The large stress tier tests software execution and resource behavior only. No large-width semantic-equivalence or optimization-effectiveness claim is made from cells lacking an independent proof.",
+  "status": "VERIFIED",
+  "status_counts": {
+    "success": 2,
+    "timeout": 3
+  },
+  "verifier_sha256": "d731ca94425ab2111d4ef8d469abab5cd00229df4920507aeef46d63ccaa81fb"
+}

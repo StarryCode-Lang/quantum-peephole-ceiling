@@ -1,0 +1,41 @@
+{
+  "bytes": 4541204,
+  "case_id": "qft_n320",
+  "cell_id": "e35-cf6060f8b926ed4b9d29f0d2",
+  "expected_qubits_from_name": 320,
+  "gate_alphabet": [
+    "barrier",
+    "cx",
+    "h",
+    "measure",
+    "u1"
+  ],
+  "one_iteration_gate_count": 255840,
+  "outer_wall_seconds": 74.28670660001808,
+  "parse_seconds": 1.5151228999893647,
+  "parsed_depth": 2550,
+  "parsed_gate_count": 255840,
+  "parsed_qubits": 320,
+  "peak_process_tree_rss_bytes": 386248704,
+  "relative_path": "benchpress/qasm/qasmbench-large/qft_n320/qft_n320.qasm",
+  "rewrite_counts": {
+    "cz_conversions": 0,
+    "h_reorders": 734,
+    "hh_cancellations": 0,
+    "local_cancellations": 0,
+    "mcz_conversions": 0,
+    "pair_gathers": 0,
+    "phase_merges": 0,
+    "template_rewrites": 0
+  },
+  "schema_version": "1.0.0",
+  "semantic_status": "UNAVAILABLE_LARGE_STRESS_ONLY",
+  "sha256": "e053b28b6eb8ac12897802fdf19a43ee5a8cd0e1ff819d701b8b956129349385",
+  "status": "success",
+  "stderr_tail": "",
+  "stdout_tail": "",
+  "tier": "large",
+  "wcl_gate_count": 255840,
+  "wcl_seconds": 6.137758400000166,
+  "worker_wall_seconds": 73.19453849998536
+}

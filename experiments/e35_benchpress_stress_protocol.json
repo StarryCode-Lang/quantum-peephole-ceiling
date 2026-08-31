@@ -1,0 +1,78 @@
+{
+  "claim_boundary": "Bounded five-file Benchpress-derived stress panel on one 16-GB Windows host, not the complete >1000-test Benchpress campaign or its 96-GB recommended environment.",
+  "design_status": "FROZEN_BEFORE_EXECUTION",
+  "estimand": "descriptive completion/status, peak process-tree RSS, elapsed time, parsed width/gates/depth, and one-iteration output size for each fixed stress cell",
+  "experiment_id": "E35_BENCHPRESS_STRESS_V1",
+  "failure_semantics": "all five cells remain in ITT; timeout, memory-cap termination, parser error, and rewrite error are terminal observed outcomes and are not replaced",
+  "freeze_date": "2026-08-31",
+  "inputs": [
+    {
+      "bytes": 8885331,
+      "case_id": "factor247_n15",
+      "expected_qubits_from_name": 15,
+      "relative_path": "benchpress/qasm/qasmbench-medium/factor247_n15/factor247_n15.qasm",
+      "sha256": "c303ca80de6d2c6b0dd229fb695c79907f2d2b2942330540ccaa72d101eefd4e",
+      "tier": "medium"
+    },
+    {
+      "bytes": 10141790,
+      "case_id": "vqe_uccsd_n28",
+      "expected_qubits_from_name": 28,
+      "relative_path": "benchpress/qasm/qasmbench-large/vqe_uccsd_n28/vqe_uccsd_n28.qasm",
+      "sha256": "8c1da2ae2b52c496ee3b60f815256bc642bcf9b740381f4dec0e50005200382d",
+      "tier": "large"
+    },
+    {
+      "bytes": 25503752,
+      "case_id": "bwt_n37_transpiled",
+      "expected_qubits_from_name": 37,
+      "relative_path": "benchpress/qasm/qasmbench-large/bwt_n37/bwt_n37_transpiled.qasm",
+      "sha256": "dae8c4f547c1ef38c05ef81e8670744630447800a7d154bf87d98aa59b636ba7",
+      "tier": "large"
+    },
+    {
+      "bytes": 4541204,
+      "case_id": "qft_n320",
+      "expected_qubits_from_name": 320,
+      "relative_path": "benchpress/qasm/qasmbench-large/qft_n320/qft_n320.qasm",
+      "sha256": "e053b28b6eb8ac12897802fdf19a43ee5a8cd0e1ff819d701b8b956129349385",
+      "tier": "large"
+    },
+    {
+      "bytes": 8852840,
+      "case_id": "multiplier_n400_transpiled",
+      "expected_qubits_from_name": 400,
+      "relative_path": "benchpress/qasm/qasmbench-large/multiplier_n400/multiplier_n400_transpiled.qasm",
+      "sha256": "030b6e7d62f15512118a384e8ef5aa52e422fa4ceb18d3751fb6ae6597dae281",
+      "tier": "large"
+    }
+  ],
+  "research_question": "Can the project parser, WCL preprocessing, and one bounded Phase-2b rewrite iteration process a fixed multi-tier subset of official Benchpress QASM workloads under explicit time and memory failure semantics?",
+  "resource_contract": {
+    "cell_timeout_seconds": 180.0,
+    "cold_process_per_cell": true,
+    "rss_cap_bytes": 8589934592,
+    "threads_per_worker": 1,
+    "workers": 1
+  },
+  "schema_version": "1.0.0",
+  "selection_rule": "five named files fixed before execution: one medium and four large QASMBench workloads spanning filename-declared widths 15, 28, 37, 320, and 400; no outcome-dependent replacement",
+  "semantic_boundary": "The large stress tier tests software execution and resource behavior only. No large-width semantic-equivalence or optimization-effectiveness claim is made from cells lacking an independent proof.",
+  "source": {
+    "commit": "b695f30e83a32bac05b9b4d8e98d37ba9aae5236",
+    "license": "Apache-2.0",
+    "license_sha256": "a546e646e3ebd602534d3599bb673c5263529edcfea4374a7c647ef3a3519289",
+    "repository": "https://github.com/Qiskit/benchpress"
+  },
+  "source_sha256": {
+    "experiments/e35_benchpress_stress.py": "a20a5873e9d237c8180ab6337fddb4c68fd5c58a062f0978d639e2e92aef1652",
+    "scripts/verify_e35_benchpress_stress.py": "d731ca94425ab2111d4ef8d469abab5cd00229df4920507aeef46d63ccaa81fb"
+  },
+  "workload": [
+    "SHA-256 stream",
+    "QASM2 parse",
+    "gate/depth characterization",
+    "WCL preprocessing",
+    "one Phase-2b commutation-plus-template iteration"
+  ]
+}

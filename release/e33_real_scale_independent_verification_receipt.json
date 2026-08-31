@@ -1,0 +1,28 @@
+{
+  "artifact_manifest_sha256": "3b7b55ad72b4b7bafed76bb0f504e9597184af9c53c9b6a7236b4dece14176f6",
+  "claim_boundary": "Direct fixed-panel evidence beyond the prior 4-10-qubit validation range and without project-generated benchmarks. The panel is external and application-oriented, not field-collected production workload evidence; it cannot establish unseen-family, all-width, real-QPU, or optimizer-independent generalization.",
+  "metric_dispositions": {
+    "13.12": {
+      "disposition": "Direct proof-audited fixed-panel evidence at 11-36 qubits, beyond the prior 4-10 range; no unseen-family or all-width extrapolation.",
+      "status": "PARTIAL"
+    },
+    "13.17": {
+      "disposition": "External application-oriented benchmark circuits are executed, but they are not field-collected production workloads.",
+      "status": "PARTIAL"
+    },
+    "17.29": {
+      "disposition": "The complete E33 panel uses only checksum-pinned circuits from the independent Quasar Zenodo artifact and no project-generated benchmark.",
+      "status": "PASS"
+    },
+    "17.30": {
+      "disposition": "The panel is entirely external benchmark circuits, but external benchmark is not synonymous with real production circuit.",
+      "status": "PARTIAL"
+    }
+  },
+  "mutants_rejected": 20,
+  "protocol_sha256": "d2299c5b971c44b65df0563dee6c35b81033a299926917a5ba97fa7621bad9da",
+  "proved_equal": 20,
+  "rows": 22,
+  "status": "VERIFIED",
+  "verifier_sha256": "fdc164551cc0b4a8ae17cd8029d59f51aa6b234070c25e268d8c86503a7e7b08"
+}

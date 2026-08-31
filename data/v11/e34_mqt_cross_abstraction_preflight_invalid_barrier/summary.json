@@ -1,0 +1,524 @@
+{
+  "claim_boundary": "Bounded MQT Bench 2.2.3 alignment on three fixed algorithms and one IBM Falcon-27 target; not exhaustive over MQT algorithms, targets, versions, mappings, or compiler seeds.",
+  "environment": {
+    "executable": "D:\\Downloads\\qresearch-mqtbench-2.2.3\\Scripts\\python.exe",
+    "executable_sha256": "d62997a02b6d63b4273391719eeafb13828ddb178cb47a64002c0ff371e524c7",
+    "mqt.bench": "2.2.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+    "qiskit": "2.5.2"
+  },
+  "metric_dispositions": {
+    "5.28": {
+      "disposition": "All three frozen same-algorithm blocks materialize at all four official MQT Bench abstraction levels with native-gate and mapped-edge invariants; scope remains the bounded panel.",
+      "status": "PARTIAL"
+    }
+  },
+  "protocol_sha256": "e00da986ae4c00c3322cff643a0460a8eae5cf37c1ef18f012a2f586ceb2e88b",
+  "rows": [
+    {
+      "all_mapped_two_qubit_edges_valid": true,
+      "all_native_operations": true,
+      "benchmark": "qft",
+      "case_id": "qft_5",
+      "circuit_size": 5,
+      "depth": 2,
+      "gate_alphabet": [
+        "barrier",
+        "measure",
+        "qft"
+      ],
+      "gate_count": 6,
+      "layout_present": false,
+      "level": "ALG",
+      "n_qubits": 5,
+      "qasm_path": "data/v11/e34_mqt_cross_abstraction/qasm/qft_5_alg.qasm",
+      "qasm_sha256": "8a92d2956ac0999e3d30bab8adc0ad743270ccb83b5313c9f5bbeab0f5f394be"
+    },
+    {
+      "all_mapped_two_qubit_edges_valid": true,
+      "all_native_operations": true,
+      "benchmark": "qft",
+      "case_id": "qft_5",
+      "circuit_size": 5,
+      "depth": 10,
+      "gate_alphabet": [
+        "barrier",
+        "cp",
+        "h",
+        "measure"
+      ],
+      "gate_count": 20,
+      "layout_present": true,
+      "level": "INDEP",
+      "n_qubits": 5,
+      "qasm_path": "data/v11/e34_mqt_cross_abstraction/qasm/qft_5_indep.qasm",
+      "qasm_sha256": "1dfc56ea7099e61cc8595ae3ee0361c434db1c238e7f8564e35f4947afb53e26"
+    },
+    {
+      "all_mapped_two_qubit_edges_valid": true,
+      "all_native_operations": false,
+      "benchmark": "qft",
+      "case_id": "qft_5",
+      "circuit_size": 5,
+      "depth": 33,
+      "gate_alphabet": [
+        "barrier",
+        "cx",
+        "measure",
+        "rz",
+        "sx",
+        "x"
+      ],
+      "gate_count": 59,
+      "layout_present": true,
+      "level": "NATIVEGATES",
+      "n_qubits": 5,
+      "qasm_path": "data/v11/e34_mqt_cross_abstraction/qasm/qft_5_nativegates.qasm",
+      "qasm_sha256": "4d18774e0c451f133c9fe6ea44195aa495445f9432762d90022d2c4acab58d91"
+    },
+    {
+      "all_mapped_two_qubit_edges_valid": true,
+      "all_native_operations": false,
+      "benchmark": "qft",
+      "case_id": "qft_5",
+      "circuit_size": 5,
+      "depth": 62,
+      "gate_alphabet": [
+        "barrier",
+        "cx",
+        "measure",
+        "rz",
+        "sx",
+        "x"
+      ],
+      "gate_count": 102,
+      "layout_present": true,
+      "level": "MAPPED",
+      "n_qubits": 27,
+      "qasm_path": "data/v11/e34_mqt_cross_abstraction/qasm/qft_5_mapped.qasm",
+      "qasm_sha256": "393450718b40a652e76f3de65137312425a77c1658df2cee8b2ce00dc90a49d9"
+    },
+    {
+      "all_mapped_two_qubit_edges_valid": true,
+      "all_native_operations": true,
+      "benchmark": "ghz",
+      "case_id": "ghz_8",
+      "circuit_size": 8,
+      "depth": 9,
+      "gate_alphabet": [
+        "barrier",
+        "cx",
+        "h",
+        "measure"
+      ],
+      "gate_count": 16,
+      "layout_present": false,
+      "level": "ALG",
+      "n_qubits": 8,
+      "qasm_path": "data/v11/e34_mqt_cross_abstraction/qasm/ghz_8_alg.qasm",
+      "qasm_sha256": "55e017610f8c510488a707feb151f2527883270c6011d9ba50f3f0240f22e9a7"
+    },
+    {
+      "all_mapped_two_qubit_edges_valid": true,
+      "all_native_operations": true,
+      "benchmark": "ghz",
+      "case_id": "ghz_8",
+      "circuit_size": 8,
+      "depth": 9,
+      "gate_alphabet": [
+        "barrier",
+        "cx",
+        "h",
+        "measure"
+      ],
+      "gate_count": 16,
+      "layout_present": false,
+      "level": "INDEP",
+      "n_qubits": 8,
+      "qasm_path": "data/v11/e34_mqt_cross_abstraction/qasm/ghz_8_indep.qasm",
+      "qasm_sha256": "55e017610f8c510488a707feb151f2527883270c6011d9ba50f3f0240f22e9a7"
+    },
+    {
+      "all_mapped_two_qubit_edges_valid": true,
+      "all_native_operations": false,
+      "benchmark": "ghz",
+      "case_id": "ghz_8",
+      "circuit_size": 8,
+      "depth": 20,
+      "gate_alphabet": [
+        "barrier",
+        "cx",
+        "measure",
+        "rz",
+        "sx"
+      ],
+      "gate_count": 38,
+      "layout_present": false,
+      "level": "NATIVEGATES",
+      "n_qubits": 8,
+      "qasm_path": "data/v11/e34_mqt_cross_abstraction/qasm/ghz_8_nativegates.qasm",
+      "qasm_sha256": "810c8648f7c47a516858446d8344c757c1ea06b07b0d803bcd9e1e210011a667"
+    },
+    {
+      "all_mapped_two_qubit_edges_valid": true,
+      "all_native_operations": false,
+      "benchmark": "ghz",
+      "case_id": "ghz_8",
+      "circuit_size": 8,
+      "depth": 16,
+      "gate_alphabet": [
+        "barrier",
+        "cx",
+        "measure",
+        "rz",
+        "sx"
+      ],
+      "gate_count": 28,
+      "layout_present": true,
+      "level": "MAPPED",
+      "n_qubits": 27,
+      "qasm_path": "data/v11/e34_mqt_cross_abstraction/qasm/ghz_8_mapped.qasm",
+      "qasm_sha256": "d5b7d556d98b90ba907a48da4f6366728c2a7d9801357705668ad8cedfefb44f"
+    },
+    {
+      "all_mapped_two_qubit_edges_valid": true,
+      "all_native_operations": true,
+      "benchmark": "qwalk",
+      "case_id": "qwalk_5",
+      "circuit_size": 5,
+      "depth": 34,
+      "gate_alphabet": [
+        "barrier",
+        "ccx",
+        "cx",
+        "h",
+        "mcx",
+        "measure",
+        "x"
+      ],
+      "gate_count": 56,
+      "layout_present": false,
+      "level": "ALG",
+      "n_qubits": 5,
+      "qasm_path": "data/v11/e34_mqt_cross_abstraction/qasm/qwalk_5_alg.qasm",
+      "qasm_sha256": "52fe300d4c31a74d759505969fd449d9b1014fdd331dbe1dff0b408448aa05db"
+    },
+    {
+      "all_mapped_two_qubit_edges_valid": true,
+      "all_native_operations": true,
+      "benchmark": "qwalk",
+      "case_id": "qwalk_5",
+      "circuit_size": 5,
+      "depth": 404,
+      "gate_alphabet": [
+        "barrier",
+        "ccx",
+        "cp",
+        "cx",
+        "h",
+        "measure",
+        "p",
+        "t",
+        "tdg",
+        "u2",
+        "x"
+      ],
+      "gate_count": 458,
+      "layout_present": false,
+      "level": "INDEP",
+      "n_qubits": 5,
+      "qasm_path": "data/v11/e34_mqt_cross_abstraction/qasm/qwalk_5_indep.qasm",
+      "qasm_sha256": "ac9e7e90d4169d66a3e22883ce9d3d96b719d38629a60347b3a10e3e9b8b75d9"
+    },
+    {
+      "all_mapped_two_qubit_edges_valid": true,
+      "all_native_operations": false,
+      "benchmark": "qwalk",
+      "case_id": "qwalk_5",
+      "circuit_size": 5,
+      "depth": 697,
+      "gate_alphabet": [
+        "barrier",
+        "cx",
+        "measure",
+        "rz",
+        "sx",
+        "x"
+      ],
+      "gate_count": 937,
+      "layout_present": false,
+      "level": "NATIVEGATES",
+      "n_qubits": 5,
+      "qasm_path": "data/v11/e34_mqt_cross_abstraction/qasm/qwalk_5_nativegates.qasm",
+      "qasm_sha256": "20f02d2dd9e3d9479425bbd7ff0c77e38e1cb5edf5e02c615af8edebbebdc810"
+    },
+    {
+      "all_mapped_two_qubit_edges_valid": true,
+      "all_native_operations": false,
+      "benchmark": "qwalk",
+      "case_id": "qwalk_5",
+      "circuit_size": 5,
+      "depth": 1053,
+      "gate_alphabet": [
+        "barrier",
+        "cx",
+        "measure",
+        "rz",
+        "sx",
+        "x"
+      ],
+      "gate_count": 1478,
+      "layout_present": true,
+      "level": "MAPPED",
+      "n_qubits": 27,
+      "qasm_path": "data/v11/e34_mqt_cross_abstraction/qasm/qwalk_5_mapped.qasm",
+      "qasm_sha256": "c142238be0ca1332962bd7d43cce306f4b5241db57f349efcfd2f53521327886"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "status": "INCOMPLETE_OR_INVALID",
+  "target_coupling_edges": [
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      3,
+      5
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      7
+    ],
+    [
+      5,
+      3
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      6,
+      7
+    ],
+    [
+      7,
+      4
+    ],
+    [
+      7,
+      6
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      5
+    ],
+    [
+      8,
+      9
+    ],
+    [
+      8,
+      11
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      10,
+      7
+    ],
+    [
+      10,
+      12
+    ],
+    [
+      11,
+      8
+    ],
+    [
+      11,
+      14
+    ],
+    [
+      12,
+      10
+    ],
+    [
+      12,
+      13
+    ],
+    [
+      12,
+      15
+    ],
+    [
+      13,
+      12
+    ],
+    [
+      13,
+      14
+    ],
+    [
+      14,
+      11
+    ],
+    [
+      14,
+      13
+    ],
+    [
+      14,
+      16
+    ],
+    [
+      15,
+      12
+    ],
+    [
+      15,
+      18
+    ],
+    [
+      16,
+      14
+    ],
+    [
+      16,
+      19
+    ],
+    [
+      17,
+      18
+    ],
+    [
+      18,
+      15
+    ],
+    [
+      18,
+      17
+    ],
+    [
+      18,
+      21
+    ],
+    [
+      19,
+      16
+    ],
+    [
+      19,
+      20
+    ],
+    [
+      19,
+      22
+    ],
+    [
+      20,
+      19
+    ],
+    [
+      21,
+      18
+    ],
+    [
+      21,
+      23
+    ],
+    [
+      22,
+      19
+    ],
+    [
+      22,
+      25
+    ],
+    [
+      23,
+      21
+    ],
+    [
+      23,
+      24
+    ],
+    [
+      24,
+      23
+    ],
+    [
+      24,
+      25
+    ],
+    [
+      25,
+      22
+    ],
+    [
+      25,
+      24
+    ],
+    [
+      25,
+      26
+    ],
+    [
+      26,
+      25
+    ]
+  ],
+  "target_operation_names": [
+    "box",
+    "break",
+    "continue",
+    "cx",
+    "delay",
+    "for_loop",
+    "id",
+    "if_else",
+    "measure",
+    "reset",
+    "rz",
+    "switch_case",
+    "sx",
+    "while_loop",
+    "x"
+  ]
+}

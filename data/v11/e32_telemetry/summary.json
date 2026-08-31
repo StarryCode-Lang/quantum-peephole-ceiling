@@ -1,0 +1,101 @@
+{
+  "claim_scope": "descriptive fixed-panel evidence for the 15 selected <=8-qubit families, six Phase-2b treatments, this host, and this source/environment only",
+  "itt_contract": "all 90 scheduled cells remain in denominator; timeout/error/invalid have unavailable timing and zero optimization benefit, never survivor imputation",
+  "itt_observed_n": 90,
+  "itt_scheduled_n": 90,
+  "not_supported": [
+    "sealed E31 timing reconstruction",
+    "unseen-family generalization",
+    "cross-machine timing generalization",
+    "real-QPU time-to-solution",
+    "optimizer-independent timing claims"
+  ],
+  "outer_family_n": 15,
+  "protocol_sha256": "b8555df71bd191f194a7a8f3b89af8dd4ef4fc474dad3b249efbf2da822168be",
+  "schema_version": "1.0.0",
+  "status": "FORMAL_BOUNDED_PANEL_COMPLETE",
+  "status_counts": {
+    "success": 89,
+    "timeout": 1
+  },
+  "time_to_best": {
+    "estimand": "elapsed time to earliest exact-valid candidate attaining the observed minimum gate count",
+    "median_seconds_available_cases": 1.3299376,
+    "p95_seconds_available_cases": 19.093401779999873
+  },
+  "time_to_first_valid": {
+    "estimand": "elapsed time to first independently exact-valid post-iteration candidate",
+    "median_seconds_available_cases": 1.3199724,
+    "p95_seconds_available_cases": 19.093401779999873
+  },
+  "timing_available_n": 89,
+  "timing_unavailable_n": 1,
+  "treatment_summaries": [
+    {
+      "failure_timeout_invalid_n": 0,
+      "itt_n": 15,
+      "listing_model": "LBL",
+      "rule_set": "COMMUTATION_ONLY",
+      "time_to_best_median_seconds": 1.3601962,
+      "time_to_best_p95_seconds": 12.174793659999976,
+      "time_to_first_valid_median_seconds": 1.3601962,
+      "time_to_first_valid_p95_seconds": 12.174793659999976,
+      "timing_available_n": 15
+    },
+    {
+      "failure_timeout_invalid_n": 0,
+      "itt_n": 15,
+      "listing_model": "LBL",
+      "rule_set": "COMMUTATION_PLUS_TEMPLATES",
+      "time_to_best_median_seconds": 1.3218076,
+      "time_to_best_p95_seconds": 12.483711269999976,
+      "time_to_first_valid_median_seconds": 1.3217705,
+      "time_to_first_valid_p95_seconds": 12.483711269999976,
+      "timing_available_n": 15
+    },
+    {
+      "failure_timeout_invalid_n": 0,
+      "itt_n": 15,
+      "listing_model": "RANDOM_TOPOLOGICAL",
+      "rule_set": "COMMUTATION_ONLY",
+      "time_to_best_median_seconds": 1.3385764,
+      "time_to_best_p95_seconds": 16.424858619999963,
+      "time_to_first_valid_median_seconds": 1.3385764,
+      "time_to_first_valid_p95_seconds": 12.434288289999976,
+      "timing_available_n": 15
+    },
+    {
+      "failure_timeout_invalid_n": 1,
+      "itt_n": 15,
+      "listing_model": "RANDOM_TOPOLOGICAL",
+      "rule_set": "COMMUTATION_PLUS_TEMPLATES",
+      "time_to_best_median_seconds": 1.3169594,
+      "time_to_best_p95_seconds": 3.126655229999998,
+      "time_to_first_valid_median_seconds": 1.28741665,
+      "time_to_first_valid_p95_seconds": 3.126655229999998,
+      "timing_available_n": 14
+    },
+    {
+      "failure_timeout_invalid_n": 0,
+      "itt_n": 15,
+      "listing_model": "WCL",
+      "rule_set": "COMMUTATION_ONLY",
+      "time_to_best_median_seconds": 1.3035882,
+      "time_to_best_p95_seconds": 12.284568179999976,
+      "time_to_first_valid_median_seconds": 1.3035882,
+      "time_to_first_valid_p95_seconds": 12.284568179999976,
+      "timing_available_n": 15
+    },
+    {
+      "failure_timeout_invalid_n": 0,
+      "itt_n": 15,
+      "listing_model": "WCL",
+      "rule_set": "COMMUTATION_PLUS_TEMPLATES",
+      "time_to_best_median_seconds": 1.360438,
+      "time_to_best_p95_seconds": 12.637936759999974,
+      "time_to_first_valid_median_seconds": 1.360438,
+      "time_to_first_valid_p95_seconds": 12.637936759999974,
+      "timing_available_n": 15
+    }
+  ]
+}

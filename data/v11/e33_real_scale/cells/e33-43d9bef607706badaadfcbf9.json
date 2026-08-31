@@ -1,0 +1,61 @@
+{
+  "benchmark_class": "adder_mux",
+  "benchmark_id": "csla_mux_3",
+  "input_circuit_sha256": "e19bed8f8c902135e514648b0d87b92a1c406794944a6be3cc658d9f87e91a55",
+  "input_gate_count": 210,
+  "listed_gate_count": 210,
+  "listing_model": "WCL",
+  "mutant_proof_decision": null,
+  "n_qubits": 15,
+  "optimized_basis_qasm_path": "data/v11/e33_real_scale/qasm/e33-43d9bef607706badaadfcbf9.optimized.qasm",
+  "optimized_basis_qasm_sha256": "a34fb8d178e85a01f3597f7f048235e64a6a8f4f9b42cf45d36258e5fcd188be",
+  "optimized_gate_count": 193,
+  "original_basis_qasm_path": "data/v11/e33_real_scale/qasm/e33-43d9bef607706badaadfcbf9.original.qasm",
+  "original_basis_qasm_sha256": "5991075d6921b08030819f8dd89fbb4523dcef31813e790bc9b55122d5cc868f",
+  "proof_decision": true,
+  "pyzx_version": "0.10.5",
+  "qasm_file_sha256": "f495b948354824175d1b9429a9824fa7d20fa52008409df6141b9238bb4147ea",
+  "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/csla_mux_3.qasm",
+  "reduction_pct_itt": 8.0952380952381,
+  "rewrite_counts": {
+    "cz_conversions": 0,
+    "h_reorders": 0,
+    "hh_cancellations": 0,
+    "local_cancellations": 0,
+    "mcz_conversions": 0,
+    "pair_gathers": 145,
+    "phase_merges": 17,
+    "template_rewrites": 0
+  },
+  "run_id": "e33-43d9bef607706badaadfcbf9",
+  "run_order": 7,
+  "schema_version": "1.0.0",
+  "status": "success",
+  "trace": [
+    {
+      "cz_conversions": 0,
+      "gate_count": 193,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 0,
+      "local_cancellations": 0,
+      "mcz_conversions": 0,
+      "pair_gathers": 145,
+      "phase_merges": 17,
+      "template_rewrites": 0
+    },
+    {
+      "cz_conversions": 0,
+      "gate_count": 193,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 1,
+      "local_cancellations": 0,
+      "mcz_conversions": 0,
+      "pair_gathers": 0,
+      "phase_merges": 0,
+      "template_rewrites": 0
+    }
+  ],
+  "wall_seconds": 1.8941952000022866
+}

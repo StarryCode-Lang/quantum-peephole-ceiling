@@ -1,0 +1,61 @@
+{
+  "benchmark_class": "adder",
+  "benchmark_id": "qcla_adder_10",
+  "input_circuit_sha256": "263001214e6d638d2b5f38b3a825650020cf96aadeb22d45dbe7359bbfd387b0",
+  "input_gate_count": 563,
+  "listed_gate_count": 563,
+  "listing_model": "LBL",
+  "mutant_proof_decision": null,
+  "n_qubits": 36,
+  "optimized_basis_qasm_path": "data/v11/e33_real_scale/qasm/e33-1ee119eb97c513b9b6538a49.optimized.qasm",
+  "optimized_basis_qasm_sha256": "33815b3ae254b940e8ac52a3bcb780c9f17a7ae229516258301ad4feecb88220",
+  "optimized_gate_count": 554,
+  "original_basis_qasm_path": "data/v11/e33_real_scale/qasm/e33-1ee119eb97c513b9b6538a49.original.qasm",
+  "original_basis_qasm_sha256": "5caaee61e986f9a23bc2789087f04c04744de74d811904bab173b644fe644fca",
+  "proof_decision": true,
+  "pyzx_version": "0.10.5",
+  "qasm_file_sha256": "705d5aa577c199c1aa302472147ae5fa7adf45e3fe58fac824ab4606a09ae176",
+  "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/qcla_adder_10.qasm",
+  "reduction_pct_itt": 1.5985790408525768,
+  "rewrite_counts": {
+    "cz_conversions": 0,
+    "h_reorders": 0,
+    "hh_cancellations": 0,
+    "local_cancellations": 1,
+    "mcz_conversions": 0,
+    "pair_gathers": 207,
+    "phase_merges": 7,
+    "template_rewrites": 0
+  },
+  "run_id": "e33-1ee119eb97c513b9b6538a49",
+  "run_order": 20,
+  "schema_version": "1.0.0",
+  "status": "success",
+  "trace": [
+    {
+      "cz_conversions": 0,
+      "gate_count": 554,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 0,
+      "local_cancellations": 1,
+      "mcz_conversions": 0,
+      "pair_gathers": 207,
+      "phase_merges": 7,
+      "template_rewrites": 0
+    },
+    {
+      "cz_conversions": 0,
+      "gate_count": 554,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 1,
+      "local_cancellations": 0,
+      "mcz_conversions": 0,
+      "pair_gathers": 0,
+      "phase_merges": 0,
+      "template_rewrites": 0
+    }
+  ],
+  "wall_seconds": 6.3084265000070445
+}

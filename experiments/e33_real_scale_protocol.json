@@ -1,0 +1,159 @@
+{
+  "claim_boundary": "Direct fixed-panel evidence beyond the prior 4-10-qubit validation range and without project-generated benchmarks. The panel is external and application-oriented, not field-collected production workload evidence; it cannot establish unseen-family, all-width, real-QPU, or optimizer-independent generalization.",
+  "design_status": "FROZEN_BEFORE_EXECUTION",
+  "estimand": "finite-panel mean WCL-minus-LBL proof-valid total-gate reduction percentage points; timeout/error/inconclusive assigned zero under ITT",
+  "experiment_id": "E33_REAL_SCALE_EXTERNAL_V1_2",
+  "factors": {
+    "listing_model": [
+      "LBL",
+      "WCL"
+    ]
+  },
+  "failure_semantics": "all 22 cells retained; missing cell fatal; proof nontrue is inconclusive not inequivalent; non-success benefit zero",
+  "freeze_date": "2026-08-31",
+  "inputs": [
+    {
+      "benchmark_class": "modular_arithmetic",
+      "benchmark_id": "mod_red_21",
+      "input_circuit_sha256": "64699b1c8e2326d467dccef305c92e0ab1581d6c7835f14c9ef0f361e559667e",
+      "input_gate_count": 338,
+      "n_qubits": 11,
+      "qasm_file_sha256": "ce78ec83d0f23f63aced95247fa2d961b7ae094c419140fbf84f4879863d5887",
+      "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/mod_red_21.qasm"
+    },
+    {
+      "benchmark_class": "finite_field_arithmetic",
+      "benchmark_id": "gf2^4_mult",
+      "input_circuit_sha256": "7dbde0e63b1c25e55bda6a3b13f51d5d5033faaee8dbea6d3b78461719977781",
+      "input_gate_count": 253,
+      "n_qubits": 12,
+      "qasm_file_sha256": "b641474944eb09f1df711859d5d9f988e3619084c84bdb8d23a38a19b86ab993",
+      "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/gf2^4_mult.qasm"
+    },
+    {
+      "benchmark_class": "qaoa",
+      "benchmark_id": "qaoa_n14_p4",
+      "input_circuit_sha256": "cafa8d68798d254bc053aacf15c372a9e83e9e7fae962c4162e1e641fa61ff08",
+      "input_gate_count": 1022,
+      "n_qubits": 14,
+      "qasm_file_sha256": "8f573315ffa672edb33a13bf28e87137e89b2c26564a0c7288a38fc89f697d5b",
+      "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/qaoa_n14_p4.qasm"
+    },
+    {
+      "benchmark_class": "adder_mux",
+      "benchmark_id": "csla_mux_3",
+      "input_circuit_sha256": "e19bed8f8c902135e514648b0d87b92a1c406794944a6be3cc658d9f87e91a55",
+      "input_gate_count": 210,
+      "n_qubits": 15,
+      "qasm_file_sha256": "f495b948354824175d1b9429a9824fa7d20fa52008409df6141b9238bb4147ea",
+      "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/csla_mux_3.qasm"
+    },
+    {
+      "benchmark_class": "qft",
+      "benchmark_id": "qft_16",
+      "input_circuit_sha256": "44a19a571b4fe9894e835c5a9b7df60c7499857788606a5fdd063b6b2232b96b",
+      "input_gate_count": 576,
+      "n_qubits": 16,
+      "qasm_file_sha256": "4173415b20f4b4fd18af7037bce395a2b03307a4e54a6b837b9a120d6e31ee67",
+      "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/qft_16.qasm"
+    },
+    {
+      "benchmark_class": "reversible_toffoli",
+      "benchmark_id": "barenco_tof_10",
+      "input_circuit_sha256": "92659098eb3be94ac344544fc03c5391204b316f9dc3dcc42f2acb053ad9a55f",
+      "input_gate_count": 518,
+      "n_qubits": 19,
+      "qasm_file_sha256": "3cde65017f9fea2607245097f2df927a1d2edcaa874ae87d120d2d6397f8d88a",
+      "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/barenco_tof_10.qasm"
+    },
+    {
+      "benchmark_class": "qaoa",
+      "benchmark_id": "qaoa_n20_p4",
+      "input_circuit_sha256": "3470a8d42343bf240896e08f3dc7a7d97330a5e13a1859d2e54672e6160722b7",
+      "input_gate_count": 1460,
+      "n_qubits": 20,
+      "qasm_file_sha256": "7ebbd01cc2d04d862cff812c537b46f74d2f4759a9ccaffaafb8c99ea92cb956",
+      "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/qaoa_n20_p4.qasm"
+    },
+    {
+      "benchmark_class": "finite_field_arithmetic",
+      "benchmark_id": "gf2^7_mult",
+      "input_circuit_sha256": "2bf6e499aa6c5cae71d9b10afe15f598e7942cd2e45cacf4f5ca14106b829257",
+      "input_gate_count": 721,
+      "n_qubits": 21,
+      "qasm_file_sha256": "32e2dd07a831be370ca6810cf9b63c4eebc4b8415ca8d1667eef3a5ca103ca14",
+      "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/gf2^7_mult.qasm"
+    },
+    {
+      "benchmark_class": "adder",
+      "benchmark_id": "adder_8",
+      "input_circuit_sha256": "b62abd1bff6e7f164878d83f71ff90815f81d1c38b22597ec0efed8d32b5add6",
+      "input_gate_count": 999,
+      "n_qubits": 24,
+      "qasm_file_sha256": "afec57b2387853c83bd26782efb1999473def7e01f69a086b242d669d3821db9",
+      "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/adder_8.qasm"
+    },
+    {
+      "benchmark_class": "adder_mux",
+      "benchmark_id": "csum_mux_9",
+      "input_circuit_sha256": "95038200ad9ae3c8c8026735627e7c0cda8f2e1f7d6928eae18c95dc68d43c03",
+      "input_gate_count": 476,
+      "n_qubits": 30,
+      "qasm_file_sha256": "9aca0ecb6dd4cfa95bceced05537c11c5beb4ca6c80bf11cd3e38b0390427637",
+      "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/csum_mux_9.qasm"
+    },
+    {
+      "benchmark_class": "adder",
+      "benchmark_id": "qcla_adder_10",
+      "input_circuit_sha256": "263001214e6d638d2b5f38b3a825650020cf96aadeb22d45dbe7359bbfd387b0",
+      "input_gate_count": 563,
+      "n_qubits": 36,
+      "qasm_file_sha256": "705d5aa577c199c1aa302472147ae5fa7adf45e3fe58fac824ab4606a09ae176",
+      "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/qcla_adder_10.qasm"
+    }
+  ],
+  "optimizer_contract": {
+    "gather_window": 64,
+    "max_iterations": 50,
+    "rule_set": "COMMUTATION_PLUS_TEMPLATES"
+  },
+  "pre_execution_amendment": {
+    "estimand_changed": false,
+    "failure_semantics_changed": false,
+    "invalid_receipts_retained": 10,
+    "reason": "The first formal invocation produced ten error-only receipts because the mutation sentinel used an invalid PyZX string gate key. The run was interrupted and preserved under data/v11/e33_real_scale_preflight_invalid_keyerror_x. A subsequent no-result unit preflight established that PyZX 0.10.5 requires the key NOT rather than X or x. No valid scientific cell or aggregate result was emitted; the sentinel key changed to NOT and all source hashes were re-frozen before restart.",
+    "sample_changed": false,
+    "scientific_question_changed": false
+  },
+  "research_question": "Does the fixed WCL listing retain proof-valid optimization behavior relative to LBL on a preselected external 11-36-qubit application-oriented benchmark panel?",
+  "resource_contract": {
+    "cell_timeout_seconds": 120.0,
+    "cold_process_per_cell": true,
+    "threads_per_worker": 1
+  },
+  "schema_version": "1.2.0",
+  "selection_rule": "eleven named circuits fixed before outcomes to span widths 11-36 and arithmetic, QAOA, QFT, and reversible classes; no result-dependent replacement",
+  "source_record": {
+    "archive_md5": "ff3a49973c97316bca0fb2d347ea5478",
+    "doi": "10.5281/zenodo.19571754",
+    "license_metadata": "not displayed in the retrieved Zenodo record; use is limited to the already archived research evidence",
+    "local_archive_sha256": "2f93847e09abaa8b7d461da15d834fcf5601b7432ac4ab3cc5a537378d950c73",
+    "version": "v3"
+  },
+  "source_sha256": {
+    "experiments/e33_real_scale_panel.py": "8bf50299b080ad14de7deffc6098a38d2afb287289022cec1b52ec498088edc6",
+    "scripts/freeze_e33_real_scale_protocol.py": "0798762ebca2364b0a9aef820e7184cf7ba65b9ee8795cafb7c25a68fad98076",
+    "scripts/verify_e33_real_scale_panel.py": "fdc164551cc0b4a8ae17cd8029d59f51aa6b234070c25e268d8c86503a7e7b08"
+  },
+  "verification_contract": {
+    "decision_nontrue": "inconclusive",
+    "decision_true": "proved equal",
+    "method": "PyZX Circuit.verify_equality full_reduce identity attempt",
+    "one_x_mutant_per_cell": true,
+    "symbolic_basis": [
+      "h",
+      "rz",
+      "cx"
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "bytes": 10141790,
+  "case_id": "vqe_uccsd_n28",
+  "cell_id": "e35-bc9c53f84208bbbec060a8f4",
+  "expected_qubits_from_name": 28,
+  "gate_alphabet": [
+    "barrier",
+    "cx",
+    "u1",
+    "u2",
+    "u3"
+  ],
+  "one_iteration_gate_count": 399482,
+  "outer_wall_seconds": 92.5567197999917,
+  "parse_seconds": 2.0429275000060443,
+  "parsed_depth": 331101,
+  "parsed_gate_count": 399482,
+  "parsed_qubits": 28,
+  "peak_process_tree_rss_bytes": 531709952,
+  "relative_path": "benchpress/qasm/qasmbench-large/vqe_uccsd_n28/vqe_uccsd_n28.qasm",
+  "rewrite_counts": {
+    "cz_conversions": 0,
+    "h_reorders": 0,
+    "hh_cancellations": 0,
+    "local_cancellations": 0,
+    "mcz_conversions": 0,
+    "pair_gathers": 0,
+    "phase_merges": 0,
+    "template_rewrites": 0
+  },
+  "schema_version": "1.0.0",
+  "semantic_status": "UNAVAILABLE_LARGE_STRESS_ONLY",
+  "sha256": "8c1da2ae2b52c496ee3b60f815256bc642bcf9b740381f4dec0e50005200382d",
+  "status": "success",
+  "stderr_tail": "",
+  "stdout_tail": "",
+  "tier": "large",
+  "wcl_gate_count": 399482,
+  "wcl_seconds": 7.697724800003925,
+  "worker_wall_seconds": 91.34182830000645
+}

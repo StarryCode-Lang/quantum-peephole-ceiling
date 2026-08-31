@@ -1,0 +1,178 @@
+{
+  "claim_scope": "fixed descriptive 15-family <=8-qubit panel on this host and source/environment only",
+  "design_status": "FROZEN_BEFORE_EXECUTION",
+  "experiment_id": "E32_TELEMETRY_V1",
+  "factors": {
+    "listing_model": [
+      "LBL",
+      "WCL",
+      "RANDOM_TOPOLOGICAL"
+    ],
+    "rule_set": [
+      "COMMUTATION_ONLY",
+      "COMMUTATION_PLUS_TEMPLATES"
+    ],
+    "window_gates": [
+      16
+    ]
+  },
+  "failure_semantics": "all 90 cells retained; timeout/error/invalid timings remain unavailable and benefit is zero under ITT",
+  "freeze_date": "2026-08-31",
+  "inputs": [
+    {
+      "circuit_family": "Adder",
+      "circuit_id": "adder_6",
+      "input_circuit_sha256": "0639b3b3f7a5228332fd6ea0cb7de6e464b224d886d779e81c774cab81bfce25",
+      "n_qubits": 7,
+      "qasm_file_sha256": "b18000d84710b359915dc98882e8b64bce3ab0ba5e5ad6aa5886d5479a54130d",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t03_028_adder_6_0639b3b3f7a5.qasm"
+    },
+    {
+      "circuit_family": "CNOT",
+      "circuit_id": "cnot_chain_8",
+      "input_circuit_sha256": "d3e8b51351e86caa6d8939fe0a903f48a089e7d220d46a14b52d6c94e6e43394",
+      "n_qubits": 8,
+      "qasm_file_sha256": "70e4e03e95989375ec9b9356e3b7e127752702c81208c3ac832951bb37a617d5",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t00_039_cnot_chain_8_d3e8b51351e8.qasm"
+    },
+    {
+      "circuit_family": "GHZ",
+      "circuit_id": "ghz_8",
+      "input_circuit_sha256": "587577f385cf54a3edd3cc639b3ac8cc5aa139f2ef414827515ddc7be4c12104",
+      "n_qubits": 8,
+      "qasm_file_sha256": "f25134ecde69bf38e1d06deddf5b6a6974d2f191b0068d717c3f1f10feb2a799",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t00_038_ghz_8_587577f385cf.qasm"
+    },
+    {
+      "circuit_family": "Grover",
+      "circuit_id": "grover_8",
+      "input_circuit_sha256": "0a54b71bfd47499f18a2421cd6bf97c15dc3f348b2d97f00df878dc6173f5324",
+      "n_qubits": 8,
+      "qasm_file_sha256": "a70c48621d90c3801abe1e557f27c85478af0b66cf36150da1c6f2b5f2e9d2c3",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t09_044_grover_8_0a54b71bfd47.qasm"
+    },
+    {
+      "circuit_family": "HaarRandom",
+      "circuit_id": "haar_4",
+      "input_circuit_sha256": "01a23834d951decd141adabe1307f2ad87488faaf5ff243ee1ed65f08cf396e8",
+      "n_qubits": 4,
+      "qasm_file_sha256": "34eaf7b85c61e387defef48578220a7212a54ffeb6b41c2fd2349f1830396477",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t08_051_haar_4_01a23834d951.qasm"
+    },
+    {
+      "circuit_family": "HardwareEfficient",
+      "circuit_id": "hardware_eff_8",
+      "input_circuit_sha256": "146c3e821e8145d085eb90027904fa7f60f9de8430825fefc368f5c286fa991b",
+      "n_qubits": 8,
+      "qasm_file_sha256": "324518f7d4e96ee6c13e666d9b695ff4e04781f7d988d1507f09dc68fa4adf80",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t00_043_hardware_eff_8_146c3e821e81.qasm"
+    },
+    {
+      "circuit_family": "IQP",
+      "circuit_id": "iqp_8",
+      "input_circuit_sha256": "0ea94971bc42ea5f21350b8ee791f5ddd3a86cabd0502a4f2ecd331789793740",
+      "n_qubits": 8,
+      "qasm_file_sha256": "eb212650d5c6e4c400d7f9d65533a04df8d14ff66d4edd7d7a7b13979f3195ca",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t01_047_iqp_8_0ea94971bc42.qasm"
+    },
+    {
+      "circuit_family": "Oracle",
+      "circuit_id": "bv_7",
+      "input_circuit_sha256": "50b395729f861742949308b817a01e0a10080914e86479b908b73eb2a45bdba8",
+      "n_qubits": 8,
+      "qasm_file_sha256": "28f976f1329b86ba8240ae2605f78da28561391e3dc3a394af58625a255edf0a",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t00_034_bv_7_50b395729f86.qasm"
+    },
+    {
+      "circuit_family": "QAOA",
+      "circuit_id": "qaoa_line_8",
+      "input_circuit_sha256": "0080a63f816f580541538093d5448ae336ed333ac6933bc71da115de0011b707",
+      "n_qubits": 8,
+      "qasm_file_sha256": "99743ceabd3878721be2a08f3a2f7a8796162e4be8b9e4462b4d1d9d8726ac60",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t02_041_qaoa_line_8_0080a63f816f.qasm"
+    },
+    {
+      "circuit_family": "QFT",
+      "circuit_id": "qft_8",
+      "input_circuit_sha256": "b2f83603b76f95e86e3b51898d6ea360adf3a62f51aa296baf0178913d4108b2",
+      "n_qubits": 8,
+      "qasm_file_sha256": "5ddc37972fcd1a9fbf4ab1a0871479aa6a7a6fb4eaecde91ee133ab9a935b9a6",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t00_037_qft_8_b2f83603b76f.qasm"
+    },
+    {
+      "circuit_family": "QuantumWalk",
+      "circuit_id": "qwalk_7",
+      "input_circuit_sha256": "0b12314b8f546448b63ec916582bdcd18c8f92e57f6756737f55de986300e4e8",
+      "n_qubits": 8,
+      "qasm_file_sha256": "c98bdcd6db08cffc67fe73696ed30898d9404ebfc0d148f970f3756acb2aca7d",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t06_035_qwalk_7_0b12314b8f54.qasm"
+    },
+    {
+      "circuit_family": "RandomClifford",
+      "circuit_id": "clifford_8",
+      "input_circuit_sha256": "28fa1a35d35427a92d30c622a80840edaaf759c54c7873b8ef1ace832c84a0de",
+      "n_qubits": 8,
+      "qasm_file_sha256": "933c2aa23dffac44563fb17833116cee9102a4df3fb18d36bf8c33175a20da27",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t01_048_clifford_8_28fa1a35d354.qasm"
+    },
+    {
+      "circuit_family": "SurfaceCode",
+      "circuit_id": "surface_code_7",
+      "input_circuit_sha256": "14da3f908abda6229c65d0aec602aaf53fad733479c969be7e0504eaa5dacae0",
+      "n_qubits": 8,
+      "qasm_file_sha256": "e366e6c346031660e4b0bf24d24b632b1ce15c5870e87cbe963369cdd531392a",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t01_036_surface_code_7_14da3f908abd.qasm"
+    },
+    {
+      "circuit_family": "UCCSD_inspired",
+      "circuit_id": "uccsd_8",
+      "input_circuit_sha256": "22551b784d24a75d9256bbd007b935019702d979f1a26edaef3c56d99546120b",
+      "n_qubits": 8,
+      "qasm_file_sha256": "c784efc3683c3a292494fb8b341990ca5e9c336116d52886cf0d05861672b53d",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t00_050_uccsd_8_22551b784d24.qasm"
+    },
+    {
+      "circuit_family": "VQE",
+      "circuit_id": "vqe_twolocal_8",
+      "input_circuit_sha256": "014e8da4cad4f97582e18a894f34fc8c3a41b14e6c31d3b3736404a1cf5b8e78",
+      "n_qubits": 8,
+      "qasm_file_sha256": "add95cde28b0b6a3051867878059662568e4bc243b705936baf3037015ebdfcc",
+      "qasm_path": "data/v10/prepaper/sota/inputs/qasm/t04_042_vqe_twolocal_8_014e8da4cad4.qasm"
+    }
+  ],
+  "listing_seed": 20260831,
+  "not_supported": [
+    "reconstruction of sealed E31 timing",
+    "unseen-family generalization",
+    "cross-host timing",
+    "real-QPU timing",
+    "optimizer-independent timing"
+  ],
+  "optimizer_contract": {
+    "max_iterations": 50
+  },
+  "resource_contract": {
+    "cell_timeout_seconds": 60.0,
+    "cold_process_per_cell": true,
+    "threads_per_worker": 1
+  },
+  "responses": {
+    "time_to_best_seconds": "elapsed monotonic time to earliest independently exact-valid candidate attaining the observed minimum gate count",
+    "time_to_first_valid_seconds": "elapsed monotonic time from first worker instruction to first independently exact-valid post-iteration candidate"
+  },
+  "schema_version": "1.0.0",
+  "selection_rule": "one maximum-width <=8-qubit input per each of 15 pre-existing E31 families; ties resolved by input_circuit_sha256 before outcomes",
+  "source_manifest": "data/v10/prepaper/sota/inputs/benchmark_manifest.csv",
+  "source_manifest_sha256": "3ab0bff77d9d39fa95920fae54094fb8e207cd2895e5642ec8305935c90db841",
+  "source_sha256": {
+    "experiments/e32_telemetry_panel.py": "2e0687d4144934c3df28d4d8b465dd6905eb3629ad2fd9404903f24ee1d9ad0d",
+    "experiments/e32_telemetry_worker.py": "7713ab41a62a585f0101f6f4c26a4d4d5a25dcef1e0d29ddebb2fbb0116722ef",
+    "scripts/freeze_e32_telemetry_protocol.py": "e6d79655fb1ce4c69f8718dc9b33a58a26b2cacf5afec038344d22fb72789428",
+    "scripts/verify_e32_telemetry_panel.py": "eef2b1fbc9e8a8160b913e44f7d6ce769008975d723f193d4d6d94757d065d86"
+  },
+  "verification_contract": {
+    "fidelity_threshold": 0.9999999999,
+    "maximum_exact_qubits": 8,
+    "method": "exact_average_gate_fidelity_per_iteration"
+  }
+}

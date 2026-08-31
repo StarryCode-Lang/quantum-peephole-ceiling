@@ -46,7 +46,7 @@ def test_verdict_requires_fixed_core_claims_and_complete_blocker_coverage():
     assert len(verdict["required_core_claim_pass_ids"]) == 25
     blockers = verdict["verification_inputs"]["external_blockers"]
     counts = verdict["status_counts"]
-    assert blockers["rows"] == counts["FAIL"] + counts["EXTERNAL"] == 40
+    assert blockers["rows"] == counts["FAIL"] + counts["EXTERNAL"]
 
 
 def test_verdict_retains_all_non_pass_items():

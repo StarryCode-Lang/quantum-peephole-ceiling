@@ -1,0 +1,49 @@
+{
+  "claim_boundary": "Direct system-wide CPU-package RAPL evidence on this host, not process-exclusive energy, DRAM/display/storage/whole-wall energy, carbon emissions, cloud billing, or cross-machine generalization. Cost values are tariff scenarios, not an actual bill.",
+  "cost_sensitivity_cny_per_run": [
+    {
+      "gross_median_cny": 1.182131049375e-05,
+      "idle_adjusted_median_cny": 4.3136596640622325e-06,
+      "rate_cny_per_kwh": 0.5
+    },
+    {
+      "gross_median_cny": 1.41855725925e-05,
+      "idle_adjusted_median_cny": 5.176391596874679e-06,
+      "rate_cny_per_kwh": 0.6
+    },
+    {
+      "gross_median_cny": 2.36426209875e-05,
+      "idle_adjusted_median_cny": 8.627319328124465e-06,
+      "rate_cny_per_kwh": 1.0
+    }
+  ],
+  "environment": {
+    "executable": "D:\\Downloads\\miniforge3\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "gross_package_joules_median": 85.113435555,
+  "gross_package_joules_range": [
+    72.295403889,
+    93.257765833
+  ],
+  "idle_adjusted_package_joules_median": 31.058349581248073,
+  "idle_adjusted_package_joules_range": [
+    3.199403776807415,
+    36.364653354464906
+  ],
+  "metric_dispositions": {
+    "10.07": {
+      "disposition": "Five paired blocks directly measure monotonic Windows RAPL CPU-package energy for the fixed optimizer workload, with gross and paired idle-adjusted joules; scope excludes whole-system and process-exclusive energy.",
+      "status": "PASS"
+    },
+    "10.08": {
+      "disposition": "Measured package joules are converted across three declared CNY/kWh sensitivity rates, but no actual tariff/bill, hardware amortization, cloud fee, or whole-system energy is available.",
+      "status": "PARTIAL"
+    }
+  },
+  "paired_blocks": 5,
+  "protocol_sha256": "bcdb1e7fad1c0a126a93ffe6c731190d965c92db6433266771636b5c90e82a2f",
+  "schema_version": "1.0.0",
+  "status": "FORMAL_PAIRED_ENERGY_PANEL_COMPLETE"
+}

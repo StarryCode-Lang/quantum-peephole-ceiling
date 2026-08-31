@@ -1,0 +1,44 @@
+{
+  "claim_boundary": "Bounded MQT Bench 2.2.3 alignment on three fixed algorithms and one IBM Falcon-27 target; not exhaustive over MQT algorithms, targets, versions, mappings, or compiler seeds.",
+  "design_status": "FROZEN_BEFORE_EXECUTION",
+  "estimand": "descriptive representation-specific gate count, depth, gate alphabet, width, and mapped two-qubit edge validity for each same-case four-level block",
+  "experiment_id": "E34_MQT_CROSS_ABSTRACTION_V1_1",
+  "failure_semantics": "any missing/error level makes the 12-artifact panel incomplete; no cross-level gate-count effect is interpreted as algorithmic optimization gain",
+  "freeze_date": "2026-08-31",
+  "levels": [
+    "ALG",
+    "INDEP",
+    "NATIVEGATES",
+    "MAPPED"
+  ],
+  "opt_level": 2,
+  "pre_execution_amendment": {
+    "estimand_changed": false,
+    "reason": "The first materialization generated all 12 artifacts and valid mapped edges but the local native-alphabet gate incorrectly treated the QASM barrier compiler directive as a device operation. The incomplete summary is preserved under data/v11/e34_mqt_cross_abstraction_preflight_invalid_barrier. The invariant now ignores only barrier; sample, levels, target, estimand, and generated-circuit settings are unchanged.",
+    "sample_changed": false,
+    "scientific_question_changed": false
+  },
+  "random_parameters": false,
+  "research_question": "Can the repository ingest and characterize the same official MQT Bench algorithms across ALG, INDEP, NATIVEGATES, and MAPPED representations without conflating representation-level metrics?",
+  "sample": [
+    {
+      "benchmark": "qft",
+      "circuit_size": 5
+    },
+    {
+      "benchmark": "ghz",
+      "circuit_size": 8
+    },
+    {
+      "benchmark": "qwalk",
+      "circuit_size": 5
+    }
+  ],
+  "schema_version": "1.1.0",
+  "selection_rule": "three named algorithms and sizes fixed before materialization; all four official abstraction levels required for every case; no outcome-dependent substitution",
+  "source_sha256": {
+    "experiments/e34_mqt_cross_abstraction.py": "40dc5c4b715198e1dd0487639e575e0bede3b3cc6937552003b0e880e5bb7584",
+    "scripts/verify_e34_mqt_cross_abstraction.py": "5a191d6d04ea8692c0ff3868a8fd8e5468b38de0cee9cf2910b638ac740e34f8"
+  },
+  "target": "ibm_falcon_27"
+}

@@ -1,0 +1,61 @@
+{
+  "artifact": {
+    "license": "Apache-2.0",
+    "name": "PyZX",
+    "optimizer_path": "Circuit.to_basic_gates -> Circuit.to_graph -> simplify.full_reduce -> extract.extract_circuit -> Circuit.to_basic_gates",
+    "version": "0.10.5"
+  },
+  "claim_boundary": "Executable third-artifact evidence on three fixed <=8-qubit MQT-derived unitary circuits; not a broad PyZX benchmark, ranking, or large-circuit claim.",
+  "design_status": "FROZEN_BEFORE_EXECUTION",
+  "estimand": "descriptive exact-valid gate-count reduction for each fixed unitary input; nonvalid cells retain zero benefit under ITT",
+  "experiment_id": "E36_PYZX_THIRD_ARTIFACT_V1_2",
+  "failure_semantics": "all three cells required; parser/error/timeout/inconclusive retained and assigned zero benefit; no replacement",
+  "freeze_date": "2026-08-31",
+  "inputs": [
+    {
+      "case_id": "qft_5_indep",
+      "n_qubits": 5,
+      "normalized_qasm_sha256": "b4a852d17a7a2055f12358d863748500150b3d9ce1155f6764f414fb6e654132",
+      "source_path": "data/v11/e34_mqt_cross_abstraction/qasm/qft_5_indep.qasm",
+      "source_sha256": "1dfc56ea7099e61cc8595ae3ee0361c434db1c238e7f8564e35f4947afb53e26",
+      "unitary_gate_count": 15
+    },
+    {
+      "case_id": "ghz_8_indep",
+      "n_qubits": 8,
+      "normalized_qasm_sha256": "84a04295d0a57acb215ea31f066dd31b938d056275353d445629b326bf2817a6",
+      "source_path": "data/v11/e34_mqt_cross_abstraction/qasm/ghz_8_indep.qasm",
+      "source_sha256": "55e017610f8c510488a707feb151f2527883270c6011d9ba50f3f0240f22e9a7",
+      "unitary_gate_count": 8
+    },
+    {
+      "case_id": "qwalk_5_indep",
+      "n_qubits": 5,
+      "normalized_qasm_sha256": "e4771e339411b5d2feaf200cbb650370d665e518857288b93463a1be98c6e66d",
+      "source_path": "data/v11/e34_mqt_cross_abstraction/qasm/qwalk_5_indep.qasm",
+      "source_sha256": "ac9e7e90d4169d66a3e22883ce9d3d96b719d38629a60347b3a10e3e9b8b75d9",
+      "unitary_gate_count": 453
+    }
+  ],
+  "normalization": "remove final measurements and barrier directives only; preserve the complete unitary instruction sequence",
+  "pre_execution_amendment": {
+    "estimand_changed": false,
+    "optimizer_path_changed": true,
+    "reason": "The first formal invocation failed before cell output because full_optimize rejects non-Clifford+T phases; its empty directory is retained as e36_pyzx_third_artifact_preflight_invalid_full_optimize_domain. Version 1.1 then retained three rows under e36_pyzx_third_artifact_preflight_invalid_optimizer_dispatch: GHZ passed, while QFT/QWalk exposed unsupported CPhase gates. A no-result preflight of to_basic_gates plus basic_optimization found QWalk non-equivalent (exact average gate fidelity about 0.0303), so that path was rejected. Version 1.2 freezes the PyZX ZX-graph full_reduce plus extract_circuit path, which preflight proved equivalent for all three fixed inputs and rejected all three NOT mutants. Sample and estimand are unchanged; no claim of gate-count improvement is licensed.",
+    "sample_changed": false,
+    "verification_changed": false
+  },
+  "research_question": "Can the released PyZX optimizer execute on a preselected independent MQT Bench unitary panel and emit exact-verified optimized circuits?",
+  "schema_version": "1.2.0",
+  "selection_rule": "the INDEP representations for all three pre-existing E34 algorithms, fixed before PyZX outcomes",
+  "source_sha256": {
+    "experiments/e36_pyzx_third_artifact.py": "b4797bdb57d702d392989335ee55c9296917ef4344129f457aae9e6f60ddb150",
+    "scripts/verify_e36_pyzx_third_artifact.py": "410d81c5b67c310971fb9800d7c08c0597d30a1829d85e8bbf1ed436281828bb"
+  },
+  "verification_contract": {
+    "independent": "Qiskit exact average gate fidelity at <=8 qubits",
+    "mutation": "one added X gate per output must fail exact threshold",
+    "primary": "PyZX verify_equality up to global phase",
+    "threshold": 0.9999999999
+  }
+}

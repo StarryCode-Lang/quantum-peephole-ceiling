@@ -1,0 +1,20 @@
+{
+  "artifact_manifest_sha256": "dbc5d1038f865184ed3c2d8c4e611ac002c1252e2334d3d1b650309cbc70dde8",
+  "claim_boundary": "Direct system-wide CPU-package RAPL evidence on this host, not process-exclusive energy, DRAM/display/storage/whole-wall energy, carbon emissions, cloud billing, or cross-machine generalization. Cost values are tariff scenarios, not an actual bill.",
+  "gross_package_joules_median": 85.113435555,
+  "idle_adjusted_package_joules_median": 31.058349581248073,
+  "metric_dispositions": {
+    "10.07": {
+      "disposition": "Five paired blocks directly measure monotonic Windows RAPL CPU-package energy for the fixed optimizer workload, with gross and paired idle-adjusted joules; scope excludes whole-system and process-exclusive energy.",
+      "status": "PASS"
+    },
+    "10.08": {
+      "disposition": "Measured package joules are converted across three declared CNY/kWh sensitivity rates, but no actual tariff/bill, hardware amortization, cloud fee, or whole-system energy is available.",
+      "status": "PARTIAL"
+    }
+  },
+  "paired_blocks": 5,
+  "protocol_sha256": "bcdb1e7fad1c0a126a93ffe6c731190d965c92db6433266771636b5c90e82a2f",
+  "status": "VERIFIED",
+  "verifier_sha256": "5eb982170b633fe53244b4e735e8b5ce2686c958d13a4e196096b4ec6564eb3b"
+}

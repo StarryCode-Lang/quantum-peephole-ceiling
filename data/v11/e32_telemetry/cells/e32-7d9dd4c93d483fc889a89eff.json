@@ -1,0 +1,132 @@
+{
+  "best_event_index": 4,
+  "best_valid_gate_count": 30,
+  "best_valid_reduction_pct_itt": 33.333333333333336,
+  "budget_seconds": 60.0,
+  "circuit_family": "IQP",
+  "event_count": 7,
+  "events": [
+    {
+      "elapsed_ns": 1570249700,
+      "elapsed_seconds": 1.5702497,
+      "event": "cell_python_started",
+      "event_index": 0
+    },
+    {
+      "elapsed_ns": 1573331800,
+      "elapsed_seconds": 1.5733318,
+      "event": "input_loaded",
+      "event_index": 1,
+      "input_circuit_sha256": "0ea94971bc42ea5f21350b8ee791f5ddd3a86cabd0502a4f2ecd331789793740",
+      "input_gate_count": 45,
+      "n_qubits": 8
+    },
+    {
+      "elapsed_ns": 1644434700,
+      "elapsed_seconds": 1.6444347,
+      "event": "listing_validated",
+      "event_index": 2,
+      "exact_fidelity": 0.9999999999999987,
+      "listed_circuit_sha256": "869d10f9d9c5ac4d9a631e91d48302e818678a94a11f0b9a1ba1de780b72df99",
+      "listed_gate_count": 45
+    },
+    {
+      "elapsed_ns": 1644665800,
+      "elapsed_seconds": 1.6446658,
+      "event": "optimizer_initialized",
+      "event_index": 3
+    },
+    {
+      "elapsed_ns": 1710551100,
+      "elapsed_seconds": 1.7105511,
+      "event": "iteration_candidate_validated",
+      "event_index": 4,
+      "exact_fidelity": 0.9999999999999984,
+      "gate_count": 30,
+      "iteration": 0,
+      "no_progress": false,
+      "output_circuit_sha256": "2f2b9f62af93a448e2556749ee6bb7ffc41b2523fdb377b69fdbb6dcb6afc0cb",
+      "rewrite_counts": {
+        "cz_conversions": 0,
+        "h_reorders": 18,
+        "hh_cancellations": 0,
+        "local_cancellations": 5,
+        "mcz_conversions": 0,
+        "pair_gathers": 63,
+        "phase_merges": 4,
+        "template_rewrites": 0
+      },
+      "valid_equivalent_output": true
+    },
+    {
+      "elapsed_ns": 1777682400,
+      "elapsed_seconds": 1.7776824,
+      "event": "iteration_candidate_validated",
+      "event_index": 5,
+      "exact_fidelity": 0.9999999999999982,
+      "gate_count": 30,
+      "iteration": 1,
+      "no_progress": true,
+      "output_circuit_sha256": "ca290b554e911c4fa9b13674e63e021cd0d3b267d80fd4598eb8e60f16d2f5bf",
+      "rewrite_counts": {
+        "cz_conversions": 0,
+        "h_reorders": 31,
+        "hh_cancellations": 0,
+        "local_cancellations": 0,
+        "mcz_conversions": 0,
+        "pair_gathers": 0,
+        "phase_merges": 0,
+        "template_rewrites": 0
+      },
+      "valid_equivalent_output": true
+    },
+    {
+      "elapsed_ns": 1777695100,
+      "elapsed_seconds": 1.7776951,
+      "event": "cell_finished",
+      "event_index": 6,
+      "status": "success"
+    }
+  ],
+  "first_valid_event_index": 4,
+  "input_circuit_sha256": "0ea94971bc42ea5f21350b8ee791f5ddd3a86cabd0502a4f2ecd331789793740",
+  "input_gate_count": 45,
+  "listing_model": "RANDOM_TOPOLOGICAL",
+  "measurement_clock": "time.perf_counter_ns",
+  "measurement_origin": "first executed Python instruction in worker module",
+  "n_qubits": 8,
+  "rule_set": "COMMUTATION_PLUS_TEMPLATES",
+  "run_id": "e32-7d9dd4c93d483fc889a89eff",
+  "run_order": 41,
+  "schema_version": "1.0.0",
+  "status": "success",
+  "time_to_best_ns": 1710551100,
+  "time_to_best_seconds": 1.7105511,
+  "time_to_first_valid_ns": 1710551100,
+  "time_to_first_valid_seconds": 1.7105511,
+  "timing_includes": [
+    "module imports",
+    "QASM parsing",
+    "listing construction and exact validation",
+    "optimizer setup",
+    "rewrite iterations",
+    "per-iteration exact candidate validation"
+  ],
+  "total_rewrite_counts": {
+    "cz_conversions": 0,
+    "h_reorders": 49,
+    "hh_cancellations": 0,
+    "local_cancellations": 5,
+    "mcz_conversions": 0,
+    "pair_gathers": 63,
+    "phase_merges": 4,
+    "template_rewrites": 0
+  },
+  "valid_equivalent_output": true,
+  "window_gates": 16,
+  "worker_environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python_executable": "D:\\Downloads\\miniforge3\\python.exe",
+    "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]"
+  }
+}

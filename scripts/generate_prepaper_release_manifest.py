@@ -268,6 +268,35 @@ PROJECT_EVIDENCE_FILES = (
     "release/prepaper_external_blockers.csv",
     "release/prepaper_readiness_verdict.json",
 )
+ADDITIONAL_ARTIFACT_MANIFESTS = (
+    "data/v11/e32_telemetry/artifact_manifest.json",
+    "data/v11/e33_real_scale/artifact_manifest.json",
+    "data/v11/e34_mqt_cross_abstraction/artifact_manifest.json",
+    "data/v11/e35_benchpress_stress/artifact_manifest.json",
+    "data/v11/e36_pyzx_third_artifact/artifact_manifest.json",
+    "data/v11/e37_energy_cost_telemetry/artifact_manifest.json",
+)
+ADDITIONAL_RELEASE_EVIDENCE = (
+    "release/e32_telemetry_independent_verification_receipt.json",
+    "release/e33_real_scale_independent_verification_receipt.json",
+    "release/e34_mqt_cross_abstraction_independent_verification_receipt.json",
+    "release/e35_benchpress_stress_independent_verification_receipt.json",
+    "release/e36_pyzx_third_artifact_independent_verification_receipt.json",
+    "release/e37_energy_cost_independent_verification_receipt.json",
+    "docs/review/e32_telemetry_verifier_erratum_2026-08-31.md",
+)
+ADDITIONAL_PREFLIGHT_ROOTS = (
+    "data/v11/e33_real_scale_preflight_invalid_keyerror_x",
+    "data/v11/e34_mqt_cross_abstraction_preflight_invalid_barrier",
+    "data/v11/e36_pyzx_third_artifact_preflight_invalid_full_optimize_domain",
+    "data/v11/e36_pyzx_third_artifact_preflight_invalid_optimizer_dispatch",
+)
+CAPSULE_OUTER_FILES = {
+    "release/prepaper_capsule_inner_manifest.json",
+    "release/prepaper_restore_capsule.zip",
+    "release/prepaper_archive_restore_audit.json",
+    "release/prepaper_readiness_verdict.json",
+}
 SOURCE_FILES = (
     "requirements.txt",
     "requirements-lock.txt",
@@ -294,6 +323,19 @@ SOURCE_FILES = (
     "experiments/e31_formal_orchestrator.py",
     "experiments/e31_recover_interrupted_suffix.py",
     "experiments/e31_listing_phase2b_interaction.py",
+    "experiments/e32_telemetry_worker.py",
+    "experiments/e32_telemetry_panel.py",
+    "experiments/e32_telemetry_protocol.json",
+    "experiments/e33_real_scale_panel.py",
+    "experiments/e33_real_scale_protocol.json",
+    "experiments/e34_mqt_cross_abstraction.py",
+    "experiments/e34_mqt_cross_abstraction_protocol.json",
+    "experiments/e35_benchpress_stress.py",
+    "experiments/e35_benchpress_stress_protocol.json",
+    "experiments/e36_pyzx_third_artifact.py",
+    "experiments/e36_pyzx_third_artifact_protocol.json",
+    "experiments/e37_energy_cost_telemetry.py",
+    "experiments/e37_energy_cost_telemetry_protocol.json",
     "experiments/hardware_validation/run.py",
     "experiments/hardware_validation/real_hardware_protocol.py",
     "data/v10/prepaper/external_baselines/quartz/adapter/build_quartz_windows.cmd",
@@ -345,6 +387,15 @@ SOURCE_FILES = (
     "analysis/prepaper_retrospective_binding_audit.py",
     "scripts/generate_prepaper_external_blockers.py",
     "scripts/generate_prepaper_readiness_verdict.py",
+    "scripts/freeze_e32_telemetry_protocol.py",
+    "scripts/verify_e32_telemetry_panel.py",
+    "scripts/verify_e32_telemetry_panel_v2.py",
+    "scripts/freeze_e33_real_scale_protocol.py",
+    "scripts/verify_e33_real_scale_panel.py",
+    "scripts/verify_e34_mqt_cross_abstraction.py",
+    "scripts/verify_e35_benchpress_stress.py",
+    "scripts/verify_e36_pyzx_third_artifact.py",
+    "scripts/verify_e37_energy_cost_telemetry.py",
     "src/integrations/__init__.py",
     "src/integrations/qiskit_pass.py",
     "scripts/generate_prepaper_release_manifest.py",
@@ -457,6 +508,12 @@ SOURCE_FILES = (
     "tests/test_generate_e31_formal_release_gate.py",
     "tests/test_sbom.py",
     "tests/test_external_link_audit.py",
+    "tests/test_e32_telemetry_panel.py",
+    "tests/test_e33_real_scale_panel.py",
+    "tests/test_e34_mqt_cross_abstraction.py",
+    "tests/test_e35_benchpress_stress.py",
+    "tests/test_e36_pyzx_third_artifact.py",
+    "tests/test_e37_energy_cost_telemetry.py",
     "data/DATA_CANONICAL.md",
     "docs/data_dictionary.md",
     "docs/references/literature_review.md",
@@ -588,6 +645,34 @@ def _validate_gate() -> dict[str, list[str]]:
     return matches
 
 
+def _additional_project_evidence_names() -> set[str]:
+    """Resolve every nested artifact member and retained invalid preflight."""
+    names = set(ADDITIONAL_ARTIFACT_MANIFESTS) | set(ADDITIONAL_RELEASE_EVIDENCE)
+    for relative in ADDITIONAL_ARTIFACT_MANIFESTS:
+        manifest_path = PROJECT_ROOT / relative
+        payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+        artifacts = payload.get("artifacts", [])
+        if len(artifacts) != int(payload.get("artifact_count", -1)):
+            raise RuntimeError(f"additional artifact manifest count mismatch: {relative}")
+        for artifact in artifacts:
+            member = str(artifact.get("path", ""))
+            path = PROJECT_ROOT / member
+            if not member or not path.is_file():
+                raise RuntimeError(f"missing additional artifact member: {member}")
+            if int(artifact.get("bytes", -1)) != path.stat().st_size or str(
+                artifact.get("sha256", "")
+            ) != _hash(path):
+                raise RuntimeError(f"drifted additional artifact member: {member}")
+            names.add(member)
+    for relative in ADDITIONAL_PREFLIGHT_ROOTS:
+        root = PROJECT_ROOT / relative
+        files = sorted(path for path in root.rglob("*") if path.is_file())
+        if not files:
+            raise RuntimeError(f"retained preflight root is empty: {relative}")
+        names.update(path.relative_to(PROJECT_ROOT).as_posix() for path in files)
+    return names
+
+
 def _assert_global_unique_sections(*sections: list[dict]) -> None:
     paths = [str(entry.get("file", "")) for section in sections for entry in section]
     missing = [path for path in paths if not path]
@@ -603,6 +688,11 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path,
                         default=PROJECT_ROOT / "release" / "prepaper_release_manifest.json")
+    parser.add_argument(
+        "--capsule-inner",
+        action="store_true",
+        help="exclude the outer archive, receipt, readiness verdict, and inner manifest itself",
+    )
     args = parser.parse_args()
     required_matches = _validate_gate()
     # Some project-level evidence lives below data/v10/prepaper.  Classify it
@@ -641,11 +731,15 @@ def main() -> None:
             "semantic replay archive closure is incomplete: "
             f"{observed_semantic_counts}"
         )
+    additional_names = _additional_project_evidence_names()
     project_evidence_names = (
         set(PROJECT_EVIDENCE_FILES)
         | set(version_qasm_files)
         | set(semantic_replay_closure)
+        | (additional_names - set(SOURCE_FILES))
     )
+    if args.capsule_inner:
+        project_evidence_names -= CAPSULE_OUTER_FILES
     evidence = [
         _entry(path) for path in _evidence_files()
         if path.relative_to(PROJECT_ROOT).as_posix() not in project_evidence_names

@@ -1,0 +1,170 @@
+{
+  "claim_boundary": "Bounded five-file Benchpress-derived stress panel on one 16-GB Windows host, not the complete >1000-test Benchpress campaign or its 96-GB recommended environment.",
+  "environment": {
+    "executable": "D:\\Downloads\\miniforge3\\python.exe",
+    "executable_sha256": "4f4997f5bd4bad6753259ba81c12c141aa772e7640c783cb112f22e1c0df92bf",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "psutil": "7.2.2",
+    "python": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+    "qiskit": "2.4.1"
+  },
+  "itt_observed_n": 5,
+  "itt_scheduled_n": 5,
+  "large_cells_observed": 4,
+  "large_cells_successful": 2,
+  "maximum_declared_qubits": 400,
+  "maximum_peak_process_tree_rss_bytes": 1885941760,
+  "metric_dispositions": {
+    "18.06": {
+      "disposition": "A direct large-circuit software tier covers declared widths 28, 37, 320, and 400 with all four terminal outcomes retained; 2/4 completed the full bounded parser/WCL/one-iteration workload. No large-width semantic-effect claim is made.",
+      "status": "PASS"
+    },
+    "5.29": {
+      "disposition": "A frozen five-file Benchpress-derived multi-tier stress schedule ran with cold-process timeout/memory/error retention; it is not the complete Benchpress campaign.",
+      "status": "PARTIAL"
+    }
+  },
+  "protocol_sha256": "147645adabbe5308cc29d65edfe7e1aa30e8455edb7da624176c214a0c56961d",
+  "rows": [
+    {
+      "bytes": 8885331,
+      "case_id": "factor247_n15",
+      "cell_id": "e35-29b3448457c0689d6a283669",
+      "error": "worker returncode=1",
+      "expected_qubits_from_name": 15,
+      "outer_wall_seconds": 180.11762079998152,
+      "peak_process_tree_rss_bytes": 733732864,
+      "relative_path": "benchpress/qasm/qasmbench-medium/factor247_n15/factor247_n15.qasm",
+      "schema_version": "1.0.0",
+      "semantic_status": "UNAVAILABLE",
+      "sha256": "c303ca80de6d2c6b0dd229fb695c79907f2d2b2942330540ccaa72d101eefd4e",
+      "status": "timeout",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "tier": "medium"
+    },
+    {
+      "bytes": 10141790,
+      "case_id": "vqe_uccsd_n28",
+      "cell_id": "e35-bc9c53f84208bbbec060a8f4",
+      "expected_qubits_from_name": 28,
+      "gate_alphabet": [
+        "barrier",
+        "cx",
+        "u1",
+        "u2",
+        "u3"
+      ],
+      "one_iteration_gate_count": 399482,
+      "outer_wall_seconds": 92.5567197999917,
+      "parse_seconds": 2.0429275000060443,
+      "parsed_depth": 331101,
+      "parsed_gate_count": 399482,
+      "parsed_qubits": 28,
+      "peak_process_tree_rss_bytes": 531709952,
+      "relative_path": "benchpress/qasm/qasmbench-large/vqe_uccsd_n28/vqe_uccsd_n28.qasm",
+      "rewrite_counts": {
+        "cz_conversions": 0,
+        "h_reorders": 0,
+        "hh_cancellations": 0,
+        "local_cancellations": 0,
+        "mcz_conversions": 0,
+        "pair_gathers": 0,
+        "phase_merges": 0,
+        "template_rewrites": 0
+      },
+      "schema_version": "1.0.0",
+      "semantic_status": "UNAVAILABLE_LARGE_STRESS_ONLY",
+      "sha256": "8c1da2ae2b52c496ee3b60f815256bc642bcf9b740381f4dec0e50005200382d",
+      "status": "success",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "tier": "large",
+      "wcl_gate_count": 399482,
+      "wcl_seconds": 7.697724800003925,
+      "worker_wall_seconds": 91.34182830000645
+    },
+    {
+      "bytes": 25503752,
+      "case_id": "bwt_n37_transpiled",
+      "cell_id": "e35-9bf969bdcb640a61e5b70344",
+      "error": "worker returncode=1",
+      "expected_qubits_from_name": 37,
+      "outer_wall_seconds": 180.07151769998018,
+      "peak_process_tree_rss_bytes": 1885941760,
+      "relative_path": "benchpress/qasm/qasmbench-large/bwt_n37/bwt_n37_transpiled.qasm",
+      "schema_version": "1.0.0",
+      "semantic_status": "UNAVAILABLE",
+      "sha256": "dae8c4f547c1ef38c05ef81e8670744630447800a7d154bf87d98aa59b636ba7",
+      "status": "timeout",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "tier": "large"
+    },
+    {
+      "bytes": 4541204,
+      "case_id": "qft_n320",
+      "cell_id": "e35-cf6060f8b926ed4b9d29f0d2",
+      "expected_qubits_from_name": 320,
+      "gate_alphabet": [
+        "barrier",
+        "cx",
+        "h",
+        "measure",
+        "u1"
+      ],
+      "one_iteration_gate_count": 255840,
+      "outer_wall_seconds": 74.28670660001808,
+      "parse_seconds": 1.5151228999893647,
+      "parsed_depth": 2550,
+      "parsed_gate_count": 255840,
+      "parsed_qubits": 320,
+      "peak_process_tree_rss_bytes": 386248704,
+      "relative_path": "benchpress/qasm/qasmbench-large/qft_n320/qft_n320.qasm",
+      "rewrite_counts": {
+        "cz_conversions": 0,
+        "h_reorders": 734,
+        "hh_cancellations": 0,
+        "local_cancellations": 0,
+        "mcz_conversions": 0,
+        "pair_gathers": 0,
+        "phase_merges": 0,
+        "template_rewrites": 0
+      },
+      "schema_version": "1.0.0",
+      "semantic_status": "UNAVAILABLE_LARGE_STRESS_ONLY",
+      "sha256": "e053b28b6eb8ac12897802fdf19a43ee5a8cd0e1ff819d701b8b956129349385",
+      "status": "success",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "tier": "large",
+      "wcl_gate_count": 255840,
+      "wcl_seconds": 6.137758400000166,
+      "worker_wall_seconds": 73.19453849998536
+    },
+    {
+      "bytes": 8852840,
+      "case_id": "multiplier_n400_transpiled",
+      "cell_id": "e35-92ddf70a1220795fe7dbb5f6",
+      "error": "worker returncode=1",
+      "expected_qubits_from_name": 400,
+      "outer_wall_seconds": 180.11584850001964,
+      "peak_process_tree_rss_bytes": 621195264,
+      "relative_path": "benchpress/qasm/qasmbench-large/multiplier_n400/multiplier_n400_transpiled.qasm",
+      "schema_version": "1.0.0",
+      "semantic_status": "UNAVAILABLE",
+      "sha256": "030b6e7d62f15512118a384e8ef5aa52e422fa4ceb18d3751fb6ae6597dae281",
+      "status": "timeout",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "tier": "large"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "semantic_boundary": "The large stress tier tests software execution and resource behavior only. No large-width semantic-equivalence or optimization-effectiveness claim is made from cells lacking an independent proof.",
+  "status": "FORMAL_STRESS_SCHEDULE_COMPLETE",
+  "status_counts": {
+    "success": 2,
+    "timeout": 3
+  }
+}

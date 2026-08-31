@@ -1,0 +1,16 @@
+{
+  "artifact_manifest_sha256": "1d56d7286a550f7812c27acba56fcb0e1da65c832ae8f593196c72360ac6effb",
+  "claim_boundary": "Bounded MQT Bench 2.2.3 alignment on three fixed algorithms and one IBM Falcon-27 target; not exhaustive over MQT algorithms, targets, versions, mappings, or compiler seeds.",
+  "levels_per_block": 4,
+  "metric_dispositions": {
+    "5.28": {
+      "disposition": "All three frozen same-algorithm blocks materialize at all four official MQT Bench abstraction levels with native-gate and mapped-edge invariants; scope remains the bounded panel.",
+      "status": "PASS"
+    }
+  },
+  "protocol_sha256": "621bdc85b4aceaff6774f595a58018f39ab71121d71acb7ce6fe3b5ab7abb4af",
+  "qasm_artifacts": 12,
+  "same_case_blocks": 3,
+  "status": "VERIFIED",
+  "verifier_sha256": "5a191d6d04ea8692c0ff3868a8fd8e5468b38de0cee9cf2910b638ac740e34f8"
+}

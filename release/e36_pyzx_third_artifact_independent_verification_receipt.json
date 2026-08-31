@@ -1,0 +1,16 @@
+{
+  "artifact_manifest_sha256": "7a9ef3476cf671a5e904ac0420acbb00de6b4897227ef7f8ae154639387450fe",
+  "claim_boundary": "Executable third-artifact evidence on three fixed <=8-qubit MQT-derived unitary circuits; not a broad PyZX benchmark, ranking, or large-circuit claim.",
+  "maximum_x_mutant_average_gate_fidelity": 0.030303030303030304,
+  "metric_dispositions": {
+    "18.04": {
+      "disposition": "PyZX 0.10.5 executes as a third released independent optimizer on all three frozen MQT-derived inputs; each output is symbolically proved and independently exact-checked, with mutation sentinels.",
+      "status": "PASS"
+    }
+  },
+  "minimum_exact_average_gate_fidelity": 0.9999999999999001,
+  "protocol_sha256": "7a4433f82b6c549971bb0b6c59b66ace74f1e6bdd14df03ecadf7d5ecbc81349",
+  "rows": 3,
+  "status": "VERIFIED",
+  "verifier_sha256": "410d81c5b67c310971fb9800d7c08c0597d30a1829d85e8bbf1ed436281828bb"
+}

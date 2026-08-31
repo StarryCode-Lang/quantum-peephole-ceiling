@@ -1,0 +1,25 @@
+{
+  "artifact_manifest_sha256": "2f29ef9f5a3a2f9354ad912e69f4dac3c150a49852df74a2b3f850a507513b00",
+  "erratum": "v1_expected_96_instead_of_186_manifest_members",
+  "families": 15,
+  "metric_dispositions": {
+    "9.52": {
+      "disposition": "Direct event-level monotonic time-to-first-valid is observed for 89/90 frozen ITT cells; the one timeout remains unavailable without imputation. Scope is the fixed E32 panel and this host only.",
+      "status": "PASS"
+    },
+    "9.53": {
+      "disposition": "Direct event-level monotonic time-to-earliest-best is observed for 89/90 frozen ITT cells; best is recomputed from every exact-valid iteration event and the timeout remains unavailable. Scope is the fixed E32 panel and this host only.",
+      "status": "PASS"
+    }
+  },
+  "payloads": 90,
+  "protocol_sha256": "b8555df71bd191f194a7a8f3b89af8dd4ef4fc474dad3b249efbf2da822168be",
+  "receipts": 90,
+  "rows": 90,
+  "scope": "fixed descriptive 15-family <=8-qubit E32 panel; not sealed E31 reconstruction or generalized timing",
+  "status": "VERIFIED",
+  "success": 89,
+  "timeout": 1,
+  "timing_available": 89,
+  "verifier_sha256": "2a80627d2ec7a95c02cc4704ccb5a411d622d7d8d62c3496e2bc28ece6fc4b82"
+}

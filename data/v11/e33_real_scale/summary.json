@@ -1,0 +1,77 @@
+{
+  "claim_boundary": "Direct fixed-panel evidence beyond the prior 4-10-qubit validation range and without project-generated benchmarks. The panel is external and application-oriented, not field-collected production workload evidence; it cannot establish unseen-family, all-width, real-QPU, or optimizer-independent generalization.",
+  "itt_observed_n": 22,
+  "itt_scheduled_n": 22,
+  "mutants_proved_equal_n": 0,
+  "paired_effect_mean_pp": 0.20842380446539718,
+  "paired_effects": [
+    {
+      "benchmark_id": "mod_red_21",
+      "n_qubits": 11,
+      "wcl_minus_lbl_reduction_pp_itt": 0.29585798816568243
+    },
+    {
+      "benchmark_id": "gf2^4_mult",
+      "n_qubits": 12,
+      "wcl_minus_lbl_reduction_pp_itt": 0.0
+    },
+    {
+      "benchmark_id": "qaoa_n14_p4",
+      "n_qubits": 14,
+      "wcl_minus_lbl_reduction_pp_itt": -0.29354207436399804
+    },
+    {
+      "benchmark_id": "csla_mux_3",
+      "n_qubits": 15,
+      "wcl_minus_lbl_reduction_pp_itt": 0.0
+    },
+    {
+      "benchmark_id": "qft_16",
+      "n_qubits": 16,
+      "wcl_minus_lbl_reduction_pp_itt": 0.0
+    },
+    {
+      "benchmark_id": "barenco_tof_10",
+      "n_qubits": 19,
+      "wcl_minus_lbl_reduction_pp_itt": 0.0
+    },
+    {
+      "benchmark_id": "qaoa_n20_p4",
+      "n_qubits": 20,
+      "wcl_minus_lbl_reduction_pp_itt": -0.13698630136986623
+    },
+    {
+      "benchmark_id": "gf2^7_mult",
+      "n_qubits": 21,
+      "wcl_minus_lbl_reduction_pp_itt": 0.6934812760055475
+    },
+    {
+      "benchmark_id": "adder_8",
+      "n_qubits": 24,
+      "wcl_minus_lbl_reduction_pp_itt": 0.2002002002001948
+    },
+    {
+      "benchmark_id": "csum_mux_9",
+      "n_qubits": 30,
+      "wcl_minus_lbl_reduction_pp_itt": -0.42016806722688926
+    },
+    {
+      "benchmark_id": "qcla_adder_10",
+      "n_qubits": 36,
+      "wcl_minus_lbl_reduction_pp_itt": 1.9538188277086976
+    }
+  ],
+  "paired_estimand": "finite-panel mean WCL-minus-LBL gate-reduction percentage points with nonvalid cells assigned zero under ITT",
+  "protocol_sha256": "d2299c5b971c44b65df0563dee6c35b81033a299926917a5ba97fa7621bad9da",
+  "proved_equal_n": 20,
+  "schema_version": "1.0.0",
+  "status": "FORMAL_BOUNDED_PANEL_COMPLETE",
+  "status_counts": {
+    "error": 2,
+    "success": 20
+  },
+  "width_range": [
+    11,
+    36
+  ]
+}

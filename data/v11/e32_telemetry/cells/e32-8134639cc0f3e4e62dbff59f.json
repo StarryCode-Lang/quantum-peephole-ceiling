@@ -1,0 +1,132 @@
+{
+  "best_event_index": 4,
+  "best_valid_gate_count": 1113,
+  "best_valid_reduction_pct_itt": 1.5044247787610598,
+  "budget_seconds": 60.0,
+  "circuit_family": "Grover",
+  "event_count": 7,
+  "events": [
+    {
+      "elapsed_ns": 1137391600,
+      "elapsed_seconds": 1.1373916,
+      "event": "cell_python_started",
+      "event_index": 0
+    },
+    {
+      "elapsed_ns": 1146341900,
+      "elapsed_seconds": 1.1463419,
+      "event": "input_loaded",
+      "event_index": 1,
+      "input_circuit_sha256": "0a54b71bfd47499f18a2421cd6bf97c15dc3f348b2d97f00df878dc6173f5324",
+      "input_gate_count": 1130,
+      "n_qubits": 8
+    },
+    {
+      "elapsed_ns": 3409223600,
+      "elapsed_seconds": 3.4092236,
+      "event": "listing_validated",
+      "event_index": 2,
+      "exact_fidelity": 0.9999999999999933,
+      "listed_circuit_sha256": "14117c280d970f510fc0c6244ddb6bf1de1575b5af302c3f90bc485cea0efbee",
+      "listed_gate_count": 1130
+    },
+    {
+      "elapsed_ns": 3409445600,
+      "elapsed_seconds": 3.4094456,
+      "event": "optimizer_initialized",
+      "event_index": 3
+    },
+    {
+      "elapsed_ns": 5584852600,
+      "elapsed_seconds": 5.5848526,
+      "event": "iteration_candidate_validated",
+      "event_index": 4,
+      "exact_fidelity": 0.9999999999999933,
+      "gate_count": 1113,
+      "iteration": 0,
+      "no_progress": false,
+      "output_circuit_sha256": "44d9cafe2ee81ab65da35a394cd2209afd56ec3fa49052546140cb7ed8fa6fc7",
+      "rewrite_counts": {
+        "cz_conversions": 0,
+        "h_reorders": 52,
+        "hh_cancellations": 8,
+        "local_cancellations": 0,
+        "mcz_conversions": 0,
+        "pair_gathers": 40,
+        "phase_merges": 1,
+        "template_rewrites": 0
+      },
+      "valid_equivalent_output": true
+    },
+    {
+      "elapsed_ns": 7946527800,
+      "elapsed_seconds": 7.9465278,
+      "event": "iteration_candidate_validated",
+      "event_index": 5,
+      "exact_fidelity": 0.9999999999999933,
+      "gate_count": 1113,
+      "iteration": 1,
+      "no_progress": true,
+      "output_circuit_sha256": "0b80f1649197e709ddea3792b9fbb798f7d1c9ccdbbb102bb498fbfc56e33bbe",
+      "rewrite_counts": {
+        "cz_conversions": 0,
+        "h_reorders": 20,
+        "hh_cancellations": 0,
+        "local_cancellations": 0,
+        "mcz_conversions": 0,
+        "pair_gathers": 0,
+        "phase_merges": 0,
+        "template_rewrites": 0
+      },
+      "valid_equivalent_output": true
+    },
+    {
+      "elapsed_ns": 7946547200,
+      "elapsed_seconds": 7.9465472,
+      "event": "cell_finished",
+      "event_index": 6,
+      "status": "success"
+    }
+  ],
+  "first_valid_event_index": 4,
+  "input_circuit_sha256": "0a54b71bfd47499f18a2421cd6bf97c15dc3f348b2d97f00df878dc6173f5324",
+  "input_gate_count": 1130,
+  "listing_model": "RANDOM_TOPOLOGICAL",
+  "measurement_clock": "time.perf_counter_ns",
+  "measurement_origin": "first executed Python instruction in worker module",
+  "n_qubits": 8,
+  "rule_set": "COMMUTATION_ONLY",
+  "run_id": "e32-8134639cc0f3e4e62dbff59f",
+  "run_order": 22,
+  "schema_version": "1.0.0",
+  "status": "success",
+  "time_to_best_ns": 5584852600,
+  "time_to_best_seconds": 5.5848526,
+  "time_to_first_valid_ns": 5584852600,
+  "time_to_first_valid_seconds": 5.5848526,
+  "timing_includes": [
+    "module imports",
+    "QASM parsing",
+    "listing construction and exact validation",
+    "optimizer setup",
+    "rewrite iterations",
+    "per-iteration exact candidate validation"
+  ],
+  "total_rewrite_counts": {
+    "cz_conversions": 0,
+    "h_reorders": 72,
+    "hh_cancellations": 8,
+    "local_cancellations": 0,
+    "mcz_conversions": 0,
+    "pair_gathers": 40,
+    "phase_merges": 1,
+    "template_rewrites": 0
+  },
+  "valid_equivalent_output": true,
+  "window_gates": 16,
+  "worker_environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python_executable": "D:\\Downloads\\miniforge3\\python.exe",
+    "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]"
+  }
+}

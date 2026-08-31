@@ -1,0 +1,68 @@
+{
+  "claim_boundary": "Executable third-artifact evidence on three fixed <=8-qubit MQT-derived unitary circuits; not a broad PyZX benchmark, ranking, or large-circuit claim.",
+  "metric_dispositions": {
+    "18.04": {
+      "disposition": "PyZX 0.10.5 executes as a third released independent optimizer on all three frozen MQT-derived inputs; each output is symbolically proved and independently exact-checked, with mutation sentinels.",
+      "status": "PASS"
+    }
+  },
+  "protocol_sha256": "7a4433f82b6c549971bb0b6c59b66ace74f1e6bdd14df03ecadf7d5ecbc81349",
+  "rows": [
+    {
+      "case_id": "qft_5_indep",
+      "mutant_proof_decision": false,
+      "n_qubits": 5,
+      "normalized_qasm_sha256": "b4a852d17a7a2055f12358d863748500150b3d9ce1155f6764f414fb6e654132",
+      "optimized_pyzx_gate_count": 88,
+      "optimized_qasm_path": "data/v11/e36_pyzx_third_artifact/qasm/qft_5_indep.optimized.qasm",
+      "optimized_qasm_sha256": "89e28c0ca3bde4a95ab70e4c5f15b28abc84d3a9cc572d65a591bdb472774d06",
+      "optimizer_path": "zx_graph_full_reduce_extract",
+      "original_pyzx_gate_count": 55,
+      "proof_decision": true,
+      "reduction_pct_itt": -60.00000000000001,
+      "source_path": "data/v11/e34_mqt_cross_abstraction/qasm/qft_5_indep.qasm",
+      "source_sha256": "1dfc56ea7099e61cc8595ae3ee0361c434db1c238e7f8564e35f4947afb53e26",
+      "status": "success",
+      "unitary_gate_count": 15,
+      "wall_seconds": 0.18465599999763072
+    },
+    {
+      "case_id": "ghz_8_indep",
+      "mutant_proof_decision": false,
+      "n_qubits": 8,
+      "normalized_qasm_sha256": "84a04295d0a57acb215ea31f066dd31b938d056275353d445629b326bf2817a6",
+      "optimized_pyzx_gate_count": 22,
+      "optimized_qasm_path": "data/v11/e36_pyzx_third_artifact/qasm/ghz_8_indep.optimized.qasm",
+      "optimized_qasm_sha256": "72a773686b10b63a2b19c812bab2aed2de43768991d20e17ae9ad6974f8ebc26",
+      "optimizer_path": "zx_graph_full_reduce_extract",
+      "original_pyzx_gate_count": 8,
+      "proof_decision": true,
+      "reduction_pct_itt": -175.0,
+      "source_path": "data/v11/e34_mqt_cross_abstraction/qasm/ghz_8_indep.qasm",
+      "source_sha256": "55e017610f8c510488a707feb151f2527883270c6011d9ba50f3f0240f22e9a7",
+      "status": "success",
+      "unitary_gate_count": 8,
+      "wall_seconds": 0.011460600013379008
+    },
+    {
+      "case_id": "qwalk_5_indep",
+      "mutant_proof_decision": false,
+      "n_qubits": 5,
+      "normalized_qasm_sha256": "e4771e339411b5d2feaf200cbb650370d665e518857288b93463a1be98c6e66d",
+      "optimized_pyzx_gate_count": 1256,
+      "optimized_qasm_path": "data/v11/e36_pyzx_third_artifact/qasm/qwalk_5_indep.optimized.qasm",
+      "optimized_qasm_sha256": "6722511b008326ce55cf975710df29fc395713837560915a2373e7822a75ac23",
+      "optimizer_path": "zx_graph_full_reduce_extract",
+      "original_pyzx_gate_count": 877,
+      "proof_decision": true,
+      "reduction_pct_itt": -43.21550741163056,
+      "source_path": "data/v11/e34_mqt_cross_abstraction/qasm/qwalk_5_indep.qasm",
+      "source_sha256": "ac9e7e90d4169d66a3e22883ce9d3d96b719d38629a60347b3a10e3e9b8b75d9",
+      "status": "success",
+      "unitary_gate_count": 453,
+      "wall_seconds": 24.03073860000586
+    }
+  ],
+  "schema_version": "1.0.0",
+  "status": "FORMAL_BOUNDED_PANEL_COMPLETE"
+}

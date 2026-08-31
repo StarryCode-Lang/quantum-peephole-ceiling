@@ -1,0 +1,73 @@
+{
+  "benchmark_class": "adder",
+  "benchmark_id": "adder_8",
+  "input_circuit_sha256": "b62abd1bff6e7f164878d83f71ff90815f81d1c38b22597ec0efed8d32b5add6",
+  "input_gate_count": 999,
+  "listed_gate_count": 999,
+  "listing_model": "WCL",
+  "mutant_proof_decision": null,
+  "n_qubits": 24,
+  "optimized_basis_qasm_path": "data/v11/e33_real_scale/qasm/e33-690966d3ebfdfc67f10d1583.optimized.qasm",
+  "optimized_basis_qasm_sha256": "ea53aefcd07ea0db85de518102df95e76e0be7ba523c0a56f6f8b302157a60bd",
+  "optimized_gate_count": 881,
+  "original_basis_qasm_path": "data/v11/e33_real_scale/qasm/e33-690966d3ebfdfc67f10d1583.original.qasm",
+  "original_basis_qasm_sha256": "e6d0d6c6f0a8b2d71d9df0c1ad9d4cba0b0dcfb0fe330244a7b30b9d6cff64a9",
+  "proof_decision": true,
+  "pyzx_version": "0.10.5",
+  "qasm_file_sha256": "afec57b2387853c83bd26782efb1999473def7e01f69a086b242d669d3821db9",
+  "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/adder_8.qasm",
+  "reduction_pct_itt": 11.811811811811811,
+  "rewrite_counts": {
+    "cz_conversions": 0,
+    "h_reorders": 0,
+    "hh_cancellations": 0,
+    "local_cancellations": 3,
+    "mcz_conversions": 0,
+    "pair_gathers": 916,
+    "phase_merges": 112,
+    "template_rewrites": 0
+  },
+  "run_id": "e33-690966d3ebfdfc67f10d1583",
+  "run_order": 17,
+  "schema_version": "1.0.0",
+  "status": "success",
+  "trace": [
+    {
+      "cz_conversions": 0,
+      "gate_count": 882,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 0,
+      "local_cancellations": 3,
+      "mcz_conversions": 0,
+      "pair_gathers": 853,
+      "phase_merges": 111,
+      "template_rewrites": 0
+    },
+    {
+      "cz_conversions": 0,
+      "gate_count": 881,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 1,
+      "local_cancellations": 0,
+      "mcz_conversions": 0,
+      "pair_gathers": 63,
+      "phase_merges": 1,
+      "template_rewrites": 0
+    },
+    {
+      "cz_conversions": 0,
+      "gate_count": 881,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 2,
+      "local_cancellations": 0,
+      "mcz_conversions": 0,
+      "pair_gathers": 0,
+      "phase_merges": 0,
+      "template_rewrites": 0
+    }
+  ],
+  "wall_seconds": 14.371375700022327
+}

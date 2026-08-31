@@ -1,0 +1,61 @@
+{
+  "benchmark_class": "qaoa",
+  "benchmark_id": "qaoa_n14_p4",
+  "input_circuit_sha256": "cafa8d68798d254bc053aacf15c372a9e83e9e7fae962c4162e1e641fa61ff08",
+  "input_gate_count": 1022,
+  "listed_gate_count": 1022,
+  "listing_model": "WCL",
+  "mutant_proof_decision": null,
+  "n_qubits": 14,
+  "optimized_basis_qasm_path": "data/v11/e33_real_scale/qasm/e33-dcdfbf48f3e8ca4cc40c7667.optimized.qasm",
+  "optimized_basis_qasm_sha256": "c31de30fcbe53aca00434d7170c3c828d5a8a2887eb8c10b36c83b6b04b9e2f8",
+  "optimized_gate_count": 574,
+  "original_basis_qasm_path": "data/v11/e33_real_scale/qasm/e33-dcdfbf48f3e8ca4cc40c7667.original.qasm",
+  "original_basis_qasm_sha256": "7174cbbe2449113d92ed56ff1410bb216773280998d7aab9ca00236587a4e048",
+  "proof_decision": true,
+  "pyzx_version": "0.10.5",
+  "qasm_file_sha256": "8f573315ffa672edb33a13bf28e87137e89b2c26564a0c7288a38fc89f697d5b",
+  "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/qaoa_n14_p4.qasm",
+  "reduction_pct_itt": 43.83561643835616,
+  "rewrite_counts": {
+    "cz_conversions": 0,
+    "h_reorders": 0,
+    "hh_cancellations": 0,
+    "local_cancellations": 224,
+    "mcz_conversions": 0,
+    "pair_gathers": 0,
+    "phase_merges": 0,
+    "template_rewrites": 0
+  },
+  "run_id": "e33-dcdfbf48f3e8ca4cc40c7667",
+  "run_order": 5,
+  "schema_version": "1.0.0",
+  "status": "success",
+  "trace": [
+    {
+      "cz_conversions": 0,
+      "gate_count": 574,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 0,
+      "local_cancellations": 224,
+      "mcz_conversions": 0,
+      "pair_gathers": 0,
+      "phase_merges": 0,
+      "template_rewrites": 0
+    },
+    {
+      "cz_conversions": 0,
+      "gate_count": 574,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 1,
+      "local_cancellations": 0,
+      "mcz_conversions": 0,
+      "pair_gathers": 0,
+      "phase_merges": 0,
+      "template_rewrites": 0
+    }
+  ],
+  "wall_seconds": 5.807108800014248
+}

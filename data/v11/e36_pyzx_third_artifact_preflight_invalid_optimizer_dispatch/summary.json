@@ -1,0 +1,56 @@
+{
+  "claim_boundary": "Executable third-artifact evidence on three fixed <=8-qubit MQT-derived unitary circuits; not a broad PyZX benchmark, ranking, or large-circuit claim.",
+  "metric_dispositions": {
+    "18.04": {
+      "disposition": "PyZX 0.10.5 executes as a third released independent optimizer on all three frozen MQT-derived inputs; each output is symbolically proved and independently exact-checked, with mutation sentinels.",
+      "status": "PARTIAL"
+    }
+  },
+  "protocol_sha256": "3d33b75218aba03cd62814d53e8614fe61c337fd3a98e112e1620bfc2e51f908",
+  "rows": [
+    {
+      "case_id": "qft_5_indep",
+      "error": "TypeError: Unknown gate CPhase(4,3,phase=1/2). Maybe simplify the gates with circuit.to_basic_gates()?",
+      "n_qubits": 5,
+      "normalized_qasm_sha256": "b4a852d17a7a2055f12358d863748500150b3d9ce1155f6764f414fb6e654132",
+      "reduction_pct_itt": 0.0,
+      "source_path": "data/v11/e34_mqt_cross_abstraction/qasm/qft_5_indep.qasm",
+      "source_sha256": "1dfc56ea7099e61cc8595ae3ee0361c434db1c238e7f8564e35f4947afb53e26",
+      "status": "error",
+      "unitary_gate_count": 15,
+      "wall_seconds": 0.01138449998688884
+    },
+    {
+      "case_id": "ghz_8_indep",
+      "mutant_proof_decision": false,
+      "n_qubits": 8,
+      "normalized_qasm_sha256": "84a04295d0a57acb215ea31f066dd31b938d056275353d445629b326bf2817a6",
+      "optimized_pyzx_gate_count": 17,
+      "optimized_qasm_path": "data/v11/e36_pyzx_third_artifact/qasm/ghz_8_indep.optimized.qasm",
+      "optimized_qasm_sha256": "e67d33653e9bac68a36bdca5cf447a3e0d48db2bb1c9e1b906757afd2fb78127",
+      "optimizer_path": "full_optimize",
+      "original_pyzx_gate_count": 8,
+      "proof_decision": true,
+      "reduction_pct_itt": -112.5,
+      "source_path": "data/v11/e34_mqt_cross_abstraction/qasm/ghz_8_indep.qasm",
+      "source_sha256": "55e017610f8c510488a707feb151f2527883270c6011d9ba50f3f0240f22e9a7",
+      "status": "success",
+      "unitary_gate_count": 8,
+      "wall_seconds": 0.015104199992492795
+    },
+    {
+      "case_id": "qwalk_5_indep",
+      "error": "TypeError: Unknown gate CPhase(3,0,phase=1/2). Maybe simplify the gates with circuit.to_basic_gates()?",
+      "n_qubits": 5,
+      "normalized_qasm_sha256": "e4771e339411b5d2feaf200cbb650370d665e518857288b93463a1be98c6e66d",
+      "reduction_pct_itt": 0.0,
+      "source_path": "data/v11/e34_mqt_cross_abstraction/qasm/qwalk_5_indep.qasm",
+      "source_sha256": "ac9e7e90d4169d66a3e22883ce9d3d96b719d38629a60347b3a10e3e9b8b75d9",
+      "status": "error",
+      "unitary_gate_count": 453,
+      "wall_seconds": 0.22954240001854487
+    }
+  ],
+  "schema_version": "1.0.0",
+  "status": "INCOMPLETE_OR_INVALID"
+}

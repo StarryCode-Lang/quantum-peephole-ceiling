@@ -1,0 +1,154 @@
+{
+  "best_event_index": 5,
+  "best_valid_gate_count": 33,
+  "best_valid_reduction_pct_itt": 36.53846153846154,
+  "budget_seconds": 60.0,
+  "circuit_family": "RandomClifford",
+  "event_count": 8,
+  "events": [
+    {
+      "elapsed_ns": 1171387400,
+      "elapsed_seconds": 1.1713874,
+      "event": "cell_python_started",
+      "event_index": 0
+    },
+    {
+      "elapsed_ns": 1174312000,
+      "elapsed_seconds": 1.174312,
+      "event": "input_loaded",
+      "event_index": 1,
+      "input_circuit_sha256": "28fa1a35d35427a92d30c622a80840edaaf759c54c7873b8ef1ace832c84a0de",
+      "input_gate_count": 52,
+      "n_qubits": 8
+    },
+    {
+      "elapsed_ns": 1278672400,
+      "elapsed_seconds": 1.2786724,
+      "event": "listing_validated",
+      "event_index": 2,
+      "exact_fidelity": 0.9999999999999987,
+      "listed_circuit_sha256": "28fa1a35d35427a92d30c622a80840edaaf759c54c7873b8ef1ace832c84a0de",
+      "listed_gate_count": 52
+    },
+    {
+      "elapsed_ns": 1279104200,
+      "elapsed_seconds": 1.2791042,
+      "event": "optimizer_initialized",
+      "event_index": 3
+    },
+    {
+      "elapsed_ns": 1362365100,
+      "elapsed_seconds": 1.3623651,
+      "event": "iteration_candidate_validated",
+      "event_index": 4,
+      "exact_fidelity": 0.9999999999999996,
+      "gate_count": 36,
+      "iteration": 0,
+      "no_progress": false,
+      "output_circuit_sha256": "f1e23905a84eb6c5b29bc1c21f8e72768a290d635019dce90893ed75f6f7c6ab",
+      "rewrite_counts": {
+        "cz_conversions": 0,
+        "h_reorders": 7,
+        "hh_cancellations": 5,
+        "local_cancellations": 0,
+        "mcz_conversions": 0,
+        "pair_gathers": 88,
+        "phase_merges": 6,
+        "template_rewrites": 0
+      },
+      "valid_equivalent_output": true
+    },
+    {
+      "elapsed_ns": 1454384100,
+      "elapsed_seconds": 1.4543841,
+      "event": "iteration_candidate_validated",
+      "event_index": 5,
+      "exact_fidelity": 0.9999999999999996,
+      "gate_count": 33,
+      "iteration": 1,
+      "no_progress": false,
+      "output_circuit_sha256": "0075081a3de62aac719ed593986de6ade5e5a4b7d72fdde60f4c3626c50f5f9f",
+      "rewrite_counts": {
+        "cz_conversions": 0,
+        "h_reorders": 12,
+        "hh_cancellations": 1,
+        "local_cancellations": 0,
+        "mcz_conversions": 0,
+        "pair_gathers": 25,
+        "phase_merges": 1,
+        "template_rewrites": 0
+      },
+      "valid_equivalent_output": true
+    },
+    {
+      "elapsed_ns": 1550506200,
+      "elapsed_seconds": 1.5505062,
+      "event": "iteration_candidate_validated",
+      "event_index": 6,
+      "exact_fidelity": 0.9999999999999996,
+      "gate_count": 33,
+      "iteration": 2,
+      "no_progress": true,
+      "output_circuit_sha256": "0075081a3de62aac719ed593986de6ade5e5a4b7d72fdde60f4c3626c50f5f9f",
+      "rewrite_counts": {
+        "cz_conversions": 0,
+        "h_reorders": 2,
+        "hh_cancellations": 0,
+        "local_cancellations": 0,
+        "mcz_conversions": 0,
+        "pair_gathers": 0,
+        "phase_merges": 0,
+        "template_rewrites": 0
+      },
+      "valid_equivalent_output": true
+    },
+    {
+      "elapsed_ns": 1550529400,
+      "elapsed_seconds": 1.5505294,
+      "event": "cell_finished",
+      "event_index": 7,
+      "status": "success"
+    }
+  ],
+  "first_valid_event_index": 4,
+  "input_circuit_sha256": "28fa1a35d35427a92d30c622a80840edaaf759c54c7873b8ef1ace832c84a0de",
+  "input_gate_count": 52,
+  "listing_model": "LBL",
+  "measurement_clock": "time.perf_counter_ns",
+  "measurement_origin": "first executed Python instruction in worker module",
+  "n_qubits": 8,
+  "rule_set": "COMMUTATION_ONLY",
+  "run_id": "e32-8219ee8141c777eeea108c38",
+  "run_order": 66,
+  "schema_version": "1.0.0",
+  "status": "success",
+  "time_to_best_ns": 1454384100,
+  "time_to_best_seconds": 1.4543841,
+  "time_to_first_valid_ns": 1362365100,
+  "time_to_first_valid_seconds": 1.3623651,
+  "timing_includes": [
+    "module imports",
+    "QASM parsing",
+    "listing construction and exact validation",
+    "optimizer setup",
+    "rewrite iterations",
+    "per-iteration exact candidate validation"
+  ],
+  "total_rewrite_counts": {
+    "cz_conversions": 0,
+    "h_reorders": 21,
+    "hh_cancellations": 6,
+    "local_cancellations": 0,
+    "mcz_conversions": 0,
+    "pair_gathers": 113,
+    "phase_merges": 7,
+    "template_rewrites": 0
+  },
+  "valid_equivalent_output": true,
+  "window_gates": 16,
+  "worker_environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python_executable": "D:\\Downloads\\miniforge3\\python.exe",
+    "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "benchmark_class": "modular_arithmetic",
+  "benchmark_id": "mod_red_21",
+  "input_circuit_sha256": "64699b1c8e2326d467dccef305c92e0ab1581d6c7835f14c9ef0f361e559667e",
+  "input_gate_count": 338,
+  "listed_gate_count": 338,
+  "listing_model": "WCL",
+  "mutant_proof_decision": null,
+  "n_qubits": 11,
+  "optimized_basis_qasm_path": "data/v11/e33_real_scale/qasm/e33-af0dca8bfd6ccc4ded13b8ce.optimized.qasm",
+  "optimized_basis_qasm_sha256": "3f3a2d7f884ff2338b512c45865e025171ad9f3074ad92afb6985c4f96dba6d3",
+  "optimized_gate_count": 303,
+  "original_basis_qasm_path": "data/v11/e33_real_scale/qasm/e33-af0dca8bfd6ccc4ded13b8ce.original.qasm",
+  "original_basis_qasm_sha256": "c64178799e97a53135fb428d077bdacfc2136ecf572afe1cd9981f5b53a69b19",
+  "proof_decision": true,
+  "pyzx_version": "0.10.5",
+  "qasm_file_sha256": "ce78ec83d0f23f63aced95247fa2d961b7ae094c419140fbf84f4879863d5887",
+  "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/mod_red_21.qasm",
+  "reduction_pct_itt": 10.355029585798814,
+  "rewrite_counts": {
+    "cz_conversions": 0,
+    "h_reorders": 0,
+    "hh_cancellations": 0,
+    "local_cancellations": 5,
+    "mcz_conversions": 0,
+    "pair_gathers": 102,
+    "phase_merges": 25,
+    "template_rewrites": 0
+  },
+  "run_id": "e33-af0dca8bfd6ccc4ded13b8ce",
+  "run_order": 1,
+  "schema_version": "1.0.0",
+  "status": "success",
+  "trace": [
+    {
+      "cz_conversions": 0,
+      "gate_count": 306,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 0,
+      "local_cancellations": 5,
+      "mcz_conversions": 0,
+      "pair_gathers": 13,
+      "phase_merges": 22,
+      "template_rewrites": 0
+    },
+    {
+      "cz_conversions": 0,
+      "gate_count": 303,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 1,
+      "local_cancellations": 0,
+      "mcz_conversions": 0,
+      "pair_gathers": 89,
+      "phase_merges": 3,
+      "template_rewrites": 0
+    },
+    {
+      "cz_conversions": 0,
+      "gate_count": 303,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 2,
+      "local_cancellations": 0,
+      "mcz_conversions": 0,
+      "pair_gathers": 0,
+      "phase_merges": 0,
+      "template_rewrites": 0
+    }
+  ],
+  "wall_seconds": 4.21753809999791
+}

@@ -1,0 +1,132 @@
+{
+  "best_event_index": 4,
+  "best_valid_gate_count": 68,
+  "best_valid_reduction_pct_itt": 15.000000000000002,
+  "budget_seconds": 60.0,
+  "circuit_family": "UCCSD_inspired",
+  "event_count": 7,
+  "events": [
+    {
+      "elapsed_ns": 1163778700,
+      "elapsed_seconds": 1.1637787,
+      "event": "cell_python_started",
+      "event_index": 0
+    },
+    {
+      "elapsed_ns": 1166050900,
+      "elapsed_seconds": 1.1660509,
+      "event": "input_loaded",
+      "event_index": 1,
+      "input_circuit_sha256": "22551b784d24a75d9256bbd007b935019702d979f1a26edaef3c56d99546120b",
+      "input_gate_count": 80,
+      "n_qubits": 8
+    },
+    {
+      "elapsed_ns": 1329988800,
+      "elapsed_seconds": 1.3299888,
+      "event": "listing_validated",
+      "event_index": 2,
+      "exact_fidelity": 1.0000000000000009,
+      "listed_circuit_sha256": "e21eca1eb309d11eb9a9b2f14ed9e18a6b9a807bcccf932adae078b4d4e6ce0b",
+      "listed_gate_count": 80
+    },
+    {
+      "elapsed_ns": 1330230000,
+      "elapsed_seconds": 1.33023,
+      "event": "optimizer_initialized",
+      "event_index": 3
+    },
+    {
+      "elapsed_ns": 1494452700,
+      "elapsed_seconds": 1.4944527,
+      "event": "iteration_candidate_validated",
+      "event_index": 4,
+      "exact_fidelity": 1.0,
+      "gate_count": 68,
+      "iteration": 0,
+      "no_progress": false,
+      "output_circuit_sha256": "bd0bee4edab77e1512362c1a31c48bf8439a94c1ce45a84754dba04da7a758bd",
+      "rewrite_counts": {
+        "cz_conversions": 0,
+        "h_reorders": 0,
+        "hh_cancellations": 0,
+        "local_cancellations": 0,
+        "mcz_conversions": 0,
+        "pair_gathers": 17,
+        "phase_merges": 12,
+        "template_rewrites": 0
+      },
+      "valid_equivalent_output": true
+    },
+    {
+      "elapsed_ns": 1673477400,
+      "elapsed_seconds": 1.6734774,
+      "event": "iteration_candidate_validated",
+      "event_index": 5,
+      "exact_fidelity": 1.0,
+      "gate_count": 68,
+      "iteration": 1,
+      "no_progress": true,
+      "output_circuit_sha256": "bd0bee4edab77e1512362c1a31c48bf8439a94c1ce45a84754dba04da7a758bd",
+      "rewrite_counts": {
+        "cz_conversions": 0,
+        "h_reorders": 0,
+        "hh_cancellations": 0,
+        "local_cancellations": 0,
+        "mcz_conversions": 0,
+        "pair_gathers": 0,
+        "phase_merges": 0,
+        "template_rewrites": 0
+      },
+      "valid_equivalent_output": true
+    },
+    {
+      "elapsed_ns": 1673498400,
+      "elapsed_seconds": 1.6734984,
+      "event": "cell_finished",
+      "event_index": 6,
+      "status": "success"
+    }
+  ],
+  "first_valid_event_index": 4,
+  "input_circuit_sha256": "22551b784d24a75d9256bbd007b935019702d979f1a26edaef3c56d99546120b",
+  "input_gate_count": 80,
+  "listing_model": "RANDOM_TOPOLOGICAL",
+  "measurement_clock": "time.perf_counter_ns",
+  "measurement_origin": "first executed Python instruction in worker module",
+  "n_qubits": 8,
+  "rule_set": "COMMUTATION_PLUS_TEMPLATES",
+  "run_id": "e32-21ee227686a6809124a50ad3",
+  "run_order": 83,
+  "schema_version": "1.0.0",
+  "status": "success",
+  "time_to_best_ns": 1494452700,
+  "time_to_best_seconds": 1.4944527,
+  "time_to_first_valid_ns": 1494452700,
+  "time_to_first_valid_seconds": 1.4944527,
+  "timing_includes": [
+    "module imports",
+    "QASM parsing",
+    "listing construction and exact validation",
+    "optimizer setup",
+    "rewrite iterations",
+    "per-iteration exact candidate validation"
+  ],
+  "total_rewrite_counts": {
+    "cz_conversions": 0,
+    "h_reorders": 0,
+    "hh_cancellations": 0,
+    "local_cancellations": 0,
+    "mcz_conversions": 0,
+    "pair_gathers": 17,
+    "phase_merges": 12,
+    "template_rewrites": 0
+  },
+  "valid_equivalent_output": true,
+  "window_gates": 16,
+  "worker_environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python_executable": "D:\\Downloads\\miniforge3\\python.exe",
+    "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]"
+  }
+}

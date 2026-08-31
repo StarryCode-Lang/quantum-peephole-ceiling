@@ -169,6 +169,105 @@ DIRECT_STATUS_OVERLAYS = {
 # explicit disposition rather than inferring several questions from one file
 # status.  ``NA`` is reserved for frozen-scope inapplicability, not missing work.
 DIRECT_DISPOSITION_OVERLAYS = {
+    "5.28": (
+        "release/e34_mqt_cross_abstraction_independent_verification_receipt.json",
+        {
+            "status": "PASS",
+            "disposition": "All three frozen same-algorithm blocks materialize at all four official MQT Bench abstraction levels with native-gate and mapped-edge invariants; scope remains the bounded panel.",
+        },
+        "PASS",
+        "Three fixed algorithms were independently materialized and verified at all four official MQT Bench 2.2.3 abstraction levels on a pinned Falcon-27 target; this is bounded alignment, not exhaustive MQT coverage.",
+    ),
+    "5.29": (
+        "release/e35_benchpress_stress_independent_verification_receipt.json",
+        {
+            "status": "PARTIAL",
+            "disposition": "A frozen five-file Benchpress-derived multi-tier stress schedule ran with cold-process timeout/memory/error retention; it is not the complete Benchpress campaign.",
+        },
+        "PARTIAL",
+        "A five-file official Benchpress-derived schedule ran under cold-process 180-second/8-GiB caps with all outcomes retained (2 success, 3 timeout); it cannot stand in for the complete Benchpress campaign.",
+    ),
+    "9.52": (
+        "release/e32_telemetry_independent_verification_receipt.json",
+        {
+            "status": "PASS",
+            "disposition": "Direct event-level monotonic time-to-first-valid is observed for 89/90 frozen ITT cells; the one timeout remains unavailable without imputation. Scope is the fixed E32 panel and this host only.",
+        },
+        "PASS",
+        "A frozen 90-cell event-level panel records monotonic time-to-first-valid directly for 89 successful cells and retains one timeout without imputation; no sealed-E31 reconstruction or cross-host claim is made.",
+    ),
+    "9.53": (
+        "release/e32_telemetry_independent_verification_receipt.json",
+        {
+            "status": "PASS",
+            "disposition": "Direct event-level monotonic time-to-earliest-best is observed for 89/90 frozen ITT cells; best is recomputed from every exact-valid iteration event and the timeout remains unavailable. Scope is the fixed E32 panel and this host only.",
+        },
+        "PASS",
+        "A frozen 90-cell event stream records the earliest exact-valid candidate attaining each observed best for 89 successful cells; one timeout stays unavailable and in the ITT denominator.",
+    ),
+    "10.07": (
+        "release/e37_energy_cost_independent_verification_receipt.json",
+        {
+            "status": "PASS",
+            "disposition": "Five paired blocks directly measure monotonic Windows RAPL CPU-package energy for the fixed optimizer workload, with gross and paired idle-adjusted joules; scope excludes whole-system and process-exclusive energy.",
+        },
+        "PASS",
+        "Direct CPU-package energy telemetry is independently verified for five paired blocks on this host; it is not process-exclusive, whole-system, carbon, or cross-machine evidence.",
+    ),
+    "10.08": (
+        "release/e37_energy_cost_independent_verification_receipt.json",
+        {
+            "status": "PARTIAL",
+            "disposition": "Measured package joules are converted across three declared CNY/kWh sensitivity rates, but no actual tariff/bill, hardware amortization, cloud fee, or whole-system energy is available.",
+        },
+        "PARTIAL",
+        "The cost values are transparent tariff scenarios derived from measured package joules, not observed monetary charges or a complete cost model.",
+    ),
+    "13.17": (
+        "release/e33_real_scale_independent_verification_receipt.json",
+        {
+            "status": "PARTIAL",
+            "disposition": "External application-oriented benchmark circuits are executed, but they are not field-collected production workloads.",
+        },
+        "PARTIAL",
+        "Application-oriented circuits from an independent Zenodo artifact were executed, but provenance does not establish that they are field-collected production workloads.",
+    ),
+    "17.29": (
+        "release/e33_real_scale_independent_verification_receipt.json",
+        {
+            "status": "PASS",
+            "disposition": "The complete E33 panel uses only checksum-pinned circuits from the independent Quasar Zenodo artifact and no project-generated benchmark.",
+        },
+        "PASS",
+        "Every E33 input is checksum-pinned to the independent Quasar Zenodo artifact; no project-generated benchmark enters the 22-cell schedule.",
+    ),
+    "17.30": (
+        "release/e33_real_scale_independent_verification_receipt.json",
+        {
+            "status": "PARTIAL",
+            "disposition": "The panel is entirely external benchmark circuits, but external benchmark is not synonymous with real production circuit.",
+        },
+        "PARTIAL",
+        "All E33 inputs are external benchmark circuits, but external benchmark provenance is not evidence that every circuit is a real production workload.",
+    ),
+    "18.04": (
+        "release/e36_pyzx_third_artifact_independent_verification_receipt.json",
+        {
+            "status": "PASS",
+            "disposition": "PyZX 0.10.5 executes as a third released independent optimizer on all three frozen MQT-derived inputs; each output is symbolically proved and independently exact-checked, with mutation sentinels.",
+        },
+        "PASS",
+        "PyZX 0.10.5 executed on all three frozen MQT-derived unitary inputs; every output passed symbolic equality and independent exact fidelity while all X mutants failed, without claiming favorable gate reduction.",
+    ),
+    "18.06": (
+        "release/e35_benchpress_stress_independent_verification_receipt.json",
+        {
+            "status": "PASS",
+            "disposition": "A direct large-circuit software tier covers declared widths 28, 37, 320, and 400 with all four terminal outcomes retained; 2/4 completed the full bounded parser/WCL/one-iteration workload. No large-width semantic-effect claim is made.",
+        },
+        "PASS",
+        "The frozen large-circuit tier observes 28, 37, 320, and 400 qubits; 28 and 320 complete the full bounded workload while 37 and 400 time out and remain in ITT. This proves a software stress tier, not large-width semantic effectiveness.",
+    ),
     "15.42": (
         "release/external_link_audit.json",
         "PARTIAL: live audit found 0 definite broken links among 60 unique URLs, but 5 URLs remain unverified and future link rot cannot be excluded",
@@ -440,10 +539,13 @@ DIRECT_DISPOSITION_OVERLAYS = {
         "All 15 training generators receive a diagnostic leave-one-generator-out refit and evaluation; these folds are not substituted for the sealed test.",
     ),
     "13.12": (
-        "data/v10/prepaper/heldout_v2/analysis/generalization_ood/generalization_ood_audit.json",
-        "FAIL: held-out qubits span 4 to 8 inside the training range 4 to 10, so no out-of-range qubit extrapolation was tested",
-        "FAIL",
-        "No cross-qubit-range extrapolation is present: training spans 4-10 qubits and held-out spans only 4-8.",
+        "release/e33_real_scale_independent_verification_receipt.json",
+        {
+            "status": "PARTIAL",
+            "disposition": "Direct proof-audited fixed-panel evidence at 11-36 qubits, beyond the prior 4-10 range; no unseen-family or all-width extrapolation.",
+        },
+        "PARTIAL",
+        "The fixed external panel directly reaches 11-36 qubits and independently re-proves 20/22 cells; two QFT cells remain parser errors and the result does not license unseen-family or all-width extrapolation.",
     ),
     "13.18": (
         "data/v10/prepaper/heldout_v2/analysis/generalization_ood/generalization_ood_audit.json",

@@ -1,0 +1,61 @@
+{
+  "benchmark_class": "adder_mux",
+  "benchmark_id": "csum_mux_9",
+  "input_circuit_sha256": "95038200ad9ae3c8c8026735627e7c0cda8f2e1f7d6928eae18c95dc68d43c03",
+  "input_gate_count": 476,
+  "listed_gate_count": 476,
+  "listing_model": "LBL",
+  "mutant_proof_decision": null,
+  "n_qubits": 30,
+  "optimized_basis_qasm_path": "data/v11/e33_real_scale/qasm/e33-84ac297a2af8413d7b52edbf.optimized.qasm",
+  "optimized_basis_qasm_sha256": "a47bd1e033ef1eb99732dffc0215776a6f76444ec575f6d80aac409390371cea",
+  "optimized_gate_count": 460,
+  "original_basis_qasm_path": "data/v11/e33_real_scale/qasm/e33-84ac297a2af8413d7b52edbf.original.qasm",
+  "original_basis_qasm_sha256": "fec6535866febd8fe29e2920345ccf43ac731c1eb8774f2098ca55ed48501839",
+  "proof_decision": true,
+  "pyzx_version": "0.10.5",
+  "qasm_file_sha256": "9aca0ecb6dd4cfa95bceced05537c11c5beb4ca6c80bf11cd3e38b0390427637",
+  "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/csum_mux_9.qasm",
+  "reduction_pct_itt": 3.361344537815125,
+  "rewrite_counts": {
+    "cz_conversions": 0,
+    "h_reorders": 0,
+    "hh_cancellations": 0,
+    "local_cancellations": 0,
+    "mcz_conversions": 0,
+    "pair_gathers": 217,
+    "phase_merges": 16,
+    "template_rewrites": 0
+  },
+  "run_id": "e33-84ac297a2af8413d7b52edbf",
+  "run_order": 18,
+  "schema_version": "1.0.0",
+  "status": "success",
+  "trace": [
+    {
+      "cz_conversions": 0,
+      "gate_count": 460,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 0,
+      "local_cancellations": 0,
+      "mcz_conversions": 0,
+      "pair_gathers": 217,
+      "phase_merges": 16,
+      "template_rewrites": 0
+    },
+    {
+      "cz_conversions": 0,
+      "gate_count": 460,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 1,
+      "local_cancellations": 0,
+      "mcz_conversions": 0,
+      "pair_gathers": 0,
+      "phase_merges": 0,
+      "template_rewrites": 0
+    }
+  ],
+  "wall_seconds": 2.863855200004764
+}

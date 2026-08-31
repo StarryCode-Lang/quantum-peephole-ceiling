@@ -1,0 +1,61 @@
+{
+  "benchmark_class": "finite_field_arithmetic",
+  "benchmark_id": "gf2^7_mult",
+  "input_circuit_sha256": "2bf6e499aa6c5cae71d9b10afe15f598e7942cd2e45cacf4f5ca14106b829257",
+  "input_gate_count": 721,
+  "listed_gate_count": 721,
+  "listing_model": "WCL",
+  "mutant_proof_decision": null,
+  "n_qubits": 21,
+  "optimized_basis_qasm_path": "data/v11/e33_real_scale/qasm/e33-27954d1327c995ab4303c8ce.optimized.qasm",
+  "optimized_basis_qasm_sha256": "080be81bfd841189adab17aade0c342a8c5ff339b4a4b5523b7a9a3f4ab4eebe",
+  "optimized_gate_count": 683,
+  "original_basis_qasm_path": "data/v11/e33_real_scale/qasm/e33-27954d1327c995ab4303c8ce.original.qasm",
+  "original_basis_qasm_sha256": "b9db6680513cd269c47b933d06fcd81b4c189854194295c728815aeeb02deba8",
+  "proof_decision": true,
+  "pyzx_version": "0.10.5",
+  "qasm_file_sha256": "32e2dd07a831be370ca6810cf9b63c4eebc4b8415ca8d1667eef3a5ca103ca14",
+  "qasm_path": "data/v10/prepaper/external_baselines/quasar/quasar-artifact/benchmarks/circuits/gf2^7_mult.qasm",
+  "reduction_pct_itt": 5.270457697642161,
+  "rewrite_counts": {
+    "cz_conversions": 0,
+    "h_reorders": 0,
+    "hh_cancellations": 0,
+    "local_cancellations": 0,
+    "mcz_conversions": 0,
+    "pair_gathers": 703,
+    "phase_merges": 38,
+    "template_rewrites": 0
+  },
+  "run_id": "e33-27954d1327c995ab4303c8ce",
+  "run_order": 15,
+  "schema_version": "1.0.0",
+  "status": "success",
+  "trace": [
+    {
+      "cz_conversions": 0,
+      "gate_count": 683,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 0,
+      "local_cancellations": 0,
+      "mcz_conversions": 0,
+      "pair_gathers": 703,
+      "phase_merges": 38,
+      "template_rewrites": 0
+    },
+    {
+      "cz_conversions": 0,
+      "gate_count": 683,
+      "h_reorders": 0,
+      "hh_cancellations": 0,
+      "iteration": 1,
+      "local_cancellations": 0,
+      "mcz_conversions": 0,
+      "pair_gathers": 0,
+      "phase_merges": 0,
+      "template_rewrites": 0
+    }
+  ],
+  "wall_seconds": 10.18079289997695
+}

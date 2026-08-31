@@ -1,0 +1,52 @@
+{
+  "claim_boundary": "Direct system-wide CPU-package RAPL evidence on this host, not process-exclusive energy, DRAM/display/storage/whole-wall energy, carbon emissions, cloud billing, or cross-machine generalization. Cost values are tariff scenarios, not an actual bill.",
+  "cost_sensitivity_rates_cny_per_kwh": [
+    0.5,
+    0.6,
+    1.0
+  ],
+  "design": {
+    "cold_process_each_workload": true,
+    "idle_seconds": 6.0,
+    "order": [
+      "idle_then_workload",
+      "workload_then_idle",
+      "idle_then_workload",
+      "workload_then_idle",
+      "idle_then_workload"
+    ],
+    "paired_blocks": 5,
+    "single_worker": true
+  },
+  "design_status": "FROZEN_BEFORE_EXECUTION",
+  "estimands": {
+    "gross_package_joules": "RAPL package counter delta during the cold workload process",
+    "idle_adjusted_package_joules": "gross workload joules minus paired idle watts times workload wall time, floored at zero",
+    "idle_package_watts": "RAPL package counter delta divided by measured idle wall time"
+  },
+  "experiment_id": "E37_WINDOWS_RAPL_ENERGY_V1",
+  "failure_semantics": "all five paired blocks retained; non-monotonic counter, workload error, missing receipt, or meter error makes the formal panel incomplete; no imputation",
+  "freeze_date": "2026-08-31",
+  "meter": {
+    "counter": "\\Energy Meter(RAPL_Package0_PKG)\\Energy",
+    "counter_preflight_delta_positive": true,
+    "primary_domain": "RAPL_Package0_PKG",
+    "provider": "Windows Energy Meter / Intel RAPL",
+    "raw_unit": "nanojoule",
+    "unit_evidence": "Windows EMI absolute energy is converted to nanojoules by Chromium EnergyMetricsProviderWin"
+  },
+  "research_question": "What gross CPU-package energy and idle-adjusted CPU-package energy are observed for one fixed exact-verified optimizer workload on this host?",
+  "schema_version": "1.0.0",
+  "source_sha256": {
+    "experiments/e37_energy_cost_telemetry.py": "47f2bc9311835442508c0b625a6d049b46b8cf3145653d3dfa6157cc3cd7cb3b",
+    "scripts/verify_e37_energy_cost_telemetry.py": "5eb982170b633fe53244b4e735e8b5ce2686c958d13a4e196096b4ec6564eb3b"
+  },
+  "workload": {
+    "description": "frozen E32 Grover-8 LBL COMMUTATION_PLUS_TEMPLATES exact-verified cell",
+    "expected_status": "success",
+    "payload": "data/v11/e32_telemetry/cells/e32-f67a12cec7bbe23193cf0f0d.payload.json",
+    "payload_sha256": "7cd5e6aa363b4d2600cc15ebe136d544dde88745658681721467efb4e8fd550d",
+    "worker": "experiments/e32_telemetry_worker.py",
+    "worker_sha256": "7713ab41a62a585f0101f6f4c26a4d4d5a25dcef1e0d29ddebb2fbb0116722ef"
+  }
+}
