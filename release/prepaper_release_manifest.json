@@ -2,9 +2,9 @@
   "counts": {
     "evidence_files": 194,
     "project_evidence_files": 34277,
-    "source_files": 221
+    "source_files": 220
   },
-  "created_utc": "2026-08-30T17:31:08.144307+00:00",
+  "created_utc": "2026-08-31T03:29:05.846714+00:00",
   "evidence": [
     {
       "bytes": 1385,
@@ -279,7 +279,7 @@
     {
       "bytes": 1105,
       "file": "data/v10/prepaper/audit/workspace_coverage.json",
-      "sha256": "d9aa1ad46e96503467f0c36761a95f50035f0bddbf7cb4438a58bc1afd9641a4"
+      "sha256": "10fe5a0355cfda04d309d5b4863a5e7ed3034808f4d4bf2cdf6a04e2bea09687"
     },
     {
       "bytes": 3750203,
@@ -290,10 +290,10 @@
       ],
       "file": "data/v10/prepaper/audit/workspace_directory_inventory.csv",
       "rows": 32687,
-      "sha256": "cc2c6da1bb9dbc4c324a6e81ce460ab7fae45071961675824ac6af023d55b78d"
+      "sha256": "a921f3077ea1599c2bba3616ac23a50dd6a38d7361558a5de7d5f76d5f7bf3ad"
     },
     {
-      "bytes": 38096542,
+      "bytes": 38097465,
       "columns": [
         "relative_path",
         "bytes",
@@ -302,8 +302,8 @@
         "lines"
       ],
       "file": "data/v10/prepaper/audit/workspace_file_inventory.csv",
-      "rows": 176406,
-      "sha256": "8b3f9bba7811a1d3c2e75c7eb7736c4e92c55d477bc39570575ad5b8b02c55c7"
+      "rows": 176413,
+      "sha256": "7b848375c466b48446cba363ee5dc601ab2675caa645d2060d6329324d0ab365"
     },
     {
       "bytes": 1563503,
@@ -2764,7 +2764,7 @@
     }
   ],
   "git": {
-    "commit": "37969ddef2c1d8110bb4bd6c3b36ca7b21b6f04b",
+    "commit": "65e9a744df6ee0ee9a2c660d95705eb0059d582e",
     "dirty": true
   },
   "project_evidence": [
@@ -175082,9 +175082,9 @@
       "sha256": "6e93f86da9395c2a1d372b4b90013e97eae36008e2e7fa77043d3efe9e26511e"
     },
     {
-      "bytes": 9758121,
+      "bytes": 9758098,
       "file": "release/prepaper_capsule_inner_manifest.json",
-      "sha256": "72924041af35851fb243428b29f8b2517e4e1203a2a4c2e31dbb04222b3afdb9"
+      "sha256": "aee649c609734dc67196a8bad8de9a622eb47662b5185986e2a3a7330565f0be"
     },
     {
       "bytes": 7996,
@@ -175102,9 +175102,9 @@
       "sha256": "2e4664db5501d5b2be5f8474cf3240066b4b8c41463b3022198a2171b48b7d00"
     },
     {
-      "bytes": 4166,
+      "bytes": 5655,
       "file": "release/prepaper_readiness_verdict.json",
-      "sha256": "227eb30f0a30e039b9cdf7ac219e396f256198089af301578fdce4c9b29a6f89"
+      "sha256": "28db26e53e778f1b82c4e1dfd01e461a7d224580299bad39e8a2cac141ad54b8"
     },
     {
       "bytes": 86616296,
@@ -175405,11 +175405,6 @@
   "schema_version": "1.0.0-prepaper",
   "scope": "pre-paper evidence only; canonical historical release remains separate",
   "source_files": [
-    {
-      "bytes": 1057,
-      "file": ".github/workflows/tests.yml",
-      "sha256": "92d70a67aba59839c4cec46aeca9c8d886656220b0d70b353bc8f2a8d8dc9b58"
-    },
     {
       "bytes": 454,
       "file": "requirements.txt",
@@ -175786,9 +175781,9 @@
       "sha256": "94187768d54a2d7dc9925ff4be884b449437abd5983550f6579f70b34c93fa35"
     },
     {
-      "bytes": 6499,
+      "bytes": 12305,
       "file": "scripts/generate_prepaper_readiness_verdict.py",
-      "sha256": "c59fcd0ef642bd2909fde783a85a843fdd7dae9c9490499baa9d7007e6e5a7e9"
+      "sha256": "c6912000eaf742955db327922feb9eaae85a7eb50c774c270be80ce76df053d5"
     },
     {
       "bytes": 171,
@@ -175801,9 +175796,9 @@
       "sha256": "75deed9c3ea0f0dce711f23304315254e14ad1b5107d165f9836be1df95fed46"
     },
     {
-      "bytes": 39935,
+      "bytes": 39900,
       "file": "scripts/generate_prepaper_release_manifest.py",
-      "sha256": "0f756afee88915c3437eb760e0321861fe65457d1cba40002542c00889c8a784"
+      "sha256": "9a10f10873eed42212f58eee8aa7f74719475a8541821681fe1c830c129b10a1"
     },
     {
       "bytes": 16413,

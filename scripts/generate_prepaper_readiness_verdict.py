@@ -12,17 +12,40 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
+
+try:
+    from scripts.verify_sbom import verify_sbom
+except ModuleNotFoundError:  # Direct ``python scripts/...py`` execution.
+    from verify_sbom import verify_sbom
 
 ROOT = Path(__file__).resolve().parents[1]
 LEDGER = ROOT / "docs/review/metric_audit_ledger_2026-08-24.csv"
 SUMMARY = ROOT / "docs/review/metric_audit_summary_2026-08-24.json"
 REGISTRY = ROOT / "docs/review/metric_evidence_registry_2026-08-26.json"
 BLOCKERS = ROOT / "release/prepaper_external_blockers.csv"
+PYTEST_RECEIPT = ROOT / "release/pytest_junit.xml"
+WORKSPACE_AUDIT = ROOT / "data/v10/prepaper/audit/workspace_coverage.json"
+WORKSPACE_FILE_INVENTORY = (
+    ROOT / "data/v10/prepaper/audit/workspace_file_inventory.csv"
+)
+WORKSPACE_DIRECTORY_INVENTORY = (
+    ROOT / "data/v10/prepaper/audit/workspace_directory_inventory.csv"
+)
+ARCHIVE_AUDIT = ROOT / "release/prepaper_archive_restore_audit.json"
+SBOM = ROOT / "release/sbom.cdx.json"
 DEFAULT_OUTPUT = ROOT / "release/prepaper_readiness_verdict.json"
+MINIMUM_PYTEST_TESTS = 552
+REQUIRED_CORE_PASS_IDS = {
+    "1.02", "1.09", "1.10", "1.12", "1.13", "1.14", "1.17",
+    "2.01", "2.02", "2.03", "2.04", "2.05", "2.07", "2.08",
+    "2.09", "2.10", "2.12", "2.13", "2.14", "2.16", "2.19",
+    "2.21", "2.22", "2.24", "2.25",
+}
 
 
 def sha256(path: Path) -> str:
@@ -31,6 +54,86 @@ def sha256(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def _pytest_receipt() -> dict:
+    root = ET.parse(PYTEST_RECEIPT).getroot()
+    suites = [root] if root.tag == "testsuite" else root.findall(".//testsuite")
+    if not suites:
+        raise RuntimeError("pytest JUnit receipt contains no test suite")
+    values = {
+        field: sum(int(suite.attrib.get(field, "0")) for suite in suites)
+        for field in ("tests", "failures", "errors", "skipped")
+    }
+    if values["tests"] < MINIMUM_PYTEST_TESTS:
+        raise RuntimeError(
+            f"pytest receipt covers only {values['tests']} tests; "
+            f"at least {MINIMUM_PYTEST_TESTS} are required"
+        )
+    if any(values[field] for field in ("failures", "errors", "skipped")):
+        raise RuntimeError(f"pytest receipt is not zero-failure: {values}")
+    values["sha256"] = sha256(PYTEST_RECEIPT)
+    return values
+
+
+def _workspace_receipt() -> dict:
+    payload = json.loads(WORKSPACE_AUDIT.read_text(encoding="utf-8"))
+    if payload.get("status") != "complete" or int(payload.get("files_byte_read", 0)) <= 0:
+        raise RuntimeError("workspace coverage audit is not complete")
+    expected = {
+        "file_inventory_sha256": sha256(WORKSPACE_FILE_INVENTORY),
+        "directory_inventory_sha256": sha256(WORKSPACE_DIRECTORY_INVENTORY),
+    }
+    for field, observed in expected.items():
+        if payload.get(field) != observed:
+            raise RuntimeError(f"workspace coverage receipt drift: {field}")
+    return {
+        "files_byte_read": int(payload["files_byte_read"]),
+        "directories_enumerated": int(payload["directories_enumerated"]),
+        "audit_sha256": sha256(WORKSPACE_AUDIT),
+        **expected,
+    }
+
+
+def _archive_receipt() -> dict:
+    payload = json.loads(ARCHIVE_AUDIT.read_text(encoding="utf-8"))
+    restore = payload.get("restore_test", {})
+    verifier = restore.get("verifier_receipt", {})
+    if payload.get("status") != "PASS_LAYERED_ARCHIVE_RESTORE_TEST":
+        raise RuntimeError("layered archive restore receipt is not PASS")
+    if restore.get("verifier_exit_code") != 0 or verifier.get("status") != "verified":
+        raise RuntimeError("restored isolated verifier did not pass")
+    if verifier.get("metric_ledger_rows_verified") != 592:
+        raise RuntimeError("restored verifier did not recheck all 592 metrics")
+    return {
+        "archive_members": int(payload["archive"]["archive_members"]),
+        "archive_sha256": str(payload["archive"]["sha256"]),
+        "receipt_sha256": sha256(ARCHIVE_AUDIT),
+        "metric_ledger_rows_verified": 592,
+    }
+
+
+def _blocker_receipt(fail_ids: list[str], external_ids: list[str]) -> dict:
+    blockers = pd.read_csv(BLOCKERS, keep_default_na=False, dtype=str)
+    required_columns = {
+        "metric_id", "status", "actor", "action", "required_input",
+        "acceptance_evidence",
+    }
+    if not required_columns.issubset(blockers.columns):
+        raise RuntimeError("external blocker table lacks required columns")
+    if blockers[list(required_columns)].apply(lambda column: column.str.len().eq(0)).any().any():
+        raise RuntimeError("external blocker table contains a blank required field")
+    expected_ids = set(fail_ids) | set(external_ids)
+    observed_ids = set(blockers["metric_id"])
+    if len(blockers) != len(expected_ids) or observed_ids != expected_ids:
+        raise RuntimeError("external blocker table does not exactly cover FAIL/EXTERNAL")
+    expected_status = {
+        **{metric_id: "FAIL" for metric_id in fail_ids},
+        **{metric_id: "EXTERNAL" for metric_id in external_ids},
+    }
+    if any(expected_status[row.metric_id] != row.status for row in blockers.itertuples()):
+        raise RuntimeError("external blocker status disagrees with the ledger")
+    return {"rows": len(blockers), "sha256": sha256(BLOCKERS)}
 
 
 def build(output: Path = DEFAULT_OUTPUT) -> dict:
@@ -52,9 +155,27 @@ def build(output: Path = DEFAULT_OUTPUT) -> dict:
     fail_ids = sorted(frame.loc[frame["status"] == "FAIL", "metric_id"])
     external_ids = sorted(frame.loc[frame["status"] == "EXTERNAL", "metric_id"])
 
-    # Core-claim section 1-2 coverage: every PASS must carry item-specific
-    # satisfaction evidence (enforced by the independent ledger verifier).
-    core_pass = [mid for mid in pass_ids if mid.split(".")[0] in {"1", "2"}]
+    missing_core = sorted(REQUIRED_CORE_PASS_IDS - set(pass_ids))
+    if missing_core:
+        raise RuntimeError(f"required core-claim metrics are not PASS: {missing_core}")
+    pytest_receipt = _pytest_receipt()
+    sbom_receipt = verify_sbom(SBOM)
+    workspace_receipt = _workspace_receipt()
+    archive_receipt = _archive_receipt()
+    blocker_receipt = _blocker_receipt(fail_ids, external_ids)
+    readiness_conditions = {
+        "required_core_metrics_pass": not missing_core,
+        "pytest_zero_failure": (
+            pytest_receipt["failures"] == 0 and pytest_receipt["errors"] == 0
+        ),
+        "sbom_verified": sbom_receipt["status"] == "verified",
+        "workspace_scan_complete": workspace_receipt["files_byte_read"] > 0,
+        "layered_archive_restorable": archive_receipt["metric_ledger_rows_verified"] == 592,
+        "all_fail_external_items_have_blockers": (
+            blocker_receipt["rows"] == counts["FAIL"] + counts["EXTERNAL"]
+        ),
+    }
+    ready = all(readiness_conditions.values())
 
     verdict = {
         "schema_version": "1.0.0",
@@ -68,17 +189,26 @@ def build(output: Path = DEFAULT_OUTPUT) -> dict:
         "item_specific_pass_coverage": {
             "numerator": counts["PASS"], "denominator": 592,
         },
-        "core_claim_pass_ids_sections_1_2": core_pass,
+        "required_core_claim_pass_ids": sorted(REQUIRED_CORE_PASS_IDS),
+        "readiness_conditions": readiness_conditions,
+        "verification_inputs": {
+            "pytest": pytest_receipt,
+            "sbom": sbom_receipt,
+            "workspace": workspace_receipt,
+            "archive_restore": archive_receipt,
+            "external_blockers": blocker_receipt,
+        },
         "gates": {
             "engineering_verification": {
                 "state": "COMPLETE",
                 "evidence": [
-                    "full pytest 546 passed / 0 failed / 0 skipped",
-                    "compileall clean across analysis/experiments/scripts/src/tests",
-                    "CycloneDX SBOM rebuilt and verified (94 components)",
-                    "workspace coverage scan: 176,406 files byte-read, 0 unreadable",
-                    "layered archive restore test PASS (34,686 members, isolated Python)",
-                    "outer pre-paper manifest verified (592-row ledger re-verified)",
+                    f"full pytest {pytest_receipt['tests']} passed / 0 failed / 0 skipped",
+                    f"CycloneDX SBOM verified ({sbom_receipt['components']} components)",
+                    "workspace coverage scan: "
+                    f"{workspace_receipt['files_byte_read']:,} files byte-read",
+                    "layered archive restore test PASS "
+                    f"({archive_receipt['archive_members']:,} members, isolated Python)",
+                    f"all {blocker_receipt['rows']} FAIL/EXTERNAL metrics have explicit blockers",
                 ],
             },
             "scientific_evidence_scope": {
@@ -110,11 +240,7 @@ def build(output: Path = DEFAULT_OUTPUT) -> dict:
             "PARTIAL_count": counts["PARTIAL"],
             "NA_count": counts["NA"],
         },
-        "verdict": (
-            "READY_FOR_PAPER_WRITING_WITH_BOUNDARIES"
-            if counts["PASS"] >= 175 and counts["FAIL"] <= 36
-            else "NOT_READY"
-        ),
+        "verdict": "READY_FOR_PAPER_WRITING_WITH_BOUNDARIES" if ready else "NOT_READY",
         "verdict_rationale": (
             "All core-claim metrics carry item-specific, hash-pinned, machine-checkable "
             "satisfaction evidence and every key verifier passes; the release chain is "

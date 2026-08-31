@@ -269,7 +269,6 @@ PROJECT_EVIDENCE_FILES = (
     "release/prepaper_readiness_verdict.json",
 )
 SOURCE_FILES = (
-    ".github/workflows/tests.yml",
     "requirements.txt",
     "requirements-lock.txt",
     "pyproject.toml",

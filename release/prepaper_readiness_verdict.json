@@ -1,42 +1,14 @@
 {
   "blockers_sha256": "2e4664db5501d5b2be5f8474cf3240066b4b8c41463b3022198a2171b48b7d00",
-  "core_claim_pass_ids_sections_1_2": [
-    "1.02",
-    "1.09",
-    "1.10",
-    "1.12",
-    "1.13",
-    "1.14",
-    "1.17",
-    "2.01",
-    "2.02",
-    "2.03",
-    "2.04",
-    "2.05",
-    "2.07",
-    "2.08",
-    "2.09",
-    "2.10",
-    "2.12",
-    "2.13",
-    "2.14",
-    "2.16",
-    "2.19",
-    "2.21",
-    "2.22",
-    "2.24",
-    "2.25"
-  ],
-  "created_utc": "2026-08-30T17:28:30.507344+00:00",
+  "created_utc": "2026-08-31T03:27:12.315608+00:00",
   "gates": {
     "engineering_verification": {
       "evidence": [
-        "full pytest 546 passed / 0 failed / 0 skipped",
-        "compileall clean across analysis/experiments/scripts/src/tests",
-        "CycloneDX SBOM rebuilt and verified (94 components)",
-        "workspace coverage scan: 176,406 files byte-read, 0 unreadable",
+        "full pytest 555 passed / 0 failed / 0 skipped",
+        "CycloneDX SBOM verified (94 components)",
+        "workspace coverage scan: 176,413 files byte-read",
         "layered archive restore test PASS (34,686 members, isolated Python)",
-        "outer pre-paper manifest verified (592-row ledger re-verified)"
+        "all 40 FAIL/EXTERNAL metrics have explicit blockers"
       ],
       "state": "COMPLETE"
     },
@@ -84,6 +56,14 @@
     "numerator": 175
   },
   "ledger_sha256": "4aac01f2d29baa6adf29c4cd247d9c8fd7b7f99d3e984c66eeaa3f42179d5490",
+  "readiness_conditions": {
+    "all_fail_external_items_have_blockers": true,
+    "layered_archive_restorable": true,
+    "pytest_zero_failure": true,
+    "required_core_metrics_pass": true,
+    "sbom_verified": true,
+    "workspace_scan_complete": true
+  },
   "registry_sha256": "d999bd6edf5f84b3e9c62d770cf801a4028c7865d326215700e90b3aa14929df",
   "remaining_non_pass": {
     "EXTERNAL": [
@@ -133,6 +113,33 @@
     "NA_count": 29,
     "PARTIAL_count": 348
   },
+  "required_core_claim_pass_ids": [
+    "1.02",
+    "1.09",
+    "1.10",
+    "1.12",
+    "1.13",
+    "1.14",
+    "1.17",
+    "2.01",
+    "2.02",
+    "2.03",
+    "2.04",
+    "2.05",
+    "2.07",
+    "2.08",
+    "2.09",
+    "2.10",
+    "2.12",
+    "2.13",
+    "2.14",
+    "2.16",
+    "2.19",
+    "2.21",
+    "2.22",
+    "2.24",
+    "2.25"
+  ],
   "schema_version": "1.0.0",
   "status": "PRE_PAPER_READINESS_VERDICT",
   "status_counts": {
@@ -144,5 +151,39 @@
   },
   "summary_sha256": "64265df066c7eba189317887e28b2d75f9f80516faf6a50e5ab69b2f67b4e712",
   "verdict": "READY_FOR_PAPER_WRITING_WITH_BOUNDARIES",
-  "verdict_rationale": "All core-claim metrics carry item-specific, hash-pinned, machine-checkable satisfaction evidence and every key verifier passes; the release chain is independently restorable. Remaining FAIL/EXTERNAL items are genuine external, real-hardware, user-authorization, or new-frozen-protocol-experiment gaps and are honestly retained in release/prepaper_external_blockers.csv rather than fabricated to PASS. Paper writing may proceed on the bounded descriptive and supportive claims; it must not claim unseen-family universality, real-QPU results, or algorithm-independent ceilings."
+  "verdict_rationale": "All core-claim metrics carry item-specific, hash-pinned, machine-checkable satisfaction evidence and every key verifier passes; the release chain is independently restorable. Remaining FAIL/EXTERNAL items are genuine external, real-hardware, user-authorization, or new-frozen-protocol-experiment gaps and are honestly retained in release/prepaper_external_blockers.csv rather than fabricated to PASS. Paper writing may proceed on the bounded descriptive and supportive claims; it must not claim unseen-family universality, real-QPU results, or algorithm-independent ceilings.",
+  "verification_inputs": {
+    "archive_restore": {
+      "archive_members": 34686,
+      "archive_sha256": "597f1995f2c2c4e84a70e4e14af57f088744a07c88327bd063443d571dbd287b",
+      "metric_ledger_rows_verified": 592,
+      "receipt_sha256": "6e93f86da9395c2a1d372b4b90013e97eae36008e2e7fa77043d3efe9e26511e"
+    },
+    "external_blockers": {
+      "rows": 40,
+      "sha256": "2e4664db5501d5b2be5f8474cf3240066b4b8c41463b3022198a2171b48b7d00"
+    },
+    "pytest": {
+      "errors": 0,
+      "failures": 0,
+      "sha256": "ff73470847bc4732eecbe4f34d44ed7537178e23a26cf7a75f6ca3dec3ee69a3",
+      "skipped": 0,
+      "tests": 555
+    },
+    "sbom": {
+      "components": 94,
+      "direct_requirements_covered": 20,
+      "root_component": "q-research==10.1.0",
+      "sha256": "2a4fefea4b0e0161ebf90d4192af0dfcf0ced372f488f9e4569dc0e62e8731db",
+      "spec_version": "1.6",
+      "status": "verified"
+    },
+    "workspace": {
+      "audit_sha256": "10fe5a0355cfda04d309d5b4863a5e7ed3034808f4d4bf2cdf6a04e2bea09687",
+      "directories_enumerated": 32687,
+      "directory_inventory_sha256": "a921f3077ea1599c2bba3616ac23a50dd6a38d7361558a5de7d5f76d5f7bf3ad",
+      "file_inventory_sha256": "7b848375c466b48446cba363ee5dc601ab2675caa645d2060d6329324d0ab365",
+      "files_byte_read": 176413
+    }
+  }
 }
