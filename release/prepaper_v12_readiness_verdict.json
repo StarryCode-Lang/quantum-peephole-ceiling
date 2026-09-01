@@ -1,6 +1,6 @@
 {
   "claim_boundary": "Finite-panel, declared-rule, bounded certificate claims only; no universal optimizer or unseen-family claim.",
-  "created_utc": "2026-09-01T08:42:55.867702+00:00",
+  "created_utc": "2026-09-01T09:37:34.060114+00:00",
   "gates": {
     "E31": "READ_ONLY",
     "E38": "PASS_ZERO_TOLERANCE",
@@ -16,7 +16,7 @@
   "ledger": {
     "path": "data/v12/v12_requirement_to_evidence_ledger.json",
     "requirements": 13,
-    "sha256": "6fe891504d17bc5dfd12435dc5fd64d580b6b867a5516aca98dd8e38c2cecaba"
+    "sha256": "99e3e75739448eb08e6b102391a0a97744ce969033de8c88117e41bf5b4cb0c3"
   },
   "manuscript_modified": false,
   "primary_estimand": {
@@ -28,7 +28,7 @@
   "rationale": "The v12 method, E38 exhaustive oracle, E39 frozen development selection, and E41 scale audit are evidenced. However, the fixed E40 external panel contains zero eligible opportunity-positive families, so the primary efficacy estimand is not estimable; the isolated full-suite recheck also retains three pre-existing E31 metric-15.41 stale-assessment failures. No manuscript claim should be drafted until the baseline artifact drift is resolved or explicitly accepted by a later release gate.",
   "sbom": {
     "path": "data/v12/v12_sbom.json",
-    "sha256": "e725359dfcfd627dd08374d5fa0464d28f44077f74a1e16ec4b59a95e57bafeb"
+    "sha256": "108b1f4750315ae323e99241bc33174a0b60ba076e712242cc68702287e09fa6"
   },
   "scale_audit": {
     "input_count": 16,
@@ -39,7 +39,7 @@
   "schema_version": "v12-readiness-verdict-v1",
   "source_data_environment_manifest": {
     "path": "data/v12/v12_source_data_environment_manifest.json",
-    "sha256": "f419d0236f3f91763d950cc6ee3048f0ac542854785b9c67724234c0b464172f"
+    "sha256": "7ab2784f9b97ccf8e6f733f3169b23014ef2d64d6c513abec9a15f9093a01d11"
   },
   "verdict": "NOT_READY_FOR_PAPER"
 }

@@ -10,7 +10,7 @@
   },
   "interpretation": "The inherited Stage 0 receipt is the 563-pass baseline gate. The isolated recheck exposes a pre-existing E31 audit-artifact drift in the fixed e9 snapshot; it is retained as an external blocker rather than repaired in this v12 scope.",
   "isolated_recheck": {
-    "collected": 563,
+    "collected": 595,
     "failed": 3,
     "failed_tests": [
       "tests/test_metric_audit_ledger.py::test_catalog_and_registry_are_unique_592_item_inventories",
@@ -19,7 +19,7 @@
     ],
     "failure_reason": "fixed e9 baseline registry stores a stale assessment for metric 15.41; E31 files were not modified",
     "new_method_or_e31_import_closure_failures": 0,
-    "passed": 560,
+    "passed": 592,
     "skipped": 0,
     "status": "BASELINE_EXTERNAL_DRIFT"
   },

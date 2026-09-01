@@ -215,8 +215,8 @@ def build_test_gate() -> None:
         },
         "isolated_recheck": {
             "status": "BASELINE_EXTERNAL_DRIFT",
-            "collected": 563,
-            "passed": 560,
+            "collected": 595,
+            "passed": 592,
             "failed": 3,
             "skipped": 0,
             "failed_tests": [

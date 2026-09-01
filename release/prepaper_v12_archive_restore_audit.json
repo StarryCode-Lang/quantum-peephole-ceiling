@@ -1,25 +1,25 @@
 {
   "archive": {
-    "archive_bytes": 100173432,
-    "archive_sha256": "08b7c94d8ab6395cbeedf5565c94d62ce235077504a7350ebc2e226e476a0ee8",
-    "inner_manifest_sha256": "494513137b9b6f30dc3ca30c71e9ab630c34b1e8191d2872f001d141520c8258",
+    "archive_bytes": 100173693,
+    "archive_sha256": "62a6352c95127ad564713128d999e371145819e4fd4f07999403e3593eb5c00d",
+    "inner_manifest_sha256": "7e024b4da3e997d6d58179cc883d3f1b55466cedc63db7600301eac70b290657",
     "path": "release/prepaper_v12_restore_capsule.zip",
     "payload_files": 36566,
-    "uncompressed_payload_bytes": 468837744
+    "uncompressed_payload_bytes": 468838800
   },
   "claim_boundary": "This proves byte-complete restoration, hash closure, and v12 verifier execution in a temporary directory on the current Windows/Python stack. It does not prove external E33/E35 input availability or future dependency availability.",
-  "created_utc": "2026-09-01T08:41:36.159400+00:00",
+  "created_utc": "2026-09-01T09:51:29.627570+00:00",
   "restore_test": {
     "archive_members_extracted": 36567,
     "full_test_recheck": {
-      "command": "D:\\Downloads\\miniforge3\\python.exe -I -m pytest -q",
+      "command": "D:\\Downloads\\miniforge3\\python.exe -I -m pytest -q --disable-warnings",
       "exit_code": 1,
       "failed": 5,
-      "passed": null,
-      "skipped": null,
-      "tail": "ue 592-item inventory\")\n        missing = REQUIRED_COLUMNS.difference(frame.columns)\n        if missing:\n            raise RuntimeError(f\"ledger lacks columns: {sorted(missing)}\")\n        if frame[list(REQUIRED_COLUMNS)].apply(lambda c: c.str.len().eq(0)).any().any():\n            raise RuntimeError(\"ledger contains a blank required field\")\n        ledger = {str(row.metric_id): row for row in frame.itertuples(index=False)}\n        registry_digest = sha256(registry_path)\n        pass_ids: list[str] = []\n        for entry in entries:\n            if not isinstance(entry, dict):\n                raise RuntimeError(\"registry contains a non-object metric\")\n            metric_id = str(entry.get(\"metric_id\"))\n            source = catalog.get(metric_id)\n            row = ledger.get(metric_id)\n            if source is None or row is None:\n                raise RuntimeError(f\"metric inventory drift: {metric_id}\")\n            expected_fields = {\n                \"section\": str(source[\"section\"]), \"item\": str(source[\"item\"]),\n                \"metric\": str(source[\"catalog_text\"]),\n                \"metric_sha256\": text_sha256(str(source[\"catalog_text\"])),\n                \"target\": str(source[\"target\"]), \"target_sha256\": text_sha256(str(source[\"target\"])),\n            }\n            entry_field = {\n                \"metric\": \"catalog_text\", \"metric_sha256\": \"catalog_text_sha256\",\n                \"target\": \"target\", \"target_sha256\": \"target_sha256\",\n                \"section\": \"section\", \"item\": \"item\",\n            }\n            for field, expected in expected_fields.items():\n                if str(getattr(row, field)) != expected or str(entry.get(entry_field[field])) != expected:\n                    raise RuntimeError(f\"catalog text/target/hash drift: {metric_id}.{field}\")\n            if int(entry.get(\"catalog_line\", -1)) != int(source[\"catalog_line\"]):\n                raise RuntimeError(f\"catalog selector line drift: {metric_id}\")\n            criterion_met, status, ref_results = _computed_assessment(entry, catalog)\n            if not all(ref_results):\n>               raise RuntimeError(f\"registry evidence selector/predicate drift: {metric_id}\")\nE               RuntimeError: registry evidence selector/predicate drift: 15.41\n\nC:\\Users\\Administrator\\AppData\\Local\\Temp\\qresearch-v12-restore-bgm1l5bz\\restored-project\\scripts\\verify_metric_audit_ledger.py:247: RuntimeError\n=========================== short test summary info ===========================\nFAILED tests/test_contribution_independence_audit.py::test_contribution_gate_is_source_bound_and_scope_limited\nFAILED tests/test_metric_audit_ledger.py::test_catalog_and_registry_are_unique_592_item_inventories\nFAILED tests/test_metric_audit_ledger.py::test_passes_are_item_specific_and_nonpass_rows_fail_closed\nFAILED tests/test_novelty_counterexample_audit.py::test_identical_counterexample_audit_is_bounded_not_absence_proof\nFAILED tests/test_verify_metric_audit_ledger.py::test_current_metric_ledger_is_independently_verified\n\n"
+      "passed": 590,
+      "skipped": 0,
+      "tail": "ue 592-item inventory\")\n        missing = REQUIRED_COLUMNS.difference(frame.columns)\n        if missing:\n            raise RuntimeError(f\"ledger lacks columns: {sorted(missing)}\")\n        if frame[list(REQUIRED_COLUMNS)].apply(lambda c: c.str.len().eq(0)).any().any():\n            raise RuntimeError(\"ledger contains a blank required field\")\n        ledger = {str(row.metric_id): row for row in frame.itertuples(index=False)}\n        registry_digest = sha256(registry_path)\n        pass_ids: list[str] = []\n        for entry in entries:\n            if not isinstance(entry, dict):\n                raise RuntimeError(\"registry contains a non-object metric\")\n            metric_id = str(entry.get(\"metric_id\"))\n            source = catalog.get(metric_id)\n            row = ledger.get(metric_id)\n            if source is None or row is None:\n                raise RuntimeError(f\"metric inventory drift: {metric_id}\")\n            expected_fields = {\n                \"section\": str(source[\"section\"]), \"item\": str(source[\"item\"]),\n                \"metric\": str(source[\"catalog_text\"]),\n                \"metric_sha256\": text_sha256(str(source[\"catalog_text\"])),\n                \"target\": str(source[\"target\"]), \"target_sha256\": text_sha256(str(source[\"target\"])),\n            }\n            entry_field = {\n                \"metric\": \"catalog_text\", \"metric_sha256\": \"catalog_text_sha256\",\n                \"target\": \"target\", \"target_sha256\": \"target_sha256\",\n                \"section\": \"section\", \"item\": \"item\",\n            }\n            for field, expected in expected_fields.items():\n                if str(getattr(row, field)) != expected or str(entry.get(entry_field[field])) != expected:\n                    raise RuntimeError(f\"catalog text/target/hash drift: {metric_id}.{field}\")\n            if int(entry.get(\"catalog_line\", -1)) != int(source[\"catalog_line\"]):\n                raise RuntimeError(f\"catalog selector line drift: {metric_id}\")\n            criterion_met, status, ref_results = _computed_assessment(entry, catalog)\n            if not all(ref_results):\n>               raise RuntimeError(f\"registry evidence selector/predicate drift: {metric_id}\")\nE               RuntimeError: registry evidence selector/predicate drift: 15.41\n\nC:\\Users\\Administrator\\AppData\\Local\\Temp\\qresearch-v12-restore-e3rg4omi\\restored-project\\scripts\\verify_metric_audit_ledger.py:247: RuntimeError\n=========================== short test summary info ===========================\nFAILED tests/test_contribution_independence_audit.py::test_contribution_gate_is_source_bound_and_scope_limited\nFAILED tests/test_metric_audit_ledger.py::test_catalog_and_registry_are_unique_592_item_inventories\nFAILED tests/test_metric_audit_ledger.py::test_passes_are_item_specific_and_nonpass_rows_fail_closed\nFAILED tests/test_novelty_counterexample_audit.py::test_identical_counterexample_audit_is_bounded_not_absence_proof\nFAILED tests/test_verify_metric_audit_ledger.py::test_current_metric_ledger_is_independently_verified\n\n"
     },
-    "inner_manifest_sha256": "494513137b9b6f30dc3ca30c71e9ab630c34b1e8191d2872f001d141520c8258",
+    "inner_manifest_sha256": "7e024b4da3e997d6d58179cc883d3f1b55466cedc63db7600301eac70b290657",
     "isolated_python_flag": "-I",
     "python_no_user_site": true,
     "temporary_directory_removed_after_test": true,
@@ -27,7 +27,7 @@
     "verifier": {
       "claim_boundary": "Finite-panel, declared-rule, bounded certificate claims only; no universal optimizer or unseen-family claim.",
       "evidence_entries_verified": 27,
-      "ledger_sha256": "fc3430bb69734a22d5f1597314cae9efb9b8da56a1e648a9683ad235a65f77f0",
+      "ledger_sha256": "99e3e75739448eb08e6b102391a0a97744ce969033de8c88117e41bf5b4cb0c3",
       "status": "verified",
       "verdict": "NOT_READY_FOR_PAPER",
       "verifier_results": {

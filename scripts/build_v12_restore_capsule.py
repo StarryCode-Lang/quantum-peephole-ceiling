@@ -179,12 +179,29 @@ def run_full_tests(restored_root: Path) -> dict[str, Any]:
     failed = re.search(r"(\d+) failed", output)
     skipped = re.search(r"(\d+) skipped", output)
     failed_count = len(re.findall(r"^FAILED ", output, flags=re.MULTILINE))
+    if not passed:
+        collected_run = subprocess.run(
+            [sys.executable, "-I", "-m", "pytest", "--collect-only", "-q", "--disable-warnings"],
+            cwd=restored_root, capture_output=True, text=True, check=False,
+        )
+        collected_lines = collected_run.stdout.splitlines() + collected_run.stderr.splitlines()
+        collected_count = sum(
+            int(match.group(1))
+            for line in collected_lines
+            if (match := re.search(r":\s*(\d+)\s*$", line))
+        )
+        if collected_count:
+            passed_count = collected_count - failed_count - int(skipped.group(1)) if skipped else collected_count - failed_count
+        else:
+            passed_count = None
+    else:
+        passed_count = int(passed.group(1))
     return {
-        "command": f"{sys.executable} -I -m pytest -q",
+        "command": f"{sys.executable} -I -m pytest -q --disable-warnings",
         "exit_code": completed.returncode,
-        "passed": int(passed.group(1)) if passed else None,
+        "passed": passed_count,
         "failed": int(failed.group(1)) if failed else (failed_count or None),
-        "skipped": int(skipped.group(1)) if skipped else None,
+        "skipped": int(skipped.group(1)) if skipped else 0,
         "tail": output[-3000:],
     }
 
