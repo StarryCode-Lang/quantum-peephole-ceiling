@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "status": "PASS_STAGE_0_BASELINE",
+  "scope_boundary": "Stage 0 only; no manuscript changes and no changes to historical E1-E37 experimental outputs.",
+  "branch": "codex/rewrite-exposure-v12",
+  "worktree": "D:/Desktop/Q-research-rewrite-exposure",
+  "baseline": {
+    "fixed_commit": "e9fdaaf3954e9c690b4afe9fcabda5ad2e95d6ae",
+    "main_checkpoint_commit": "afcfa17a4664c854663807ba7eb5bbfded5b0063",
+    "baseline_import_commit": "af8ed604b69d452d48905ff7f03065260d68b44f",
+    "baseline_sync_commit": "e6b3e67cd0b4693653f35eed754948df37bed3ad"
+  },
+  "capsule": {
+    "path": "release/prepaper_restore_capsule.zip",
+    "sha256": "306e3aae552e4c55972148ebd4b48a4b84afd440531acaa0a9679df7002fe1ba",
+    "inner_manifest_sha256": "33909547430ede4c439a6a1090a45e3f712c1c84bf0c080265ded81f850585ef",
+    "archive_members": 35043,
+    "payload_entries": 35042
+  },
+  "environment": {
+    "python": "3.12.12",
+    "python_executable": "D:/Downloads/miniforge3/python.exe",
+    "python_executable_sha256": "4f4997f5bd4bad6753259ba81c12c141aa772e7640c783cb112f22e1c0df92bf",
+    "packages": {
+      "cirq": "1.6.1",
+      "numpy": "1.26.4",
+      "pandas": "2.2.2",
+      "pyzx": "0.10.5",
+      "pytest": "8.2.2",
+      "pytket": "2.18.0",
+      "qiskit": "2.4.1",
+      "scipy": "1.13.1"
+    }
+  },
+  "tests": {
+    "command": "D:/Downloads/miniforge3/python.exe -m pytest -q",
+    "collected": 563,
+    "passed": 563,
+    "failed": 0,
+    "skipped": 0,
+    "xfailed": 0,
+    "exit_code": 0,
+    "progress_markers": "all passed-node markers were '.', with no 's' or 'x' markers"
+  },
+  "manifest_verification": {
+    "status": "verified",
+    "files": 35042,
+    "csv_rows": 511512,
+    "metric_ledger_rows_verified": 592,
+    "e31_formal_checks": 34134,
+    "e31_independent_receipt_checks": 24,
+    "e31_structural_semantic_cells_recomputed": 6858,
+    "external_lineage_checks": 15,
+    "nested_audit_hashes_verified": 31,
+    "numeric_columns_checked_for_infinity": 1590,
+    "python_files_dependency_audited": 209
+  },
+  "archive_restore": {
+    "status": "PASS_LAYERED_ARCHIVE_RESTORE_TEST",
+    "receipt": "release/prepaper_archive_restore_audit.json",
+    "archive_sha256": "306e3aae552e4c55972148ebd4b48a4b84afd440531acaa0a9679df7002fe1ba",
+    "restored_files_verified": 35042
+  }
+}

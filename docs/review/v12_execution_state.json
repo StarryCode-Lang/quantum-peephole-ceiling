@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "project": "Q-research v12 rewrite exposure certificate",
+  "status": "STAGE_0_COMPLETE_STAGE_1_IN_PROGRESS",
+  "manuscript_modified": false,
+  "historical_e1_e37_modified": false,
+  "active_worktree": "D:/Desktop/Q-research-rewrite-exposure",
+  "active_branch": "codex/rewrite-exposure-v12",
+  "stage_0": {
+    "status": "PASS",
+    "baseline_receipt": "docs/review/v12_stage0_baseline_receipt.json",
+    "hard_gate": "563 passed, 0 failed, 0 skipped",
+    "capsule_restore": "PASS_LAYERED_ARCHIVE_RESTORE_TEST",
+    "release_manifest": "verified"
+  },
+  "stage_1": {
+    "status": "IN_PROGRESS",
+    "novelty_claim": "pending red-team review",
+    "existing_mechanisms": "pending code-level comparison",
+    "theorem_status": "not_claimed"
+  },
+  "stage_2_theory": {
+    "status": "NOT_STARTED",
+    "theorem_status": "not_claimed"
+  },
+  "stage_3_implementation": {
+    "status": "NOT_STARTED"
+  },
+  "stage_4_e38_exact_oracle": {
+    "status": "NOT_STARTED"
+  },
+  "stage_5_to_9": {
+    "status": "NOT_STARTED"
+  },
+  "e31": {
+    "status": "READ_ONLY",
+    "new_method_data_dependency": false
+  }
+}
