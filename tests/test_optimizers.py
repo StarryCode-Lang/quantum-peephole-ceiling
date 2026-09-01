@@ -529,7 +529,7 @@ class TestQuantumAdderFix(unittest.TestCase):
 
 
 
-class TestRotationMergingBugFix(unittest.TestCase):
+class TestRotationMergingPhysicalEquivalence(unittest.TestCase):
     """Tests for the global-phase bug fix in _merge_rotations (v3.1.0).
 
     BUG: The old code removed rotation gates whose angles summed to 2*pi,
@@ -553,8 +553,8 @@ class TestRotationMergingBugFix(unittest.TestCase):
 
     # --- Rz tests ---
 
-    def test_rz_pi_plus_pi_not_removed(self):
-        """Rz(pi) + Rz(pi) = Rz(2*pi) = -I: must NOT be removed."""
+    def test_rz_pi_plus_pi_removed(self):
+        """Rz(2*pi) is removable because -I differs only by global phase."""
         optimizer = GreedyGateCancellation()
         qc = QuantumCircuit(1)
         qc.rz(np.pi, 0)
@@ -562,9 +562,8 @@ class TestRotationMergingBugFix(unittest.TestCase):
 
         result = optimizer.optimize(qc)
 
-        # Must NOT reduce to 0 gates; should merge into a single Rz gate
-        self.assertEqual(result.optimized_size, 1,
-            "BUG: Rz(pi)+Rz(pi) was incorrectly removed! Rz(2pi) = -I, not I.")
+        self.assertEqual(result.optimized_size, 0)
+        self.assertTrue(self._unitary_close(qc, result.optimized_circuit))
 
     def test_rz_pi_plus_neg_pi_removed(self):
         """Rz(pi) + Rz(-pi) = Rz(0) = I: SHOULD be removed."""
@@ -578,8 +577,8 @@ class TestRotationMergingBugFix(unittest.TestCase):
         self.assertEqual(result.optimized_size, 0,
             "Rz(pi)+Rz(-pi) should cancel to identity and be removed.")
 
-    def test_rz_half_pi_plus_three_half_pi_not_removed(self):
-        """Rz(pi/2) + Rz(3*pi/2) = Rz(2*pi) = -I: must NOT be removed."""
+    def test_rz_half_pi_plus_three_half_pi_removed(self):
+        """Rz(pi/2) + Rz(3*pi/2) is removable up to global phase."""
         optimizer = GreedyGateCancellation()
         qc = QuantumCircuit(1)
         qc.rz(np.pi / 2, 0)
@@ -587,8 +586,8 @@ class TestRotationMergingBugFix(unittest.TestCase):
 
         result = optimizer.optimize(qc)
 
-        self.assertEqual(result.optimized_size, 1,
-            "BUG: Rz(pi/2)+Rz(3pi/2) was incorrectly removed! Rz(2pi) = -I.")
+        self.assertEqual(result.optimized_size, 0)
+        self.assertTrue(self._unitary_close(qc, result.optimized_circuit))
 
     def test_rz_05_plus_neg_05_removed(self):
         """Rz(0.5) + Rz(-0.5) = Rz(0) = I: SHOULD be removed."""
@@ -604,8 +603,8 @@ class TestRotationMergingBugFix(unittest.TestCase):
 
     # --- Rx tests (same bug applies) ---
 
-    def test_rx_pi_plus_pi_not_removed(self):
-        """Rx(pi) + Rx(pi) = Rx(2*pi) = -I: must NOT be removed."""
+    def test_rx_pi_plus_pi_removed(self):
+        """Rx(2*pi) is removable up to global phase."""
         optimizer = GreedyGateCancellation()
         qc = QuantumCircuit(1)
         qc.rx(np.pi, 0)
@@ -613,8 +612,8 @@ class TestRotationMergingBugFix(unittest.TestCase):
 
         result = optimizer.optimize(qc)
 
-        self.assertEqual(result.optimized_size, 1,
-            "BUG: Rx(pi)+Rx(pi) was incorrectly removed! Rx(2pi) = -I.")
+        self.assertEqual(result.optimized_size, 0)
+        self.assertTrue(self._unitary_close(qc, result.optimized_circuit))
 
     def test_rx_pi_plus_neg_pi_removed(self):
         """Rx(pi) + Rx(-pi) = Rx(0) = I: SHOULD be removed."""
@@ -630,8 +629,8 @@ class TestRotationMergingBugFix(unittest.TestCase):
 
     # --- Ry tests (same bug applies) ---
 
-    def test_ry_pi_plus_pi_not_removed(self):
-        """Ry(pi) + Ry(pi) = Ry(2*pi) = -I: must NOT be removed."""
+    def test_ry_pi_plus_pi_removed(self):
+        """Ry(2*pi) is removable up to global phase."""
         optimizer = GreedyGateCancellation()
         qc = QuantumCircuit(1)
         qc.ry(np.pi, 0)
@@ -639,8 +638,8 @@ class TestRotationMergingBugFix(unittest.TestCase):
 
         result = optimizer.optimize(qc)
 
-        self.assertEqual(result.optimized_size, 1,
-            "BUG: Ry(pi)+Ry(pi) was incorrectly removed! Ry(2pi) = -I.")
+        self.assertEqual(result.optimized_size, 0)
+        self.assertTrue(self._unitary_close(qc, result.optimized_circuit))
 
     def test_ry_pi_plus_neg_pi_removed(self):
         """Ry(pi) + Ry(-pi) = Ry(0) = I: SHOULD be removed."""

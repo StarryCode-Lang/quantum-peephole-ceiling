@@ -66,10 +66,18 @@ def generate_ag_canonical_circuit(
             if not apply_h:
                 continue
             # Each H layer applies H to a random subset of qubits, disjoint by
-            # definition (single-qubit gates).
+            # definition (single-qubit gates).  Keep every nominal H stage
+            # non-empty: an empty separator can collapse two CNOT stages into
+            # adjacency and create cancellations (counterexample: n=2,
+            # seed=35 in the pre-2026-08-09 generator).
+            selected = []
             for q in range(n_qubits):
                 if rng.random() < 0.5:
-                    qc.h(q)
+                    selected.append(q)
+            if not selected:
+                selected.append(rng.randrange(n_qubits))
+            for q in selected:
+                qc.h(q)
         elif stage == "S":
             if not apply_s:
                 continue

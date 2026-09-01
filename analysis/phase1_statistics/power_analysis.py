@@ -208,13 +208,13 @@ def nonparametric_power_analysis(
     """Estimate statistical power for the Mann-Whitney U test (review L9).
 
     The Mann-Whitney U test is the non-parametric test actually used in
-    this project. Because no closed-form exact power formula exists for
-    it, power is approximated via the asymptotic relative efficiency
-    (ARE) approach: the parametric (two-sample t-test) power is
-    computed first and then scaled by the Pitman ARE of the
-    Mann-Whitney U test relative to the t-test under normality (0.955)::
+    this project. Because power depends on the full alternative distribution,
+    this helper makes the explicit local-normal-shift assumption and uses the
+    Pitman asymptotic relative efficiency (ARE) of the Mann-Whitney U test
+    relative to the t-test (0.955).  ARE scales information/sample size, so it
+    scales the non-centrality parameter by ``sqrt(ARE)``::
 
-        nonparametric_power ~= parametric_power * 0.955
+        ncp_MWU ~= sqrt(0.955) * ncp_t
 
     Parameters
     ----------
@@ -238,23 +238,15 @@ def nonparametric_power_analysis(
         - 'effect_size': input effect size
         - 'n1', 'n2': input sample sizes
         - 'alpha': significance level
-        - 'method': 'Mann-Whitney U (ARE approximation)'
+        - 'method': 'Mann-Whitney U (local-normal ARE approximation)'
         - 'approximation_note': description of the approximation
 
     Notes
     -----
-    This is an approximation. The Pitman ARE of 0.955 holds under
-    normality, where it gives the *relative efficiency* in the limit as
-    the effect size approaches zero. The resulting estimate should be
-    treated as a **lower bound on power for non-normal distributions**:
-    the Mann-Whitney U test can be substantially more powerful than the
-    t-test when the data are heavy-tailed or skewed, so the true power
-    may exceed this estimate. For heavy-tailed distributions the ARE
-    can exceed 1.0 (i.e. the Mann-Whitney U test is more efficient than
-    the t-test), which this conservative approximation does not capture.
-
-    For a more precise estimate, consider Monte-Carlo simulation of the
-    Mann-Whitney U test under the target distribution.
+    This is not a distribution-free lower bound.  The value 0.955 applies to
+    local alternatives under normality; skew, ties, zero inflation, and
+    heavy tails can move power in either direction.  For confirmatory design,
+    use Monte Carlo simulation under a preregistered data-generating model.
 
     Raises
     ------
@@ -276,9 +268,11 @@ def nonparametric_power_analysis(
     )
     parametric_power = float(np.clip(parametric_power, 0.0, 1.0))
 
-    nonparametric_power = float(
-        np.clip(parametric_power * _MWU_PITMAN_ARE, 0.0, 1.0)
+    mwu_ncp = ncp * np.sqrt(_MWU_PITMAN_ARE)
+    nonparametric_power = 1.0 - stats.nct.cdf(crit, df, mwu_ncp) + stats.nct.cdf(
+        -crit, df, mwu_ncp
     )
+    nonparametric_power = float(np.clip(nonparametric_power, 0.0, 1.0))
 
     return {
         "power": nonparametric_power,
@@ -289,12 +283,12 @@ def nonparametric_power_analysis(
         "n1": n1,
         "n2": n2,
         "alpha": alpha,
-        "method": "Mann-Whitney U (ARE approximation)",
+        "method": "Mann-Whitney U (local-normal ARE approximation)",
         "approximation_note": (
-            "Power approximated as parametric (t-test) power * Pitman "
-            "ARE (0.955). This is a lower bound on power for non-normal "
-            "distributions; the Mann-Whitney U test can be more "
-            "powerful than the t-test under heavy-tailed or skewed data."
+            "Pitman ARE=0.955 scales the t-test non-centrality by sqrt(ARE) "
+            "under local normal-shift alternatives. This is not a "
+            "distribution-free lower bound; simulate the preregistered "
+            "alternative for confirmatory power planning."
         ),
     }
 
@@ -344,7 +338,7 @@ def report_power_for_experiment(
 
     Notes
     -----
-    The Mann-Whitney U power uses the ARE approximation from
+    The Mann-Whitney U power uses the local-normal ARE approximation from
     :func:`nonparametric_power_analysis`. See that function's docstring
     for the limitations of this estimate.
 
