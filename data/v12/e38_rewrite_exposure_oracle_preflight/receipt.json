@@ -1,0 +1,29 @@
+{
+  "inputs_sha256": "efacf3f7b5f99f2c9b081c38284255a6cf348ff97628d0bc2a82d2418cb7c50d",
+  "mode": "preflight",
+  "protocol_id": "E38_REWRITE_EXPOSURE_ORACLE_V1",
+  "protocol_sha256": "f1656e5f5cfe79cf92354603808e6fe855479307d23fe37bdc34f817eb25ef2e",
+  "summary": {
+    "case_count": 32,
+    "certificate_contract_failure": 0,
+    "cgl_lb_shortfall": 0,
+    "dependency_invalid": 0,
+    "equivalence_failure": 0,
+    "exact_solver_mismatch": 0,
+    "lb_gt_oracle": 0,
+    "max_topological_orders": 13440,
+    "model_counts": {
+      "conservative_commutation_v1": 32,
+      "wire_order_v1": 32
+    },
+    "mutant_not_rejected": 0,
+    "rows": 64,
+    "status_counts": {
+      "exact": 34,
+      "exact_zero": 30
+    },
+    "theorem_mismatch": 0,
+    "ub_lt_oracle": 0
+  },
+  "zero_tolerance": true
+}

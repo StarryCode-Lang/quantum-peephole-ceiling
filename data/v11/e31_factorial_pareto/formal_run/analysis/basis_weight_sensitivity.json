@@ -1,0 +1,170 @@
+{
+  "basis_schemes": {
+    "ibm_rz_sx_x_cx": [
+      "rz",
+      "sx",
+      "x",
+      "cx"
+    ],
+    "ibm_rz_sx_x_cz": [
+      "rz",
+      "sx",
+      "x",
+      "cz"
+    ],
+    "u_cx": [
+      "u",
+      "cx"
+    ]
+  },
+  "basis_translation_overhead_on_391_inputs": {
+    "ibm_rz_sx_x_cx": {
+      "mean_added_gates": 289.2429667519182,
+      "mean_translation_ratio": 2.779632220664266,
+      "median_added_gates": 72.0,
+      "median_translation_ratio": 2.411764705882353,
+      "q95_added_gates": 1687.0
+    },
+    "ibm_rz_sx_x_cz": {
+      "mean_added_gates": 2131.5498721227623,
+      "mean_translation_ratio": 5.693937604744595,
+      "median_added_gates": 144.0,
+      "median_translation_ratio": 4.176470588235294,
+      "q95_added_gates": 15763.0
+    },
+    "u_cx": {
+      "mean_added_gates": 52.12787723785166,
+      "mean_translation_ratio": 1.4662457122263313,
+      "median_added_gates": 0.0,
+      "median_translation_ratio": 1.0,
+      "q95_added_gates": 345.0
+    }
+  },
+  "cost_configurations": {
+    "cz_equal_weight": {
+      "basis": "ibm_rz_sx_x_cz",
+      "itt_mean_reduction_pp": 8.585857149682566,
+      "primary_contrast": {
+        "equal_family_mean_pp": -0.14469253987431685,
+        "family_cluster_count": 15,
+        "family_t14_ci95_high_pp": 0.0826303664830366,
+        "family_t14_ci95_low_pp": -0.37201544623167027,
+        "fixed_panel_input_weighted_mean_pp": -0.24783135831489883,
+        "sign": "negative"
+      },
+      "success_only_reduction_pp": {
+        "mean": 11.898643815982258,
+        "median": 1.4925373134328401,
+        "q05": 0.0,
+        "q95": 60.0,
+        "regression_probability": 0.0
+      },
+      "weight_profile": "equal"
+    },
+    "ibm_equal_weight": {
+      "basis": "ibm_rz_sx_x_cx",
+      "itt_mean_reduction_pp": 12.43746614770226,
+      "primary_contrast": {
+        "equal_family_mean_pp": -0.2149300775676607,
+        "family_cluster_count": 15,
+        "family_t14_ci95_high_pp": 0.14928089108767167,
+        "family_t14_ci95_low_pp": -0.5791410462229931,
+        "fixed_panel_input_weighted_mean_pp": -0.37976652169697117,
+        "sign": "negative"
+      },
+      "success_only_reduction_pp": {
+        "mean": 17.236366397071674,
+        "median": 3.8135593220338992,
+        "q05": 0.0,
+        "q95": 85.71428571428572,
+        "regression_probability": 0.0
+      },
+      "weight_profile": "equal"
+    },
+    "ibm_two_qubit_weight_10": {
+      "basis": "ibm_rz_sx_x_cx",
+      "itt_mean_reduction_pp": 8.840035929144742,
+      "primary_contrast": {
+        "equal_family_mean_pp": -0.12437851962100277,
+        "family_cluster_count": 15,
+        "family_t14_ci95_high_pp": 0.07647408304598402,
+        "family_t14_ci95_low_pp": -0.32523112228798956,
+        "fixed_panel_input_weighted_mean_pp": -0.21083120961397883,
+        "sign": "negative"
+      },
+      "success_only_reduction_pp": {
+        "mean": 12.25089551428979,
+        "median": 1.0234462225530372,
+        "q05": 0.0,
+        "q95": 60.07326007326007,
+        "regression_probability": 0.0
+      },
+      "weight_profile": "two_qubit_10"
+    },
+    "ibm_virtual_rz_two_qubit_weight_10": {
+      "basis": "ibm_rz_sx_x_cx",
+      "itt_mean_reduction_pp": 6.450350460448926,
+      "primary_contrast": {
+        "equal_family_mean_pp": -0.07033282930586145,
+        "family_cluster_count": 15,
+        "family_t14_ci95_high_pp": 0.03871063786285443,
+        "family_t14_ci95_low_pp": -0.1793762964745773,
+        "fixed_panel_input_weighted_mean_pp": -0.11060636705047162,
+        "sign": "negative"
+      },
+      "success_only_reduction_pp": {
+        "mean": 8.939168364800542,
+        "median": 0.3504161191414834,
+        "q05": 0.0,
+        "q95": 51.515151515151516,
+        "regression_probability": 0.0
+      },
+      "weight_profile": "virtual_rz_two_qubit_10"
+    },
+    "u_cx_equal_weight": {
+      "basis": "u_cx",
+      "itt_mean_reduction_pp": 10.559626290671275,
+      "primary_contrast": {
+        "equal_family_mean_pp": -0.1614602228151262,
+        "family_cluster_count": 15,
+        "family_t14_ci95_high_pp": 0.11393394406383531,
+        "family_t14_ci95_low_pp": -0.43685438969408774,
+        "fixed_panel_input_weighted_mean_pp": -0.2851237123091513,
+        "sign": "negative"
+      },
+      "success_only_reduction_pp": {
+        "mean": 14.633976535147081,
+        "median": 1.7094017094017144,
+        "q05": 0.0,
+        "q95": 70.0,
+        "regression_probability": 0.0
+      },
+      "weight_profile": "equal"
+    }
+  },
+  "created_utc": "2026-08-29T01:17:02.030133+00:00",
+  "design_manifest_sha256": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86",
+  "formal_rows": 28152,
+  "interpretation": "The current-basis counts reproduce every successful sealed row exactly. Common-basis and gate-weight alternatives are post-seal sensitivity estimands; family-t14 intervals are supportive and do not replace the frozen confirmatory contrast.",
+  "limitations": [
+    "Basis translation uses Qiskit optimization_level=0 without hardware coupling, routing, scheduling, or calibration.",
+    "Two-qubit and virtual-RZ profiles are transparent cost sensitivities, not measured hardware durations or error rates.",
+    "Timeout rows remain zero in the ITT estimand because no valid output circuit was retained."
+  ],
+  "primary_contrast_sign_stable": true,
+  "primary_contrast_signs": {
+    "cz_equal_weight": "negative",
+    "ibm_equal_weight": "negative",
+    "ibm_two_qubit_weight_10": "negative",
+    "ibm_virtual_rz_two_qubit_weight_10": "negative",
+    "u_cx_equal_weight": "negative"
+  },
+  "recorded_current_basis_counts_reproduced": true,
+  "results_sha256": "76702c2c47e6e191e088bb2c10a7f382ec3f755ecba0bc5bdf19eea2d7af9167",
+  "schema_version": "1.0.0",
+  "semantic_replay_manifest_sha256": "54c5d5cfef49237a922ea1097b62d9db76fcc28e81fd53724a2963960a07b9df",
+  "status": "PASS_E31_COMMON_BASIS_AND_GATE_WEIGHT_SENSITIVITY_COMPLETE",
+  "success_rows": 20314,
+  "unique_inputs": 391,
+  "unique_successful_output_qpy_hashes": 1802
+}

@@ -1,0 +1,27 @@
+{
+  "fixed_benchmark_A": {
+    "confirmatory_mcid_decision_status": "VALID_IF_COMPUTED_FROM_SEALED_COMPLETE_PANEL",
+    "design_based_confidence_interval": null,
+    "design_based_p_value": null,
+    "estimate_pp": -0.37976652169697117,
+    "inference_status": "NOT_IDENTIFIED_NO_TREATMENT_RANDOMIZATION",
+    "point_estimate_status": "VALID_EXACT_FIXED_PANEL_DESCRIPTION"
+  },
+  "new_family_generalized_B": {
+    "confirmatory_claim_allowed": false,
+    "estimate_pp": -0.2149300775676611,
+    "family_cluster_df": 14,
+    "family_cluster_se_pp": 0.16981221056023227,
+    "inference_role": "SUPPORTIVE_MODEL_BASED_EXTRAPOLATION_NO_CONFIRMATORY_CLAIM",
+    "point_estimate_status": "VALID_EQUAL_FAMILY_DESCRIPTION",
+    "probability_sample_of_families": false,
+    "t14_ci95": [
+      -0.5791410462229936,
+      0.1492808910876713
+    ],
+    "t14_p_value_model_based": 0.22628162314191502,
+    "unseen_family_generalization_status": "BLOCKED",
+    "wild_cluster_bootstrap_t_p_value": 0.30955
+  },
+  "primary_contrast": "grid-averaged listing-by-rule-set interaction"
+}

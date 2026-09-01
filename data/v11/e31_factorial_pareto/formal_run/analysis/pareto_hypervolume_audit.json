@@ -1,0 +1,42 @@
+{
+  "deduplicated_protocol_objective": {
+    "reason": "failure_rate equals 1 - valid_rate exactly and is not an independent axis",
+    "removed": "failure_rate"
+  },
+  "draws": 200000,
+  "hypervolume": 0.00236,
+  "independent_objectives": [
+    "quality_itt_mean",
+    "valid_rate",
+    "wall_seconds_median",
+    "peak_rss_mb_p95"
+  ],
+  "interpretation": "relative to observed treatment-cell ranges, not an absolute cross-study metric",
+  "method": "SEEDED_MONTE_CARLO_UNIT_HYPERCUBE",
+  "monte_carlo_standard_error": 0.00010849954838615688,
+  "normalization": "observed range; reference point is zero, ideal point is one",
+  "objective_ranges": {
+    "peak_rss_mb_p95": {
+      "direction": "minimize",
+      "observed_max": 147.265625,
+      "observed_min": 105.435546875
+    },
+    "quality_itt_mean": {
+      "direction": "maximize",
+      "observed_max": 22.87772352337794,
+      "observed_min": 0.0
+    },
+    "valid_rate": {
+      "direction": "maximize",
+      "observed_max": 0.9744245524296675,
+      "observed_min": 0.0
+    },
+    "wall_seconds_median": {
+      "direction": "minimize",
+      "observed_max": 2.242429300000367,
+      "observed_min": 1.0421168000029866
+    }
+  },
+  "pareto_points": 26,
+  "seed": 20260811
+}

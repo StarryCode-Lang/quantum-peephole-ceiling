@@ -1,0 +1,71 @@
+{
+  "budget_specifications": {
+    "all_1_10_30_120": [
+      1,
+      10,
+      30,
+      120
+    ],
+    "executable_10_30_120": [
+      10,
+      30,
+      120
+    ],
+    "long_30_120": [
+      30,
+      120
+    ],
+    "terminal_120": [
+      120
+    ]
+  },
+  "created_utc": "2026-08-29T01:21:38.074029+00:00",
+  "estimate_max_pp": -0.008344268341105455,
+  "estimate_min_pp": -0.9064363630310966,
+  "estimate_sign_stable": true,
+  "family_influence": {
+    "all_family_equal_family_mean_pp": -0.21493007756766072,
+    "leave_one_family_out_checks": 15,
+    "maximum_absolute_delta_family": "Oracle",
+    "maximum_absolute_delta_pp": 0.15782304397159072,
+    "sign_change_count": 0
+  },
+  "figure_pdf": "data/v11/e31_factorial_pareto/formal_run/analysis/specification_influence/specification_curve.pdf",
+  "figure_pdf_sha256": "4baf0d7a8bd3c64672270539e8240ef4abecac0cf0c246916a0b852f0b291428",
+  "figure_png": "data/v11/e31_factorial_pareto/formal_run/analysis/specification_influence/specification_curve.png",
+  "figure_png_sha256": "9fd68ce11d20e480c4192fcbf8ba3ef07513387bb9ab0f00cf5b830f1052ea88",
+  "interpretation": "The curve varies frozen budget inclusion, window inclusion, and population weighting. It is a post-seal robustness multiverse; no row is a new confirmatory test.",
+  "leave_one_family_out_csv": "data/v11/e31_factorial_pareto/formal_run/analysis/specification_influence/leave_one_family_out.csv",
+  "leave_one_family_out_csv_sha256": "125e3ce835fbfe78b3dc9b1611759a1107451dbdafdc8972aea784e9582ef40b",
+  "limitations": [
+    "The multiverse is bounded to 32 prespecified-by-construction defensible summaries and is not exhaustive.",
+    "Equal-family t14 intervals cover only the 15 observed families and do not license unseen-family claims.",
+    "Fixed-input-weighted rows are descriptive and intentionally omit a pseudo-population confidence interval."
+  ],
+  "schema_version": "1.0.0",
+  "source_sha256": "76702c2c47e6e191e088bb2c10a7f382ec3f755ecba0bc5bdf19eea2d7af9167",
+  "specification_count": 32,
+  "specification_csv": "data/v11/e31_factorial_pareto/formal_run/analysis/specification_influence/specification_curve.csv",
+  "specification_csv_sha256": "581d0939b820f82d20a9c81d3013bc35c41aebefe11f6300ec79696da9df58e0",
+  "status": "PASS_E31_SPECIFICATION_CURVE_AND_FAMILY_INFLUENCE_COMPLETE",
+  "weighting_specifications": [
+    "fixed_input_weighted_descriptive",
+    "equal_family_supportive"
+  ],
+  "window_specifications": {
+    "all_4_16_64": [
+      4,
+      16,
+      64
+    ],
+    "window_16": [
+      16
+    ],
+    "window_4": [
+      4
+    ],
+    "window_64": [
+      64
+    ]
+  }
+}

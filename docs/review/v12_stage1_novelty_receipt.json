@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "status": "PASS_WITH_BOUNDARIES",
+  "window": {
+    "start": "2025-09-01",
+    "end": "2026-09-01",
+    "searched_on": "2026-09-01"
+  },
+  "comparison_matrix": "docs/review/v12_novelty_comparison_matrix.md",
+  "required_comparators": [
+    "Qiskit DAGDependency/pattern matching",
+    "Quartz",
+    "QUESO",
+    "Quasar",
+    "Local Optimization/cut-and-meld",
+    "Q-PreSyn",
+    "QuTuner"
+  ],
+  "additional_in_window_comparators": [
+    "HOPPS",
+    "unitary-to-hybrid quantum circuit equivalence checking",
+    "RL with deterministic Commutation-and-Reduction"
+  ],
+  "core_claims_red_teamed": [
+    "dependence-model-specific pair exposure",
+    "joint exposure through quotient-DAG contraction",
+    "matching upper bound and constructive lower bound",
+    "zero and exact exposure certificates",
+    "certificate-guided legal listing materialization"
+  ],
+  "result": {
+    "substantive_isomorphism_found": false,
+    "closest_threat": "Quasar's graph-plus-sequence e-graphs and step-limited cost extraction",
+    "closest_representation_precedent": "Qiskit DAGDependency and exact pattern matching",
+    "boundary": "The proposed object is not global circuit optimality, a rewrite-rule synthesizer, or an equivalence checker. It certifies a finite supported pair-exposure frontier under an explicit dependence/rule contract."
+  },
+  "external_sources": [
+    "https://qiskit.qotlabs.org/docs/api/qiskit/qiskit.dagcircuit.DAGDependency",
+    "https://arxiv.org/abs/1909.05270",
+    "https://arxiv.org/abs/2204.09033",
+    "https://arxiv.org/abs/2211.09691",
+    "https://doi.org/10.1145/3808254",
+    "https://arxiv.org/abs/2502.19526",
+    "https://arxiv.org/abs/2601.19738",
+    "https://arxiv.org/abs/2607.04586",
+    "https://arxiv.org/abs/2503.03227",
+    "https://arxiv.org/abs/2511.18770",
+    "https://arxiv.org/abs/2511.22523",
+    "https://arxiv.org/abs/2608.19103"
+  ],
+  "decision": "Proceed to theory and counterexample attack with conjecture/draft theorem labels until E38 passes."
+}

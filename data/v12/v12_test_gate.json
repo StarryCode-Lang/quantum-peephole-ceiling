@@ -1,0 +1,41 @@
+{
+  "baseline_gate": {
+    "collected": 563,
+    "exit_code": 0,
+    "failed": 0,
+    "passed": 563,
+    "receipt": "docs/review/v12_stage0_baseline_receipt.json",
+    "skipped": 0,
+    "status": "PASS"
+  },
+  "interpretation": "The inherited Stage 0 receipt is the 563-pass baseline gate. The isolated recheck exposes a pre-existing E31 audit-artifact drift in the fixed e9 snapshot; it is retained as an external blocker rather than repaired in this v12 scope.",
+  "isolated_recheck": {
+    "collected": 595,
+    "failed": 3,
+    "failed_tests": [
+      "tests/test_metric_audit_ledger.py::test_catalog_and_registry_are_unique_592_item_inventories",
+      "tests/test_metric_audit_ledger.py::test_passes_are_item_specific_and_nonpass_rows_fail_closed",
+      "tests/test_verify_metric_audit_ledger.py::test_current_metric_ledger_is_independently_verified"
+    ],
+    "failure_reason": "fixed e9 baseline registry stores a stale assessment for metric 15.41; E31 files were not modified",
+    "new_method_or_e31_import_closure_failures": 0,
+    "passed": 592,
+    "skipped": 0,
+    "status": "BASELINE_EXTERNAL_DRIFT"
+  },
+  "new_method_targeted_gate": {
+    "files": [
+      "tests/test_rewrite_exposure.py",
+      "tests/test_rewrite_property_sweep.py",
+      "tests/test_rewrite_order_confluence_audit.py",
+      "tests/test_optimizers.py",
+      "tests/test_phase2b_template_matcher.py",
+      "tests/test_listing_phase2b_interaction.py",
+      "tests/test_ceiling_aware.py",
+      "tests/test_monotone_ceiling.py"
+    ],
+    "result": "targeted regression suite passed; warnings only",
+    "status": "PASS"
+  },
+  "schema_version": "v12-test-gate-v1"
+}

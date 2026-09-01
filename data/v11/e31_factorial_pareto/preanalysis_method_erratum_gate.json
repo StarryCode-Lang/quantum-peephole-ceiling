@@ -1,0 +1,26 @@
+{
+  "status": "PREANALYSIS_MATHEMATICAL_ERRATUM_FROZEN_BEFORE_AGGREGATE_EFFECT_ANALYSIS",
+  "created_date": "2026-08-24",
+  "checkpoint_boundary": {
+    "committed_rows": 19708,
+    "max_run_order": 19707,
+    "last_committed_utc": "2026-08-24T02:00:54.640834+00:00",
+    "inspected_aggregate_fields": [
+      "status",
+      "run_order",
+      "committed_utc"
+    ],
+    "primary_contrast_computed_before_erratum": false
+  },
+  "erratum_path": "docs/review/e31_preanalysis_method_erratum_2026-08-24.md",
+  "erratum_sha256": "833c81c66ccbdaee626861a0400e0b2afc90f29fbdd4a398a5eece1b559d578a",
+  "protocol_sha256": "2464d1d531032a71c2947e9e8abd2b6b84de9fc6f048239944ee9357097365e8",
+  "design_manifest_sha256": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86",
+  "changes_to_frozen_execution": false,
+  "invalid_inference_removed": "family-restricted artificial-sign randomization p-value",
+  "replacement": "exact finite-population contrast plus explicitly non-design-based stratified stability interval",
+  "unmeasured_secondary_outcomes": [
+    "time_to_first_valid_seconds",
+    "time_to_best_seconds"
+  ]
+}

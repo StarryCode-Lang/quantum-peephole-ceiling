@@ -1,0 +1,53 @@
+{
+  "audit_role": "E31_UNIQUE_DETERMINISTIC_SEMANTIC_CELL_REPLAY",
+  "common_basis": [
+    "rz",
+    "sx",
+    "x",
+    "cx"
+  ],
+  "cross_budget_semantic_identity_verified": true,
+  "design_manifest_sha256": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86",
+  "fidelity_threshold": 0.9999999999,
+  "formal_success_rows_bound": 1,
+  "independent_trace_average_gate_fidelity": 0.9999999999994784,
+  "input_circuit_sha256": "1a7bfb668baba31b5cb74057590661843ab8c6a997dc5e21c16d38ca42dee44b",
+  "listed_circuit_sha256": "5f08dd7ff0fda4803de7239203859e57a209836eb70ee22f432145de7ce4a962",
+  "operator_dimension": 256,
+  "operator_metric_method": "exact dense Operator.from_circuit; trace inner product; phase-aligned Uout^dagger Uin Frobenius identity via Hilbert-Schmidt equality",
+  "phase_aligned_identity_frobenius_norm": 1.1577425520113929e-05,
+  "phase_aligned_identity_relative_frobenius_norm": 7.235890950071206e-07,
+  "phase_alignment_imag": 1.9414739327984514e-15,
+  "phase_alignment_real": 1.0,
+  "protocol_sha256": "2464d1d531032a71c2947e9e8abd2b6b84de9fc6f048239944ee9357097365e8",
+  "qpy_path": "data/v11/e31_factorial_pareto/formal_run/semantic_replay/outputs/4177b3e0bfa4d00f8edd6bffad4be4a3bb992cf34b4c94b1c13552d96bf32f13.qpy",
+  "qpy_roundtrip_logical_hash_verified": true,
+  "qpy_sha256": "426b9ae098cff0b0f0deac07dad91a0be2929c2736c43e8a055dc3bf3bb65a6e",
+  "recorded_common_basis_gate_reduction_pct": 5.34782608695652,
+  "recorded_exact_fidelity": 0.9999999999994784,
+  "recorded_optimized_common_basis_gate_count": 8708,
+  "recorded_original_common_basis_gate_count": 9200,
+  "recorded_output_circuit_sha256": "5c40657bc6c008ead87e8a5b9919688a3c62bfca353f688403497e5a1ef6f9bf",
+  "reduction_formula": "100 * (1 - optimized_common_basis_count / original_common_basis_count)",
+  "replayed_common_basis_gate_reduction_pct": 5.34782608695652,
+  "replayed_optimized_common_basis_gate_count": 8708,
+  "replayed_original_common_basis_gate_count": 9200,
+  "replayed_output_circuit_sha256": "5c40657bc6c008ead87e8a5b9919688a3c62bfca353f688403497e5a1ef6f9bf",
+  "run_id": "f3a1275b67b17c7ecfffff596eee514bb32acb27c457adda242758d373647dba",
+  "run_order": 28120,
+  "schema_version": "1.0.0",
+  "semantic_cell_id": "4177b3e0bfa4d00f8edd6bffad4be4a3bb992cf34b4c94b1c13552d96bf32f13",
+  "semantic_cell_key": {
+    "input_circuit_sha256": "1a7bfb668baba31b5cb74057590661843ab8c6a997dc5e21c16d38ca42dee44b",
+    "listing_model": "RANDOM_TOPOLOGICAL",
+    "rule_set": "COMMUTATION_ONLY",
+    "window_gates": 4
+  },
+  "status": "PASS",
+  "successful_budget_seconds": [
+    120
+  ],
+  "trace_uout_dagger_uin_abs": 255.99999999993298,
+  "trace_uout_dagger_uin_imag": 4.970173267962734e-13,
+  "trace_uout_dagger_uin_real": 255.99999999993298
+}

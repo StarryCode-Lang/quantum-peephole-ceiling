@@ -1,0 +1,34 @@
+{
+  "arms": [
+    "WCL_Greedy",
+    "CGL_Greedy",
+    "LBL_Phase2b",
+    "CGL_Phase2b"
+  ],
+  "cell_timeout_seconds": {
+    "E33": 120,
+    "E35": 180
+  },
+  "claim_boundary": "E41 supports scale and resource behavior only and does not alter E40 efficacy conclusions",
+  "cold_process_per_cell": true,
+  "e33_protocol_sha256": "d2299c5b971c44b65df0563dee6c35b81033a299926917a5ba97fa7621bad9da",
+  "e35_protocol_sha256": "147645adabbe5308cc29d65edfe7e1aa30e8455edb7da624176c214a0c56961d",
+  "equivalence_policy": "exact stabilizer for Clifford; exact operator when within bound; otherwise equivalence_unavailable; never sampled fidelity",
+  "experiment_id": "E41_REWRITE_EXPOSURE_SCALE_V1",
+  "input_count": 16,
+  "panels": {
+    "E33": 11,
+    "E35": 5
+  },
+  "rss_cap_bytes": 8589934592,
+  "source_hashes": {
+    "experiments/e41_rewrite_exposure_scale/run.py": "691b57d59be1504f0100027703a105afd1b5a86b5d6acf5ac9f25f54913e6756",
+    "scripts/verify_e41_rewrite_exposure_scale.py": "2ef9914185ebd2fd6d2f3ed3fce76e735d358126090a656307418150f3e72643",
+    "src/optimisation/_gate_predicates.py": "c7c0c6a7c985e5e4f19b2699323679f94b3f5040376b9a3224d40364b6bf83f2",
+    "src/optimisation/base.py": "f1c983c6273517cee511612137813c107a8a11940b71e0ac28bb4b3cdbbb4248",
+    "src/optimisation/rewrite_exposure.py": "88a1b9a9e7893133f490d9d9ef218de613456f3e9d1f052792fd7c1a3a295d28"
+  },
+  "status": "FROZEN_BEFORE_EXECUTION",
+  "threads_per_worker": 1,
+  "workers": 1
+}

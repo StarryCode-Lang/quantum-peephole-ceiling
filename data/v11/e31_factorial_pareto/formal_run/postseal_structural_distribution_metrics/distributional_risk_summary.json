@@ -1,0 +1,47 @@
+{
+  "catastrophic_expansion_operationalization": "post-seal sensitivity grid: common-basis gate-count increase at or above each listed percentage, conditional on a successful valid output",
+  "created_utc": "2026-08-28T14:23:54.223439+00:00",
+  "design_manifest_sha256": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86",
+  "formal_rows": 28152,
+  "itt_zero_for_non_success_reduction_quantiles_pp": {
+    "q01": 0.0,
+    "q05": 0.0,
+    "q10": 0.0,
+    "q25": 0.0,
+    "q50": 0.0
+  },
+  "non_success_rows": 7838,
+  "peak_live_qubits_status": "NOT_MEASURED; active_qubits_static is reported only as a static upper-bound proxy",
+  "results_sha256": "76702c2c47e6e191e088bb2c10a7f382ec3f755ecba0bc5bdf19eea2d7af9167",
+  "schema_version": "1.0.0",
+  "scope": "sealed E31 fixed panel; structural metrics use exact logical QPY outputs; no hardware-native, scheduled-duration, or fault-tolerant synthesis claim",
+  "semantic_replay_manifest_sha256": "54c5d5cfef49237a922ea1097b62d9db76fcc28e81fd53724a2963960a07b9df",
+  "solution_diversity": {
+    "input_count": 391,
+    "inputs_with_any_success": 381,
+    "per_input_unique_output_max": 16,
+    "per_input_unique_output_median": 4.0,
+    "per_input_unique_output_min": 0,
+    "unique_output_circuits_global": 1802
+  },
+  "status": "PASS_POSTSEAL_DERIVED_DISTRIBUTIONAL_METRICS",
+  "structural_metric_representation": "logical replayed QPY before hardware synthesis",
+  "structural_semantic_cells": 6858,
+  "success_only_reduction_quantiles_pp": {
+    "q01": 0.0,
+    "q05": 0.0,
+    "q10": 0.0,
+    "q25": 0.0,
+    "q50": 3.8135593220338992
+  },
+  "success_rows": 20314,
+  "successful_expansion_probability_by_threshold": {
+    "increase_ge_10pct": 0.0,
+    "increase_ge_1pct": 0.0,
+    "increase_ge_25pct": 0.0,
+    "increase_ge_5pct": 0.0
+  },
+  "successful_regression_count": 0,
+  "successful_regression_probability": 0.0,
+  "t_depth_status": "NOT_FAULT_TOLERANT_T_DEPTH; logical T/TDG layers are descriptive only when arbitrary non-Clifford+T operations are present"
+}

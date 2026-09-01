@@ -1,0 +1,40 @@
+{
+  "bootstrap": {
+    "replicates": 2000,
+    "seed": 951032,
+    "unit": "input circuit hash across the complete factorial grid within budget"
+  },
+  "budgets_seconds": [
+    1,
+    10,
+    30,
+    120
+  ],
+  "created_utc": "2026-08-29T01:19:13.008158+00:00",
+  "figure_pdf": "data/v11/e31_factorial_pareto/formal_run/analysis/validity_runtime_frontier/validity_runtime_frontier.pdf",
+  "figure_pdf_sha256": "8584d47f85057ca54b9abf43e95c80c0f96faa5c6ecd5ecf8f537355b63878c8",
+  "figure_png": "data/v11/e31_factorial_pareto/formal_run/analysis/validity_runtime_frontier/validity_runtime_frontier.png",
+  "figure_png_sha256": "f52f4ec67215dc6cb28d39ccf6b6c5adfda654454a8fe0a97d32089014ed5c69",
+  "formal_rows": 28152,
+  "frontier_csv": "data/v11/e31_factorial_pareto/formal_run/analysis/validity_runtime_frontier/frontier_by_budget.csv",
+  "frontier_csv_sha256": "a356aeb534594d6447937e1e00ebe4fa564f470f4ba0d97e0d3d01b90c16b4d5",
+  "interpretation": "This is a four-point independent-budget response profile over the sealed fixed panel. It is a reproducible anytime-style AUC proxy, not a within-run incumbent trajectory.",
+  "limitations": [
+    "The profile cannot identify time-to-first-valid or time-to-best within a run.",
+    "Wall time includes orchestration overhead and is not CPU time.",
+    "AUC uses log10 budget spacing and is descriptive for the four frozen budgets only."
+  ],
+  "log10_budget_normalized_auc": {
+    "itt_mean_reduction_pp": 12.576475612461294,
+    "validity_rate": 0.7277889278539965
+  },
+  "pareto_nondominated_budgets_seconds": [
+    1,
+    10,
+    30,
+    120
+  ],
+  "schema_version": "1.0.0",
+  "source_sha256": "76702c2c47e6e191e088bb2c10a7f382ec3f755ecba0bc5bdf19eea2d7af9167",
+  "status": "PASS_E31_VALIDITY_RUNTIME_FRONTIER_AND_BUDGET_AUC_COMPLETE"
+}

@@ -1,0 +1,80 @@
+{
+  "arms": [
+    "LBL_Greedy",
+    "WCL_Greedy",
+    "RandomTopological32_Greedy",
+    "CGL_Greedy",
+    "LBL_Phase2b",
+    "CGL_Phase2b"
+  ],
+  "cell_timeout_seconds": 180,
+  "claim_boundary": "fixed finite MQT generator panel; no population inference or optimizer-independent generalization",
+  "classification_rule": "certificate UB > 0 is opportunity_positive; UB == 0 is robust_zero_control; no eligible input is unavailable",
+  "classification_sha256": "f3b488bbf2b7fcf0e0815c17d3cccf3e8c1023e884ffb8219d3e2061bbaa4905",
+  "experiment_id": "E40_PROSPECTIVE_REWRITE_EXPOSURE_V1",
+  "experiment_wall_budget_seconds": 172800,
+  "generation_manifest_sha256": "6165c30b9cc62269e57ec44f417d47938a09861841397ffe1160a11676a575a9",
+  "generator_environment": {
+    "mqt.bench": "2.2.3",
+    "qiskit_core": "2.4.1",
+    "qiskit_generation": "2.5.2"
+  },
+  "greedy": {
+    "fidelity_threshold": 0.9999999999,
+    "max_iterations": 50
+  },
+  "inputs_sha256": "42b75d57e334bc11b7c744c5e7d6c16ea610ae0244d1883fcce9c3d8f7e8390c",
+  "phase2b": {
+    "fidelity_threshold": 0.9999999999,
+    "gather_window": 64,
+    "max_iterations": 50,
+    "template_enabled": true
+  },
+  "random_seed_formula": "int.from_bytes(SHA256(input_sha + 20260901 + replicate)[:8], big)",
+  "random_topological_replicates": 32,
+  "rss_cap_bytes": 8589934592,
+  "selected_config": {
+    "beam_width": 32,
+    "candidate_cap": 256,
+    "dependence_model": "conservative_commutation_v1",
+    "downstream_optimizer": "GreedyGateCancellation(max_iterations=50)",
+    "exact_candidate_limit": 24,
+    "exact_node_budget": 1000000,
+    "experiment_id": "E39_DEVELOPMENT_GRID_V1",
+    "fidelity_threshold": 0.9999999999,
+    "no_e40_result_used": true,
+    "overlap_check_budget": 20000000,
+    "rule_library": "pair_v1",
+    "selected_config": {
+      "beam_width": 32,
+      "candidate_cap": 256,
+      "complete_mean_effect_pp": 1.2884002579467075,
+      "config_id": "b32_c256",
+      "error_count": 0,
+      "input_count": 391,
+      "median_cgl_total_seconds": 0.0019133999994664919,
+      "median_effect_pp": 0.0,
+      "opportunity_positive_count": 230
+    },
+    "selected_config_id": "b32_c256",
+    "selection_rule": [
+      "leave_one_family_out_effects_are_reported",
+      "maximize_complete_development_input_mean_effect_pp",
+      "retain_configs_within_0.25_pp_of_best",
+      "choose_lowest_median_cgl_total_runtime",
+      "tie_break_beam_width_then_candidate_cap_ascending"
+    ],
+    "source_module": "src/optimisation/rewrite_exposure.py",
+    "source_module_sha256": "88a1b9a9e7893133f490d9d9ef218de613456f3e9d1f052792fd7c1a3a295d28",
+    "status": "FROZEN_FOR_E40"
+  },
+  "source_hashes": {
+    "experiments/e40_prospective_rewrite_exposure/run.py": "d5fc5e660b013aee0a5bb05a0cacaf5a87f7745a6833bb34b0b459e1a8cff9c9",
+    "src/optimisation/_gate_predicates.py": "c7c0c6a7c985e5e4f19b2699323679f94b3f5040376b9a3224d40364b6bf83f2",
+    "src/optimisation/base.py": "f1c983c6273517cee511612137813c107a8a11940b71e0ac28bb4b3cdbbb4248",
+    "src/optimisation/rewrite_exposure.py": "88a1b9a9e7893133f490d9d9ef218de613456f3e9d1f052792fd7c1a3a295d28"
+  },
+  "status": "FROZEN_BEFORE_FORMAL_EXECUTION",
+  "threads_per_worker": 1,
+  "workers": 1
+}

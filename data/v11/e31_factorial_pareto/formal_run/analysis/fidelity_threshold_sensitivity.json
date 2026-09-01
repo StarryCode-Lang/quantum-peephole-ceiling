@@ -1,0 +1,70 @@
+{
+  "created_utc": "2026-08-28T14:57:32.835057+00:00",
+  "formal_success_rows": 20314,
+  "frozen_threshold": "0.9999999999",
+  "interpretation": "All sealed successful cells remain accepted from 0.99 through the frozen 0.9999999999 threshold. Stricter near-one thresholds are reported as numerical sensitivity only and do not retroactively redefine the frozen protocol.",
+  "limitation": "This varies the acceptance threshold over already sealed independent trace-fidelity certificates; it is not a new optimizer run or a hardware-noise fidelity study.",
+  "maximum_recorded_independent_fidelity": 1.0000000000000044,
+  "minimum_recorded_independent_fidelity": 0.9999999999994639,
+  "schema_version": "1.0.0",
+  "semantic_cells": 6858,
+  "source_manifest": "data/v11/e31_factorial_pareto/formal_run/semantic_replay/semantic_replay_manifest.json",
+  "source_manifest_sha256": "54c5d5cfef49237a922ea1097b62d9db76fcc28e81fd53724a2963960a07b9df",
+  "status": "PASS_E31_FIDELITY_THRESHOLD_SENSITIVITY_COMPLETE",
+  "threshold_grid": {
+    "0.99": {
+      "formal_success_row_acceptance_rate": 1.0,
+      "formal_success_rows_accepted": 20314,
+      "semantic_cell_acceptance_rate": 1.0,
+      "semantic_cells_accepted": 6858
+    },
+    "0.999": {
+      "formal_success_row_acceptance_rate": 1.0,
+      "formal_success_rows_accepted": 20314,
+      "semantic_cell_acceptance_rate": 1.0,
+      "semantic_cells_accepted": 6858
+    },
+    "0.9999": {
+      "formal_success_row_acceptance_rate": 1.0,
+      "formal_success_rows_accepted": 20314,
+      "semantic_cell_acceptance_rate": 1.0,
+      "semantic_cells_accepted": 6858
+    },
+    "0.999999": {
+      "formal_success_row_acceptance_rate": 1.0,
+      "formal_success_rows_accepted": 20314,
+      "semantic_cell_acceptance_rate": 1.0,
+      "semantic_cells_accepted": 6858
+    },
+    "0.9999999999": {
+      "formal_success_row_acceptance_rate": 1.0,
+      "formal_success_rows_accepted": 20314,
+      "semantic_cell_acceptance_rate": 1.0,
+      "semantic_cells_accepted": 6858
+    },
+    "0.99999999999": {
+      "formal_success_row_acceptance_rate": 1.0,
+      "formal_success_rows_accepted": 20314,
+      "semantic_cell_acceptance_rate": 1.0,
+      "semantic_cells_accepted": 6858
+    },
+    "0.999999999999": {
+      "formal_success_row_acceptance_rate": 1.0,
+      "formal_success_rows_accepted": 20314,
+      "semantic_cell_acceptance_rate": 1.0,
+      "semantic_cells_accepted": 6858
+    },
+    "0.9999999999999": {
+      "formal_success_row_acceptance_rate": 0.9321650093531555,
+      "formal_success_rows_accepted": 18936,
+      "semantic_cell_acceptance_rate": 0.9212598425196851,
+      "semantic_cells_accepted": 6318
+    },
+    "1.0": {
+      "formal_success_row_acceptance_rate": 0.2630698040760067,
+      "formal_success_rows_accepted": 5344,
+      "semantic_cell_acceptance_rate": 0.25984251968503935,
+      "semantic_cells_accepted": 1782
+    }
+  }
+}

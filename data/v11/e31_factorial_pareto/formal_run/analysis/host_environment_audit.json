@@ -1,0 +1,54 @@
+{
+  "adjustment": "saturated 72-cell treatment mean plus input-hash fixed mean",
+  "blocks": 20,
+  "continuous_host_exclusivity_verified": false,
+  "continuous_host_telemetry_recorded": false,
+  "interpretation": "Run-order diagnostics can reveal temporal drift but cannot prove its absence; runtime, timeout, and memory findings remain conditional on the recorded shared host.",
+  "material_drift_screen_decision": "NO_THRESHOLD_EXCEEDED",
+  "material_drift_threshold_exceeded": {
+    "peak_rss_mb": false,
+    "quality_itt": false,
+    "timeout": false,
+    "valid": false,
+    "wall_budget_fraction": false
+  },
+  "material_drift_thresholds": {
+    "peak_rss_mb": 128.0,
+    "quality_itt": 1.0,
+    "timeout": 0.05,
+    "valid": 0.05,
+    "wall_budget_fraction": 0.05
+  },
+  "outcomes": {
+    "peak_rss_mb": {
+      "last_minus_first_adjusted_residual_mean": -3.195474022061191,
+      "max_absolute_block_adjusted_residual_mean": 4.642749376416984
+    },
+    "quality_itt": {
+      "last_minus_first_adjusted_residual_mean": -0.3925006994970838,
+      "max_absolute_block_adjusted_residual_mean": 0.584418292532933
+    },
+    "timeout": {
+      "last_minus_first_adjusted_residual_mean": 0.004790515181509976,
+      "max_absolute_block_adjusted_residual_mean": 0.009608175141762897
+    },
+    "valid": {
+      "last_minus_first_adjusted_residual_mean": -0.004790515181509976,
+      "max_absolute_block_adjusted_residual_mean": 0.009608175141762893
+    },
+    "wall_budget_fraction": {
+      "last_minus_first_adjusted_residual_mean": 0.013164739748183954,
+      "max_absolute_block_adjusted_residual_mean": 0.035372140887721955
+    },
+    "wall_seconds": {
+      "last_minus_first_adjusted_residual_mean": 0.40258624630545514,
+      "max_absolute_block_adjusted_residual_mean": 0.7080963631065981
+    }
+  },
+  "rows": 28152,
+  "startup_overlap_guard_only": true,
+  "status": "OBSERVATIONAL_TEMPORAL_SENSITIVITY_ONLY",
+  "threshold_role": "predeclared descriptive sensitivity thresholds, not hypothesis tests",
+  "treatment_cell_count_per_block_max": 34,
+  "treatment_cell_count_per_block_min": 8
+}

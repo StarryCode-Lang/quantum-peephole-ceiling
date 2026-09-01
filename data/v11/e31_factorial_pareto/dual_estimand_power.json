@@ -1,0 +1,111 @@
+{
+  "alpha_two_sided": 0.05,
+  "benchmark": {
+    "families": 15,
+    "family_sizes": {
+      "Adder": 21,
+      "CNOT": 3,
+      "GHZ": 3,
+      "Grover": 27,
+      "HaarRandom": 10,
+      "HardwareEfficient": 30,
+      "IQP": 30,
+      "Oracle": 51,
+      "QAOA": 30,
+      "QFT": 3,
+      "QuantumWalk": 60,
+      "RandomClifford": 30,
+      "SurfaceCode": 33,
+      "UCCSD_inspired": 30,
+      "VQE": 30
+    },
+    "unique_inputs": 391
+  },
+  "decision": {
+    "approximate_families_required_for_80pct_at_1pp_conservative_rho1": 539,
+    "fixed_benchmark_A": "PASS",
+    "fixed_power_floor": 0.99985,
+    "fixed_type_i_ceiling": 0.05165,
+    "formal_28152_execution": "PASS",
+    "generalized_power_floor": 0.07055,
+    "generalized_type_i_ceiling": 0.0513,
+    "new_family_claims": "BLOCKED_UNTIL_MORE_FAMILIES",
+    "new_family_generalized_B": "BLOCK",
+    "rationale": "Formal execution is licensed only by the prospectively frozen fixed-benchmark primary. New-family claims remain separately gated and cannot borrow 391 inputs as independent family replications."
+  },
+  "design_manifest_sha256": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86",
+  "formal_results_used": false,
+  "inference_methods": {
+    "fixed_benchmark_A_formal_test": "20,000-draw family-restricted paired-label Monte Carlo randomization with a fixed seed",
+    "fixed_benchmark_A_power_test": "family-blocked conditional pooled test, the large-sample approximation to the frozen paired-label randomization analysis",
+    "new_family_generalized_B": "two-sided one-sample t test over equal-weight family means"
+  },
+  "limitations": [
+    "The 12-cell correlation is not identified by the earlier pilot; 0, 0.5, and 1 are sensitivity bounds.",
+    "Fixed-benchmark inference conditions on these 391 hashes and their observed family composition.",
+    "Generalized inference has only 15 family clusters and must not use input-level degrees of freedom.",
+    "The pilot variance anchor is prospective for E31 but comes from the earlier E31 phase2a/phase2b comparison."
+  ],
+  "mcid_pp": 1.0,
+  "multiplicity": {
+    "confirmatory_tests": 1,
+    "primary_alpha": 0.05,
+    "remaining_interactions": "supportive_or_exploratory",
+    "remaining_main_effects": "supportive"
+  },
+  "primary_contrast": "equal-weight mean over the complete 3-window x 4-budget grid of [(WCL-LBL)_COMMUTATION_PLUS_TEMPLATES - (WCL-LBL)_COMMUTATION_ONLY]",
+  "protocol_sha256": "2464d1d531032a71c2947e9e8abd2b6b84de9fc6f048239944ee9357097365e8",
+  "scenarios": [
+    {
+      "averaged_between_family_sd_pp": 2.379391759674146,
+      "averaged_within_family_sd_pp": 1.0400722537402258,
+      "fixed_benchmark_A": {
+        "power_at_1pp": 1.0,
+        "type_i_error": 0.0509
+      },
+      "new_family_generalized_B": {
+        "power_at_1pp": 0.32425,
+        "type_i_error": 0.05005
+      },
+      "within_input_grid_correlation": 0.0
+    },
+    {
+      "averaged_between_family_sd_pp": 6.066282506530172,
+      "averaged_within_family_sd_pp": 2.651674358683919,
+      "fixed_benchmark_A": {
+        "power_at_1pp": 1.0,
+        "type_i_error": 0.04885
+      },
+      "new_family_generalized_B": {
+        "power_at_1pp": 0.09215,
+        "type_i_error": 0.0513
+      },
+      "within_input_grid_correlation": 0.5
+    },
+    {
+      "averaged_between_family_sd_pp": 8.242454837732673,
+      "averaged_within_family_sd_pp": 3.6029159740414807,
+      "fixed_benchmark_A": {
+        "power_at_1pp": 0.99985,
+        "type_i_error": 0.05165
+      },
+      "new_family_generalized_B": {
+        "power_at_1pp": 0.07055,
+        "type_i_error": 0.0492
+      },
+      "within_input_grid_correlation": 1.0
+    }
+  ],
+  "seed": 310731,
+  "simulations_per_null_or_alternative_scenario": 20000,
+  "status": "PROSPECTIVE_DUAL_ESTIMAND_SIMULATION",
+  "target_power": 0.8,
+  "variance_anchor": {
+    "did_between_family_sd_pp": 8.242454837732673,
+    "did_mean_pp": 3.7695114503414886,
+    "did_total_sd_pp": 8.889094819547331,
+    "did_within_family_sd_pp": 3.6029159740414807,
+    "pilot_complete_inputs": 44,
+    "pilot_families": 15
+  }
+}

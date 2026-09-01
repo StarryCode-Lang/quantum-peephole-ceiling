@@ -1,0 +1,81 @@
+{
+  "artifacts": {
+    "mixed_model_fixed_effects.csv": {
+      "rows": 4,
+      "sha256": "774114702902a6cfc28a525b789ca032616ba45b1652c52047af0a7f8721c937"
+    },
+    "mixed_model_summary.txt": {
+      "sha256": "995af84ef99e7d2f6280c66cc072609e07cd33d1441b42dc2f8a1b4e5151bf19"
+    }
+  },
+  "claim_boundary": "The mixed model is supportive, not the confirmatory E31 inferential engine. Fifteen families are too few to treat the near-boundary random-effect geometry as routine; family-t14 and wild-cluster-bootstrap outputs remain the primary supportive inference.",
+  "convergence": {
+    "converged": true,
+    "gradient_infinity_norm": 0.0014922991216813365,
+    "optimizer_function_calls": 38,
+    "optimizer_iterations": 12,
+    "optimizer_warnflag": 0
+  },
+  "created_utc": "2026-08-29T12:43:06.700853+00:00",
+  "diagnostics": {
+    "family_random_effect_covariance": [
+      [
+        337.431576174377,
+        75.98882551127336
+      ],
+      [
+        75.98882551127336,
+        17.264526078923296
+      ]
+    ],
+    "family_random_effect_covariance_eigenvalues": [
+      0.14467476409620872,
+      354.5514274892041
+    ],
+    "family_random_effect_eigenvalue_ratio": 0.0004080501526132312,
+    "family_random_intercept_slope_correlation": 0.9955877428904147,
+    "hessian_eigenvalues": [
+      -2249.2663140422615,
+      -9.50816978414067,
+      -2.2497597247214847,
+      -0.874964314635488,
+      -0.0053261530089728495,
+      0.001772221334336158,
+      0.6823332950821955,
+      137.0683196757433
+    ],
+    "hessian_negative_definite": false,
+    "hessian_singular_flag": false,
+    "near_singular_random_effect_geometry": true
+  },
+  "fixed_effects": {
+    "Intercept": 9.42227931077116,
+    "listing_wcl": 2.6555183141347007,
+    "listing_wcl:templates": -0.3797665216969797,
+    "templates": 4.448131980699361
+  },
+  "metric_dispositions": {
+    "11.32": "PASS: the declared supportive mixed model converged under REML/L-BFGS without an optimizer warning",
+    "11.33": "PARTIAL: convergence is achieved, but the observed Hessian is indefinite and the family random intercept/slope covariance is near singular",
+    "11.40": "PASS: a family-level random slope for WCL versus LBL is estimated jointly with the family intercept and input variance component"
+  },
+  "model": {
+    "aggregation": "equal mean over the frozen 3 windows x 4 budgets before modeling",
+    "family_groups": 15,
+    "fit": "REML",
+    "formula": "itt_reduction_pp ~ listing_wcl * templates",
+    "input_instances": 391,
+    "observations": 1564,
+    "optimizer": "lbfgs",
+    "random_effects": "family random intercept plus family listing_wcl slope; input variance component intercept",
+    "statsmodels_version": "0.14.6"
+  },
+  "primary_interaction_reproduces_descriptive_pp": -0.3797665216969797,
+  "schema_version": "1.0.0",
+  "scope": "supportive post-seal model on the fixed 391-input E31 panel",
+  "source_bindings": {
+    "analysis/e31_mixed_model_diagnostics.py": "d1e1ea794ceda1415d56ec4888e0bb7560b733c7835873bfb6cc006b6aa998b9",
+    "formal_results.csv": "76702c2c47e6e191e088bb2c10a7f382ec3f755ecba0bc5bdf19eea2d7af9167"
+  },
+  "status": "PASS_CONVERGED_WITH_NEAR_SINGULAR_RANDOM_EFFECT_WARNING"
+}

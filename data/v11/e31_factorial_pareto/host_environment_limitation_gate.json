@@ -1,0 +1,29 @@
+{
+  "status": "PREANALYSIS_HOST_LIMITATION_FROZEN",
+  "created_utc": "2026-08-24T03:02:30.829452+00:00",
+  "checkpoint_boundary": {
+    "rows": 20405,
+    "max_run_order": 20404,
+    "status_counts_only": {
+      "success": 14733,
+      "timeout": 5672
+    }
+  },
+  "aggregate_treatment_effects_inspected": false,
+  "row_exclusion_or_rerun_authorized": false,
+  "continuous_host_exclusivity_verified": false,
+  "continuous_host_telemetry_recorded": false,
+  "temporal_blocks": 20,
+  "material_drift_thresholds": {
+    "quality_itt": 1.0,
+    "valid": 0.05,
+    "timeout": 0.05,
+    "wall_budget_fraction": 0.05,
+    "peak_rss_mb": 128.0
+  },
+  "protocol_sha256": "2464d1d531032a71c2947e9e8abd2b6b84de9fc6f048239944ee9357097365e8",
+  "design_manifest_sha256": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86",
+  "disclosure_path": "docs/review/e31_host_environment_limitation_2026-08-24.md",
+  "disclosure_sha256": "0e87a60e82f4a88543cc19f9cefdad797b2d4a17b4a172497e0e6601fc0d88cc",
+  "interpretation": "Thresholds were frozen before formal aggregate treatment analysis; the diagnostic can reveal temporal drift but cannot prove its absence."
+}

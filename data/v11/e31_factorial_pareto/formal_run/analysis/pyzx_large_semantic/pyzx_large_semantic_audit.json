@@ -1,0 +1,61 @@
+{
+  "artifacts": {
+    "pyzx_large_semantic_cells.csv": {
+      "rows": 27,
+      "sha256": "d5797ab8804e0c219bbb3b3c1027a4462e1901ffeba60c21a4b9d76638fddfde"
+    }
+  },
+  "claim_boundary": "This is a bounded ZX-calculus panel at the largest E31 widths, not all 6,858 cells. Selection requires a successful sealed semantic cell; the omitted large-width inputs are reported explicitly rather than treated as verified. Successful identity reduction is symbolic evidence; PyZX incompleteness means failure to reduce would be inconclusive. Qiskit is used only to parse QASM/QPY and translate both sides identically to h/rz/cx before PyZX parsing.",
+  "created_utc": "2026-08-29T13:00:12.990464+00:00",
+  "method": {
+    "common_symbolic_basis": [
+      "h",
+      "rz",
+      "cx"
+    ],
+    "decision": "Circuit.verify_equality(up_to_global_phase=True)",
+    "interpretation": "True means the composed ZX diagram was reduced to identity by full_reduce; a non-True result is INCONCLUSIVE and is never classified as inequivalent.",
+    "library": "PyZX",
+    "version": "0.10.5"
+  },
+  "metric_dispositions": {
+    "7.25": "PASS: PyZX full-reduce proves equality for all 27 selected sealed E31 cells at widths 9-10, while one X-mutant per family is not proved equal"
+  },
+  "results": {
+    "inconclusive_or_timeout": 0,
+    "maximum_proof_wall_seconds": 0.488323900004616,
+    "mutants_not_proved_equal": 3,
+    "one_x_mutants": 3,
+    "proved_equal": 27
+  },
+  "schema_version": "1.0.0",
+  "scope": {
+    "cells": 27,
+    "eligible_design_inputs": 37,
+    "families": [
+      "Adder",
+      "Oracle",
+      "SurfaceCode"
+    ],
+    "families_without_successful_semantic_cell": [
+      "QuantumWalk"
+    ],
+    "inputs_without_successful_semantic_cell": 10,
+    "min_qubits": 9,
+    "per_case_timeout_seconds": 60.0,
+    "selection": "one minimum-emitted-gate successful semantic cell per unique E31 input with n_qubits >= threshold",
+    "translated_gate_count_range": [
+      10,
+      153
+    ],
+    "width_counts": {
+      "10": 9,
+      "9": 18
+    }
+  },
+  "source_bindings": {
+    "analysis/e31_pyzx_large_semantic_audit.py": "250e779d83a2babf919844066a9215cb0e8ad15d70b73be8c93d70f7b0bc7de4",
+    "design_manifest.csv": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86"
+  },
+  "status": "PASS_ALL_SELECTED_LARGE_E31_CELLS_ZX_REDUCED_TO_IDENTITY"
+}

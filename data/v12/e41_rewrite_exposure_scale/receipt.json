@@ -1,0 +1,23 @@
+{
+  "cell_count": 16,
+  "claim_boundary": "E41 supports scale and resource behavior only and does not alter E40 efficacy conclusions",
+  "equivalence_unavailable_arm_count": 48,
+  "experiment_id": "E41_REWRITE_EXPOSURE_SCALE_V1",
+  "formal_results_sha256": "9fb1bc5cd0b80aed30907ce2e61e5542ee4a26b1e9c03da25c1f577db366e245",
+  "input_count": 16,
+  "inputs_sha256": "9da04104ef5126e61876f2b5979e5ea012245f789fe081678be09a668a8ddbc0",
+  "protocol_sha256": "87f9ed838d9818d7573fb102959daf52be04e0510658c5f1a05eae85f9aa79d5",
+  "resource_or_error_cells": 4,
+  "result_rows": 48,
+  "source_hashes": {
+    "experiments/e41_rewrite_exposure_scale/run.py": "691b57d59be1504f0100027703a105afd1b5a86b5d6acf5ac9f25f54913e6756",
+    "scripts/verify_e41_rewrite_exposure_scale.py": "2ef9914185ebd2fd6d2f3ed3fce76e735d358126090a656307418150f3e72643",
+    "src/optimisation/_gate_predicates.py": "c7c0c6a7c985e5e4f19b2699323679f94b3f5040376b9a3224d40364b6bf83f2",
+    "src/optimisation/base.py": "f1c983c6273517cee511612137813c107a8a11940b71e0ac28bb4b3cdbbb4248",
+    "src/optimisation/rewrite_exposure.py": "88a1b9a9e7893133f490d9d9ef218de613456f3e9d1f052792fd7c1a3a295d28"
+  },
+  "status": "FORMAL_WITH_RESOURCE_OR_ERROR_OUTCOMES",
+  "successful_cells": 12,
+  "unmarked_semantic_failure_count": 0,
+  "wire_order_fallback_cells": 0
+}

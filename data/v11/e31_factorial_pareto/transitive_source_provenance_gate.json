@@ -1,0 +1,99 @@
+{
+  "aggregate_treatment_effects_inspected": false,
+  "checkpoint_boundary": {
+    "committed_rows": 21366,
+    "first_committed_utc": "2026-08-11T12:49:21.790965+00:00",
+    "last_committed_utc": "2026-08-24T04:03:53.847310+00:00",
+    "max_run_order": 21365,
+    "min_run_order": 0,
+    "sqlite_integrity": "ok",
+    "status_counts_only": {
+      "success": 15433,
+      "timeout": 5933
+    },
+    "unique_run_ids": 21366,
+    "unique_run_orders": 21366
+  },
+  "complete_cryptographic_prerun_source_closure": false,
+  "created_date": "2026-08-24",
+  "created_utc": "2026-08-24T04:13:05.1211903+00:00",
+  "design_manifest_sha256": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86",
+  "direct_frozen_source_count": 7,
+  "disclosure_path": "docs/review/e31_transitive_source_provenance_limitation_2026-08-24.md",
+  "disclosure_sha256": "60a888c73b6d4554793bf98e9b5110d68694c33aa7f178dea60c9e20ffb1fabd",
+  "environment_path": "data/v11/e31_factorial_pareto/formal_run/environment.json",
+  "environment_sha256": "15d695f9cc6c6acf153718a9adef445c886b89376b9d024aa36f1aca360be63e",
+  "historical_environment_rewritten": false,
+  "interpretation": "Conditional release eligibility with a PARTIAL provenance rating; the post-hoc gate cannot be represented as a complete cryptographic pre-run source freeze.",
+  "omitted_first_party_import_closure": {
+    "experiments/e31_factorial_pareto_design.py": {
+      "last_write_local": "2026-08-11T20:04:26.4583322+08:00",
+      "sha256": "3888690b3fa15395540707d596a4169a07582d12a1f3c1b7bd0c4e2deec73ea5"
+    },
+    "src/circuits/__init__.py": {
+      "last_write_local": "2026-06-10T13:31:44.8866397+08:00",
+      "sha256": "1797dafd16a572ebc1c4f11bcd661cb5aa6f44eee8c9510e95bcce48fd57ee4d"
+    },
+    "src/circuits/generator_v2.py": {
+      "last_write_local": "2026-06-24T08:43:27.9496040+08:00",
+      "sha256": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232"
+    },
+    "src/equivalence.py": {
+      "last_write_local": "2026-08-11T19:31:32.8876577+08:00",
+      "sha256": "19de65ac1fb719c763ed60f4b3bb8655435b706976333c1bf5e569faa58834af"
+    },
+    "src/optimisation/__init__.py": {
+      "last_write_local": "2026-07-11T22:19:53.6250915+08:00",
+      "sha256": "5dffe0a4aad9352fd0235ce51d66ebb6f46f1d83ecf7cc68e11681ebbc48bb45"
+    },
+    "src/optimisation/_gate_predicates.py": {
+      "last_write_local": "2026-07-20T23:29:58.5597674+08:00",
+      "sha256": "c7c0c6a7c985e5e4f19b2699323679f94b3f5040376b9a3224d40364b6bf83f2"
+    },
+    "src/optimisation/base.py": {
+      "last_write_local": "2026-08-11T19:46:48.6834685+08:00",
+      "sha256": "f1c983c6273517cee511612137813c107a8a11940b71e0ac28bb4b3cdbbb4248"
+    },
+    "src/optimisation/ceiling_aware.py": {
+      "last_write_local": "2026-08-11T19:47:09.1436662+08:00",
+      "sha256": "db0afd66cd8a7eaef9b60e8bf317620b967cf298e8ad28bd32093fe87985bfb6"
+    },
+    "src/optimisation/constants.py": {
+      "last_write_local": "2026-08-09T22:00:39.0044745+08:00",
+      "sha256": "ce80583a56732a3cc70cbef5ff0124cd0f03517fbfc718f06ebf4e5055ea3c41"
+    },
+    "src/optimisation/phase1/__init__.py": {
+      "last_write_local": "2026-06-14T09:47:33.7961594+08:00",
+      "sha256": "802ef343ca499c03f5f7c2c3e9e6bde692c5bfd00296abf133b23ac0b560b5c7"
+    },
+    "src/optimisation/phase1/genetic_algorithm.py": {
+      "last_write_local": "2026-08-11T19:47:09.1447044+08:00",
+      "sha256": "7e59e479d4b11fe5944859971c3f6f490705a7b394b558f2d620ccdb17fa2e5d"
+    },
+    "src/optimisation/phase1/greedy.py": {
+      "last_write_local": "2026-08-11T19:47:09.1459345+08:00",
+      "sha256": "182346d4926282999dc193ce7156666f8cc98e105fd99c8d87a00d77081e37af"
+    },
+    "src/optimisation/phase1/random_local_search.py": {
+      "last_write_local": "2026-08-11T19:47:09.1470169+08:00",
+      "sha256": "5846e76c0f696840b12b8faf7a45b95e4d57c12ab65d5758dccabf26d573971f"
+    },
+    "src/optimisation/phase1/simulated_annealing.py": {
+      "last_write_local": "2026-08-11T19:47:09.1480478+08:00",
+      "sha256": "19f415ffd544be8deb772d9bd92891e716fd60a6e4abe226f0359263ca184034"
+    },
+    "src/optimisation/phase2/__init__.py": {
+      "last_write_local": "2026-07-09T07:54:25.6291785+08:00",
+      "sha256": "8aa91ebf7630b23444d15e1538c44b35632e2b32915e3726327cf5bd8c1afa7d"
+    },
+    "src/optimisation/phase2/commutation_rewriter.py": {
+      "last_write_local": "2026-08-11T19:47:09.1480478+08:00",
+      "sha256": "98a3eee5b88937e47c068707643b627c0bca1c54fd7a730acab4f2b5758fb976"
+    }
+  },
+  "omitted_source_count": 16,
+  "protocol_sha256": "2464d1d531032a71c2947e9e8abd2b6b84de9fc6f048239944ee9357097365e8",
+  "row_exclusion_or_rerun_authorized": false,
+  "status": "POSTHOC_TRANSITIVE_SOURCE_LIMITATION_FROZEN_BEFORE_AGGREGATE_ANALYSIS",
+  "timestamp_evidence_is_cryptographic_commitment": false
+}

@@ -1,0 +1,60 @@
+{
+  "arms": [
+    {
+      "arm": "WCL_Greedy",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 80,
+      "output_gate_count": 200,
+      "reduction": 0.0,
+      "runtime_seconds": 0.020924500000546686,
+      "status": "success"
+    },
+    {
+      "arm": "CGL_Greedy",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 77,
+      "output_gate_count": 194,
+      "reduction": 0.0,
+      "runtime_seconds": 0.02592250000088825,
+      "status": "success"
+    },
+    {
+      "arm": "LBL_Phase2b",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 77,
+      "output_gate_count": 193,
+      "reduction": 0.0,
+      "runtime_seconds": 0.06926490000114427,
+      "status": "success"
+    },
+    {
+      "arm": "CGL_Phase2b",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 77,
+      "output_gate_count": 193,
+      "reduction": 0.0,
+      "runtime_seconds": 0.07426649999979418,
+      "status": "success"
+    }
+  ],
+  "case_id": "csla_mux_3",
+  "certificate": {
+    "actual_dependence_model": "conservative_commutation_v1",
+    "candidate_count": 656,
+    "fallback_reason": "",
+    "lb": 16,
+    "status": "exact",
+    "ub": 16
+  },
+  "input_gate_count": 210,
+  "input_qasm_sha256": "f495b948354824175d1b9429a9824fa7d20fa52008409df6141b9238bb4147ea",
+  "n_qubits": 15,
+  "panel": "E33",
+  "peak_rss_bytes": 118120448,
+  "status": "success",
+  "wall_seconds": 1.5265746000004583
+}

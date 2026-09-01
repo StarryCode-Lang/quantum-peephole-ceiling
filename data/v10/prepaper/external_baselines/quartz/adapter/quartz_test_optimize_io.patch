@@ -1,0 +1,42 @@
+diff --git a/src/test/test_optimize.cpp b/src/test/test_optimize.cpp
+index 8bdee59..3f05383 100644
+--- a/src/test/test_optimize.cpp
++++ b/src/test/test_optimize.cpp
+@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
+   std::string circuit_name = "barenco_tof_3";
+   std::string output_fn;
+   std::string eqset_fn =
+-      kQuartzRootPath.string() + "/eccset/Nam_3_3_complete_ECC_set.json";
++      kQuartzRootPath.string() + "/eccset/Nam_5_3_complete_ECC_set.json";
+ 
+   if (argc >= 2) {
+     assert(argv[1] != nullptr);
+@@ -18,6 +18,14 @@ int main(int argc, char **argv) {
+     if (argc >= 3) {
+       assert(argv[2] != nullptr);
+       circuit_name = std::string(argv[2]);
++      if (argc >= 4) {
++        assert(argv[3] != nullptr);
++        eqset_fn = std::string(argv[3]);
++        if (argc >= 5) {
++          assert(argv[4] != nullptr);
++          output_fn = std::string(argv[4]);
++        }
++      }
+     }
+   }
+ 
+@@ -50,7 +58,11 @@ int main(int argc, char **argv) {
+ 
+   auto graph_optimized = graph->optimize(xfers, graph->gate_count() * 1.05,
+                                          circuit_name, "", true, nullptr, 10);
+-  std::cout << "Optimized graph:" << std::endl;
+-  std::cout << graph_optimized->to_qasm();
++  if (output_fn.empty()) {
++    std::cout << "Optimized graph:" << std::endl;
++    std::cout << graph_optimized->to_qasm();
++  } else {
++    graph_optimized->to_qasm(output_fn, false, false);
++  }
+   return 0;
+ }

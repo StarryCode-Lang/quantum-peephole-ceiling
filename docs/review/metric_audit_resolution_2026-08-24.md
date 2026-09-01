@@ -3,7 +3,7 @@
 Status: supersedes the legacy section-status/shared-evidence ledger.
 
 - Registry: `docs/review/metric_evidence_registry_2026-08-26.json`
-- Registry SHA-256: `7b044d6790dbc45af2eb13c1d9c46b11b5a515cd5002d09e69bfa0c0d950854e`
+- Registry SHA-256: `6170358ee14183f606871d907138d492dd6861debe051f4b808c289a4481ac3b`
 - Catalog SHA-256: `eb5f039ae5cfcd97e205afae9febb25f7b69bd52e57f4af4cdb8997d0393d36b`
 - Item-specific PASS coverage: **182/592**.
 - Status counts: `{"EXTERNAL": 4, "FAIL": 24, "NA": 29, "PARTIAL": 353, "PASS": 182}`.

@@ -1,0 +1,40 @@
+{
+  "configuration_count": 6,
+  "experiment_id": "E39_DEVELOPMENT_GRID_V1",
+  "family_count": 15,
+  "frozen_algorithm_config_sha256": "cbae374237ac5d113b712709251abc905a94a7662dc03d05749bee5ea8cfd702",
+  "grid_results_sha256": "fc20841bf84c0042e32642177ac1f4e6455b64d172969bea9ec871725fcc7e92",
+  "input_count": 391,
+  "inputs_sha256": "0b9bd90e3972c520c2fffa5c19c2b042d42c053166b3d9fe17fc79186fe7d077",
+  "leave_one_family_out_sha256": "c9135d5e911991cc28d01bd39380d7043c215296e062f75612f84965769f0886",
+  "protocol_sha256": "4e07e79b29e2d50f3eae9e904bcde1a11b78b80f6fc193d2c3020a2106423bbe",
+  "result_rows": 2346,
+  "selection": {
+    "best_complete_mean_effect_pp": 1.2884002579467075,
+    "effect_tolerance_pp": 0.25,
+    "eligible_config_ids": [
+      "b1_c64",
+      "b8_c64",
+      "b32_c64",
+      "b1_c256",
+      "b8_c256",
+      "b32_c256"
+    ],
+    "experiment_id": "E39_DEVELOPMENT_GRID_V1",
+    "no_e40_result_used": true,
+    "selected_config": {
+      "beam_width": 32,
+      "candidate_cap": 256,
+      "complete_mean_effect_pp": 1.2884002579467075,
+      "config_id": "b32_c256",
+      "error_count": 0,
+      "input_count": 391,
+      "median_cgl_total_seconds": 0.0019133999994664919,
+      "median_effect_pp": 0.0,
+      "opportunity_positive_count": 230
+    },
+    "selection_is_frozen_for_e40": true,
+    "status": "DEVELOPMENT_ONLY"
+  },
+  "status": "verified_development_grid"
+}
