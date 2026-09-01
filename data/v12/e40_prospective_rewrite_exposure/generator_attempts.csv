@@ -1,0 +1,169 @@
+benchmark,declared_size,status,actual_qubits,gate_count,classical_bits,parameter_count,dynamic_control,gate_alphabet,qasm2_export,eligibility_reason,error
+ae,4,generated,4,12,4,0,False,"['barrier', 'c-unitary', 'h', 'measure', 'qft_dg', 'ry']",False,gate_count_outside_20_2000,
+ae,5,generated,5,15,5,0,False,"['barrier', 'c-unitary', 'h', 'measure', 'qft_dg', 'ry']",False,gate_count_outside_20_2000,
+ae,6,generated,6,18,6,0,False,"['barrier', 'c-unitary', 'h', 'measure', 'qft_dg', 'ry']",False,gate_count_outside_20_2000,
+ae,7,generated,7,21,7,0,False,"['barrier', 'c-unitary', 'h', 'measure', 'qft_dg', 'ry']",False,classical_bits_present,
+ae,8,generated,8,24,8,0,False,"['barrier', 'c-unitary', 'h', 'measure', 'qft_dg', 'ry']",False,classical_bits_present,
+ae,9,generated,9,27,9,0,False,"['barrier', 'c-unitary', 'h', 'measure', 'qft_dg', 'ry']",False,classical_bits_present,
+ae,10,generated,10,30,10,0,False,"['barrier', 'c-unitary', 'h', 'measure', 'qft_dg', 'ry']",False,classical_bits_present,
+bmw_quark_cardinality,4,generated,4,41,4,37,False,"['barrier', 'measure', 'rx', 'rxx', 'rz']",False,classical_bits_present,
+bmw_quark_cardinality,5,generated,5,52,5,47,False,"['barrier', 'measure', 'rx', 'rxx', 'rz']",False,classical_bits_present,
+bmw_quark_cardinality,6,generated,6,63,6,57,False,"['barrier', 'measure', 'rx', 'rxx', 'rz']",False,classical_bits_present,
+bmw_quark_cardinality,7,generated,7,74,7,67,False,"['barrier', 'measure', 'rx', 'rxx', 'rz']",False,classical_bits_present,
+bmw_quark_cardinality,8,generated,8,85,8,77,False,"['barrier', 'measure', 'rx', 'rxx', 'rz']",False,classical_bits_present,
+bmw_quark_cardinality,9,generated,9,96,9,87,False,"['barrier', 'measure', 'rx', 'rxx', 'rz']",False,classical_bits_present,
+bmw_quark_cardinality,10,generated,10,107,10,97,False,"['barrier', 'measure', 'rx', 'rxx', 'rz']",False,classical_bits_present,
+bmw_quark_copula,4,generated,4,36,4,28,False,"['barrier', 'cx', 'h', 'measure', 'rx', 'rxx', 'rz']",False,classical_bits_present,
+bmw_quark_copula,5,generation_error,,,,,,,,,ValueError:Number of qubits must be divisible by 2.
+bmw_quark_copula,6,generated,6,60,6,48,False,"['barrier', 'cx', 'h', 'measure', 'rx', 'rxx', 'rz']",False,classical_bits_present,
+bmw_quark_copula,7,generation_error,,,,,,,,,ValueError:Number of qubits must be divisible by 2.
+bmw_quark_copula,8,generated,8,88,8,72,False,"['barrier', 'cx', 'h', 'measure', 'rx', 'rxx', 'rz']",False,classical_bits_present,
+bmw_quark_copula,9,generation_error,,,,,,,,,ValueError:Number of qubits must be divisible by 2.
+bmw_quark_copula,10,generated,10,120,10,100,False,"['barrier', 'cx', 'h', 'measure', 'rx', 'rxx', 'rz']",False,classical_bits_present,
+cdkm_ripple_carry_adder,4,generated,4,7,4,0,False,"['MAJ', 'UMA', 'barrier', 'cx', 'measure']",False,gate_count_outside_20_2000,
+cdkm_ripple_carry_adder,5,generation_error,,,,,,,,,ValueError:num_qubits must be an even integer ≥ 4.
+cdkm_ripple_carry_adder,6,generated,6,11,6,0,False,"['MAJ', 'UMA', 'barrier', 'cx', 'measure']",False,gate_count_outside_20_2000,
+cdkm_ripple_carry_adder,7,generation_error,,,,,,,,,ValueError:num_qubits must be an even integer ≥ 4.
+cdkm_ripple_carry_adder,8,generated,8,15,8,0,False,"['MAJ', 'UMA', 'barrier', 'cx', 'measure']",False,gate_count_outside_20_2000,
+cdkm_ripple_carry_adder,9,generation_error,,,,,,,,,ValueError:num_qubits must be an even integer ≥ 4.
+cdkm_ripple_carry_adder,10,generated,10,19,10,0,False,"['MAJ', 'UMA', 'barrier', 'cx', 'measure']",False,gate_count_outside_20_2000,
+dj,4,generated,4,11,3,0,False,"['Oracle', 'barrier', 'h', 'measure', 'u2']",False,gate_count_outside_20_2000,
+dj,5,generated,5,14,4,0,False,"['Oracle', 'barrier', 'h', 'measure', 'u2']",False,gate_count_outside_20_2000,
+dj,6,generated,6,17,5,0,False,"['Oracle', 'barrier', 'h', 'measure', 'u2']",False,gate_count_outside_20_2000,
+dj,7,generated,7,20,6,0,False,"['Oracle', 'barrier', 'h', 'measure', 'u2']",False,classical_bits_present,
+dj,8,generated,8,23,7,0,False,"['Oracle', 'barrier', 'h', 'measure', 'u2']",False,classical_bits_present,
+dj,9,generated,9,26,8,0,False,"['Oracle', 'barrier', 'h', 'measure', 'u2']",False,classical_bits_present,
+dj,10,generated,10,29,9,0,False,"['Oracle', 'barrier', 'h', 'measure', 'u2']",False,classical_bits_present,
+draper_qft_adder,4,generated,4,9,4,0,False,"['barrier', 'circuit-327', 'circuit-327_dg', 'cp', 'measure']",False,gate_count_outside_20_2000,
+draper_qft_adder,5,generation_error,,,,,,,,,ValueError:num_qubits must be an even integer ≥ 2.
+draper_qft_adder,6,generated,6,14,6,0,False,"['barrier', 'circuit-332', 'circuit-332_dg', 'cp', 'measure']",False,gate_count_outside_20_2000,
+draper_qft_adder,7,generation_error,,,,,,,,,ValueError:num_qubits must be an even integer ≥ 2.
+draper_qft_adder,8,generated,8,20,8,0,False,"['barrier', 'circuit-337', 'circuit-337_dg', 'cp', 'measure']",False,classical_bits_present,
+draper_qft_adder,9,generation_error,,,,,,,,,ValueError:num_qubits must be an even integer ≥ 2.
+draper_qft_adder,10,generated,10,27,10,0,False,"['barrier', 'circuit-342', 'circuit-342_dg', 'cp', 'measure']",False,classical_bits_present,
+full_adder,4,generated,4,7,4,0,False,"['Carry', 'Sum', 'barrier', 'cx', 'measure']",False,gate_count_outside_20_2000,
+full_adder,5,generation_error,,,,,,,,,ValueError:num_qubits must be an even integer ≥ 4.
+full_adder,6,generated,6,11,6,0,False,"['MAJ', 'UMA', 'barrier', 'cx', 'measure']",False,gate_count_outside_20_2000,
+full_adder,7,generation_error,,,,,,,,,ValueError:num_qubits must be an even integer ≥ 4.
+full_adder,8,generated,8,15,8,0,False,"['MAJ', 'UMA', 'barrier', 'cx', 'measure']",False,gate_count_outside_20_2000,
+full_adder,9,generation_error,,,,,,,,,ValueError:num_qubits must be an even integer ≥ 4.
+full_adder,10,generated,10,19,10,0,False,"['MAJ', 'UMA', 'barrier', 'cx', 'measure']",False,gate_count_outside_20_2000,
+graphstate,4,generated,4,12,4,0,False,"['barrier', 'cz', 'h', 'measure']",False,gate_count_outside_20_2000,
+graphstate,5,generated,5,15,5,0,False,"['barrier', 'cz', 'h', 'measure']",False,gate_count_outside_20_2000,
+graphstate,6,generated,6,18,6,0,False,"['barrier', 'cz', 'h', 'measure']",False,gate_count_outside_20_2000,
+graphstate,7,generated,7,21,7,0,False,"['barrier', 'cz', 'h', 'measure']",False,classical_bits_present,
+graphstate,8,generated,8,24,8,0,False,"['barrier', 'cz', 'h', 'measure']",False,classical_bits_present,
+graphstate,9,generated,9,27,9,0,False,"['barrier', 'cz', 'h', 'measure']",False,classical_bits_present,
+graphstate,10,generated,10,30,10,0,False,"['barrier', 'cz', 'h', 'measure']",False,classical_bits_present,
+half_adder,4,generation_error,,,,,,,,,ValueError:num_qubits must be an odd integer ≥ 3.
+half_adder,5,generated,5,13,5,0,False,"['barrier', 'ccx', 'cx', 'measure']",False,gate_count_outside_20_2000,
+half_adder,6,generation_error,,,,,,,,,ValueError:num_qubits must be an odd integer ≥ 3.
+half_adder,7,generated,7,24,7,0,False,"['barrier', 'ccx', 'cx', 'measure', 'x']",False,classical_bits_present,
+half_adder,8,generation_error,,,,,,,,,ValueError:num_qubits must be an odd integer ≥ 3.
+half_adder,9,generated,9,65,9,0,False,"['barrier', 'ccx', 'cx', 'h', 'measure', 'p', 'u2', 'x']",False,classical_bits_present,
+half_adder,10,generation_error,,,,,,,,,ValueError:num_qubits must be an odd integer ≥ 3.
+hhl,4,generated,4,17,1,0,False,"['cp', 'cry', 'h', 'measure', 'qft_dg', 'swap', 'x']",False,gate_count_outside_20_2000,
+hhl,5,generated,5,24,1,0,False,"['cp', 'cry', 'h', 'measure', 'qft_dg', 'x']",False,classical_bits_present,
+hhl,6,generated,6,33,1,0,False,"['cp', 'cry', 'h', 'measure', 'qft_dg', 'x']",False,classical_bits_present,
+hhl,7,generated,7,43,1,0,False,"['cp', 'cry', 'h', 'measure', 'qft_dg', 'x']",False,classical_bits_present,
+hhl,8,generated,8,54,1,0,False,"['cp', 'cry', 'h', 'measure', 'qft_dg', 'x']",False,classical_bits_present,
+hhl,9,generated,9,66,1,0,False,"['cp', 'cry', 'h', 'measure', 'qft_dg', 'x']",False,classical_bits_present,
+hhl,10,generated,10,79,1,0,False,"['cp', 'cry', 'h', 'measure', 'qft_dg', 'x']",False,classical_bits_present,
+hrs_cumulative_multiplier,4,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 5 and (num_qubits - 1) must be divisible by 4.
+hrs_cumulative_multiplier,5,generated,5,6,5,0,False,"['barrier', 'ccircuit-466', 'measure']",False,gate_count_outside_20_2000,
+hrs_cumulative_multiplier,6,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 5 and (num_qubits - 1) must be divisible by 4.
+hrs_cumulative_multiplier,7,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 5 and (num_qubits - 1) must be divisible by 4.
+hrs_cumulative_multiplier,8,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 5 and (num_qubits - 1) must be divisible by 4.
+hrs_cumulative_multiplier,9,generated,9,11,9,0,False,"['barrier', 'ccircuit-481', 'measure']",False,gate_count_outside_20_2000,
+hrs_cumulative_multiplier,10,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 5 and (num_qubits - 1) must be divisible by 4.
+iqpe,4,generated,2,15,3,0,True,"['cp', 'h', 'if_else', 'measure', 'x']",False,gate_count_outside_20_2000,
+iqpe,5,generated,2,27,4,0,True,"['cp', 'h', 'if_else', 'measure', 'x']",False,classical_bits_present,
+iqpe,6,generated,2,33,5,0,True,"['cp', 'h', 'if_else', 'measure', 'x']",False,classical_bits_present,
+iqpe,7,generated,2,42,6,0,True,"['cp', 'h', 'if_else', 'measure', 'x']",False,classical_bits_present,
+iqpe,8,generated,2,57,7,0,True,"['cp', 'h', 'if_else', 'measure', 'x']",False,classical_bits_present,
+iqpe,9,generated,2,66,8,0,True,"['cp', 'h', 'if_else', 'measure', 'x']",False,classical_bits_present,
+iqpe,10,generated,2,78,9,0,True,"['cp', 'h', 'if_else', 'measure', 'x']",False,classical_bits_present,
+modular_adder,4,generated,4,12,4,0,False,"['barrier', 'cp', 'h', 'measure', 'qft_dg', 'swap']",False,gate_count_outside_20_2000,
+modular_adder,5,generation_error,,,,,,,,,ValueError:num_qubits must be an even integer ≥ 2.
+modular_adder,6,generated,6,19,6,0,False,"['barrier', 'cp', 'h', 'measure', 'qft_dg']",False,gate_count_outside_20_2000,
+modular_adder,7,generation_error,,,,,,,,,ValueError:num_qubits must be an even integer ≥ 2.
+modular_adder,8,generated,8,29,8,0,False,"['barrier', 'cp', 'h', 'measure', 'qft_dg']",False,classical_bits_present,
+modular_adder,9,generation_error,,,,,,,,,ValueError:num_qubits must be an even integer ≥ 2.
+modular_adder,10,generated,10,59,10,0,False,"['barrier', 'cx', 'measure', 'rccx']",False,classical_bits_present,
+multiplier,4,generated,4,31,4,0,False,"['barrier', 'ccx', 'cx', 'h', 'measure', 'p', 'u2', 'unitary']",False,classical_bits_present,
+multiplier,5,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 4 and divisible by 4.
+multiplier,6,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 4 and divisible by 4.
+multiplier,7,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 4 and divisible by 4.
+multiplier,8,generated,8,113,8,0,False,"['barrier', 'ccx', 'cx', 'h', 'measure', 'p', 'rccx', 'u2', 'unitary']",False,classical_bits_present,
+multiplier,9,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 4 and divisible by 4.
+multiplier,10,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 4 and divisible by 4.
+qftentangled,4,generated,4,18,4,0,False,"['barrier', 'cp', 'cx', 'h', 'measure']",False,gate_count_outside_20_2000,
+qftentangled,5,generated,5,25,5,0,False,"['barrier', 'cp', 'cx', 'h', 'measure']",False,classical_bits_present,
+qftentangled,6,generated,6,33,6,0,False,"['barrier', 'cp', 'cx', 'h', 'measure']",False,classical_bits_present,
+qftentangled,7,generated,7,42,7,0,False,"['barrier', 'cp', 'cx', 'h', 'measure']",False,classical_bits_present,
+qftentangled,8,generated,8,52,8,0,False,"['barrier', 'cp', 'cx', 'h', 'measure']",False,classical_bits_present,
+qftentangled,9,generated,9,63,9,0,False,"['barrier', 'cp', 'cx', 'h', 'measure']",False,classical_bits_present,
+qftentangled,10,generated,10,75,10,0,False,"['barrier', 'cp', 'cx', 'h', 'measure']",False,classical_bits_present,
+qnn,4,generated,4,31,4,12,False,"['barrier', 'cx', 'h', 'measure', 'p', 'ry']",False,classical_bits_present,
+qnn,5,generated,5,39,5,15,False,"['barrier', 'cx', 'h', 'measure', 'p', 'ry']",False,classical_bits_present,
+qnn,6,generated,6,47,6,18,False,"['barrier', 'cx', 'h', 'measure', 'p', 'ry']",False,classical_bits_present,
+qnn,7,generated,7,55,7,21,False,"['barrier', 'cx', 'h', 'measure', 'p', 'ry']",False,classical_bits_present,
+qnn,8,generated,8,63,8,24,False,"['barrier', 'cx', 'h', 'measure', 'p', 'ry']",False,classical_bits_present,
+qnn,9,generated,9,71,9,27,False,"['barrier', 'cx', 'h', 'measure', 'p', 'ry']",False,classical_bits_present,
+qnn,10,generated,10,79,10,30,False,"['barrier', 'cx', 'h', 'measure', 'p', 'ry']",False,classical_bits_present,
+qpeexact,4,generated,4,12,3,0,False,"['barrier', 'cp', 'h', 'measure', 'x']",False,gate_count_outside_20_2000,
+qpeexact,5,generated,5,23,4,0,False,"['barrier', 'cp', 'h', 'measure', 'x']",False,classical_bits_present,
+qpeexact,6,generated,6,28,5,0,False,"['barrier', 'cp', 'h', 'measure', 'x']",False,classical_bits_present,
+qpeexact,7,generated,7,36,6,0,False,"['barrier', 'cp', 'h', 'measure', 'x']",False,classical_bits_present,
+qpeexact,8,generated,8,50,7,0,False,"['barrier', 'cp', 'h', 'measure', 'x']",False,classical_bits_present,
+qpeexact,9,generated,9,58,8,0,False,"['barrier', 'cp', 'h', 'measure', 'x']",False,classical_bits_present,
+qpeexact,10,generated,10,69,9,0,False,"['barrier', 'cp', 'h', 'measure', 'x']",False,classical_bits_present,
+qpeinexact,4,generated,4,16,3,0,False,"['barrier', 'cp', 'h', 'measure', 'x']",False,gate_count_outside_20_2000,
+qpeinexact,5,generated,5,23,4,0,False,"['barrier', 'cp', 'h', 'measure', 'x']",False,classical_bits_present,
+qpeinexact,6,generated,6,31,5,0,False,"['barrier', 'cp', 'h', 'measure', 'x']",False,classical_bits_present,
+qpeinexact,7,generated,7,40,6,0,False,"['barrier', 'cp', 'h', 'measure', 'x']",False,classical_bits_present,
+qpeinexact,8,generated,8,50,7,0,False,"['barrier', 'cp', 'h', 'measure', 'x']",False,classical_bits_present,
+qpeinexact,9,generated,9,61,8,0,False,"['barrier', 'cp', 'h', 'measure', 'x']",False,classical_bits_present,
+qpeinexact,10,generated,10,73,9,0,False,"['barrier', 'cp', 'h', 'measure', 'x']",False,classical_bits_present,
+rg_qft_multiplier,4,generated,4,8,4,0,False,"['barrier', 'circuit-3106', 'circuit-3106_dg', 'mcphase', 'measure']",False,gate_count_outside_20_2000,
+rg_qft_multiplier,5,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 4 and divisible by 4.
+rg_qft_multiplier,6,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 4 and divisible by 4.
+rg_qft_multiplier,7,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 4 and divisible by 4.
+rg_qft_multiplier,8,generated,8,26,8,0,False,"['barrier', 'circuit-3111', 'circuit-3111_dg', 'mcphase', 'measure']",False,classical_bits_present,
+rg_qft_multiplier,9,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 4 and divisible by 4.
+rg_qft_multiplier,10,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 4 and divisible by 4.
+seven_qubit_steane_code,4,generation_error,,,,,,,,,ValueError:num_qubits must be divisible by 13.
+seven_qubit_steane_code,5,generation_error,,,,,,,,,ValueError:num_qubits must be divisible by 13.
+seven_qubit_steane_code,6,generation_error,,,,,,,,,ValueError:num_qubits must be divisible by 13.
+seven_qubit_steane_code,7,generation_error,,,,,,,,,ValueError:num_qubits must be divisible by 13.
+seven_qubit_steane_code,8,generation_error,,,,,,,,,ValueError:num_qubits must be divisible by 13.
+seven_qubit_steane_code,9,generation_error,,,,,,,,,ValueError:num_qubits must be divisible by 13.
+seven_qubit_steane_code,10,generation_error,,,,,,,,,ValueError:num_qubits must be divisible by 13.
+shor,4,generation_error,,,,,,,,,"ValueError:No Shor instance for circuit_size=4. Available: 18, 42, 58, 74."
+shor,5,generation_error,,,,,,,,,"ValueError:No Shor instance for circuit_size=5. Available: 18, 42, 58, 74."
+shor,6,generation_error,,,,,,,,,"ValueError:No Shor instance for circuit_size=6. Available: 18, 42, 58, 74."
+shor,7,generation_error,,,,,,,,,"ValueError:No Shor instance for circuit_size=7. Available: 18, 42, 58, 74."
+shor,8,generation_error,,,,,,,,,"ValueError:No Shor instance for circuit_size=8. Available: 18, 42, 58, 74."
+shor,9,generation_error,,,,,,,,,"ValueError:No Shor instance for circuit_size=9. Available: 18, 42, 58, 74."
+shor,10,generation_error,,,,,,,,,"ValueError:No Shor instance for circuit_size=10. Available: 18, 42, 58, 74."
+shors_nine_qubit_code,4,generation_error,,,,,,,,,ValueError:num_qubits must be divisible by 17.
+shors_nine_qubit_code,5,generation_error,,,,,,,,,ValueError:num_qubits must be divisible by 17.
+shors_nine_qubit_code,6,generation_error,,,,,,,,,ValueError:num_qubits must be divisible by 17.
+shors_nine_qubit_code,7,generation_error,,,,,,,,,ValueError:num_qubits must be divisible by 17.
+shors_nine_qubit_code,8,generation_error,,,,,,,,,ValueError:num_qubits must be divisible by 17.
+shors_nine_qubit_code,9,generation_error,,,,,,,,,ValueError:num_qubits must be divisible by 17.
+shors_nine_qubit_code,10,generation_error,,,,,,,,,ValueError:num_qubits must be divisible by 17.
+vbe_ripple_carry_adder,4,generated,4,7,4,0,False,"['Carry', 'Sum', 'barrier', 'cx', 'measure']",False,gate_count_outside_20_2000,
+vbe_ripple_carry_adder,5,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 4 and (num_qubits - 1) must be divisible by 3.
+vbe_ripple_carry_adder,6,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 4 and (num_qubits - 1) must be divisible by 3.
+vbe_ripple_carry_adder,7,generated,7,13,7,0,False,"['Carry', 'Carry_dg', 'Sum', 'barrier', 'cx', 'measure']",False,gate_count_outside_20_2000,
+vbe_ripple_carry_adder,8,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 4 and (num_qubits - 1) must be divisible by 3.
+vbe_ripple_carry_adder,9,generation_error,,,,,,,,,ValueError:num_qubits must be an integer ≥ 4 and (num_qubits - 1) must be divisible by 3.
+vbe_ripple_carry_adder,10,generated,10,19,10,0,False,"['Carry', 'Carry_dg', 'Sum', 'barrier', 'cx', 'measure']",False,gate_count_outside_20_2000,
+wstate,4,generated,4,17,4,0,False,"['barrier', 'cx', 'cz', 'measure', 'ry', 'x']",False,gate_count_outside_20_2000,
+wstate,5,generated,5,22,5,0,False,"['barrier', 'cx', 'cz', 'measure', 'ry', 'x']",False,classical_bits_present,
+wstate,6,generated,6,27,6,0,False,"['barrier', 'cx', 'cz', 'measure', 'ry', 'x']",False,classical_bits_present,
+wstate,7,generated,7,32,7,0,False,"['barrier', 'cx', 'cz', 'measure', 'ry', 'x']",False,classical_bits_present,
+wstate,8,generated,8,37,8,0,False,"['barrier', 'cx', 'cz', 'measure', 'ry', 'x']",False,classical_bits_present,
+wstate,9,generated,9,42,9,0,False,"['barrier', 'cx', 'cz', 'measure', 'ry', 'x']",False,classical_bits_present,
+wstate,10,generated,10,47,10,0,False,"['barrier', 'cx', 'cz', 'measure', 'ry', 'x']",False,classical_bits_present,

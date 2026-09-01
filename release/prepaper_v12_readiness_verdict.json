@@ -1,0 +1,45 @@
+{
+  "claim_boundary": "Finite-panel, declared-rule, bounded certificate claims only; no universal optimizer or unseen-family claim.",
+  "created_utc": "2026-09-01T08:42:55.867702+00:00",
+  "gates": {
+    "E31": "READ_ONLY",
+    "E38": "PASS_ZERO_TOLERANCE",
+    "E39": "PASS_DEVELOPMENT_ONLY",
+    "E40": "NOT_ESTIMABLE_EXTERNAL_BOUNDARY",
+    "E41": "FORMAL_WITH_RESOURCE_OR_ERROR_OUTCOMES",
+    "E42": "EXTERNAL_OPTIONAL_NOT_AUTHORIZED",
+    "full_tests": "BASELINE_EXTERNAL_DRIFT",
+    "novelty": "PASS_WITH_BOUNDARIES",
+    "theory_and_core_implementation": "PASS_WITH_BOUNDARIES"
+  },
+  "historical_e1_e37_modified": false,
+  "ledger": {
+    "path": "data/v12/v12_requirement_to_evidence_ledger.json",
+    "requirements": 13,
+    "sha256": "6fe891504d17bc5dfd12435dc5fd64d580b6b867a5516aca98dd8e38c2cecaba"
+  },
+  "manuscript_modified": false,
+  "primary_estimand": {
+    "effect_pp": null,
+    "opportunity_positive_family_count": 0,
+    "status": "NOT_ESTIMABLE_EXTERNAL_BOUNDARY"
+  },
+  "project": "Q-research v12 rewrite exposure certificate",
+  "rationale": "The v12 method, E38 exhaustive oracle, E39 frozen development selection, and E41 scale audit are evidenced. However, the fixed E40 external panel contains zero eligible opportunity-positive families, so the primary efficacy estimand is not estimable; the isolated full-suite recheck also retains three pre-existing E31 metric-15.41 stale-assessment failures. No manuscript claim should be drafted until the baseline artifact drift is resolved or explicitly accepted by a later release gate.",
+  "sbom": {
+    "path": "data/v12/v12_sbom.json",
+    "sha256": "e725359dfcfd627dd08374d5fa0464d28f44077f74a1e16ec4b59a95e57bafeb"
+  },
+  "scale_audit": {
+    "input_count": 16,
+    "resource_or_error_cells": 4,
+    "successful_cells": 12,
+    "unmarked_semantic_failure_count": 0
+  },
+  "schema_version": "v12-readiness-verdict-v1",
+  "source_data_environment_manifest": {
+    "path": "data/v12/v12_source_data_environment_manifest.json",
+    "sha256": "f419d0236f3f91763d950cc6ee3048f0ac542854785b9c67724234c0b464172f"
+  },
+  "verdict": "NOT_READY_FOR_PAPER"
+}

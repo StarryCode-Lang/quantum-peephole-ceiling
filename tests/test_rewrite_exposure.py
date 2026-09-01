@@ -280,7 +280,7 @@ def test_conservative_overlap_budget_falls_back_to_wire_model_with_reason():
 
     assert certificate.dependence_model == DependenceModel.WIRE_ORDER_V1.value
     assert certificate.fallback_reason.startswith(
-        "conservative_overlap_check_budget_exceeded:1"
+        "conservative_overlap_check_budget_predicted:1:"
     )
 
 

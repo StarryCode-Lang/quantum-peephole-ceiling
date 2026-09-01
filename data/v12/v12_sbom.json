@@ -1,0 +1,116 @@
+{
+  "bomFormat": "CycloneDX",
+  "components": [
+    {
+      "name": "cirq",
+      "scope": "support",
+      "type": "library",
+      "version": "1.6.1"
+    },
+    {
+      "name": "matplotlib",
+      "scope": "support",
+      "type": "library",
+      "version": "3.9.0"
+    },
+    {
+      "name": "mqt.bench",
+      "scope": "support",
+      "type": "library",
+      "version": "2.2.3"
+    },
+    {
+      "name": "numpy",
+      "scope": "required",
+      "type": "library",
+      "version": "1.26.4"
+    },
+    {
+      "name": "pandas",
+      "scope": "required",
+      "type": "library",
+      "version": "2.2.2"
+    },
+    {
+      "name": "pytest",
+      "scope": "support",
+      "type": "library",
+      "version": "8.2.2"
+    },
+    {
+      "name": "pytket",
+      "scope": "support",
+      "type": "library",
+      "version": "2.18.0"
+    },
+    {
+      "name": "pyzx",
+      "scope": "required",
+      "type": "library",
+      "version": "0.10.5"
+    },
+    {
+      "name": "qiskit",
+      "scope": "required",
+      "type": "library",
+      "version": "2.4.1"
+    },
+    {
+      "name": "qiskit-aer",
+      "scope": "support",
+      "type": "library",
+      "version": "0.17.2"
+    },
+    {
+      "name": "qiskit-core-environment",
+      "scope": "core-execution",
+      "type": "library",
+      "version": "2.4.1"
+    },
+    {
+      "name": "qiskit-generation-environment",
+      "scope": "external-generation-only",
+      "type": "library",
+      "version": "2.5.2"
+    },
+    {
+      "name": "qiskit-ibm-runtime",
+      "scope": "support",
+      "type": "library",
+      "version": "0.47.0"
+    },
+    {
+      "name": "scipy",
+      "scope": "required",
+      "type": "library",
+      "version": "1.13.1"
+    },
+    {
+      "name": "tqdm",
+      "scope": "support",
+      "type": "library",
+      "version": "4.66.4"
+    }
+  ],
+  "metadata": {
+    "component": {
+      "name": "q-research-v12-rewrite-exposure",
+      "type": "application",
+      "version": "v12"
+    },
+    "environment": {
+      "platform": "Windows-11-10.0.26200-SP0",
+      "python": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]"
+    },
+    "timestamp": "2026-09-01T08:42:55.540380+00:00",
+    "tools": [
+      {
+        "name": "build_v12_readiness_package.py",
+        "vendor": "OpenAI Codex"
+      }
+    ]
+  },
+  "serialNumber": "urn:uuid:q-research-v12-rewrite-exposure",
+  "specVersion": "1.6",
+  "version": 1
+}

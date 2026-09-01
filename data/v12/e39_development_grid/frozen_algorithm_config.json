@@ -1,0 +1,35 @@
+{
+  "beam_width": 32,
+  "candidate_cap": 256,
+  "dependence_model": "conservative_commutation_v1",
+  "downstream_optimizer": "GreedyGateCancellation(max_iterations=50)",
+  "exact_candidate_limit": 24,
+  "exact_node_budget": 1000000,
+  "experiment_id": "E39_DEVELOPMENT_GRID_V1",
+  "fidelity_threshold": 0.9999999999,
+  "no_e40_result_used": true,
+  "overlap_check_budget": 20000000,
+  "rule_library": "pair_v1",
+  "selected_config": {
+    "beam_width": 32,
+    "candidate_cap": 256,
+    "complete_mean_effect_pp": 1.2884002579467075,
+    "config_id": "b32_c256",
+    "error_count": 0,
+    "input_count": 391,
+    "median_cgl_total_seconds": 0.0019133999994664919,
+    "median_effect_pp": 0.0,
+    "opportunity_positive_count": 230
+  },
+  "selected_config_id": "b32_c256",
+  "selection_rule": [
+    "leave_one_family_out_effects_are_reported",
+    "maximize_complete_development_input_mean_effect_pp",
+    "retain_configs_within_0.25_pp_of_best",
+    "choose_lowest_median_cgl_total_runtime",
+    "tie_break_beam_width_then_candidate_cap_ascending"
+  ],
+  "source_module": "src/optimisation/rewrite_exposure.py",
+  "source_module_sha256": "88a1b9a9e7893133f490d9d9ef218de613456f3e9d1f052792fd7c1a3a295d28",
+  "status": "FROZEN_FOR_E40"
+}

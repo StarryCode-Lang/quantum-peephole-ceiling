@@ -1,0 +1,67 @@
+{
+  "beam_width_grid": [
+    1,
+    8,
+    32
+  ],
+  "candidate_cap_grid": [
+    64,
+    256
+  ],
+  "cell_timeout_seconds": 60,
+  "configurations": [
+    {
+      "beam_width": 1,
+      "candidate_cap": 64,
+      "config_id": "b1_c64"
+    },
+    {
+      "beam_width": 8,
+      "candidate_cap": 64,
+      "config_id": "b8_c64"
+    },
+    {
+      "beam_width": 32,
+      "candidate_cap": 64,
+      "config_id": "b32_c64"
+    },
+    {
+      "beam_width": 1,
+      "candidate_cap": 256,
+      "config_id": "b1_c256"
+    },
+    {
+      "beam_width": 8,
+      "candidate_cap": 256,
+      "config_id": "b8_c256"
+    },
+    {
+      "beam_width": 32,
+      "candidate_cap": 256,
+      "config_id": "b32_c256"
+    }
+  ],
+  "dependence_model_ablation": "wire_order_v1",
+  "dependence_model_main": "conservative_commutation_v1",
+  "downstream_optimizer": "GreedyGateCancellation(max_iterations=50)",
+  "exact_candidate_limit": 24,
+  "exact_node_budget": 1000000,
+  "experiment_id": "E39_DEVELOPMENT_GRID_V1",
+  "family_count": 15,
+  "fidelity_threshold": 0.9999999999,
+  "overlap_check_budget": 20000000,
+  "selection_rule": [
+    "leave_one_family_out_effects_are_reported",
+    "maximize_complete_development_input_mean_effect_pp",
+    "retain_configs_within_0.25_pp_of_best",
+    "choose_lowest_median_cgl_total_runtime",
+    "tie_break_beam_width_then_candidate_cap_ascending"
+  ],
+  "source_manifest": "data/v11/e31_factorial_pareto/design_manifest.csv",
+  "source_manifest_sha256": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86",
+  "source_metadata": "data/v11/e31_factorial_pareto/design_metadata.json",
+  "source_metadata_sha256": "35101a775b9989f587127a2a301c9f1a67597d18ed28ed1d32c09fd55553e3da",
+  "status": "DEVELOPMENT_ONLY",
+  "unique_input_count": 391,
+  "workers": 1
+}

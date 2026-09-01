@@ -1,0 +1,103 @@
+{
+  "archive": {
+    "archive_bytes": 100173432,
+    "archive_sha256": "08b7c94d8ab6395cbeedf5565c94d62ce235077504a7350ebc2e226e476a0ee8",
+    "inner_manifest_sha256": "494513137b9b6f30dc3ca30c71e9ab630c34b1e8191d2872f001d141520c8258",
+    "path": "release/prepaper_v12_restore_capsule.zip",
+    "payload_files": 36566,
+    "uncompressed_payload_bytes": 468837744
+  },
+  "claim_boundary": "This proves byte-complete restoration, hash closure, and v12 verifier execution in a temporary directory on the current Windows/Python stack. It does not prove external E33/E35 input availability or future dependency availability.",
+  "created_utc": "2026-09-01T08:41:36.159400+00:00",
+  "restore_test": {
+    "archive_members_extracted": 36567,
+    "full_test_recheck": {
+      "command": "D:\\Downloads\\miniforge3\\python.exe -I -m pytest -q",
+      "exit_code": 1,
+      "failed": 5,
+      "passed": null,
+      "skipped": null,
+      "tail": "ue 592-item inventory\")\n        missing = REQUIRED_COLUMNS.difference(frame.columns)\n        if missing:\n            raise RuntimeError(f\"ledger lacks columns: {sorted(missing)}\")\n        if frame[list(REQUIRED_COLUMNS)].apply(lambda c: c.str.len().eq(0)).any().any():\n            raise RuntimeError(\"ledger contains a blank required field\")\n        ledger = {str(row.metric_id): row for row in frame.itertuples(index=False)}\n        registry_digest = sha256(registry_path)\n        pass_ids: list[str] = []\n        for entry in entries:\n            if not isinstance(entry, dict):\n                raise RuntimeError(\"registry contains a non-object metric\")\n            metric_id = str(entry.get(\"metric_id\"))\n            source = catalog.get(metric_id)\n            row = ledger.get(metric_id)\n            if source is None or row is None:\n                raise RuntimeError(f\"metric inventory drift: {metric_id}\")\n            expected_fields = {\n                \"section\": str(source[\"section\"]), \"item\": str(source[\"item\"]),\n                \"metric\": str(source[\"catalog_text\"]),\n                \"metric_sha256\": text_sha256(str(source[\"catalog_text\"])),\n                \"target\": str(source[\"target\"]), \"target_sha256\": text_sha256(str(source[\"target\"])),\n            }\n            entry_field = {\n                \"metric\": \"catalog_text\", \"metric_sha256\": \"catalog_text_sha256\",\n                \"target\": \"target\", \"target_sha256\": \"target_sha256\",\n                \"section\": \"section\", \"item\": \"item\",\n            }\n            for field, expected in expected_fields.items():\n                if str(getattr(row, field)) != expected or str(entry.get(entry_field[field])) != expected:\n                    raise RuntimeError(f\"catalog text/target/hash drift: {metric_id}.{field}\")\n            if int(entry.get(\"catalog_line\", -1)) != int(source[\"catalog_line\"]):\n                raise RuntimeError(f\"catalog selector line drift: {metric_id}\")\n            criterion_met, status, ref_results = _computed_assessment(entry, catalog)\n            if not all(ref_results):\n>               raise RuntimeError(f\"registry evidence selector/predicate drift: {metric_id}\")\nE               RuntimeError: registry evidence selector/predicate drift: 15.41\n\nC:\\Users\\Administrator\\AppData\\Local\\Temp\\qresearch-v12-restore-bgm1l5bz\\restored-project\\scripts\\verify_metric_audit_ledger.py:247: RuntimeError\n=========================== short test summary info ===========================\nFAILED tests/test_contribution_independence_audit.py::test_contribution_gate_is_source_bound_and_scope_limited\nFAILED tests/test_metric_audit_ledger.py::test_catalog_and_registry_are_unique_592_item_inventories\nFAILED tests/test_metric_audit_ledger.py::test_passes_are_item_specific_and_nonpass_rows_fail_closed\nFAILED tests/test_novelty_counterexample_audit.py::test_identical_counterexample_audit_is_bounded_not_absence_proof\nFAILED tests/test_verify_metric_audit_ledger.py::test_current_metric_ledger_is_independently_verified\n\n"
+    },
+    "inner_manifest_sha256": "494513137b9b6f30dc3ca30c71e9ab630c34b1e8191d2872f001d141520c8258",
+    "isolated_python_flag": "-I",
+    "python_no_user_site": true,
+    "temporary_directory_removed_after_test": true,
+    "temporary_directory_used": true,
+    "verifier": {
+      "claim_boundary": "Finite-panel, declared-rule, bounded certificate claims only; no universal optimizer or unseen-family claim.",
+      "evidence_entries_verified": 27,
+      "ledger_sha256": "fc3430bb69734a22d5f1597314cae9efb9b8da56a1e648a9683ad235a65f77f0",
+      "status": "verified",
+      "verdict": "NOT_READY_FOR_PAPER",
+      "verifier_results": {
+        "e38": {
+          "inputs_sha256": "98b41a9b7ece1bfcff7abf6e17164b41daf35cb7218ad8241b01367dad36041c",
+          "protocol_id": "E38_REWRITE_EXPOSURE_ORACLE_V1",
+          "protocol_sha256": "dc29b04ab9a51a0998fa515a229bb1025ea20bd8f8ac447e89727c7093fd808d",
+          "rows_sha256": "c187e445f6881f616241f0aa5bb3aef53d4497f7bbba5a92dca3dcc377332948",
+          "source_hashes": {
+            "_gate_predicates.py": "c7c0c6a7c985e5e4f19b2699323679f94b3f5040376b9a3224d40364b6bf83f2",
+            "base.py": "f1c983c6273517cee511612137813c107a8a11940b71e0ac28bb4b3cdbbb4248",
+            "rewrite_exposure.py": "88a1b9a9e7893133f490d9d9ef218de613456f3e9d1f052792fd7c1a3a295d28"
+          },
+          "status": "verified",
+          "summary": {
+            "case_count": 512,
+            "certificate_contract_failure": 0,
+            "cgl_lb_shortfall": 0,
+            "dependency_invalid": 0,
+            "equivalence_failure": 0,
+            "exact_solver_mismatch": 0,
+            "lb_gt_oracle": 0,
+            "models": [
+              "conservative_commutation_v1",
+              "wire_order_v1"
+            ],
+            "mutant_not_rejected": 0,
+            "rows": 1024,
+            "theorem_mismatch": 0,
+            "ub_lt_oracle": 0
+          }
+        },
+        "e39": {
+          "configuration_count": 6,
+          "error_count": 0,
+          "experiment_id": "E39_DEVELOPMENT_GRID_V1",
+          "family_count": 15,
+          "grid_results_sha256": "fc20841bf84c0042e32642177ac1f4e6455b64d172969bea9ec871725fcc7e92",
+          "input_count": 391,
+          "result_rows": 2346,
+          "selected_config_id": "b32_c256",
+          "source_module_sha256": "88a1b9a9e7893133f490d9d9ef218de613456f3e9d1f052792fd7c1a3a295d28",
+          "status": "verified"
+        },
+        "e40": {
+          "attempt_count": 168,
+          "classification_rows": 24,
+          "eligible_family_count": 0,
+          "experiment_id": "E40_PROSPECTIVE_REWRITE_EXPOSURE_V1",
+          "external_boundary": "no eligible pure-unitary classical-free MQT INDEP output under the frozen 24-ID x 4..10 panel; no substitution permitted",
+          "formal_cell_count": 0,
+          "formal_result_rows": 0,
+          "generator_family_count": 24,
+          "protocol_sha256": "d2a367e83cc80b03a14823f8b30f3766242f86008441ee6e7c46e6b95859ae92",
+          "status": "verified"
+        },
+        "e41": {
+          "cell_count": 16,
+          "experiment_id": "E41_REWRITE_EXPOSURE_SCALE_V1",
+          "formal_result_rows": 48,
+          "input_count": 16,
+          "protocol_sha256": "87f9ed838d9818d7573fb102959daf52be04e0510658c5f1a05eae85f9aa79d5",
+          "resource_or_error_cells": 4,
+          "status": "verified",
+          "successful_cells": 12,
+          "unmarked_semantic_failure_count": 0
+        }
+      }
+    }
+  },
+  "schema_version": "v12-capsule-restore-audit-v1",
+  "status": "PASS_V12_CAPSULE_RESTORE_WITH_BASELINE_TEST_DRIFT"
+}

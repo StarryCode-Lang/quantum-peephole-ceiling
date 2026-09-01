@@ -1,0 +1,79 @@
+{
+  "cell_count": 16,
+  "claim_boundary": "E41 supports scale and resource behavior only and does not alter E40 efficacy conclusions",
+  "equivalence_policy": "exact stabilizer for Clifford; exact operator when within bound; otherwise equivalence_unavailable; never sampled fidelity",
+  "equivalence_status_counts": {
+    "equivalence_unavailable": 48
+  },
+  "equivalence_unavailable_arm_count": 48,
+  "evidence": {
+    "formal_results": {
+      "bytes": 5834,
+      "file": "data/v12/e41_rewrite_exposure_scale/formal_results.csv",
+      "selector": "48 successful-cell arm rows",
+      "sha256": "9fb1bc5cd0b80aed30907ce2e61e5542ee4a26b1e9c03da25c1f577db366e245",
+      "status": "PASS"
+    },
+    "inputs": {
+      "bytes": 10000,
+      "file": "data/v12/e41_rewrite_exposure_scale/inputs.json",
+      "selector": "11 E33 and 5 E35 input records",
+      "sha256": "9da04104ef5126e61876f2b5979e5ea012245f789fe081678be09a668a8ddbc0",
+      "status": "PASS"
+    },
+    "protocol": {
+      "bytes": 1496,
+      "file": "data/v12/e41_rewrite_exposure_scale/protocol.json",
+      "selector": "frozen arms, resource limits, equivalence policy",
+      "sha256": "87f9ed838d9818d7573fb102959daf52be04e0510658c5f1a05eae85f9aa79d5",
+      "status": "PASS"
+    },
+    "receipt": {
+      "bytes": 1343,
+      "file": "data/v12/e41_rewrite_exposure_scale/receipt.json",
+      "selector": "resource outcomes and semantic failure counts",
+      "sha256": "f37e6de06907298fc58eee3f0b903b15e8708c3c304cdb4d23257d8a107e16cd",
+      "status": "PASS"
+    }
+  },
+  "experiment_id": "E41_REWRITE_EXPOSURE_SCALE_V1",
+  "formal_result_rows": 48,
+  "input_count": 16,
+  "no_e40_efficacy_update": true,
+  "panel_counts": {
+    "E33": 11,
+    "E35": 5
+  },
+  "resource_or_error_cells": 4,
+  "resource_outcomes": [
+    {
+      "case_id": "bwt_n37_transpiled",
+      "error": "cell_timeout_180s",
+      "panel": "E35",
+      "status": "resource_failure"
+    },
+    {
+      "case_id": "factor247_n15",
+      "error": "cell_timeout_180s",
+      "panel": "E35",
+      "status": "resource_failure"
+    },
+    {
+      "case_id": "multiplier_n400_transpiled",
+      "error": "cell_timeout_180s",
+      "panel": "E35",
+      "status": "resource_failure"
+    },
+    {
+      "case_id": "vqe_uccsd_n28",
+      "error": "rss_cap_8GiB",
+      "panel": "E35",
+      "status": "resource_failure"
+    }
+  ],
+  "schema_version": "v12-e41-scalability-report-v1",
+  "status": "FORMAL_WITH_RESOURCE_OR_ERROR_OUTCOMES",
+  "successful_cells": 12,
+  "unmarked_semantic_failure_count": 0,
+  "wire_order_fallback_cells": 0
+}

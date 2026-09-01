@@ -1,0 +1,63 @@
+{
+  "effect_pp": null,
+  "eligible_family_count": 0,
+  "evidence": {
+    "checkpoint": {
+      "bytes": 20480,
+      "file": "data/v12/e40_prospective_rewrite_exposure/checkpoint.sqlite3",
+      "selector": "SQLite cells and arm_results tables",
+      "sha256": "b2d7d404151358f1b3b8d8ec9f861848c7f4e9f9a9474fa6eda6249e785bcc55",
+      "status": "PASS"
+    },
+    "classification": {
+      "bytes": 1235,
+      "file": "data/v12/e40_prospective_rewrite_exposure/classification.csv",
+      "selector": "all rows classification=unavailable",
+      "sha256": "f3b488bbf2b7fcf0e0815c17d3cccf3e8c1023e884ffb8219d3e2061bbaa4905",
+      "status": "PASS"
+    },
+    "formal_receipt": {
+      "bytes": 1241,
+      "file": "data/v12/e40_prospective_rewrite_exposure/receipt.json",
+      "selector": "FORMAL_COMPLETE, cell_count=0, result_rows=0",
+      "sha256": "d3f8b9140884461e371725b054119dc998924d9d631042c478743f63affabf73",
+      "status": "PASS"
+    },
+    "generation_manifest": {
+      "bytes": 1355,
+      "file": "data/v12/e40_prospective_rewrite_exposure/generation_manifest.json",
+      "selector": "attempt_count, eligible_family_count, generator versions",
+      "sha256": "6165c30b9cc62269e57ec44f417d47938a09861841397ffe1160a11676a575a9",
+      "status": "PASS"
+    },
+    "inputs": {
+      "bytes": 795,
+      "file": "data/v12/e40_prospective_rewrite_exposure/inputs.csv",
+      "selector": "24 fixed generator-family rows",
+      "sha256": "42b75d57e334bc11b7c744c5e7d6c16ea610ae0244d1883fcce9c3d8f7e8390c",
+      "status": "PASS"
+    }
+  },
+  "experiment_id": "E40_PROSPECTIVE_REWRITE_EXPOSURE_V1",
+  "external_boundary": "no eligible pure-unitary classical-free MQT INDEP output under the frozen 24-ID x 4..10 panel; no substitution permitted",
+  "family_win_rate": null,
+  "formal_cell_count": 0,
+  "formal_result_rows": 0,
+  "interpretation": "The fixed 24-ID x declared-size 4..10 MQT INDEP panel produced no pure-unitary, classical-free, fully-bound eligible input under the frozen filters. This is a finite-panel availability result, not evidence that rewrite exposure is absent in MQT or in quantum circuits generally.",
+  "median_effect_pp": null,
+  "no_substitution": true,
+  "opportunity_positive_family_count": 0,
+  "primary_estimand": "mean over frozen opportunity-positive families of 100 * [(CGL+Greedy reduction) - (WCL+Greedy reduction)]",
+  "runtime_gate": null,
+  "schema_version": "v12-e40-primary-estimand-v1",
+  "selection_contract": [
+    "retain_actual_qubits_le_10",
+    "retain_gate_count_20_to_2000_inclusive",
+    "retain_fully_bound_inputs",
+    "retain_pure_unitary_inputs_without_classical_bits_or_dynamic_control",
+    "select_maximum_actual_qubits_then_maximum_gate_count_then_lexicographically_smallest_qasm_sha256",
+    "preserve_no_eligible_input_without_substitution"
+  ],
+  "status": "NOT_ESTIMABLE_EXTERNAL_BOUNDARY",
+  "thresholds_evaluated": false
+}

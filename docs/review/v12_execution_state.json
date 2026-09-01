@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "project": "Q-research v12 rewrite exposure certificate",
-  "status": "STAGE_1_COMPLETE_STAGE_2_IN_PROGRESS",
+  "status": "STAGE_9_FINAL_PACKAGE_READY",
   "manuscript_modified": false,
   "historical_e1_e37_modified": false,
   "active_worktree": "D:/Desktop/Q-research-rewrite-exposure",
@@ -22,20 +22,77 @@
     "theorem_status": "not_claimed"
   },
   "stage_2_theory": {
-    "status": "IN_PROGRESS",
-    "theorem_status": "conjecture_or_draft_until_e38"
+    "status": "DRAFT_VALIDATED_BY_E38",
+    "theorem_status": "empirically_validated_with_declared_boundaries"
   },
   "stage_3_implementation": {
-    "status": "NOT_STARTED"
+    "status": "PASS",
+    "core_module": "src/optimisation/rewrite_exposure.py",
+    "semantic_contract_tests": 32,
+      "public_export": "src/optimisation/rewrite_exposure.py (direct module import; package initializer unchanged for E31 closure)"
   },
   "stage_4_e38_exact_oracle": {
-    "status": "NOT_STARTED"
+    "status": "PASS_ZERO_TOLERANCE",
+    "protocol_id": "E38_REWRITE_EXPOSURE_ORACLE_V1",
+    "preflight_receipt": "data/v12/e38_rewrite_exposure_oracle_preflight/receipt.json",
+    "formal_receipt": "data/v12/e38_rewrite_exposure_oracle/receipt.json",
+    "verification": "data/v12/e38_rewrite_exposure_oracle/verification.json",
+    "formal_cases": 512,
+    "formal_model_rows": 1024,
+    "topological_order_limit": 40320,
+    "zero_tolerance_failures": 0
+  },
+  "stage_5_e39_development_grid": {
+    "status": "PASS",
+    "protocol": "data/v12/e39_development_grid/protocol.json",
+    "verification": "data/v12/e39_development_grid/verification.json",
+    "input_count": 391,
+    "family_count": 15,
+    "configuration_count": 6,
+    "result_rows": 2346,
+    "error_count": 0,
+    "frozen_config": "data/v12/e39_development_grid/frozen_algorithm_config.json",
+    "selected_config_id": "b32_c256",
+    "development_only": true
+  },
+  "stage_6_7_e40_prospective_external_panel": {
+    "status": "EXTERNAL_BOUNDARY_VERIFIED",
+    "protocol": "data/v12/e40_prospective_rewrite_exposure/protocol.json",
+    "verification": "data/v12/e40_prospective_rewrite_exposure/verification.json",
+    "generator_environment": "mqt.bench 2.2.3 / Qiskit 2.5.2 generation / Qiskit 2.4.1 core",
+    "fixed_generator_family_count": 24,
+    "attempt_count": 168,
+    "eligible_family_count": 0,
+    "formal_cell_count": 0,
+    "formal_result_rows": 0,
+    "no_substitution": true
+  },
+  "stage_8_e41_scale_stress": {
+    "status": "PASS_WITH_DECLARED_RESOURCE_OUTCOMES",
+    "protocol": "data/v12/e41_rewrite_exposure_scale/protocol.json",
+    "verification": "data/v12/e41_rewrite_exposure_scale/verification.json",
+    "input_count": 16,
+    "successful_cells": 12,
+    "resource_or_error_cells": 4,
+    "formal_result_rows": 48,
+    "unmarked_semantic_failure_count": 0,
+    "equivalence_unavailable_is_explicit": true
   },
   "stage_5_to_9": {
-    "status": "NOT_STARTED"
+    "status": "STAGE_9_E42_OPTIONAL_NOT_AUTHORIZED"
   },
   "e31": {
     "status": "READ_ONLY",
     "new_method_data_dependency": false
+  },
+  "final_package": {
+    "status": "BUILT_WITH_DECLARED_BASELINE_DRIFT",
+    "ledger": "data/v12/v12_requirement_to_evidence_ledger.json",
+    "sbom": "data/v12/v12_sbom.json",
+    "source_data_environment_manifest": "data/v12/v12_source_data_environment_manifest.json",
+    "readiness_verdict": "release/prepaper_v12_readiness_verdict.json",
+    "restore_capsule": "release/prepaper_v12_restore_capsule.zip",
+    "restore_audit": "release/prepaper_v12_archive_restore_audit.json",
+    "verdict": "NOT_READY_FOR_PAPER"
   }
 }

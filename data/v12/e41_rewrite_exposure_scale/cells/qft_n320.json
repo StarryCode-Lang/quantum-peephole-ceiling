@@ -1,0 +1,58 @@
+{
+  "arms": [
+    {
+      "arm": "WCL_Greedy",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 2550,
+      "output_gate_count": 255840,
+      "reduction": 0.0,
+      "runtime_seconds": 10.083252600001288,
+      "status": "success"
+    },
+    {
+      "arm": "CGL_Greedy",
+      "equivalence_status": "equivalence_unavailable",
+      "error": "unsupported_dynamic_or_nonunitary_instruction:255521:measure",
+      "output_gate_count": 255840,
+      "reduction": 0.0,
+      "runtime_seconds": 0.387503400001151,
+      "status": "unavailable"
+    },
+    {
+      "arm": "LBL_Phase2b",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 2550,
+      "output_gate_count": 255840,
+      "reduction": 0.0,
+      "runtime_seconds": 63.29533939999965,
+      "status": "success"
+    },
+    {
+      "arm": "CGL_Phase2b",
+      "equivalence_status": "equivalence_unavailable",
+      "error": "unsupported_dynamic_or_nonunitary_instruction:255521:measure",
+      "output_gate_count": 255840,
+      "reduction": 0.0,
+      "runtime_seconds": 0.4344149999997171,
+      "status": "unavailable"
+    }
+  ],
+  "case_id": "qft_n320",
+  "certificate": {
+    "actual_dependence_model": "conservative_commutation_v1",
+    "candidate_count": 0,
+    "fallback_reason": "",
+    "lb": 0,
+    "status": "unavailable",
+    "ub": 0
+  },
+  "input_gate_count": 255840,
+  "input_qasm_sha256": "e053b28b6eb8ac12897802fdf19a43ee5a8cd0e1ff819d701b8b956129349385",
+  "n_qubits": 320,
+  "panel": "E35",
+  "peak_rss_bytes": 456781824,
+  "status": "success",
+  "wall_seconds": 78.77006819999951
+}

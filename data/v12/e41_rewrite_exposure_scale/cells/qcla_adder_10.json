@@ -1,0 +1,60 @@
+{
+  "arms": [
+    {
+      "arm": "WCL_Greedy",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 84,
+      "output_gate_count": 561,
+      "reduction": 0.0,
+      "runtime_seconds": 0.01881639999919571,
+      "status": "success"
+    },
+    {
+      "arm": "CGL_Greedy",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 82,
+      "output_gate_count": 547,
+      "reduction": 0.0,
+      "runtime_seconds": 0.04275650000272435,
+      "status": "success"
+    },
+    {
+      "arm": "LBL_Phase2b",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 83,
+      "output_gate_count": 554,
+      "reduction": 0.0,
+      "runtime_seconds": 0.3193204999988666,
+      "status": "success"
+    },
+    {
+      "arm": "CGL_Phase2b",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 82,
+      "output_gate_count": 545,
+      "reduction": 0.0,
+      "runtime_seconds": 0.33995779999895603,
+      "status": "success"
+    }
+  ],
+  "case_id": "qcla_adder_10",
+  "certificate": {
+    "actual_dependence_model": "conservative_commutation_v1",
+    "candidate_count": 1577,
+    "fallback_reason": "",
+    "lb": 16,
+    "status": "exact",
+    "ub": 16
+  },
+  "input_gate_count": 563,
+  "input_qasm_sha256": "705d5aa577c199c1aa302472147ae5fa7adf45e3fe58fac824ab4606a09ae176",
+  "n_qubits": 36,
+  "panel": "E33",
+  "peak_rss_bytes": 72806400,
+  "status": "success",
+  "wall_seconds": 2.0385141000006115
+}

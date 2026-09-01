@@ -1,0 +1,60 @@
+{
+  "arms": [
+    {
+      "arm": "WCL_Greedy",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 109,
+      "output_gate_count": 560,
+      "reduction": 0.0,
+      "runtime_seconds": 0.09324940000078641,
+      "status": "success"
+    },
+    {
+      "arm": "CGL_Greedy",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 6,
+      "output_gate_count": 94,
+      "reduction": 0.0,
+      "runtime_seconds": 0.016327699999237666,
+      "status": "success"
+    },
+    {
+      "arm": "LBL_Phase2b",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 5,
+      "output_gate_count": 80,
+      "reduction": 0.0,
+      "runtime_seconds": 0.2478914999992412,
+      "status": "success"
+    },
+    {
+      "arm": "CGL_Phase2b",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 5,
+      "output_gate_count": 80,
+      "reduction": 0.0,
+      "runtime_seconds": 0.21064539999861154,
+      "status": "success"
+    }
+  ],
+  "case_id": "qft_16",
+  "certificate": {
+    "actual_dependence_model": "conservative_commutation_v1",
+    "candidate_count": 3536,
+    "fallback_reason": "",
+    "lb": 482,
+    "status": "truncated",
+    "ub": 3202
+  },
+  "input_gate_count": 576,
+  "input_qasm_sha256": "4173415b20f4b4fd18af7037bce395a2b03307a4e54a6b837b9a120d6e31ee67",
+  "n_qubits": 16,
+  "panel": "E33",
+  "peak_rss_bytes": 92434432,
+  "status": "success",
+  "wall_seconds": 4.0805122999991
+}

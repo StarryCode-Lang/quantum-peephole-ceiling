@@ -1,0 +1,60 @@
+{
+  "arms": [
+    {
+      "arm": "WCL_Greedy",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 249,
+      "output_gate_count": 949,
+      "reduction": 0.0,
+      "runtime_seconds": 0.35993150000285823,
+      "status": "success"
+    },
+    {
+      "arm": "CGL_Greedy",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 254,
+      "output_gate_count": 944,
+      "reduction": 0.0,
+      "runtime_seconds": 0.30189270000118995,
+      "status": "success"
+    },
+    {
+      "arm": "LBL_Phase2b",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 238,
+      "output_gate_count": 883,
+      "reduction": 0.0,
+      "runtime_seconds": 0.44180169999890495,
+      "status": "success"
+    },
+    {
+      "arm": "CGL_Phase2b",
+      "equivalence_fidelity": null,
+      "equivalence_status": "equivalence_unavailable",
+      "output_depth": 238,
+      "output_gate_count": 872,
+      "reduction": 0.0,
+      "runtime_seconds": 0.35753180000028806,
+      "status": "success"
+    }
+  ],
+  "case_id": "adder_8",
+  "certificate": {
+    "actual_dependence_model": "conservative_commutation_v1",
+    "candidate_count": 12261,
+    "fallback_reason": "",
+    "lb": 115,
+    "status": "exact",
+    "ub": 115
+  },
+  "input_gate_count": 999,
+  "input_qasm_sha256": "afec57b2387853c83bd26782efb1999473def7e01f69a086b242d669d3821db9",
+  "n_qubits": 24,
+  "panel": "E33",
+  "peak_rss_bytes": 93954048,
+  "status": "success",
+  "wall_seconds": 5.077000499997666
+}

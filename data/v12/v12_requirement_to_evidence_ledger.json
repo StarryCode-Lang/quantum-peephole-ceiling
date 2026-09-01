@@ -1,0 +1,307 @@
+{
+  "created_utc": "2026-09-01T08:42:55.857693+00:00",
+  "project": "Q-research v12 rewrite exposure certificate",
+  "rows": [
+    {
+      "boundary": "Inherited Stage 0 evidence; current v12 capsule is separately audited below.",
+      "evidence": [
+        {
+          "bytes": 2324,
+          "file": "docs/review/v12_stage0_baseline_receipt.json",
+          "selector": "fixed baseline, capsule SHA, 563-pass receipt",
+          "sha256": "aba7183f374e4df893e89ec2c869ee81c5ae86a010cee15b82682425066bd6b0",
+          "status": "PASS"
+        }
+      ],
+      "id": "V12-00",
+      "requirement": "Isolated baseline and restore capsule lineage",
+      "status": "PASS"
+    },
+    {
+      "boundary": "No substantive isomorphism found in the required scope; literature boundary remains explicit.",
+      "evidence": [
+        {
+          "bytes": 2038,
+          "file": "docs/review/v12_stage1_novelty_receipt.json",
+          "selector": "required comparison scope and result",
+          "sha256": "96490cea32d359588282d858f1504641d0a08f5de052af054174e00b681da62e",
+          "status": "PASS"
+        },
+        {
+          "bytes": 11532,
+          "file": "docs/review/v12_novelty_comparison_matrix.md",
+          "selector": "comparison matrix",
+          "sha256": "df10b4f46071dc8050e5113c2eccecf656b854e1708b8e15cc407a6d3ed6635a",
+          "status": "PASS"
+        }
+      ],
+      "id": "V12-01",
+      "requirement": "Novelty red-team comparison",
+      "status": "PASS_WITH_BOUNDARIES"
+    },
+    {
+      "boundary": "The document is not promoted beyond empirically validated draft status.",
+      "evidence": [
+        {
+          "bytes": 9419,
+          "file": "docs/theory/v12_rewrite_exposure_theory.md",
+          "selector": "definitions, five theorem drafts, falsifiers",
+          "sha256": "727510a8c83e0d84393694849a7677b55f75e450e3c4e580d8d0e92ca55bdd80",
+          "status": "PASS"
+        }
+      ],
+      "id": "V12-02",
+      "requirement": "Definitions, theorem drafts, counterexample boundaries",
+      "status": "PASS_WITH_BOUNDARIES"
+    },
+    {
+      "boundary": "Only pair_v1 and declared dependence models are covered.",
+      "evidence": [
+        {
+          "bytes": 48909,
+          "file": "src/optimisation/rewrite_exposure.py",
+          "selector": "implementation",
+          "sha256": "88a1b9a9e7893133f490d9d9ef218de613456f3e9d1f052792fd7c1a3a295d28",
+          "status": "PASS"
+        },
+        {
+          "bytes": 12484,
+          "file": "tests/test_rewrite_exposure.py",
+          "selector": "32 semantic contract tests",
+          "sha256": "1b835557908d5b4a14f1f6668ac639b848631ae6aa7b9824303bb4560bebaa1a",
+          "status": "PASS"
+        }
+      ],
+      "id": "V12-03",
+      "requirement": "Core certificate and CGL implementation",
+      "status": "PASS"
+    },
+    {
+      "boundary": "Finite 2..5 qubit, 4..8 gate, declared alphabet panel.",
+      "evidence": [
+        {
+          "bytes": 830,
+          "file": "data/v12/e38_rewrite_exposure_oracle_preflight/receipt.json",
+          "selector": "32-case preflight",
+          "sha256": "f92cc486fa2d39be06e300614a3246846ce9f8bf246a49333559569fb6af5d66",
+          "status": "PASS"
+        },
+        {
+          "bytes": 834,
+          "file": "data/v12/e38_rewrite_exposure_oracle/receipt.json",
+          "selector": "512 cases x 2 models, zero-tolerance fields",
+          "sha256": "e97fb42cb8f37609f77bd8947180ff63cd34065bd569c5e570f449769e807d44",
+          "status": "PASS"
+        },
+        {
+          "bytes": 1068,
+          "file": "data/v12/e38_rewrite_exposure_oracle/verification.json",
+          "selector": "independent verifier",
+          "sha256": "346287cbcc460122c2d21c1ea0523f5496e2e43846806b39746b155808b0f903",
+          "status": "PASS"
+        }
+      ],
+      "id": "V12-04",
+      "requirement": "E38 exact exhaustive oracle",
+      "status": "PASS"
+    },
+    {
+      "boundary": "Development-only; no E40 result used.",
+      "evidence": [
+        {
+          "bytes": 1446,
+          "file": "data/v12/e39_development_grid/receipt.json",
+          "selector": "391 inputs, 15 families, six configurations",
+          "sha256": "7e2e8c9f93d0024b5b7f408457b34dde2309983fe5490302c0720727bd7f4979",
+          "status": "PASS"
+        },
+        {
+          "bytes": 3073,
+          "file": "data/v12/e39_development_grid/analysis.json",
+          "selector": "selection and leave-one-family-out analysis",
+          "sha256": "9e83395fac92c6465088ac0af80ba09ed3712c70f5dac099ed23dcaf5a6a12f5",
+          "status": "PASS"
+        },
+        {
+          "bytes": 1272,
+          "file": "data/v12/e39_development_grid/frozen_algorithm_config.json",
+          "selector": "frozen b32_c256 config",
+          "sha256": "cbae374237ac5d113b712709251abc905a94a7662dc03d05749bee5ea8cfd702",
+          "status": "PASS"
+        }
+      ],
+      "id": "V12-05",
+      "requirement": "E39 development-only configuration selection",
+      "status": "PASS"
+    },
+    {
+      "boundary": "No eligible pure-unitary classical-free fully-bound input under the frozen panel; no substitution permitted.",
+      "evidence": [
+        {
+          "bytes": 1355,
+          "file": "data/v12/e40_prospective_rewrite_exposure/generation_manifest.json",
+          "selector": "168 attempts, generator versions",
+          "sha256": "6165c30b9cc62269e57ec44f417d47938a09861841397ffe1160a11676a575a9",
+          "status": "PASS"
+        },
+        {
+          "bytes": 795,
+          "file": "data/v12/e40_prospective_rewrite_exposure/inputs.csv",
+          "selector": "24 fixed families",
+          "sha256": "42b75d57e334bc11b7c744c5e7d6c16ea610ae0244d1883fcce9c3d8f7e8390c",
+          "status": "PASS"
+        },
+        {
+          "bytes": 1235,
+          "file": "data/v12/e40_prospective_rewrite_exposure/classification.csv",
+          "selector": "all unavailable",
+          "sha256": "f3b488bbf2b7fcf0e0815c17d3cccf3e8c1023e884ffb8219d3e2061bbaa4905",
+          "status": "PASS"
+        }
+      ],
+      "id": "V12-06",
+      "requirement": "E40 frozen external MQT generation and classification",
+      "status": "EXTERNAL_BOUNDARY"
+    },
+    {
+      "boundary": "No efficacy, family-win-rate, or runtime threshold is estimable from zero opportunity-positive families.",
+      "evidence": [
+        {
+          "bytes": 3299,
+          "file": "data/v12/e40_prospective_rewrite_exposure/protocol.json",
+          "selector": "frozen six-arm protocol",
+          "sha256": "d2a367e83cc80b03a14823f8b30f3766242f86008441ee6e7c46e6b95859ae92",
+          "status": "PASS"
+        },
+        {
+          "bytes": 1241,
+          "file": "data/v12/e40_prospective_rewrite_exposure/receipt.json",
+          "selector": "zero formal cells without certificate violations",
+          "sha256": "d3f8b9140884461e371725b054119dc998924d9d631042c478743f63affabf73",
+          "status": "PASS"
+        },
+        {
+          "bytes": 20480,
+          "file": "data/v12/e40_prospective_rewrite_exposure/checkpoint.sqlite3",
+          "selector": "empty but present checkpoint",
+          "sha256": "b2d7d404151358f1b3b8d8ec9f861848c7f4e9f9a9474fa6eda6249e785bcc55",
+          "status": "PASS"
+        },
+        {
+          "bytes": 2965,
+          "file": "data/v12/e40_prospective_rewrite_exposure/primary_estimand.json",
+          "selector": "estimand disposition",
+          "sha256": "ffda9fb2bc0402f62f526d1dae1f33dff16a1cace928a008090c1cdf5f13b6d5",
+          "status": "PASS"
+        }
+      ],
+      "id": "V12-07",
+      "requirement": "E40 formal six-arm experiment and checkpoint",
+      "status": "NOT_ESTIMABLE_EXTERNAL_BOUNDARY"
+    },
+    {
+      "boundary": "Scale/resource evidence only; unavailable equivalence is explicit and does not update E40 efficacy.",
+      "evidence": [
+        {
+          "bytes": 1343,
+          "file": "data/v12/e41_rewrite_exposure_scale/receipt.json",
+          "selector": "16 cells, 12 success, 4 resource/error, 48 rows",
+          "sha256": "f37e6de06907298fc58eee3f0b903b15e8708c3c304cdb4d23257d8a107e16cd",
+          "status": "PASS"
+        },
+        {
+          "bytes": 2653,
+          "file": "data/v12/e41_rewrite_exposure_scale/scalability_report.json",
+          "selector": "resource outcomes and equivalence statuses",
+          "sha256": "0e92f926f716d970378eeb2c8a0b73c481fa0ed1a1fb211a25526865bd955b1e",
+          "status": "PASS"
+        },
+        {
+          "bytes": 346,
+          "file": "data/v12/e41_rewrite_exposure_scale/verification.json",
+          "selector": "independent verifier",
+          "sha256": "9ecd56c1c59ea32bd61ca93d00e1b78702ec30a074a2034ee9d1874f8606963e",
+          "status": "PASS"
+        }
+      ],
+      "id": "V12-08",
+      "requirement": "E41 realistic scale and resource stress",
+      "status": "PASS_WITH_DECLARED_RESOURCE_OUTCOMES"
+    },
+    {
+      "boundary": "The isolated fixed baseline has an independently recorded stale metric assessment; no E31 repair is included.",
+      "evidence": [
+        {
+          "bytes": 3990,
+          "file": "docs/review/v12_execution_state.json",
+          "selector": "manuscript_modified=false, historical_e1_e37_modified=false, E31 READ_ONLY=true",
+          "sha256": "037d558c903fe81221c5fec3ede3f737cf436b0a3bbad78387db86ac3c34e10e",
+          "status": "PASS"
+        }
+      ],
+      "id": "V12-09",
+      "requirement": "E31 remains read-only and manuscript remains unchanged",
+      "status": "PASS"
+    },
+    {
+      "boundary": "Inherited 563-pass receipt is preserved; current isolated recheck has three pre-existing metric 15.41 failures.",
+      "evidence": [
+        {
+          "bytes": 1699,
+          "file": "data/v12/v12_test_gate.json",
+          "selector": "baseline, targeted, and isolated recheck dispositions",
+          "sha256": "c583f2bab7261c962ea8a4c4bde7a978fb7f00e9b7cce8cf2e78a91f6f36fec2",
+          "status": "PASS"
+        }
+      ],
+      "id": "V12-10",
+      "requirement": "Test gates",
+      "status": "BASELINE_EXTERNAL_DRIFT"
+    },
+    {
+      "boundary": "E40 generator environment is isolated and represented separately from core execution.",
+      "evidence": [
+        {
+          "bytes": 2565,
+          "file": "data/v12/v12_sbom.json",
+          "selector": "CycloneDX SBOM",
+          "sha256": "e725359dfcfd627dd08374d5fa0464d28f44077f74a1e16ec4b59a95e57bafeb",
+          "status": "PASS"
+        },
+        {
+          "bytes": 15197,
+          "file": "data/v12/v12_source_data_environment_manifest.json",
+          "selector": "source/data/environment hashes",
+          "sha256": "f419d0236f3f91763d950cc6ee3048f0ac542854785b9c67724234c0b464172f",
+          "status": "PASS"
+        }
+      ],
+      "id": "V12-11",
+      "requirement": "SBOM and source/data/environment manifest",
+      "status": "PASS"
+    },
+    {
+      "boundary": "No QPU account, budget, backend selection, or authorization was supplied.",
+      "evidence": [
+        {
+          "bytes": 3990,
+          "file": "docs/review/v12_execution_state.json",
+          "selector": "STAGE_9_E42_OPTIONAL_NOT_AUTHORIZED",
+          "sha256": "037d558c903fe81221c5fec3ede3f737cf436b0a3bbad78387db86ac3c34e10e",
+          "status": "PASS"
+        }
+      ],
+      "id": "V12-12",
+      "requirement": "Optional E42 authorization gate",
+      "status": "EXTERNAL_OPTIONAL"
+    }
+  ],
+  "schema_version": "v12-requirement-to-evidence-ledger-v1",
+  "summary": {
+    "baseline_drift": 1,
+    "external_boundary": 4,
+    "not_estimable": 1,
+    "pass_like": 9,
+    "requirements": 13
+  }
+}
