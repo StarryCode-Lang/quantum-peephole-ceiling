@@ -328,17 +328,22 @@ def run(mode: str = "full", families: list[str] | None = None,
         wcl_mean = wcl["reduction"].mean() if len(wcl) else 0.0
         gap = wcl_mean - lbl_mean
         changed = sub["wcl_listing_reordered"].any()
-        # Wilcoxon signed-rank: WCL > LBL?
-        lbl_vals = lbl["reduction"].values
-        wcl_vals = wcl["reduction"].values
-        min_len = min(len(lbl_vals), len(wcl_vals))
-        if min_len >= 5 and np.any(wcl_vals[:min_len] - lbl_vals[:min_len] != 0):
-            w_stat, p_val = sp_stats.wilcoxon(wcl_vals[:min_len], lbl_vals[:min_len],
+        # Wilcoxon signed-rank: WCL > LBL, paired by the generating instance.
+        pair_keys = ["param_n", "trial", "seed"]
+        paired = lbl[pair_keys + ["reduction"]].merge(
+            wcl[pair_keys + ["reduction"]], on=pair_keys, how="inner",
+            validate="one_to_one", suffixes=("_lbl", "_wcl"))
+        if len(paired) != len(lbl) or len(paired) != len(wcl):
+            raise ValueError(f"Unmatched LBL/WCL rows for {fam}")
+        lbl_vals = paired["reduction_lbl"].to_numpy()
+        wcl_vals = paired["reduction_wcl"].to_numpy()
+        if len(paired) >= 5 and np.any(wcl_vals - lbl_vals != 0):
+            w_stat, p_val = sp_stats.wilcoxon(wcl_vals, lbl_vals,
                                               alternative="greater")
             sig = "***" if p_val < 0.001 else ("**" if p_val < 0.01 else ("*" if p_val < 0.05 else ""))
             print(f"  [{fam}] LBL={lbl_mean:.6f} WCL={wcl_mean:.6f} "
                   f"gap={gap:+.6f} W={w_stat:.0f} p={p_val:.4e} {sig}"
-                  f" reordered={'Y' if changed else 'N'} (n={min_len})")
+                  f" reordered={'Y' if changed else 'N'} (n={len(paired)})")
         else:
             print(f"  [{fam}] LBL={lbl_mean:.6f} WCL={wcl_mean:.6f} "
                   f"gap={gap:+.6f} reordered={'Y' if changed else 'N'} "

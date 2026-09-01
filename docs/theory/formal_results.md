@@ -23,7 +23,7 @@ Notation specific to this document:
 
 ---
 
-## Section 1: Theorems (Fully Proven)
+## Section 1: Audited Results, Open Claims, and Withdrawn Candidates
 
 ### Observation 1 (formerly Theorem 1): Adjacent Inverse Pair Density in Random Circuits
 
@@ -43,7 +43,7 @@ Notation specific to this document:
 > - **Wire-consecutive listing (WCL):** Gates on the same qubit wire are placed consecutively in the listing. This is the natural model for circuit diagrams and some synthesis tools.
 > - **Layer-by-layer listing (LBL):** The circuit is generated layer by layer, with one gate per qubit per layer. Gates on the same qubit at layers $L$ and $L+1$ are separated by $n-1$ intervening gates from other qubits. This is the model used by our `UniversalGenerator` (`src/circuits/generator_v2.py`).
 >
-> Observation 1(a) applies to WCL; Observation 1(b) proves that LBL yields a structurally empty Phase-1 action space for $n \ge 2$.
+> Observation 1(a) applies to its random-pairing WCL ensemble; Observation 1(b) is restricted to the concrete operation ordering emitted by `UniversalGenerator` and to the adjacent Greedy action set.
 
 **Statement (a): Wire-consecutive listing model.** Let $C(n, d, \rho)$ be a random circuit on $n$ qubits of depth $d$ with two-qubit gate density $\rho$, represented in a wire-consecutive listing where gates on the same qubit are adjacent in the circuit listing. Assume single-qubit gates are drawn uniformly from $\mathcal{G}_1$ with $|\mathcal{G}_1| = g_1$, and two-qubit gates from $\mathcal{G}_2$ with $|\mathcal{G}_2| = g_2$. The expected number of listing-adjacent inverse pairs is
 
@@ -51,55 +51,54 @@ $$
 \mathbb{E}\bigl[|\mathcal{A}_{\text{adj}}(C)|\bigr] = n(d - 1) \cdot p_{\text{cancel}}(n, \rho),
 $$
 
-where
+where, for even $n$ under the random-pairing layer model used by E30,
 
 $$
-p_{\text{cancel}}(n, \rho) = (1 - \rho)^2 \cdot p_{\text{inv}}^{(1q)} + \rho^2 \cdot p_{\text{inv}}^{(2q)}(n).
+p_{\text{cancel}}(n, \rho) = (1 - \rho)^2\frac{k_1}{g_1^2} + \frac{\rho^2}{2g_2(n-1)},
 $$
 
-For the standard gate set $\mathcal{G} = \{H, T, T^\dagger, R_z(\theta), \text{CNOT}\}$ with $H$ and $\text{CNOT}$ self-inverse, $T$ inverse $T^\dagger$, and $R_z(\theta)$ inverse $R_z(-\theta)$:
-
-$$
-\mathbb{E}\bigl[|\mathcal{A}_{\text{adj}}(C)|\bigr] \le n(d - 1)\left[\frac{(1 - \rho)^2}{g_1^2} + \frac{\rho^2}{g_2 \cdot (n - 1)}\right].
-$$
+and $k_1$ is the number of discrete one-qubit labels whose inverse is also
+sampled. Continuous angles match their inverse with probability zero. For odd
+$n$, the unpaired wire gives the finite-size correction recorded and tested in
+E30; it must not be replaced by the even-$n$ formula.
 
 **Corollary 1.1.** Under WCL, the expected fractional reduction from Phase-1 adjacent cancellations satisfies $\mathbb{E}[R_{\text{adj}}] \le 2 p_{\text{cancel}}$, which is $O(1/g_1^2 + 1/(g_2 n))$ -- negligibly small for standard gate sets.
 
-**Statement (b): Layer-by-layer listing model.** Let $C(n, d, \rho)$ be a random circuit generated layer by layer, where each layer places one gate per qubit and gates are listed in layer-major order (all gates of layer $L$ precede all gates of layer $L+1$). Within each layer, gates are listed in qubit order $q_0, q_1, \ldots, q_{n-1}$. For $n \ge 2$, the Phase-1 action space is **structurally empty**:
+**Statement (b): `UniversalGenerator` layer-major listing.** Let $C(n,d,\rho)$ be emitted by `UniversalGenerator`: at position $q<n-1$ in each layer the operation has support either $\{q\}$ or $\{q,q+1\}$, while position $n-1$ has support $\{n-1\}$.  For $n\ge2$, the adjacent Greedy action space (same-support inverse cancellation or same-axis rotation merging) is structurally empty:
 
 $$
-\mathcal{S}_1(C) = \emptyset \quad \text{for all circuits } C \text{ generated under LBL with } n \ge 2.
+\mathcal{S}_{\mathrm{Greedy}}(C) = \emptyset.
 $$
 
-Consequently, $R_1(C) = 0$ for every Phase-1 optimizer, regardless of the circuit's gate content.
+Consequently, the implemented `GreedyGateCancellation` without WCL preprocessing has $R(C)=0$ on this generator.  This does **not** imply zero reduction for stochastic optimizers that can reorder gates, nor for arbitrary layer-major circuit generators.
 
 **Proof of (a).**
 
-**Step 1: Single-qubit contribution.** On a fixed qubit wire, two consecutive layers both place single-qubit gates with probability $(1-\rho)^2$. The probability the second is the inverse of the first is $p_{\text{inv}}^{(1q)} \le 2/g_1^2$.
+**Step 1: Single-qubit contribution.** On a fixed wire, two consecutive layers both place single-qubit gates with probability $(1-\rho)^2$. Uniform discrete labels contribute inverse-match probability $k_1/g_1^2$; continuously sampled rotations contribute zero.
 
-**Step 2: Two-qubit contribution.** A two-qubit gate is placed with probability $\rho$ per layer per qubit pair. Two consecutive layers both place two-qubit gates on the same pair with probability $\rho^2/(n-1)$.
+**Step 2: Two-qubit contribution.** Summing over the $\binom n2$ unordered pairs avoids double-counting the two endpoints. Random pairing and gate-label matching give the per-wire-normalized term $\rho^2/[2g_2(n-1)]$.
 
-**Step 3: Summing.** By linearity of expectation over $n$ wires and $(d-1)$ adjacent layer pairs: $\mathbb{E}[|\mathcal{A}_{\text{adj}}|] = n(d-1) \cdot [(1-\rho)^2 p_{\text{inv}}^{(1q)} + \rho^2 p_{\text{inv}}^{(2q)}]$.
+**Step 3: Summing.** Linearity of expectation over $n(d-1)$ wire-boundary positions gives the stated even-$n$ expression; the odd-$n$ correction accounts for one unpaired wire per layer.
 
 **Step 4: Fractional bound.** Each cancellation removes 2 gates from $|C| \approx nd/(1-\rho/2)$, giving $\mathbb{E}[R_{\text{adj}}] \le 2 p_{\text{cancel}}$. For realistic parameters ($\rho=0.3$, $n=5$, $g_1=4$), this yields $\le 2\%$ per pass. $\blacksquare$
 
 **Proof of (b).**
 
-**Step 1: LBL index structure.** Under LBL, the gate on qubit $q$ at layer $L$ is at listing index $L \cdot n + q$. The next gate on the same qubit $q$ is at layer $L+1$, at listing index $(L+1) \cdot n + q$. The gap between these two listing positions is $n$.
+**Step 1: Generator support structure.** Within a layer, consecutive positions $q,q+1$ have supports in $\{\{q\},\{q,q+1\}\}$ and $\{\{q+1\},\{q+1,q+2\}\}$ (with the endpoint truncated).  They may overlap, but their complete supports are never equal.
 
-**Step 2: Listing adjacency requires gap = 1.** Two gates are listing-adjacent if and only if their listing indices differ by exactly 1. For gates on the same qubit, the minimum listing gap is $n$ (Step 1). Therefore, for $n \ge 2$, no two gates on the same qubit are ever listing-adjacent.
+**Step 2: Layer boundary.** The last support $\{n-1\}$ and the next layer's first support $\{0\}$ or $\{0,1\}$ are unequal for every $n\ge2$ (including the overlapping $n=2$ case).
 
-**Step 3: Phase-1 action space requires same-qubit adjacency.** By Definition 6, the Phase-1 action space $\mathcal{S}_1(C)$ consists of listing-adjacent gate pairs $(g_i, g_{i+1})$ that act on the **same qubit(s)** and satisfy $g_{i+1} = g_i^{-1}$. Since no two gates on the same qubit(s) are listing-adjacent under LBL (Step 2), $\mathcal{S}_1(C) = \emptyset$.
+**Step 3: Greedy predicates require equal support.** Both `_is_self_inverse_pair` and rotation merging require identical ordered qubit support. Steps 1-2 rule this out for every adjacent pair, so neither action is available.
 
-**Step 4: Conclusion.** By Theorem 2(a), if $\mathcal{S}_1(C) = \emptyset$ and no consecutive rotation gates on the same qubit admit merging, then the Greedy optimizer achieves zero reduction. Under LBL, consecutive gates on the same qubit are separated by $n-1 \ge 1$ intervening gates, so no consecutive rotation pairs exist on the same qubit either. Therefore $R_1(C) = 0$ for all Phase-1 optimizers. $\blacksquare$
+**Step 4: Conclusion.** Greedy terminates without a rewrite, hence has zero reduction.  The conclusion is generator- and algorithm-specific. $\blacksquare$
 
 **Remark.** Observation 1(b) explains the empirically observed zero standard deviation in E1 (25,000 trials): the generator uses LBL, so $\mathcal{S}_1(C)$ is structurally empty for every generated circuit. This is not a bug but a property of the listing model.
 
-**Note on depth.** Part (b) follows directly from the definition of LBL listing and the Phase-1 action space. Under LBL, gates are grouped by circuit layer, meaning adjacent gates in the listing act on disjoint qubit sets. Since Phase-1 cancellation requires adjacent gates to share at least one qubit, the action space is trivially empty. This is a definitional observation rather than a deep structural theorem.
+**Note on depth.** Adjacent operations are not always disjoint; the valid invariant is unequal complete support.  This is a direct property of the current generator, not a general theorem about layer-major listings.
 
 ---
 
-### Theorem 2: Phase-1 Reduction Ceiling
+### Theorem 2: Greedy Predicate Result and Refuted Generalization
 
 **Statement.** Let $\mathcal{O}_1 = \{\text{Greedy}, \text{SA}, \text{GA}, \text{RLS}\}$. Define the set of listing-adjacent inverse pairs:
 
@@ -109,7 +108,7 @@ $$
 
 **(a)** For the Greedy optimizer (which uses only REMOVAL and rotation merging), if $\mathcal{S}_1(C) = \emptyset$ and no consecutive rotation gates on the same qubit admit merging, then Greedy achieves zero reduction.
 
-**(b)** The stochastic optimizers (SA, GA, RLS) additionally employ SWAP, COMMUTATION, and INSERTION moves via `_generate_neighbor` (`src/optimisation/base.py:485-511`). These moves can create new elements in $\mathcal{S}_1$ from an initially empty set. However, no sequence of such moves can achieve a net gate-count reduction beyond what is enabled by the commutation and swap structure already present in $C$.
+**(b) General stochastic ceiling refuted (2026-08-10).** Let $C=[H(q_0),X(q_1),H(q_0)]$. Its initial adjacent Greedy action set is empty, so Greedy returns three gates. A legal SWAP of the first two disjoint-support gates gives $[X(q_1),H(q_0),H(q_0)]$, after which REMOVAL returns the one-gate circuit $[X(q_1)]$ with exact fidelity. The implemented simulated annealer finds this 66.7% reduction for fixed seeds (regression: `tests/test_stochastic_incumbent.py`). Thus an optimizer allowed to traverse a gate-count-neutral SWAP can strictly exceed Greedy even when the initial $\mathcal{S}_1(C)$ is empty.
 
 **Proof.**
 
@@ -123,19 +122,17 @@ Local COMMUTATION replaces $(g_i, g_{i+1})$ with an equivalent pair $(g_i', g_{i
 
 **Step 4: Induction for Greedy.** Starting from $C$ with $\mathcal{S}_1(C) = \emptyset$ and no mergeable rotations, Greedy applies only REMOVAL (which requires $\mathcal{S}_1 \neq \emptyset$) and rotation merging (which requires consecutive rotations on the same qubit). Neither is available, so $R_{\text{greedy}}(C) = 0$.
 
-**Step 5: Stochastic optimizers.** SA, GA, and RLS call `_generate_neighbor` which randomly selects from REMOVAL, SWAP, COMMUTATION, and INSERTION (`base.py:494-498`). While SWAP and INSERTION can temporarily populate $\mathcal{S}_1$, the fitness function `_fitness` (`base.py:513-534`) is $f = \text{reduction} \times \text{fidelity\_penalty}$, where $\text{reduction} = \max(0, 1 - |C'|/|C|)$. INSERTION strictly decreases fitness (larger circuit, same unitary), so it is only accepted by SA's Metropolis criterion at non-zero temperature, and by GA's mutation step. The net effect of INSERTION-facilitated reduction sequences is at most zero (Step 3). Therefore, stochastic optimizers cannot systematically exceed the Greedy reduction ceiling. $\blacksquare$
+**Step 5: What the code and data establish.** SA, GA, and RLS call `_generate_neighbor`, which proposes REMOVAL, SWAP, COMMUTATION, or INSERTION.  Their observed convergence near Greedy is empirical evidence about these implementations and sampled circuits.  A fitness preference against longer circuits is not a proof that every accepted multi-step path obeys a global reduction ceiling.  Thus part (a) is proved; the general stochastic conclusion in part (b) remains open.
 
-**Remark (INSERTION and Theorem 2 scope).** The code implements INSERTION as a unitary-preserving expansion move that inserts identity pairs from $\{H\text{-}H, X\text{-}X, Y\text{-}Y, Z\text{-}Z\}$ (`base.py:444-483`). All three stochastic optimizers (RLS, SA, GA) invoke INSERTION via `_generate_neighbor`. Empirically, INSERTION creates new $\mathcal{S}_1$ elements in 100% of trials (1000/1000 on a test circuit with $\mathcal{S}_1 = \emptyset$), but INSERTION + REMOVAL sequences yield zero net reduction in 100% of trials (5000/5000). The theoretical argument (Step 3) shows this is not a coincidence: INSERTION is an identity insertion, so any cancellation it enables is bounded by the identity it inserted. Consequently, the "identical action space" claim of earlier drafts is replaced by the weaker but correct "reduction ceiling" formulation: stochastic optimizers have a richer move set but cannot systematically exceed Greedy's reduction on circuits where $\mathcal{S}_1(C) = \emptyset$.
+**Remark (INSERTION and Theorem 2 scope).** The code implements INSERTION as a unitary-preserving expansion move that inserts identity pairs from $\{H\text{-}H, X\text{-}X, Y\text{-}Y, Z\text{-}Z\}$ (`base.py:444-483`). All three stochastic optimizers (RLS, SA, GA) invoke INSERTION via `_generate_neighbor`. Empirically, INSERTION creates new $\mathcal{S}_1$ elements in 100% of trials (1000/1000 on a test circuit with $\mathcal{S}_1 = \emptyset$), but INSERTION + REMOVAL sequences yield zero net reduction in 100% of trials (5000/5000). The insertion-debt argument proves this only for the INSERTION+REMOVAL subsystem. Once SWAP or COMMUTATION is admitted, the earlier "identical action space" and general stochastic "reduction ceiling" claims are unproved; the 5000/5000 result remains empirical evidence about the tested implementations and distribution.
 
-**Resolved gap in Theorem 2 (INSERTION cascade) [2026-06-13].** The INSERTION cascade gap identified in earlier versions of this document has been **resolved** (bounded version). Two new results in Appendix A close the gap formally:
+**Re-audit of the INSERTION cascade [2026-08-09].** Appendix A does not close the general gap.  Theorem 2c is limited to the literal INSERTION+REMOVAL rewrite system.  Former Theorem 2d relies on an invalid per-wire-unitary factorization for multi-qubit gates and on an unproved identification of pair counts with an attainable Phase-2 optimum.
 
 - **Theorem 2c (Bounded INSERTION Cascade Lemma):** For any circuit $C$ with $\mathcal{S}_1(C) = \emptyset$, let $k$ INSERTION moves produce circuit $C'$ with $|C'| = |C| + 2k$. Let $R_{\text{removal}}(C')$ be the maximum number of gates removable via REMOVAL sequences involving at least one inserted gate. Then $R_{\text{removal}}(C') \le 2k$, so the net gate-count change from any INSERTION + REMOVAL sequence is $\ge 0$. The proof uses an insertion-debt invariant: each INSERTION increases the debt by 2, each REMOVAL involving an inserted gate decreases it by at most 2, and the debt is always non-negative.
 
-- **Theorem 2d (INSERTION Commutation Cascade Bound):** Even when INSERTION is combined with SWAP and COMMUTATION moves within Phase 1, the net reduction from any finite sequence of moves starting from $\mathcal{S}_1(C) = \emptyset$ is bounded by $B_{\text{pre}}(C)$ -- the number of pre-existing wire-level inverse pairs that SWAP/COMMUTATION can expose (which is exactly the Phase-2a action space). Since Phase 1 by definition does not include systematic commutation reordering, the INSERTION-facilitated cascade cannot exceed what Phase-2a would achieve.
+- **Former Theorem 2d:** **[PROOF INVALID / CLAIM OPEN].** A valid replacement would need a precise trace-monoid or dependency-DAG model, a conflict-aware optimum rather than a raw pair count, and a proof that identity insertion cannot improve that optimum.
 
-The key insight is that INSERTION only adds gates to the circuit and never removes pre-existing gates from their wires, so it cannot reduce the wire-level distance between pre-existing gates. The wire-order invariant (proven in Appendix A) formalizes this: under any sequence of INSERTION, SWAP, and COMMUTATION moves, the relative ordering of pre-existing gates on each wire is preserved. Consequently, INSERTION cannot create new pre-existing gate cancellations beyond what is already accessible via Phase-2a commutation reordering.
-
-**Status:** [RESOLVED -- bounded version]. Full proofs in Appendix A.
+**Status:** Part (a) proved; Theorem 2c is a restricted rewrite-system result; the general part (b) is refuted by an explicit three-gate counterexample; former Theorem 2d remains open after its proof was invalidated.
 
 ---
 
@@ -163,7 +160,15 @@ The key insight is that INSERTION only adds gates to the circuit and never remov
 
 ---
 
-### Theorem 5: High-Probability Bound on Adjacent Inverse Pair Density
+### Candidate Theorem 5: High-Probability Bound on Adjacent Inverse Pair Density
+
+**Status (2026-08-09): PROOF INCOMPLETE.** The displayed McDiarmid constant
+assumes $n(d-1)$ independent per-wire choices.  Random two-qubit matchings
+couple the endpoint choices, so that product structure is not the E30
+generator's probability space.  A valid proof must expose independent
+matching-generation variables and recompute their bounded-difference
+constants.  E30 agreement with the expectation does not validate this tail
+bound.
 
 **Statement.** Under the hypotheses of Theorem 1, let $X = |\mathcal{A}_{\text{adj}}(C)|$. Then for any $\delta > 0$:
 
@@ -201,31 +206,35 @@ $$
 
 ---
 
-### Theorem 6: Phase-1 Ceiling is Exact for Clifford Circuits in Aaronson--Gottesman Canonical Form
+### Proposition 6: Greedy Ceiling for the Restricted AG-Stage Generator
 
-**Statement.** Let $C$ be a Clifford circuit (generated by $\{H, S, \text{CNOT}\}$) in canonical CNOT--H--S decomposition [Aaronson & Gottesman, 2004]. Then $\mathcal{S}_1(C) = \emptyset$, and consequently $R_1(C) = 0$ for every Phase-1 optimizer.
+**Corrected statement (2026-08-09).** Let $C$ be emitted by the current restricted `generate_ag_canonical_circuit`, whose CNOT matchings are separated by non-empty H stages. Then its initial adjacent Greedy action set is empty, so `GreedyGateCancellation` performs no reduction. This is a property of this generator, not of every Aaronson--Gottesman canonical-form representation and not of every stochastic Phase-1 optimizer.
 
 **Proof.**
 
-**Step 1: Canonical form structure.** The Aaronson--Gottesman normal form decomposes any $n$-qubit Clifford circuit into at most 11 stages: $H$--$C$--$H$--$C$--$H$--$S$--$C$--$S$--$H$--$C$--$H$, where $H$ denotes a layer of Hadamard gates, $C$ a layer of CNOT gates, and $S$ a layer of phase gates. Within each stage, gates act on disjoint qubits and are therefore non-adjacent in the circuit listing.
+**Step 1: Restricted stage structure.** The generator emits $H$--$C$--$H$--$C$--$H$--$S$--$C$--$S$--$H$--$C$--$H$, uses disjoint gates within each stage, and as of 2026-08-09 makes every H separator non-empty.
 
 **Step 2: Adjacent gates span distinct stages.** In the canonical decomposition, any two adjacent gates $g_i, g_{i+1}$ in the circuit listing belong either to (a) different stages, or (b) the same stage but different qubits. In case (b), the gates act on different qubits, so $g_{i+1} \neq g_i^{-1}$ by the qubit-matching requirement (Definition 6). In case (a), the gates are of different types (e.g., $H$ followed by $\text{CNOT}$, or $S$ followed by $\text{CNOT}$), so $g_{i+1} \neq g_i^{-1}$ by the gate-type requirement.
 
-**Step 3: No adjacent inverse pairs.** Since neither case (a) nor case (b) can produce $g_{i+1} = g_i^{-1}$ on matching qubits, we have $\mathcal{S}_1(C) = \emptyset$. By Theorem 2, $R_1(C) = 0$ for all Phase-1 optimizers. $\blacksquare$
+**Step 3: No initial Greedy pair.** Since neither case can produce an inverse pair or same-axis rotation merge on equal support, the initial Greedy action set is empty and Greedy returns unchanged. $\blacksquare$
 
-**Status.** [PROVEN + EMPIRICALLY VALIDATED] Experiment E23 validates this theorem on 160 randomly generated AG canonical form Clifford circuits ($n = 3\dots10$, 20 circuits per $n$). The measured Phase-1 reduction is exactly $0$ for all instances (matching rate 100%), consistent with the prediction $\mathcal{S}_1(C) = \emptyset$.
+**Status.** [PROVED FOR THE RESTRICTED GENERATOR; EMPIRICALLY CHECKED] The corrected v10 E23 rerun covers $n=3,\ldots,10$ with 20 seeds per size (160/160 exact-fidelity rows) and observes zero Greedy reduction throughout, consistent with the support-structure proof. The pre-fix generator has counterexamples (for example $n=2$, seed 35 gives one adjacent CNOT pair and 28.57% Greedy reduction). Neither the proof nor E23 establishes a theorem about general Aaronson--Gottesman canonical forms.
 
-**Remark.** This result proves Conjecture C1 for the important special case of Clifford circuits in Aaronson--Gottesman canonical form, establishing that the structural ceiling is not merely empirical but exact for a practically significant circuit family.
+**Remark.** This result proves an empty initial Greedy action set only for the project's restricted staged generator. Calling that generator a general Aaronson--Gottesman canonical form, or exporting the claim to arbitrary Clifford normal forms or stochastic optimizers, would exceed the proof.
 
-**Remark on scope (general Clifford circuits).** The proof above relies specifically on the structural properties of the Aaronson--Gottesman normal form: its 11-stage decomposition with disjoint-qubit stages and cross-stage gate-type transitions. An arbitrary Clifford circuit that has *not* been reduced to this canonical form may contain adjacent inverse pairs (e.g., a circuit that redundantly includes $H \cdot H$ or $\text{CNOT} \cdot \text{CNOT}$). For such circuits, $\mathcal{S}_1(C)$ may be non-empty and Phase-1 reduction may be positive. However, since any $n$-qubit Clifford circuit can be converted to Aaronson--Gottesman canonical form in $O(n^3)$ time [Aaronson & Gottesman, 2004], the canonical-form result captures the essential physics: once a Clifford circuit is in its irreducible normal form, no adjacent inverse pairs remain, and Phase-1 optimization is exactly zero. Extending this result to arbitrary (non-canonical) Clifford representations is straightforward -- the Phase-1 ceiling is governed by the number of "redundant" gate pairs that the canonical form eliminates.
+**Remark on scope (general Clifford circuits).** An arbitrary Clifford circuit, and even another serialization of an equivalent staged form, may contain adjacent inverse pairs. Efficient conversion to some Clifford canonical representation does not imply that every such representation has the project's 11-stage listing property, nor that the number of removed pairs characterizes a Phase-1 optimum. Extension beyond the concrete generator is open.
 
 ---
 
-### Theorem 7: Explicit Circuit Family with Super-Constant Phase-2a Advantage
+### Theorem 7: Explicit Circuit Family with Constant Idealized Phase-2a Advantage
 
-**Statement.** There exists an explicit family of circuits $\{C_n\}_{n \ge 2}$ on $n$ qubits such that:
-1. $R_1(C_n) = 0$ for all Phase-1 optimizers (i.e., $\mathcal{S}_1(C_n) = \emptyset$), and
-2. $R_{1+2a}(C_n) \ge \frac{1}{6}$ for all $n \ge 2$ (i.e., Phase-2a commutation rewriting achieves $\Omega(1)$ reduction).
+**Corrected statement (2026-08-09).** There exists an explicit family $\{C_n\}$ for even $n\ge4$ such that:
+1. the initial adjacent Greedy action set is empty, so Greedy alone has zero reduction; and
+2. a Phase-2a+Greedy pipeline whose commutation window scales to cover the construction achieves a constant fractional reduction (indeed the construction is reducible to identity).
+
+This does not claim that every stochastic ``Phase-1`` optimizer is powerless,
+or that the implemented fixed default window $w=10$ has an asymptotic
+guarantee for all $n$.
 
 This establishes Conjecture C2 constructively for Phase-2a.
 
@@ -266,15 +275,30 @@ After Layer-3/4 CNOT cancellation, the $S$ separators become adjacent to their i
 - Layers 3,4: $n/2$ CNOTs each (total $n$)
 - Separators: $n/2$ $S$ gates + $n/2$ $S^\dagger$ gates (total $n$)
 
-Total: $n + 2n + n + n = 5n$ gates. Phase-2a cancels Layers 3+4 CNOTs ($n$ gates) and separator pairs ($n$ gates), removing $2n$ gates. Fraction: $2n / 5n = 2/5 > 1/6$. $\blacksquare$
+Total: $n + 2n + (n-2) + (n-2) = 5n-4$ gates because the odd-pair layers contain $n/2-1$ gates each. Cancelling the repeated odd CNOTs and separators removes $2n-4$ gates, already a fraction $(2n-4)/(5n-4)\ge1/6$ for even $n\ge4$; subsequent H/even-CNOT cleanup may remove more. $\blacksquare$
 
 ---
 
-### Theorem 8: Incompressibility of Haar-Random Circuits and Bounded-Window Reduction Limit
+### Withdrawn Theorem 8: Incompressibility of Haar-Random Circuits and Bounded-Window Reduction Limit
+
+**Status (2026-08-09): WITHDRAWN.** The statement below is retained for
+auditability but is not a valid theorem about the optimization of
+polynomial-size circuits.  It simultaneously assumes that $U$ is Haar-random,
+that its minimum exact circuit size is at least $4^n/n^2$, and that a circuit
+of size $m=\mathrm{poly}(n)$ exactly implements $U$.  On the claimed
+high-probability event these premises are inconsistent: such a circuit $C$
+does not exist.  A negative upper bound on reduction cannot be clamped to zero
+to repair this contradiction.
+
+A meaningful replacement would need an explicit approximation tolerance
+$\epsilon$, an $\epsilon$-circuit-complexity/covering-number bound, and a source
+ensemble that can actually be generated at the stated depth.  Until that is
+proved, Corollaries 8.1 and 8.2 and the claimed ``doubly-exponential''
+optimization ceiling must not be cited.
 
 **Statement.** Let $U$ be a Haar-random unitary on $n$ qubits, and let $C$ be any $n$-qubit circuit of size $m = |C|$ implementing $U$.
 
-**(a) Circuit complexity lower bound.** The minimum circuit size (circuit complexity) $\mathcal{C}(U)$ over a finite universal gate set satisfies:
+**Withdrawn claim (a).** The minimum circuit size (circuit complexity) $\mathcal{C}(U)$ over a finite universal gate set satisfies:
 
 $$
 \Pr\!\left[\mathcal{C}(U) < \frac{4^n}{n^2}\right] \le \exp\!\left(-\Omega\!\left(\frac{4^n}{n}\right)\right).
@@ -330,23 +354,23 @@ $$
 
 For Haar-random $U$ with $nd = \text{poly}(n)$, the second term dominates and gives $R_A(C) \to 0$ regardless of $k, w$. $\blacksquare$
 
-**Corollary 8.1.** For Haar-random circuits of depth $d = \text{poly}(n)$, the maximum achievable gate-count reduction by *any* algorithm -- bounded or unbounded window, any search strategy (greedy, stochastic, learning-based, or exhaustive) -- approaches zero doubly-exponentially fast in $n$. This provides an asymptotic information-theoretic bound for the Haar-random regime, complementary to the combinatorial explanation of the E1--E5 observations via Observation 1(b).
+**Withdrawn Corollary 8.1.** The former claim about Haar-random circuits of polynomial depth does not follow because exact polynomial-size Haar-random circuits are not supplied by the premises.
 
-**Corollary 8.2.** For circuits of depth $d = \Theta(4^n / n^2)$ (near the complexity threshold), bounded-window optimizers with fixed $k, w$ achieve $R(C) \le kw / nd \to 0$, while unbounded optimizers may achieve $\Omega(1)$ reduction as the circuit approaches the complexity boundary. The transition at $d \sim 4^n / n^2$ separates an incompressible regime from a potentially compressible one.
+**Withdrawn Corollary 8.2.** The asserted transition requires a valid approximate-complexity model and is not established here.  The elementary bound $R(C)\le kw/|C|$ remains true for a fixed number of bounded-window rewrites, independently of Haar randomness.
 
-**Remark.** Part (b) is the substantive result: it shows that the incompressibility of Haar-random unitaries is the fundamental barrier to optimization, not merely the boundedness of the window size. The earlier formulation (v3.0) stated only the bounded-window bound $kw / nd$, which is trivially true for *any* circuit regardless of structure and does not invoke Haar-randomness. The present formulation establishes that Haar-random circuits are not just hard for local optimizers but hard for *all* optimizers, due to the information-theoretic incompressibility of random unitaries. This explains why Phase-2 (a+b) techniques (commutation rewriting, template matching) succeed on structured circuits (Oracle, BV) where algebraic structure provides shortcuts unavailable in the Haar-random ensemble.
+**Audit note.** The earlier bounded-window inequality $kw/|C|$ is valid but trivial.  The stronger Haar-random optimization claim is withdrawn for the incompatible-premise reason stated above.
 
 ---
 
-### Regime and scope of Theorem 8
+### Why former Theorem 8 cannot be used
 
-**Scope of application.** Theorem 8 applies to Haar-random unitaries, i.e., unitaries drawn from the Haar measure on $U(2^n)$. The experiments labeled E1--E5, however, use shallow random gate sequences generated by `src/circuits/generator_v2.py` (depth $d \in [1,50]$, two-qubit gate density $\rho = 0.3$, finite gate set). At the tested depths these random gate sequences do not sample Haar-random unitaries.
+**Scope correction.** The withdrawn argument concerns Haar-random unitaries, while E1--E5 use shallow random gate sequences generated by `src/circuits/generator_v2.py` (depth $d \in [1,50]$, two-qubit gate density $\rho = 0.3$, finite gate set). At the tested depths these sequences do not sample Haar-random unitaries, and no valid theorem here connects the two regimes.
 
-**Regime separation.** For typical E1--E5 parameters (e.g., $n = 10$, $d = 50$, $|C| \approx 500$ gates), the Haar-random complexity threshold is $4^n / n^2 \approx 10{,}486$ gates. The experimental circuits are therefore far from the Haar-random regime. Theorem 8 should be treated as an asymptotic worst-case / complementary information-theoretic bound, not as a direct explanation of the E1--E5 empirical observations.
+The issue is not merely regime separation. A unitary implemented exactly by the assumed polynomial-size circuit already has complexity at most that circuit size, so it cannot simultaneously satisfy the claimed larger lower bound. No asymptotic or information-theoretic conclusion in the former statement survives without replacing exact implementation by a carefully defined approximate circuit-complexity model and proving a covering bound for that model.
 
-**What explains the experiments.** The empirical $\sim 0\%$ Phase-1 reduction observed in E1--E5 is explained by Theorem 1 (adjacent inverse-pair density) and Observation 1(b) (layer-by-layer listing empties the Phase-1 action space), not by Haar-random incompressibility. Corollary 8.1 is a valid asymptotic statement about the optimization desert, but it does not apply pointwise to the shallow random gate sequences used in the experiments.
+**What explains the experiments.** The empirical $\sim 0\%$ Phase-1 reduction observed in E1--E5 is explained by the listing-dependent adjacent-action model, not by Haar-random incompressibility. Corollary 8.1 is withdrawn.
 
-**Practical implication.** Theorem 8 should not be invoked to explain the low reduction in E1--E5; the correct explanation is the combinatorial sparsity of inverse pairs under the LBL listing model.
+**Practical implication.** Do not invoke former Theorem 8. The observed low Greedy reduction in E1--E5 is explained only within the tested generator/listing/predicate combination.
 
 ---
 
@@ -376,13 +400,13 @@ On a disjoint union of paths, maximum independent set is solvable in $O(|V|)$ ti
 
 ## Section 3: Empirical Observations
 
-### Empirical Observation 1 (formerly Proposition 2): Greedy Matches Stochastic Phase-1 Optimizers
+### Withdrawn Empirical Generalization 1 (formerly Proposition 2): Greedy Matches Stochastic Phase-1 Optimizers
 
-**Statement.** For any circuit $C$, $\mathbb{E}[R_{\text{stoch}}(C)] \le R_{\text{greedy}}(C) + O(1/|C|)$ for any stochastic Phase-1 optimizer.
+**Withdrawn statement.** For any circuit $C$, $\mathbb{E}[R_{\text{stoch}}(C)] \le R_{\text{greedy}}(C) + O(1/|C|)$ for any stochastic Phase-1 optimizer.
 
-**Status**: [EMPIRICAL OBSERVATION] -- Downgraded from Proposition (proof sketch) on 2026-06-12. The original proof sketch relied on greedy matching approximation bounds that do not rigorously establish the stated $O(1/|C|)$ term. While the empirical evidence (E4: all four optimizers converge to ~0% on random circuits) strongly supports this observation, a rigorous proof remains open. The observation follows heuristically from Theorem 2's action-space analysis but cannot be formally derived from it without additional argument.
+**Status**: [WITHDRAWN AS A GENERALIZATION 2026-08-10]. The original proof sketch relied on greedy matching approximation bounds that do not establish the stated $O(1/|C|)$ term. More decisively, `H(q0), X(q1), H(q0)` has zero Greedy reduction while the implemented simulated annealer can reach the exact one-gate circuit after SWAP+REMOVAL. The unspecified big-$O$ constant also makes the finite-size statement non-falsifiable as written. No algorithm-independent bound is claimed.
 
-**Empirical support.** E4 tested 100 circuits $\times$ 4 optimizers. All achieved $\le$0.67% mean reduction on random circuits (n=5, d=15), with Greedy at 0.00%, GA at 0.67%, SA at ~0%, and RLS at ~0%. The stochastic optimizers' slight advantage (0.67% for GA) arises from rare non-adjacent pair discovery via SWAP moves, not from INSERTION-facilitated reduction. For random circuits where $\mathcal{S}_1(C) \approx \emptyset$, all optimizers converge to 0%.
+**Historical distribution-specific evidence only.** E4 tested 100 circuits $\times$ 4 optimizers and observed means at or below 0.67% on its random-circuit distribution. Those SA/RLS/GA runs predate the 2026-08-10 incumbent repair, so they cannot validate a stochastic ceiling without a repaired-code rerun. At most, E4 records low reductions for that finite generator/configuration; it is not evidence of algorithm independence.
 
 ---
 
@@ -402,7 +426,7 @@ These open problems motivate the study but are not claimed as results of this pa
 
 **Question.** Is the Circuit Optimization Decision Problem (CODP) QMA-hard?
 
-**Motivation.** Circuit Identity Testing (CIT) is QMA-complete [Janzing, Wocjan & Beth, 2003]. Since CIT is the special case of CODP with $r = 0$, one might expect CODP to be at least QMA-hard. However, the standard path -- Kitaev's circuit-to-Hamiltonian construction [Kitaev, 1997] -- yields a specific circuit family (history-state circuits), and showing that bounded-window peephole rewrites can distinguish YES from NO instances requires analyzing the rewrite-rule closure of these circuits, which is open.
+**Motivation.** Non-Identity Check is QMA-complete [Janzing, Wocjan & Beth, 2003], but it is not a proved special-case reduction to CODP. Under the reduction-ratio convention here, $r=0$ is trivial because the input circuit itself satisfies the size bound; $r=1$ asks for closeness to the empty circuit, but the identity/non-identity promise orientation does not by itself establish QMA-hardness of the existential minimization problem. A valid reduction must specify the channel metric, promise orientation, witness quantifiers, and size gap. The standard Feynman--Kitaev route also yields a highly structured history-state construction whose rewrite closure is unanalysed.
 
 **Current status.** The empirical observation that all Phase-1 optimizers achieve ~0% reduction on random circuits is *consistent with* QMA-hardness but does not constitute proof. A zero-mean reduction could also arise from a flat but classically tractable landscape.
 
@@ -425,35 +449,37 @@ These open problems motivate the study but are not claimed as results of this pa
 
 ### Formal Conjectures
 
-These are the paper's central formal claims, supported by strong empirical evidence and partial theoretical arguments.
+This section records former conjectures, surviving scoped results, and open classification questions. Refuted or proved existence claims are not treated as active conjectures.
 
-#### Conjecture 1: The Phase 1 Ceiling is Structural
+#### Former Conjecture 1: General Phase-1 Ceiling (refuted; restricted questions remain)
 
-**Statement.** For any circuit family $\mathcal{F}$ in which no adjacent inverse gate pairs exist in the initial data structure, *every* Phase-1-only optimizer (greedy, simulated annealing, genetic algorithm, random local search) achieves exactly $0\%$ gate reduction. This ceiling is a property of the circuit data structure, not of the optimization algorithm.
+**Refuted statement.** For any circuit family $\mathcal{F}$ in which no adjacent inverse gate pairs exist in the initial data structure, *every* Phase-1-only optimizer (greedy, simulated annealing, genetic algorithm, random local search) achieves exactly $0\%$ gate reduction.
 
-**Status**: [CONJECTURE $\to$ PARTIALLY PROVEN] -- the statement follows from Theorem 2 (action-space identity) for deterministic optimizers; the conjecture concerns the universality claim for stochastic optimizers. Theorem 5 strengthens the empirical bound to a high-probability guarantee. Theorem 6 proves the conjecture exactly for Clifford circuits in canonical form. Theorem 8 proves the bounded-window reduction limit for Haar-random circuits.
+**Status**: [REFUTED 2026-08-10]. The circuit $[H(q_0),X(q_1),H(q_0)]$ has an empty initial Greedy action set, but one legal disjoint-support SWAP followed by REMOVAL reduces it from three gates to one. What survives is the Greedy predicate theorem and generator-specific empty-action results, not algorithm independence over the larger move closure.
 
 **Evidence:**
 
-1. **Action-space identity** (Theorem 2). All Phase-1 optimizers operate on the same action space $\mathcal{S}_1(C)$. If $\mathcal{S}_1(C) = \emptyset$, no Phase-1 move reduces gate count. Note: Theorem 2 has a known gap in the INSERTION cascade argument (see Remark after Theorem 2, now resolved by Thm 2c/2d in Appendix A).
+1. **Greedy predicate result** (Theorem 2a). If $\mathcal{S}_1(C) = \emptyset$ and no rotations are mergeable, Greedy has no available reducing rewrite. Stochastic optimizers have a larger move graph; equality of their global action spaces is not proved.
 
-2. **Empirical validation** (E1--E5, 45,500 trials). Across Universal, Clifford, and Structured circuit families, all four Phase-1 optimizers achieved $\le 0.05\%$ mean reduction. The ceiling is reproducible and algorithm-independent. Note: Empirical Observation 1 (formerly Prop 2) formalizes this as $\mathbb{E}[R_{\text{stoch}}(C)] \le R_{\text{greedy}}(C) + O(1/|C|)$.
+2. **Historical finite-distribution observation** (E1--E5, 45,500 trials). Low mean reductions were recorded across the tested families, but the stochastic runs predate the incumbent repair and do not establish algorithm independence. Greedy-only rows remain descriptive evidence for the initial listing predicate.
 
-3. **Theoretical argument.** A Phase-1 optimizer can cancel adjacent inverses (REMOVAL), swap disjoint-qubit gates (SWAP), or commute gates (COMMUTATION). SWAP and COMMUTATION preserve gate count. Without commutation-based reordering across non-commuting blocks, the set of cancelable pairs is invariant under Phase-1 moves.
+3. **Failed theoretical argument.** Although SWAP and COMMUTATION preserve gate count, they can change adjacency and expose cancelable pairs. The three-gate counterexample falsifies the proposed invariance.
 
-**Remaining gap.** The formal invariant argument must show that SWAP and COMMUTATION moves within Phase-1 scope cannot *create* new adjacent inverse pairs. Theorem 2 addresses this: it proves that SWAP can create listing-adjacent pairs but only reveals pre-existing wire-level structure (no net reduction), and INSERTION creates new $\mathcal{S}_1$ elements but cannot achieve net reduction (insertion adds 2 gates, cancellation removes 2 gates). The remaining open question is whether this invariant extends to Phase-1 scope when commutation is restricted (no reordering across non-commuting blocks) -- which is precisely why Phase-2 (a+b) exists.
+**Remaining gap.** A valid dependency-DAG or trace-monoid argument must characterize when SWAP and COMMUTATION expose or create conflict-compatible cancellations. Theorem 2 proves only the Greedy predicate result, and Theorem 2c proves only INSERTION+REMOVAL debt. Former Theorem 2d did not establish the required invariant for multi-qubit gates. Whether the implemented stochastic Phase-1 move closure has a general reduction ceiling therefore remains open.
 
 **Open problems:**
 - C1.OP1: Formalize the invariant characterizing exactly which circuit families have empty Phase-1 action spaces.
 - C1.OP2: Quantify $\Pr[\mathcal{S}_1(C) \neq \emptyset]$ as a function of $(n, d, \mathcal{G})$ for random circuit ensembles.
 
-#### Conjecture 2: Phase-2 (a+b) Provides Context-Dependent Super-Constant Improvement
+#### Former Conjecture 2: Phase-2 (a+b) Provides Context-Dependent Super-Constant Improvement
 
 **Statement.** There exist circuit families $\mathcal{F}$ and gate sets $\mathcal{G}$ for which Phase-1 optimization achieves $O(1/d)$ reduction (or $0\%$), while Phase-1+2 optimization achieves $\Omega(1)$ reduction. The improvement $\Gamma(C) = R_{1+2}(C) - R_1(C)$ is context-dependent: it is significant for some families (e.g., oracle circuits) and zero for others (e.g., structured brickwork, QFT, GHZ).
 
-**Status**: [CONJECTURE $\to$ PROVEN FOR PHASE-2a (commutation) AND PHASE-2b (template matching)] -- Two constructive proofs establish C2:
+**Status**: [EXISTENCE CLAIM PROVEN; GENERAL CLASSIFICATION OPEN] -- Two constructive proofs establish the existential statement:
 - **Theorem 7** constructs an *artificial* circuit family with $\Gamma^{\text{(2a)}} \ge 1/6 = \Omega(1)$ via **Phase-2a commutation rewriting** + separator-cancellation.  Experiment E24 validates this bound empirically (mean reduction $0.7980$ for $n = 4, 6, \dots, 12$).
-- **Theorem 9** (Appendix B) proves $\Gamma^{\text{(2b)}}(BV_n) \ge n/(4.5n+4) \ge 2/13 = \Omega(1)$ for the *natural* Bernstein--Vazirani oracle family, via the $H$-CNOT-$H$ template identity (**Phase-2b**).
+- **Theorem 9** (Appendix B) constructs a full-pipeline rewrite with
+  $R^{\text{(2b)}}(BV_n)\ge2n/(3n+2)\ge1/2$ for the stated all-ones BV
+  circuit. This is achieved reduction, not global optimality.
 
 **Phase coverage caveat.** Theorem 7 is a **Phase-2a** result and is both implemented and validated. Theorem 9 is a **Phase-2b** result; the current `Phase2bTemplateMatcher` implements the required $H$-CNOT-$H$ template and the full-scale v2 benchmark validates the recorded BV grid. This does not validate an unrestricted template universe, and it must not be conflated with the Phase-2a reductions reported in E10/E11.
 
@@ -472,9 +498,9 @@ These are the paper's central formal claims, supported by strong empirical evide
 - **(Theory--experiment bridge)** The achievable Phase-2a bound for BV remains open: the empirical $\sim$20% Phase-2a reduction on Oracle/BV (E11) lacks a matching theoretical lower bound.  Closing this gap requires either (a) extending Phase-2a theory to cover the E11 Oracle structure, or (b) running E11 with the implemented Phase-2b matcher to validate Theorem 9 directly.
 
 **Open problems:**
-- C2.OP1: Construct an explicit circuit family with proven super-constant Phase-2 (a+b) improvement.
-- C2.OP2: Determine $\max_C \Gamma(C) / R_1(C)$ as a function of $(n, d, \mathcal{G})$.
-- C2.OP3: Characterize the gate-set conditions under which Phase-2 (a+b) is necessary.
+- C2.OP1 (resolved by Theorems 7 and 9): construct an explicit circuit family with proven super-constant Phase-2 improvement.
+- C2.OP2: Determine a non-singular advantage measure and its extremal scaling as a function of $(n, d, \mathcal{G})$; the ratio $\Gamma/R_1$ is undefined when $R_1=0$.
+- C2.OP3: Characterize the gate-set and family conditions under which Phase-2 (a+b) is necessary.
 
 ---
 
@@ -484,8 +510,8 @@ These are the paper's central formal claims, supported by strong empirical evide
 |----|------|-----------|----------|-----------------|
 | OP1 | Open Problem | CODP is QMA-hard | Weak -- reduction sketch incomplete | Complete the Kitaev reduction |
 | OP2 | Open Problem | No PTAS for CODP | Updated -- conflict resolution is in P (Prop 1); hardness source unclear | Identify true hardness source |
-| **C1** | **Conjecture** | **Phase 1 ceiling is structural (listing-conditional)** | **Strong -- Thm 2 + Thm 5 + Thm 6 (Clifford) + Thm 8 (Haar, asymptotic) + 45,500 trials (LBL). Ceiling is listing-conditional: WCL exposes ~7.8% Phase-1 reduction on the same circuits.** | **Formalize invariant for general circuit families; characterize WCL vs LBL gap** |
-| **C2** | **Conjecture** | **Phase-2 (a+b) is context-dependent super-constant** | **Proven (Phase-2a and Phase-2b) -- Thm 7 (artificial, Phase-2a, $\Gamma \ge 1/6$, validated by E24) + Thm 9 (BV natural, Phase-2b, $\Gamma \ge 2/13$). E10/E11 empirical (Phase-2a): ~3% random, ~20% Oracle.** | **(1) Phase-2a bound for BV / natural families; (2) characterize all families with super-constant $\Gamma$; (3) bridge theory (2b) $\leftrightarrow$ experiment (2a)** |
+| **C1** | **Refuted general conjecture** | **All Phase-1 optimizers share a listing-conditional ceiling** | **Refuted by SWAP+REMOVAL on a three-gate circuit. Surviving results are Greedy-specific, restricted-generator, or restricted-move-set statements. Historical stochastic evidence requires repaired-code reruns.** | **Characterize the dependency-DAG/trace-monoid move closure for explicitly scoped families** |
+| **C2** | **Proved existence result** | **Some families have context-dependent $\Omega(1)$ Phase-2 advantage** | **Thm 7 (artificial Phase-2a, $\Gamma \ge 1/6$) + Thm 9 (BV Phase-2b, $\Gamma \ge 2/13$); no universal-family claim.** | **Phase-2a bound for natural families; characterize sufficient/necessary family and gate-set conditions** |
 
 ---
 
@@ -553,7 +579,7 @@ Production compilers (Qiskit `transpile`, Cirq, t|ket>) use DAG representations 
 
 2. **Phase-2a commutation value.** Phase-2a commutation rewriting (which operates on wire-level structure, not listing order) is listing-independent. The framework's Phase-2 (a+b) results (Theorem 7, Theorem 9) hold regardless of the listing model, because commutation is a wire-level algebraic property.
 
-3. **Ceiling is representation-dependent, not algorithm-dependent.** Within a fixed listing model, all Phase-1 optimizers (greedy, SA, GA, RLS) converge to the same ceiling (Theorem 2). The ceiling is a property of the representation + circuit structure, not of the search algorithm.
+3. **Observed ceiling is representation-dependent; algorithm independence is not proved.** Within the tested fixed listing model, Greedy, SA, GA, and RLS converge empirically to similar reductions.  The data support a representation-plus-structure hypothesis, not a universal theorem excluding stronger search algorithms.
 
 #### 5.3.2 What the framework does NOT claim
 
@@ -651,15 +677,15 @@ Still not implemented: exhaustive small-Clifford template enumeration, phase-gad
 
 ---
 
-## Appendix A: Theorem 2c and 2d -- Bounded INSERTION Cascade Proofs
+## Appendix A: Restricted Theorem 2c and Withdrawn Theorem 2d
 
-> **Document Status**: Formal proofs resolving the INSERTION cascade gap in Theorem 2.
+> **Document Status (audited 2026-08-09):** Theorem 2c resolves only the INSERTION+REMOVAL subsystem. Former Theorem 2d is an invalid proof retained solely as an audit trail; the general INSERTION+SWAP+COMMUTATION cascade gap remains open.
 > **Version**: 1.0
 > **Date**: 2026-06-13
 
 ### Motivation and Gap Statement
 
-Theorem 2(b) establishes that stochastic Phase-1 optimizers (SA, GA, RLS) cannot systematically exceed the Greedy reduction ceiling on circuits where $\mathcal{S}_1(C) = \emptyset$. Step 3 of that proof asserts that "cancellations involving only pre-existing gates could have been found without INSERTION." However, this assertion left an **open gap**: INSERTION can change the commutation topology of the circuit, potentially enabling SWAP or COMMUTATION sequences that were previously impossible.
+Earlier drafts asserted that stochastic Phase-1 optimizers (SA, GA, RLS) cannot systematically exceed the Greedy reduction ceiling on circuits where $\mathcal{S}_1(C) = \emptyset$. The audit found that assertion unproved: INSERTION can change the commutation topology and potentially enable SWAP or COMMUTATION sequences that were previously impossible.
 
 Specifically, if inserting $H \cdot H$ between gates $A$ and $B$ makes $A$ and $B$ commutable (by changing the effective ordering context), then INSERTION has created a Phase-2a-style opportunity that Phase-1 alone could not find. The concern is that an INSERTION-facilitated commutation cascade might achieve net gate-count reduction beyond what is available without INSERTION.
 
@@ -833,9 +859,11 @@ and since each mixed REMOVAL is net-zero, the *effective* removal count (net of 
 
 ---
 
-### Theorem 2d (INSERTION Commutation Cascade Bound)
+### Withdrawn Theorem 2d (INSERTION Commutation Cascade Bound)
 
-**Statement.** Let $C$ be a circuit with $\mathcal{S}_1(C) = \emptyset$. Let $M$ be any finite sequence of moves drawn from $\{\text{INSERTION}, \text{REMOVAL}, \text{SWAP}, \text{COMMUTATION}\}$ applied to $C$, producing circuit $C'$. Suppose $M$ contains $k$ INSERTION moves. Then:
+> **Status (2026-08-09): proof invalid; claim open.** The text below is retained as an audit trail, not as an established result.  Its "wire-level unitary" is not well-defined for gates coupling multiple wires, preservation of a total wire product does not preserve pairwise inverse relations, and $B_{\mathrm{pre}}$ is neither defined conflict-freely nor proved equal to the Phase-2 optimum.
+
+**Former statement.** Let $C$ be a circuit with $\mathcal{S}_1(C) = \emptyset$. Let $M$ be any finite sequence of moves drawn from $\{\text{INSERTION}, \text{REMOVAL}, \text{SWAP}, \text{COMMUTATION}\}$ applied to $C$, producing circuit $C'$. Suppose $M$ contains $k$ INSERTION moves. Then:
 
 $$
 |C'| - |C| \ge -B_{\text{pre}}(C),
@@ -944,7 +972,7 @@ $$
 R_1^{\text{INSERTION}}(C) - R_1(C) \le R_{1+2}(C) - R_1(C) = \Gamma(C).
 $$
 
-This proves that INSERTION within Phase 1 can at best simulate Phase-2a's commutation reordering, never exceed it. $\blacksquare$
+This was the intended conclusion, but it does not follow from the invalid invariant above.
 
 #### Discussion
 
@@ -952,27 +980,21 @@ This proves that INSERTION within Phase 1 can at best simulate Phase-2a's commut
 
 The bound in Theorem 2c ($R_{\text{removal}}(C') \le 2k$) is **tight**: a sequence of $k$ INSERTION moves followed by $k$ REMOVAL moves on the inserted pairs themselves achieves exactly $R_{\text{removal}} = 2k$ with net change 0. No sequence can achieve $R_{\text{removal}} > 2k$ involving inserted gates.
 
-The bound in Theorem 2d ($\Delta|C| \ge -B_{\text{pre}}(C)$) is also tight in the following sense: if the circuit contains $B_{\text{pre}}(C)$ pre-existing wire-level inverse pairs accessible to SWAP/COMMUTATION, then Phase-2a (without any INSERTION) can achieve exactly that reduction. INSERTION cannot improve upon this.
+No tightness statement survives for former Theorem 2d: $B_{\text{pre}}(C)$ is not an established conflict-aware optimum, and attainability by Phase-2a was not proved.
 
 **Implications for the INSERTION Cascade Gap**
 
-The open gap in Theorem 2 (Step 3) asked whether INSERTION-facilitated commutation cascades could achieve net reduction beyond what is available without INSERTION. Theorems 2c and 2d answer this definitively:
+The open gap asks whether INSERTION-facilitated commutation cascades can achieve net reduction beyond what is available without INSERTION. Only the first item below is established; former Theorem 2d and all consequences that depend on it are withdrawn:
 
 1. **INSERTION + REMOVAL alone** (Thm 2c): Net gate-count change is $\ge 0$. INSERTION is a "zero-sum" operation when combined only with REMOVAL.
 
-2. **INSERTION + REMOVAL + SWAP + COMMUTATION** (Thm 2d): Net reduction is bounded by $B_{\text{pre}}(C)$, which is exactly the Phase-2 (a+b) action space. INSERTION cannot create new reduction opportunities beyond what Phase-2 (a+b) already provides.
+2. **INSERTION + REMOVAL + SWAP + COMMUTATION** (former Thm 2d): **open**. $B_{\text{pre}}(C)$ was not defined conflict-freely or proved equal to an attainable optimum, and the multi-qubit per-wire factorization is invalid.
 
-3. **Practical consequence**: Stochastic Phase-1 optimizers that employ INSERTION (SA, GA, RLS) cannot systematically exceed the Greedy reduction ceiling, even when INSERTION changes the commutation topology. The empirical observation of 100% zero net reduction in 5000 trials is a necessary consequence of the algebraic structure, not a coincidence.
+3. **Practical consequence:** The 5,000-trial zero-net-reduction result is empirical evidence about the tested implementations and distribution, not a necessary algebraic consequence for the full move set.
 
 **Relation to Phase-2 (a+b) Advantage**
 
-Theorem 2d establishes a clean separation:
-
-- **Phase 1 + INSERTION** $\le$ **Phase-2a** in terms of achievable reduction.
-- **Phase-2a** exploits the pre-existing wire-level structure of $C$ via systematic commutation reordering.
-- **INSERTION** within Phase 1 is at best a clumsy simulation of Phase-2a, adding and removing gates to achieve what Phase-2a does directly.
-
-This reinforces the central message of the theoretical framework: the optimization gap $\Gamma(C) = R_{1+2}(C) - R_1(C)$ is a property of the circuit's algebraic structure (commutation relations), not of the Phase-1 optimizer's search strategy.
+No ordering between Phase 1+INSERTION and Phase-2a follows from former Theorem 2d. Establishing one requires a new dependency-DAG/trace-monoid theorem and a conflict-aware optimum.
 
 ---
 
@@ -1019,18 +1041,27 @@ where the product in Layer 2 is ordered as $\text{CNOT}(q_1, q_{n+1}), \text{CNO
 
 **Unitary implemented.** $BV_n$ implements the unitary $U_{BV_n} = H^{\otimes n} \cdot O_s \cdot H^{\otimes n}$ (on the input register, with ancilla factored out), where $O_s$ is the phase oracle. For $s = 1^n$, the output state encodes $s$ in the computational basis: $U_{BV_n}|0\rangle^{\otimes n} = |1^n\rangle$.
 
-### Theorem 9 (Phase-2b Advantage for Bernstein--Vazirani Oracle Circuits)
+### Theorem 9 (Constructive Phase-2b Advantage for an all-ones BV Circuit)
 
 **Statement.** For the Bernstein--Vazirani oracle circuit $BV_n$ on $n+1$ qubits ($n \ge 2$) with secret string $s = 1^n$:
 
 1. $R_1(BV_n) = 0$ (Phase 1 achieves zero reduction in the standard LBL listing).
-2. Phase-2b (commutation rewriting + template matching) achieves
+2. The explicit Phase-2b sequence below produces an equivalent circuit with
+$n+2$ total gates from the $3n+2$-gate input, and therefore achieves
 $$
-R_{1+2}^{\text{(2b)}}(BV_n) \ge \frac{n}{4.5n+4} \ge \frac{2}{13} \quad \text{for all } n \ge 2.
+R_{1+2}^{\text{(2b)}}(BV_n) \ge \frac{2n}{3n+2}
+\ge \frac12 \quad \text{for all } n \ge 2.
 $$
-In particular $R_{1+2}^{\text{(2b)}}(BV_n) = \Omega(1)$, and the optimization gap satisfies $\Gamma^{\text{(2b)}}(BV_n) \ge \frac{2}{13}$ for all $n \ge 2$.
+In particular the achieved reduction is $\Omega(1)$. This is a constructive
+lower bound for the stated rewrite sequence, not a proof that $n+2$ is globally
+minimum under any gate set.
 
-**Remark on the bound.** The exact reduction achievable by Phase-2 (a+b) depends on the listing order and the specific commutation/template sequence applied. We prove a lower bound of $n/(4.5n+4)$, which for $n \ge 2$ yields at least $2/13 \approx 0.154$, and which approaches $1/4.5 \approx 0.222$ as $n \to \infty$. The bound uses the implemented Phase-2b template matcher (the $H$-CNOT-$H$ identity) and accounts for the gate-overhead of the template transformation. It is a bound for this stated template model, not for all quantum compilers.
+**Audit correction (2026-08-11).** Earlier versions divided by an invented
+quantity of "equivalent gate-slots" that included pattern-matching and
+bookkeeping work. Runtime work is not circuit gate count and cannot enter this
+estimand. The corrected statement counts only emitted circuit operations,
+includes the two untouched ancilla-preparation gates, and makes no optimality
+claim.
 
 > **Audit note (review Stage 2 -- "Thm 10 calculation inconsistency").** An external review flagged an apparent inconsistency between a "45.5%" figure and a recomputed "66.7%". This note resolves the confusion:
 >
@@ -1038,9 +1069,9 @@ In particular $R_{1+2}^{\text{(2b)}}(BV_n) = \Omega(1)$, and the optimization ga
 >
 > 2. **Two distinct quantities.** The proof reports *two* numbers that must not be conflated:
 >    - **Idealized ratio** $R_{\text{ideal}} = (2n-2)/(3n) \to 2/3 \approx 66.7\%$ -- the gross reduction if the template rewrite were free. This is an upper bound on what the rewrite *could* achieve, used only for intuition.
->    - **Rigorous lower bound** $R \ge n/(4.5n+4) \ge 2/13 \approx 15.4\%$ -- the proven guarantee after accounting for template-matching overhead (the $4.5n+4$ denominator). This is the theorem's actual claim.
+>    - **Corrected constructive bound** $R\ge2n/(3n+2)\ge1/2$ -- obtained by counting the actual input and emitted gates. Runtime overhead is reported separately.
 >
-> 3. **No 45.5% claim exists in this document.** The review's "45.5%" appears to be a misreading. The document states $2/13 \approx 15.4\%$ (small-$n$ rigorous bound) and $1/4.5 \approx 22.2\%$ (asymptotic rigorous bound). If any companion document (e.g., a manuscript draft) cites "45.5%", it is a stale figure from a superseded draft and must be replaced with the rigorous $n/(4.5n+4)$ bound.
+> 3. Any companion document retaining `n/(4.5n+4)`, "equivalent gate-slots", or an exact `n+2` optimum is stale. The valid claim is the achieved reduction above; minimality remains unproved.
 >
 > 4. **Net effect.** The theorem is correct as stated. The "inconsistency" is an apples-to-oranges comparison between the idealized upper bound and the rigorous lower bound, which the proof already separates clearly in Stage C.
 
@@ -1145,47 +1176,34 @@ There are $n-1$ such inter-CNOT cancellation opportunities, each removing 2 gate
 
 ###### Stage C: Gate-count accounting
 
-**Gross reduction (before overhead).**
+**Constructive gate-count reduction.**
 - Gates removed by B-2: $2n$ (the $H(q_i)_{\text{L1}}$ and $H(q_i)_{\text{L3}}$ for all $i$).
 - Gates added by B-2: $2n$ (the $H(q_{n+1})$ pairs).
 - Gates removed by B-3: $2(n-1)$ (the $n-1$ cancelling $H(q_{n+1})$ pairs).
 - CNOT count: $n$ before, $n$ after (direction reversed but count unchanged).
 
-Gross gate count after the full rewrite: $3n - 2(n-1) = n + 2$.
+After the inter-template cancellations, the left endpoint Hadamard also cancels
+the ancilla-preparation Hadamard. The full emitted circuit is one ancilla $X$,
+$n$ reversed CNOTs, and one terminal ancilla $H$: $n+2$ gates in total, down
+from $3n+2$.
 
-The **idealized** reduction ratio would be
+The achieved full-circuit reduction ratio is therefore
 $$
-R_{\text{ideal}}(BV_n) = \frac{3n - (n+2)}{3n} = \frac{2n-2}{3n},
+R_{\text{achieved}}(BV_n)=\frac{(3n+2)-(n+2)}{3n+2}
+=\frac{2n}{3n+2},
 $$
-which tends to $2/3$ as $n \to \infty$. **This idealized expression is not the theorem's claimed bound.** It ignores the template-application overhead, which we account for next.
-
-**Overhead accounting.** Each application of the $H$-CNOT-$H$ template (Phase B-2) is itself a non-trivial rewrite: it requires matching a 3-gate pattern, validating direction reversal, and re-emitting the reversed CNOT plus two ancilla $H$ gates. In a realistic peephole rewriter this transformation carries a per-application cost that does not vanish. We model this overhead by decomposing the template-application cost into concrete operations:
-
-- Pattern matching cost: 3 gate slots (the pattern length).
-- Direction reversal bookkeeping: 1 gate slot (qubit index swap metadata).
-- Residual ancilla $H$ management: 0.5 gate slot amortized (each template application produces 2 ancilla $H$ gates, which participate in $n-1$ pairwise cancellations across $n$ templates, leaving 2 unpaired $H$ gates total — amortized $2/n \to 0$ as $n \to \infty$, bounded by 0.5 for the worst case $n=2$).
-
-Total per-application overhead: $3 + 1 + 0.5 = 4.5$ equivalent gate-slots. This is a conservative estimate: it assumes no optimization of the pattern-matching step across adjacent wires. The constant $4.5$ is an upper bound on the per-template overhead, derived from the worst-case matching cost plus residual ancilla $H$ gates; a tighter analysis would reduce this constant and improve the bound.
-
-Total overhead: $4.5n$ across $n$ qubits. An additional constant overhead of $4$ gate-slots accounts for boundary effects at the two ends of the CNOT chain.
-
-The **rigorous** lower bound on the achievable reduction is therefore
+which is $1/2$ at $n=2$ and tends to $2/3$. Pattern matching,
+verification, and bookkeeping belong in runtime/resource reporting, not in the
+gate-count denominator. Hence
 $$
-R_{1+2}^{\text{(2b)}}(BV_n) \ge \frac{3n - (n + 2) - (\text{overhead amortized into denominator})}{3n}
-\;\Longrightarrow\;
-R_{1+2}^{\text{(2b)}}(BV_n) \ge \frac{n}{4.5n + 4}.
+R_{1+2}^{\text{(2b)}}(BV_n)=\Omega(1). \quad \blacksquare
 $$
 
-For $n \ge 2$: $R_{1+2}^{\text{(2b)}}(BV_2) \ge 2/13 \approx 0.154$. As $n \to \infty$: $R_{1+2}^{\text{(2b)}} \ge 1/4.5 \approx 0.222$.
+### Small-$n$ verification of the constructed sequence
 
-Since $n/(4.5n+4)$ is bounded below by the positive constant $2/13$ for all $n \ge 2$, we conclude
-$$
-R_{1+2}^{\text{(2b)}}(BV_n) = \Omega(1), \qquad \Gamma^{\text{(2b)}}(BV_n) \ge \frac{2}{13}. \quad \blacksquare
-$$
-
-### Small-$n$ verification (idealized sequence)
-
-The following examples verify the *idealized* rewrite sequence (i.e., before the overhead accounting of Stage C). They serve as intuition-building checks on the template mechanism and do **not** replace the rigorous bound $n/(4.5n+4)$.
+The following displays omit the two unchanged ancilla-preparation gates from
+both the input and output. They verify the local rewrite sequence; they do not
+prove global gate-count optimality.
 
 **Verification for $n = 2$.** $BV_2$ has $3 \cdot 2 = 6$ gates:
 $$H(q_1), H(q_2), \text{CNOT}(q_1, q_3), \text{CNOT}(q_2, q_3), H(q_1), H(q_2).$$
@@ -1228,7 +1246,9 @@ The Phase-2b procedure above uses four operations, all within the Phase-2b toolk
 
 The experimental codebase separates **Phase-2a** (`commutation_rewriter.py`: disjoint-qubit commutation plus a small set of algebraic commutation rules) from **Phase-2b** (`template_matcher.py`: inverse closure, phase-polynomial merging, and bounded Clifford-conjugation templates). E26 evaluates the implemented Phase-2b library at full scale; it is not an exhaustive template universe.
 
-Theorem 9's bound $n/(4.5n+4) = \Omega(1)$ relies on the $H$-CNOT-$H$ template (Phase-2b). **Under pure Phase-2a, the achievable reduction for $BV_n$ is an open question.** Concretely:
+Theorem 9's achieved bound $2n/(3n+2)=\Omega(1)$ relies on the full-pipeline
+$H$-CNOT-$H$ template (Phase-2b). **Under pure Phase-2a, the achievable
+reduction for $BV_n$ is an open question.** Concretely:
 
 - Phase-2a can perform Stage B-1 (disjoint-qubit commutation) freely.
 - Phase-2a **cannot** perform Stage B-2 (the $H$-CNOT-$H$ template rewrite).
@@ -1236,13 +1256,13 @@ Theorem 9's bound $n/(4.5n+4) = \Omega(1)$ relies on the $H$-CNOT-$H$ template (
 
 Therefore, under Phase-2a alone, the *provable* reduction for $BV_n$ is currently $0$ (matching Phase-1). Whether a clever Phase-2a commutation sequence can achieve non-zero reduction on $BV_n$ is left as an open question.
 
-**Experimental status.** The manuscript's reported "~20% Phase-2 reduction on Oracle/BV circuits" (E11) was obtained with Phase-2a. The mechanism behind this empirical reduction is **not** the $H$-CNOT-$H$ template of Theorem 9, but rather the commutation of redundant $H/X$ gates exposed by the specific Oracle circuit structure in E11's test suite. The relationship between the theoretical Phase-2b bound (Theorem 9) and the empirical Phase-2a reduction (E11) is therefore indirect, and the manuscript must state this clearly.
+**Experimental status.** The corrected v10 E26 rerun directly evaluates the implemented Phase-2b pipeline on 80 BV instances ($n=3,\ldots,10$, 10 secrets per size), with exact equivalence for all three optimizer arms. For `template_phase2b`, every instance exceeds the theorem's conservative bound; size-specific mean reductions range from 0.5915 to 0.7455 and minima from 0.5455 to 0.6250 (`data/v10/prepaper/e26/bv_theory_v8.csv`). This validates the implementation on the tested BV grid, not completeness of the template universe. The older E11 Phase-2a result uses a different mechanism and remains indirect evidence only.
 
 ### Listing-model dependency
 
 As with Theorem 1, the Phase-1 result $R_1(BV_n) = 0$ depends on the listing model. Under WCL (wire-consecutive listing), the gates on wire $q_i$ are listed consecutively: $H(q_i)_{\text{L1}}, \text{CNOT}(q_i, q_{n+1}), H(q_i)_{\text{L3}}$. Under WCL, $H(q_i)_{\text{L1}}$ and $\text{CNOT}(q_i, q_{n+1})$ are listing-adjacent, but $H \neq \text{CNOT}^{-1}$, so $\mathcal{S}_1(BV_n) = \emptyset$ still holds. **The Phase-1 result is listing-independent for $BV_n$.**
 
-The Phase-2b result is also listing-independent in the sense that the rewrite procedure operates on the circuit *graph* (wire-level adjacency), not on the listing order. However, the *gate-counting* of the rewrite depends on the initial listing: under WCL the $H$ gates are already adjacent to their CNOTs, so Stage B-1 is a no-op and the overhead is reduced.
+The abstract constructive sequence can be expressed modulo legal commutations, but the implemented matcher is bounded-window and consumes a concrete listing. Its empirical success can therefore be representation dependent. The theorem establishes existence under its stated rewrite operations; it does not prove listing invariance of the implementation or its gate count.
 
 > **Connection to the broader listing-conditional framing.** The structural-ceiling framework (Conjecture C1, Observation 1(b)) is explicitly **listing-conditional**: the Phase-1 ceiling $\mathcal{S}_1(C) = \emptyset$ is a property of the LBL listing, not of the circuit's intrinsic unitary. Theorem 9's Phase-1 result inherits this listing-conditionality.
 
@@ -1252,7 +1272,7 @@ The Phase-2b result is also listing-independent in the sense that the rewrite pr
 |----------|----------------------|----------------------|
 | Circuit family | Adversarial construction | Natural quantum algorithm |
 | $R_1$ | 0 | 0 |
-| $R_{1+2}^{\text{(2b)}}$ lower bound | $\ge 1/6 \approx 0.167$ | $\ge n/(4.5n+4) \ge 2/13 \approx 0.154$ |
+| $R_{1+2}^{\text{(2b)}}$ lower bound | $\ge 1/6 \approx 0.167$ | achieved $\ge2n/(3n+2)\ge1/2$ for the all-ones construction |
 | Phase-2 (a+b) mechanism | CNOT--CNOT cancellation via $S$-commutation | $H$-CNOT-$H$ template (Phase-2b) + ancilla $H$-cancellation |
 | Practical relevance | Low (designed for proof) | High (BV is a standard oracle algorithm) |
 | Asymptotic gap $\Gamma^{\text{(2b)}}$ | $\Omega(1)$ | $\Omega(1)$ (specifically $\to 1/4.5$) |
@@ -1268,22 +1288,22 @@ Theorem 9 strengthens the case for Conjecture C2 by demonstrating Phase-2b advan
 |----|------|-----------|--------|
 | **Thm 1(a)** | Theorem | Adjacent inverse pair density bound under WCL (expectation) | [CORRECTED 2026-08-06 -- constants fixed (k1 factor; 2-qubit double count) and directly validated by E30] |
 | **Thm 1(b)** | Theorem | LBL listing model yields $\mathcal{S}_1(C) = \emptyset$ for $n \ge 2$ | [PROVEN -- structural, explains E1 zero-std] |
-| **Thm 2** | Theorem | Phase-1 reduction ceiling (SWAP/INSERTION clarified) | [PROVEN -- INSERTION cascade resolved (bounded version), see Thm 2c/2d] |
+| **Thm 2** | Mixed | Greedy predicate ceiling; proposed stochastic ceiling | **[PART (a) PROVEN; GENERAL PART (b) REFUTED BY 3-GATE SWAP+REMOVAL COUNTEREXAMPLE]** |
 | **Lemma 3** | Lemma | Commutation rewriting preserves equivalence | [PROVEN -- 1-line, supporting lemma] |
 | **Lemma 4** | Lemma | Greedy optimality for non-conflicting pairs | [PROVEN -- narrow scope, supporting lemma] |
-| **Thm 5** | Theorem | High-probability bound on adjacent inverse pairs (McDiarmid) | [PROVEN -- standard concentration] |
-| **Thm 6** | Theorem | Phase-1 ceiling exact for Clifford circuits in canonical form | [PROVEN -- empirically validated by E23 (160 circuits, matching rate 1.0)] |
+| **Thm 5** | Candidate theorem | High-probability bound on adjacent inverse pairs (McDiarmid) | **[PROOF INCOMPLETE -- matching dependencies omitted]** |
+| **Prop 6** | Proposition | Greedy ceiling for the restricted non-empty-stage AG generator | **[CODE-CORRECTED; E23 does not establish general AG claim]** |
 | **Thm 7** | Theorem | Explicit circuit family with $\Omega(1)$ Phase-2a advantage | [PROVEN -- artificial construction] |
-| **Thm 8** | Theorem | Haar-random circuit incompressibility and bounded-window limit | [PROVEN -- Parts a-b substantive; Part c trivial; does not apply to experimental regime] |
+| **Thm 8** | Withdrawn claim | Haar-random circuit incompressibility and bounded-window limit | **[WITHDRAWN 2026-08-09 -- incompatible premises]** |
 | **Thm 2c** | Theorem | Bounded INSERTION cascade lemma: $R_{\text{removal}}(C') \le 2k$ | [PROVEN -- insertion-debt invariant, see Appendix A] |
-| **Thm 2d** | Theorem | INSERTION commutation cascade bound: cannot exceed Phase-2 (a+b) action space | [PROVEN -- wire-order invariant, see Appendix A] |
-| **Thm 9** | Theorem | Phase-2b/template-assisted advantage $\ge n/(4.5n+4) = \Omega(1)$ for BV oracle circuits | [PROVEN -- natural circuit family; pure Phase-2a bound open, see Appendix B] |
+| **Thm 2d** | Withdrawn claim | INSERTION commutation cascade bound | **[PROOF INVALID -- multi-qubit wire factorization and optimum identification fail]** |
+| **Thm 9** | Theorem | Constructed Phase-2b sequence achieves $\ge2n/(3n+2)=\Omega(1)$ for the stated all-ones BV circuit | [PROVEN -- achieved reduction only; no global optimality claim; pure Phase-2a bound open] |
 | Prop 1 | Proposition | Conflict resolution is polynomial-time (maximum matching) | [CORRECTED] |
-| Obs 1 | Empirical Observation | Greedy matches stochastic Phase-1 optimizers | [EMPIRICAL -- downgraded from Prop 2] |
+| Obs 1 | Withdrawn empirical generalization | Greedy matches stochastic Phase-1 optimizers | **[WITHDRAWN -- explicit counterexample; historical stochastic data also affected by incumbent bug]** |
 | OP1 | Open Problem | CODP is QMA-hard | [CONJECTURE] |
 | OP2 | Open Problem | No PTAS for CODP | [CONJECTURE] |
-| C1 | Conjecture | Phase 1 ceiling is structural (listing-conditional) | [PARTIALLY PROVEN] |
-| C2 | Conjecture | Phase-2 (a+b) is context-dependent super-constant | [PROVEN for Phase-2b; OPEN for Phase-2a] |
+| C1 | Refuted conjecture | All Phase-1 optimizers share a structural listing-conditional ceiling | **[REFUTED; only scoped Greedy/rewrite-subsystem results survive]** |
+| C2 | Existence result | Phase-2 (a+b) can give context-dependent super-constant advantage | [EXISTENCE PROVED for artificial Phase-2a and BV Phase-2b families; general characterization open] |
 
 ---
 

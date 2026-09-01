@@ -28,7 +28,7 @@ This script orchestrates the full experimental pipeline (E01-E24) across all 15 
 
 The complete source code for this study-including all optimizer implementations, experiment scripts, analysis tools, and documentation-is publicly available at the project repository:
 
-> **Repository**: `https://github.com/Q-research-team/q-research`
+> **Repository**: Public archival URL not yet assigned; former placeholder returned 404.
 
 The codebase is organized as follows:
 

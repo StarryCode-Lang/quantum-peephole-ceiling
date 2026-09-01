@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import platform
 import subprocess
 import sys
@@ -78,7 +79,7 @@ EXCLUDED_DIRS = {
 #               canonical file (2026-08-06 tidy-up)
 #   superseded/ - earlier partial/smoke runs kept for provenance only
 NON_CANONICAL_DIR_NAMES = {"derived", "metadata", "raw", "logs", "scholar",
-                           "chunks", "superseded"}
+                           "chunks", "superseded", "prepaper"}
 
 SCHEMA_BY_ROOT = {
     "v2_fixed": "legacy_v2_v3",
@@ -120,14 +121,15 @@ def dataset_entries(data_root: Path) -> List[Dict[str, object]]:
         root = data_root / root_name
         if not root.exists():
             continue
-        for exp_dir in sorted(path for path in root.glob("**") if path.is_dir()):
-            rel_parts = exp_dir.relative_to(root).parts
-            if any(part in NON_CANONICAL_DIR_NAMES for part in rel_parts):
-                continue
-            if (root_name, exp_dir.name) in KNOWN_DUPLICATES:
-                continue
-            if (root_name, exp_dir.name) in EXCLUDED_DIRS:
-                continue
+        candidate_dirs = [root]
+        for current, directories, _ in os.walk(root):
+            directories[:] = sorted(name for name in directories if (
+                name not in NON_CANONICAL_DIR_NAMES
+                and (root_name, name) not in KNOWN_DUPLICATES
+                and (root_name, name) not in EXCLUDED_DIRS
+            ))
+            candidate_dirs.extend(Path(current) / name for name in directories)
+        for exp_dir in candidate_dirs:
             metadata_path = exp_dir / "metadata.json"
             metadata = {}
             if metadata_path.exists():

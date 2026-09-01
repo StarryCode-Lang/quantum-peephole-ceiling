@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "status": "PARTIAL_TARGETED_PRIMARY_VERSION_RECONCILIATION",
+  "audit_date": "2026-08-30",
+  "comparators": [
+    {
+      "name": "Quartz",
+      "arxiv_id": "2204.09033",
+      "arxiv_current_version": "v2",
+      "arxiv_pages": 28,
+      "arxiv_pdf_bytes": 41885020,
+      "arxiv_pdf_sha256": "36ef1c70876322c66b598baa77a31ec94aaa568920998b8ed375f369b4a53ce3",
+      "formal_doi": "10.1145/3519939.3523433",
+      "formal_pages": 16,
+      "formal_pdf_bytes": 756401,
+      "formal_pdf_sha256": "5c593b4f633ddf2831cd1356921c4232e6e32a6e7bc387c0f4ef2f4aa2e6ed11",
+      "material_difference": "arXiv v2 adds Appendix A Detailed Results; the official arXiv record also reports typo corrections and an updated artifact reference",
+      "central_claim_reversal_found": false
+    },
+    {
+      "name": "GUOQ",
+      "arxiv_id": "2411.04104",
+      "arxiv_current_version": "v1",
+      "arxiv_pages": 15,
+      "arxiv_pdf_bytes": 1826374,
+      "arxiv_pdf_sha256": "615d625b7d3a2983665fd8278f166f6e41072c871409df505cf7dd5daa579332",
+      "formal_doi": "10.1145/3669940.3707240",
+      "formal_pages": 17,
+      "formal_pdf_bytes": 1715466,
+      "formal_pdf_sha256": "d50483c492301af1d8613cd42a04091ceaaa914c49660ce02e2bfedbdc25a4d9",
+      "material_difference": "formal ASPLOS version adds acknowledgments and Artifact Appendix C with the reproduction workflow",
+      "central_claim_reversal_found": false
+    }
+  ],
+  "metric_dispositions": {
+    "3.18": "PARTIAL: latest arXiv and formal versions were directly compared for Quartz and GUOQ, but the full manuscript bibliography has not received corpus-wide pairwise version reconciliation"
+  },
+  "claim_boundary": "This targeted audit covers the two closest executable external comparators. PDF layout and appendix differences were inspected, but the result is not a systematic all-reference version audit.",
+  "primary_records": [
+    "https://arxiv.org/abs/2204.09033",
+    "https://www.cs.cmu.edu/~zhihaoj2/papers/quartz-pldi22.pdf",
+    "https://doi.org/10.1145/3519939.3523433",
+    "https://arxiv.org/abs/2411.04104",
+    "https://qqq-wisc.github.io/files/asplos25.pdf",
+    "https://doi.org/10.1145/3669940.3707240"
+  ]
+}

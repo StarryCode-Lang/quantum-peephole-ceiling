@@ -60,7 +60,21 @@ def find_rerun(exp_id: str) -> Path | None:
     return csvs[0] if csvs else None
 
 
-OVERLAP_KEYS = ["circuit_id", "optimizer", "window_size", "topology"]
+# Treatment identifiers must be part of the overlap key.  In particular, E12
+# has four compiler levels per circuit while ``optimizer`` is always ``none``;
+# omitting ``compiler_optimization_level`` silently collapsed 568 rows to 142.
+OVERLAP_KEYS = [
+    "circuit_id",
+    "optimizer",
+    "compiler",
+    "compiler_name",
+    "compiler_optimization_level",
+    "compiler_config_id",
+    "window_size",
+    "topology",
+    "trial",
+    "seed",
+]
 # Extra scientific columns worth comparing when present (E13 schema etc.)
 EXTRA_NUMERIC_COLS = [
     "gate_count_total", "baseline_gate_count", "optimized_gate_count",

@@ -1,14 +1,14 @@
 # Quantum Peephole Ceiling: Representation-Conditioned Optimization in Quantum Circuits
 
-**Project Version**: 10.0.0  
-**Date**: 2026-08-01  
-**Release ID**: q-research-10.0.0-wave6  
+**Project Version**: 10.1.0
+**Date**: 2026-08-11
+**Release ID**: q-research-10.1.0-audit-fixes
 
 ---
 
 ## Project Overview
 
-This project characterizes the boundaries of quantum circuit peephole optimization across 15 circuit families and 6 optimizer types, with 96,289 data rows across 37 canonical datasets. The central contribution is a representation-conditioned analysis of the action space available to bounded local rewrites.
+This project characterizes the boundaries of quantum circuit peephole optimization across 15 circuit families and 6 optimizer types, with 96,205 active canonical rows across 35 datasets. The release manifest also retains 2 superseded provenance entries (84 rows), for 37 listed entries and 96,289 rows in total. The central contribution is a representation-conditioned analysis of the action space available to bounded local rewrites.
 
 ### Core Scientific Question
 > When and why does peephole optimization succeed or fail across diverse circuit families?
@@ -139,7 +139,7 @@ Use `conda run -n q-research python ...` when the environment is not activated.
 | E30 | Thm 1(a) WCL Validation | COMPLETE | 13,500 | Corrected WCL density formula: 27 cells, max |z| = 2.86, median rel. err. 1.4% |
 | EHW | Noise-Model Validation (fake backends) | COMPLETE | 288 | Noise-model only, NOT real hardware; BV 46.15% logical -> 0% physical L1 |
 
-**Total**: 96,289 data rows across 37 canonical datasets (see `release/release_manifest.json` and `data/DATA_CANONICAL.md` for the exact per-dataset counts).
+**Active evidence total**: 96,205 rows across 35 canonical datasets. The release manifest lists 37 entries / 96,289 rows when the two superseded provenance entries are included (see `release/release_manifest.json` and `data/DATA_CANONICAL.md`).
 
 ---
 

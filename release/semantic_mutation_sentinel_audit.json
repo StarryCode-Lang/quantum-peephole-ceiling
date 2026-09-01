@@ -1,0 +1,785 @@
+{
+  "cases": 20,
+  "controls": [
+    {
+      "case": 0,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 1,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 2,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 3,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 4,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 5,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 6,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 7,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 8,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 9,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 10,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 11,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 12,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 13,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 14,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 15,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 16,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 17,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 18,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    },
+    {
+      "case": 19,
+      "certificate_accepted": true,
+      "control": "insert_x_inverse_pair",
+      "independent_operator_equivalent": true
+    }
+  ],
+  "equivalent_controls": 20,
+  "equivalent_controls_passed": 20,
+  "interpretation": "This is targeted semantic mutation coverage for four destructive operator classes, not a whole-program mutation score.",
+  "mutants": 80,
+  "mutants_killed": 80,
+  "mutation_operators": [
+    "delete_first_instruction",
+    "insert_x",
+    "perturb_phase",
+    "insert_cx"
+  ],
+  "records": [
+    {
+      "case": 0,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 0,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 0,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 0,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 1,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 1,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 1,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 1,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 2,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 2,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 2,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 2,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 3,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 3,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 3,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 3,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 4,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 4,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 4,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 4,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 5,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 5,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 5,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 5,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 6,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 6,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 6,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 6,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 7,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 7,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 7,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 7,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 8,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 8,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 8,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 8,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 9,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 9,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 9,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 9,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 10,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 10,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 10,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 10,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 11,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 11,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 11,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 11,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 12,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 12,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 12,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 12,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 13,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 13,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 13,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 13,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 14,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 14,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 14,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 14,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 15,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 15,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 15,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 15,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 16,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 16,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 16,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 16,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 17,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 17,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 17,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 17,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 18,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 18,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 18,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 18,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    },
+    {
+      "case": 19,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "delete_first_instruction"
+    },
+    {
+      "case": 19,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_x"
+    },
+    {
+      "case": 19,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "perturb_phase"
+    },
+    {
+      "case": 19,
+      "certificate_accepted": false,
+      "certificate_status": "verified_not_equivalent",
+      "independent_operator_equivalent": false,
+      "killed": true,
+      "mutation": "insert_cx"
+    }
+  ],
+  "seed": 20260824,
+  "source_sha256": {
+    "scripts/audit_equivalence_verifier_agreement.py": "01483069456facfc709b0cc066352fc859a5014dbeac988658bb8fb1e002207a",
+    "scripts/audit_semantic_mutation_sentinels.py": "f5cae2b090c11f3d4825b1c61d54fbd3f1086c48cdfef9545e624f47bc7789ef",
+    "src/equivalence.py": "19de65ac1fb719c763ed60f4b3bb8655435b706976333c1bf5e569faa58834af"
+  },
+  "status": "PASS_ALL_TARGETED_MUTANTS_KILLED"
+}

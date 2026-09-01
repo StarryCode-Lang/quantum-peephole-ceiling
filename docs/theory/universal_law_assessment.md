@@ -22,6 +22,13 @@ All quoted numbers were re-derived from canonical artifacts (manuscript tables,
 `data/v6/ceiling_repair/repair_summary.json`, E12/E15/E20 comparison tables)
 on 2026-07-20; nothing is cited from memory.
 
+> **Superseded theory verdict (2026-08-09).** The classification of Thm 2d as
+> a candidate meta-law is withdrawn: its proof uses an invalid per-wire-unitary
+> factorization for multi-qubit gates and an unproved equivalence between pair
+> counts and attainable Phase-2 reduction.  This file remains useful as a
+> historical assessment, but `formal_results.md` is the controlling status
+> record.
+
 ---
 
 ## 1. Universality verdict, theorem by theorem
@@ -42,29 +49,30 @@ Verdict classes:
 | Thm 1(a) | $\mathbb{E}[\lvert\mathcal{A}_{\text{adj}}\rvert] \le n(d-1)\left[(1-\rho)^2/g_1^2 + \rho^2/(g_2(n-1))\right]$ under WCL | U-triv | Birthday-paradox-grade first-moment counting over a finite gate alphabet. Correct and useful as a design rule of thumb; not a law. |
 | Thm 1(b) | Under LBL, $n \ge 2 \Rightarrow \mathcal{S}_1(C) = \emptyset$ for every $C$ | RC | True for every circuit — but it is a theorem *about a data structure*, not about circuits. Its entire content is "listing adjacency $\ne$ wire adjacency". Universal across circuits; vacuous across representations. |
 | Thm 2(a) | $R_1(C) = 0$ iff $\mathcal{S}_1(C) = \emptyset$ (plus rotation-merge clause) | U-triv | Near-definitional for the Phase-1 move set. |
-| Thm 2(c) | Insertion-debt invariant: $k$ INSERTIONs $\Rightarrow$ net gate change $\ge 0$ | ML-cand | A genuine conservation law for local rewriting; see §1.1. |
-| Thm 2(d) | INSERTION+SWAP+COMMUTATION cannot exceed the pre-existing accessible inverse-pair structure $\mathcal{S}_{1+2}(C)\setminus\mathcal{S}_1(C)$ | ML-cand | Strongest result in the corpus; wire-order invariant; see §1.1. |
-| Cor 2.1 | All four Phase-1 optimizers share the ceiling $R_1^*(C)$ | FAU (as "universal desert") | True per circuit for the tested move sets, but any universal "~0% everywhere" reading is falsified twice: the CNOT family has $R_1^* = 100\%$, and WCL relisting moves the same random ensemble from 0.0000% to 7.83%. Survives only as "algorithm-independence conditional on (move set, listing)". |
-| Thm 5–8 | Complexity classification; context-dependent Phase-2 advantage constructions | FS → RC | Constructive per-family results; the context-dependence is itself the anti-universal message. |
-| Thm 9 | BV Phase-2b upper bound $n/(4.5n+4)$ | FS | Single-family bound; honest and non-trivial, not exportable. |
-| Prop 1 (corrected), Obs 1 | LBL generator ⇒ zero variance is structural | RC | Same content class as Thm 1(b). |
-| C1/C2 (conjectures) | Listing/window-conditional ceiling tightness | RC | Already scoped as conditional. |
+| Thm 2(c) | Insertion-debt invariant for INSERTION+REMOVAL only | U-triv / restricted | Sound potential argument for a narrow rewrite subsystem; it does not cover SWAP or COMMUTATION. |
+| Former Thm 2(d) | Claimed INSERTION+SWAP+COMMUTATION ceiling | Withdrawn | Invalid multi-qubit per-wire factorization and unproved identification of pair counts with an attainable optimum. |
+| Former Cor 2.1 | All four Phase-1 optimizers share a global ceiling | Falsified | `H(q0), X(q1), H(q0)` is Greedy-sterile initially but reducible by SWAP+REMOVAL; historical stochastic data also predate the incumbent repair. |
+| Candidate Thm 5 | Concentration of adjacent inverse pairs | Incomplete | The random-matching generator is not the independent product space used by the McDiarmid argument. |
+| Prop 6 / Thm 7 / withdrawn Thm 8 | Restricted AG generator / explicit Phase-2a family / Haar claim | FS / FS / withdrawn | Only the first two scoped constructions survive; the Haar incompressibility argument has incompatible premises. |
+| Thm 9 | all-ones BV full-pipeline achieved reduction $2n/(3n+2)$ | FS | Single-family constructive bound; no global optimality and not exportable. |
+| Prop 1 (corrected) | Conflict resolution for a frozen action graph is maximum matching | U-triv / restricted | Polynomial-time selection does not solve sequential rewrite search. |
+| Former Obs 1 / C1 | Greedy matches stochastic optimizers / global Phase-1 ceiling | Falsified | The three-gate counterexample defeats algorithm independence; only scoped move-system or generator results survive. |
+| Former C2 | Existence of context-dependent $\Omega(1)$ Phase-2 advantage | FS, proved existence | Theorems 7 and 9 prove existence for explicit Phase-2a and BV Phase-2b families; general characterization remains open. |
 
-### 1.1 The meta-law candidate: conservation of contraction opportunities (Thm 2c/2d)
+### 1.1 Failed meta-law candidate; surviving restricted insertion debt
 
-The 2c/2d pair is the only result with the *shape* of a physical law: an
-invariant (the insertion debt $\Delta$; the wire-order of pre-existing gates)
-constraining all trajectories of a stochastic dynamics (RLS/SA/GA move
-sequences), with a falsifiable consequence (net reduction bounded by
-pre-existing accessible structure), confirmed empirically — INSERTION creates
-new $\mathcal{S}_1$ elements in 1000/1000 probe trials yet yields zero net
-reduction in 5000/5000 trials (formal_results.md, Appendix A).
+The earlier 2c/2d pair appeared to have the shape of a physical law, but the
+2026-08-09 proof audit invalidated 2d.  Only the insertion-debt potential for
+INSERTION+REMOVAL survives.  It does not constrain full RLS/SA/GA trajectories
+that also use SWAP and COMMUTATION.  The 1000/1000 action-space and 5000/5000
+zero-net-reduction observations therefore remain empirical for the full move
+set (formal_results.md, Appendix A).
 
 Two honest boundaries:
 
-1. **Scope of the move set.** The invariant holds for {REMOVAL, SWAP,
-   COMMUTATION, INSERTION}. Production compilers escape it precisely by
-   violating its premises: template matching and phase-polynomial resynthesis
+1. **Scope of the move set.** The proved invariant holds only for
+   {INSERTION, REMOVAL}. Production compilers and the project's own stochastic
+   optimizers use moves outside that proof, while template matching and phase-polynomial resynthesis
    create contractions that are *not* latent as wire-level inverse pairs
    (E12/E15/E20: Qiskit O3 39.3% on VQE, 35.5% on HardwareEfficient, 61.2% on
    IQP where the prototype move set yields 0.0–0.5%). It is therefore a law of
@@ -74,10 +82,9 @@ Two honest boundaries:
    Lyapunov/potential argument; the mathematics is elementary. Its value is
    empirical surprisingness (§2), not depth.
 
-Recommendation: state it as the project's central meta-law — *identity
-insertion cannot create contraction opportunities beyond pre-existing
-accessible structure* — with the move-set boundary printed inside the
-statement.
+Recommendation: do not claim a central meta-law. State only the restricted
+insertion-debt lemma and present the dependency-DAG/trace-monoid extension as
+an open problem.
 
 ### 1.2 What a true universal law would look like here, and why we do not have one
 
@@ -121,17 +128,20 @@ Why this is the most surprising result in the corpus:
 - It inverts the usual direction of explanation: not "the object is hard" but
   "the view of the object is incomplete". The desert is in the map, not the
   territory.
-- It is algorithm-independent: four optimizers (Greedy, RLS, SA, GA), 45,500
-  trials, all agree on the ceiling under a fixed listing. Representation choice
-  dominates algorithm choice — a reversal of the field's default research
-  question.
+- The paired Greedy comparison is representation-sensitive, but it is **not
+  algorithm-independent**. The three-gate SWAP+REMOVAL counterexample refutes
+  that generalization, and the historical SA/RLS/GA rows predate the incumbent
+  repair. The defensible result is that representation changes the action space
+  and Greedy outcome under the stated rule set; relative dominance over
+  optimizer choice requires repaired-code data.
 
 ### 2.2 Supporting surprises
 
-- **INSERTION sterility.** An optimizer can manufacture unlimited *apparent*
+- **Observed INSERTION sterility on the tested system.** An optimizer can manufacture *apparent*
   search space with zero expected progress: INSERTION creates action-space
   elements in 100% of probe trials (1000/1000) and produces zero net reduction
-  in 100% of outcome trials (5000/5000). Thm 2(c) makes this a theorem.
+  in 100% of outcome trials (5000/5000). Thm 2(c) proves only the
+  INSERTION+REMOVAL subsystem; the full stochastic result is empirical.
 - **The compiler gap is again representational.** On identical circuits, Qiskit
   O3 reaches 76.1% (RandomClifford) / 61.2% (IQP) / 39.3% (VQE) where the
   listing-based prototype reaches 16.5% / 0.5% / 0.0% (E12/E15/E20 tables).
@@ -171,8 +181,8 @@ Why this is the most surprising result in the corpus:
    QFT/GHZ/SurfaceCode); (iii) the context-dependent-advantage constructions
    (Thm 7 family) are formally frustration phenomena — global constraints
    (separator gates) block local relaxation moves.
-4. **Term rewriting / algebra.** Thm 2(c)/2(d) are invariant (Lyapunov)
-   arguments over a string-rewriting system. Two open questions inherit
+4. **Term rewriting / algebra.** Thm 2(c) is a restricted Lyapunov argument;
+   former Thm 2(d) is withdrawn. Two open questions inherit
    standard rewriting vocabulary: confluence of the Phase-1+2 relation modulo
    commutation (Church–Rosser), and the listing-invariant ceiling of §1.2 as a
    normal-form-invariance question.

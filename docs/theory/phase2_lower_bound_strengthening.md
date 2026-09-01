@@ -1,4 +1,10 @@
-# Phase-2 Lower Bound Strengthening
+# Phase-2 Lower Bound Strengthening (superseded audit route)
+
+> **Superseded 2026-08-11.** This note mixed pattern-matching runtime work with
+> circuit gate count through "equivalent gate-slots". It is retained as a
+> failed reasoning route, not evidence. The corrected authority is Theorem 9 in
+> `formal_results.md`: the explicit all-ones BV full pipeline achieves
+> $2n/(3n+2)$, without a global-optimality claim.
 
 **Version**: 1.0 (Draft)
 **Date**: 2026-07-17

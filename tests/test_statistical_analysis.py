@@ -920,6 +920,15 @@ def test_power_module_invalid_n_raises():
         pass
 
 
+def test_mwu_are_power_preserves_nominal_alpha_under_null():
+    """At zero effect, an approximate level-alpha test must have power alpha."""
+    from analysis.phase1_statistics.power_analysis import nonparametric_power_analysis
+
+    result = nonparametric_power_analysis(0.0, 40, 40, alpha=0.05)
+    assert abs(result["power"] - 0.05) < 1e-12
+    assert "not a distribution-free lower bound" in result["approximation_note"]
+
+
 def test_core_bh_returns_tuple():
     """core.benjamini_hochberg should return (rejected, adjusted_p) tuple."""
     from analysis.phase1_statistics.core import benjamini_hochberg as bh_core
@@ -962,6 +971,13 @@ def test_holm_bonferroni_basic():
     rejected = result["rejected"]
     assert rejected[0], f"p=0.01 should be rejected, got {rejected}"
     assert result["method"] == "Holm-Bonferroni"
+
+
+def test_holm_adjusted_p_matches_reference_values():
+    """Check the full adjusted-p vector, not only rejection decisions."""
+    p = [0.01, 0.04, 0.03, 0.20]
+    result = holm_correction(p, alpha=0.05)
+    assert np.allclose(result["adjusted_p"], [0.04, 0.09, 0.09, 0.20])
 
 
 def test_holm_bonferroni_all_significant():

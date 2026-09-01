@@ -60,6 +60,37 @@ def bootstrap_mean_diff_ci(x, y, n_bootstrap=10_000, ci=95.0, random_seed=42):
     return point, ci_lower, ci_upper
 
 
+def bootstrap_paired_diff_ci(x, y, n_bootstrap=10_000, ci=95.0, random_seed=42):
+    """Percentile bootstrap CI for a paired mean difference."""
+    x_arr = np.asarray(x, dtype=float)
+    y_arr = np.asarray(y, dtype=float)
+    if x_arr.shape != y_arr.shape or x_arr.size == 0:
+        raise ValueError("Paired samples must be non-empty and have equal shape.")
+    differences = x_arr - y_arr
+    rng = np.random.default_rng(random_seed)
+    indices = rng.integers(0, differences.size, size=(n_bootstrap, differences.size))
+    boot = differences[indices].mean(axis=1)
+    alpha = (100.0 - ci) / 2.0
+    return (
+        float(differences.mean()),
+        float(np.percentile(boot, alpha)),
+        float(np.percentile(boot, 100.0 - alpha)),
+    )
+
+
+def matched_rank_biserial(x, y):
+    """Matched-pairs rank-biserial correlation, excluding zero differences."""
+    from scipy.stats import rankdata
+
+    differences = np.asarray(x, dtype=float) - np.asarray(y, dtype=float)
+    differences = differences[differences != 0]
+    if differences.size == 0:
+        return 0.0
+    ranks = rankdata(np.abs(differences), method="average")
+    denominator = float(ranks.sum())
+    return float((ranks[differences > 0].sum() - ranks[differences < 0].sum()) / denominator)
+
+
 def safe_load(path):
     path = Path(path)
     if not path.exists():
@@ -67,10 +98,27 @@ def safe_load(path):
     return pd.read_csv(path)
 
 
-def compute_comparison(comparison_name, experiment, metric, x, y):
+def paired_values(df, group_col, group_1, group_2, keys, value_col="reduction"):
+    """Return strictly aligned paired values; reject duplicates or missing mates."""
+    subset = df[df[group_col].isin([group_1, group_2])]
+    duplicated = subset.duplicated(keys + [group_col], keep=False)
+    if duplicated.any():
+        raise ValueError(f"Duplicate rows violate paired keys {keys + [group_col]}")
+    wide = subset.pivot(index=keys, columns=group_col, values=value_col)
+    if group_1 not in wide or group_2 not in wide:
+        raise ValueError(f"Missing comparison groups: {group_1}, {group_2}")
+    if wide[[group_1, group_2]].isna().any().any():
+        raise ValueError("Paired comparison contains unmatched rows.")
+    return wide[group_1].to_numpy(), wide[group_2].to_numpy()
+
+
+def compute_comparison(comparison_name, experiment, metric, x, y, *, paired=False):
     """Compute one row of effect-size statistics."""
     x = np.asarray(x, dtype=float)
     y = np.asarray(y, dtype=float)
+
+    if paired and x.shape != y.shape:
+        raise ValueError("Paired comparisons require equal-length aligned samples.")
 
     # Cohen's d (and Hedges' g) - canonical module.
     # Guard against zero pooled variance (degenerate samples).
@@ -107,19 +155,37 @@ def compute_comparison(comparison_name, experiment, metric, x, y):
         cliffs_ci_low = float("nan")
         cliffs_ci_high = float("nan")
 
-    # Bootstrap CI on the difference of means (10,000 resamples).
-    _, ci_low, ci_high = bootstrap_mean_diff_ci(x, y, n_bootstrap=10_000, random_seed=42)
+    if paired:
+        differences = x - y
+        diff_sd = float(np.std(differences, ddof=1)) if len(differences) > 1 else 0.0
+        cohens_dz = float(np.mean(differences) / diff_sd) if diff_sd > 0 else float("nan")
+        rank_biserial = matched_rank_biserial(x, y)
+        _, ci_low, ci_high = bootstrap_paired_diff_ci(
+            x, y, n_bootstrap=10_000, random_seed=42
+        )
+        # Independent-sample standardized effects are not valid for this design.
+        d_val = g_val = gd_val = delta_val = float("nan")
+        cohens_mag = cliffs_mag = "not applicable (paired design)"
+    else:
+        cohens_dz = float("nan")
+        rank_biserial = float("nan")
+        _, ci_low, ci_high = bootstrap_mean_diff_ci(
+            x, y, n_bootstrap=10_000, random_seed=42
+        )
 
     return {
         "comparison": comparison_name,
         "experiment": experiment,
         "metric": metric,
+        "design": "paired" if paired else "independent",
         "mean_1": float(np.mean(x)),
         "mean_2": float(np.mean(y)),
         "cohens_d": d_val,
         "hedges_g": g_val,
         "glass_delta": gd_val,
         "cliffs_delta": delta_val,
+        "cohens_dz": cohens_dz,
+        "matched_rank_biserial": rank_biserial,
         "bootstrap_ci_lower": ci_low,
         "bootstrap_ci_upper": ci_high,
         "n_1": int(len(x)),
@@ -156,9 +222,9 @@ def comparisons_e4():
     df = safe_load(DATA_DIR / "v2_fixed" / "e04" / "e04_algorithm_comparison_v2_20260613_132653.csv")
     df = df.dropna(subset=["reduction"])
     rows = []
-    baseline = df.loc[df["optimizer"] == "greedy", "reduction"].values
     for opt in ("rls", "sa", "ga"):
-        other = df.loc[df["optimizer"] == opt, "reduction"].values
+        keys = [c for c in ("seed_index", "seed_base", "trial", "seed") if c in df.columns]
+        baseline, other = paired_values(df, "optimizer", "greedy", opt, keys)
         rows.append(
             compute_comparison(
                 comparison_name=f"Greedy vs {opt.upper()}",
@@ -166,6 +232,7 @@ def comparisons_e4():
                 metric="reduction",
                 x=baseline,
                 y=other,
+                paired=True,
             )
         )
     return rows
@@ -175,8 +242,10 @@ def comparisons_e10():
     """E10: phase-1 (greedy_phase1) vs phase-2a (commutation_phase2)."""
     df = safe_load(DATA_DIR / "v5" / "e10" / "e10_expanded_phase1_vs_phase2_20260613_131601.csv")
     df = df.dropna(subset=["reduction"])
-    phase1 = df.loc[df["optimizer"] == "greedy_phase1", "reduction"].values
-    phase2 = df.loc[df["optimizer"] == "commutation_phase2", "reduction"].values
+    keys = ["part", "circuit_family", "circuit_type", "n_qubits", "depth", "trial", "seed"]
+    phase1, phase2 = paired_values(
+        df, "optimizer", "greedy_phase1", "commutation_phase2", keys
+    )
     return [
         compute_comparison(
             comparison_name="Phase-1 vs Phase-2a",
@@ -184,6 +253,7 @@ def comparisons_e10():
             metric="reduction",
             x=phase1,
             y=phase2,
+            paired=True,
         )
     ]
 
@@ -234,8 +304,8 @@ def comparisons_e19():
     """E19: WCL vs LBL listing models."""
     df = safe_load(DATA_DIR / "v6" / "e19" / "e19_wcl_listing_full_e19_full_20260620_123825.csv")
     df = df.dropna(subset=["reduction"])
-    wcl = df.loc[df["listing_model"] == "WCL", "reduction"].values
-    lbl = df.loc[df["listing_model"] == "LBL", "reduction"].values
+    keys = ["n_qubits", "depth", "trial", "seed"]
+    wcl, lbl = paired_values(df, "listing_model", "WCL", "LBL", keys)
     return [
         compute_comparison(
             comparison_name="WCL vs LBL",
@@ -243,6 +313,7 @@ def comparisons_e19():
             metric="reduction",
             x=wcl,
             y=lbl,
+            paired=True,
         )
     ]
 
@@ -255,12 +326,15 @@ CSV_COLUMNS = [
     "comparison",
     "experiment",
     "metric",
+    "design",
     "mean_1",
     "mean_2",
     "cohens_d",
     "hedges_g",
     "glass_delta",
     "cliffs_delta",
+    "cohens_dz",
+    "matched_rank_biserial",
     "bootstrap_ci_lower",
     "bootstrap_ci_upper",
     "n_1",
@@ -294,9 +368,9 @@ def write_summary_md(rows, csv_path, md_path):
     lines.append("")
     lines.append(
         "Bootstrap 95% CIs (10,000 resamples, percentile method) on the "
-        "difference of means, with Cohen's d (parametric) and Cliff's delta "
-        "(non-parametric). Positive Cohen's d / positive bootstrap difference "
-        "means group 1 has the larger mean reduction."
+        "difference of means. Paired experiments resample within-circuit "
+        "differences and report Cohen's dz plus matched rank-biserial; "
+        "independent experiments report Cohen's d and Cliff's delta."
     )
     lines.append("")
     lines.append(f"Source data: `{csv_path.name}`")
@@ -305,21 +379,21 @@ def write_summary_md(rows, csv_path, md_path):
     lines.append("## Key Comparisons")
     lines.append("")
     header = (
-        "| Comparison | Exp | mean_1 | mean_2 | Cohen's d | Hedges' g | "
-        "Glass's Delta | Cliff's delta | Bootstrap 95% CI (diff) | n_1 | n_2 |"
+        "| Comparison | Exp | Design | mean_1 | mean_2 | Cohen's d/dz | "
+        "Cliff's/matched rank-biserial | Bootstrap 95% CI (diff) | n_1 | n_2 |"
     )
-    sep = "|---|---|---|---|---|---|---|---|---|---|---|"
+    sep = "|---|---|---|---|---|---|---|---|---|---|"
     lines.append(header)
     lines.append(sep)
     for _, r in key_df.iterrows():
         ci = f"[{r['bootstrap_ci_lower']:+.4f}, {r['bootstrap_ci_upper']:+.4f}]"
+        standardized = r['cohens_dz'] if r['design'] == 'paired' else r['cohens_d']
+        ordinal = r['matched_rank_biserial'] if r['design'] == 'paired' else r['cliffs_delta']
         lines.append(
             f"| {r['comparison']} | {r['experiment']} | "
+            f"{r['design']} | "
             f"{r['mean_1']:.4f} | {r['mean_2']:.4f} | "
-            f"{r['cohens_d']:+.3f} ({r['cohens_magnitude']}) | "
-            f"{r['hedges_g']:+.3f} | "
-            f"{r['glass_delta']:+.3f} | "
-            f"{r['cliffs_delta']:+.3f} ({r['cliffs_magnitude']}) | "
+            f"{standardized:+.3f} | {ordinal:+.3f} | "
             f"{ci} | {r['n_1']} | {r['n_2']} |"
         )
 
@@ -340,11 +414,10 @@ def write_summary_md(rows, csv_path, md_path):
         for _, r in other_df.iterrows():
             ci = f"[{r['bootstrap_ci_lower']:+.4f}, {r['bootstrap_ci_upper']:+.4f}]"
             lines.append(
-                f"| {r['comparison']} | {r['experiment']} | "
+                f"| {r['comparison']} | {r['experiment']} | {r['design']} | "
                 f"{r['mean_1']:.4f} | {r['mean_2']:.4f} | "
-                f"{r['cohens_d']:+.3f} | {r['hedges_g']:+.3f} | "
-                f"{r['glass_delta']:+.3f} | "
-                f"{r['cliffs_delta']:+.3f} | {ci} | {r['n_1']} | {r['n_2']} |"
+                f"{r['cohens_d']:+.3f} | {r['cliffs_delta']:+.3f} | "
+                f"{ci} | {r['n_1']} | {r['n_2']} |"
             )
         lines.append("")
 
@@ -371,7 +444,11 @@ def main(out_dir=None):
 
     print("\n=== Key comparison summary ===")
     key_df = pd.DataFrame(rows)
-    key_cols = ["comparison", "experiment", "cohens_d", "glass_delta", "cliffs_delta", "bootstrap_ci_lower", "bootstrap_ci_upper"]
+    key_cols = [
+        "comparison", "experiment", "design", "cohens_d", "cohens_dz",
+        "cliffs_delta", "matched_rank_biserial", "bootstrap_ci_lower",
+        "bootstrap_ci_upper",
+    ]
     key_names = {"Greedy vs RLS", "Greedy vs SA", "Greedy vs GA", "Phase-1 vs Phase-2a", "WCL vs LBL", "Random vs Structured"}
     print(key_df[key_df["comparison"].isin(key_names)][key_cols].to_string(index=False))
 

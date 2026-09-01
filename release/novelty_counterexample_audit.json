@@ -1,0 +1,26 @@
+{
+  "checks": {
+    "identical_counterexample_answered": true,
+    "latest_close_methods_refreshed": true,
+    "representation_collision_catalogued": true
+  },
+  "claim_boundary": "The search supports a narrow statement that no identical counterexample was found in the documented comparator set. It is not proof that none exists, and broader representation-dependence is explicitly prior art.",
+  "closest_collisions": [
+    "Q-PreSyn: representation-dependent learned pre-synthesis",
+    "Quasar: sequence/graph equality-saturation representation sensitivity",
+    "cut-and-meld: oracle-parametric local optimality",
+    "GUOQ: rewrite and resynthesis composition"
+  ],
+  "created_utc": "2026-08-30T00:17:39.014295+00:00",
+  "metric_dispositions": {
+    "3.13": "PARTIAL: targeted primary-source searches found close representation, local-optimality, and scalability collisions but no identical minimal counterexample; absence cannot be established exhaustively"
+  },
+  "schema_version": "1.0.0",
+  "source_bindings": {
+    "analysis/novelty_counterexample_audit.py": "e3d40976074b8899a8e1d3477c20990cfcb835840be35b7b68eb69bbae0f09b1",
+    "docs/review/prepaper_forward_negative_citation_audit_2026-08-24.md": "889365711d2dc024e0b5568e9ee9b67c51b134325d756a71d0af53254569f29d",
+    "docs/review/prepaper_novelty_matrix_2026-08-10.md": "df75c7a7d56cf68500799cafb4952667dc1a3ec49be167f50fde6d06c6f0e4c0",
+    "docs/review/prepaper_novelty_refresh_2026-08-24.md": "4e143b4ec954f44c41554c9c193c76719969af68cca6d50b8196702a78eacf57"
+  },
+  "status": "PARTIAL_TARGETED_NO_IDENTICAL_COUNTEREXAMPLE_FOUND"
+}

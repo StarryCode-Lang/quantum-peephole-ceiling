@@ -1,11 +1,68 @@
 # Analysis Summary
 
+> **Superseding audit note (2026-08-10).** Any row below asserting that Greedy
+> matches all stochastic Phase-1 optimizers, or that an algorithm-independent
+> ceiling follows from E4, is withdrawn. The explicit circuit
+> `H(q0), X(q1), H(q0)` is reducible by SWAP+REMOVAL but not by the initial
+> Greedy predicate. Historical SA/RLS/GA results also predate the repaired
+> minimum-gate valid-incumbent tracking and cannot validate a stochastic ceiling
+> without rerun. Numerical tables are retained as historical records only.
+
 > **Document Status**: Consolidated analysis document merging Phase 1 vs Phase 2 comparison, Qiskit pass mechanism analysis, and theory-experiment cross-validation.
 > **Date**: 2026-08-01
 >
 > **Active-status note**: This is a consolidated historical analysis. For
 > current Phase-2b, listing-sensitivity, row-count, and source-drift status use
 > `docs/review/publication_readiness_2026-08.md` and the active evidence files.
+
+## 0. Current frozen pre-paper results (2026-08-10)
+
+This section supersedes all interpretive prose below. Sections 1--3 remain an
+audit trail and must not be used as current claim support unless their statement
+is repeated here or in the dated pre-paper audit packet. This is a results
+record, not manuscript prose.
+
+- **RQ1, representation/listing sensitivity.** On the canonical multi-family
+  E19 extension (480 paired instances, 16 circuit-family clusters), WCL minus
+  LBL reduction is 5.901 percentage points (family-outer, instance-inner 95%
+  CI 2.004--10.615; cluster sign-permutation p=0.01770). The 90% CI
+  2.552--9.791 excludes the predeclared +/-1 pp equivalence region. A separate
+  5,000-pair random-depth replication gives 7.829 pp (95% CI
+  7.367--8.192), but has one generator family and is supporting sensitivity
+  evidence, not independent family replication. The auxiliary mixed model did
+  not converge; the preregistered nested-bootstrap/permutation fallback is the
+  primary analysis.
+- **Sealed out-of-family prediction.** The frozen model/predictions were tested
+  on 240 instances from eight new generator families: MCC 0.731 with nested
+  generator-cluster 95% CI 0.425--1.000, accuracy 0.846, balanced accuracy
+  0.877, and AUROC 0.992. This passes the frozen positive-MCC criterion, but the
+  eight-cluster interval is wide and does not establish universal transfer.
+- **RQ3, shared 520-input tool comparison.** Exact-valid rates are custom
+  509/520, Qiskit 520/520, Cirq 519/520, and tket 512/520. Their ITT common-basis
+  gate reductions are respectively 12.691%, 25.651%, -257.359%, and -20.189%.
+  Failures remain in the denominator. Several instance-paired contrasts are
+  strong, but validity failures are family-concentrated and all corresponding
+  family-cluster sign-permutation p-values are 1; family generality must not be
+  inferred from instance-level p-values.
+- **Independent external artifacts.** Under documented official configurations
+  and the same frozen 520 inputs, Quasar has 408 exact-valid outputs (78.46%;
+  42 timeouts and 50 errors) and 28.296% ITT reduction; Quartz has 519
+  exact-valid outputs (99.81%) and -5.377% ITT reduction. Quasar minus Quartz is
+  -21.346 pp in validity and +33.673 pp in ITT reduction, but the two
+  family-cluster endpoint p-values both become 0.05799 after Holm correction.
+  Therefore neither external contrast is confirmatory at alpha=0.05. Official
+  defaults also do not imply equal internal compute budgets.
+- **Negative and boundary results.** E23 establishes zero Greedy reduction only
+  for the implemented restricted AG generator. The earlier general Greedy
+  ceiling is refuted by an explicit SWAP+REMOVAL counterexample. Former Theorem
+  8 is withdrawn because its premises are incompatible. The empirical
+  correlation model is exploratory only; the new sealed classifier is a
+  different, prospectively frozen test.
+
+Machine-readable sources are under `data/v10/prepaper/analysis/`,
+`data/v10/prepaper/heldout/analysis/`, and
+`data/v10/prepaper/external_baselines/`. The final claim boundary and complete
+limitations are maintained in the dated pre-paper final audit.
 
 ---
 
@@ -269,9 +326,12 @@ Based on the gap analysis, we identify three candidate Phase 3 mechanisms that c
 
 ### 2.7 Conclusion
 
-The pass isolation analysis reveals that the 20--45% gap between our peephole prototype and Qiskit's full transpiler is not attributable to any single mechanism but rather to the **synergistic combination of multiple beyond-peephole optimizations**. The two most impactful mechanisms are template matching / Clifford simplification (contributing ~50% of the gap) and phase-polynomial optimization (~25% of the gap). Neither mechanism is accessible to local peephole methods, confirming the structural ceiling hypothesis: there exists a hard upper bound on peephole-accessible reduction, and exceeding this bound requires fundamentally different algorithmic approaches.
-
-These findings directly motivate the Phase 3 extension of our framework, which we formalize as a three-pronged approach: phase-polynomial synthesis for diagonal circuits (3a), Clifford tableau reduction for stabilizer circuits (3b), and template matching for parametric variational circuits (3c). Each addresses a specific subset of the observed gap and can be independently validated against the corresponding circuit families.
+Historical interpretation, withdrawn: the pass-isolation study did not identify
+causal percentage contributions for individual mechanisms and cannot establish
+an algorithm-independent structural ceiling. It supports only the narrower
+observation that the tested local prototype and the tested compiler pipelines
+have family-dependent performance gaps. Candidate Phase-3 mechanisms remain
+future hypotheses until separately implemented and evaluated.
 
 ---
 
@@ -310,20 +370,20 @@ _Source: `theory_experiment_crossvalidation.md`_
 | ID | Prediction | Corresponding Experiment(s) | Predicted Value | Observed Value | Consistency | Notes |
 |----|-----------|----------------------------|-----------------|----------------|-------------|-------|
 | **Thm 1a** | Under wire-consecutive listing (WCL), the expected number of listing-adjacent inverse pairs is E[\|A_adj\|] = n(d-1) * p_cancel. For E1 parameters (n=5, rho=0.3, gate set {H, T, Rz, Rx, Ry, CNOT}): p_cancel = 0.0421. | E1 (25,000 trials, n=5, d=1-50), E2 (2,100 trials), E3 (11,962 trials), E4 (400 trials), E5 (6,000 trials) | **d=5**: ~0.842 pairs; **d=10**: ~1.894 pairs; **d=50**: ~10.314 pairs. Fractional Phase-1 reduction <= 2% per Corollary 1.1. | **0 adjacent inverse pairs** in all 25,000+ trials. Phase-1 reduction = 0.0000% with std = 0.0000%. | **MISMATCH** | Thm 1a assumes WCL; experiments use the LBL generator (`generator_v2.py`). Under LBL, wire-consecutive gates are separated by n-1 intervening gates, so no listing-adjacent same-qubit pairs exist. The MISMATCH is fully explained by Thm 1b. The Thm 1a formula overcounts because it treats wire-consecutive gates as listing-adjacent. See `FIX2_E1_Zero_Std_Analysis.md` Section 4 for detailed analysis. **NOTE: All experiments E1-E5 use LBL (layer-by-layer listing via `generator_v2.py`), NOT WCL (wire-consecutive listing). The Thm 1a prediction applies only to the WCL model and should not be compared against LBL-generated circuits.** |
-| **Thm 1b** | Under layer-by-layer listing (LBL), S_1(C) = empty for all circuits with n >= 2. Consequently R_1(C) = 0 for every Phase-1 optimizer. | E1 (25,000 trials, n=5, d=1-50), E2 (n=6, d=20), E3 (n=3-10), E4 (n=5, d=15), E5 (n=5, d=3-20) | Exactly 0% reduction; exactly 0 listing-adjacent inverse pairs; std = 0 across all trials. | Mean reduction = 0.0000%, std = 0.0000% across all 25,000 E1 trials. Confirmed across E2-E5 (45,500+ total trials). Independent verification: 0 same-qubit adjacent pairs found in ~99,000 pairs per 1,000 circuits at d=20. | **MATCH** | Thm 1b perfectly explains the empirically observed structural zero. The generator (`generator_v2.py` lines 230-258) places gate on qubit q at layer L at listing index L*n + q, guaranteeing gap >= n between same-qubit gates. This is not a bug but a structural property. |
+| **Thm 1b** | Under layer-by-layer listing (LBL), the implemented initial adjacent Greedy action set is empty for `n >= 2`. | E1--E5 listing audit; E19 paired listings | Exactly zero initial listing-adjacent inverse pairs; zero Greedy reduction absent mergeable rotations. | Structural zero is observed under LBL; WCL changes the outcome. | **MATCH, GREEDY/LISTING ONLY** | The result concerns a representation predicate. It does not imply zero reduction for optimizers that can change adjacency via SWAP/COMMUTATION. |
 | **Thm 2 (a)** | If S_1(C) = empty and no consecutive rotation gates on the same qubit admit merging, the Greedy optimizer achieves zero reduction. | E1-E5 (all Greedy trials), E10 (Greedy Phase 1), E14 (extended benchmark) | Greedy R_1(C) = 0% on all random circuits. | Greedy mean reduction: E1 = 0.0000%, E2 = 0.0000%, E3 = 0.0000%, E4 = 0.0000%, E10 random = 0.0000%. | **MATCH** | Greedy achieves exactly 0% on all random circuit experiments, confirming the reduction ceiling when S_1 is empty. |
-| **Thm 2 (b)** | Stochastic optimizers (SA, GA, RLS) employ SWAP, COMMUTATION, and INSERTION moves that can populate S_1, but cannot systematically achieve net gate-count reduction beyond what is enabled by the commutation/swap structure already present. INSERTION + REMOVAL sequences yield zero net reduction. | E4 (4 optimizers x 100 circuits, n=5, d=15) | All stochastic optimizers achieve ~0% mean reduction, with differences from Greedy bounded by O(1/\|C\|). INSERTION creates new S_1 elements in 100% of trials but INSERTION+REMOVAL yields zero net reduction in 100% of trials. | E4: Greedy = 0.00%, SA ~= 0%, RLS ~= 0%, GA = 0.67%. Overall mean = 0.0067%. GA's 0.67% arises from rare SWAP-enabled non-adjacent pair discovery, not INSERTION. | **MATCH** | The 0.67% GA advantage is consistent with rare SWAP-facilitated discovery (Thm 2 Step 2 acknowledges SWAP can reveal pre-existing wire-level structure). The INSERTION-specific prediction (100% zero net reduction in 5000/5000 trials) is reported in the Thm 2 remark but not from a labeled experiment. The INSERTION cascade gap (whether INSERTION can change commutation topology to enable net reduction) remains formally open. |
+| **Thm 2 (b)** | Empty initial Greedy action set imposes the same zero ceiling on stochastic Phase-1 optimizers. | Explicit counterexample + historical E4 | A valid universal statement must survive SWAP/COMMUTATION reachability. | `H(q0), X(q1), H(q0)` reduces exactly from 3 to 1 by SWAP+REMOVAL; fixed-seed SA finds it. | **REFUTED** | E4 is distribution-specific and predates the incumbent fix. Only the restricted INSERTION+REMOVAL debt lemma survives. |
 | **Lemma 3** | Commutation rewriting preserves unitary equivalence exactly. Any circuit produced by the HybridCommuteRewrite pipeline (Phase 1 + Phase 2 + Phase 1) is unitarily equivalent to the input. | All experiments (E1-E18) that report fidelity | F_avg = 1.000000 (exact) for all optimizer outputs. | Mean fidelity = 1.000000 across all verified datasets (E1-E18). No fidelity violations reported above numerical precision threshold. | **MATCH** | Exact unitary preservation is confirmed across the fidelity-verified corpus — previously stated as 45,000+ trials (E1–E18 era); the current release comprises 34 canonical datasets / 73,702 rows (`release/release_manifest.json`), of which the large majority carry a verified fidelity value (E18 failure rows and the E21 labeling caveat excepted; see manuscript §7.5). Note: fidelity verification uses direct unitary comparison for n <= max_qubits_fidelity; large circuits require sampled/process fidelity (see claim C7 caveat in `v4_claim_evidence_map.md`). |
 | **Lemma 4** | When no two cancelable pairs share a gate (non-conflicting pairs), the Greedy scan achieves the maximum Phase-1 reduction, exactly 2\|S_1(C)\| gates. | E11 (CNOT chain, n=3-5), E4 (random circuits where \|S_1\| = 0 trivially) | Greedy achieves maximum possible Phase-1 reduction when pairs are non-conflicting. For CNOT chain: 100% reduction. For random circuits: 0% (trivially, since \|S_1\| = 0). | E11 CNOT chain: Greedy achieves 100% reduction. E4 random: Greedy achieves 0% (trivially optimal since \|S_1\| = 0). | **MATCH** | CNOT chain is the canonical test case: all adjacent inverse pairs are non-conflicting (each CNOT is paired with exactly one neighbor), and Greedy correctly cancels all of them. Not tested on structured circuits with known conflicting pairs. |
 | **Prop 1** | Maximum non-overlapping adjacent inverse pair selection is solvable in polynomial time via maximum matching. The O(m) greedy scan computes a maximal (not necessarily maximum) matching, suboptimal by at most 2x. | E4 (algorithm comparison), E11 (CNOT chain), E1-E5 (random circuits where conflicts are rare) | Greedy achieves near-optimal Phase-1 reduction. In random circuits (conflicts rare), Greedy ~= optimal. In CNOT chain (no conflicts), Greedy = optimal = 100%. | E4: Greedy = 0.00% (optimal, since \|S_1\| = 0). E11 CNOT chain: Greedy = 100% (optimal). No experiment directly compares Greedy vs. Edmonds' blossom algorithm on circuits with known conflicts. | **PARTIAL MATCH** | The polynomial-time solvability claim is a complexity-theoretic result not directly tested by experiments. The greedy-approximation bound (within 2x of optimal) is empirically supported (Greedy matches or exceeds stochastic optimizers) but not rigorously tested on circuits engineered to produce conflicting pairs. |
-| **Obs 1** | E[R_stoch(C)] <= R_greedy(C) + O(1/\|C\|) for any stochastic Phase-1 optimizer. | E4 (100 circuits x 4 optimizers, n=5, d=15, \|C\| = 75) | All four optimizers achieve <= 0.67% mean reduction. Stochastic advantage over Greedy bounded by O(1/75) ~= 1.3%. | E4: Greedy = 0.00%, GA = 0.67%, SA ~= 0%, RLS ~= 0%. Maximum stochastic advantage = 0.67% (GA), which is < 1/75 ~= 1.3%. | **MATCH** | The 0.67% GA advantage is within the O(1/\|C\|) bound. The advantage arises from rare SWAP-enabled non-adjacent pair discovery, not from INSERTION-facilitated reduction. Originally stated as Proposition 2; downgraded to Empirical Observation on 2026-06-12 because the O(1/\|C\|) term lacks rigorous proof. |
-| **Thm 5** | High-probability bound (McDiarmid): with probability >= 1 - delta, X <= n(d-1)*p_cancel + sqrt(2n(d-1)*ln(1/delta)). Corollary 5.1: R_1(C) vanishes as n, d -> infinity. | E1 (depth sweep d=1-50, n=5), E3 (qubit sweep n=3-10) | Under WCL at delta=0.01, n=5, d=50: X <= 10.314 + 13.572 = 23.886. Phase-1 reduction fraction -> 0 as n,d -> inf. Under LBL: trivially satisfied (0 <= any positive bound). | Observed: X = 0 (and R_1 = 0%) for all depths d=1-50 and all n=3-10. The bound is satisfied but not tightly tested. | **MATCH** (trivially) | The concentration inequality is satisfied trivially because LBL produces X=0 <= any positive upper bound. A meaningful tightness test would require WCL circuits where X > 0. Corollary 5.1 (vanishing reduction) is consistent with E1/E3 observations but the vanishing rate is not directly measured since the observed value is already exactly 0. |
-| **Thm 6** | For Clifford circuits in Aaronson-Gottesman canonical form: S_1(C) = empty, R_1(C) = 0 for all Phase-1 optimizers. | E23 (data/v7/e23/, 160 rows, n=3-10, 20 circuits per n, AG canonical form generator `src/circuits/ag_canonical.py`). | R_1(C) = 0% exactly for Clifford circuits in AG canonical form. | E23: mean_reduction = 0.0%, max_reduction = 0.0% across all 160 AG-canonical Clifford circuits (n=3-10). matching_rate = 1.0 (all circuits verified in AG canonical form). fidelity ≈ 1.0 (numerical precision). | **MATCH** | E23 directly instantiates the AG canonical form generator and confirms R_1(C) = 0% for all Phase-1 optimizers across n=3-10. This validates the theorem's prediction that the 11-stage AG decomposition structure (H-C-H-C-H-S-C-S-H-C-H) yields an empty Phase-1 action space. Closed by E23 (2026-07-09). |
+| **Former Obs 1** | `E[R_stoch(C)] <= R_greedy(C) + O(1/|C|)` for any stochastic Phase-1 optimizer. | E4 + counterexample audit | A specified constant/distribution and repaired stochastic implementation would be required. | The finite-size big-O statement is non-falsifiable as written; the general ordering is defeated by the three-gate example. | **WITHDRAWN** | Historical E4 means remain descriptive only. |
+| **Candidate Thm 5** | McDiarmid concentration bound for the random-matching generator. | E1/E3 are LBL and cannot test the derivation | Requires a valid dependent-exposure martingale/bounded-difference proof. | LBL zeros satisfy the inequality vacuously but provide no evidence for its proof assumptions. | **PROOF INCOMPLETE / UNTESTED** | Must not be reported as a theorem or empirical match. |
+| **Prop 6 (formerly Thm 6)** | The corrected non-empty-stage AG generator has an empty Greedy action set. | v10 E23, 160 rows, `n=3..10` | Restricted generator and Greedy only. | 160/160 exact-fidelity rows have zero Greedy reduction; the pre-fix generator has an `n=2, seed=35` counterexample. | **MATCH, RESTRICTED** | Does not establish a claim about general AG canonical forms or all stochastic optimizers. |
 | **Thm 7** | Explicit circuit family {C_n} with R_1(C_n) = 0 and R_{1+2}(C_n) >= 1/6 ~= 16.7% for all n >= 2. (Proves C2 constructively.) | E10 (random Universal: Phase 2 advantage), E11 (Oracle/BV: ~20% Phase 2), E14 (Oracle/BV ~27.6%, RandomClifford ~22.1%), E24 (data/v7/e24/, 75 rows, direct instantiation of the Thm 7 construction, n=4-12). | R_1 = 0% and R_{1+2} >= 16.7% for the explicit construction. More broadly: existence of circuit families with Omega(1) Phase-2 advantage. | E10 random Universal: R_1 = 0%, R_{1+2} = 3.26%. E11 Oracle/BV: R_1 = 0%, R_{1+2} ~= 20%. E14 Oracle/BV: ~27.6%, RandomClifford: ~22.1%. E24 (direct Thm 7 construction): R_1 = 0.0%, Phase-2a mean reduction = 79.8% (>> 1/6 bound, all sizes meet bound), Phase-2b mean reduction = 2.5% (fixture-scale, does not meet 1/6 bound). | **MATCH** (Phase-2a) | E24 directly instantiates the Thm 7 construction (interleaved CNOT-H-CNOT-S-H-CNOT with S-gate separators) and confirms R_1 = 0% and Phase-2a reduction >= 1/6 for all tested n=4-12. The Phase-2a mean (79.8%) far exceeds the 1/6 = 16.7% theoretical lower bound. Phase-2b template matching achieves only 2.5% (fixture-scale limitation, not a theorem violation - Thm 7 concerns Phase-2a commutation, not Phase-2b templates). Closed by E24 (2026-07-11). |
-| **Thm 8a** | Haar-random circuit complexity lower bound: Pr[C(U) < 4^n/n^2] <= exp(-Omega(4^n/n)). Haar-random unitaries are incompressible below the 4^n/n^2 threshold. | E1-E5 (n=3-10, d=1-50). **Critical caveat**: experiments use random gate sequences at depth d=poly(n), far below the Haar-random complexity threshold. For n=10, d=50: \|C\| ~= 500 gates while 4^n/n^2 ~= 10,486 gates. | For Haar-random U with n=5: C(U) >= 4^5/25 = 1024/25 ~= 41 gates with overwhelming probability. For n=10: C(U) >= 4^10/100 ~= 10,486 gates. | E1-E5: R_1 ~= 0% on random gate sequences. However, these circuits are NOT Haar-random unitaries; they are random gate sequences at depth d=poly(n), producing unitaries far from Haar-random. | **PARTIAL MATCH** | The ~0% reduction observed in E1-E5 is consistent with Thm 8a's prediction of incompressibility, but the experimental regime (d=poly(n)) does not reach the Haar-random complexity threshold (d ~ 4^n/n^2). The empirical ~0% is explained by Thm 1b (combinatorial sparsity under LBL), not by Haar-random incompressibility. Thm 8a provides a complementary information-theoretic argument for the asymptotic regime not reached in experiments. See `framework.md` caveat #4. |
-| **Thm 8b** | For d = o(4^n/n^2), R_max(C) <= 1 - 4^n/(n^3 d) -> 0 doubly-exponentially. For n=10, d=100: 4^10/(10^3 * 100) ~= 10.5, so R_max <= 0 (literally no reduction possible). | E1-E5 (n=3-10, d=1-50) | For E1 params (n=5, d=50): 4^5/(125*50) = 1024/6250 ~= 0.164, so R_max <= 1 - 0.164 = 0.836. For E3 params (n=10, d=30): 4^10/(1000*30) ~= 34.95, so R_max = 0. | E1-E5: R_1 = 0% (consistent with R_max = 0 for large n). For n=5, the bound R_max <= 83.6% is not tight. | **PARTIAL MATCH** | The bound is directionally correct (reduction is indeed 0%) but the theorem applies to Haar-random unitaries, not the random gate sequences used in experiments. For n=5, d=50, the bound (83.6%) is far from tight. For n=10, the bound correctly predicts zero reduction possible, but again the experimental circuits are not Haar-random. The doubly-exponential vanishing rate is not directly measurable. |
-| **Thm 8c** | Bounded-window corollary: R_A(C) <= min(kw/(nd), 1 - 4^n/(n^3 d)). Each rewrite of window w removes at most w gates; k rewrites remove at most kw gates. | E16 (window-size scaling: w in {2, 5, 10, 20}), E1-E5 | R(C) <= kw/(nd). For fixed k, R scales linearly with w and inversely with nd. The Haar-random term (1 - 4^n/(n^3 d)) dominates for d=poly(n). | E16: w=2 -> ~0%, w=5 -> ~1.5%, w=10 -> ~4.2%, w=20 -> higher. Phase-2 reduction increases with window size, consistent with the kw/(nd) upper bound. | **MATCH** (trivially) | The kw/(nd) bound is trivially true for any circuit (as noted in `framework.md`: "Part c trivially true for any circuit"). The observed increase with w is consistent with the bound but does not test it tightly. The Haar-random term from Part (b) provides the tighter constraint but is not experimentally reachable. |
-| **C1** | The Phase 1 ceiling is structural: for any circuit family without adjacent inverse pairs, every Phase-1 optimizer achieves exactly 0% reduction. This is a property of the circuit data structure, not the algorithm. | E1-E5 (45,500+ random circuit trials), E10 (random circuits), E14 (15-family extended benchmark) | All Phase-1 optimizers achieve 0% reduction on all circuit families lacking adjacent inverse pairs. | E1-E5: <= 0.67% mean (GA); Greedy = 0.00% on all random. E10 random: Greedy = 0.00%. E14: Greedy = 0% on QFT, GHZ, BV, IQP, SurfaceCode, QAOA, HardwareEfficient, and most families. E11: Greedy = 0% on QFT, GHZ, Oracle/BV, QAOA, VQE, HardwareEfficient. | **MATCH** | Strong support from both theory (Thm 2, Thm 5, Thm 8) and experiments (45,500+ trials). The ceiling is reproducible and algorithm-independent. The GA's 0.67% in E4 is a minor stochastic fluctuation, not a systematic violation. Remaining open problem: formalize the invariant characterizing exactly which circuit families have empty Phase-1 action spaces (C1.OP1). |
+| **Former Thm 8a** | Haar-random covering/counting intuition. | No experiment in this corpus samples Haar-random unitaries at the required circuit-complexity regime. | A rigorous approximate-synthesis model and consistent input-size premise would be required. | E1--E5 are finite-depth random gate sequences under LBL. | **WITHDRAWN / UNTESTED** | The old statement cannot explain the observed zero reduction. |
+| **Former Thm 8b** | Claimed bounded-window reduction ceiling derived from Haar incompressibility. | None | The input circuit cannot be assumed smaller than a lower bound on the exact size of the same unitary. | Premises are incompatible on the advertised high-probability event. | **WITHDRAWN** | Clamping a negative bound to zero does not repair the contradiction. |
+| **Former Thm 8c** | `kw/(nd)` counting bound combined with former Thm 8b. | E16 window sweep | The elementary removed-gates counting statement is tautological under a fixed number of rewrites; the Haar term is invalid. | Larger windows correlate with larger reductions but do not validate an upper bound. | **WITHDRAWN AS THEOREM; DESCRIPTIVE WINDOW RESULT ONLY** | No Haar-based inference is admissible. |
+| **Former C1** | Every Phase-1 optimizer has zero reduction when the initial adjacent inverse set is empty. | Counterexample + historical E1--E5/E4 | Must hold over the complete stochastic move closure. | Three-gate SWAP+REMOVAL counterexample directly violates the statement. | **REFUTED** | Surviving claims are Greedy-specific, restricted-generator, or restricted-move-subsystem results. |
 | **C2** | Phase 2 provides context-dependent super-constant improvement: some families show Omega(1) Phase-2 advantage while others show zero. Gamma(C) = R_{1+2}(C) - R_1(C) is family-dependent. | E10 (Phase 1 vs Phase 2 on random/structured/real), E11 (Oracle/BV ~20%), E14 (extended 15-family suite), E16 (window-size scaling) | R_1 = 0% and R_{1+2} = Omega(1) for specific families (e.g., Oracle). R_1 = 0% and R_{1+2} = 0% for families without commutation structure (e.g., QFT, GHZ). | E10 random Universal: R_1=0%, R_{1+2}=3.26% (Cohen's d=1.32, Cliff's delta=-0.840). E11 Oracle/BV: R_1=0%, R_{1+2}~=20% (16-50%). E14 Oracle/BV: ~27.6%, RandomClifford: ~22.1%, UCCSD: ~1.4%. E10 structured brickwork: R_{1+2}=0%. E11 QFT/GHZ/QAOA/VQE/HardwareEfficient: R_{1+2}=0%. E16: improvement scales with window size (w=2: ~0%, w=10: ~4.2%). | **MATCH** | Proven constructively by Thm 7 and strongly supported by E10/E11/E14/E16 empirical data. The context-dependence is clearly demonstrated: Oracle/BV benefits greatly (~20-28%) while QFT/GHZ/QAOA show zero improvement. The C2.OP1 open problem (construct explicit family) is closed by Thm 7. Remaining: characterize ALL families with super-constant improvement (C2.OP2, C2.OP3). |
 
 ---
@@ -332,10 +392,10 @@ _Source: `theory_experiment_crossvalidation.md`_
 
 | Consistency | Count | IDs |
 |-------------|-------|-----|
-| **MATCH** | 12 | Thm 1b, Thm 2a, Thm 2b, Lemma 3, Lemma 4, Obs 1, Thm 5 (trivial), Thm 6, Thm 7 (Phase-2a), Thm 8c (trivial), C1, C2 |
-| **PARTIAL MATCH** | 3 | Prop 1, Thm 8a, Thm 8b |
-| **MISMATCH** | 1 | Thm 1a (WCL prediction vs. LBL generator) |
-| **UNTESTED** | 0 | (all theorems now tested - Thm 6 closed by E23, Thm 7 closed by E24) |
+| **ADMISSIBLE, SCOPED** | 10 | Corrected Thm 1a/E30, Thm 1b, Thm 2a, Lemmas 3--4, Prop 1, restricted Prop 6/E23, Thm 7/E24, Thm 2c, Thm 9/E26 |
+| **REFUTED** | 3 | General Thm 2b, former Obs 1, former C1 |
+| **WITHDRAWN** | 2 | Former Thm 2d, former Thm 8 |
+| **INCOMPLETE / OPEN** | 3 classes | Candidate Thm 5, CODP complexity, general Phase-2 family classification |
 
 ---
 
@@ -367,40 +427,36 @@ At d=50, Theorem 1a predicts ~10.3 adjacent inverse pairs (Poisson probability o
 
 **Implication for the manuscript.** The MISMATCH between Thm 1a and E1-E5 is not a theoretical error but a model-experiment mismatch. The manuscript should clearly state that Thm 1a predictions apply to WCL circuits and that E1-E5 test Thm 1b (LBL), not Thm 1a. To directly test Thm 1a, a WCL generator or wire-traversal pre-processing step is needed.
 
-#### 2. Theorem 6: The Untested Canonical Form Result
+#### 2. Restricted AG-generator result
 
-**[ACTION REQUIRED]** This theorem has not been experimentally validated. Recommend: (a) implement AG canonical form generator for verification, or (b) explicitly label as 'Theoretical result not tested in this work' in the manuscript.
+The corrected v10 E23 generator forces non-empty stages and yields 160/160
+exact-fidelity zero-Greedy-reduction rows for `n=3..10`. The admissible result
+is restricted to that generator and Greedy. The pre-fix generator has an
+`n=2, seed=35` counterexample, and neither dataset proves a statement about all
+Aaronson--Gottesman canonical forms or all stochastic optimizers.
 
-Theorem 6 proves that Clifford circuits in Aaronson-Gottesman canonical form have an empty Phase-1 action space. This is the only theorem with no corresponding experimental test.
+#### 3. Former Theorem 8 is withdrawn
 
-**Why it remains untested.** The E14 experiment includes a "RandomClifford" circuit family, but these are generated by random Clifford gate sequences (via the LBL generator), not by constructing circuits in the 11-stage Aaronson-Gottesman normal form (H-C-H-C-H-S-C-S-H-C-H). The 0% Phase-1 reduction observed on RandomClifford circuits is explained by Thm 1b (LBL structure), not by the AG canonical form properties.
+The advertised high-probability event gives a minimum exact circuit size larger
+than the assumed input circuit, so the reduction-ceiling premise is empty.
+E1--E5 are also finite-depth random gate sequences, not Haar-random unitaries in
+the stated regime. No experimental “partial match” can repair the logical
+contradiction; the claim is withdrawn.
 
-**What would be needed.** To test Thm 6, one would need to:
-1. Implement an Aaronson-Gottesman canonical form circuit generator.
-2. Generate Clifford circuits in canonical form for various n.
-3. Verify that S_1(C) = empty and R_1(C) = 0 for all Phase-1 optimizers.
-4. Compare against non-canonical Clifford circuits where S_1(C) may be non-empty.
+#### 4. Theorem 7 and Theorem 9 are scoped existence results
 
-#### 3. Theorem 8: The Haar-Random vs. Random Gate Sequence Gap
-
-Theorems 8a and 8b prove incompressibility for Haar-random unitaries, but all experiments use random gate sequences of depth d = poly(n). For the experimental regime:
-
-- n=5, d=50: |C| ~= 250 gates vs. Haar threshold 4^5/25 ~= 41 gates (reachable, but the random gate sequence does not produce a Haar-random unitary)
-- n=10, d=50: |C| ~= 500 gates vs. Haar threshold 4^10/100 ~= 10,486 gates (far below threshold)
-
-The ~0% reduction observed in E1-E5 is therefore explained by the combinatorial sparsity of inverse pairs (Thm 1b), not by Haar-random incompressibility (Thm 8). The Thm 8 bounds are directionally consistent with observations but do not directly explain them. This caveat is explicitly acknowledged in `framework.md` (caveat #4).
-
-#### 4. Theorem 7: Constructive Proof Without Direct Instantiation
-
-Theorem 7 constructs an explicit circuit family (interleaved CNOT layers with S-gate separators) demonstrating Omega(1) Phase-2 advantage. While the existence claim is supported by Oracle/BV and RandomClifford results, the specific construction was not instantiated as an experiment.
-
-**What was tested instead.** Oracle/Bernstein-Vazirani circuits provide a natural (non-artificial) family where Phase 2 achieves ~20% reduction through a related mechanism (commuting H/X gates past CNOT layers). The broader implication of C2 (context-dependent super-constant advantage) is well-supported even though the specific Thm 7 circuit family was not tested.
+E24 directly instantiates the artificial Theorem 7 Phase-2a construction. The
+v10 E26 BV grid validates the implemented Phase-2b configuration associated
+with Theorem 9. Together they prove/validate existence for explicit families;
+they do not classify all circuit families or establish a universal advantage.
 
 ---
 
-### Experiment Coverage Matrix
+### Historical Experiment Coverage Matrix (not a claim-validity matrix)
 
-This matrix shows which experiments provide evidence for which theoretical results.
+This legacy matrix only records intended links in the earlier analysis. An `X`
+does not validate a proof or a now-refuted claim; the current authority is
+`docs/theory/prepaper_theory_gate_2026-08-10.md`.
 
 | Experiment | N trials | Thm 1b | Thm 2 | Lemma 3 | Lemma 4 | Obs 1 | Thm 5 | C1 | C2 |
 |-----------|----------|--------|-------|---------|---------|-------|-------|----|----|
@@ -428,13 +484,13 @@ rather than direct experimental validations.
 | **Thm 1a distribution validation** (WCL model) | Closed at aggregate level | E30 (`data/v10/e30/`, 13,500 trials, 27 cells) directly validates the corrected expectation formula; `docs/analysis/e30_distribution_p10.md` records 27 aggregate Poisson diagnostics with wire-level independence explicitly untested. |
 | **Thm 6 untested** (AG canonical form) | CLOSED | **Closed by E23** (data/v7/e23/, 160 rows, 2026-07-09). AG canonical form generator implemented (`src/circuits/ag_canonical.py`); R_1 = 0.0% confirmed across n=3-10. |
 | **Thm 7 construction not instantiated** | CLOSED | **Closed by E24** (data/v7/e24/, 75 rows, 2026-07-11). Direct instantiation gives R_1 = 0.0% and Phase-2a mean reduction = 79.8% (>> 1/6 bound). Phase-2b v1 remains a separate engineered-family template-coverage gap. |
-| **Thm 8 not in experimental regime** | Low | Not addressable with current n <= 20 experiments. The Haar-random threshold 4^n/n^2 is unreachable for meaningful n. Document the caveat clearly (already done in `framework.md`). |
+| **Former Thm 8** | CLOSED BY WITHDRAWAL | Premises are incompatible; no experiment can validate the stated theorem. Retain only as an audit trail. |
 | **Prop 1 not directly tested** | Medium | Construct circuits with known conflicting adjacent inverse pairs and compare Greedy matching vs. Edmonds' blossom algorithm output. |
 
 ---
 
-*Document version: 1.2*
-*Last updated: 2026-07-20*
+*Document version: 1.3 (superseding theory audit)*
+*Last updated: 2026-08-10*
 *Author: Q-research Cross-Validation Analysis*
 *Source files: `docs/theory/formal_results.md`, `docs/theory/framework.md`, `docs/results/experimental_design.md`, `docs/manuscript/manuscript.md`*
 

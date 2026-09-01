@@ -910,6 +910,57 @@ def safe_kruskal(groups):
     except ValueError:
         return 1.0  # all identical → no evidence of difference
 
+
+def safe_paired_omnibus(frame, pair_keys, condition, value):
+    """Strict repeated-measures comparison keyed by the generating instance."""
+    required = list(pair_keys) + [condition, value]
+    data = frame[required].dropna()
+    if data.duplicated(list(pair_keys) + [condition]).any():
+        raise ValueError(f"Duplicate repeated-measure rows for {condition}")
+    matrix = data.pivot(index=list(pair_keys), columns=condition, values=value).dropna()
+    if matrix.shape[0] < 2 or matrix.shape[1] < 2:
+        return 1.0, matrix
+    values = [matrix[col].to_numpy() for col in matrix.columns]
+    if np.allclose(np.ptp(matrix.to_numpy(), axis=1), 0):
+        return 1.0, matrix
+    result = (stats.wilcoxon(values[0], values[1], alternative='two-sided')
+              if len(values) == 2 else stats.friedmanchisquare(*values))
+    pvalue = float(result.pvalue)
+    return (1.0 if np.isnan(pvalue) else pvalue), matrix
+
+
+def paired_effect_sizes(matrix):
+    """Largest paired contrast, reported as matched rank-biserial and Cohen dz."""
+    best = None
+    columns = list(matrix.columns)
+    for i, left in enumerate(columns):
+        for right in columns[i + 1:]:
+            diff = matrix[left].to_numpy(dtype=float) - matrix[right].to_numpy(dtype=float)
+            nonzero = diff[~np.isclose(diff, 0.0)]
+            if len(nonzero):
+                ranks = stats.rankdata(np.abs(nonzero), method='average')
+                mrbc = float(
+                    (ranks[nonzero > 0].sum() - ranks[nonzero < 0].sum())
+                    / ranks.sum()
+                )
+            else:
+                mrbc = 0.0
+            sd = diff.std(ddof=1)
+            dz = (0.0 if np.isclose(sd, 0) and np.isclose(diff.mean(), 0)
+                  else float(np.sign(diff.mean()) * np.inf) if np.isclose(sd, 0)
+                  else float(diff.mean() / sd))
+            candidate = (abs(mrbc), left, right, mrbc, dz)
+            if best is None or candidate[0] > best[0]:
+                best = candidate
+    if best is None:
+        return {'primary_metric': None, 'primary_effect': None,
+                'secondary_metric': None, 'secondary_effect': None,
+                'note': 'no paired contrast'}
+    _, left, right, mrbc, dz = best
+    return {'primary_metric': 'matched_rank_biserial', 'primary_effect': mrbc,
+            'secondary_metric': 'cohen_dz', 'secondary_effect': dz,
+            'note': f'max paired contrast ({left} vs {right}); n_pairs={len(matrix)}'}
+
 # H1 (E1): Kruskal-Wallis — reduction across depth levels (non-parametric ANOVA)
 e1_depth_groups = [grp['reduction'].dropna().values for _, grp in e1.groupby('depth')]
 p_e1_depth = safe_kruskal(e1_depth_groups)
@@ -921,8 +972,12 @@ if 'entanglement_density' in e2.columns:
     # Align on rows where BOTH columns are non-missing (bug #4 fix: independent
     # dropna() on each column misaligns rows and yields wrong correlations).
     e2_valid = e2[['entanglement_density', 'reduction']].dropna()
-    r_e2, p_e2_corr = stats.pearsonr(e2_valid['entanglement_density'],
-                                      e2_valid['reduction'])
+    if (e2_valid['entanglement_density'].nunique() < 2 or
+            e2_valid['reduction'].nunique() < 2):
+        r_e2, p_e2_corr = np.nan, 1.0
+    else:
+        r_e2, p_e2_corr = stats.pearsonr(e2_valid['entanglement_density'],
+                                          e2_valid['reduction'])
     # E2 reduction has zero variance (all 0.0000 under LBL), so Pearson r is
     # undefined (NaN). Report honestly: r=NaN, p=NaN → treat as non-significant.
     if np.isnan(r_e2):
@@ -936,7 +991,10 @@ if 'entanglement_density' in e2.columns:
     effect_size_collection.append({
         'cliffs_delta': None, 'cliffs_delta_CI95': None,
         'hedges_g': float(r_e2) if not np.isnan(r_e2) else None,
-        'hedges_g_CI95': None, 'note': f'Pearson r={r_e2_str}',
+        'hedges_g_CI95': None, 'primary_metric': 'pearson_r',
+        'primary_effect': float(r_e2) if not np.isnan(r_e2) else None,
+        'secondary_metric': None, 'secondary_effect': None,
+        'note': f'Pearson r={r_e2_str}',
     })
 
 # H2 (E3): Kruskal-Wallis — reduction across qubit counts
@@ -945,17 +1003,17 @@ p_e3_qubits = safe_kruskal(e3_qubit_groups)
 pvalue_collection.append(('E3: Reduction across qubit counts (Kruskal-Wallis)', p_e3_qubits))
 effect_size_collection.append(_pairwise_effect_sizes(e3_qubit_groups))
 
-# H3 (E4): Kruskal-Wallis — reduction across optimizers (non-parametric)
-e4_opt_groups = [grp['reduction'].dropna().values for _, grp in e4.groupby('optimizer')]
-p_e4_opt = safe_kruskal(e4_opt_groups)
-pvalue_collection.append(('E4: Reduction across optimizers (Kruskal-Wallis)', p_e4_opt))
-effect_size_collection.append(_pairwise_effect_sizes(e4_opt_groups))
+# H3 (E4): repeated measures across optimizers on the same circuit.
+p_e4_opt, e4_red_matrix = safe_paired_omnibus(
+    e4, ['n_qubits', 'depth', 'trial', 'seed'], 'optimizer', 'reduction')
+pvalue_collection.append(('E4: Reduction across optimizers (paired omnibus)', p_e4_opt))
+effect_size_collection.append(paired_effect_sizes(e4_red_matrix))
 
 # E4 runtime comparison: Kruskal-Wallis — runtime across optimizers
-e4_rt_groups = [grp['runtime_seconds'].dropna().values for _, grp in e4.groupby('optimizer')]
-p_e4_rt = safe_kruskal(e4_rt_groups)
-pvalue_collection.append(('E4: Runtime across optimizers (Kruskal-Wallis)', p_e4_rt))
-effect_size_collection.append(_pairwise_effect_sizes(e4_rt_groups))
+p_e4_rt, e4_rt_matrix = safe_paired_omnibus(
+    e4, ['n_qubits', 'depth', 'trial', 'seed'], 'optimizer', 'runtime_seconds')
+pvalue_collection.append(('E4: Runtime across optimizers (paired omnibus)', p_e4_rt))
+effect_size_collection.append(paired_effect_sizes(e4_rt_matrix))
 
 # H6 (E5): Kruskal-Wallis — reduction across depths (landscape)
 e5_depth_groups = [grp['reduction'].dropna().values for _, grp in e5.groupby('depth')]
@@ -969,14 +1027,15 @@ p_e10_fam = safe_kruskal(e10_fam_groups)
 pvalue_collection.append(('E10: Reduction across circuit families (Kruskal-Wallis)', p_e10_fam))
 effect_size_collection.append(_pairwise_effect_sizes(e10_fam_groups))
 
-# E10: Kruskal-Wallis — reduction across optimizers
-e10_opt_groups = [grp['reduction'].dropna().values for _, grp in e10.groupby('optimizer')]
-if len(e10_opt_groups) >= 2:
-    p_e10_opt = safe_kruskal(e10_opt_groups)
-    pvalue_collection.append(('E10: Reduction across optimizers (Kruskal-Wallis)', p_e10_opt))
-    effect_size_collection.append(_pairwise_effect_sizes(e10_opt_groups))
+# E10: repeated measures across optimizers.
+e10_pair_keys = ['part', 'circuit_family', 'circuit_type', 'n_qubits', 'depth', 'trial', 'seed']
+p_e10_opt, e10_opt_matrix = safe_paired_omnibus(
+    e10, e10_pair_keys, 'optimizer', 'reduction')
+if e10_opt_matrix.shape[1] >= 2:
+    pvalue_collection.append(('E10: Reduction across optimizers (paired omnibus)', p_e10_opt))
+    effect_size_collection.append(paired_effect_sizes(e10_opt_matrix))
 
-# E10 Universal subset: Mann-Whitney U — Greedy vs Hybrid (Phase 2 advantage)
+# E10 Universal subset: paired Wilcoxon — Greedy vs Hybrid (Phase 2 advantage)
 # wave-4 fix: the optimizer-name literals previously read 'Greedy' and
 # 'HybridCommuteRewrite', which never match the canonical E10 labels
 # ('greedy_phase1' / 'commutation_phase2' / 'hybrid_phase1_2'), so both
@@ -986,13 +1045,22 @@ if len(e10_opt_groups) >= 2:
 # (which therefore grows from 15 to 16 tests).
 e10_uni = e10[e10['circuit_family'] == 'Universal']
 if len(e10_uni) > 0:
-    greedy_vals = e10_uni[e10_uni['optimizer'] == 'greedy_phase1']['reduction'].dropna().values
-    hybrid_vals = e10_uni[e10_uni['optimizer'] == 'hybrid_phase1_2']['reduction'].dropna().values
-    if len(greedy_vals) > 0 and len(hybrid_vals) > 0:
-        u_stat, p_e10_uni = stats.mannwhitneyu(greedy_vals, hybrid_vals, alternative='less')
+    keys = ['part', 'circuit_type', 'n_qubits', 'depth', 'trial', 'seed']
+    greedy = e10_uni[e10_uni['optimizer'] == 'greedy_phase1'][keys + ['reduction']]
+    hybrid = e10_uni[e10_uni['optimizer'] == 'hybrid_phase1_2'][keys + ['reduction']]
+    paired = greedy.merge(hybrid, on=keys, how='inner', validate='one_to_one',
+                          suffixes=('_greedy', '_hybrid'))
+    if len(paired) != len(greedy) or len(paired) != len(hybrid):
+        raise ValueError('E10 Universal Greedy/Hybrid rows are not exactly paired')
+    greedy_vals = paired['reduction_greedy'].to_numpy()
+    hybrid_vals = paired['reduction_hybrid'].to_numpy()
+    if len(paired) > 0:
+        p_e10_uni = (1.0 if np.allclose(greedy_vals, hybrid_vals) else
+                     stats.wilcoxon(greedy_vals, hybrid_vals, alternative='less').pvalue)
         p_e10_uni = 1.0 if np.isnan(p_e10_uni) else float(p_e10_uni)
-        pvalue_collection.append(('E10 Universal: Greedy vs Hybrid (Mann-Whitney U)', p_e10_uni))
-        effect_size_collection.append(_pairwise_effect_sizes([greedy_vals, hybrid_vals]))
+        pvalue_collection.append(('E10 Universal: Greedy vs Hybrid (paired Wilcoxon)', p_e10_uni))
+        effect_size_collection.append(paired_effect_sizes(
+            paired[['reduction_greedy', 'reduction_hybrid']]))
 
 # === Extended tests (E11-E18) for comprehensive FDR correction ===
 
@@ -1002,49 +1070,41 @@ p_e11_fam = safe_kruskal(e11_fam_groups)
 pvalue_collection.append(('E11: Reduction across circuit families (KW, H7)', p_e11_fam))
 effect_size_collection.append(_pairwise_effect_sizes(e11_fam_groups))
 
-# H8 (E12): Kruskal-Wallis — reduction across Qiskit optimization levels
-e12_level_groups = [grp['reduction'].dropna().values for _, grp in e12.groupby('compiler_optimization_level')]
-p_e12_levels = safe_kruskal(e12_level_groups)
-pvalue_collection.append(('E12: Reduction across optimization levels (KW, H8)', p_e12_levels))
-effect_size_collection.append(_pairwise_effect_sizes(e12_level_groups))
+# H8 (E12): repeated levels on the same input circuit.
+p_e12_levels, e12_level_matrix = safe_paired_omnibus(
+    e12, ['circuit_id', 'seed', 'trial'], 'compiler_optimization_level', 'reduction')
+pvalue_collection.append(('E12: Reduction across optimization levels (paired omnibus, H8)', p_e12_levels))
+effect_size_collection.append(paired_effect_sizes(e12_level_matrix))
 
-# H9 (E14): Kruskal-Wallis — reduction across families x optimizers interaction
+# H9 (E14): no confirmatory p-value. A one-way test over family x optimizer
+# cells is not an interaction test and ignores repeated optimizer measurements.
 e14['family_opt'] = e14['circuit_family'] + '_' + e14['optimizer']
 e14_interact_groups = [grp['reduction'].dropna().values for _, grp in e14.groupby('family_opt')]
-p_e14_interact = safe_kruskal(e14_interact_groups)
-pvalue_collection.append(('E14: Reduction across families x optimizers (KW, H9)', p_e14_interact))
-effect_size_collection.append(_pairwise_effect_sizes(e14_interact_groups))
 
-# H10 (E15): Friedman test — reduction across compilers (matched circuit families)
-try:
-    e15_pivot_data = e15.groupby(['circuit_family', 'compiler'])['reduction'].mean().reset_index()
-    e15_matrix = e15_pivot_data.pivot(index='circuit_family', columns='compiler', values='reduction').dropna()
-    if len(e15_matrix.columns) >= 2 and len(e15_matrix) >= 2:
-        _friedman_stat, _friedman_p = stats.friedmanchisquare(*[e15_matrix[c].values for c in e15_matrix.columns])
-        _friedman_p = 1.0 if np.isnan(_friedman_p) else float(_friedman_p)
-        pvalue_collection.append(('E15: Reduction across compilers (Friedman, H10)', _friedman_p))
-        effect_size_collection.append(_pairwise_effect_sizes(
-            [e15_matrix[c].values for c in e15_matrix.columns]))
-    else:
-        raise ValueError("Insufficient matched data for Friedman test")
-except Exception:
-    # Fallback to Kruskal-Wallis if Friedman not applicable
-    e15_comp_groups = [grp['reduction'].dropna().values for _, grp in e15.groupby('compiler')]
-    p_e15_comp = safe_kruskal(e15_comp_groups)
-    pvalue_collection.append(('E15: Reduction across compilers (KW, H10)', p_e15_comp))
-    effect_size_collection.append(_pairwise_effect_sizes(e15_comp_groups))
+# H10 (E15): repeated compiler configurations on the same input circuit.
+# Treat each custom optimizer and each Qiskit optimization level as a distinct
+# condition; pooling them under only "custom"/"qiskit" creates duplicates.
+e15 = e15.copy()
+e15['compiler_condition'] = (e15['compiler_backend'].astype(str) + ':' +
+                             e15['compiler_opt_level'].astype(str))
+p_e15_comp, e15_matrix = safe_paired_omnibus(
+    e15, ['circuit_id', 'seed', 'trial'], 'compiler_condition', 'reduction')
+if e15_matrix.shape[0] >= 2 and e15_matrix.shape[1] >= 2:
+    pvalue_collection.append(('E15: Reduction across compilers (paired omnibus, H10)', p_e15_comp))
+    effect_size_collection.append(paired_effect_sizes(e15_matrix))
 
-# H11 (E16): Kruskal-Wallis — reduction across window sizes
-e16_ws_groups = [grp['reduction'].dropna().values for _, grp in e16.groupby('window_size')]
-p_e16_ws = safe_kruskal(e16_ws_groups)
-pvalue_collection.append(('E16: Reduction across window sizes (KW, H11)', p_e16_ws))
-effect_size_collection.append(_pairwise_effect_sizes(e16_ws_groups))
+# H11 (E16): repeated window sizes on the same input circuit.
+p_e16_ws, e16_ws_matrix = safe_paired_omnibus(
+    e16, ['circuit_id', 'seed', 'trial', 'optimizer'], 'window_size', 'reduction')
+pvalue_collection.append(('E16: Reduction across window sizes (paired omnibus, H11)', p_e16_ws))
+effect_size_collection.append(paired_effect_sizes(e16_ws_matrix))
 
-# H12 (E17): Kruskal-Wallis — reduction across topologies
-e17_topo_groups = [grp['reduction'].dropna().values for _, grp in e17.groupby('topology')]
-p_e17_topo = safe_kruskal(e17_topo_groups)
-pvalue_collection.append(('E17: Reduction across topologies (KW, H12)', p_e17_topo))
-effect_size_collection.append(_pairwise_effect_sizes(e17_topo_groups))
+# H12 (E17): repeated topologies on the same circuit id/trial.
+e17_test = e17[e17['optimizer'] != 'none']
+p_e17_topo, e17_topo_matrix = safe_paired_omnibus(
+    e17_test, ['circuit_id', 'seed', 'trial', 'optimizer'], 'topology', 'reduction')
+pvalue_collection.append(('E17: Reduction across topologies (paired omnibus, H12)', p_e17_topo))
+effect_size_collection.append(paired_effect_sizes(e17_topo_matrix))
 
 # H13 (E18): Kruskal-Wallis — reduction across circuit families in Clifford+T (ok status only)
 e18_ok = e18[e18['status'] == 'ok']
@@ -1068,8 +1128,10 @@ for i, (test_name, raw_p) in enumerate(pvalue_collection):
     adj_p = adjusted_p[i]
     sig = "***" if adj_p < 0.001 else "**" if adj_p < 0.01 else "*" if adj_p < 0.05 else "ns"
     es = effect_size_collection[i] if i < len(effect_size_collection) else {}
-    cd_str = f"{es.get('cliffs_delta'):.3f}" if es.get('cliffs_delta') is not None else "n/a"
-    print(f"{test_name:<58} {raw_p:>12.6f} {adj_p:>12.6f} {sig:>5}  d={cd_str}")
+    primary = es.get('primary_effect', es.get('cliffs_delta'))
+    metric = es.get('primary_metric', 'cliffs_delta' if primary is not None else None)
+    effect_str = f"{metric}={primary:.3f}" if primary is not None else "effect=n/a"
+    print(f"{test_name:<58} {raw_p:>12.6f} {adj_p:>12.6f} {sig:>5}  {effect_str}")
 
 # Save FDR results to CSV (with integrated effect sizes, bug #12 fix)
 fdr_results_rows = []
@@ -1078,12 +1140,20 @@ for i, (test_name, raw_p) in enumerate(pvalue_collection):
     es = effect_size_collection[i] if i < len(effect_size_collection) else {
         'cliffs_delta': None, 'cliffs_delta_CI95': None,
         'hedges_g': None, 'hedges_g_CI95': None, 'note': 'n/a'}
+    primary = es.get('primary_effect', es.get('cliffs_delta'))
+    primary_metric = es.get('primary_metric', 'cliffs_delta' if primary is not None else None)
+    secondary = es.get('secondary_effect', es.get('hedges_g'))
+    secondary_metric = es.get('secondary_metric', 'hedges_g' if secondary is not None else None)
     fdr_results_rows.append({
         'Test': test_name,
         'Raw_p_value': raw_p,
         'Adjusted_p_value_BH': adjusted_p[i],
         'Significant_at_0.05': sig,
         'Rejected': bool(rejected[i]),
+        'Primary_effect_metric': primary_metric,
+        'Primary_effect': primary,
+        'Secondary_effect_metric': secondary_metric,
+        'Secondary_effect': secondary,
         'Cliffs_delta': es.get('cliffs_delta'),
         'Cliffs_delta_CI95': es.get('cliffs_delta_CI95'),
         'Hedges_g': es.get('hedges_g'),
@@ -1136,7 +1206,7 @@ for i in range(len(test_labels)):
 ax.text(0.02, 0.02,
         f'BH-FDR correction applied to {len(pvalue_collection)} tests; '
         f'{int(rejected.sum())} significant at q=0.05. '
-        f'Effect sizes (Cliff\'s delta / Hedges\' g) reported in fdr_correction_results.csv.',
+         f'Design-appropriate effect sizes reported in fdr_correction_results.csv.',
         transform=ax.transAxes, fontsize=9, verticalalignment='bottom',
         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 

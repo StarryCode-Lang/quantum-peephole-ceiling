@@ -132,7 +132,7 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
                 reduction = 1.0 - optimized_gate_count / baseline_gate_count if baseline_gate_count else 0.0
                 fidelity = average_gate_fidelity(compiled, circuit, max_qubits=max_qubits_fidelity)
                 fidelity_source = "exact" if fidelity is not None else "unavailable"
-                success = bool(fidelity is not None and fidelity >= 0.999)
+                success = bool(reduction >= 0.05 and fidelity is not None and fidelity >= 0.999)
                 output_hash = circuit_sha256(compiled)
                 compiled_counts = gate_counts(compiled)
             except Exception as exc:  # record compiler failures as data, not crashes

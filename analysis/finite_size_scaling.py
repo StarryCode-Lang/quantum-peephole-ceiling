@@ -42,8 +42,8 @@ def binder_cumulant(
     data : sequence of float
         Observed order-parameter values (e.g., gate reduction).
     order : int, default 4
-        Order of the cumulant. 4 is standard; 2 gives a simple normalized
-        variance measure.
+        Order of the cumulant. Only the standard fourth-order Binder
+        cumulant is supported.
 
     Returns
     -------
@@ -64,17 +64,15 @@ def binder_cumulant(
     var_val = float(np.var(data_arr, ddof=1))
     moment_2 = float(np.mean(data_arr ** 2))
 
-    if order == 4:
-        moment_4 = float(np.mean(data_arr ** 4))
-        if moment_2 == 0:
-            cumulant = 0.0
-        else:
-            cumulant = 1.0 - moment_4 / (3.0 * moment_2 ** 2)
-    elif order == 2:
-        cumulant = 1.0 - var_val / (moment_2 ** 2) if moment_2 != 0 else 0.0
-        moment_4 = np.nan
-    else:
-        raise ValueError("order must be 2 or 4.")
+    if order != 4:
+        raise ValueError("only the standard fourth-order Binder cumulant is supported")
+
+    moment_4 = float(np.mean(data_arr ** 4))
+    informative = not np.isclose(moment_2, 0.0)
+    cumulant = (
+        1.0 - moment_4 / (3.0 * moment_2 ** 2)
+        if informative else np.nan
+    )
 
     return {
         "cumulant": cumulant,
@@ -82,7 +80,9 @@ def binder_cumulant(
         "variance": var_val,
         "n_samples": len(data_arr),
         "moment_2": moment_2,
-        "moment_4": moment_4 if order == 4 else np.nan,
+        "moment_4": moment_4,
+        "informative": informative,
+        "status": "ok" if informative else "undefined_zero_second_moment",
     }
 
 
@@ -349,20 +349,29 @@ def scaling_collapse(
     rescaled_x = np.abs(control_arr - critical_estimate) * (sizes_arr ** (1.0 / nu))
     rescaled_y = values_arr * (sizes_arr ** (-beta / nu))
 
-    # Review M7 fix: previously ``collapsed`` was hardcoded to True with
-    # no quantitative validation.  We now compute an R² goodness-of-fit
-    # for the scaling ansatz by fitting rescaled_y as a function of
-    # rescaled_x and measuring how well the data collapses onto a single
-    # curve.  We use a simple polynomial fit (degree 2) as the reference
-    # model and compute R² = 1 - SS_res/SS_tot.
+    # Validate out of sample across system sizes.  An in-sample polynomial
+    # R² can be arbitrarily high through overfitting and is not evidence of
+    # collapse.  Leave-one-size-out prediction asks whether the rescaled curve
+    # learned from other sizes predicts the held-out size.
     r_squared = None
     quality = "unknown"
     collapsed = False
-    if len(rescaled_x) >= 4:
+    unique_sizes = np.unique(sizes_arr)
+    if len(rescaled_x) >= 6 and len(unique_sizes) >= 3:
         try:
             from numpy.polynomial import polynomial as P
-            coeffs = P.polyfit(rescaled_x, rescaled_y, min(3, len(rescaled_x) - 1))
-            y_pred = P.polyval(rescaled_x, coeffs)
+            y_pred = np.full_like(rescaled_y, np.nan, dtype=float)
+            for held_out in unique_sizes:
+                test = sizes_arr == held_out
+                train = ~test
+                degree = min(2, int(np.sum(train)) - 1)
+                if degree < 1:
+                    continue
+                coeffs = P.polyfit(rescaled_x[train], rescaled_y[train], degree)
+                y_pred[test] = P.polyval(rescaled_x[test], coeffs)
+            valid = np.isfinite(y_pred)
+            if not np.all(valid):
+                raise ValueError("leave-one-size-out predictions incomplete")
             ss_res = float(np.sum((rescaled_y - y_pred) ** 2))
             ss_tot = float(np.sum((rescaled_y - np.mean(rescaled_y)) ** 2))
             r_squared = 1.0 - ss_res / ss_tot if ss_tot > 0 else 0.0
@@ -390,6 +399,7 @@ def scaling_collapse(
         "collapsed": collapsed,
         "r_squared": r_squared,
         "quality": quality,
+        "validation": "leave_one_size_out",
     }
 
 
@@ -397,24 +407,20 @@ def scaling_collapse(
 # Critical Point Estimation with Confidence Intervals
 # ============================================================================
 
-def estimate_critical_point(
+def estimate_asymptotic_value(
     sizes: Sequence[int],
-    control: Sequence[float],
     values: Sequence[float],
     model: str = "power",
     n_bootstrap: int = 5000,
     confidence_level: float = 0.95,
     random_seed: Optional[int] = 42,
 ) -> Dict[str, Any]:
-    """
-    Estimate critical point / asymptotic value with bootstrap confidence interval.
+    """Estimate the infinite-size asymptote with a size-stratified bootstrap.
 
     Parameters
     ----------
     sizes : sequence of int
         System sizes.
-    control : sequence of float
-        Control parameter (used for critical point extraction).
     values : sequence of float
         Observed values.
     model : {'power', 'exponential'}, default 'power'
@@ -439,10 +445,19 @@ def estimate_critical_point(
     rng = np.random.default_rng(random_seed)
     sizes_arr = np.asarray(sizes, dtype=float)
     values_arr = np.asarray(values, dtype=float)
-    n = len(values_arr)
+    if len(sizes_arr) != len(values_arr):
+        raise ValueError("sizes and values must have the same length")
+    if not np.all(np.isfinite(sizes_arr)) or not np.all(np.isfinite(values_arr)):
+        raise ValueError("sizes and values must be finite")
+    unique_sizes = np.unique(sizes_arr)
+    if len(unique_sizes) < 3:
+        raise ValueError("Need at least 3 distinct system sizes for fitting")
+
+    size_groups = [values_arr[sizes_arr == size] for size in unique_sizes]
+    size_means = np.array([np.mean(group) for group in size_groups])
 
     # Point estimate
-    fit_result = fit_finite_size_scaling(sizes, values, model=model)
+    fit_result = fit_finite_size_scaling(unique_sizes, size_means, model=model)
     if model == "power":
         point_estimate = fit_result["extrapolated_infinite"]
     elif model == "exponential":
@@ -453,17 +468,23 @@ def estimate_critical_point(
     # Bootstrap
     bootstrap_estimates = []
     for _ in range(n_bootstrap):
-        indices = rng.choice(n, size=n, replace=True)
-        boot_sizes = sizes_arr[indices].astype(int)
-        boot_values = values_arr[indices]
+        # Resample observations within every system size, retaining each size
+        # exactly once in the fit.  Row-wise resampling can omit or duplicate
+        # sizes and does not preserve the experimental hierarchy.
+        boot_values = np.array([
+            np.mean(rng.choice(group, size=len(group), replace=True))
+            for group in size_groups
+        ])
         try:
-            boot_fit = fit_finite_size_scaling(boot_sizes, boot_values, model=model)
+            boot_fit = fit_finite_size_scaling(unique_sizes, boot_values, model=model)
             bootstrap_estimates.append(boot_fit["extrapolated_infinite"])
         except Exception:
             bootstrap_estimates.append(np.nan)
 
     bootstrap_estimates = np.array(bootstrap_estimates)
     bootstrap_estimates = bootstrap_estimates[np.isfinite(bootstrap_estimates)]
+    if bootstrap_estimates.size == 0:
+        raise RuntimeError("all size-stratified bootstrap fits failed")
 
     alpha = (1.0 - confidence_level) / 2.0
     ci_lower = float(np.percentile(bootstrap_estimates, alpha * 100))
@@ -476,7 +497,48 @@ def estimate_critical_point(
         "fit_result": fit_result,
         "bootstrap_estimates": bootstrap_estimates.tolist(),
         "confidence_level": confidence_level,
+        "estimand": "infinite_size_asymptotic_value",
+        "bootstrap_design": "resample_within_system_size",
+        "n_sizes": int(len(unique_sizes)),
     }
+
+
+def estimate_critical_point(
+    sizes: Sequence[int],
+    control: Sequence[float],
+    values: Sequence[float],
+    model: str = "power",
+    n_bootstrap: int = 5000,
+    confidence_level: float = 0.95,
+    random_seed: Optional[int] = 42,
+) -> Dict[str, Any]:
+    """Deprecated compatibility wrapper; this does not estimate a critical point.
+
+    A critical point requires crossings or a validated scaling model involving
+    the control parameter.  The historical implementation ignored ``control``
+    and estimated an infinite-size asymptote, so the honest API is now
+    :func:`estimate_asymptotic_value`.
+    """
+    import warnings
+
+    if len(control) != len(values):
+        raise ValueError("control and values must have the same length")
+    warnings.warn(
+        "estimate_critical_point does not use the control parameter; use "
+        "estimate_asymptotic_value or a crossing-based critical-point model",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    result = estimate_asymptotic_value(
+        sizes,
+        values,
+        model=model,
+        n_bootstrap=n_bootstrap,
+        confidence_level=confidence_level,
+        random_seed=random_seed,
+    )
+    result["estimand"] = "asymptotic_value_not_critical_point"
+    return result
 
 
 # ============================================================================
@@ -546,13 +608,18 @@ def run_fss_analysis(
         except Exception as e:
             results["scaling_fit_exponential_error"] = str(e)
 
-    # Critical point estimation if control parameter is provided
+    # A control column alone does not define a critical-point estimator.  Report
+    # the size asymptote under an honest key and leave crossing inference to a
+    # design that supplies cumulant curves at common control values.
     if control_col is not None and control_col in df.columns:
-        control = df[control_col].values
         try:
-            cp_est = estimate_critical_point(sizes, control, values, model="power")
-            results["critical_point"] = cp_est
+            asymptotic = estimate_asymptotic_value(sizes, values, model="power")
+            results["asymptotic_value"] = asymptotic
+            results["critical_point"] = {
+                "status": "not_estimated",
+                "reason": "no crossing-based control-parameter model was specified",
+            }
         except Exception as e:
-            results["critical_point_error"] = str(e)
+            results["asymptotic_value_error"] = str(e)
 
     return results

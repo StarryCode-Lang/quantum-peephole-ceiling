@@ -26,6 +26,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.circuits.ag_canonical import generate_ag_canonical_circuit
 from src.optimisation.phase1.greedy import GreedyGateCancellation
+from src.provenance import file_sha256
 
 
 # ---------------------------------------------------------------------------
@@ -125,6 +126,7 @@ def run_e23(n_min: int = 3, n_max: int = 10, n_circuits_per_n: int = 20, seed_ba
                     "optimized_size": result.optimized_size,
                     "reduction": result.reduction,
                     "fidelity": result.fidelity,
+                    "fidelity_source": "exact",
                     "iterations": result.iterations,
                     "runtime_seconds": result.runtime_seconds,
                 })
@@ -153,6 +155,11 @@ def run_e23(n_min: int = 3, n_max: int = 10, n_circuits_per_n: int = 20, seed_ba
         "mean_reduction": float(df["reduction"].mean()),
         "max_reduction": float(df["reduction"].max()),
         "csv_path": str(csv_path.relative_to(PROJECT_ROOT)),
+        "result_deterministic_sha256": _canonical_result_sha(df),
+        "source_file": Path(__file__).resolve().relative_to(PROJECT_ROOT).as_posix(),
+        "source_sha256": file_sha256(Path(__file__).resolve()),
+        "protocol_file": "experiments/prepaper_protocol.json",
+        "protocol_sha256": file_sha256(PROJECT_ROOT / "experiments/prepaper_protocol.json"),
     }
 
     meta_path = output_dir / "metadata.json"

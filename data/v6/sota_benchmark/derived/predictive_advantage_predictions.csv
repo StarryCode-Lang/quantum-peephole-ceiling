@@ -3,9 +3,9 @@ QFT,3,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses,
 GHZ,3,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",3,3,0.0,0.333333,0.333333,2,0.0,1.0,0.0,0.666667,0,"cx,h",1.0
 CNOT,3,highly_optimizable,True,80.0,High inverse pair density -> Phase-1 cancellation dominates,16,16,0.533333,1.8125,0.0,1,0.0,1.0,0.0,1.0,0,cx,1.0
 Oracle,4,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,12,6,0.0,0.166667,0.698413,3,0.0,0.833333,0.0,0.166667,0,"cx,h,x",0.5
-QAOA,3,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,12,8,0.0,0.25,0.444444,2,0.0,0.333333,0.0,0.333333,0,"cx,u",0.666667
-VQE,3,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,14,6,0.0,0.071429,0.567901,2,0.0,0.142857,0.0,0.142857,0,"cx,u",0.428571
-HardwareEfficient,3,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,8,4,0.0,0.125,0.571429,3,0.75,0.25,0.0,0.25,0,"cx,ry,rz",0.5
+QAOA,3,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,21,15,0.0,0.285714,0.388889,2,0.0,0.380952,0.0,0.380952,0,"cx,u",0.714286
+VQE,3,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,22,10,0.0,0.090909,0.51634,2,0.0,0.181818,0.0,0.181818,0,"cx,u",0.454545
+HardwareEfficient,3,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,16,8,0.0,0.125,0.515152,3,0.75,0.25,0.0,0.25,0,"cx,ry,rz",0.5
 Grover,3,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,23,11,0.0,0.086957,0.555556,3,0.0,0.565217,0.0,0.086957,1,"ccx,h,x",0.478261
 Adder,4,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,6,6,0.0,0.166667,0.133333,3,0.0,0.333333,0.0,0.833333,1,"ccx,cx,x",1.0
 QuantumWalk,4,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,46,29,0.0,0.0,0.392954,6,0.021739,0.195652,0.0,0.391304,1,"ccx,cx,h,mcx,ry,x",0.630435
@@ -17,9 +17,9 @@ QFT,4,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses,
 GHZ,4,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",4,4,0.0,0.5,0.5,2,0.0,1.0,0.0,0.75,0,"cx,h",1.0
 CNOT,4,highly_optimizable,True,80.0,High inverse pair density -> Phase-1 cancellation dominates,24,18,0.521739,1.833333,0.22807,1,0.0,1.0,0.0,1.0,0,cx,0.75
 Oracle,5,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,14,6,0.0,0.214286,0.765432,3,0.0,0.857143,0.0,0.142857,0,"cx,h,x",0.428571
-QAOA,4,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,17,11,0.0,0.294118,0.490741,2,0.0,0.352941,0.0,0.352941,0,"cx,u",0.647059
-VQE,4,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,19,7,0.0,0.105263,0.603175,2,0.0,0.157895,0.0,0.157895,0,"cx,u",0.368421
-HardwareEfficient,4,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,11,4,0.0,0.181818,0.666667,3,0.727273,0.272727,0.0,0.272727,0,"cx,ry,rz",0.363636
+QAOA,4,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,30,18,0.0,0.333333,0.475556,2,0.0,0.4,0.0,0.4,0,"cx,u",0.6
+VQE,4,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,30,11,0.0,0.133333,0.591111,2,0.0,0.2,0.0,0.2,0,"cx,u",0.366667
+HardwareEfficient,4,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,22,8,0.0,0.181818,0.679739,3,0.727273,0.272727,0.0,0.272727,0,"cx,ry,rz",0.363636
 Grover,4,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,26,11,0.04,0.076923,0.68254,3,0.0,0.615385,0.0,0.076923,1,"h,mcx,x",0.423077
 QuantumWalk,5,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,58,35,0.0,0.0,0.412998,6,0.017241,0.155172,0.0,0.413793,1,"ccx,cx,h,mcx,ry,x",0.603448
 IQP,4,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,15,4,0.0,0.2,0.811111,2,0.466667,0.533333,0.0,0.0,0,"h,rz",0.266667
@@ -29,9 +29,9 @@ QFT,5,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses,
 GHZ,5,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",5,5,0.0,0.6,0.6,2,0.0,1.0,0.0,0.8,0,"cx,h",1.0
 CNOT,5,highly_optimizable,True,80.0,High inverse pair density -> Phase-1 cancellation dominates,32,20,0.516129,1.84375,0.353909,1,0.0,1.0,0.0,1.0,0,cx,0.625
 Oracle,6,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,16,6,0.0,0.25,0.79798,3,0.0,0.875,0.0,0.125,0,"cx,h,x",0.375
-QAOA,5,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,22,14,0.0,0.318182,0.509804,2,0.0,0.363636,0.0,0.363636,0,"cx,u",0.636364
-VQE,5,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,24,8,0.0,0.125,0.619883,2,0.0,0.166667,0.0,0.166667,0,"cx,u",0.333333
-HardwareEfficient,5,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,14,4,0.0,0.214286,0.728395,3,0.714286,0.285714,0.0,0.285714,0,"cx,ry,rz",0.285714
+QAOA,5,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,39,21,0.0,0.358974,0.51634,2,0.0,0.410256,0.0,0.410256,0,"cx,u",0.538462
+VQE,5,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,38,12,0.0,0.157895,0.62963,2,0.0,0.210526,0.0,0.210526,0,"cx,u",0.315789
+HardwareEfficient,5,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,28,8,0.0,0.214286,0.719807,3,0.714286,0.285714,0.0,0.285714,0,"cx,ry,rz",0.285714
 Grover,5,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,39,11,0.0,0.051282,0.767974,3,0.0,0.487179,0.0,0.051282,1,"h,mcx,x",0.282051
 Adder,7,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,14,8,0.0,0.142857,0.506173,3,0.0,0.285714,0.0,0.714286,1,"ccx,cx,x",0.571429
 QuantumWalk,6,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,70,41,0.0,0.0,0.435897,6,0.014286,0.128571,0.0,0.428571,1,"ccx,cx,h,mcx,ry,x",0.585714
@@ -39,5 +39,100 @@ IQP,5,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achi
 RandomClifford,5,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,44,13,0.0,0.181818,0.783476,3,0.0,1.0,0.0,0.113636,0,"cx,h,s",0.295455
 SurfaceCode,6,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",8,7,0.0,0.5,0.214286,3,0.0,0.875,0.0,0.625,0,"cx,h,x",0.875
 UCCSD_inspired,5,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,48,25,0.0,0.75,0.563307,3,0.416667,0.541667,0.0,0.541667,0,"cx,ry,x",0.520833
+QFT,6,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",21,11,0.0,0.0,0.472222,2,0.0,0.285714,0.0,0.714286,0,"cp,h",0.52381
+GHZ,6,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",6,6,0.0,0.666667,0.666667,2,0.0,1.0,0.0,0.833333,0,"cx,h",1.0
+CNOT,6,highly_optimizable,True,80.0,High inverse pair density -> Phase-1 cancellation dominates,40,22,0.512821,1.85,0.533333,1,0.0,1.0,0.0,1.0,0,cx,0.55
+Oracle,7,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,19,7,0.0,0.263158,0.785714,3,0.0,0.894737,0.0,0.157895,0,"cx,h,x",0.368421
+QAOA,6,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,48,24,0.0,0.375,0.540052,2,0.0,0.416667,0.0,0.416667,0,"cx,u",0.5
+VQE,6,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,46,13,0.0,0.173913,0.653117,2,0.0,0.217391,0.0,0.217391,0,"cx,u",0.282609
+HardwareEfficient,6,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,34,8,0.0,0.235294,0.781609,3,0.705882,0.294118,0.0,0.294118,0,"cx,ry,rz",0.235294
+Grover,6,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,42,13,0.0,0.0,0.786787,3,0.0,0.52381,0.0,0.047619,1,"h,mcx,x",0.309524
+QuantumWalk,7,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,82,47,0.0,0.0,0.441558,6,0.012195,0.109756,0.0,0.439024,1,"ccx,cx,h,mcx,ry,x",0.573171
+IQP,6,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,34,11,0.0,0.117647,0.781609,3,0.411765,0.352941,0.0,0.235294,0,"cz,h,rz",0.323529
+RandomClifford,6,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,45,10,0.0,0.155556,0.861111,3,0.0,1.0,0.0,0.088889,0,"cx,h,s",0.222222
+SurfaceCode,7,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",10,8,0.0,0.5,0.333333,3,0.0,0.8,0.0,0.6,0,"cx,h,x",0.8
+UCCSD_inspired,6,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,58,28,0.0,0.706897,0.591195,3,0.448276,0.5,0.0,0.5,0,"cx,ry,x",0.482759
+QFT,7,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",28,13,0.0,0.0,0.487923,2,0.0,0.25,0.0,0.75,0,"cp,h",0.464286
+GHZ,7,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",7,7,0.0,0.714286,0.714286,2,0.0,1.0,0.0,0.857143,0,"cx,h",1.0
+CNOT,7,highly_optimizable,True,80.0,High inverse pair density -> Phase-1 cancellation dominates,48,24,0.510638,1.854167,0.692506,1,0.0,1.0,0.0,1.0,0,cx,0.5
+Oracle,8,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,20,6,0.0,0.3,0.851852,3,0.0,0.9,0.0,0.1,0,"cx,h,x",0.3
+QAOA,7,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,57,27,0.0,0.385965,0.555556,2,0.0,0.421053,0.0,0.421053,0,"cx,u",0.473684
+VQE,7,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,54,14,0.0,0.185185,0.668934,2,0.0,0.222222,0.0,0.222222,0,"cx,u",0.259259
+HardwareEfficient,7,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,40,8,0.0,0.25,0.819048,3,0.7,0.3,0.0,0.3,0,"cx,ry,rz",0.2
+Grover,7,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,45,11,0.0,0.044444,0.811111,3,0.0,0.555556,0.0,0.044444,1,"h,mcx,x",0.244444
+Adder,10,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,17,10,0.0,0.176471,0.574074,3,0.0,0.352941,0.0,0.882353,1,"ccx,cx,x",0.588235
+QuantumWalk,8,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,94,53,0.0,0.0,0.446941,6,0.010638,0.095745,0.0,0.446809,1,"ccx,cx,h,mcx,ry,x",0.56383
+IQP,7,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,36,8,0.0,0.305556,0.845878,3,0.416667,0.388889,0.0,0.194444,0,"cz,h,rz",0.222222
+RandomClifford,7,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,50,13,0.0,0.12,0.82716,3,0.0,1.0,0.0,0.12,0,"cx,h,s",0.26
+SurfaceCode,8,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",11,9,0.0,0.545455,0.296296,3,0.0,0.818182,0.0,0.636364,0,"cx,h,x",0.818182
+UCCSD_inspired,7,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,67,28,0.0,0.686567,0.698925,3,0.477612,0.477612,0.0,0.477612,0,"cx,ry,x",0.41791
+QFT,8,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",36,15,0.0,0.0,0.487455,2,0.0,0.222222,0.0,0.777778,0,"cp,h",0.416667
+GHZ,8,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",8,8,0.0,0.75,0.75,2,0.0,1.0,0.0,0.875,0,"cx,h",1.0
+CNOT,8,highly_optimizable,True,80.0,High inverse pair density -> Phase-1 cancellation dominates,56,26,0.509091,1.857143,0.729847,1,0.0,1.0,0.0,1.0,0,cx,0.464286
+Oracle,9,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,23,7,0.0,0.304348,0.919753,3,0.0,0.913043,0.0,0.130435,0,"cx,h,x",0.304348
+QAOA,8,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,66,30,0.0,0.393939,0.566485,2,0.0,0.424242,0.0,0.424242,0,"cx,u",0.454545
+VQE,8,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,62,15,0.0,0.193548,0.680312,2,0.0,0.225806,0.0,0.225806,0,"cx,u",0.241935
+HardwareEfficient,8,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,46,8,0.0,0.26087,0.856369,3,0.695652,0.304348,0.0,0.304348,0,"cx,ry,rz",0.173913
+Grover,8,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,50,11,0.0,0.04,0.822222,3,0.0,0.56,0.0,0.04,1,"h,mcx,x",0.22
+QuantumWalk,9,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,106,59,0.0,0.0,0.454345,6,0.009434,0.084906,0.0,0.45283,1,"ccx,cx,h,mcx,ry,x",0.556604
+IQP,8,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,41,9,0.0,0.268293,0.851852,3,0.439024,0.390244,0.0,0.170732,0,"cz,h,rz",0.219512
+RandomClifford,8,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,56,12,0.0,0.178571,0.860566,3,0.0,1.0,0.0,0.125,0,"cx,h,s",0.214286
+SurfaceCode,9,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",13,10,0.0,0.538462,0.333333,3,0.0,0.769231,0.0,0.615385,0,"cx,h,x",0.769231
+UCCSD_inspired,8,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,80,31,0.0,0.6625,0.724444,3,0.5,0.45,0.0,0.45,0,"cx,ry,x",0.3875
+QFT,9,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",45,17,0.0,0.0,0.477778,2,0.0,0.2,0.0,0.8,0,"cp,h",0.377778
+GHZ,9,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",9,9,0.0,0.777778,0.777778,2,0.0,1.0,0.0,0.888889,0,"cx,h",1.0
+CNOT,9,highly_optimizable,True,80.0,High inverse pair density -> Phase-1 cancellation dominates,64,28,0.507937,1.859375,0.728814,1,0.0,1.0,0.0,1.0,0,cx,0.4375
+Oracle,10,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,27,9,0.0,0.296296,0.888889,3,0.0,0.925926,0.0,0.185185,0,"cx,h,x",0.333333
+QAOA,9,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,75,33,0.0,0.4,0.574603,2,0.0,0.426667,0.0,0.426667,0,"cx,u",0.44
+VQE,9,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,70,16,0.0,0.2,0.688889,2,0.0,0.228571,0.0,0.228571,0,"cx,u",0.228571
+HardwareEfficient,9,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,52,8,0.0,0.269231,0.874704,3,0.692308,0.307692,0.0,0.307692,0,"cx,ry,rz",0.153846
+Grover,9,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,59,11,0.0,0.033898,0.839506,3,0.0,0.525424,0.0,0.033898,1,"h,mcx,x",0.186441
+Adder,13,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,24,12,0.0,0.166667,0.719298,3,0.0,0.333333,0.0,0.833333,1,"ccx,cx,x",0.5
+QuantumWalk,10,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,118,65,0.0,0.0,0.46116,6,0.008475,0.076271,0.0,0.457627,1,"ccx,cx,h,mcx,ry,x",0.550847
+IQP,9,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,48,11,0.0,0.3125,0.852713,3,0.354167,0.375,0.0,0.270833,0,"cz,h,rz",0.229167
+RandomClifford,9,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,66,11,0.0,0.166667,0.885246,3,0.0,1.0,0.0,0.075758,0,"cx,h,s",0.166667
+SurfaceCode,10,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",13,11,0.0,0.615385,0.222222,3,0.0,0.846154,0.0,0.692308,0,"cx,h,x",0.846154
+UCCSD_inspired,9,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,82,26,0.0,0.609756,0.738817,3,0.536585,0.414634,0.0,0.414634,0,"cx,ry,x",0.317073
+QFT,10,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",55,19,0.0,0.0,0.462222,2,0.0,0.181818,0.0,0.818182,0,"cp,h",0.345455
+GHZ,10,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",10,10,0.0,0.8,0.8,2,0.0,1.0,0.0,0.9,0,"cx,h",1.0
+CNOT,10,highly_optimizable,True,80.0,High inverse pair density -> Phase-1 cancellation dominates,72,30,0.507042,1.861111,0.728027,1,0.0,1.0,0.0,1.0,0,cx,0.416667
+Oracle,11,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,30,10,0.0,0.3,0.88,3,0.0,0.933333,0.0,0.2,0,"cx,h,x",0.333333
+QAOA,10,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,84,36,0.0,0.404762,0.580872,2,0.0,0.428571,0.0,0.428571,0,"cx,u",0.428571
+VQE,10,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,78,17,0.0,0.205128,0.695586,2,0.0,0.230769,0.0,0.230769,0,"cx,u",0.217949
+HardwareEfficient,10,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,58,8,0.0,0.275862,0.886792,3,0.689655,0.310345,0.0,0.310345,0,"cx,ry,rz",0.137931
+Grover,10,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,68,13,0.0,0.0,0.857143,3,0.0,0.5,0.0,0.029412,1,"h,mcx,x",0.191176
+QuantumWalk,11,prototype_ceiling,False,0.0,Multi-controlled gates create complex patterns beyond prototype action space,130,71,0.0,0.0,0.464889,6,0.007692,0.069231,0.0,0.461538,1,"ccx,cx,h,mcx,ry,x",0.546154
+IQP,10,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,64,15,0.0,0.265625,0.858757,3,0.40625,0.3125,0.0,0.28125,0,"cz,h,rz",0.234375
+RandomClifford,10,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,73,11,0.0,0.068493,0.903595,3,0.0,1.0,0.0,0.068493,0,"cx,h,s",0.150685
+SurfaceCode,11,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",12,12,0.0,0.75,0.0,2,0.0,1.0,0.0,0.833333,0,"cx,h",1.0
+UCCSD_inspired,10,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,101,29,0.0,0.60396,0.771991,3,0.554455,0.39604,0.0,0.39604,0,"cx,ry,x",0.287129
+QFT,12,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",78,23,0.0,0.0,0.453577,2,0.0,0.153846,0.0,0.846154,0,"cp,h",0.294872
+GHZ,12,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",12,12,0.0,0.833333,0.825397,2,0.0,1.0,0.0,0.916667,0,"cx,h",1.0
+CNOT,12,highly_optimizable,True,80.0,High inverse pair density -> Phase-1 cancellation dominates,88,34,0.505747,1.863636,0.726908,1,0.0,1.0,0.0,1.0,0,cx,0.386364
+Oracle,13,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,36,12,0.0,0.305556,0.863799,3,0.0,0.944444,0.0,0.222222,0,"cx,h,x",0.333333
+QAOA,12,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,102,42,0.0,0.411765,0.58992,2,0.0,0.431373,0.0,0.431373,0,"cx,u",0.411765
+HardwareEfficient,12,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,70,8,0.0,0.285714,0.902564,3,0.685714,0.314286,0.0,0.314286,0,"cx,ry,rz",0.114286
+IQP,12,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,62,9,0.0,0.290323,0.933723,3,0.451613,0.387097,0.0,0.16129,0,"cz,h,rz",0.145161
+RandomClifford,12,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,85,9,0.0,0.141176,0.941667,3,0.0,1.0,0.0,0.035294,0,"cx,h,s",0.105882
+SurfaceCode,13,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",17,14,0.0,0.647059,0.240741,3,0.0,0.823529,0.0,0.705882,0,"cx,h,x",0.823529
+QFT,15,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",120,29,0.0,0.0,0.418357,2,0.0,0.125,0.0,0.875,0,"cp,h",0.241667
+GHZ,15,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",15,15,0.0,0.866667,0.844444,2,0.0,1.0,0.0,0.933333,0,"cx,h",1.0
+CNOT,15,highly_optimizable,True,80.0,High inverse pair density -> Phase-1 cancellation dominates,112,40,0.504505,1.866071,0.725857,1,0.0,1.0,0.0,1.0,0,cx,0.357143
+Oracle,16,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,42,12,0.0,0.333333,0.888889,3,0.0,0.952381,0.0,0.190476,0,"cx,h,x",0.285714
+QAOA,15,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,129,51,0.0,0.418605,0.598566,2,0.0,0.434109,0.0,0.434109,0,"cx,u",0.395349
+HardwareEfficient,15,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,88,8,0.0,0.295455,0.921017,3,0.681818,0.318182,0.0,0.318182,0,"cx,ry,rz",0.090909
+IQP,15,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,88,16,0.0,0.238636,0.951807,3,0.420455,0.340909,0.0,0.238636,0,"cz,h,rz",0.181818
+RandomClifford,15,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,95,9,0.0,0.178947,0.962963,3,0.0,1.0,0.0,0.052632,0,"cx,h,s",0.094737
+SurfaceCode,16,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",19,17,0.0,0.736842,0.126984,3,0.0,0.894737,0.0,0.789474,0,"cx,h,x",0.894737
+QFT,20,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",210,39,0.0,0.0,0.35664,2,0.0,0.095238,0.0,0.904762,0,"cp,h",0.185714
+GHZ,20,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",20,20,0.0,0.9,0.859259,2,0.0,1.0,0.0,0.95,0,"cx,h",1.0
+CNOT,20,highly_optimizable,True,80.0,High inverse pair density -> Phase-1 cancellation dominates,152,50,0.503311,1.868421,0.724868,1,0.0,1.0,0.0,1.0,0,cx,0.328947
+Oracle,21,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,58,18,0.0,0.327586,0.825996,3,0.0,0.965517,0.0,0.241379,0,"cx,h,x",0.310345
+QAOA,20,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,174,66,0.0,0.425287,0.606838,2,0.0,0.436782,0.0,0.436782,0,"cx,u",0.37931
+HardwareEfficient,20,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,118,8,0.0,0.305085,0.94297,3,0.677966,0.322034,0.0,0.322034,0,"cx,ry,rz",0.067797
+IQP,20,prototype_ceiling_sota_optimizable,True,30.0,Rotation merging by SOTA achieves 20-60%,106,12,0.0,0.141509,0.973597,3,0.386792,0.377358,0.0,0.235849,0,"cz,h,rz",0.113208
+RandomClifford,20,phase2_optimizable,True,20.0,High commutation + Clifford density -> Phase-2 rewriting exposes cancellations,137,11,0.0,0.124088,0.990741,3,0.0,1.0,0.0,0.043796,0,"cx,h,s",0.080292
+SurfaceCode,21,genuine_ceiling,False,0.0,"Structural ceiling: low diversity, no inverses, no rotations -> ~0%",26,22,0.0,0.730769,0.179894,3,0.0,0.846154,0.0,0.769231,0,"cx,h,x",0.846154
+HaarRandom,2,prototype_ceiling_sota_optimizable,True,30.0,Parameterized rotations (decomposed to u) -> SOTA rotation merging achieves 20-60%,11,7,0.0,0.0,0.277778,2,0.0,0.272727,0.0,0.272727,0,"cx,u",0.636364
 HaarRandom,3,moderately_optimizable,True,10.0,Diverse gate set with rotations -> moderate optimization benefit,59,39,0.0,0.067797,0.473251,4,0.20339,0.355932,0.0,0.322034,0,"cx,h,rz,u",0.661017
 HaarRandom,4,moderately_optimizable,True,10.0,Diverse gate set with rotations -> moderate optimization benefit,275,189,0.0,0.105455,0.469547,4,0.261818,0.381818,0.0,0.345455,0,"cx,h,rz,u",0.687273

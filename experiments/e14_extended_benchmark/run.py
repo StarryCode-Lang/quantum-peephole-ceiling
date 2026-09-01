@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 import time
 from datetime import datetime, timezone
@@ -72,20 +73,30 @@ def build_optimizers(window_size: int = 10,
 
 
 def run(mode: str, seed: int, max_qubits_fidelity: int,
-        window_sizes: List[int] | None = None) -> pd.DataFrame:
+        window_sizes: List[int] | None = None,
+        output_dir: Path | None = None) -> pd.DataFrame:
     """Run E14 and return the result table."""
     if window_sizes is None:
         window_sizes = [10]  # default: only one window size for smoke
 
     run_id = f"e14_{mode}_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
     script_path = Path(__file__).resolve()
-    output_dir = PROJECT_ROOT / "data" / "v5" / "e14"
+    output_dir = (PROJECT_ROOT / "data" / "v10" / "prepaper" / "e14"
+                  if output_dir is None else Path(output_dir).resolve())
     output_dir.mkdir(parents=True, exist_ok=True)
+    checkpoint_path = output_dir / "e14_checkpoint.csv"
 
     metadata = run_metadata(PROJECT_ROOT, script_path, VERSION, run_id)
     circuits = generate_extended_suite(mode=mode, seed=seed)
 
     rows: List[dict] = []
+    if checkpoint_path.exists():
+        rows = pd.read_csv(checkpoint_path).to_dict(orient="records")
+        print(f"Resuming E14 from {len(rows)} checkpoint rows")
+    completed = {
+        (str(row["input_circuit_sha256"]), int(row["window_size"]), str(row["optimizer"]))
+        for row in rows
+    }
     for trial, bench in enumerate(circuits):
         circuit = bench.circuit
         input_hash = circuit_sha256(circuit)
@@ -94,18 +105,64 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
         for ws in window_sizes:
             optimizers = build_optimizers(window_size=ws)
             for optimizer_name, optimizer in optimizers.items():
+                row_key = (input_hash, ws, optimizer_name)
+                if row_key in completed:
+                    continue
                 start = time.time()
-                result = optimizer.optimize(circuit, target=circuit)
+                try:
+                    result = optimizer.optimize(circuit, target=circuit)
+                except Exception as exc:
+                    rows.append({
+                        "schema_version": SCHEMA_VERSION,
+                        "experiment_id": EXPERIMENT_ID,
+                        "run_id": run_id,
+                        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+                        "circuit_id": bench.circuit_id,
+                        "circuit_family": bench.family,
+                        "circuit_type": bench.circuit_type,
+                        "benchmark_suite": bench.suite,
+                        "n_qubits": circuit.num_qubits,
+                        "depth": counts["depth"],
+                        "gate_count_total": counts["gate_count_total"],
+                        "baseline_gate_count": circuit.size(),
+                        "optimized_gate_count": float("nan"),
+                        "reduction": float("nan"),
+                        "window_size": ws,
+                        "fidelity": float("nan"),
+                        "fidelity_source": "unavailable",
+                        "valid_equivalent_output": False,
+                        "success": False,
+                        "analysis_reduction_itt": 0.0,
+                        "runtime_seconds": time.time() - start,
+                        "optimizer": optimizer_name,
+                        "optimizer_version": VERSION,
+                        "seed": bench.seed,
+                        "trial": trial,
+                        "source_file": script_path.relative_to(PROJECT_ROOT).as_posix(),
+                        "source_sha256": file_sha256(script_path),
+                        "input_circuit_sha256": input_hash,
+                        "status": "optimizer_error",
+                        "error_type": type(exc).__name__,
+                        "error": str(exc),
+                    })
+                    completed.add(row_key)
+                    continue
                 runtime = time.time() - start
 
                 output_hash = circuit_sha256(result.optimized_circuit)
-                fidelity = result.fidelity
-                if fidelity is None or fidelity == 0.0:
-                    exact = average_gate_fidelity(
-                        result.optimized_circuit, circuit,
-                        max_qubits=max_qubits_fidelity,
-                    )
-                    fidelity = exact if exact is not None else result.fidelity
+                exact = average_gate_fidelity(
+                    result.optimized_circuit, circuit,
+                    max_qubits=max_qubits_fidelity,
+                )
+                fidelity = float("nan") if exact is None else exact
+                valid_equivalent = bool(
+                    math.isfinite(fidelity)
+                    and fidelity >= optimizer.fidelity_threshold
+                )
+                success = bool(
+                    valid_equivalent
+                    and result.reduction >= optimizer.success_reduction
+                )
 
                 # Compute extended metrics
                 ext = result.compute_extended_metrics(circuit)
@@ -142,7 +199,10 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
                     # Window size (P6)
                     "window_size": ws,
                     "fidelity": fidelity,
-                    "success": bool(result.success),
+                    "fidelity_source": "exact" if math.isfinite(fidelity) else "unavailable",
+                    "valid_equivalent_output": valid_equivalent,
+                    "success": success,
+                    "analysis_reduction_itt": result.reduction if valid_equivalent else 0.0,
                     "runtime_seconds": runtime,
                     "optimizer": optimizer_name,
                     "optimizer_version": VERSION,
@@ -156,12 +216,22 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
                     "input_circuit_sha256": input_hash,
                     "output_circuit_sha256": output_hash,
                     "notes": bench.notes,
+                    "status": "ok",
+                    "error_type": "",
+                    "error": "",
                 }
                 rows.append(row)
+                completed.add(row_key)
+                if len(rows) % 25 == 0:
+                    tmp = checkpoint_path.with_suffix('.csv.tmp')
+                    pd.DataFrame(rows).to_csv(tmp, index=False)
+                    tmp.replace(checkpoint_path)
 
     df = pd.DataFrame(rows)
     csv_path = output_dir / f"e14_extended_benchmark_{run_id}.csv"
     df.to_csv(csv_path, index=False)
+    if checkpoint_path.exists():
+        checkpoint_path.unlink()
 
     metadata.update(
         {
@@ -177,6 +247,8 @@ def run(mode: str, seed: int, max_qubits_fidelity: int,
             "n_rows": len(df),
             "optimizers": list(build_optimizers().keys()),
             "circuit_families": sorted({bench.family for bench in circuits}),
+            "protocol_file": "experiments/prepaper_protocol.json",
+            "protocol_sha256": file_sha256(PROJECT_ROOT / "experiments/prepaper_protocol.json"),
         }
     )
     with (output_dir / "metadata.json").open("w", encoding="utf-8") as handle:
@@ -196,6 +268,7 @@ def main() -> None:
     parser.add_argument("--mode", choices=["smoke", "full"], default="smoke")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--max-qubits-fidelity", type=int, default=10)
+    parser.add_argument("--output-dir", type=Path, default=None)
     parser.add_argument(
         "--window-sizes", type=int, nargs="+", default=None,
         help="Window sizes to evaluate (default: [10] for smoke, all for full)",
@@ -205,7 +278,7 @@ def main() -> None:
     if ws is None and args.mode == "full":
         ws = WINDOW_SIZES
     run(mode=args.mode, seed=args.seed, max_qubits_fidelity=args.max_qubits_fidelity,
-        window_sizes=ws)
+        window_sizes=ws, output_dir=args.output_dir)
 
 
 if __name__ == "__main__":

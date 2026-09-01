@@ -1,0 +1,4613 @@
+{
+  "boundary_angle_unique_circuit_coverage": {
+    "pi_above": 8,
+    "pi_below": 8,
+    "two_pi_below": 8,
+    "zero_above": 8,
+    "zero_below": 8
+  },
+  "cases_per_configuration": 40,
+  "configurations": [
+    {
+      "gather_window": 4,
+      "template_enabled": false
+    },
+    {
+      "gather_window": 16,
+      "template_enabled": false
+    },
+    {
+      "gather_window": 64,
+      "template_enabled": false
+    },
+    {
+      "gather_window": 4,
+      "template_enabled": true
+    },
+    {
+      "gather_window": 16,
+      "template_enabled": true
+    },
+    {
+      "gather_window": 64,
+      "template_enabled": true
+    }
+  ],
+  "failure_count": 0,
+  "failures": [],
+  "interpretation": "The paired sweep covers 40 unique generated two-to-four-qubit bound-unitary circuits under six rule/window configurations, with forced zero/pi/two-pi boundary angles; it is not an exhaustive proof over all circuits.",
+  "paired_configuration_cells": 240,
+  "records": [
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 0,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "5e2b445d9a1b0528c76394245e0328fe4978f3085b0fbf915236c9f335372016",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 1,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "73cadd540e6f46fc7fe76cceecf8a10c98e261b389d4e3655497f9d1b682ee53",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 2,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "c3a66fc2f14dc8ebee3ce6caba0a258ecf8374dea5f0cef7f697fc545b14856e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 3,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "0303efe4da28693c092026beaa4874866fac173bee82b71cc7f655b9a1b3a90a",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 4,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "272c7b46632d59e6c09984af566a7919a9d325cc1aeb935f689b7c9b545d88ea",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 5,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "cdbaad1c0697ff74110fa7a7c6fd3cc0162b3715d4cce54db7e6129c43a33b61",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 6,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "d477af72bbf03ce833ef85285241358e03d8944b2dee3ea90192adb78bb209ad",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 7,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "f481ad80f77caa28debb82a88b2098be3b779d0b7be55f1fa0bb8a7dffde7ca8",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 8,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "2a591e8bfa871fe77e1ccd4c8a71e2aac98238e3ecd43f8b17124297f562f078",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 9,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "806fe2b040799bd4df62be56702902c04a9afe71f9aeae7e803b1f9ef1ccb60e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 10,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "7bb31504ae235ea8d7f092b29a6f6f897ab9f818033aa76d9b0624adf76464e0",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 11,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "432c8de196c203ca50285cc5f26d7842462873aed0f66beb5cb979d9d86c6a01",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 12,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "5898f1912e97824ac2c8906ce694f96f7f7267a17542166380683fe3edfa31e6",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 13,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "f60ab3a89fbfab6ef5a3f222d54b5c7fd20aa98ce894d9b069d17ff80f931abd",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 14,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "5661294afb9fe2fb1caaedb04d9c8b748af41f3b797c116b13d938ac679cc6e9",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 15,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "3a382a14c7c96bbd33d464a8911af76de80fadf425fe60d49e6f2e43056a497d",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 16,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "502ffdcfba9476d4e861e25e0686e211bf2efe3a111b9c120c7467c90df246f3",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 17,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "688d07059366bea068febdfd5c074cd9817f617fef52b5d2b593ef0337e5cbcb",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 18,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "3cf95fb55d58e6710daa17156e7728415818dd79ee08f2e173dc2af377d88c8a",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 19,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "b77b2a0181188ac18d44c3d169b8744c4fef086230ac28d9bee6600cefdb2787",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 20,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "a85621f16bea0a8d339b17b07fc96234cd983091779b8c994e14fc62deaa44e6",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 21,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "348b56a70da64d4e0b658c37747062f7ae0c63bdaab173759a30ab2a7383e331",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 22,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "074bb87ef90303146caa7b2e4cdd42e51e7ff14b46865a1c9c6260625b99d8bf",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 23,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "1ceb8df2a584421ab57abf71dd0445bb26aa2a5d10ad5e714e4a82d95174cdf4",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 24,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "afe051865c00c2386a2e08dadbec3d15533410daf839396854623b4fe61eb83e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 25,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "1cd31c67876c561f72c88b14ec5f7ab9efa472ce71fbf3159393b771aecb7c29",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 26,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "2d7cba8579da310489acf9c353c6ec8d6f7bc0b668571e6cf65739ead0dea44e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 27,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "338769c9c816ad94976a23305ff5cf9dd9f65da0545d57bf793f2ce159a0f5ed",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 28,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "9904082f956773adb46e53c550044790c2be11e7e6434b4948d5dc2543df1e29",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 29,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "0e9a96eb9a7285bd3743b7449dc97506dd6f6dcc0932a4f40ecb0ca705707a3f",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 30,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "d79106a9e7a4c86b6adac6a8cee11e143a94e0ec91b2787aa1b69df4db2df418",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 31,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "ba24bb613e086d5d31a1ef42abaa81e7e4864eb15cf0b0f1fd43c799a92a4cbf",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 32,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "0c3cbf04cadbfe27a60f12a66b267b4f8075d95ab4fc0b2b325e5ebe542a2eb7",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 33,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "e08206e2939a8114207730da71f97c6db29e057e55c96986bf7b923eac9cf747",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 34,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "f853736514fb69a94c25d6b0a37be8d89a08d06c60aca67d0fc73a4611000050",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 35,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "29eb8eaaf4cee72c5a0ef4095bcd026e247694d08c197307b37ca6d8deb70d7f",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 36,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "47866f948e3158037263d4670c19edae02d0fa385381078cab2c6404e649282d",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 37,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "9ec78c7a0752d29f210268e801652926eb4cebd698eacf57400e7b16af475adc",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 38,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "0bb9675f774c24af23dde0cdf792da865805cae318da1703de77800fb300ffff",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 39,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "d6129b92c76101f7b62c4f9055202f19b5cc3872e0f9510b5a190da82ed3b678",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 0,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "5e2b445d9a1b0528c76394245e0328fe4978f3085b0fbf915236c9f335372016",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 1,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "73cadd540e6f46fc7fe76cceecf8a10c98e261b389d4e3655497f9d1b682ee53",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 2,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "c3a66fc2f14dc8ebee3ce6caba0a258ecf8374dea5f0cef7f697fc545b14856e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 3,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "0303efe4da28693c092026beaa4874866fac173bee82b71cc7f655b9a1b3a90a",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 4,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "272c7b46632d59e6c09984af566a7919a9d325cc1aeb935f689b7c9b545d88ea",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 5,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "cdbaad1c0697ff74110fa7a7c6fd3cc0162b3715d4cce54db7e6129c43a33b61",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 6,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "d477af72bbf03ce833ef85285241358e03d8944b2dee3ea90192adb78bb209ad",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 7,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "f481ad80f77caa28debb82a88b2098be3b779d0b7be55f1fa0bb8a7dffde7ca8",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 8,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "2a591e8bfa871fe77e1ccd4c8a71e2aac98238e3ecd43f8b17124297f562f078",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 9,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "806fe2b040799bd4df62be56702902c04a9afe71f9aeae7e803b1f9ef1ccb60e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 10,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "7bb31504ae235ea8d7f092b29a6f6f897ab9f818033aa76d9b0624adf76464e0",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 11,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "432c8de196c203ca50285cc5f26d7842462873aed0f66beb5cb979d9d86c6a01",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 12,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "5898f1912e97824ac2c8906ce694f96f7f7267a17542166380683fe3edfa31e6",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 13,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "f60ab3a89fbfab6ef5a3f222d54b5c7fd20aa98ce894d9b069d17ff80f931abd",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 14,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "5661294afb9fe2fb1caaedb04d9c8b748af41f3b797c116b13d938ac679cc6e9",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 15,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "3a382a14c7c96bbd33d464a8911af76de80fadf425fe60d49e6f2e43056a497d",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 16,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "502ffdcfba9476d4e861e25e0686e211bf2efe3a111b9c120c7467c90df246f3",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 17,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "688d07059366bea068febdfd5c074cd9817f617fef52b5d2b593ef0337e5cbcb",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 18,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "3cf95fb55d58e6710daa17156e7728415818dd79ee08f2e173dc2af377d88c8a",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 19,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "b77b2a0181188ac18d44c3d169b8744c4fef086230ac28d9bee6600cefdb2787",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 20,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "a85621f16bea0a8d339b17b07fc96234cd983091779b8c994e14fc62deaa44e6",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 21,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "348b56a70da64d4e0b658c37747062f7ae0c63bdaab173759a30ab2a7383e331",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 22,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "074bb87ef90303146caa7b2e4cdd42e51e7ff14b46865a1c9c6260625b99d8bf",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 23,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "1ceb8df2a584421ab57abf71dd0445bb26aa2a5d10ad5e714e4a82d95174cdf4",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 24,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "afe051865c00c2386a2e08dadbec3d15533410daf839396854623b4fe61eb83e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 25,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "1cd31c67876c561f72c88b14ec5f7ab9efa472ce71fbf3159393b771aecb7c29",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 26,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "2d7cba8579da310489acf9c353c6ec8d6f7bc0b668571e6cf65739ead0dea44e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 27,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "338769c9c816ad94976a23305ff5cf9dd9f65da0545d57bf793f2ce159a0f5ed",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 28,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "9904082f956773adb46e53c550044790c2be11e7e6434b4948d5dc2543df1e29",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 29,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "0e9a96eb9a7285bd3743b7449dc97506dd6f6dcc0932a4f40ecb0ca705707a3f",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 30,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "d79106a9e7a4c86b6adac6a8cee11e143a94e0ec91b2787aa1b69df4db2df418",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 31,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "ba24bb613e086d5d31a1ef42abaa81e7e4864eb15cf0b0f1fd43c799a92a4cbf",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 32,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "0c3cbf04cadbfe27a60f12a66b267b4f8075d95ab4fc0b2b325e5ebe542a2eb7",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 33,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "e08206e2939a8114207730da71f97c6db29e057e55c96986bf7b923eac9cf747",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 34,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "f853736514fb69a94c25d6b0a37be8d89a08d06c60aca67d0fc73a4611000050",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 35,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "29eb8eaaf4cee72c5a0ef4095bcd026e247694d08c197307b37ca6d8deb70d7f",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 36,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "47866f948e3158037263d4670c19edae02d0fa385381078cab2c6404e649282d",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 37,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "9ec78c7a0752d29f210268e801652926eb4cebd698eacf57400e7b16af475adc",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 38,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "0bb9675f774c24af23dde0cdf792da865805cae318da1703de77800fb300ffff",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 39,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "d6129b92c76101f7b62c4f9055202f19b5cc3872e0f9510b5a190da82ed3b678",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 0,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "5e2b445d9a1b0528c76394245e0328fe4978f3085b0fbf915236c9f335372016",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 1,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "73cadd540e6f46fc7fe76cceecf8a10c98e261b389d4e3655497f9d1b682ee53",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 2,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "c3a66fc2f14dc8ebee3ce6caba0a258ecf8374dea5f0cef7f697fc545b14856e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 3,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "0303efe4da28693c092026beaa4874866fac173bee82b71cc7f655b9a1b3a90a",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 4,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "272c7b46632d59e6c09984af566a7919a9d325cc1aeb935f689b7c9b545d88ea",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 5,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "cdbaad1c0697ff74110fa7a7c6fd3cc0162b3715d4cce54db7e6129c43a33b61",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 6,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "d477af72bbf03ce833ef85285241358e03d8944b2dee3ea90192adb78bb209ad",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 7,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "f481ad80f77caa28debb82a88b2098be3b779d0b7be55f1fa0bb8a7dffde7ca8",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 8,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "2a591e8bfa871fe77e1ccd4c8a71e2aac98238e3ecd43f8b17124297f562f078",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 9,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "806fe2b040799bd4df62be56702902c04a9afe71f9aeae7e803b1f9ef1ccb60e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 10,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "7bb31504ae235ea8d7f092b29a6f6f897ab9f818033aa76d9b0624adf76464e0",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 11,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "432c8de196c203ca50285cc5f26d7842462873aed0f66beb5cb979d9d86c6a01",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 12,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "5898f1912e97824ac2c8906ce694f96f7f7267a17542166380683fe3edfa31e6",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 13,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "f60ab3a89fbfab6ef5a3f222d54b5c7fd20aa98ce894d9b069d17ff80f931abd",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 14,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "5661294afb9fe2fb1caaedb04d9c8b748af41f3b797c116b13d938ac679cc6e9",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 15,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "3a382a14c7c96bbd33d464a8911af76de80fadf425fe60d49e6f2e43056a497d",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 16,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "502ffdcfba9476d4e861e25e0686e211bf2efe3a111b9c120c7467c90df246f3",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 17,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "688d07059366bea068febdfd5c074cd9817f617fef52b5d2b593ef0337e5cbcb",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 18,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "3cf95fb55d58e6710daa17156e7728415818dd79ee08f2e173dc2af377d88c8a",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 19,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "b77b2a0181188ac18d44c3d169b8744c4fef086230ac28d9bee6600cefdb2787",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 20,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "a85621f16bea0a8d339b17b07fc96234cd983091779b8c994e14fc62deaa44e6",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 21,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "348b56a70da64d4e0b658c37747062f7ae0c63bdaab173759a30ab2a7383e331",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 22,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "074bb87ef90303146caa7b2e4cdd42e51e7ff14b46865a1c9c6260625b99d8bf",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 23,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "1ceb8df2a584421ab57abf71dd0445bb26aa2a5d10ad5e714e4a82d95174cdf4",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 24,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "afe051865c00c2386a2e08dadbec3d15533410daf839396854623b4fe61eb83e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 25,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "1cd31c67876c561f72c88b14ec5f7ab9efa472ce71fbf3159393b771aecb7c29",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 26,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "2d7cba8579da310489acf9c353c6ec8d6f7bc0b668571e6cf65739ead0dea44e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 27,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "338769c9c816ad94976a23305ff5cf9dd9f65da0545d57bf793f2ce159a0f5ed",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 28,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "9904082f956773adb46e53c550044790c2be11e7e6434b4948d5dc2543df1e29",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 29,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "0e9a96eb9a7285bd3743b7449dc97506dd6f6dcc0932a4f40ecb0ca705707a3f",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 30,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "d79106a9e7a4c86b6adac6a8cee11e143a94e0ec91b2787aa1b69df4db2df418",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 31,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "ba24bb613e086d5d31a1ef42abaa81e7e4864eb15cf0b0f1fd43c799a92a4cbf",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 32,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "0c3cbf04cadbfe27a60f12a66b267b4f8075d95ab4fc0b2b325e5ebe542a2eb7",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 33,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "e08206e2939a8114207730da71f97c6db29e057e55c96986bf7b923eac9cf747",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 34,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "f853736514fb69a94c25d6b0a37be8d89a08d06c60aca67d0fc73a4611000050",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 35,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "29eb8eaaf4cee72c5a0ef4095bcd026e247694d08c197307b37ca6d8deb70d7f",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 36,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "47866f948e3158037263d4670c19edae02d0fa385381078cab2c6404e649282d",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 37,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "9ec78c7a0752d29f210268e801652926eb4cebd698eacf57400e7b16af475adc",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 38,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "0bb9675f774c24af23dde0cdf792da865805cae318da1703de77800fb300ffff",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 39,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "d6129b92c76101f7b62c4f9055202f19b5cc3872e0f9510b5a190da82ed3b678",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": false
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 0,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "5e2b445d9a1b0528c76394245e0328fe4978f3085b0fbf915236c9f335372016",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 1,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "73cadd540e6f46fc7fe76cceecf8a10c98e261b389d4e3655497f9d1b682ee53",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 2,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "c3a66fc2f14dc8ebee3ce6caba0a258ecf8374dea5f0cef7f697fc545b14856e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 3,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "0303efe4da28693c092026beaa4874866fac173bee82b71cc7f655b9a1b3a90a",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 4,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "272c7b46632d59e6c09984af566a7919a9d325cc1aeb935f689b7c9b545d88ea",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 5,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "cdbaad1c0697ff74110fa7a7c6fd3cc0162b3715d4cce54db7e6129c43a33b61",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 6,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "d477af72bbf03ce833ef85285241358e03d8944b2dee3ea90192adb78bb209ad",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 7,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "f481ad80f77caa28debb82a88b2098be3b779d0b7be55f1fa0bb8a7dffde7ca8",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 8,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "2a591e8bfa871fe77e1ccd4c8a71e2aac98238e3ecd43f8b17124297f562f078",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 9,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "806fe2b040799bd4df62be56702902c04a9afe71f9aeae7e803b1f9ef1ccb60e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 10,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "7bb31504ae235ea8d7f092b29a6f6f897ab9f818033aa76d9b0624adf76464e0",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 11,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "432c8de196c203ca50285cc5f26d7842462873aed0f66beb5cb979d9d86c6a01",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 12,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "5898f1912e97824ac2c8906ce694f96f7f7267a17542166380683fe3edfa31e6",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 13,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "f60ab3a89fbfab6ef5a3f222d54b5c7fd20aa98ce894d9b069d17ff80f931abd",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 14,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "5661294afb9fe2fb1caaedb04d9c8b748af41f3b797c116b13d938ac679cc6e9",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 15,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "3a382a14c7c96bbd33d464a8911af76de80fadf425fe60d49e6f2e43056a497d",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 16,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "502ffdcfba9476d4e861e25e0686e211bf2efe3a111b9c120c7467c90df246f3",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 17,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "688d07059366bea068febdfd5c074cd9817f617fef52b5d2b593ef0337e5cbcb",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 18,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "3cf95fb55d58e6710daa17156e7728415818dd79ee08f2e173dc2af377d88c8a",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 19,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "b77b2a0181188ac18d44c3d169b8744c4fef086230ac28d9bee6600cefdb2787",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 20,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "a85621f16bea0a8d339b17b07fc96234cd983091779b8c994e14fc62deaa44e6",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 21,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "348b56a70da64d4e0b658c37747062f7ae0c63bdaab173759a30ab2a7383e331",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 22,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "074bb87ef90303146caa7b2e4cdd42e51e7ff14b46865a1c9c6260625b99d8bf",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 23,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "1ceb8df2a584421ab57abf71dd0445bb26aa2a5d10ad5e714e4a82d95174cdf4",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 24,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "afe051865c00c2386a2e08dadbec3d15533410daf839396854623b4fe61eb83e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 25,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "1cd31c67876c561f72c88b14ec5f7ab9efa472ce71fbf3159393b771aecb7c29",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 26,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "2d7cba8579da310489acf9c353c6ec8d6f7bc0b668571e6cf65739ead0dea44e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 27,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "338769c9c816ad94976a23305ff5cf9dd9f65da0545d57bf793f2ce159a0f5ed",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 28,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "9904082f956773adb46e53c550044790c2be11e7e6434b4948d5dc2543df1e29",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 29,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "0e9a96eb9a7285bd3743b7449dc97506dd6f6dcc0932a4f40ecb0ca705707a3f",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 30,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "d79106a9e7a4c86b6adac6a8cee11e143a94e0ec91b2787aa1b69df4db2df418",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 31,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "ba24bb613e086d5d31a1ef42abaa81e7e4864eb15cf0b0f1fd43c799a92a4cbf",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 32,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "0c3cbf04cadbfe27a60f12a66b267b4f8075d95ab4fc0b2b325e5ebe542a2eb7",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 33,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "e08206e2939a8114207730da71f97c6db29e057e55c96986bf7b923eac9cf747",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 34,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "f853736514fb69a94c25d6b0a37be8d89a08d06c60aca67d0fc73a4611000050",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 35,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "29eb8eaaf4cee72c5a0ef4095bcd026e247694d08c197307b37ca6d8deb70d7f",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 36,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "47866f948e3158037263d4670c19edae02d0fa385381078cab2c6404e649282d",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 37,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "9ec78c7a0752d29f210268e801652926eb4cebd698eacf57400e7b16af475adc",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 38,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "0bb9675f774c24af23dde0cdf792da865805cae318da1703de77800fb300ffff",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 39,
+      "error": null,
+      "gather_window": 4,
+      "input_qasm_sha256": "d6129b92c76101f7b62c4f9055202f19b5cc3872e0f9510b5a190da82ed3b678",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 0,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "5e2b445d9a1b0528c76394245e0328fe4978f3085b0fbf915236c9f335372016",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 1,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "73cadd540e6f46fc7fe76cceecf8a10c98e261b389d4e3655497f9d1b682ee53",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 2,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "c3a66fc2f14dc8ebee3ce6caba0a258ecf8374dea5f0cef7f697fc545b14856e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 3,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "0303efe4da28693c092026beaa4874866fac173bee82b71cc7f655b9a1b3a90a",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 4,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "272c7b46632d59e6c09984af566a7919a9d325cc1aeb935f689b7c9b545d88ea",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 5,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "cdbaad1c0697ff74110fa7a7c6fd3cc0162b3715d4cce54db7e6129c43a33b61",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 6,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "d477af72bbf03ce833ef85285241358e03d8944b2dee3ea90192adb78bb209ad",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 7,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "f481ad80f77caa28debb82a88b2098be3b779d0b7be55f1fa0bb8a7dffde7ca8",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 8,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "2a591e8bfa871fe77e1ccd4c8a71e2aac98238e3ecd43f8b17124297f562f078",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 9,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "806fe2b040799bd4df62be56702902c04a9afe71f9aeae7e803b1f9ef1ccb60e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 10,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "7bb31504ae235ea8d7f092b29a6f6f897ab9f818033aa76d9b0624adf76464e0",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 11,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "432c8de196c203ca50285cc5f26d7842462873aed0f66beb5cb979d9d86c6a01",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 12,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "5898f1912e97824ac2c8906ce694f96f7f7267a17542166380683fe3edfa31e6",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 13,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "f60ab3a89fbfab6ef5a3f222d54b5c7fd20aa98ce894d9b069d17ff80f931abd",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 14,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "5661294afb9fe2fb1caaedb04d9c8b748af41f3b797c116b13d938ac679cc6e9",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 15,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "3a382a14c7c96bbd33d464a8911af76de80fadf425fe60d49e6f2e43056a497d",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 16,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "502ffdcfba9476d4e861e25e0686e211bf2efe3a111b9c120c7467c90df246f3",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 17,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "688d07059366bea068febdfd5c074cd9817f617fef52b5d2b593ef0337e5cbcb",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 18,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "3cf95fb55d58e6710daa17156e7728415818dd79ee08f2e173dc2af377d88c8a",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 19,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "b77b2a0181188ac18d44c3d169b8744c4fef086230ac28d9bee6600cefdb2787",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 20,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "a85621f16bea0a8d339b17b07fc96234cd983091779b8c994e14fc62deaa44e6",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 21,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "348b56a70da64d4e0b658c37747062f7ae0c63bdaab173759a30ab2a7383e331",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 22,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "074bb87ef90303146caa7b2e4cdd42e51e7ff14b46865a1c9c6260625b99d8bf",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 23,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "1ceb8df2a584421ab57abf71dd0445bb26aa2a5d10ad5e714e4a82d95174cdf4",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 24,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "afe051865c00c2386a2e08dadbec3d15533410daf839396854623b4fe61eb83e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 25,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "1cd31c67876c561f72c88b14ec5f7ab9efa472ce71fbf3159393b771aecb7c29",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 26,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "2d7cba8579da310489acf9c353c6ec8d6f7bc0b668571e6cf65739ead0dea44e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 27,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "338769c9c816ad94976a23305ff5cf9dd9f65da0545d57bf793f2ce159a0f5ed",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 28,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "9904082f956773adb46e53c550044790c2be11e7e6434b4948d5dc2543df1e29",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 29,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "0e9a96eb9a7285bd3743b7449dc97506dd6f6dcc0932a4f40ecb0ca705707a3f",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 30,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "d79106a9e7a4c86b6adac6a8cee11e143a94e0ec91b2787aa1b69df4db2df418",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 31,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "ba24bb613e086d5d31a1ef42abaa81e7e4864eb15cf0b0f1fd43c799a92a4cbf",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 32,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "0c3cbf04cadbfe27a60f12a66b267b4f8075d95ab4fc0b2b325e5ebe542a2eb7",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 33,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "e08206e2939a8114207730da71f97c6db29e057e55c96986bf7b923eac9cf747",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 34,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "f853736514fb69a94c25d6b0a37be8d89a08d06c60aca67d0fc73a4611000050",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 35,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "29eb8eaaf4cee72c5a0ef4095bcd026e247694d08c197307b37ca6d8deb70d7f",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 36,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "47866f948e3158037263d4670c19edae02d0fa385381078cab2c6404e649282d",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 37,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "9ec78c7a0752d29f210268e801652926eb4cebd698eacf57400e7b16af475adc",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 38,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "0bb9675f774c24af23dde0cdf792da865805cae318da1703de77800fb300ffff",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 39,
+      "error": null,
+      "gather_window": 16,
+      "input_qasm_sha256": "d6129b92c76101f7b62c4f9055202f19b5cc3872e0f9510b5a190da82ed3b678",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 0,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "5e2b445d9a1b0528c76394245e0328fe4978f3085b0fbf915236c9f335372016",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 1,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "73cadd540e6f46fc7fe76cceecf8a10c98e261b389d4e3655497f9d1b682ee53",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 2,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "c3a66fc2f14dc8ebee3ce6caba0a258ecf8374dea5f0cef7f697fc545b14856e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 3,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "0303efe4da28693c092026beaa4874866fac173bee82b71cc7f655b9a1b3a90a",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 4,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "272c7b46632d59e6c09984af566a7919a9d325cc1aeb935f689b7c9b545d88ea",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 5,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "cdbaad1c0697ff74110fa7a7c6fd3cc0162b3715d4cce54db7e6129c43a33b61",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 6,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "d477af72bbf03ce833ef85285241358e03d8944b2dee3ea90192adb78bb209ad",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 7,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "f481ad80f77caa28debb82a88b2098be3b779d0b7be55f1fa0bb8a7dffde7ca8",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 8,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "2a591e8bfa871fe77e1ccd4c8a71e2aac98238e3ecd43f8b17124297f562f078",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 9,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "806fe2b040799bd4df62be56702902c04a9afe71f9aeae7e803b1f9ef1ccb60e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 10,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "7bb31504ae235ea8d7f092b29a6f6f897ab9f818033aa76d9b0624adf76464e0",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 11,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "432c8de196c203ca50285cc5f26d7842462873aed0f66beb5cb979d9d86c6a01",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 12,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "5898f1912e97824ac2c8906ce694f96f7f7267a17542166380683fe3edfa31e6",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 13,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "f60ab3a89fbfab6ef5a3f222d54b5c7fd20aa98ce894d9b069d17ff80f931abd",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 14,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "5661294afb9fe2fb1caaedb04d9c8b748af41f3b797c116b13d938ac679cc6e9",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 15,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "3a382a14c7c96bbd33d464a8911af76de80fadf425fe60d49e6f2e43056a497d",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 16,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "502ffdcfba9476d4e861e25e0686e211bf2efe3a111b9c120c7467c90df246f3",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 17,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "688d07059366bea068febdfd5c074cd9817f617fef52b5d2b593ef0337e5cbcb",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 18,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "3cf95fb55d58e6710daa17156e7728415818dd79ee08f2e173dc2af377d88c8a",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 19,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "b77b2a0181188ac18d44c3d169b8744c4fef086230ac28d9bee6600cefdb2787",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 20,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "a85621f16bea0a8d339b17b07fc96234cd983091779b8c994e14fc62deaa44e6",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 21,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "348b56a70da64d4e0b658c37747062f7ae0c63bdaab173759a30ab2a7383e331",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 22,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "074bb87ef90303146caa7b2e4cdd42e51e7ff14b46865a1c9c6260625b99d8bf",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 23,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "1ceb8df2a584421ab57abf71dd0445bb26aa2a5d10ad5e714e4a82d95174cdf4",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 24,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "afe051865c00c2386a2e08dadbec3d15533410daf839396854623b4fe61eb83e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 25,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "1cd31c67876c561f72c88b14ec5f7ab9efa472ce71fbf3159393b771aecb7c29",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 26,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "2d7cba8579da310489acf9c353c6ec8d6f7bc0b668571e6cf65739ead0dea44e",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 27,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "338769c9c816ad94976a23305ff5cf9dd9f65da0545d57bf793f2ce159a0f5ed",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 28,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "9904082f956773adb46e53c550044790c2be11e7e6434b4948d5dc2543df1e29",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 29,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "0e9a96eb9a7285bd3743b7449dc97506dd6f6dcc0932a4f40ecb0ca705707a3f",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 30,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "d79106a9e7a4c86b6adac6a8cee11e143a94e0ec91b2787aa1b69df4db2df418",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 31,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "ba24bb613e086d5d31a1ef42abaa81e7e4864eb15cf0b0f1fd43c799a92a4cbf",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 32,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "0c3cbf04cadbfe27a60f12a66b267b4f8075d95ab4fc0b2b325e5ebe542a2eb7",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 33,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "e08206e2939a8114207730da71f97c6db29e057e55c96986bf7b923eac9cf747",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 34,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "f853736514fb69a94c25d6b0a37be8d89a08d06c60aca67d0fc73a4611000050",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_below",
+      "case": 35,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "29eb8eaaf4cee72c5a0ef4095bcd026e247694d08c197307b37ca6d8deb70d7f",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "zero_above",
+      "case": 36,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "47866f948e3158037263d4670c19edae02d0fa385381078cab2c6404e649282d",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_below",
+      "case": 37,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "9ec78c7a0752d29f210268e801652926eb4cebd698eacf57400e7b16af475adc",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "pi_above",
+      "case": 38,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "0bb9675f774c24af23dde0cdf792da865805cae318da1703de77800fb300ffff",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    },
+    {
+      "boundary_angle_label": "two_pi_below",
+      "case": 39,
+      "error": null,
+      "gather_window": 64,
+      "input_qasm_sha256": "d6129b92c76101f7b62c4f9055202f19b5cc3872e0f9510b5a190da82ed3b678",
+      "passed": true,
+      "properties": {
+        "certificate_accepted": true,
+        "gate_count_nonincreasing": true,
+        "operator_equivalent": true,
+        "second_pass_operator_equivalent": true,
+        "second_pass_size_stable": true,
+        "second_pass_syntax_stable": true,
+        "terminated_at_rewrite_counter_fixpoint": true,
+        "trace_nonincreasing": true
+      },
+      "template_enabled": true
+    }
+  ],
+  "seed": 20260824,
+  "source_sha256": {
+    "scripts/audit_rewrite_properties.py": "631d3e9f2c4e8e5086ed35712891a27aa33ecf05e3959ac0ffcb353c924d8e8d",
+    "src/equivalence.py": "19de65ac1fb719c763ed60f4b3bb8655435b706976333c1bf5e569faa58834af",
+    "src/optimisation/base.py": "f1c983c6273517cee511612137813c107a8a11940b71e0ac28bb4b3cdbbb4248",
+    "src/optimisation/constants.py": "ce80583a56732a3cc70cbef5ff0124cd0f03517fbfc718f06ebf4e5055ea3c41",
+    "src/optimisation/phase2/template_matcher.py": "4fc65e470a050079056a1c5445477fb5764f3c62e7009225170015f12b5f7760"
+  },
+  "status": "PASS_ALL_GENERATIVE_PROPERTIES",
+  "total_cases": 240,
+  "unique_circuits": 40
+}

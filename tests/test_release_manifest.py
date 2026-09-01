@@ -6,6 +6,9 @@ from pathlib import Path
 
 import pandas as pd
 
+from scripts.generate_release_manifest import dataset_entries
+from scripts.verify_prepaper_release_manifest import _verify_external_lineage
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -21,5 +24,20 @@ def test_manifest_and_listing_dataset_are_synchronized():
 
     assert len(manifest["datasets"]) == 37
     assert sum(item["rows"] or 0 for item in manifest["datasets"]) == 96289
+    active = [item for item in manifest["datasets"] if not item.get("superseded", False)]
+    assert len(active) == 35
+    assert sum(item["rows"] or 0 for item in active) == 96205
     assert digest == entry["sha256"]
     assert rows == entry["rows"] == metadata["n_rows"] == 6720
+
+
+def test_historical_manifest_generator_excludes_prepaper_packet():
+    entries = dataset_entries(ROOT / "data")
+    assert entries
+    assert all("/prepaper/" not in str(entry["file"]) for entry in entries)
+
+
+def test_external_fidelity_lineage_is_cross_verified():
+    # Source, raw/revalidated data, input manifests, segment ledgers and driver
+    # hashes are all checked for both independently executed artifacts.
+    assert _verify_external_lineage() == 15

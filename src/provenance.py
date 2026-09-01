@@ -14,6 +14,7 @@ from typing import Any, Dict, Iterable, Mapping, Optional
 DEFAULT_SOURCE_FILES = (
     "src/circuits/generator_v2.py",
     "src/circuits/real_benchmarks.py",
+    "src/equivalence.py",
     "src/optimisation/base.py",
     "src/optimisation/_gate_predicates.py",
     "src/optimisation/ceiling_aware.py",

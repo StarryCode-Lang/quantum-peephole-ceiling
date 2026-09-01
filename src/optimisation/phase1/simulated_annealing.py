@@ -61,8 +61,11 @@ class SimulatedAnnealingOptimizer(BaseOptimizer):
         current = copy.deepcopy(circuit)
         current_fitness = self._fitness(current, target)
         
-        best = copy.deepcopy(current)
-        best_fitness = current_fitness
+        # The exploration score includes a cancellation-potential bonus and
+        # may prefer a temporarily larger circuit.  The returned incumbent is
+        # therefore tracked independently by the scientific objective:
+        # minimum gate count subject to the fidelity threshold.
+        incumbent = copy.deepcopy(current)
         
         temp = self.initial_temp
         min_temp = 1e-8  # Prevent division by zero
@@ -86,27 +89,28 @@ class SimulatedAnnealingOptimizer(BaseOptimizer):
                     current = neighbor
                     current_fitness = neighbor_fitness
             
-            # Update best
-            if current_fitness > best_fitness:
-                best = copy.deepcopy(current)
-                best_fitness = current_fitness
+            if current.size() < incumbent.size():
+                candidate_fidelity = self.calculate_fidelity(current, target)
+                if candidate_fidelity >= self.fidelity_threshold:
+                    incumbent = copy.deepcopy(current)
             
             # Cool down
             temp *= self.cooling_rate
             temp = max(temp, min_temp)
         
         runtime = time.time() - start_time
-        fidelity = self.calculate_fidelity(best, target)
-        reduction = 1.0 - best.size() / circuit.size() if circuit.size() > 0 else 0.0
+        fidelity, equivalence_certificate = self.result_equivalence(incumbent, target)
+        reduction = 1.0 - incumbent.size() / circuit.size() if circuit.size() > 0 else 0.0
         success = self._is_success(reduction, fidelity)
         
         return OptimizationResult(
-            optimized_circuit=best,
+            optimized_circuit=incumbent,
             original_size=circuit.size(),
-            optimized_size=best.size(),
+            optimized_size=incumbent.size(),
             fidelity=fidelity,
             iterations=iteration + 1,
             runtime_seconds=runtime,
             success=success,
+            equivalence_certificate=equivalence_certificate,
             metadata={'algorithm': 'sa', 'final_temp': temp}
         )

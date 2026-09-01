@@ -226,7 +226,7 @@
 
 [74] ~~Removed: duplicate of [59] (Hietala et al., VOQC, POPL 2021). See [59].~~
 
-[81] K. Patel, J. Shapira, and I. L. Markov, "Quantum circuit optimization: A survey," ACM Computing Surveys, vol. 55, no. 9, article 178, pp. 1-32, 2022. arXiv:2210.12035
+[81] ~~Removed: fabricated/misattributed citation. arXiv:2210.12035 is an unrelated computer-vision paper, not a quantum-circuit-optimization survey. See `docs/review/wave1/universal_law.md`.~~
 
 ---
 
@@ -239,6 +239,16 @@
 [77] G. Yang, P. Raun, R. Tao, and R. Gu, "Equality saturation for quantum circuit optimization," Proceedings of the ACM on Programming Languages, vol. 10, no. PLDI, 2026. DOI: 10.1145/3808254.
 
 [89] Y. Huang, X. Zhou, F. Meng, P. Zhu, Y. Luo, and Z. Du, "SSR: A Swapping-Sweeping-and-Rewriting Optimizer for Quantum Circuit Transformation," ACM Transactions on Design Automation of Electronic Systems, 2026. DOI: 10.1145/3828549; arXiv:2503.03227.
+
+[90] D. Lizzio Bosco, L. Cincio, G. Serra, and M. Cerezo, "Quantum Circuit Pre-Synthesis: Learning Local Edits to Reduce T-count," arXiv:2601.19738, 2026. DOI: 10.48550/arXiv.2601.19738.
+
+[91] P. A. Abdulla, Y.-F. Chen, M. Hecko, L. Holik, O. Lengal, J.-A. Lin, and R. S. Thinniyam, "Parameterized Verification of Quantum Circuits," arXiv:2511.19897, 2025. DOI: 10.48550/arXiv.2511.19897.
+
+[92] M. Szyniszewski, A. Kissinger, N. Linden, and P. Skrzypczyk, "Automated Quantum Circuit Optimization with Randomized Replacements," arXiv:2601.15934, 2026. DOI: 10.48550/arXiv.2601.15934.
+
+[93] R. Ghlib, R. Bouhadouza, and F. Hnaien, "Scalable Multi-Objective Genetic Algorithm for Quantum Circuit Optimization," Scientific Reports, vol. 16, article 17977, 2026. DOI: 10.1038/s41598-026-47674-5.
+
+[94] B. Rosenhahn, T. J. Osborne, and C. Hirche, "Optimization Driven Quantum Circuit Reduction," New Journal of Physics, vol. 27, article 104509, 2025. DOI: 10.1088/1367-2630/ae0e40; arXiv:2502.14715.
 
 ---
 
@@ -353,7 +363,7 @@ The following references were identified as missing from the original 42-referen
 | [78] | Nam, Ross, Su, Childs, Maslov (2018) | Automated optimization with continuous parameters | Foundational |
 | [79] | Yamashita, Nakanishi, Ishioka (2010) | Merging quantum circuits | Foundational |
 | [80] | Amy, Azimzadeh, Mosca (2018) | CNOT complexity of CNOT circuits | Foundational |
-| [81] | Patel, Shapira, Markov (2022) | Quantum circuit optimization survey | Survey |
+| [81] | Removed after reference audit | Fabricated/misattributed citation | — |
 | [82] | Kissinger, van de Wetering (2020) | PyZX | F-5, H-15 |
 | [83] | Liu et al. (2024) | QuCLEAR | F-5 |
 | [84] | Tan, Cong (2021) | QUEKO / layout synthesis optimality | F-5 |
@@ -361,9 +371,14 @@ The following references were identified as missing from the original 42-referen
 | [86] | Mori et al. (2025) | Quantum circuit unoptimization | Foundational |
 | [87] | Yang et al. (2025) | PHOENIX | F-5 |
 | [88] | Shende, Markov, Bullock (2004) | Minimal reversible circuit | F-5, C-8 |
+| [90] | Bosco et al. (2026) | Representation-changing quantum pre-synthesis | Novelty audit |
+| [91] | Abdulla et al. (2025) | Infinite-family parameterized circuit verification | Novelty audit |
+| [92] | Szyniszewski et al. (2026) | Approximate mixed-channel local rewriting | Novelty audit |
+| [93] | Ghlib et al. (2026) | Scalable multi-objective circuit optimization | Novelty audit |
+| [94] | Rosenhahn et al. (2025) | Local stochastic/database/ML term replacement | Novelty audit |
 
 ---
 
-*Document version: 2.1*
-*Last updated: 2026-07-10*
+*Document version: 2.2*
+*Last updated: 2026-08-24*
 *Author: Q-Research Reference Compilation*

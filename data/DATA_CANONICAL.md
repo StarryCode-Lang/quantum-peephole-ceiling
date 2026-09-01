@@ -4,8 +4,9 @@
 > **Date**: 2026-08-06  
 > **Purpose**: Define, for every experiment, the single **canonical** CSV used
 > for analysis and manuscript figures, the layout of derived artifacts, and the
-> data-version policy. Aligned with `release/release_manifest.json` (37 canonical
-> datasets, 96,289 rows as of 2026-08-06).
+> data-version policy. Aligned with `release/release_manifest.json` (35 active
+> canonical datasets / 96,205 rows, plus 2 superseded provenance entries / 84
+> rows; 37 listed entries / 96,289 rows in total as of 2026-08-06).
 
 ## Roles
 
@@ -79,7 +80,7 @@ Fields that were not recorded at generation time were backfilled during the
 | Heldout | `v5/new_families_heldout.csv` | 125 | results_v2 | Phase 7 held-out validation |
 | Isolation | `v5/qiskit_pass_isolation.csv` | 100 | results_v2 | Phase 7 Qiskit pass isolation |
 | EHW | `v8/hardware_validation/ehw_runs_full_20260720_150931.csv` | 288 | results_v8 | Hardware-validation full run (FakeManilaV2/FakeNairobiV2 noise-model simulation, **not** real hardware); supersedes the 48-row smoke; summary CSV in same dir is derived |
-| E26 | `v8/phase2b_full/phase2b_full_validation_v8.csv` | 2,427 | results_v8 | Phase-2b v2 full-scale validation (wave-6 full-factorial grid: depth families n=3..10 x depth={20..50 step 5}, 56/56 combos; 0 fidelity failures); BV reaches exact k+2 optimum on all 80 instances; analysis CSVs in same dir. Renamed from "E10p2b-v2" (manifest: "E26_phase2b_full_v8") on 2026-08-06 to match the manuscript's E26 |
+| E26 | `v8/phase2b_full/phase2b_full_validation_v8.csv` | 2,427 | results_v8 | Phase-2b v2 full-scale validation (wave-6 full-factorial grid: depth families n=3..10 x depth={20..50 step 5}, 56/56 combos); BV reaches exact k+2 optimum on all 80 instances. **Fidelity caveat:** 201 rows used the superseded product-state `sampled200` estimator; "0 fidelity failures" is not a valid global average-gate-fidelity claim for those rows. |
 | E30 | `v10/e30/e30_thm1a_wcl_results.csv` | 13,500 | results_v10 | Direct quantitative validation of Theorem 1(a) under WCL with corrected constants (k1 factor; no per-wire double counting): 27 cells (n∈{4,5,8} × d∈{10,20,40} × ρ∈{0,0.3,0.6}, 500 trials each), max \|z\| = 2.86, median \|rel err\| (ρ>0) = 1.4%; per-cell theory comparison in `derived/` |
 | E_listing_sensitivity_v8 | `v8/listing_sensitivity/listing_sensitivity_v8.csv` | 6,720 | results_v8 | Listing-sensitivity check (wave-6 full coverage): 15/15 families x 20-50 relisting variants; production compilers 0/126 sensitive, prototype 15/42 (6 sensitive families); qwalk_8 complete (20/20 variants, 80 rows; exact 9-qubit Operator checks skipped under the documented budget) |
 | E27_new_families | `v8/e27_new_families/e27_new_families_v8.csv` | 675 | results_v8 | 5 new circuit families (QPE, TrotterHamiltonian, QuantumVolume, WState, RepetitionCode) for family-mean statistical power; wave-6 PART-5 LOFO evaluation in `v6/ceiling_repair/part5_*` (docs/review/wave6/e27_part5.md) |
@@ -202,15 +203,18 @@ Version meanings:
    All canonical v2_fixed..v8 runs were generated under the effective 0.20
    default. The `success` column is non-informative anyway (Known Issue 7), so
    no canonical values change; future reruns will report `success` under 0.05.
-10. **AG canonical generator S/Sdg fix (2026-08-06)** — `ag_canonical.py`
+10. **AG-stage generator audit (2026-08-06 to 2026-08-09)** — `ag_canonical.py`
     sampled S with probability 0.3 but Sdg with 0.21 (two sequential
     `rng.random() < 0.3` draws). Fixed to symmetric single-draw sampling with
     a regression test (`tests/test_ag_canonical.py`). Canonical E23 (v7) was
     generated under the buggy distribution; a verification rerun under the
     fixed generator (`data/v10/e23_fixed_generator/`, non-canonical) reproduces
-    matching_rate = 1.0, confirming Theorem 6's R1 = 0 prediction is
-    distribution-invariant (it follows from the AG stage structure, not the
-    gate probabilities). Canonical E23 retained.
+    matching_rate = 1.0 only on its sampled seeds. A 2026-08-09 exhaustive-seed
+    audit found a counterexample in the then-current generator (`n=2`, seed 35:
+    28.57% Greedy reduction) because an empty H stage exposed adjacent CNOTs.
+    H stages are now forced non-empty, and the formal claim is narrowed to the
+    restricted generator. Canonical E23 is retained as historical data but is
+    not a validation of general Aaronson--Gottesman canonical form.
 11. **Theorem 1(a) constants corrected and validated (2026-08-06)** — the
     theorem as originally stated omitted the discrete-gate count k1 in the
     one-qubit term (actual p_inv^(1q) = k1/g1^2, not ≤ 2/g1^2) and double-
@@ -221,6 +225,33 @@ Version meanings:
     label (v5/e10 lacks `schema_version`; v5/e14, v5/e15 carry it); both are
     frozen and documented rather than rewritten. `v6/e21/ceiling_aware_comparison.csv`
     (results_v6) lacks `timestamp_utc`. Neither affects any analysis column.
+13. **Canonical v8 E26 sampled fidelity is not publication-grade** — 201 rows use the old
+    `sampled200` product-state estimator; 80 of those rows change gate count.
+    Product states are not a global projective 2-design, so the recorded values
+    cannot certify average gate fidelity. Exact/tableau rows remain unaffected.
+    A separate 2,427-row publication-gate rerun using exact/tableau verification
+    where available and global Haar sampling otherwise is frozen at
+    `v10/prepaper/e26/phase2b_full_validation_v8.csv`; it does not overwrite the
+    canonical v8 historical file.
+14. **Released SOTA coverage is unbalanced** — the custom baseline is a 21-row smoke
+    run versus 440-520 rows for full external-compiler runs. The aggregate was
+    regenerated on 2026-08-09 so inferential columns use only exact matched
+    circuits and true Holm correction; most family cells have zero pairs and
+    the available paired cells have only n=3. Descriptive means are not a
+    balanced SOTA superiority test. A separate pre-paper rerun now has the same
+    frozen 520 input keys for custom, Qiskit, Cirq, and t|ket>, with ITT failure
+    accounting under `v10/prepaper/sota/`; it is not yet part of the release
+    chain and does not retroactively validate the released aggregate.
+15. **Historical stochastic Phase-1 results may use the wrong returned
+    incumbent** — before 2026-08-10, simulated annealing, random local search,
+    and the genetic algorithm could use cancellation-potential-augmented
+    exploration fitness to choose the returned "best" circuit.  This could
+    return a larger circuit despite having visited a smaller fidelity-valid
+    circuit.  The implementations now maintain a separate minimum-gate valid
+    incumbent and are covered by `tests/test_stochastic_incumbent.py`.  Old
+    SA/RLS/GA data are retained as historical records but must not support
+    algorithm-independence or stochastic-ceiling claims without a repaired-code
+    rerun.  Greedy-only results are unaffected.
 
 ## Optimizer Naming Convention Map
 

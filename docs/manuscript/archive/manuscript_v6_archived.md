@@ -1590,7 +1590,7 @@ All experimental data supporting the findings of this study—including raw CSV 
 
 ## Code Availability Statement
 
-The complete source code is publicly available at `https://github.com/Q-research-team/q-research`. The codebase includes optimizer implementations (`src/`), experiment drivers (`experiments/`), analysis tools (`analysis/`), and reproducibility scripts (`scripts/`). The project uses Python 3.12 with dependencies pinned in `requirements.txt` and `environment.yml`. A Docker container is provided via the `Dockerfile`. Release version: v6.0.0.
+The archived draft formerly cited a placeholder repository URL that returned 404 and is not evidence of public availability. The codebase includes optimizer implementations (`src/`), experiment drivers (`experiments/`), analysis tools (`analysis/`), and reproducibility scripts (`scripts/`). The project uses Python 3.12 with dependencies pinned in `requirements.txt` and `environment.yml`. A Docker container is provided via the `Dockerfile`. Release version: v6.0.0. A real public archival URL must be assigned before any availability claim is restored.
 
 ## Competing Interests
 

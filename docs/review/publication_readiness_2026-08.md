@@ -226,7 +226,7 @@ source commit used for every primary table or a reproducible source snapshot.
 | Held-out generalization | Fails for some mechanisms | Present the failure as a boundary; do not market the model as universal |
 | Data manifest | Passing | Re-run after any canonical-data decision; do not regenerate for non-canonical corrected reruns |
 | Reproducible clean checkout | Pending final commit gate | Commit source/data/docs, then run tests/verify/figures from the resulting clean checkout |
-| Data/code availability | Repository URL corrected; no archive DOI claimed | Keep `https://github.com/StarryCode-Lang/quantum-peephole-ceiling`; add an archival DOI only after a real deposit |
+| Data/code availability | No public archive or repository URL is currently verified | Assign a real public archive URL and DOI after deposit; do not cite the former 404 placeholder |
 | Author declarations | Placeholder | Complete authors, contributions, funding, conflicts, and acknowledgements before submission |
 | Figure QA | Partial | Render all PDFs, inspect fonts/labels/captions, and ensure every figure maps to current canonical data |
 | Independent replication | Missing | Ask a separate researcher to run the clean-checkout protocol and reproduce headline tables |

@@ -201,7 +201,7 @@ def run(smoke=False, output_dir=None):
                                 "reduction": result.reduction,
                                 "fidelity": fid,
                                 "fidelity_method": fid_method,
-                                "success": bool(fid >= 0.99),
+                                "success": bool(result.reduction >= 0.05 and fid >= 0.99),
                                 "runtime_seconds": result.runtime_seconds,
                                 "seed": seed,
                                 "trial": si,

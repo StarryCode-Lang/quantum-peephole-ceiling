@@ -1,0 +1,42 @@
+{
+  "protocol_version": "1.0.0",
+  "stage": "confirmatory_execution_after_seal",
+  "sealed_input_root": "data/v10/prepaper/heldout_v2",
+  "expected_rows_per_tool": 192,
+  "required_unique_input_hashes": 192,
+  "tool_order": [
+    "custom",
+    "qiskit",
+    "cirq",
+    "tket"
+  ],
+  "tool_config": "default",
+  "worker_count": 1,
+  "timeout_seconds_per_input": 120,
+  "common_basis": [
+    "rz",
+    "sx",
+    "x",
+    "cx"
+  ],
+  "exact_fidelity_max_qubits": 10,
+  "fidelity_threshold": 0.9999999999,
+  "intention_to_treat": {
+    "retain_timeout": true,
+    "retain_error": true,
+    "retain_fidelity_unavailable": true,
+    "invalid_output_reduction_pct": 0.0
+  },
+  "analysis": {
+    "classifier_threshold": 0.5,
+    "refit_allowed": false,
+    "feature_change_allowed": false,
+    "observed_label": "qiskit_and_tket_valid_and_each_common_gate_reduction_pct_gt_1",
+    "instance_unit": "globally_unique_input_circuit_sha256",
+    "outer_cluster": "generator_family",
+    "inner_resampling_unit": "unique_input_circuit_sha256",
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20260809,
+    "combined_outer_families": 16
+  }
+}

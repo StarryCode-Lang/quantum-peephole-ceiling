@@ -25,16 +25,12 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 # --- Phase 1 Statistics modules (newly integrated) ---
 from analysis.phase1_statistics.bootstrap import bootstrap_ci as _bootstrap_ci
-from analysis.phase1_statistics.effect_size import cliffs_delta, cohens_d, effect_size_table
 from analysis.phase1_statistics.multiple_comparison import (
     benjamini_hochberg,
     holm_bonferroni,
-    fdr_control_table,
 )
 from analysis.finite_size_scaling import (
-    binder_cumulant,
     binder_cumulant_by_size,
-    estimate_critical_point,
 )
 
 
@@ -142,31 +138,116 @@ def generate_e10_figure(df):
 # Statistical analysis using phase1_statistics modules
 # ---------------------------------------------------------------------------
 
-def _run_pairwise_ttest(sub_df: pd.DataFrame, opt_a: str, opt_b: str) -> dict:
-    """Run a two-sample t-test between two optimizers."""
-    a_vals = sub_df[sub_df['optimizer'] == opt_a]['reduction'].dropna().values
-    b_vals = sub_df[sub_df['optimizer'] == opt_b]['reduction'].dropna().values
+_PAIR_KEY_CANDIDATES = (
+    'part', 'circuit_family', 'circuit_type', 'n_qubits', 'depth', 'trial', 'seed'
+)
 
-    if len(a_vals) < 2 or len(b_vals) < 2:
+
+def _paired_reductions(
+    sub_df: pd.DataFrame,
+    opt_a: str,
+    opt_b: str,
+) -> tuple[np.ndarray, np.ndarray, list[str]]:
+    """Align two optimizers on the exact circuit-condition key.
+
+    E10 evaluates every optimizer on the same generated circuit.  Treating the
+    optimizer groups as independent discards this design and gives the wrong
+    standard error.  A pivot also makes duplicate or incomplete keys visible.
+    """
+    key_cols = [column for column in _PAIR_KEY_CANDIDATES if column in sub_df.columns]
+    if not key_cols:
+        raise ValueError("E10 paired analysis requires circuit-condition key columns")
+
+    selected = sub_df[sub_df['optimizer'].isin([opt_a, opt_b])]
+    duplicate_mask = selected.duplicated(key_cols + ['optimizer'], keep=False)
+    if duplicate_mask.any():
+        raise ValueError("duplicate optimizer result for an E10 circuit-condition key")
+
+    wide = selected.pivot(index=key_cols, columns='optimizer', values='reduction')
+    if opt_a not in wide.columns or opt_b not in wide.columns:
+        return np.array([]), np.array([]), key_cols
+    paired = wide[[opt_a, opt_b]].dropna()
+    return paired[opt_a].to_numpy(), paired[opt_b].to_numpy(), key_cols
+
+
+def _run_pairwise_analysis(sub_df: pd.DataFrame, opt_a: str, opt_b: str) -> dict:
+    """Run primary Wilcoxon and sensitivity paired-t analyses for E10."""
+    a_vals, b_vals, key_cols = _paired_reductions(sub_df, opt_a, opt_b)
+
+    if len(a_vals) < 2:
         return {
             "opt_a": opt_a,
             "opt_b": opt_b,
             "p_value": np.nan,
+            "wilcoxon_statistic": np.nan,
+            "paired_t_p_value": np.nan,
             "t_statistic": np.nan,
             "n_a": len(a_vals),
-            "n_b": len(b_vals),
+            "n_b": len(a_vals),
+            "n_pairs": len(a_vals),
+            "pair_key": key_cols,
+            "design": "paired",
         }
 
-    t_stat, p_val = stats.ttest_ind(a_vals, b_vals, equal_var=False)
+    differences = a_vals - b_vals
+    if np.allclose(differences, 0.0):
+        wilcoxon_stat, wilcoxon_p = 0.0, 1.0
+        t_stat, t_p = 0.0, 1.0
+    else:
+        wilcoxon = stats.wilcoxon(
+            differences,
+            zero_method='wilcox',
+            alternative='two-sided',
+            method='auto',
+        )
+        wilcoxon_stat, wilcoxon_p = float(wilcoxon.statistic), float(wilcoxon.pvalue)
+        t_result = stats.ttest_rel(a_vals, b_vals, nan_policy='omit')
+        t_stat, t_p = float(t_result.statistic), float(t_result.pvalue)
+
+    nonzero = differences[~np.isclose(differences, 0.0)]
+    if len(nonzero):
+        ranks = stats.rankdata(np.abs(nonzero), method="average")
+        rank_biserial = float(
+            (ranks[nonzero > 0].sum() - ranks[nonzero < 0].sum())
+            / ranks.sum()
+        )
+    else:
+        rank_biserial = 0.0
+    diff_sd = float(np.std(differences, ddof=1))
+    if diff_sd > 0:
+        cohen_dz = float(np.mean(differences) / diff_sd)
+    else:
+        cohen_dz = 0.0 if np.isclose(np.mean(differences), 0.0) else float(
+            np.sign(np.mean(differences)) * np.inf
+        )
+    diff_ci = _bootstrap_ci(differences, n_bootstrap=10000, random_seed=42)
 
     return {
         "opt_a": opt_a,
         "opt_b": opt_b,
-        "p_value": float(p_val),
+        "p_value": wilcoxon_p,
+        "primary_test": "Wilcoxon signed-rank, two-sided",
+        "wilcoxon_statistic": wilcoxon_stat,
+        "paired_t_p_value": t_p,
         "t_statistic": float(t_stat),
         "n_a": len(a_vals),
         "n_b": len(b_vals),
+        "n_pairs": len(a_vals),
+        "pair_key": key_cols,
+        "design": "paired",
+        "mean_paired_difference": float(np.mean(differences)),
+        "mean_difference_ci": {
+            "ci_lower": diff_ci["ci_lower"],
+            "ci_upper": diff_ci["ci_upper"],
+        },
+        "cohen_dz": cohen_dz,
+        "matched_rank_biserial": rank_biserial,
     }
+
+
+def _run_pairwise_ttest(sub_df: pd.DataFrame, opt_a: str, opt_b: str) -> dict:
+    """Backward-compatible name; the implementation is now correctly paired."""
+    return _run_pairwise_analysis(sub_df, opt_a, opt_b)
 
 
 def generate_statistical_report(df: pd.DataFrame) -> dict:
@@ -221,19 +302,16 @@ def generate_statistical_report(df: pd.DataFrame) -> dict:
             ci_result = _bootstrap_ci(opt_sub, n_bootstrap=10000, random_seed=42)
             part_report["bootstrap_cis"][opt] = ci_result
 
-        # Pairwise t-tests and effect sizes
+        # Paired comparisons: the same circuit-condition is evaluated by every
+        # optimizer, so Wilcoxon signed-rank is primary and paired t is a
+        # sensitivity analysis.
         pairwise_results = []
         for i in range(len(optimizers)):
             for j in range(i + 1, len(optimizers)):
                 opt_a, opt_b = optimizers[i], optimizers[j]
-                a_vals = sub[sub['optimizer'] == opt_a]['reduction'].dropna().values
-                b_vals = sub[sub['optimizer'] == opt_b]['reduction'].dropna().values
-
-                if len(a_vals) < 2 or len(b_vals) < 2:
+                ttest = _run_pairwise_analysis(sub, opt_a, opt_b)
+                if ttest["n_pairs"] < 2:
                     continue
-
-                # t-test
-                ttest = _run_pairwise_ttest(sub, opt_a, opt_b)
                 comparison_name = f"{opt_a}_vs_{opt_b}"
                 part_report["pairwise_comparisons"][comparison_name] = ttest
                 pairwise_results.append({
@@ -245,23 +323,11 @@ def generate_statistical_report(df: pd.DataFrame) -> dict:
                     "n2": ttest["n_b"],
                 })
 
-                # effect sizes via phase1_statistics module
-                cd = cliffs_delta(a_vals, b_vals)
-                coh = cohens_d(a_vals, b_vals)
                 part_report["effect_sizes"][comparison_name] = {
-                    "cliffs_delta": {
-                        "delta": cd["delta"],
-                        "ci_lower": cd["ci_lower"],
-                        "ci_upper": cd["ci_upper"],
-                        "magnitude": cd["magnitude"],
-                    },
-                    "cohens_d": {
-                        "d": coh["d"],
-                        "g": coh["g"],
-                        "ci_lower": coh["ci_lower"],
-                        "ci_upper": coh["ci_upper"],
-                        "magnitude": coh["magnitude"],
-                    },
+                    "cohen_dz": ttest["cohen_dz"],
+                    "matched_rank_biserial": ttest["matched_rank_biserial"],
+                    "mean_paired_difference": ttest["mean_paired_difference"],
+                    "mean_difference_ci": ttest["mean_difference_ci"],
                 }
 
         # Multiple comparison correction (Benjamini-Hochberg & Holm-Bonferroni)
@@ -328,26 +394,18 @@ def generate_statistical_report(df: pd.DataFrame) -> dict:
         except Exception as exc:
             report["binder_cumulants_error"] = str(exc)
 
-    # ------------------------------------------------------------------
-    # Critical point estimation (using n_qubits as system size if available)
-    # ------------------------------------------------------------------
-    if 'n_qubits' in df.columns and len(df['n_qubits'].unique()) >= 3:
-        try:
-            sizes = df['n_qubits'].values
-            values = df['reduction'].values
-            control = df.get('depth', np.arange(len(df))).values
-            cp_est = estimate_critical_point(
-                sizes, control, values, model="power",
-                n_bootstrap=5000, confidence_level=0.95, random_seed=42
-            )
-            report["critical_point_estimation"] = {
-                "point_estimate": cp_est["point_estimate"],
-                "ci_lower": cp_est["ci_lower"],
-                "ci_upper": cp_est["ci_upper"],
-                "confidence_level": cp_est["confidence_level"],
-            }
-        except Exception as exc:
-            report["critical_point_estimation_error"] = str(exc)
+    # E10 is an optimizer comparison, not a finite-size critical-point design.
+    # The former code fitted reduction directly against repeated system sizes,
+    # ignored the supplied control variable, and mislabeled the extrapolated
+    # infinite-size value as a critical point.  Preserve an explicit audit note
+    # instead of emitting a scientifically meaningless estimate.
+    report["critical_point_estimation"] = {
+        "status": "not_applicable",
+        "reason": (
+            "E10 has no validated order parameter/control-parameter crossing "
+            "design; Binder/FSS inference is not warranted."
+        ),
+    }
 
     return report
 
@@ -377,21 +435,18 @@ def generate_e10_report(df):
         report.append("")
 
         # Statistical comparison using phase1_statistics
-        greedy = sub[sub['optimizer'] == 'greedy_phase1']['reduction'].values
-        hybrid = sub[sub['optimizer'] == 'hybrid_phase1_2']['reduction'].values
-
-        if len(greedy) > 0 and len(hybrid) > 0:
-            cd = cliffs_delta(greedy, hybrid)
-            coh = cohens_d(greedy, hybrid)
+        comparison = _run_pairwise_analysis(sub, 'greedy_phase1', 'hybrid_phase1_2')
+        if comparison["n_pairs"] > 0:
             report.append(
-                f"**Cliff's delta (Greedy vs Hybrid)**: {cd['delta']:+.3f} "
-                f"[{cd['ci_lower']:.3f}, {cd['ci_upper']:.3f}] "
-                f"({cd['magnitude']})"
+                f"**Paired mean difference (Greedy - Hybrid)**: "
+                f"{comparison['mean_paired_difference']:+.4f} "
+                f"[{comparison['mean_difference_ci']['ci_lower']:.4f}, "
+                f"{comparison['mean_difference_ci']['ci_upper']:.4f}]"
             )
             report.append(
-                f"**Cohen's d (Greedy vs Hybrid)**: {coh['g']:+.3f} "
-                f"[{coh['ci_lower']:.3f}, {coh['ci_upper']:.3f}] "
-                f"({coh['magnitude']})"
+                f"**Wilcoxon signed-rank p**: {comparison['p_value']:.3g}; "
+                f"paired Cohen's dz: {comparison['cohen_dz']:+.3f}; "
+                f"matched rank-biserial: {comparison['matched_rank_biserial']:+.3f}"
             )
             report.append("")
 

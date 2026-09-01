@@ -338,9 +338,17 @@ def validate_predictions(
     predictions: pd.DataFrame,
     sota_csv: str,
 ) -> Tuple[pd.DataFrame, Dict]:
-    """Validate structural predictions against SOTA actual reductions.
+    """Run an in-sample consistency check against family-level SOTA reductions.
 
-    For each (family, n_qubits), compare:
+    The hand-written rules and thresholds were derived while inspecting these
+    same SOTA families (see comments above ``predict_ceiling``).  Consequently
+    this is resubstitution, not out-of-sample validation or an unbiased estimate
+    of generalization accuracy.  The SOTA table contains one aggregate target per family.  Predictions are
+    therefore aggregated to one row per family before scoring; treating every
+    size-specific prediction as an independent target would pseudo-replicate
+    the same SOTA observation and inflate the apparent sample size.
+
+    For each family, compare:
     - Predicted optimizable (True/False) vs SOTA actual optimizable
       (actual reduction > threshold)
     - Predicted reduction range vs actual reduction
@@ -352,12 +360,13 @@ def validate_predictions(
     # Use SOTA mean reduction per family (best tool per family)
     best_sota = sota_df.loc[sota_df.groupby("circuit_family")["mean_gate_reduction"].idxmax()]
 
+    family_predictions = _aggregate_family_predictions(predictions)
     results = []
     y_true = []
     y_pred = []
     actual_threshold = 2.0  # % reduction above which we call "optimizable"
 
-    for _, pred_row in predictions.iterrows():
+    for _, pred_row in family_predictions.iterrows():
         family = pred_row["circuit_family"]
         predicted_optimizable = pred_row["predicted_optimizable"]
         predicted_reduction = pred_row["predicted_reduction_pct"]
@@ -398,13 +407,17 @@ def validate_predictions(
         results.append({
             "circuit_family": family,
             "ceiling_class": pred_row["ceiling_class"],
+            "n_prediction_instances": int(pred_row["n_prediction_instances"]),
+            "prediction_agreement": float(pred_row["prediction_agreement"]),
             "predicted_optimizable": predicted_optimizable,
             "predicted_reduction_pct": predicted_reduction,
             "actual_best_reduction_pct": actual_reduction,
             "actual_best_tool": best_tool,
             "actual_optimizable": actual_optimizable,
             "prediction_correct": (tp or tn) if actual_optimizable is not None else None,
-            "reduction_error_pct": round(reduction_error, 2) if reduction_error else None,
+            "reduction_error_pct": (
+                round(reduction_error, 2) if reduction_error is not None else None
+            ),
             "reduction_direction": reduction_direction,
             "tp": tp, "tn": tn, "fp": fp, "fn": fn,
         })
@@ -426,6 +439,12 @@ def validate_predictions(
     mcc = (tp_count * tn_count - fp_count * fn_count) / (denom ** 0.5) if denom > 0 else 0.0
 
     summary = {
+        "evaluation_design": "in_sample_resubstitution",
+        "validated_out_of_sample": False,
+        "model_selection_note": (
+            "Decision rules were derived from the same 15 SOTA families; "
+            "accuracy/F1/MCC are descriptive consistency metrics only."
+        ),
         "n_families": len(results),
         "n_with_sota_data": sum(1 for r in results if r["actual_optimizable"] is not None),
         "tp": tp_count, "tn": tn_count, "fp": fp_count, "fn": fn_count,
@@ -438,6 +457,32 @@ def validate_predictions(
     }
 
     return results_df, summary
+
+
+def _aggregate_family_predictions(predictions: pd.DataFrame) -> pd.DataFrame:
+    """Collapse size-specific rows to the family unit used by SOTA targets."""
+    required = {
+        "circuit_family", "ceiling_class", "predicted_optimizable",
+        "predicted_reduction_pct",
+    }
+    missing = required.difference(predictions.columns)
+    if missing:
+        raise ValueError(f"prediction table missing columns: {sorted(missing)}")
+
+    rows = []
+    for family, group in predictions.groupby("circuit_family", sort=True):
+        binary = group["predicted_optimizable"].astype(bool)
+        majority = bool(binary.mean() >= 0.5)
+        modes = group["ceiling_class"].mode()
+        rows.append({
+            "circuit_family": family,
+            "ceiling_class": str(modes.iloc[0]),
+            "predicted_optimizable": majority,
+            "predicted_reduction_pct": float(group["predicted_reduction_pct"].mean()),
+            "n_prediction_instances": int(len(group)),
+            "prediction_agreement": float((binary == majority).mean()),
+        })
+    return pd.DataFrame(rows)
 
 
 # ---------------------------------------------------------------------------
@@ -464,7 +509,8 @@ def compute_predictive_advantage(
     n_correctly_skipped = 0  # predicted ceiling AND SOTA also ~0%
     n_incorrectly_skipped = 0  # predicted ceiling but SOTA found reduction
 
-    for _, pred_row in predictions.iterrows():
+    family_predictions = _aggregate_family_predictions(predictions)
+    for _, pred_row in family_predictions.iterrows():
         family = pred_row["circuit_family"]
         sota_fam = sota_df[sota_df["circuit_family"] == family]
         if sota_fam.empty:
@@ -485,6 +531,12 @@ def compute_predictive_advantage(
 
     speedup = total_sota_time / max(total_sota_time - skipped_time, 0.001)
     return {
+        "evaluation_design": "in_sample_counterfactual_proxy",
+        "validated_out_of_sample": False,
+        "runtime_unit_note": (
+            "Uses family-level means averaged across available tool/config cells, "
+            "not measured end-to-end wall time on a held-out deployment."
+        ),
         "total_sota_runtime_s": round(total_sota_time, 4),
         "skipped_runtime_s": round(skipped_time, 4),
         "saved_runtime_s": round(total_sota_time - (total_sota_time - skipped_time), 4),
@@ -514,7 +566,8 @@ def main():
                         help="Validate predictions against SOTA results")
     args = parser.parse_args()
 
-    output_dir = PROJECT_ROOT / "data" / "v6" / "sota_benchmark"
+    benchmark_dir = PROJECT_ROOT / "data" / "v6" / "sota_benchmark"
+    output_dir = benchmark_dir / "derived"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Step 1: Generate predictions
@@ -529,7 +582,7 @@ def main():
     # Step 2: Validate against SOTA (if data available)
     sota_csv = args.sota_csv
     if sota_csv is None:
-        sota_csv = str(output_dir / "aggregated" / "sota_comparison_aggregated.csv")
+        sota_csv = str(benchmark_dir / "aggregated" / "sota_comparison_aggregated.csv")
 
     if args.validate or Path(sota_csv).exists():
         print(f"\nValidating predictions against SOTA data: {sota_csv}")
@@ -539,7 +592,7 @@ def main():
             results_df.to_csv(results_path, index=False)
             print(f"Validation results: {len(results_df)} rows -> {results_path}")
 
-            print(f"\n=== Prediction Accuracy ===")
+            print(f"\n=== In-Sample Rule Consistency (Not Held-Out Accuracy) ===")
             print(f"  Families with SOTA data: {summary['n_with_sota_data']}")
             print(f"  TP={summary['tp']} TN={summary['tn']} FP={summary['fp']} FN={summary['fn']}")
             print(f"  Precision: {summary['precision']}")
@@ -549,7 +602,7 @@ def main():
             print(f"  MCC:       {summary['mcc']}")
 
             # Step 3: Compute predictive advantage (time saved)
-            print(f"\n=== Predictive Advantage (Time Saved) ===")
+            print(f"\n=== In-Sample Counterfactual Runtime Proxy ===")
             adv = compute_predictive_advantage(predictions, sota_csv)
             if adv:
                 print(f"  Total SOTA runtime: {adv['total_sota_runtime_s']}s")

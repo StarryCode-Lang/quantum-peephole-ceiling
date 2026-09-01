@@ -484,28 +484,43 @@ def run(mode: str = "full", families: list[str] | None = None,
     print("\n=== Ablation Key Result (Wilcoxon signed-rank) ===")
     for opt in ["greedy_phase1_lbl", "commutation_phase2a"]:
         s = df[df["optimizer"] == opt]
-        orig = s[s["listing_model"] == "original"]["reduction"].values
-        shuf = s[s["listing_model"].str.startswith("shuffle_")]["reduction"].values
-        wcl = s[s["listing_model"] == "wcl"]["reduction"].values
-        if len(orig) >= 5 and len(shuf) >= 5:
-            min_len = min(len(orig), len(shuf))
-            diff = orig[:min_len] - shuf[:min_len]
+        pair_keys = ["circuit_family", "param_n", "trial", "seed"]
+        orig_rows = s[s["listing_model"] == "original"][pair_keys + ["reduction"]]
+        shuf_rows = (s[s["listing_model"].str.startswith("shuffle_")]
+                     .groupby(pair_keys, as_index=False)["reduction"].mean())
+        wcl_rows = s[s["listing_model"] == "wcl"][pair_keys + ["reduction"]]
+        orig_shuf = orig_rows.merge(shuf_rows, on=pair_keys, how="inner",
+                                    validate="one_to_one",
+                                    suffixes=("_original", "_shuffle_mean"))
+        orig_wcl = orig_rows.merge(wcl_rows, on=pair_keys, how="inner",
+                                   validate="one_to_one",
+                                   suffixes=("_original", "_wcl"))
+        if len(orig_shuf) != len(orig_rows) or len(orig_wcl) != len(orig_rows):
+            raise ValueError(f"Unmatched ablation rows for optimizer {opt}")
+        orig = orig_shuf["reduction_original"].to_numpy()
+        shuf = orig_shuf["reduction_shuffle_mean"].to_numpy()
+        if len(orig_shuf) >= 5:
+            diff = orig - shuf
             if np.any(diff != 0):
-                w_stat, p_val = sp_stats.wilcoxon(orig[:min_len], shuf[:min_len], alternative="two-sided")
+                w_stat, p_val = sp_stats.wilcoxon(orig, shuf, alternative="two-sided")
             else:
                 w_stat, p_val = 0.0, 1.0
-            cohens_d = ((orig.mean() - shuf.mean()) /
-                        np.sqrt((orig.var() + shuf.var()) / 2))
+            diff_sd = diff.std(ddof=1)
+            if np.isclose(diff_sd, 0):
+                cohens_d = 0.0 if np.isclose(diff.mean(), 0) else float(np.sign(diff.mean()) * np.inf)
+            else:
+                cohens_d = diff.mean() / diff_sd
             print(f"  {opt}: orig={orig.mean():.6f} vs shuf={shuf.mean():.6f} "
-                  f"W={w_stat:.0f} p={p_val:.4e} d={cohens_d:.3f}")
-        if len(orig) >= 5 and len(wcl) >= 5:
-            min_len = min(len(orig), len(wcl))
-            diff = orig[:min_len] - wcl[:min_len]
+                  f"W={w_stat:.0f} p={p_val:.4e} dz={cohens_d:.3f}")
+        if len(orig_wcl) >= 5:
+            orig2 = orig_wcl["reduction_original"].to_numpy()
+            wcl = orig_wcl["reduction_wcl"].to_numpy()
+            diff = orig2 - wcl
             if np.any(diff != 0):
-                w_stat, p_val = sp_stats.wilcoxon(orig[:min_len], wcl[:min_len], alternative="two-sided")
+                w_stat, p_val = sp_stats.wilcoxon(orig2, wcl, alternative="two-sided")
             else:
                 w_stat, p_val = 0.0, 1.0
-            print(f"  {opt}: orig={orig.mean():.6f} vs wcl={wcl.mean():.6f} "
+            print(f"  {opt}: orig={orig2.mean():.6f} vs wcl={wcl.mean():.6f} "
                   f"W={w_stat:.0f} p={p_val:.4e}")
 
     return df

@@ -4,7 +4,7 @@ E10 Phase-2b Validation: Template Matching on Canonical Circuit Suite
 
 Review F1 (FATAL): The project's strongest theoretical results —
 Theorem 7 (artificial family, >= 1/6 = 16.7% reduction) and
-Theorem 9 (BV oracle family, >= n/(4.5n+4) reduction) — are proven for
+Theorem 9 (all-ones BV construction, achieved 2n/(3n+2) reduction) — is scoped to
 Phase-2b (template matching: H-CX-H direction reversal + HH cancellation),
 but the canonical E10 experiment only ran Phase-2a (commutation rewriter).
 This script closes that theory-experiment gap by running Phase2bTemplateMatcher
@@ -12,7 +12,7 @@ on the same circuit families and sizes used by E10.
 
 What this script does:
   1. Runs Phase2bTemplateMatcher (template_matcher.py) on BV oracle circuits
-     across sizes n = 2..10, validating Thm 9's bound n/(4.5n+4).
+across sizes n = 2..10, checking the corrected constructed reduction.
   2. Runs Phase-1 (Greedy), Phase-2a (CommutationRewriter), Phase-2b
      (TemplateMatcher), and a Hybrid (Phase-1 + Phase-2a + Phase-2b) on
      the full E10 circuit suite (random Universal, Brickwork, Clifford,
@@ -151,7 +151,7 @@ REAL_CIRCUIT_GENERATORS = {
     "HardwareEfficient": [make_hardware_efficient],
 }
 
-# Extended size range for BV to validate the asymptotic bound n/(4.5n+4).
+# Extended size range for the all-ones BV constructive check.
 BV_SIZES_FOR_THEORY = list(range(2, 11))  # n = 2..10
 SIZES = [3, 4, 5, 6, 7]
 
@@ -326,15 +326,12 @@ def run_e10_phase2b(n_trials_random: int = 100):
     bv_theory = []
     for n in BV_SIZES_FOR_THEORY:
         original_gates = 3 * n + 2  # n H + 1 X + 1 H + n CX + n H
-        rigorous_bound = n / (4.5 * n + 4)
-        idealized = (2 * n - 2) / (3 * n) if n >= 2 else 0.0
+        achieved_bound = 2 * n / (3 * n + 2)
         bv_theory.append({
             "n": n,
             "original_gate_count_theory": original_gates,
-            "thm9_rigorous_lower_bound": rigorous_bound,
-            "thm9_idealized_upper_bound": idealized,
-            "thm9_rigorous_pct": 100.0 * rigorous_bound,
-            "thm9_idealized_pct": 100.0 * idealized,
+            "thm9_constructed_reduction": achieved_bound,
+            "thm9_constructed_pct": 100.0 * achieved_bound,
         })
     bv_theory_df = pd.DataFrame(bv_theory)
     theory_path = output_dir / f"e10_phase2b_bv_theory_{timestamp}.csv"
@@ -358,7 +355,10 @@ def run_e10_phase2b(n_trials_random: int = 100):
         "theory_file": theory_path.name,
         "theorems_validated": {
             "Thm_7_artificial": ">= 1/6 = 16.7% (artificial family, not run here)",
-            "Thm_9_BV_oracle": f">= n/(4.5n+4), validated for n in {BV_SIZES_FOR_THEORY}",
+            "Thm_9_BV_oracle": (
+                f"all-ones construction 2n/(3n+2), checked for n in "
+                f"{BV_SIZES_FOR_THEORY}; no global optimality claim"
+            ),
         },
         "timestamp": datetime.now().isoformat(),
         "review_fix": "F1 (FATAL): Phase-2b canonical validation",
@@ -374,7 +374,7 @@ def run_e10_phase2b(n_trials_random: int = 100):
     bv = df[(df["circuit_family"] == "BV") & (df["optimizer"] == "template_phase2b")]
     if len(bv):
         for _, r in bv.sort_values("param_n").iterrows():
-            bound = r["param_n"] / (4.5 * r["param_n"] + 4)
+            bound = 2 * r["param_n"] / (3 * r["param_n"] + 2)
             meets = "PASS" if r["reduction"] >= bound - 1e-9 else "CHECK"
             print(f"  BV(n={int(r['param_n'])}): reduction={r['reduction']:.4f} "
                   f"bound={bound:.4f} [{meets}]")

@@ -278,18 +278,27 @@ def run(seeds: list[int] | None = None, n_trials: int | None = None,
         else:
             print(f"  {opt}: insufficient groups for ANOVA")
 
-    # Pairwise optimizer comparison (averaged over seeds)
-    print("\n=== Pairwise optimizer comparison (pooled) ===")
+    # Pairwise optimizer comparison on the same generated circuit instances.
+    print("\n=== Pairwise optimizer comparison (paired, pooled) ===")
+    pair_keys = ["seed_index", "seed_base", "trial", "seed"]
     for i, opt1 in enumerate(OPTIMIZER_NAMES):
         for opt2 in OPTIMIZER_NAMES[i+1:]:
-            d1 = df[df["optimizer"] == opt1]["reduction"]
-            d2 = df[df["optimizer"] == opt2]["reduction"]
-            t_stat, p_val = sp_stats.ttest_ind(d1, d2, equal_var=False)
-            pooled_std = np.sqrt((d1.var() + d2.var()) / 2)
-            hedges_g = ((d1.mean() - d2.mean()) / pooled_std
-                        if pooled_std > 0 else 0.0)
+            a = df[df["optimizer"] == opt1][pair_keys + ["reduction"]]
+            b = df[df["optimizer"] == opt2][pair_keys + ["reduction"]]
+            paired = a.merge(b, on=pair_keys, how="inner", validate="one_to_one",
+                             suffixes=("_a", "_b"))
+            if len(paired) != len(a) or len(paired) != len(b):
+                raise ValueError(f"Unmatched optimizer rows: {opt1} vs {opt2}")
+            d1 = paired["reduction_a"].to_numpy()
+            d2 = paired["reduction_b"].to_numpy()
+            t_stat, p_val = sp_stats.ttest_rel(d1, d2)
+            differences = d1 - d2
+            diff_sd = differences.std(ddof=1)
+            hedges_g = (0.0 if np.isclose(diff_sd, 0) and np.isclose(differences.mean(), 0)
+                        else float(np.sign(differences.mean()) * np.inf) if np.isclose(diff_sd, 0)
+                        else differences.mean() / diff_sd)
             print(f"  {opt1} vs {opt2}: t={t_stat:.3f} p={p_val:.4e} "
-                  f"Hedges_g={hedges_g:.3f}")
+                  f"Cohen_dz={hedges_g:.3f} n_pairs={len(paired)}")
 
     return df
 

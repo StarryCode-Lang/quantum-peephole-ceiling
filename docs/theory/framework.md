@@ -1,8 +1,10 @@
 # Theoretical Framework: Structural Ceilings and Context-Dependent Optimization in Quantum Circuit Peephole Rewriting
 
-**Version**: 5.4.0 (Consolidated)
-**Date**: 2026-06-13
-**Status**: Central framework document. Definitions D1-D10, unified conceptual architecture, complexity classification, and cross-reference map.
+**Version**: 5.4.2 (Metric-audit correction)
+**Date**: 2026-08-11
+**Status**: Conceptual framework only. Claim admissibility is controlled by
+`prepaper_theory_gate_2026-08-10.md`; detailed proof status is controlled by
+`formal_results.md`. Conflicts must be resolved in favour of the theory gate.
 
 ---
 
@@ -19,13 +21,13 @@ For detailed formal results, see the companion document `formal_results.md` whic
 
 > **Notation**: Phase-2a refers to commutation-based rewriting (implemented in `commutation_rewriter.py`). Phase-2b refers to template-assisted rewriting (implemented in `template_matcher.py` and evaluated at full scale in the v2 validation dataset). When we write "Phase-2" without a suffix, we refer to Phase-2a; Phase-2b results are always labeled explicitly.
 
-> **Honest assessment of theoretical contribution (updated 2026-06-13).** Of the 11 labeled theorems, 3--4 serve as primary theoretical contributions, with the remaining results providing formal backing for the empirical patterns observed:
-> - **Thm 2** (Phase-1 Reduction Ceiling): The core structural result. The INSERTION cascade gap is now **resolved** (bounded version) via Thm 2c/2d, which prove that INSERTION cannot achieve net reduction beyond the Phase-2 (a+b) action space.
-> - **Thm 8 Parts a--b** (Haar-random incompressibility): Standard but non-trivial dimension-counting; however, it applies to Haar-random *unitaries*, not the random *gate sequences* used in experiments (see caveat below).
+> **Audit correction (2026-08-09).** The earlier contribution count was overstated:
+> - **Thm 2(a)** proves only the Greedy no-action predicate.  The general stochastic ceiling is open; former Thm 2d uses an invalid per-wire factorization for multi-qubit gates.
+> - **Thm 5** has an incomplete concentration proof, the former general **Thm 6** has a concrete generator counterexample, and **Thm 8** is withdrawn because its premises are incompatible.
 > - **Thm 7** (Explicit Phase-2a advantage): Constructive but uses an artificial circuit family.
 > - **Thm 9** (Phase-2b advantage for BV oracle circuits): Proves $\Omega(1)$ Phase-2b advantage for the natural Bernstein--Vazirani oracle family, strengthening Thm 7 from artificial to natural circuits.
 >
-> The remaining theorems are supporting: Thm 1(a) (birthday-paradox calculation; constants corrected and directly validated by E30 on 2026-08-06), Thm 1(b) (listing-model structural result, important for methodology), Thm 2c/2d (INSERTION cascade closure), Lemma 3 (1-line associativity), Lemma 4 (trivially narrow special case), Thm 5 (standard McDiarmid application), Thm 6 (validated by E23 on 160 AG-canonical Clifford circuits), Thm 8 Part c (trivially true for any circuit). They provide formal backing but are not themselves novel contributions.
+> At present, the defensible theory consists of elementary/restricted structural results plus the explicit Thm 7/9 constructions.  Empirical regularities must not be promoted to universal algorithm-independent laws.
 
 ---
 
@@ -52,13 +54,26 @@ Throughout this document and its companions, we use the following standard notat
 
 ### D1–D4: Circuit and Optimization Basics
 
-**Definition 1 (Quantum Circuit).** A quantum circuit $C$ is a sequence of quantum gates $C = (g_1, g_2, \ldots, g_m)$ where each $g_i \in \mathcal{G}$ is drawn from a gate set $\mathcal{G}$ acting on $n$ qubits. The **size** of the circuit is $|C| = m$.
+**Definition 1 (Project circuit scope).** A circuit $C$ is a finite sequence of
+unitary gates $C=(g_1,\ldots,g_m)$ from a stated gate set $\mathcal G$ acting on
+a fixed register of $n$ qubits. The size is $|C|=m$. Unless a result explicitly
+says otherwise, this framework excludes measurement, reset, classical control,
+dynamic branches, changing ancilla allocation, and unbound symbolic parameters.
+Claims about those models require a separate semantic and cost contract.
 
-**Definition 2 (Unitary Equivalence).** Two circuits $C$ and $C'$ are **unitarily equivalent**, denoted $C \equiv C'$, if they implement the same unitary transformation: $U(C) = U(C')$.
+**Definition 2 (Project unitary equivalence).** Two in-scope circuits are
+equivalent, denoted $C\equiv C'$, when their unitaries agree up to a global
+phase. Operationally, the frozen numerical contract uses average gate fidelity
+and declares exact equivalence only when its stated tolerance is met. Sampled
+checks are probabilistic evidence, not symbolic parameterized equivalence.
 
 **Definition 3 (Peephole Optimization).** A **peephole optimization** is a local transformation $T$ that replaces a contiguous subsequence (window) $W \subseteq C$ with $W'$ such that $W \equiv W'$ and $|W'| \le |W|$.
 
-**Definition 4 (Phase 1 Optimizer).** A **Phase 1 optimizer** only considers peephole windows of size $|W| = 2$ (adjacent gate pairs) and applies transformations that reduce gate count by cancellation or merging. See Theorem 2 for the proof that all Phase-1 optimizers share the same action space.
+**Definition 4 (Adjacent Greedy subsystem).** The implemented adjacent Greedy
+subsystem considers size-two listing-adjacent pairs and applies its stated
+cancellation/merge predicates. Its initial action set is Definition 6. SA, RLS,
+and GA additionally traverse neutral or expanding moves and therefore do not
+share this action space; the former algorithm-independence statement is refuted.
 
 ### D5–D7: Phase 2 and Action Spaces
 
@@ -87,6 +102,31 @@ Conjecture C2 states that $\Gamma(C) = \Omega(1)$ for specific circuit families.
 $$F_{\text{avg}}(C, C') = \frac{|\text{Tr}(U^\dagger U')|^2 + d}{d^2 + d}$$
 where $d = 2^n$ and $U, U'$ are the unitaries implemented by $C, C'$.
 
+### D11: Executable Equivalence-Certificate Contract
+
+**Definition 11 (Equivalence certificate).** An executable equivalence check
+returns `(method, status, scope, threshold, fidelity, uncertainty, evidence)`,
+implemented by `src/equivalence.py`. Its current scope is fixed-width, fully
+bound, unitary circuits compared up to global phase. Evidence classes are kept
+distinct:
+
+1. `exact_structural`: identical supported Qiskit circuit syntax;
+2. `exact_clifford`: tableau equality beyond the dense-unitary budget;
+3. `numerical_unitary`: dense-operator average gate fidelity within that budget;
+4. `sampled_global_haar`: a Monte Carlo estimate with sample count and standard
+   error, labelled `estimated_*`, never symbolic or exact;
+5. `heuristic`: structural similarity only, never accepted as semantic evidence;
+6. `unavailable`: no supported certificate, which fails closed.
+
+Free parameters require a symbolic proof system or a predeclared,
+probability-qualified parameter-domain protocol. Finite bindings are instances,
+not a proof of parameterized equivalence. Measurement, reset, initialization,
+classical bits/conditions, and dynamic control flow require observational or
+channel semantics that are not implemented here; they return `unavailable`
+even for identical program text. The contract therefore makes no claim of
+symbolic completeness, partial-initialization equivalence, or support for
+ancilla allocation/discard.
+
 ### Additional Definitions: Formal Decision Problems
 
 **Definition A1 (Circuit Optimization Decision Problem, CODP).**
@@ -97,7 +137,13 @@ where $d = 2^n$ and $U, U'$ are the unitaries implemented by $C, C'$.
 > **Input**: Two quantum circuits $C$ and $C'$, and a tolerance $\epsilon > 0$.
 > **Question**: Does $C \equiv_\epsilon C'$ hold?
 
-Unitary equivalence up to tolerance $\epsilon$: $C \equiv_\epsilon C'$ if $\| U - U' \|_\diamond \le \epsilon$, where $\| \cdot \|_\diamond$ is the diamond norm.
+Channel equivalence up to tolerance $\epsilon$: $C \equiv_\epsilon C'$ if
+$\|\mathcal{U}-\mathcal{U}'\|_\diamond \le \epsilon$, where
+$\mathcal{U}(\rho)=U\rho U^\dagger$. The diamond norm applies to channels,
+not directly to the matrix difference $U-U'$, and therefore ignores global
+phase. A complexity classification additionally requires an explicit
+inverse-polynomial YES/NO promise gap; Definitions A1--A2 alone are problem
+schemas, not complete promise-problem specifications.
 
 ---
 
@@ -113,9 +159,9 @@ Unitary equivalence up to tolerance $\epsilon$: $C \equiv_\epsilon C'$ if $\| U 
 
 3. **What the framework does NOT claim.** The framework does not discover new quantum phenomena, prove lower bounds on quantum circuit complexity, or establish connections to quantum gravity, holography, or other areas of fundamental physics. The "structural ceiling" is a limit on a specific class of *classical algorithms* (peephole rewriters) applied to a specific *data structure* (gate sequences). It should not be confused with circuit complexity lower bounds (which concern the minimum number of gates needed to represent a unitary, regardless of algorithm).
 
-4. **Critical caveat: Haar-random unitaries vs. random gate sequences.** Theorem 8 proves incompressibility for Haar-random *unitaries*, but all experiments use random *gate sequences* of depth d=poly(n). For n=10, d=50, the circuit has ~500 gates while the Haar-random complexity threshold is ~4^n/n^2 $\approx$ 10,486 gates. Random gate sequences at these depths produce unitaries far from Haar-random. Therefore, Thm 8's bounds do not directly explain the experimental results -- the empirical ~0% reduction on random circuits is explained by the combinatorial sparsity of inverse pairs (Thm 1), not by Haar-random incompressibility. Thm 8 provides a *complementary* information-theoretic argument for the asymptotic regime that is not reached in our experiments. Note: The empirical optimization desert observed in E1-E5 is explained by Theorem 1 (combinatorial sparsity of inverse pairs), not by Theorem 8 (which applies to Haar-random unitaries, a regime not reached in our experiments). Corollary 8.1 provides a complementary information-theoretic perspective for the asymptotic regime.
+4. **Haar argument withdrawn.** Former Theorem 8 assumed both an exact polynomial-size implementation and, with high probability, complexity larger than that implementation. Its premises are incompatible, so it supplies no incompressibility result. The E1--E5 behavior is instead a generator- and Greedy-predicate observation about sparse listing-adjacent inverse pairs.
 
-5. **Appropriate interpretation.** The framework's value lies in its systematic empirical methodology (96,289 controlled result rows across 37 canonical datasets; `release/release_manifest.json`) and its unification of several known observations (adjacent cancellation limits, commutation-based advantage, compiler comparisons) into a coherent, representation-conditioned model. The theorems provide support for selected empirical patterns, but the patterns themselves are about *software behavior* (compiler optimization passes), not *new physical phenomena*.
+5. **Appropriate interpretation.** The framework's value lies in its systematic empirical methodology (96,205 active-canonical rows across 35 datasets; two additional manifest entries are superseded provenance) and its unification of several known observations into a representation-conditioned software model. Row count is not a unique-benchmark count or a priority proof.
 
 This framing is not a limitation but a clarification: the framework occupies a well-defined niche at the intersection of quantum software engineering and combinatorial optimization, and its claims should be evaluated accordingly.
 
@@ -202,7 +248,12 @@ Phase-2a (commutation rewriting) provides additional reduction only when:
 
 2. **Layer-by-layer listing (LBL):** The circuit is generated layer by layer, with one gate per qubit per layer. Gates on the same qubit $q$ at layers $L$ and $L+1$ are separated by $n-1$ intervening gates from other qubits. This is the model used by our `UniversalGenerator` (`src/circuits/generator_v2.py`).
 
-**Theorem 1(b) (formal statement).** Under LBL with $n \ge 2$, the Phase-1 action space is structurally empty: $\mathcal{S}_1(C) = \emptyset$ for every circuit $C$. Consequently, $R_1(C) = 0$ for every Phase-1 optimizer, regardless of the circuit's gate content.
+**Observation 1(b) (formal statement).** Under the stated LBL generator with
+$n\ge2$, the implemented adjacent Greedy action set is empty. Consequently
+Greedy returns zero reduction. This does not imply zero reduction for an
+optimizer whose move closure includes SWAP, COMMUTATION, or INSERTION; the
+three-gate counterexample in `tests/test_stochastic_incumbent.py` refutes that
+generalization.
 
 **Proof sketch.** Under LBL, the gate on qubit $q$ at layer $L$ is at listing index $L \cdot n + q$. The next gate on the same qubit is at index $(L+1) \cdot n + q$, a gap of $n \ge 2$. Since Phase-1 requires listing adjacency (gap = 1) on the same qubit(s), no Phase-1 action is possible.
 
@@ -239,15 +290,27 @@ We study the following problems (see Definitions A1--A2 above for formal definit
 
 ### Section 1: Known Results
 
-#### 1.1 Circuit Identity Testing is QMA-hard
+#### 1.1 Standard Non-Identity/Non-Equivalence Check versus this document's CIT schema
 
-**Result** [Janzing, Wocjan & Beth, 2003; Kempe, Kitaev & Regev, 2006]. CIT is QMA-hard.
+**External result** [Janzing, Wocjan & Beth, 2003/2005]. The standard promise
+problem **Non-Identity Check** (YES when a circuit is far from every
+global-phase identity, NO when it is close) is QMA-complete; the work also
+treats a promise version of non-equivalence checking. Its norm, phase quotient,
+thresholds, and YES/NO orientation are part of the theorem.
 
-**Proof idea.** Reduce from the $k$-Local Hamiltonian problem. Given a Hamiltonian $H = \sum_{i=1}^m H_i$ on $n$ qubits with each $H_i$ acting on at most $k$ qubits, the ground-state energy problem is QMA-complete for $k \ge 2$. Kitaev's circuit-to-Hamiltonian construction builds a history-state circuit $C_H$ that encodes the Hamiltonian's spectrum. Deciding whether two history-state circuits are equivalent up to tolerance $\epsilon$ requires estimating the ground-state energy gap, which is QMA-hard.
+**Scope correction.** Definition A2 asks a bare "are these channels close?"
+question and does not state the complementary promise case or gap. It is not
+therefore licensed to inherit the QMA-complete label merely by being named
+"CIT". The earlier history-state paragraph was not a reduction and is
+withdrawn.
 
-**Status**: [PROVEN] -- the QMA-hardness of CIT is a standard result in quantum complexity theory.
+**Status**: [STANDARD EXTERNAL RESULT, BUT NOT YET A CLASSIFICATION OF A2].
 
-**Implication for CODP.** Since CIT is the special case $r = 0$ of CODP, CODP is at least as hard as CIT. However, this only proves *hardness*, not *completeness*: CODP may be harder than QMA (e.g., it may require counting or optimization over witnesses).
+**No current implication for CODP.** CODP restricts $r\in(0,1]$; even if one
+allowed $r=0$, the input circuit itself would be a trivial witness. Thus CIT is
+not the $r=0$ special case of CODP and no QMA-hardness reduction follows. CODP
+hardness remains open pending an explicit promise-preserving size-gap
+reduction.
 
 #### 1.2 Phase-1 Conflict Resolution is Polynomial-Time Solvable
 
@@ -259,13 +322,22 @@ We study the following problems (see Definitions A1--A2 above for formal definit
 
 **Implication.** Phase-1 adjacent-pair selection is computationally tractable. The greedy scan computes a maximal (not necessarily maximum) matching, achieving at least a 1/2-approximation in the worst case and the exact optimum when conflicts are absent (Lemma 4). For circuits where optimal conflict resolution is needed, an exact polynomial-time maximum matching algorithm can be substituted.
 
-#### 1.3 Clifford Circuit Optimization is Efficient
+#### 1.3 Clifford Equivalence Is Efficient; Optimal Synthesis Is Separate
 
-**Result** [Gottesman, 1997; Aaronson & Gottesman, 2004]. For Clifford circuits (generated by $\{H, S, \text{CNOT}\}$), CIT is solvable in polynomial time $O(n^3)$ via the stabilizer formalism. Optimal reduction to a normal form (e.g., CNOT-H-S decomposition) is also polynomial.
+**Result** [Gottesman, 1997; Aaronson & Gottesman, 2004]. For Clifford circuits
+(generated by $\{H,S,\mathrm{CNOT}\}$), exact equivalence up to global phase is
+decidable in polynomial time using a stabilizer/tableau representation.
 
-**Status**: [PROVEN] -- the Gottesman-Knill theorem provides an explicit algorithm.
+**Status**: [PROVEN FOR EQUIVALENCE/SIMULATION]. Gottesman--Knill does not by
+itself prove that minimum-gate or minimum-depth Clifford synthesis is
+polynomial-time.
 
-**Implication.** The hardness of CODP is *not* uniform across circuit families. Clifford circuits are efficiently optimizable because their unitary group (the Clifford group) has a polynomial-size presentation. For non-Clifford circuits (e.g., containing $T$ gates or continuous rotations), no such presentation is known, and optimization is believed to be hard.
+**Implication.** Efficient semantic equivalence verification can make a
+proposed Clifford optimization easy to *check*, but it does not make the search
+for a globally minimum circuit easy. The complexity of CODP under a precise
+Clifford gate basis, cost metric, ancilla policy, connectivity, and promise gap
+must be proved separately; the earlier claim "Clifford CODP is in P" is
+withdrawn.
 
 #### 1.4 Solovay-Kitaev Provides Approximate Synthesis
 
@@ -283,17 +355,23 @@ The Solovay-Kitaev algorithm constructs such a circuit in classical polynomial t
 
 ### Section 2: Conjectured Results
 
-#### 2.1 CODP is QMA-hard
+#### 2.1 Is CODP QMA-hard?
 
-**Conjecture** (OP1). CODP is QMA-hard.
+**Open question** (OP1). Is CODP QMA-hard under a fully specified promise and
+cost model?
 
-**Evidence.** CIT is QMA-hard and CIT $\le_p$ CODP. The reduction from $k$-Local Hamiltonian to CODP requires showing that the history-state circuit $C_H$ has a shorter equivalent iff the Hamiltonian instance is YES. The circuit-to-Hamiltonian construction yields circuits of size $O(n \cdot \text{poly}(m))$; the gap $\Delta = \Omega(1/\text{poly}(n))$ should translate to a detectable difference in minimal circuit size.
+**Evidence status.** Non-Identity Check is QMA-hard, but no valid reduction to CODP is established here. The zero-size target reverses the usual identity/non-identity promise orientation, while $r=0$ is trivial under the present size convention. A reduction from $k$-Local Hamiltonian would need to prove that the history-state construction has a shorter equivalent exactly in the intended promise case and preserve both the channel-distance and circuit-size gaps; no such proof is currently available.
 
 **Obstruction.** The history-state circuit has a very specific structure (Feynman-Kitaev clock, controlled operations). It is not known whether peephole rewrite rules can exploit this structure to find spurious reductions on NO instances. A full proof must rule out "false positives" from bounded-window rewrites.
 
 #### 2.2 No Polynomial-Time Constant-Factor Approximation
 
-**Conjecture** (OP2). For any constant $\varepsilon > 0$, no polynomial-time algorithm approximates CODP within factor $(1 - \varepsilon)$ unless $\text{P} = \text{NP}$ (or $\text{BQP} = \text{QMA}$).
+**Withdrawn conjectural formulation** (OP2). The earlier multiplicative
+approximation claim was not supported by a reduction and is ill-defined when
+the optimum cost or achievable reduction is zero. The admissible question is:
+under a fixed gate set, metric, ancilla/connectivity policy, and additive or
+gap approximation objective, what approximation guarantees or hardness bounds
+hold for sequential circuit rewriting?
 
 **Evidence.** The Phase-1 subproblem (adjacent pair selection) is polynomial-time solvable via maximum matching (Proposition 1, corrected). However, the full CODP includes commutation rewriting, which dynamically changes the conflict graph. Whether the dynamic optimization problem is APX-hard is unknown. For the static Phase-1 problem on bounded-degree conflict graphs, greedy matching achieves a constant-factor approximation.
 
@@ -305,7 +383,9 @@ The Solovay-Kitaev algorithm constructs such a circuit in classical polynomial t
 
 **Evidence.**
 - **Treewidth**: Circuits of treewidth $t$ can be optimized via dynamic programming on the tree decomposition in time $O(f(t) \cdot \text{poly}(|C|))$. For $t = O(\log n)$, this is quasi-polynomial. For $t = O(1)$, it is polynomial.
-- **Non-Clifford gates**: Each $T$ gate or continuous rotation introduces a continuous parameter that cannot be handled by the discrete stabilizer formalism. The number of non-Clifford gates is a natural parameter; hardness in this parameter is consistent with the known hardness of CIT for non-Clifford circuits.
+- **Non-Clifford gates**: Each $T$ gate or continuous rotation leaves the pure
+  stabilizer formalism. The number of non-Clifford gates is a natural
+  parameter, but this observation alone proves no CODP hardness result.
 
 **Status**: [CONJECTURE] -- no FPT algorithm has been published for circuit optimization parameterized by treewidth, though the general approach is standard.
 
@@ -326,8 +406,8 @@ The Solovay-Kitaev algorithm constructs such a circuit in classical polynomial t
 **Open Problem 3.2.1.** Is CODP in QMA? That is, given a circuit $C$ and a claimed reduction $C'$, can a quantum verifier efficiently check that $C \equiv_\epsilon C'$ and $|C'| \le (1-r)|C|$?
 
 - Checking $|C'| \le (1-r)|C|$ is trivial.
-- Checking $C \equiv_\epsilon C'$ is CIT, which is QMA-hard but *also* in QMA (the witness is the state on which the circuits differ, if they differ). Therefore CIT is QMA-complete.
-- CODP is in QMA if the witness includes both the reduced circuit $C'$ and the proof of equivalence. However, $C'$ may be exponentially large to write down, so the witness size is an issue.
+- A state on which two circuits differ witnesses **non-equivalence**, not the universal closeness condition $C \equiv_\epsilon C'$. The quantifier direction therefore does not give the claimed QMA verifier for equivalence.
+- A polynomial classical description of $C'$ can witness the size bound, but this alone does not efficiently certify worst-case channel-distance closeness. Membership of CODP in QMA is open in this project.
 
 **Open Problem 3.2.2.** Does a quantum computer provide any advantage for circuit optimization? That is, is there a BQP algorithm for CODP that outperforms the best classical algorithm?
 
@@ -352,16 +432,17 @@ The Solovay-Kitaev algorithm constructs such a circuit in classical polynomial t
 
 | Problem | Restriction | Complexity | Status | Reference |
 |---------|------------|------------|--------|-----------|
-| CIT | General circuits | QMA-complete | [PROVEN] | Janzing et al., 2003; Kempe et al., 2006 |
-| CIT | Clifford circuits | P | [PROVEN] | Gottesman-Knill theorem |
+| Non-Identity / Non-Equivalence Check | Standard general-circuit promise formulation | QMA-complete | [EXTERNAL RESULT; precise norm/gap/orientation required] | Janzing et al., 2003/2005 |
+| A2 CIT schema | General circuits | Unclassified as written | [PROMISE GAP/ORIENTATION MISSING] | This audit |
+| Exact equivalence | Clifford circuits | P | [PROVEN] | Stabilizer/tableau formalism |
 | CIT | Stabilizer states | P | [PROVEN] | Aaronson & Gottesman, 2004 |
-| CODP | General circuits | QMA-hard, in QMA? | [CONJECTURE] | OP1 |
-| CODP | Clifford circuits | P | [PROVEN] | Normal form reduction |
+| CODP | General circuits | Open | [NO VALID CIT REDUCTION] | OP1 |
+| CODP | Clifford circuits | Open under general optimal-cost formulations | [EQUIVALENCE IN P DOES NOT IMPLY OPTIMIZATION IN P] | Scope correction |
 | CODP | Bounded treewidth | FPT? | [CONJECTURE] | Open |
 | P1OPT (conflict resolution) | General circuits | P (maximum matching) | [CORRECTED] | Proposition 1 |
 | P1OPT (greedy scan) | General circuits | P | [PROVEN] | $O(|C|)$ scan |
 | P12OPT | General circuits | QMA-hard? | [CONJECTURE] | OP1 + OP2 |
-| P12OPT | Clifford circuits | P | [PROVEN] | Template matching + GAUSS |
+| P12OPT | Clifford circuits | Unclassified for global optimum | [RESTRICTED REWRITES/SYNTHESIS HEURISTICS DO NOT PROVE P] | Scope correction |
 | Approx-CODP | General circuits | APX-hard? | [CONJECTURE] | OP2 |
 | Approx-CODP | Bounded degree | $O(1)$-approx | [PROVEN] | Greedy matching |
 | SPE | General circuits | #P-hard? | [CONJECTURE] | Counting solutions |
@@ -392,9 +473,14 @@ The *quantum circuit complexity* of a unitary $U$, denoted $\mathcal{C}(U)$, is 
 - **Haar-random unitaries** have complexity $\mathcal{C}(U) \ge \Omega(4^n / n)$ with high probability [Nielsen, 2005; Harrow & Montanaro, 2017].
 - **Random circuits of depth $d$** have complexity $\le nd$ by construction.
 - For $d \ll 4^n / n$, random circuits are *far* from Haar-random in complexity, leaving room for optimization.
-- As $d \to \infty$, random circuits converge to Haar measure, and their complexity approaches the Haar-random lower bound. At this point, no shorter equivalent circuit exists, and optimization is impossible.
+- Approximate design or distributional convergence does not imply that a
+  particular sampled circuit is minimum-size, nor that a shorter equivalent
+  circuit is impossible.
 
-This provides a *complexity-theoretic* explanation for the exponential decay of success probability: as $d$ increases, the circuit's unitary approaches a Haar-random unitary whose complexity is exponentially larger than the circuit size, making reduction by local peephole methods impossible.
+The former Haar-complexity explanation is withdrawn. The observed decay is an
+empirical property of the sampled generator/listing/rule/budget contract; it
+cannot be promoted to a circuit-complexity lower bound without a compatible
+distributional theorem and a valid quantifier/size argument.
 
 ---
 
@@ -406,8 +492,8 @@ This provides a *complexity-theoretic* explanation for the exponential decay of 
 |----|-----------|----------|---------|
 | OP1 | CODP is QMA-hard (motivating open problem) | Weak -- reduction sketch | formal_results.md Conjectures |
 | OP2 | No PTAS for CODP (motivating open problem) | Weak -- MIS gap issues | formal_results.md Conjectures |
-| **C1** | **Phase 1 ceiling is structural** | **Strong -- Thm 2 + empirical** | formal_results.md Conjectures |
-| **C2** | **Phase-2 (a+b) is context-dependent super-constant** | **Strong -- E10/E11** | formal_results.md Conjectures |
+| **C1** | **All Phase-1 optimizers share a structural ceiling** | **REFUTED -- three-gate SWAP+REMOVAL counterexample** | formal_results.md Former Conjectures |
+| **C2** | **Some families have context-dependent $\Omega(1)$ Phase-2 advantage** | **EXISTENCE PROVED -- Thm 7 and Thm 9; classification open** | formal_results.md Former Conjectures |
 
 ### Theorems and Propositions (detailed in `formal_results.md`)
 
@@ -415,26 +501,26 @@ This provides a *complexity-theoretic* explanation for the exponential decay of 
 |----|-----------|--------|---------|
 | Thm 1(a) | Adjacent inverse pair density bound under WCL (expectation) | [PROVEN -- elementary] | formal_results.md Theorems |
 | Thm 1(b) | LBL listing model yields $\mathcal{S}_1(C) = \emptyset$ for $n \ge 2$ | [PROVEN -- structural] | formal_results.md Theorems |
-| Thm 2 | Phase-1 action-space identity / reduction ceiling | [PROVEN -- INSERTION cascade resolved (bounded version)] | formal_results.md Theorems |
+| Thm 2 | Greedy predicate ceiling; proposed stochastic ceiling | **[PART (a) PROVEN; GENERAL PART (b) REFUTED]** | formal_results.md Theorems |
 | Thm 2c | Bounded INSERTION cascade lemma ($R_{\text{removal}} \le 2k$) | [PROVEN -- insertion-debt invariant] | formal_results.md Appendix A |
-| Thm 2d | INSERTION commutation cascade bound ($\le$ Phase-2 (a+b) action space) | [PROVEN -- wire-order invariant] | formal_results.md Appendix A |
+| Thm 2d | INSERTION commutation cascade bound | **[WITHDRAWN -- invalid multi-qubit per-wire factorization]** | formal_results.md Appendix A |
 | Lemma 3 | Commutation preserves equivalence | [PROVEN -- 1-line, supporting lemma] | formal_results.md Lemmas |
 | Lemma 4 | Greedy optimality for non-conflicting pairs | [PROVEN -- narrow scope, supporting lemma] | formal_results.md Lemmas |
-| Thm 5 | High-probability bound on inverse pairs (McDiarmid) | [PROVEN -- standard] | formal_results.md Theorems |
-| Thm 6 | Phase-1 ceiling exact for Clifford in canonical form | [PROVEN -- validated by E23] | formal_results.md Theorems |
+| Thm 5 | High-probability bound on inverse pairs (McDiarmid) | **[PROOF INCOMPLETE -- dependent random matching]** | formal_results.md Theorems |
+| Prop 6 | Greedy ceiling for corrected restricted AG generator | **[RESTRICTED; former general claim refuted by n=2, seed=35]** | formal_results.md Theorems |
 | Thm 7 | Explicit circuit family with $\Omega(1)$ Phase-2a advantage | [PROVEN -- artificial] | formal_results.md Theorems |
-| Thm 8 | Haar-random incompressibility + bounded-window limit | [PROVEN -- Parts a-b substantive; Part c trivial] | formal_results.md Theorems |
-| Thm 9 | Phase-2b/template-assisted advantage $\ge n/(4.5n+4)$ for BV oracle circuits | [PROVEN -- natural circuit family; pure Phase-2a bound open] | formal_results.md Appendix B |
+| Thm 8 | Haar-random incompressibility + bounded-window limit | **[WITHDRAWN -- incompatible premises]** | formal_results.md Theorems |
+| Thm 9 | Full-pipeline Phase-2b construction achieves $2n/(3n+2)$ for the stated all-ones BV circuit | [PROVEN achieved reduction; no global optimality; pure Phase-2a bound open] | formal_results.md Appendix B |
 | Prop 1 | Conflict resolution is polynomial-time (maximum matching) | [CORRECTED] | formal_results.md Propositions |
-| Obs 1 | Greedy matches stochastic optimizers | [EMPIRICAL] | formal_results.md Empirical Observations |
+| Obs 1 | Greedy matches stochastic optimizers | **[WITHDRAWN GENERALIZATION; COUNTEREXAMPLE + HISTORICAL INCUMBENT BUG]** | formal_results.md Empirical Observations |
 
 ### Complexity Results (see Complexity Classification above)
 
 | Problem | Restriction | Complexity | Status |
 |---------|------------|------------|--------|
-| CIT | General circuits | QMA-complete | [PROVEN] |
-| CIT | Clifford circuits | P | [PROVEN] |
-| CODP | General circuits | QMA-hard? | [OPEN -- OP1] |
+| Non-Identity / Non-Equivalence Check | Standard promise formulation | QMA-complete | [EXTERNAL RESULT; not automatically A2] |
+| Exact equivalence | Clifford circuits | P | [PROVEN] |
+| CODP | General circuits | Open | [NO VALID HARDNESS REDUCTION -- OP1] |
 | P1OPT (conflict resolution) | General circuits | P (maximum matching) | [Prop 1, corrected] |
 | P1OPT (greedy scan) | General circuits | P | [PROVEN] |
 

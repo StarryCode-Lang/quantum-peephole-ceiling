@@ -49,7 +49,8 @@ packages required).
 ### Purpose
 
 Theorem 9 proves that Phase-2b (template-assisted rewriting) achieves
-Gamma >= n/(4.5n+4) reduction on Bernstein-Vazirani oracle circuits.
+The all-ones Bernstein--Vazirani construction achieves reduction
+2n/(3n+2); this is not a global optimality claim.
 The existing fixture-scale validation (E10 Phase-2b, 1,017 rows) only
 covers 10 of 15 families and uses a single instance per size. This
 experiment:
@@ -91,7 +92,8 @@ The random Universal and Clifford families contribute the most rows.
 ### Statistical analysis
 
 1. **Thm 9 bound check**: For each BV size n, test whether the empirical
-   mean Phase-2b reduction >= n/(4.5n+4). Report PASS/FAIL per size.
+the all-ones Phase-2b row matches 2n/(3n+2). Report that row separately
+from descriptive means over other secrets.
 2. **One-sample t-test**: For each family, test H0: mean Phase-2b
    reduction = 0 (Phase-2b provides no benefit).
 3. **Paired t-test**: Phase-2b reduction vs Phase-1 reduction per family

@@ -1,0 +1,112 @@
+tests/test_active_document_consistency.py: 2
+tests/test_ag_canonical.py: 5
+tests/test_archive_restore_audit.py: 3
+tests/test_audit_script_entrypoints.py: 4
+tests/test_ceiling_aware.py: 17
+tests/test_circuit_generation.py: 40
+tests/test_circuit_semantics_scope_audit.py: 1
+tests/test_commutation.py: 29
+tests/test_commutation_bug_reproduction.py: 9
+tests/test_comparator_version_publication_audit.py: 1
+tests/test_compiler_integration.py: 3
+tests/test_compiler_version_sensitivity_audit.py: 2
+tests/test_compiler_version_sensitivity_verifier.py: 1
+tests/test_contribution_independence_audit.py: 1
+tests/test_cost_vector_scope_audit.py: 2
+tests/test_direct_dependencies.py: 2
+tests/test_e03_scaling_model_audit.py: 1
+tests/test_e10_paired_statistics.py: 3
+tests/test_e12_version_stack_reconciliation.py: 2
+tests/test_e20_pipeline.py: 3
+tests/test_e30_distribution.py: 2
+tests/test_e31_basis_weight_sensitivity.py: 2
+tests/test_e31_factorial_pareto.py: 23
+tests/test_e31_fidelity_threshold_sensitivity.py: 1
+tests/test_e31_finalize_formal_run.py: 6
+tests/test_e31_first_party_import_closure_audit.py: 2
+tests/test_e31_formal_orchestrator.py: 9
+tests/test_e31_fragility_listing_audit.py: 1
+tests/test_e31_independent_verification_receipt.py: 1
+tests/test_e31_input_duplicate_isomorphism_audit.py: 1
+tests/test_e31_mixed_model_diagnostics.py: 1
+tests/test_e31_native_semantic_verifier.py: 4
+tests/test_e31_posthoc_family_inference.py: 8
+tests/test_e31_pyzx_large_semantic_audit.py: 1
+tests/test_e31_recover_interrupted_suffix.py: 2
+tests/test_e31_release_verifier.py: 31
+tests/test_e31_resource_profile_audit.py: 1
+tests/test_e31_runtime_outcome_audit.py: 1
+tests/test_e31_semantic_replay.py: 7
+tests/test_e31_specification_influence_audit.py: 1
+tests/test_e31_structural_distribution_metrics.py: 2
+tests/test_e31_temporal_gate_binding.py: 1
+tests/test_e31_validity_runtime_frontier.py: 1
+tests/test_equivalence_verifier_agreement_audit.py: 2
+tests/test_external_guoq_benchmark.py: 2
+tests/test_external_guoq_bqskit_pilot.py: 1
+tests/test_external_link_audit.py: 1
+tests/test_fidelity_estimator.py: 22
+tests/test_finite_size_scaling.py: 5
+tests/test_gate_predicates.py: 29
+tests/test_generate_e31_formal_release_gate.py: 6
+tests/test_hardness_families.py: 4
+tests/test_hardware_routing_overhead_audit.py: 2
+tests/test_hardware_validation_metrics.py: 2
+tests/test_heldout_calibration_null_audit.py: 1
+tests/test_heldout_class_gateset_generalization_audit.py: 1
+tests/test_heldout_generalization_ood_audit.py: 2
+tests/test_heldout_v2_execution.py: 7
+tests/test_heldout_v2_seal.py: 4
+tests/test_integration.py: 2
+tests/test_listing_phase2b_interaction.py: 2
+tests/test_metric_audit_ledger.py: 5
+tests/test_monotone_ceiling.py: 2
+tests/test_novelty_counterexample_audit.py: 1
+tests/test_optimizers.py: 45
+tests/test_phase2b_template_matcher.py: 28
+tests/test_predictive_advantage.py: 2
+tests/test_prepaper_hardware_analysis.py: 3
+tests/test_prepaper_retrospective_binding_audit.py: 3
+tests/test_prepaper_statistics.py: 1
+tests/test_qubit_permutation_metamorphic_audit.py: 1
+tests/test_release_manifest.py: 3
+tests/test_rewrite_order_confluence_audit.py: 1
+tests/test_rewrite_property_sweep.py: 1
+tests/test_sbom.py: 4
+tests/test_semantic_mutation_sentinels.py: 1
+tests/test_sota_resource_metrics.py: 4
+tests/test_statistical_analysis.py: 77
+tests/test_stochastic_incumbent.py: 2
+tests/test_transformation_failure_localization_audit.py: 1
+tests/test_verify_metric_audit_ledger.py: 5
+tests/test_wire_traversal.py: 18
+tests/test_zero_inflated_statistics.py: 3
+
+============================== warnings summary ===============================
+..\..\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:64
+  D:\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+    prop = Group((name + Suppress("=") + comma_separated(value)) | oneOf(_CONSTANTS))
+
+..\..\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:85
+..\..\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:85
+..\..\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:85
+..\..\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:85
+..\..\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:85
+..\..\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:85
+  D:\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+    parse = parser.parseString(pattern)
+
+..\..\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:89
+..\..\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:89
+..\..\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:89
+..\..\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:89
+..\..\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:89
+..\..\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:89
+  D:\Downloads\miniforge3\Lib\site-packages\matplotlib\_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+    parser.resetCache()
+
+..\..\Downloads\miniforge3\Lib\site-packages\matplotlib\_mathtext.py:45
+  D:\Downloads\miniforge3\Lib\site-packages\matplotlib\_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+    ParserElement.enablePackrat()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html

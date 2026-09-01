@@ -139,15 +139,24 @@ class Phase2bTemplateMatcher(BaseOptimizer):
         largest H-CX-H separation intended to be exposed (for the BV oracle
         family at n data qubits the separation is <= 2n + k + 4, so the
         default of 64 covers n <= 30).
+    template_enabled : bool
+        When false, skip only the adjacent conjugation-template pass.  All
+        listing, gathering, cancellation, merging, termination, and scoring
+        code remains identical; this is the E31 isolated rule-set treatment.
+    collect_trace : bool
+        Record per-iteration counters and gate counts in result metadata.
     """
 
     VERSION = '2.0.0'
 
     def __init__(self, max_iterations: int = 100, fidelity_threshold: float = 0.99,
-                 success_reduction: float = 0.20, gather_window: int = 64):
+                 success_reduction: float = 0.20, gather_window: int = 64,
+                 template_enabled: bool = True, collect_trace: bool = False):
         super().__init__(fidelity_threshold, success_reduction)
         self.max_iterations = max_iterations
         self.gather_window = gather_window
+        self.template_enabled = bool(template_enabled)
+        self.collect_trace = bool(collect_trace)
 
     # --------------------------------------------------------------------
     # Public entry points
@@ -176,7 +185,7 @@ class Phase2bTemplateMatcher(BaseOptimizer):
                 break
 
         runtime = time.time() - start_time
-        fidelity = 1.0 if target is None else self.calculate_fidelity(optimized, target)
+        fidelity, equivalence_certificate = self.result_equivalence(optimized, target)
         reduction = 1.0 - optimized.size() / original.size() if original.size() > 0 else 0.0
 
         metadata = self._metadata_from_counters(
@@ -189,6 +198,7 @@ class Phase2bTemplateMatcher(BaseOptimizer):
             iterations=self._total_actions(counters),
             runtime_seconds=runtime,
             success=self._is_success(reduction, fidelity),
+            equivalence_certificate=equivalence_certificate,
             metadata=metadata,
         )
 
@@ -213,26 +223,35 @@ class Phase2bTemplateMatcher(BaseOptimizer):
         original = circuit
         optimized = copy.deepcopy(circuit)
         counters = self._zero_counters()
+        trace: list[dict[str, int]] = []
 
-        for _ in range(self.max_iterations):
+        for iteration in range(self.max_iterations):
             iter_counts = self._zero_counters()
             self._gather_h_sandwiches(optimized, iter_counts)
             self._gather_commuting_pairs(optimized, iter_counts)
-            self._apply_all_templates(optimized, iter_counts)
+            if self.template_enabled:
+                self._apply_all_templates(optimized, iter_counts)
             self._cancel_inverse_pairs(optimized, iter_counts)
             self._merge_phase_gates(optimized, iter_counts)
             self._accumulate(counters, iter_counts)
+            if self.collect_trace:
+                trace.append({"iteration": iteration, **iter_counts,
+                              "gate_count": optimized.size()})
             # Gathering alone is not progress: it only reorders.  Continue
             # only if a rewrite or a reduction happened this iteration.
             if self._no_progress(iter_counts):
                 break
 
         runtime = time.time() - start_time
-        fidelity = 1.0 if target is None else self.calculate_fidelity(optimized, target)
+        fidelity, equivalence_certificate = self.result_equivalence(optimized, target)
         reduction = 1.0 - optimized.size() / original.size() if original.size() > 0 else 0.0
 
         metadata = self._metadata_from_counters(
             counters, algorithm='phase2b_template_matcher_full_pipeline', pipeline='full')
+        metadata['template_enabled'] = self.template_enabled
+        metadata['gather_window'] = self.gather_window
+        if self.collect_trace:
+            metadata['trace'] = trace
         metadata['theorem_target'] = 'Thm 9 (BV oracle)'
         return OptimizationResult(
             optimized_circuit=optimized,
@@ -242,6 +261,7 @@ class Phase2bTemplateMatcher(BaseOptimizer):
             iterations=self._total_actions(counters),
             runtime_seconds=runtime,
             success=self._is_success(reduction, fidelity),
+            equivalence_certificate=equivalence_certificate,
             metadata=metadata,
         )
 

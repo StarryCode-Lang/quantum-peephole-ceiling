@@ -295,7 +295,7 @@ class CeilingAwareOptimizer(BaseOptimizer):
         total_time_ms = (time.perf_counter() - t_start) * 1000.0
 
         # -- Fidelity & reduction -------------------------------------------
-        fidelity = 1.0 if target is None else self.calculate_fidelity(optimized, target)
+        fidelity, equivalence_certificate = self.result_equivalence(optimized, target)
         reduction = 1.0 - optimized.size() / original.size() if original.size() > 0 else 0.0
         success = self._is_success(reduction, fidelity)
 
@@ -307,6 +307,7 @@ class CeilingAwareOptimizer(BaseOptimizer):
             iterations=0,
             runtime_seconds=total_time_ms / 1000.0,
             success=success,
+            equivalence_certificate=equivalence_certificate,
             metadata={
                 'algorithm': 'ceiling_aware',
                 'phase1_skipped': phase1_skipped,

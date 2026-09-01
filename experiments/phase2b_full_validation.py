@@ -20,12 +20,12 @@ Stratified coverage (compute-bounded, see metadata.coverage):
 Optimizers: greedy_phase1, commutation_phase2a, template_phase2b (full
 pipeline).  Fidelity policy per row (column ``fidelity_method``):
 exact Operator for n_qubits <= 9; exact Clifford-tableau equality for
-all-Clifford circuits at n_qubits >= 10; Haar product-state sampling
-(200 samples) otherwise.  For unitarily equivalent circuits the sampled
+all-Clifford circuits at n_qubits >= 10; global Haar-random state sampling
+(200 samples, with Monte Carlo standard error) otherwise.  For unitarily equivalent circuits the sampled
 estimator returns exactly 1.0 (every overlap equals 1), so no row can
 false-pass.
 
-Output: data/v8/phase2b_full/
+Output for the frozen pre-paper rerun: data/v10/prepaper/e26/
   chunks/phase2b_v8_<chunk>_<ts>.csv   per-chunk raw rows
   phase2b_full_validation_v8.csv       merged canonical table
   family_summary_v8.csv                per-family x optimizer summary
@@ -44,11 +44,9 @@ Gap-fill chunk ``qw8``: QuantumWalk at n=8 only (2 seeds x 3 optimizers).
 The 9-qubit walk circuit carries 36 MCX gates with up to 8 controls; exact
 Operator-based fidelity was measured at ~133 s/row (2026-07-21 probe), which
 exceeds the per-chunk compute envelope, so this chunk forces the documented
-``sampled200`` fallback and labels every row ``fidelity_method=sampled200``.
-Because all three optimizers leave the MCX-heavy walk circuit unchanged, the
-sampled estimator resolves via its exact structural-equality fast path
-(``circuit == target`` -> 1.0), so the reported fidelity is exact, not an
-estimate, for these rows.
+global-Haar 200-sample fallback.  Rows that are structurally identical resolve
+through the exact fast path; otherwise validity requires the lower endpoint of
+the recorded 95% Monte Carlo interval to meet the fidelity threshold.
 """
 
 from __future__ import annotations
@@ -107,6 +105,8 @@ DEPTH_FAMILIES = {"Universal", "RandomClifford", "Structured", "IQP"}
 DETERMINISTIC_FAMILIES = {"QFT", "GHZ", "CNOT_chain"}
 
 DATA_DIR = PROJECT_ROOT / "data" / "v8" / "phase2b_full"
+PROTOCOL_PATH = PROJECT_ROOT / "experiments" / "prepaper_protocol.json"
+FIDELITY_THRESHOLD = 0.9999999999
 
 _CLIFFORD_GATE_NAMES = {"h", "x", "y", "z", "s", "sdg", "cx", "cnot", "cz", "swap", "id"}
 
@@ -186,27 +186,54 @@ def _is_all_clifford(circuit: QuantumCircuit) -> bool:
     return all(inst.operation.name in _CLIFFORD_GATE_NAMES for inst in circuit.data)
 
 
+def _global_haar_fidelity_with_se(optimizer, optimized: QuantumCircuit,
+                                  original: QuantumCircuit, n_samples: int = 200):
+    """Estimate average gate fidelity with global Haar states and report MC SE."""
+    from qiskit.quantum_info import Statevector
+
+    dimension = 2 ** original.num_qubits
+    overlaps = []
+    for _ in range(n_samples):
+        vector = (optimizer.rng.normal(size=dimension)
+                  + 1j * optimizer.rng.normal(size=dimension))
+        vector /= np.linalg.norm(vector)
+        psi = Statevector(vector)
+        out_a = psi.evolve(optimized)
+        out_b = psi.evolve(original)
+        overlaps.append(float(np.abs(np.vdot(out_a.data, out_b.data)) ** 2))
+    values = np.asarray(overlaps, dtype=float)
+    estimate = float(values.mean())
+    se = float(values.std(ddof=1) / np.sqrt(len(values))) if len(values) > 1 else float("nan")
+    return min(1.0, max(0.0, estimate)), se
+
+
 def _fidelity(optimizer, optimized: QuantumCircuit, original: QuantumCircuit,
               force_method: str | None = None):
-    """Return (fidelity, method).  See module docstring for the policy."""
+    """Return (fidelity, method, Monte Carlo SE, sample count)."""
+    if optimized == original:
+        return 1.0, "exact", 0.0, 0
     if force_method == "sampled200":
-        # Gap-fill chunks (e.g. qw8) where exact Operator fidelity exceeds the
-        # compute envelope; uses the documented sampling fallback.
-        return optimizer._estimate_fidelity(optimized, original, n_samples=200), "sampled200"
+        estimate, se = _global_haar_fidelity_with_se(
+            optimizer, optimized, original, n_samples=200
+        )
+        return estimate, "sampled_global_haar", se, 200
     n = original.num_qubits
     if n <= 9:
-        return optimizer.calculate_fidelity(optimized, original), "exact"
+        return optimizer.calculate_fidelity(optimized, original), "exact", 0.0, 0
     if _is_all_clifford(optimized) and _is_all_clifford(original):
         try:
             from qiskit.quantum_info import Clifford
             if Clifford(optimized) == Clifford(original):
-                return 1.0, "clifford_tableau"
+                return 1.0, "exact_clifford", 0.0, 0
             # Not equal: investigate exactly where feasible.
             if n <= 11:
-                return optimizer.calculate_fidelity(optimized, original), "exact_fallback"
+                return optimizer.calculate_fidelity(optimized, original), "exact", 0.0, 0
         except Exception:
             pass
-    return optimizer._estimate_fidelity(optimized, original, n_samples=200), "sampled200"
+    estimate, se = _global_haar_fidelity_with_se(
+        optimizer, optimized, original, n_samples=200
+    )
+    return estimate, "sampled_global_haar", se, 200
 
 
 # ---------------------------------------------------------------------------
@@ -218,13 +245,34 @@ def _run_row(optimizers, family, n, depth, seed, trial, metrics_calc, run_id, ch
     circuit, extra = _generate(family, n, depth, seed, trial, metrics_calc)
     rows = []
     for opt_name, (optimizer, use_full) in optimizers.items():
-        if use_full:
-            result = optimizer.optimize_full_pipeline(circuit, target=None)
-        else:
-            result = optimizer.optimize(circuit, target=None)
-        fid, fid_method = _fidelity(optimizer, result.optimized_circuit, circuit,
-                                    force_method=force_fidelity_method)
-        meta = result.metadata or {}
+        started = time.perf_counter()
+        try:
+            if use_full:
+                result = optimizer.optimize_full_pipeline(circuit, target=None)
+            else:
+                result = optimizer.optimize(circuit, target=None)
+            fid, fid_method, fid_se, fid_samples = _fidelity(
+                optimizer, result.optimized_circuit, circuit,
+                force_method=force_fidelity_method,
+            )
+            fid_lcb = max(0.0, fid - 1.96 * fid_se) if np.isfinite(fid_se) else float("nan")
+            valid = bool(np.isfinite(fid_lcb) and fid_lcb >= FIDELITY_THRESHOLD)
+            meta = result.metadata or {}
+            original_size = result.original_size
+            optimized_size = result.optimized_size
+            reduction = result.reduction
+            runtime_seconds = result.runtime_seconds
+            optimization_error = ""
+        except Exception as exc:  # preserve the ITT denominator
+            fid = fid_se = fid_lcb = float("nan")
+            fid_method, fid_samples = "unavailable", 0
+            valid = False
+            meta = {}
+            original_size = circuit.size()
+            optimized_size = float("nan")
+            reduction = float("nan")
+            runtime_seconds = time.perf_counter() - started
+            optimization_error = f"{type(exc).__name__}: {exc}"
         row = {
             "experiment": EXPERIMENT_ID,
             "run_id": run_id,
@@ -234,13 +282,19 @@ def _run_row(optimizers, family, n, depth, seed, trial, metrics_calc, run_id, ch
             "n_qubits": circuit.num_qubits,
             "param_n": n,
             "depth": extra.get("depth", depth if depth is not None else circuit.depth()),
-            "original_size": result.original_size,
-            "optimized_size": result.optimized_size,
-            "reduction": result.reduction,
+            "original_size": original_size,
+            "optimized_size": optimized_size,
+            "reduction": reduction,
             "fidelity": fid,
             "fidelity_method": fid_method,
-            "success": bool(fid >= 0.99),
-            "runtime_seconds": result.runtime_seconds,
+            "fidelity_mc_se": fid_se,
+            "fidelity_ci95_lower": fid_lcb,
+            "fidelity_n_samples": fid_samples,
+            "valid_equivalent_output": valid,
+            "success": bool(valid and np.isfinite(reduction) and reduction >= 0.05),
+            "analysis_reduction_itt": reduction if valid and np.isfinite(reduction) else 0.0,
+            "optimization_error": optimization_error,
+            "runtime_seconds": runtime_seconds,
             "seed": seed,
             "trial": trial,
             "template_rewrites": meta.get("template_rewrites"),
@@ -357,14 +411,30 @@ def run_chunk(chunk: str, smoke: bool, output_dir: Path,
             rows.extend(_run_row(optimizers, fam, n, d, seed, trial,
                                  metrics_calc, run_id, chunk,
                                  force_fidelity_method=force_fidelity_method))
-        except Exception as exc:  # pragma: no cover - defensive
-            print(f"  WARNING {fam}(n={n},d={d},seed={seed}): {exc}", flush=True)
+        except Exception as exc:  # generation-level failure: all arms remain in ITT
+            print(f"  WARNING generation {fam}(n={n},d={d},seed={seed}): {exc}", flush=True)
+            for opt_name in optimizers:
+                rows.append({
+                    "experiment": EXPERIMENT_ID, "run_id": run_id, "chunk": chunk,
+                    "optimizer": opt_name, "circuit_family": fam,
+                    "n_qubits": n, "param_n": n, "depth": d,
+                    "original_size": float("nan"), "optimized_size": float("nan"),
+                    "reduction": float("nan"), "fidelity": float("nan"),
+                    "fidelity_method": "unavailable", "fidelity_mc_se": float("nan"),
+                    "fidelity_ci95_lower": float("nan"), "fidelity_n_samples": 0,
+                    "valid_equivalent_output": False, "success": False,
+                    "analysis_reduction_itt": 0.0,
+                    "optimization_error": f"generation {type(exc).__name__}: {exc}",
+                    "runtime_seconds": 0.0, "seed": seed, "trial": trial,
+                })
         if (idx + 1) % 20 == 0:
             # Incremental write for safety
             pd.DataFrame(rows).to_csv(inc_path, index=False)
             print(f"  ... {idx + 1}/{len(plan)} grid points "
                   f"({time.time() - t_start:.0f}s)", flush=True)
     df = pd.DataFrame(rows)
+    df["source_sha256"] = file_sha256(Path(__file__).resolve())
+    df["protocol_sha256"] = file_sha256(PROTOCOL_PATH)
     # Final write to the same incremental path (already created)
     df.to_csv(inc_path, index=False)
     ts = ts_start
@@ -389,6 +459,19 @@ def _atomic_write_csv(df: pd.DataFrame, path: Path) -> None:
     tmp.replace(path)
 
 
+def _holm_adjust(values: list[float]) -> list[float]:
+    """Holm family-wise adjusted p-values, preserving NaNs and input order."""
+    result = [float("nan")] * len(values)
+    finite = [(i, float(p)) for i, p in enumerate(values) if np.isfinite(p)]
+    ordered = sorted(finite, key=lambda item: item[1])
+    running = 0.0
+    m = len(ordered)
+    for rank, (index, p_value) in enumerate(ordered):
+        running = max(running, (m - rank) * p_value)
+        result[index] = min(1.0, running)
+    return result
+
+
 def merge_and_analyze(output_dir: Path) -> None:
     chunks = sorted(output_dir.glob("phase2b_v8_*.csv"))
     if not chunks:
@@ -402,27 +485,34 @@ def merge_and_analyze(output_dir: Path) -> None:
     _atomic_write_csv(df, canonical)
 
     # Per-family x optimizer summary
-    summary = (df.groupby(["circuit_family", "optimizer"])["reduction"]
+    summary = (df.groupby(["circuit_family", "optimizer"])["analysis_reduction_itt"]
                  .agg(["mean", "std", "count", "min", "max"]).reset_index())
     summary_path = output_dir / "family_summary_v8.csv"
     _atomic_write_csv(summary, summary_path)
 
     # Core question: families with Phase-1 ~ 0% — can Phase-2b exceed 30%?
-    p1 = df[df.optimizer == "greedy_phase1"].groupby("circuit_family")["reduction"].mean()
-    p2a = df[df.optimizer == "commutation_phase2a"].groupby("circuit_family")["reduction"].mean()
-    p2b = df[df.optimizer == "template_phase2b"].groupby("circuit_family")["reduction"].mean()
+    p1 = df[df.optimizer == "greedy_phase1"].groupby("circuit_family")["analysis_reduction_itt"].mean()
+    p2a = df[df.optimizer == "commutation_phase2a"].groupby("circuit_family")["analysis_reduction_itt"].mean()
+    p2b = df[df.optimizer == "template_phase2b"].groupby("circuit_family")["analysis_reduction_itt"].mean()
     from scipy import stats as sp_stats
     core_rows = []
     for fam in sorted(df.circuit_family.unique()):
         p1m = float(p1.get(fam, np.nan))
         sub = df[df.circuit_family == fam]
-        v1 = sub[sub.optimizer == "greedy_phase1"]["reduction"].values
-        v2 = sub[sub.optimizer == "template_phase2b"]["reduction"].values
-        m = min(len(v1), len(v2))
+        pair_keys = ["param_n", "depth", "seed", "trial"]
+        p1_rows = sub[sub.optimizer == "greedy_phase1"][pair_keys + ["analysis_reduction_itt"]]
+        p2_rows = sub[sub.optimizer == "template_phase2b"][pair_keys + ["analysis_reduction_itt"]]
+        paired = p1_rows.merge(p2_rows, on=pair_keys, how="inner",
+                               validate="one_to_one", suffixes=("_p1", "_p2b"))
+        if len(paired) != len(p1_rows) or len(paired) != len(p2_rows):
+            raise ValueError(f"Unmatched Phase-1/Phase-2b rows for {fam}")
+        v1 = paired["analysis_reduction_itt_p1"].to_numpy()
+        v2 = paired["analysis_reduction_itt_p2b"].to_numpy()
+        m = len(paired)
         p_val = np.nan
-        if m >= 5 and not np.allclose(v2[:m] - v1[:m], 0):
+        if m >= 5 and not np.allclose(v2 - v1, 0):
             try:
-                _, p_val = sp_stats.wilcoxon(v2[:m], v1[:m], alternative="greater")
+                _, p_val = sp_stats.wilcoxon(v2, v1, alternative="two-sided")
             except Exception:
                 pass
         core_rows.append({
@@ -430,44 +520,66 @@ def merge_and_analyze(output_dir: Path) -> None:
             "phase1_mean": p1m,
             "phase2a_mean": float(p2a.get(fam, np.nan)),
             "phase2b_mean": float(p2b.get(fam, np.nan)),
-            "phase2b_min": float(sub[sub.optimizer == "template_phase2b"]["reduction"].min()),
+            "phase2b_min": float(sub[sub.optimizer == "template_phase2b"]["analysis_reduction_itt"].min()),
             "n_rows_phase2b": int(len(v2)),
+            "n_pairs": int(m),
             "phase1_is_zero": bool(p1m < 1e-9),
             "phase2b_gt_30pct": bool(float(p2b.get(fam, 0.0)) > 0.30),
             "wilcoxon_p_phase2b_gt_phase1": p_val,
         })
     core = pd.DataFrame(core_rows)
+    core["wilcoxon_p_holm"] = _holm_adjust(
+        core["wilcoxon_p_phase2b_gt_phase1"].tolist())
+    core = core.rename(columns={
+        "wilcoxon_p_phase2b_gt_phase1": "wilcoxon_p_two_sided"
+    })
     core_path = output_dir / "core_question_v8.csv"
     _atomic_write_csv(core, core_path)
 
-    # BV vs Theorem 9
+    # BV descriptive grid plus the all-ones constructive Theorem 9 check.
     bv = df[(df.circuit_family == "BV") & (df.optimizer == "template_phase2b")]
     bv_rows = []
     for n, grp in bv.groupby("param_n"):
-        bound = n / (4.5 * n + 4)
+        bound = 2 * n / (3 * n + 2)
+        all_ones = grp.loc[grp.trial.eq(0), "analysis_reduction_itt"]
+        if len(all_ones) != 1:
+            raise ValueError(f"BV n={n}: expected one all-ones trial")
         bv_rows.append({
             "n": int(n),
-            "mean_reduction": grp.reduction.mean(),
-            "min_reduction": grp.reduction.min(),
-            "std": grp.reduction.std(),
+            "mean_reduction": grp.analysis_reduction_itt.mean(),
+            "min_reduction": grp.analysis_reduction_itt.min(),
+            "std": grp.analysis_reduction_itt.std(),
             "count": len(grp),
-            "thm9_rigorous_lower_bound": bound,
-            "mean_meets_bound": bool(grp.reduction.mean() >= bound - 1e-9),
-            "min_meets_bound": bool(grp.reduction.min() >= bound - 1e-9),
+            "thm9_constructed_all_ones_reduction": bound,
+            "all_ones_observed_reduction": float(all_ones.iloc[0]),
+            "all_ones_matches_construction": bool(np.isclose(all_ones.iloc[0], bound)),
         })
     bv_df = pd.DataFrame(bv_rows)
     bv_path = output_dir / "bv_theory_v8.csv"
     _atomic_write_csv(bv_df, bv_path)
 
-    # Bootstrap CI pooled
-    rng = np.random.RandomState(42)
+    # Family-clustered nested bootstrap: family outer, instances inner.
     boot_rows = []
-    for opt in df.optimizer.unique():
-        vals = df[df.optimizer == opt]["reduction"].values
-        boot = [np.mean(rng.choice(vals, size=len(vals), replace=True)) for _ in range(5000)]
+    for opt_index, opt in enumerate(sorted(df.optimizer.unique())):
+        opt_df = df[df.optimizer == opt]
+        families = np.asarray(sorted(opt_df.circuit_family.unique()), dtype=object)
+        groups = {family: opt_df.loc[
+            opt_df.circuit_family == family, "analysis_reduction_itt"
+        ].to_numpy(float) for family in families}
+        rng = np.random.default_rng(20260809 + opt_index)
+        boot = np.empty(10000, dtype=float)
+        for replicate in range(len(boot)):
+            sampled_families = rng.choice(families, size=len(families), replace=True)
+            sampled = [rng.choice(groups[family], size=len(groups[family]), replace=True)
+                       for family in sampled_families]
+            boot[replicate] = float(np.mean(np.concatenate(sampled)))
+        vals = opt_df["analysis_reduction_itt"].to_numpy(float)
         boot_rows.append({"optimizer": opt, "mean": vals.mean(),
                           "ci95_lo": np.percentile(boot, 2.5),
-                          "ci95_hi": np.percentile(boot, 97.5)})
+                          "ci95_hi": np.percentile(boot, 97.5),
+                          "replicates": len(boot), "seed": 20260809 + opt_index,
+                          "outer_cluster": "circuit_family",
+                          "inner_unit": "circuit_instance"})
     boot_df = pd.DataFrame(boot_rows)
     boot_path = output_dir / "bootstrap_ci_v8.csv"
     _atomic_write_csv(boot_df, boot_path)
@@ -538,10 +650,22 @@ def merge_and_analyze(output_dir: Path) -> None:
         },
         "phase2b_template_matcher_version": Phase2bTemplateMatcher.VERSION,
         "script_sha256": script_hash,
+        "protocol_sha256": file_sha256(PROTOCOL_PATH),
         "provenance": prov,
         "schema_version": "v8",
+        "confirmatory_analysis": {
+            "intention_to_treat_column": "analysis_reduction_itt",
+            "tests": "two-sided paired Wilcoxon",
+            "multiplicity": "Holm within E26 family",
+            "bootstrap": "family-outer instance-inner nested percentile",
+            "bootstrap_replicates": 10000,
+            "bootstrap_base_seed": 20260809,
+        },
         "theorems_validated": {
-            "Thm_9_BV_oracle": "Phase-2b >= n/(4.5n+4): see bv_theory_v8.csv",
+            "Thm_9_BV_oracle": (
+                "all-ones construction achieves 2n/(3n+2); no global "
+                "optimality claim: see bv_theory_v8.csv"
+            ),
         },
     }
 
@@ -567,9 +691,10 @@ def merge_and_analyze(output_dir: Path) -> None:
     print("\n=== BV vs Thm 9 ===")
     for _, r in bv_df.iterrows():
         print(f"  n={r.n}: mean={r.mean_reduction:.4f} min={r.min_reduction:.4f} "
-              f"bound={r.thm9_rigorous_lower_bound:.4f} "
-              f"[{'PASS' if r.mean_meets_bound else 'CHECK'}]")
-    print("\n=== Bootstrap 95% CI (pooled) ===")
+              f"constructed={r.thm9_constructed_all_ones_reduction:.4f} "
+              f"observed={r.all_ones_observed_reduction:.4f} "
+              f"[{'PASS' if r.all_ones_matches_construction else 'CHECK'}]")
+    print("\n=== Family-clustered nested bootstrap 95% CI ===")
     for _, r in boot_df.iterrows():
         print(f"  {r.optimizer:20s} mean={r['mean']:.4f} CI=[{r.ci95_lo:.4f},{r.ci95_hi:.4f}]")
 

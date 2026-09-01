@@ -2,7 +2,7 @@
 
 **Version**: 1.0 (Draft)
 **Date**: 2026-07-17
-**Status**: Evaluation of which existing theorems can be elevated from "supporting observation" to "non-trivial technical contribution" through deepening or generalization.
+**Status**: Historical brainstorming document, not a theorem-status source.  The 2026-08-09 audit withdrew Thm 8, refuted the general AG Thm 6, found Thm 5 incomplete, and invalidated the proof of Thm 2d.  Any proposal below that treats those results as established must be re-derived before use.
 
 ---
 
@@ -75,7 +75,7 @@ $$
 
 ## 2. Thm 2c/2d: INSERTION Cascade Lemma
 
-**Current status:** Bounded INSERTION cascade (Thm 2c: $R_{\text{removal}} \le 2k$) and INSERTION commutation cascade bound (Thm 2d: cannot exceed Phase-2 action space). These resolve a previously open gap in the INSERTION argument and are considered "resolved" in the framework.
+**Current status (superseded 2026-08-09):** Thm 2c is restricted to INSERTION+REMOVAL. Former Thm 2d is withdrawn because its multi-qubit per-wire invariant is invalid and its pair count is not an established Phase-2 optimum. The general INSERTION+commutation gap remains open.
 
 **Current contribution grade:** ★★☆ (technically non-trivial, resolved a known gap)
 
@@ -313,7 +313,9 @@ where $C_U$ is any circuit implementing $U$. Meanwhile, there exist infinite cir
 
 ## 7. Thm 9: BV Oracle Phase-2b Bound
 
-**Current status:** The strongest theoretical result — $\Omega(1)$ Phase-2b advantage for a natural circuit family. The bound $n/(4.5n+4) \to 1/4.5$ is conservative.
+**Current status (corrected 2026-08-11):** the explicit all-ones BV
+full-pipeline sequence achieves $2n/(3n+2)\to2/3$. This is not a proof that the
+emitted $n+2$-gate circuit is globally minimum.
 
 **Current contribution grade:** ★★★ (strongest result, natural family, non-trivial proof)
 

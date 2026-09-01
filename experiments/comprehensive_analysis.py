@@ -38,12 +38,14 @@ def analyze_phase2b():
     # BV bound check
     bv = df[df.circuit_family == "BV"]
     if len(bv) > 0:
-        print("\n  BV Phase-2b vs Thm 9 bound (n/(4.5n+4)):")
+        print("\n  BV Phase-2b all-ones construction (2n/(3n+2)):")
         for n in sorted(bv.n_qubits.unique()):
             sub = bv[(bv.n_qubits == n) & (bv.optimizer == "template_phase2b")]
+            if "trial" in sub.columns:
+                sub = sub[sub.trial == 0]
             if len(sub) > 0:
                 mean_red = sub.reduction.mean()
-                bound = n / (4.5 * n + 4)
+                bound = 2 * n / (3 * n + 2)
                 status = "PASS" if mean_red >= bound else "FAIL"
                 print(f"    BV(n={n}): mean={mean_red:.4f} bound={bound:.4f} [{status}]")
 
@@ -75,12 +77,14 @@ def analyze_wcl():
     for fam in sorted(df.circuit_family.unique()):
         if fam in wcl.index and fam in lbl.index:
             gap = wcl[fam] - lbl[fam]
-            # Quick Wilcoxon
-            wcl_vals = df[(df.circuit_family == fam) & (df.listing_model == "WCL")].reduction.values
-            lbl_vals = df[(df.circuit_family == fam) & (df.listing_model == "LBL")].reduction.values
-            min_len = min(len(wcl_vals), len(lbl_vals))
-            if min_len >= 5 and not np.allclose(wcl_vals[:min_len] - lbl_vals[:min_len], 0):
-                _, p = stats.wilcoxon(wcl_vals[:min_len], lbl_vals[:min_len], alternative="greater")
+            pair_keys = ["param_n", "trial", "seed"]
+            fam_rows = df[df.circuit_family == fam]
+            paired = fam_rows[fam_rows.listing_model == "LBL"][pair_keys + ["reduction"]].merge(
+                fam_rows[fam_rows.listing_model == "WCL"][pair_keys + ["reduction"]],
+                on=pair_keys, how="inner", validate="one_to_one",
+                suffixes=("_lbl", "_wcl"))
+            if len(paired) >= 5 and not np.allclose(paired.reduction_wcl - paired.reduction_lbl, 0):
+                _, p = stats.wilcoxon(paired.reduction_wcl, paired.reduction_lbl, alternative="greater")
                 sig = "***" if p < 0.001 else ("**" if p < 0.01 else ("*" if p < 0.05 else "ns"))
             else:
                 sig = "ns" if abs(gap) < 1e-6 else "?"
