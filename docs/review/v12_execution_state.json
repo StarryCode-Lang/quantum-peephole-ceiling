@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "project": "Q-research v12 rewrite exposure certificate",
-  "status": "STAGE_0_COMPLETE_STAGE_1_IN_PROGRESS",
+  "status": "STAGE_1_COMPLETE_STAGE_2_IN_PROGRESS",
   "manuscript_modified": false,
   "historical_e1_e37_modified": false,
   "active_worktree": "D:/Desktop/Q-research-rewrite-exposure",
@@ -14,14 +14,16 @@
     "release_manifest": "verified"
   },
   "stage_1": {
-    "status": "IN_PROGRESS",
-    "novelty_claim": "pending red-team review",
-    "existing_mechanisms": "pending code-level comparison",
+    "status": "PASS_WITH_BOUNDARIES",
+    "receipt": "docs/review/v12_stage1_novelty_receipt.json",
+    "matrix": "docs/review/v12_novelty_comparison_matrix.md",
+    "novelty_claim": "no substantive isomorphism found in required comparison scope",
+    "closest_threat": "Quasar graph-plus-sequence e-graphs",
     "theorem_status": "not_claimed"
   },
   "stage_2_theory": {
-    "status": "NOT_STARTED",
-    "theorem_status": "not_claimed"
+    "status": "IN_PROGRESS",
+    "theorem_status": "conjecture_or_draft_until_e38"
   },
   "stage_3_implementation": {
     "status": "NOT_STARTED"
