@@ -37,6 +37,40 @@ python scripts/reproduce_all.py --verify
 
 `--verify` checks every canonical CSV listed in `release/release_manifest.json` for existence, SHA-256 checksum, and exact row count, then runs per-experiment structural checks (metadata presence, required CSV columns, and source-hash drift warnings). Any missing file, checksum mismatch, or row-count mismatch fails the command with a non-zero exit code.
 
+## v12 bounded rewrite-exposure package
+
+The v12 extension is verified separately from the historical canonical dataset
+manifest. From the repository root, run:
+
+```bash
+python scripts/verify_v12_readiness_package.py
+```
+
+The verifier checks the requirement-to-evidence ledger, source and data hashes,
+the E38 exact oracle, the E39 development grid, the E40 prospective input
+availability boundary, and the E41 scale/resource panel. The current package
+returns `verified` with the disposition `NOT_READY_FOR_PAPER` because E40 has
+zero eligible efficacy inputs; this is an evidence boundary, not a failed
+verification run.
+
+The v12 protocol artifacts are located at:
+
+- `data/v12/e38_rewrite_exposure_oracle/` — exhaustive finite oracle and
+  certificate-contract checks;
+- `data/v12/e39_development_grid/` — development-only configuration selection;
+- `data/v12/e40_prospective_rewrite_exposure/` — frozen MQT generation,
+  classification, and an empty-but-present SQLite checkpoint;
+- `data/v12/e41_rewrite_exposure_scale/` — scale/resource results with
+  unavailable equivalence explicitly marked;
+- `data/v12/v12_requirement_to_evidence_ledger.json` — requirement-to-evidence
+  binding; and
+- `release/prepaper_v12_archive_restore_audit.json` — isolated restore audit for
+  the v12 capsule.
+
+Do not substitute E33/E35 external inputs, sampled fidelity, or E41 resource
+outcomes for the missing E40 efficacy population. The implementation scope is
+the declared `pair_v1` rule library and dependence models only.
+
 ## Smoke reproduction
 
 Use the project reproduction entry point for selected experiments or smoke defaults:
@@ -118,6 +152,14 @@ python -m piptools compile --generate-hashes --output-file=requirements-lock.txt
 - Numerical commutation fallback can change optimization opportunities and should be reported separately from rule-based baseline results.
 - Historical wave documents may describe experiments as planned or metadata-only; the active status is defined by `data/DATA_CANONICAL.md`, `release/release_manifest.json`, and `docs/manuscript/claim_evidence_table.csv`.
 - `scripts/reproduce_all.py --verify` reports "source file(s) modified since data generation" warnings for 11 experiments (E12–E21 and E25; 10–11 source files each, all under `src/optimisation/`). These stem from legitimate improvements to optimizer/analysis code made after the canonical data was generated, not from data tampering. They have been evaluated and are accepted as-is: the canonical datasets are anchored by the numbers quoted in the manuscript and are intentionally not rerun, so the warnings remain visible in verification output by design.
+- The current v12 package is independently verified but not paper-ready: E40's
+  frozen panel produced no eligible efficacy inputs, and the full-suite recheck
+  retains three inherited metric-15.41 baseline-drift failures. See the v12
+  ledger and readiness verdict rather than inferring readiness from the test
+  verifier alone.
+- Local disposable state is not release evidence: Python caches, virtual
+  environments, external baseline source checkouts, generated build trees,
+  timestamped logs, and test reports are excluded from the v12 restore capsule.
 
 ## Figure regeneration
 

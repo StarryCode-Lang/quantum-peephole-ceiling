@@ -127,6 +127,24 @@ even for identical program text. The contract therefore makes no claim of
 symbolic completeness, partial-initialization equivalence, or support for
 ancilla allocation/discard.
 
+### D12: Representation-conditioned rewrite exposure
+
+The v12 extension makes the representation dependence of local rewrite
+opportunities explicit. For a fixed listed circuit and declared dependence
+model, the rewrite-exposure certificate records the current exposed weight, a
+constructive lower bound, a matching upper bound, and the exact optimum when
+the bounded solver is complete. The certificate is about the finite action
+space exposed by that representation; it is not a fidelity certificate and it
+does not imply an unrestricted optimizer bound.
+
+The current implementation is limited to the `pair_v1` rule library and the
+`wire_order_v1` / `conservative_commutation_v1` dependence models. Unsupported
+gate semantics, dynamic control, non-unitary operations, unbound parameters, or
+budget exhaustion are represented fail-closed. E38 validates the contract on
+its finite exhaustive panel; E39 is development-only; E40 has no eligible
+efficacy population; and E41 reports scale/resource behavior only. Formal
+definitions and falsifiers are maintained in `v12_rewrite_exposure_theory.md`.
+
 ### Additional Definitions: Formal Decision Problems
 
 **Definition A1 (Circuit Optimization Decision Problem, CODP).**

@@ -23,6 +23,7 @@ MANIFEST = ROOT / "release" / "prepaper_v12_capsule_inner_manifest.json"
 ARCHIVE = ROOT / "release" / "prepaper_v12_restore_capsule.zip"
 AUDIT = ROOT / "release" / "prepaper_v12_archive_restore_audit.json"
 INNER_NAME = "release/prepaper_v12_release_manifest.json"
+EXTERNAL_BASELINE_PREFIX = ("data", "v10", "prepaper", "external_baselines")
 
 
 def sha256(path: Path) -> str:
@@ -47,8 +48,15 @@ def write_json(path: Path, payload: Any) -> None:
 
 
 def payload_files() -> list[Path]:
-    excluded_dirs = {".git", ".pytest_cache", "__pycache__", ".mypy_cache", ".ruff_cache"}
-    excluded_names = {ARCHIVE.name, MANIFEST.name, AUDIT.name, "prepaper_restore_capsule.zip"}
+    excluded_dirs = {".git", ".pytest_cache", "__pycache__", ".mypy_cache", ".ruff_cache", ".venv", "venv"}
+    excluded_names = {
+        ARCHIVE.name,
+        MANIFEST.name,
+        AUDIT.name,
+        "prepaper_restore_capsule.zip",
+        "pytest_collect.txt",
+        "pytest_junit.xml",
+    }
     files: list[Path] = []
     for path in ROOT.rglob("*"):
         if not path.is_file():
@@ -56,7 +64,17 @@ def payload_files() -> list[Path]:
         relative_parts = path.relative_to(ROOT).parts
         if any(part in excluded_dirs for part in relative_parts):
             continue
-        if path.name in excluded_names or path.suffix in {".pyc", ".tmp"}:
+        if (
+            len(relative_parts) >= 6
+            and relative_parts[:4] == EXTERNAL_BASELINE_PREFIX
+            and (relative_parts[5] == "repo" or relative_parts[5].startswith("build"))
+        ):
+            continue
+        if (
+            path.name in excluded_names
+            or path.suffix in {".log", ".pyc", ".pyo", ".tmp"}
+            or ".bak-" in path.name
+        ):
             continue
         files.append(path)
     return sorted(files, key=lambda path: path.relative_to(ROOT).as_posix())
@@ -79,7 +97,7 @@ def build_manifest() -> dict[str, Any]:
         ).stdout.strip(),
         "counts": {"payload_files": len(entries)},
         "payload": entries,
-        "claim_boundary": "The capsule is a byte-pinned local research snapshot. E41 E33/E35 source roots remain external inputs recorded by hash in the v12 evidence.",
+        "claim_boundary": "The capsule is a byte-pinned research snapshot. Local external baseline source checkouts, generated build trees, and virtual environments are excluded; E41 E33/E35 source roots remain external inputs recorded by hash in the v12 evidence.",
     }
     write_json(MANIFEST, manifest)
     return manifest

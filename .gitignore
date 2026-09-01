@@ -14,6 +14,8 @@ node_modules/
 
 # Testing
 .pytest_cache/
+pytest_collect.txt
+pytest_junit.xml
 
 # Build artifacts
 dist/
@@ -69,4 +71,8 @@ graphify-out/
 .workbuddy/
 
 # Deepwork session state
-.slim/deepwork/
+.slim/
+
+# External baseline source checkouts and generated build trees
+data/v10/prepaper/external_baselines/*/repo/
+data/v10/prepaper/external_baselines/*/build*/

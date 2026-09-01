@@ -1,8 +1,8 @@
 # Quantum Peephole Ceiling: Representation-Conditioned Optimization in Quantum Circuits
 
-**Project Version**: 10.1.0
-**Date**: 2026-08-11
-**Release ID**: q-research-10.1.0-audit-fixes
+**Project Version**: v12 rewrite-exposure evidence package
+**Date**: 2026-09-01
+**Readiness**: `NOT_READY_FOR_PAPER`
 
 ---
 
@@ -13,6 +13,31 @@ This project characterizes the boundaries of quantum circuit peephole optimizati
 ### Core Scientific Question
 > When and why does peephole optimization succeed or fail across diverse circuit families?
 
+### Current v12 extension
+
+v12 adds a representation-conditioned rewrite-exposure certificate and a
+certificate-guided lower-bound search. The implementation is deliberately
+bounded to the declared `pair_v1` rule library and the `wire_order_v1` /
+`conservative_commutation_v1` dependence models. The current evidence package
+is independently verified, but it does not replace the historical canonical
+datasets or establish a universal optimizer theorem.
+
+The v12 package reports:
+
+- E38 exact exhaustive oracle: 512 cases, 1,024 model rows, with all
+  theorem/solver/bound/certificate checks passing.
+- E39 development-only selection: 391 inputs, 15 families, six configurations;
+  `b32_c256` is frozen for development follow-up only.
+- E40 prospective MQT panel: 168 generation attempts and zero eligible
+  pure-unitary, classical-free, fully-bound inputs; the primary efficacy
+  estimand is therefore not estimable and no substitution is made.
+- E41 scale/resource panel: 16 cells and 48 arm rows, with 12 successful and
+  four explicitly recorded resource/error outcomes; it does not update E40
+  efficacy.
+
+The machine-readable ledger, test gate, source/environment manifest, and final
+readiness disposition are under `data/v12/` and `release/prepaper_v12_*`.
+
 ### Key Findings
 1. **Listing Model Sensitivity**: Layer-by-layer listing (LBL) structurally empties the Phase-1 action space for n >= 2 (Observation 1(b)); wire-consecutive listing (WCL) exposes ~7.8% reduction hidden under LBL (E19, 10,000 rows)
 2. **Empirical Trichotomy**: CNOT chains achieve 100% Phase-1 reduction; oracle/Clifford circuits yield 14-16% via Phase-2a commutation; 3 of 15 families at genuine structural ceiling (QFT/GHZ/SurfaceCode) + 7 of 15 at prototype action-space ceiling
@@ -20,6 +45,9 @@ This project characterizes the boundaries of quantum circuit peephole optimizati
 4. **Theory-Experiment Validation**: 17-row theory-experiment scorecard (14 MATCH / 3 PARTIAL / 0 MISMATCH as of 2026-08-06). Theorem 1(a)'s corrected WCL density formula directly validated by E30 (13,500 trials, max |z| = 2.86). Theorem 9 (BV oracle Phase-2b advantage >= n/(4.5n+4)) validated at full scale: Phase-2b v2 reaches the exact k+2 optimum on all 80 BV instances, exceeding the rigorous bound by 3.1-4.2×; IQP 92.0%, Structured 40.2%, RandomClifford 51.6% mean reduction
 5. **Ceiling-Aware Optimization (Exploratory)**: 1.6x-228x speedup (aggregate 34.97×) with bitwise-identical reduction on the 15 training families; the original heuristic predictor failed held-out validation (MAE=0.2775, Pearson=NaN), but a repaired hybrid model (mechanism gate + random forest) reaches LOFO MAE 0.0172 [0.0129, 0.0218], pooled r=0.977 -- the gate was selected post hoc on a single dataset, so this is not a validated off-the-shelf predictor (family-mean prediction remains underpowered at n=15 folds; wave-6 20-family robustness: pooled MAE 0.0188, r=0.967, family-mean r=0.780 pure-RF / 0.887 gated, but a RepetitionCode fold failure — MAE 0.303, r=-0.826 — marks the generalization boundary for unseen intermediate-density mechanisms)
 6. **Fidelity Verified**: Optimizations preserve unitary equivalence where exact/scalable checks are available; E18 includes documented decomposition/fidelity-failure rows (44.4% failure rate, survivorship-biased)
+7. **Rewrite Exposure Certificate**: v12 makes the representation-dependent
+   exposure opportunity explicit and fail-closed; its efficacy conclusion is
+   bounded by the finite E38--E41 protocols and the E40 availability boundary
 
 ---
 
@@ -47,8 +75,8 @@ Q-research/
 │   │       └── template_matcher.py      # Phase-2b (full-scale v2)
 │   └── provenance.py            # Data provenance tracking
 │
-├── experiments/                  # Experiment scripts (by ID, E1-E30)
-├── data/                         # Canonical data (v2_fixed-v8, v10; v9 reruns are non-canonical evidence)
+├── experiments/                  # Experiment scripts (by ID, E1-E41)
+├── data/                         # Canonical data plus bounded v10-v12 evidence packages
 ├── analysis/                     # Analysis scripts, figures, statistics
 ├── docs/                         # Documentation
 │   ├── theory/                  # Theoretical framework + formal results + proof audits
@@ -60,7 +88,7 @@ Q-research/
 │   ├── supplementary/           # Supplementary materials
 │   └── data_dictionary.md       # Canonical data dictionary
 ├── scripts/                      # Reproduction scripts
-├── release/                      # Machine-readable release manifest
+├── release/                      # Machine-readable manifests, receipts, and restore capsules
 ├── tests/                        # Unit, integration, and statistical tests
 ├── environment.yml              # Conda environment (Python 3.12)
 ├── requirements.txt             # Pip requirements (pinned)
@@ -83,6 +111,9 @@ Q-research/
 - `docs/review/`: audit reports and historical wave decisions; historical files are not active evidence unless referenced by the current claim map.
 - `docs/**/archive/` and `docs/review/wave*/`: historical provenance only; they are not synchronized claim sources.
 - `docs/verification/`: reproducibility and calibration artifacts.
+- `data/v12/v12_requirement_to_evidence_ledger.json`: current v12 requirement-to-evidence map.
+- `release/prepaper_v12_readiness_verdict.json`: current v12 readiness disposition.
+- `scripts/verify_v12_readiness_package.py`: independent v12 package verifier.
 - `scripts/`: repository-level verification, manifest, and calibration entrypoints.
 
 ### Data Roles
@@ -91,6 +122,7 @@ Q-research/
 - Derived evidence: regenerated summaries under experiment `derived/` directories or `analysis/figures/`.
 - Rerun evidence: `data/v9/` and `data/v11/e20_corrected/`; current-code reconciliation outputs are non-canonical and must not replace frozen release data without an explicit version decision.
 - Supporting pilot: `data/v11/e31_listing_phase2b/` contains 396 non-canonical E31 rows; it is not part of the release manifest or canonical totals.
+- v12 bounded evidence: `data/v12/` records the rewrite-exposure certificate, E38 oracle, E39 development grid, E40 availability boundary, and E41 scale/resource panel; it is not added to the historical canonical totals.
 - Disposable local state: Python caches, timestamped backups, agent sessions, and logs. These are ignored and removed during final cleanup.
 
 ### Required Gates
@@ -100,6 +132,7 @@ python -m pytest tests/ -q
 python -m compileall -q src experiments scripts analysis
 python scripts/reproduce_all.py --verify
 python scripts/characterize_fidelity_fallback.py --n-values 3 5 8 --samples 1000
+python scripts/verify_v12_readiness_package.py
 ```
 
 Use `conda run -n q-research python ...` when the environment is not activated.
@@ -137,9 +170,13 @@ Use `conda run -n q-research python ...` when the environment is not activated.
 | E27 | New Families | COMPLETE | 675 | QPE/Trotter/QuantumVolume/WState/RepetitionCode (robustness suite) |
 | E29 | Multi-Seed E04 | COMPLETE | 800 | E04 single-seed estimates not reproduced (RLS -176.5%) |
 | E30 | Thm 1(a) WCL Validation | COMPLETE | 13,500 | Corrected WCL density formula: 27 cells, max |z| = 2.86, median rel. err. 1.4% |
+| E38 | Rewrite Exposure Oracle | COMPLETE | 1,024 model rows | Exact finite oracle and certificate contract: all zero-tolerance checks pass |
+| E39 | Rewrite Exposure Development Grid | DEVELOPMENT-ONLY | 2,346 | Six bounded configurations; frozen selector `b32_c256` |
+| E40 | Prospective Rewrite Exposure | EXTERNAL BOUNDARY | 168 attempts / 0 eligible | No eligible MQT input under the frozen pure-unitary panel; efficacy not estimable |
+| E41 | Rewrite Exposure Scale | RESOURCE-BOUND | 48 arm rows | 12 successful cells and 4 declared resource/error cells; scale evidence only |
 | EHW | Noise-Model Validation (fake backends) | COMPLETE | 288 | Noise-model only, NOT real hardware; BV 46.15% logical -> 0% physical L1 |
 
-**Active evidence total**: 96,205 rows across 35 canonical datasets. The release manifest lists 37 entries / 96,289 rows when the two superseded provenance entries are included (see `release/release_manifest.json` and `data/DATA_CANONICAL.md`).
+**Historical canonical evidence total**: 96,205 rows across 35 canonical datasets. The release manifest lists 37 entries / 96,289 rows when the two superseded provenance entries are included. v12 evidence is a separately bounded package and is not folded into those historical totals.
 
 ---
 
@@ -170,6 +207,7 @@ Key limitations:
 - Listing-sensitivity coverage complete (wave 6): 15/15 families, 6,720 rows, 168 combos; production compilers 0/126 sensitive, prototype 15/42 (6 sensitive families incl. UCCSD_inspired); qwalk_8 has 20/20 variants and all 80 rows use the documented structural-preservation route instead of exact 9-qubit Operator checks
 - Rerun reconciliation (wave 6): 11 experiments rerun under current code (E12-E21 plus E25) and reconciled; canonical retained for all; IQP commutation/hybrid reductions in canonical E14/E15/E16/E21 are systematically conservative under the strengthened commutation predicate (optimizer-capability enhancement, not a data error); E20 is bit-for-bit identical, while E18 diverges because current BasisTranslator coverage differs from the frozen generator snapshot (see `docs/review/wave6/reconciliation_disposition.md`)
 - E31 listing/Phase-2b interaction: 396-row smoke pilot only; the full family x size/depth/seed factorial remains open and does not alter canonical conclusions.
+- v12 rewrite-exposure results remain finite-panel claims: E38 validates the certificate on its declared oracle panel, E39 is development-only, E40 has no eligible efficacy inputs, and E41 records scale/resource behavior without sampled-fidelity substitution.
 
 ---
 
@@ -180,6 +218,9 @@ Key limitations:
 ```bash
 # Verify data integrity (fast, no reruns)
 python scripts/reproduce_all.py --verify
+
+# Verify the bounded v12 certificate and readiness package
+python scripts/verify_v12_readiness_package.py
 
 # Full reproduction: tests, all experiments, figures, and verification
 python scripts/reproduce_all.py --all

@@ -612,8 +612,41 @@ All corrections above have been applied to the relevant sections of this documen
 
 4. **Extending this analysis to noise-aware optimization is an important direction for future work.** A noise-aware extension would define the optimization objective as fidelity-adjusted gate reduction: maximize expected output fidelity per gate, subject to the constraint that the optimized circuit is unitarily equivalent to the input. This requires integrating noise models (depolarizing, amplitude damping, crosstalk) into the structural-ceiling analysis and re-deriving the ceiling bounds under noise-aware cost functions.
 
+## 13. v12 Rewrite-Exposure Certificate Package
+
+### 13.1 Scope
+
+The v12 extension studies how the chosen circuit representation exposes
+cancelable or mergeable local rewrite opportunities. It is a bounded certificate
+study, not a universal optimizer claim. The implementation is limited to the
+declared `pair_v1` rule library and the `wire_order_v1` and
+`conservative_commutation_v1` dependence models. Dynamic control, non-unitary
+operations, unbound parameters, and unsupported semantics fail closed.
+
+### 13.2 Registered protocols
+
+| Protocol | Design | Disposition |
+|---|---|---|
+| E38 | 512 finite cases, two dependence models, exhaustive topological orders where declared, and exact oracle comparison | Complete; zero theorem, bound, solver, equivalence, and certificate-contract mismatches |
+| E39 | 391 fixed inputs across 15 families and six development configurations | Development-only; `b32_c256` frozen for follow-up |
+| E40 | 24 fixed MQT families across declared sizes 4--10, 168 generation attempts, six formal arms | External boundary; zero eligible inputs, so the primary efficacy estimand is not estimable |
+| E41 | 16 scale/resource inputs and four optimizer arms, with unavailable equivalence recorded explicitly | Scale/resource evidence only; 12 successful cells and four resource/error cells |
+
+### 13.3 Analysis and stopping rules
+
+E38 is the zero-tolerance semantic gate. E39 may select a development
+configuration but cannot be used as confirmatory efficacy evidence. E40 uses no
+substitution when its frozen eligibility filters yield an empty population.
+E41 does not backfill the missing E40 population and does not use sampled
+fidelity as an equivalence claim. The current machine-readable ledger and
+readiness verdict are under `data/v12/` and `release/prepaper_v12_*`.
+
+The v12 package verifier must pass before these records are treated as
+available evidence. A passing verifier does not change the current
+`NOT_READY_FOR_PAPER` disposition.
+
 ---
 
-*Document version: 2.4*  
-*Last updated: 2026-06-16*  
-*Changes from v2.3: Added Section 12.10 (Noise Model Limitation) with detailed discussion of gate errors, decoherence, readout errors, and their interaction with peephole optimization effectiveness.*
+*Document version: 2.5*
+*Last updated: 2026-09-01*
+*Changes from v2.4: Added Section 13 for the bounded v12 rewrite-exposure certificate protocols and explicit readiness boundaries.*

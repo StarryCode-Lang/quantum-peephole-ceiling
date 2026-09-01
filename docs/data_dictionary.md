@@ -778,6 +778,27 @@ generator implements the exact layer model assumed by Theorem 1(a).
 
 ---
 
+### v12 Rewrite-Exposure Evidence Package (bounded, non-canonical)
+
+The v12 package uses explicit machine-readable certificates rather than adding
+new rows to the historical E1--E37 canonical totals.
+
+| Artifact | Role / principal fields |
+|---|---|
+| `data/v12/e38_rewrite_exposure_oracle/inputs.jsonl` | Declared finite input panel, gate listing, qubit count, and case id. |
+| `data/v12/e38_rewrite_exposure_oracle/rows.jsonl` | Per-case certificate, dependence model, oracle optimum, matching upper bound, constructive lower bound, solver status, and zero-tolerance checks. |
+| `data/v12/e39_development_grid/grid_results.csv` | Development configuration, certificate bounds, runtime, reduction, equivalence disposition, circuit identity, and opportunity-positive flag. |
+| `data/v12/e40_prospective_rewrite_exposure/classification.csv` | Frozen MQT family classification: `eligible`, `no_eligible_input`, or `unavailable` under the declared filters. |
+| `data/v12/e40_prospective_rewrite_exposure/checkpoint.sqlite3` | Restartable formal-run schema with `cells` and `arm_results` tables; the zero-cell boundary is represented explicitly. |
+| `data/v12/e41_rewrite_exposure_scale/formal_results.csv` | Scale/resource arm rows with certificate bounds, status, equivalence disposition, reduction, output size/depth, runtime, and error. |
+| `data/v12/v12_requirement_to_evidence_ledger.json` | Hash-bound requirements, evidence selectors, and status dispositions. |
+
+Certificate status values are fail-closed: `exact_zero`, `exact`, `bounded`,
+`truncated`, and `unavailable`. Equivalence values distinguish exact evidence
+from `equivalence_unavailable`; unavailable equivalence is not a fidelity pass.
+E39 is development-only, E40 efficacy is not estimable with zero eligible
+families, and E41 is scale/resource evidence only.
+
 ## Known Quirks and Naming Inconsistencies
 
 Documented quirks discovered during the v2.2.0 documentation-sync audit.

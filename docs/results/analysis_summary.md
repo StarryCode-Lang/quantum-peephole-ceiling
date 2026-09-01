@@ -64,6 +64,33 @@ Machine-readable sources are under `data/v10/prepaper/analysis/`,
 `data/v10/prepaper/external_baselines/`. The final claim boundary and complete
 limitations are maintained in the dated pre-paper final audit.
 
+## 0.1 Current v12 rewrite-exposure evidence package (2026-09-01)
+
+This section is the current status addendum for the representation-conditioned
+rewrite-exposure extension. It is separate from the historical canonical
+results above and does not alter their row counts or claims.
+
+- **E38 exact oracle.** The finite panel contains 512 cases evaluated under two
+  declared dependence models, producing 1,024 model rows. The oracle comparison,
+  matching bounds, exact solver, equivalence checks, and certificate-contract
+  mutation checks all pass with zero recorded failures.
+- **E39 development grid.** The fixed design contains 391 inputs from 15
+  families and six configurations. `b32_c256` is frozen as a development
+  selector only; E39 is not confirmatory efficacy evidence.
+- **E40 prospective availability.** The frozen 24-family MQT panel produced
+  168 generation attempts but zero eligible pure-unitary, classical-free,
+  fully-bound inputs. The primary efficacy estimand is therefore
+  `NOT_ESTIMABLE_EXTERNAL_BOUNDARY`; no E33/E35 substitution is permitted.
+- **E41 scale/resource behavior.** The panel contains 16 cells and 48 arm rows:
+  12 successful cells and four explicit resource/error outcomes. Equivalence
+  unavailable is recorded as unavailable, not as sampled-fidelity success, and
+  E41 does not update the E40 efficacy conclusion.
+
+The package verifier returns `verified` for the v12 ledger and E38--E41
+verifiers, while the readiness disposition remains `NOT_READY_FOR_PAPER`.
+The active manuscript is intentionally unchanged pending resolution of the
+E40 population boundary and inherited metric-15.41 baseline drift.
+
 ---
 
 ## 1. Phase 1 vs Phase 2 Analysis
