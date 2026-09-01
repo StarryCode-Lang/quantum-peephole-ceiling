@@ -14,6 +14,16 @@ from .phase2 import (
     Phase2bTemplateMatcher,
 )
 from .ceiling_aware import CeilingAwareOptimizer, count_phase1_actions, count_phase2_actions
+from .rewrite_exposure import (
+    CertificateGuidedPreprocessor,
+    CertificateStatus,
+    DependenceModel,
+    ExposureCertificate,
+    ExposureConfig,
+    RewriteCandidate,
+    certify_rewrite_exposure,
+    materialize_cgl_listing,
+)
 
 
 def create_optimizer(optimizer_type: str, **kwargs) -> BaseOptimizer:
@@ -67,5 +77,13 @@ __all__ = [
     'CeilingAwareOptimizer',
     'count_phase1_actions',
     'count_phase2_actions',
+    'CertificateGuidedPreprocessor',
+    'CertificateStatus',
+    'DependenceModel',
+    'ExposureCertificate',
+    'ExposureConfig',
+    'RewriteCandidate',
+    'certify_rewrite_exposure',
+    'materialize_cgl_listing',
     'create_optimizer',
 ]
