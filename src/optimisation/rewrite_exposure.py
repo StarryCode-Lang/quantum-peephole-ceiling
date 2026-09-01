@@ -233,6 +233,25 @@ def _listing_sha256(listing_order: Iterable[int]) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def _adjacent_matching_weight(
+    circuit: QuantumCircuit,
+    listing_order: Iterable[int],
+    tolerance: float,
+) -> int:
+    """Maximum weight of endpoint-disjoint supported pairs in one listing."""
+    order = list(listing_order)
+    best_without_previous = 0
+    best_through_previous = 0
+    for position in range(1, len(order)):
+        rule = _pair_rule(circuit, order[position - 1], order[position], tolerance)
+        edge_weight = rule[1] if rule is not None else 0
+        best_without_previous, best_through_previous = (
+            best_through_previous,
+            max(best_through_previous, best_without_previous + edge_weight),
+        )
+    return best_through_previous
+
+
 def _source_hashes() -> dict[str, str]:
     result: dict[str, str] = {}
     module_path = Path(__file__).resolve()
@@ -813,11 +832,9 @@ def certify_rewrite_exposure(
     ranked = _rank_candidates(pairwise_candidates)
     discarded = max(0, len(ranked) - normalized.candidate_cap)
     retained = ranked[: normalized.candidate_cap]
-    current_weight = 0
-    for index in range(max(0, n - 1)):
-        rule = _pair_rule(circuit, index, index + 1, normalized.tolerance)
-        if rule is not None:
-            current_weight += rule[1]
+    current_weight = _adjacent_matching_weight(
+        circuit, range(n), normalized.tolerance
+    )
 
     matching_milp_reason = None
     all_for_ub = retained
@@ -831,10 +848,12 @@ def certify_rewrite_exposure(
 
     search_nodes = 0
     exact_optimum: int | None = None
-    if len(candidates) <= DEFAULT_EXACT_CANDIDATE_LIMIT and discarded == 0:
+    search_budget_exceeded = False
+    if len(ranked) <= DEFAULT_EXACT_CANDIDATE_LIMIT and discarded == 0:
         selected, search_nodes, budget_exceeded = _exact_joint_selection(
             retained, n, edges, normalized.exact_node_budget
         )
+        search_budget_exceeded = budget_exceeded
         exact_optimum = sum(item.reduction_weight for item in selected) if not budget_exceeded else None
         solver = "exact_branch_and_bound"
         if budget_exceeded:
@@ -843,7 +862,7 @@ def certify_rewrite_exposure(
             )
     else:
         selected, search_nodes = _beam_selection(retained, n, edges, normalized.beam_width)
-        if len(candidates) <= DEFAULT_EXACT_CANDIDATE_LIMIT and discarded == 0:
+        if len(ranked) <= DEFAULT_EXACT_CANDIDATE_LIMIT and discarded == 0:
             exact_optimum = None
 
     lower_bound = sum(item.reduction_weight for item in selected)
@@ -855,10 +874,10 @@ def certify_rewrite_exposure(
         fallback_reason = matching_milp_reason
     if discarded:
         status = CertificateStatus.TRUNCATED
+    elif lower_bound == matching_ub and not search_budget_exceeded:
+        status = CertificateStatus.EXACT_ZERO if lower_bound == 0 else CertificateStatus.EXACT
     elif exact_optimum is None:
         status = CertificateStatus.BOUNDED
-    elif lower_bound == matching_ub:
-        status = CertificateStatus.EXACT_ZERO if lower_bound == 0 else CertificateStatus.EXACT
     else:
         status = CertificateStatus.BOUNDED
     if not retained:

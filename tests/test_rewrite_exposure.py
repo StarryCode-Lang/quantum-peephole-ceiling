@@ -200,6 +200,17 @@ def test_current_exposure_counts_supported_adjacent_rules_only():
     assert certificate.selected_pairs[0]["rule_id"] == "pair_v1.rotation_merge"
 
 
+def test_current_exposure_uses_endpoint_disjoint_matching_not_adjacent_edge_sum():
+    circuit = QuantumCircuit(1)
+    circuit.h(0)
+    circuit.h(0)
+    circuit.h(0)
+
+    certificate = certify_rewrite_exposure(circuit)
+
+    assert certificate.current_exposed_weight == 2
+
+
 def test_matching_upper_bound_is_safe_and_exact_for_small_instance():
     circuit = _h_pair_circuit()
     certificate = certify_rewrite_exposure(circuit)
