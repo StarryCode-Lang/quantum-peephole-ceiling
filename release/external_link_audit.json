@@ -1,0 +1,985 @@
+{
+  "claim_boundary": "This is a point-in-time live reachability audit. HTTP 403, authentication, robots, and network failures remain unverified; template URLs are not dereferenced; absence of a current 404/410 does not guarantee future persistence.",
+  "created_utc": "2026-08-30T00:21:16.481769+00:00",
+  "live_check_requested": true,
+  "markdown_files": 113,
+  "metric_dispositions": {
+    "15.42": "PARTIAL: live audit found 0 definite broken links among 60 unique URLs, but 5 URLs remain unverified and future link rot cannot be excluded"
+  },
+  "records": [
+    {
+      "check": {
+        "status": "template_not_checked"
+      },
+      "occurrences": [
+        {
+          "line": 28,
+          "path": "docs/references/search_ledger.md"
+        }
+      ],
+      "url": "https://api.crossref.org/works/{doi}"
+    },
+    {
+      "check": {
+        "status": "template_not_checked"
+      },
+      "occurrences": [
+        {
+          "line": 29,
+          "path": "docs/references/search_ledger.md"
+        }
+      ],
+      "url": "https://api.datacite.org/dois/{doi}"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/1901.10114",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 137,
+          "path": "docs/analysis/compiler_listing_audit.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/1901.10114"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2110.03137",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 514,
+          "path": "docs/review/metric_catalog_2026-08-11.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2110.03137"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2110.10292",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 326,
+          "path": "docs/review/metric_catalog_2026-08-11.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2110.10292"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2202.09194",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 186,
+          "path": "docs/review/wave1/universal_law.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2202.09194"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2204.09033",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 12,
+          "path": "docs/references/literature_review.md"
+        },
+        {
+          "line": 17,
+          "path": "docs/review/prepaper_arxiv_publication_version_audit_2026-08-30.md"
+        },
+        {
+          "line": 47,
+          "path": "docs/review/prepaper_forward_negative_citation_audit_2026-08-24.md"
+        },
+        {
+          "line": 69,
+          "path": "docs/review/publication_readiness_2026-08.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2204.09033"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2206.10843",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 185,
+          "path": "docs/review/wave1/universal_law.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2206.10843"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2210.12035",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 186,
+          "path": "docs/review/wave1/universal_law.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2210.12035"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2305.10966",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 93,
+          "path": "docs/review/prepaper_novelty_matrix_2026-08-10.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2305.10966"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2307.10120",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 70,
+          "path": "docs/review/publication_readiness_2026-08.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2307.10120"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2312.11597",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 94,
+          "path": "docs/review/prepaper_novelty_matrix_2026-08-10.md"
+        },
+        {
+          "line": 72,
+          "path": "docs/review/publication_readiness_2026-08.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2312.11597"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2402.14396",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 95,
+          "path": "docs/review/prepaper_novelty_matrix_2026-08-10.md"
+        },
+        {
+          "line": 70,
+          "path": "docs/review/publication_readiness_2026-08.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2402.14396"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2404.18456",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 130,
+          "path": "docs/review/metric_catalog_2026-08-11.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2404.18456"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2409.08844",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 170,
+          "path": "docs/review/metric_catalog_2026-08-11.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2409.08844"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2411.04104",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 36,
+          "path": "docs/review/prepaper_arxiv_publication_version_audit_2026-08-30.md"
+        },
+        {
+          "line": 48,
+          "path": "docs/review/prepaper_forward_negative_citation_audit_2026-08-24.md"
+        },
+        {
+          "line": 91,
+          "path": "docs/review/prepaper_novelty_matrix_2026-08-10.md"
+        },
+        {
+          "line": 76,
+          "path": "docs/review/prepaper_novelty_refresh_2026-08-24.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2411.04104"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2502.14715",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 73,
+          "path": "docs/review/prepaper_novelty_refresh_2026-08-24.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2502.14715"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2502.19526",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 50,
+          "path": "docs/review/prepaper_forward_negative_citation_audit_2026-08-24.md"
+        },
+        {
+          "line": 92,
+          "path": "docs/review/prepaper_novelty_matrix_2026-08-10.md"
+        },
+        {
+          "line": 75,
+          "path": "docs/review/prepaper_novelty_refresh_2026-08-24.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2502.19526"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2503.03227",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 71,
+          "path": "docs/review/publication_readiness_2026-08.md"
+        },
+        {
+          "line": 65,
+          "path": "docs/review/wave2/manuscript_integration.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2503.03227"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2511.19897",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 69,
+          "path": "docs/review/prepaper_novelty_refresh_2026-08-24.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2511.19897"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2601.15934",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 70,
+          "path": "docs/review/prepaper_novelty_refresh_2026-08-24.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2601.15934"
+    },
+    {
+      "check": {
+        "final_url": "https://arxiv.org/abs/2601.19738",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 96,
+          "path": "docs/review/prepaper_novelty_matrix_2026-08-10.md"
+        },
+        {
+          "line": 74,
+          "path": "docs/review/prepaper_novelty_refresh_2026-08-24.md"
+        }
+      ],
+      "url": "https://arxiv.org/abs/2601.19738"
+    },
+    {
+      "check": {
+        "final_url": "https://cs.nyu.edu/~shw8119/25/qce25-oac.pdf",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 52,
+          "path": "docs/review/prepaper_forward_negative_citation_audit_2026-08-24.md"
+        }
+      ],
+      "url": "https://cs.nyu.edu/~shw8119/25/qce25-oac.pdf"
+    },
+    {
+      "check": {
+        "final_url": "https://www.nature.com/articles/s41598-026-47674-5?error=cookies_not_supported&code=9725abd9-e29f-47c2-bc7e-f5795fd03df1",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 53,
+          "path": "docs/review/prepaper_forward_negative_citation_audit_2026-08-24.md"
+        },
+        {
+          "line": 71,
+          "path": "docs/review/prepaper_novelty_refresh_2026-08-24.md"
+        }
+      ],
+      "url": "https://doi.org/10.1038/s41598-026-47674-5"
+    },
+    {
+      "check": {
+        "final_url": "https://validate.perfdrive.com/fb803c746e9148689b3984a31fccd902/?ssa=0a273c01-f208-42a2-a2eb-33560f2feefc&ssb=14983207095&ssc=https%3A%2F%2Fiopscience.iop.org%2Farticle%2F10.1088%2F1367-2630%2Fae0e40&ssi=acb144a3-cnvj-422f-abc4-ea4adf96f0f1&ssk=botmanager_support@radware.com&ssm=00236937044470224106938490918811&ssn=113a53e33cbfcd4c028c6fb12929cfddcb1e0a1b42c0-94df-46c9-a63d4a&sso=a2ef5096-0254c4ccc82d648ecebf1b8284aac5c8a545a252fcee1148&ssp=19977425191788005063178802273911347&ssq=15229944927519581503049275570381939809048&ssr=MTguMTgzLjE5MS4xMjQ=&sst=Q-research-link-audit/1.0&ssu=&ssv=&ssw=&ssx=eyJfX3V6bWYiOiI3ZjkwMDAwYTFiNDJjMC05NGRmLTQ2YzktYTA5Ni0wMjU0YzRjY2M4MmQxLTE3ODgwNDkyNzU2NjEwLTAwNDcwMmFkYTQwNDhhZWZkMWUxMCIsInJkIjoiaW9wLm9yZyIsInV6bXgiOiI3ZmMwMDA2NjFjMzJjZS05NDQ2LTRlOWItYWQwYS03Y2JjMjQxMTMxOWExLTE3ODgwNDkyNzU2NjEwLTAwMjgyNmFmYWE2NGI1NTQ5MjkxMCJ9",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 72,
+          "path": "docs/review/prepaper_novelty_refresh_2026-08-24.md"
+        }
+      ],
+      "url": "https://doi.org/10.1088/1367-2630/ae0e40"
+    },
+    {
+      "check": {
+        "final_url": "https://ieeexplore.ieee.org/document/11250322/",
+        "http_status": 202,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 51,
+          "path": "docs/review/prepaper_forward_negative_citation_audit_2026-08-24.md"
+        }
+      ],
+      "url": "https://doi.org/10.1109/QCE65121.2025.00069"
+    },
+    {
+      "check": {
+        "final_url": "https://dl.acm.org/doi/10.1145/3519939.3523433",
+        "http_status": 403,
+        "method": "GET",
+        "status": "unverified_http"
+      },
+      "occurrences": [
+        {
+          "line": 21,
+          "path": "docs/review/prepaper_arxiv_publication_version_audit_2026-08-30.md"
+        },
+        {
+          "line": 87,
+          "path": "docs/review/prepaper_novelty_matrix_2026-08-10.md"
+        }
+      ],
+      "url": "https://doi.org/10.1145/3519939.3523433"
+    },
+    {
+      "check": {
+        "final_url": "https://dl.acm.org/doi/10.1145/3649831",
+        "http_status": 403,
+        "method": "GET",
+        "status": "unverified_http"
+      },
+      "occurrences": [
+        {
+          "line": 88,
+          "path": "docs/review/prepaper_novelty_matrix_2026-08-10.md"
+        }
+      ],
+      "url": "https://doi.org/10.1145/3649831"
+    },
+    {
+      "check": {
+        "final_url": "https://dl.acm.org/doi/10.1145/3669940.3707240",
+        "http_status": 403,
+        "method": "GET",
+        "status": "unverified_http"
+      },
+      "occurrences": [
+        {
+          "line": 39,
+          "path": "docs/review/prepaper_arxiv_publication_version_audit_2026-08-30.md"
+        },
+        {
+          "line": 49,
+          "path": "docs/review/prepaper_forward_negative_citation_audit_2026-08-24.md"
+        },
+        {
+          "line": 17,
+          "path": "docs/review/prepaper_guoq_go_no_go_2026-08-11.md"
+        }
+      ],
+      "url": "https://doi.org/10.1145/3669940.3707240"
+    },
+    {
+      "check": {
+        "final_url": "https://dl.acm.org/doi/10.1145/3808254",
+        "http_status": 200,
+        "method": "GET",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 89,
+          "path": "docs/review/prepaper_novelty_matrix_2026-08-10.md"
+        }
+      ],
+      "url": "https://doi.org/10.1145/3808254"
+    },
+    {
+      "check": {
+        "final_url": "https://zenodo.org/records/14057840",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 18,
+          "path": "docs/review/prepaper_guoq_go_no_go_2026-08-11.md"
+        }
+      ],
+      "url": "https://doi.org/10.5281/zenodo.14055562"
+    },
+    {
+      "check": {
+        "final_url": "https://zenodo.org/records/14057840",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 19,
+          "path": "docs/review/prepaper_guoq_go_no_go_2026-08-11.md"
+        }
+      ],
+      "url": "https://doi.org/10.5281/zenodo.14057840"
+    },
+    {
+      "check": {
+        "status": "template_not_checked"
+      },
+      "occurrences": [
+        {
+          "line": 27,
+          "path": "docs/references/search_ledger.md"
+        }
+      ],
+      "url": "https://export.arxiv.org/api/query?id_list="
+    },
+    {
+      "check": {
+        "final_url": "https://github.com/Quantinuum/pytket-qiskit",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 5,
+          "path": "docs/results/tket_bug_report_final.md"
+        }
+      ],
+      "url": "https://github.com/CQCL/pytket-qiskit"
+    },
+    {
+      "check": {
+        "final_url": "https://github.com/Quantinuum/tket",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 28,
+          "path": "docs/analysis/archive/sota_availability.md"
+        },
+        {
+          "line": 4,
+          "path": "docs/results/tket_bug_report_final.md"
+        }
+      ],
+      "url": "https://github.com/CQCL/tket"
+    },
+    {
+      "check": {
+        "final_url": "https://github.com/Quantinuum/tket/issues?q=implicit+permutation+tk_to_qiskit",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 169,
+          "path": "docs/results/tket_bug_report_final.md"
+        },
+        {
+          "line": 54,
+          "path": "docs/review/wave5/tket_bugreport.md"
+        }
+      ],
+      "url": "https://github.com/CQCL/tket/issues?q=implicit+permutation+tk_to_qiskit"
+    },
+    {
+      "check": {
+        "final_url": "https://github.com/Qiskit/qiskit",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 37,
+          "path": "docs/analysis/archive/sota_availability.md"
+        }
+      ],
+      "url": "https://github.com/Qiskit/qiskit"
+    },
+    {
+      "check": {
+        "final_url": "https://github.com/StarryCode-Lang/quantum-peephole-ceiling",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 1136,
+          "path": "docs/manuscript/manuscript.md"
+        }
+      ],
+      "url": "https://github.com/StarryCode-Lang/quantum-peephole-ceiling"
+    },
+    {
+      "check": {
+        "final_url": "https://github.com/inQWIRE/SQIR",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 54,
+          "path": "docs/analysis/archive/sota_availability.md"
+        }
+      ],
+      "url": "https://github.com/inQWIRE/SQIR"
+    },
+    {
+      "check": {
+        "final_url": "https://github.com/inQWIRE/mlvoqc",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 54,
+          "path": "docs/analysis/archive/sota_availability.md"
+        }
+      ],
+      "url": "https://github.com/inQWIRE/mlvoqc"
+    },
+    {
+      "check": {
+        "final_url": "https://github.com/inQWIRE/mlvoqc",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 59,
+          "path": "docs/analysis/archive/sota_availability.md"
+        }
+      ],
+      "url": "https://github.com/inQWIRE/mlvoqc.git#mapping"
+    },
+    {
+      "check": {
+        "final_url": "https://github.com/inQWIRE/pyvoqc",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 54,
+          "path": "docs/analysis/archive/sota_availability.md"
+        }
+      ],
+      "url": "https://github.com/inQWIRE/pyvoqc"
+    },
+    {
+      "check": {
+        "final_url": "https://github.com/juhanimerilehto/microbench",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 117,
+          "path": "docs/analysis/archive/sota_availability.md"
+        }
+      ],
+      "url": "https://github.com/juhanimerilehto/microbench"
+    },
+    {
+      "check": {
+        "final_url": "https://github.com/qqq-wisc/guoq",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 13,
+          "path": "docs/review/prepaper_guoq_go_no_go_2026-08-11.md"
+        }
+      ],
+      "url": "https://github.com/qqq-wisc/guoq"
+    },
+    {
+      "check": {
+        "final_url": "https://github.com/quantum-compiler/Quarl",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 91,
+          "path": "docs/analysis/archive/sota_availability.md"
+        }
+      ],
+      "url": "https://github.com/quantum-compiler/Quarl"
+    },
+    {
+      "check": {
+        "final_url": "https://github.com/quantum-compiler/quartz",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 70,
+          "path": "docs/analysis/archive/sota_availability.md"
+        }
+      ],
+      "url": "https://github.com/quantum-compiler/quartz"
+    },
+    {
+      "check": {
+        "final_url": "https://github.com/quantumlib/Cirq",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 45,
+          "path": "docs/analysis/archive/sota_availability.md"
+        }
+      ],
+      "url": "https://github.com/quantumlib/Cirq"
+    },
+    {
+      "check": {
+        "final_url": "https://journals.aps.org/prxquantum/about",
+        "http_status": 403,
+        "method": "GET",
+        "status": "unverified_http"
+      },
+      "occurrences": [
+        {
+          "line": 7,
+          "path": "docs/review/metric_catalog_2026-08-11.md"
+        }
+      ],
+      "url": "https://journals.aps.org/prxquantum/about"
+    },
+    {
+      "check": {
+        "final_url": "https://qqq-wisc.github.io/",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 12,
+          "path": "docs/review/prepaper_guoq_go_no_go_2026-08-11.md"
+        }
+      ],
+      "url": "https://qqq-wisc.github.io/"
+    },
+    {
+      "check": {
+        "final_url": "https://qqq-wisc.github.io/files/asplos25.pdf",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 38,
+          "path": "docs/review/prepaper_arxiv_publication_version_audit_2026-08-30.md"
+        }
+      ],
+      "url": "https://qqq-wisc.github.io/files/asplos25.pdf"
+    },
+    {
+      "check": {
+        "final_url": "https://quantum-journal.org/papers/q-2023-07-20-1062/",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 170,
+          "path": "docs/review/metric_catalog_2026-08-11.md"
+        }
+      ],
+      "url": "https://quantum-journal.org/papers/q-2023-07-20-1062/"
+    },
+    {
+      "check": {
+        "final_url": "https://www.acm.org/publications/policies/artifact-review-and-badging-current",
+        "http_status": 403,
+        "method": "GET",
+        "status": "unverified_http"
+      },
+      "occurrences": [
+        {
+          "line": 554,
+          "path": "docs/review/metric_catalog_2026-08-11.md"
+        }
+      ],
+      "url": "https://www.acm.org/publications/policies/artifact-review-and-badging-current"
+    },
+    {
+      "check": {
+        "final_url": "https://www.amstat.org/asa/files/pdfs/p-valuestatement.pdf",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 444,
+          "path": "docs/review/metric_catalog_2026-08-11.md"
+        }
+      ],
+      "url": "https://www.amstat.org/asa/files/pdfs/p-valuestatement.pdf"
+    },
+    {
+      "check": {
+        "final_url": "https://www.cs.cmu.edu/~zhihaoj2/papers/quartz-pldi22.pdf",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 20,
+          "path": "docs/review/prepaper_arxiv_publication_version_audit_2026-08-30.md"
+        }
+      ],
+      "url": "https://www.cs.cmu.edu/~zhihaoj2/papers/quartz-pldi22.pdf"
+    },
+    {
+      "check": {
+        "final_url": "https://www.nature.com/articles/sdata201618?error=cookies_not_supported&code=ffc0842e-57a2-48af-af17-186f2aa3d951",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 602,
+          "path": "docs/review/metric_catalog_2026-08-11.md"
+        }
+      ],
+      "url": "https://www.nature.com/articles/sdata201618"
+    },
+    {
+      "check": {
+        "final_url": "https://www.nature.com/nbt/editorial-policies/reporting-standards?error=cookies_not_supported&code=41d82dab-0eba-4baf-b347-10e9fac0451e",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 554,
+          "path": "docs/review/metric_catalog_2026-08-11.md"
+        }
+      ],
+      "url": "https://www.nature.com/nbt/editorial-policies/reporting-standards"
+    },
+    {
+      "check": {
+        "final_url": "https://www.nature.com/npjqi/for-authors-and-referees/guideforreviewers?error=cookies_not_supported&code=3b802db7-85db-456e-980a-d4dbe689dfdc",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 7,
+          "path": "docs/review/metric_catalog_2026-08-11.md"
+        }
+      ],
+      "url": "https://www.nature.com/npjqi/for-authors-and-referees/guideforreviewers"
+    },
+    {
+      "check": {
+        "final_url": "https://www.nature.com/npjqi/for-authors-and-referees/submission-guidelines?error=cookies_not_supported&code=2b825c30-0106-4ff8-b6ae-3eb482a47774",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 391,
+          "path": "docs/review/metric_catalog_2026-08-11.md"
+        }
+      ],
+      "url": "https://www.nature.com/npjqi/for-authors-and-referees/submission-guidelines"
+    },
+    {
+      "check": {
+        "final_url": "https://www.nist.gov/publications/expanding-ai-evaluation-toolbox-statistical-models",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 444,
+          "path": "docs/review/metric_catalog_2026-08-11.md"
+        }
+      ],
+      "url": "https://www.nist.gov/publications/expanding-ai-evaluation-toolbox-statistical-models"
+    },
+    {
+      "check": {
+        "final_url": "https://zenodo.org/records/19571754",
+        "http_status": 200,
+        "method": "HEAD",
+        "status": "reachable"
+      },
+      "occurrences": [
+        {
+          "line": 90,
+          "path": "docs/review/prepaper_novelty_matrix_2026-08-10.md"
+        }
+      ],
+      "url": "https://zenodo.org/records/19571754"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "scope": "README.md and docs/**/*.md",
+  "source_sha256": "ff3c3866bcec7b1771fcafb694a9b4afebfa95976f58477eaaa0eec5bdb62c47",
+  "status": "PASS_NO_DEFINITE_BROKEN_LINKS_WITH_UNVERIFIED",
+  "status_counts": {
+    "reachable": 52,
+    "template_not_checked": 3,
+    "unverified_http": 5
+  },
+  "unique_urls": 60,
+  "url_occurrences": 78
+}

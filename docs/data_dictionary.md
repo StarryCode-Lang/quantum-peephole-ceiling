@@ -98,7 +98,7 @@ Unless otherwise noted, a column is present in all six schema families.
 | `reduction` | `float` | Fractional gate reduction: `1 - optimized / baseline`. Range: `[0, 1]`. Proportion unless column ends in `_pct`. | `0.2083` |
 | `reduction_pct` | `float` | Percent reduction: `100 * reduction` (results_v1/v2). | `20.83` |
 | `fidelity` | `float` | Average gate fidelity between original and optimized circuits. Range: `[0, 1]`. | `0.9992` |
-| `success` | `bool` | Binary success flag: `reduction >= 0.20 AND fidelity >= 0.99`. | `True` |
+| `success` | `bool` | Versioned binary flag. Frozen v2_fixed--v8 optimizer rows generally used `reduction >= 0.20 AND fidelity >= 0.99`; future runs use `reduction >= 0.05 AND fidelity >= configured threshold`. Some legacy compiler rows used fidelity-only and must not be pooled as outcomes. | `True` |
 | `runtime_seconds` | `float` | Wall-clock runtime of the optimization (seconds). | `0.342` |
 | `timestamp_utc` | `str` (ISO 8601) | UTC timestamp when the row was generated. | `2026-05-15T08:23:17Z` |
 
@@ -444,11 +444,39 @@ fractional `reduction` convention used elsewhere.
 | `success_rate` | `float` | Fraction of cell rows with status `ok` (`n_trials / n_cell_rows`). |
 | `fidelity_pass_rate` | `float` | Fraction of exact-fidelity rows with `fidelity >= 0.999`. |
 | `fidelity_exact_rate` | `float` | Fraction of rows whose fidelity was computed by exact unitary comparison. |
-| `mann_whitney_p_vs_custom` | `float` | Two-sided Mann-Whitney U p-value vs the `custom` tool's reductions (empty for `custom` rows). |
-| `wilcoxon_p_vs_custom` | `float` | Wilcoxon signed-rank p-value vs `custom` (empty for `custom` rows). |
-| `cliffs_delta_vs_custom` | `float` | Cliff's delta effect size vs `custom` (empty for `custom` rows). |
-| `holm_significant` | `bool` | `True` if the Mann-Whitney p-value passed the Holm correction (`p < holm_alpha`). |
-| `holm_alpha` | `float` | Holm-adjusted significance threshold used for the cell. |
+| `mann_whitney_p_vs_custom` | `float` | Secondary unpaired Mann-Whitney U p-value vs `custom` (empty for `custom` rows). |
+| `wilcoxon_p_vs_custom` | `float` | Primary paired Wilcoxon signed-rank p-value after matching on circuit fingerprint/ID/trial/seed. |
+| `cliffs_delta_vs_custom` | `float` | Secondary independent-sample Cliff's delta vs `custom`. |
+| `n_pairs_vs_custom` | `int` | Number of one-to-one matched circuits used by the paired comparison. |
+| `matched_rank_biserial_vs_custom` | `float` | Paired ordinal effect size corresponding to the Wilcoxon design. |
+| `holm_significant` | `bool` | `True` if the paired Wilcoxon p-value passes Holm step-down correction across all tool/config/family comparisons. |
+| `holm_alpha` | `float` | Holm rank-specific threshold for the comparison. |
+| `holm_adjusted_p` | `float` | Holm-adjusted paired Wilcoxon p-value. |
+
+#### SOTA raw schema 1.1 resource extension (future runs)
+
+The frozen v10 raw files predate this extension. Missing historical values are
+`NaN`/`unavailable`, never zero-filled. Schema 1.1 adds:
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `common_baseline_two_q_depth`, `common_optimized_two_q_depth` | `int` | Two-qubit-only circuit depth after conversion to the frozen common basis. |
+| `parse_elapsed_seconds` | `float` | QASM read, parse, and input-hash verification wall time measured while loading the manifest. |
+| `input_normalization_elapsed_seconds`, `output_normalization_elapsed_seconds` | `float` | Common-basis conversion and metric-extraction wall time before/after optimization. |
+| `optimizer_elapsed_seconds` | `float` | Tool-only worker wall time, excluding persistent-worker startup. |
+| `verification_elapsed_seconds` | `float` | Exact average-gate-fidelity computation wall time. |
+| `result_serialization_elapsed_seconds` | `float` | One-row CSV record serialization time; periodic checkpoint disk I/O is excluded. |
+| `pipeline_elapsed_seconds` | `float` | Full per-instance parent-process pipeline wall time. |
+| `optimizer_cpu_seconds` | `float` | CPU time measured inside the isolated optimizer worker. |
+| `optimizer_peak_rss_bytes` | `float` | Peak RSS of the worker process tree sampled every 50 ms; this is a sampled upper observation, not an exact kernel high-water mark. |
+| `optimizer_peak_rss_method` | `str` | `sampled_process_tree_50ms` or `unavailable`. |
+| `timing_semantics_version` | `str` | Versioned timing contract; schema 1.1 uses `1.1.0`. |
+
+`analysis/prepaper_rq3_tool_comparison.py` also emits per-input and summary
+quality--runtime Pareto tables. Frontier membership maximizes exact-valid ITT
+common-basis gate reduction and minimizes optimizer wall time. Invalid outputs
+or missing runtimes remain visible with status
+`unavailable_invalid_or_runtime` and are not imputed.
 
 ### E22: Gate-Order Shuffle Ablation (v7)
 
@@ -883,7 +911,7 @@ Consumers joining across datasets must account for these.
 - `observed_best_reduction`: `0.0 <= value <= 1.0`
 
 ### Boolean Columns
-- `success`: Computed as `reduction >= 0.20 AND fidelity >= 0.99`
+- `success`: Do not pool across schema generations. Frozen v2_fixed--v8 optimizer rows generally used a 0.20 reduction threshold; future code uses 0.05 plus the configured fidelity threshold. Legacy compiler rows may be fidelity-only. Recompute from `reduction` and `fidelity` for comparative analysis.
 
 ---
 

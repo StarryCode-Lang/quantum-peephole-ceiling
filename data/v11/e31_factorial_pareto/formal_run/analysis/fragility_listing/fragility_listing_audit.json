@@ -1,0 +1,231 @@
+{
+  "artifacts": {
+    "equal_budget_conclusion_sensitivity.csv": {
+      "rows": 20,
+      "sha256": "2636b1e19aa63d65b42656cd5c4fc6d374408d22246b61e76045ee2113b99b61"
+    },
+    "listing_extremes_by_family.csv": {
+      "rows": 15,
+      "sha256": "927424ccabe150cfe7f9150fba60f2c771f293ae283de48f1890d9bc1de3963a"
+    },
+    "listing_extremes_cells.csv": {
+      "rows": 9384,
+      "sha256": "0ef7ac1ff9c447ecd7c44559ea84015906861ca9e23d5e5d7fdb7e8ec783a869"
+    },
+    "single_input_influence.csv": {
+      "rows": 1955,
+      "sha256": "06331cd19a3c44d800ac3b0a45181ff2af826c67815e23881a2caf4274294938"
+    }
+  },
+  "claim_boundary": "This audit diagnoses the frozen panel. Oracle best/worst selection is post hoc; the one-second all-timeout boundary is not evidence of equality; timeout deletion does not recover uncheckpointed incumbents; no unseen-family inference is claimed.",
+  "created_utc": "2026-08-29T12:36:21.281441+00:00",
+  "equal_budget_sensitivity": {
+    "audited_conclusions": 5,
+    "budgets_seconds": [
+      1,
+      10,
+      30,
+      120
+    ],
+    "one_second_boundary": "all five audited ITT contrasts equal zero because every row timed out",
+    "reversing_conclusions": [],
+    "sign_reversal_count": 0
+  },
+  "listing_extremes": {
+    "all_three_tied_rate": 0.8222506393861893,
+    "best_minus_random_mean_pp": 0.8798195845116079,
+    "cells": 9384,
+    "families": 15,
+    "interpretation": "Best and worst are post-seal per-cell oracle envelopes over the three frozen listings; they are a sensitivity bound, not a deployable listing selector.",
+    "oracle_best_mean_pp": 13.690207707314748,
+    "oracle_worst_mean_pp": 10.836535188459209,
+    "random_listing_mean_pp": 12.81038812280314,
+    "random_minus_worst_mean_pp": 1.9738529343439322
+  },
+  "metric_dispositions": {
+    "12.14": "PASS: post-seal oracle-best, oracle-worst, and frozen random listings are compared for every complete design cell",
+    "17.03": "PASS: five declared core descriptive conclusions receive exhaustive leave-one-input-out influence analysis",
+    "17.07": "PARTIAL: every single recorded-timeout deletion is bounded, but no retained incumbent exists to bound hidden timeout outcomes",
+    "17.08": "PASS: all five declared conclusions are recomputed at each equal budget and none reverses sign"
+  },
+  "schema_version": "1.0.0",
+  "scope": "sealed 391-input E31 fixed panel; post-seal descriptive sensitivity only",
+  "single_input_influence": {
+    "conclusions": 5,
+    "inputs": 391,
+    "maximum_absolute_shift_pp": 0.0592237246463474,
+    "most_single_input_sensitive_conclusion": "random_minus_lbl_plus_templates",
+    "responsible_family": "Oracle",
+    "responsible_input_sha256": "2b1cde4abea2ed44a9eb8279de400f807116abcb88a364fd04bbb05b1c3244ae",
+    "sign_flip_count": 0
+  },
+  "source_bindings": {
+    "analysis/e31_fragility_listing_audit.py": "ff85c40ef78fc39d30d5724ce87cf1c52820678ec87db946ca9ed9c75fe0cc47",
+    "e31_factorial_pareto_protocol.json": "2464d1d531032a71c2947e9e8abd2b6b84de9fc6f048239944ee9357097365e8",
+    "formal_results.csv": "76702c2c47e6e191e088bb2c10a7f382ec3f755ecba0bc5bdf19eea2d7af9167"
+  },
+  "status": "PASS_BOUNDED_E31_FRAGILITY_AND_LISTING_AUDIT",
+  "timeout_deletion_sensitivity": {
+    "any_sign_flip": false,
+    "largest_single_timeout_deletion_effect": {
+      "absolute_shift_pp": 0.0032953006494569337,
+      "affected_timeout_rows": 1307,
+      "cell": [
+        "COMMUTATION_PLUS_TEMPLATES",
+        "WCL"
+      ],
+      "conclusion": "primary_listing_by_rule_did",
+      "full_estimate_pp": -0.3797665216969719,
+      "sign_flip": false,
+      "single_timeout_deletion_estimate_pp": -0.37647122104751496
+    },
+    "single_record_deletion_cells": [
+      {
+        "absolute_shift_pp": 0.0032953006494569337,
+        "affected_timeout_rows": 1307,
+        "cell": [
+          "COMMUTATION_PLUS_TEMPLATES",
+          "WCL"
+        ],
+        "conclusion": "primary_listing_by_rule_did",
+        "full_estimate_pp": -0.3797665216969719,
+        "sign_flip": false,
+        "single_timeout_deletion_estimate_pp": -0.37647122104751496
+      },
+      {
+        "absolute_shift_pp": 0.0028356435074705644,
+        "affected_timeout_rows": 1303,
+        "cell": [
+          "COMMUTATION_PLUS_TEMPLATES",
+          "LBL"
+        ],
+        "conclusion": "primary_listing_by_rule_did",
+        "full_estimate_pp": -0.3797665216969719,
+        "sign_flip": false,
+        "single_timeout_deletion_estimate_pp": -0.38260216520444246
+      },
+      {
+        "absolute_shift_pp": 0.0024280302467722947,
+        "affected_timeout_rows": 1300,
+        "cell": [
+          "COMMUTATION_ONLY",
+          "WCL"
+        ],
+        "conclusion": "primary_listing_by_rule_did",
+        "full_estimate_pp": -0.3797665216969719,
+        "sign_flip": false,
+        "single_timeout_deletion_estimate_pp": -0.3821945519437442
+      },
+      {
+        "absolute_shift_pp": 0.0018874166942772774,
+        "affected_timeout_rows": 1307,
+        "cell": [
+          "COMMUTATION_ONLY",
+          "LBL"
+        ],
+        "conclusion": "primary_listing_by_rule_did",
+        "full_estimate_pp": -0.3797665216969719,
+        "sign_flip": false,
+        "single_timeout_deletion_estimate_pp": -0.3778791050026946
+      },
+      {
+        "absolute_shift_pp": 0.0024280302467722947,
+        "affected_timeout_rows": 1300,
+        "cell": [
+          "COMMUTATION_ONLY",
+          "WCL"
+        ],
+        "conclusion": "wcl_minus_lbl_commutation_only",
+        "full_estimate_pp": 2.536018174756535,
+        "sign_flip": false,
+        "single_timeout_deletion_estimate_pp": 2.538446205003307
+      },
+      {
+        "absolute_shift_pp": 0.0018874166942772774,
+        "affected_timeout_rows": 1307,
+        "cell": [
+          "COMMUTATION_ONLY",
+          "LBL"
+        ],
+        "conclusion": "wcl_minus_lbl_commutation_only",
+        "full_estimate_pp": 2.536018174756535,
+        "sign_flip": false,
+        "single_timeout_deletion_estimate_pp": 2.5341307580622576
+      },
+      {
+        "absolute_shift_pp": 0.0032953006494569337,
+        "affected_timeout_rows": 1307,
+        "cell": [
+          "COMMUTATION_PLUS_TEMPLATES",
+          "WCL"
+        ],
+        "conclusion": "wcl_minus_lbl_plus_templates",
+        "full_estimate_pp": 2.156251653059563,
+        "sign_flip": false,
+        "single_timeout_deletion_estimate_pp": 2.15954695370902
+      },
+      {
+        "absolute_shift_pp": 0.0028356435074705644,
+        "affected_timeout_rows": 1303,
+        "cell": [
+          "COMMUTATION_PLUS_TEMPLATES",
+          "LBL"
+        ],
+        "conclusion": "wcl_minus_lbl_plus_templates",
+        "full_estimate_pp": 2.156251653059563,
+        "sign_flip": false,
+        "single_timeout_deletion_estimate_pp": 2.1534160095520924
+      },
+      {
+        "absolute_shift_pp": 0.002270324316469896,
+        "affected_timeout_rows": 1311,
+        "cell": [
+          "COMMUTATION_ONLY",
+          "RANDOM_TOPOLOGICAL"
+        ],
+        "conclusion": "random_minus_lbl_commutation_only",
+        "full_estimate_pp": 1.796219655706695,
+        "sign_flip": false,
+        "single_timeout_deletion_estimate_pp": 1.7984899800231648
+      },
+      {
+        "absolute_shift_pp": 0.0018874166942772774,
+        "affected_timeout_rows": 1307,
+        "cell": [
+          "COMMUTATION_ONLY",
+          "LBL"
+        ],
+        "conclusion": "random_minus_lbl_commutation_only",
+        "full_estimate_pp": 1.796219655706695,
+        "sign_flip": false,
+        "single_timeout_deletion_estimate_pp": 1.7943322390124177
+      },
+      {
+        "absolute_shift_pp": 0.003191363222564192,
+        "affected_timeout_rows": 1310,
+        "cell": [
+          "COMMUTATION_PLUS_TEMPLATES",
+          "RANDOM_TOPOLOGICAL"
+        ],
+        "conclusion": "random_minus_lbl_plus_templates",
+        "full_estimate_pp": 1.6686811835039972,
+        "sign_flip": false,
+        "single_timeout_deletion_estimate_pp": 1.6718725467265614
+      },
+      {
+        "absolute_shift_pp": 0.0028356435074705644,
+        "affected_timeout_rows": 1303,
+        "cell": [
+          "COMMUTATION_PLUS_TEMPLATES",
+          "LBL"
+        ],
+        "conclusion": "random_minus_lbl_plus_templates",
+        "full_estimate_pp": 1.6686811835039972,
+        "sign_flip": false,
+        "single_timeout_deletion_estimate_pp": 1.6658455399965266
+      }
+    ],
+    "timeout_rows": 7838,
+    "unresolved_hidden_incumbent": "Timeout rows contain no retained incumbent, so deletion sensitivity cannot bound the unobserved outcome that might have existed before forced termination."
+  }
+}

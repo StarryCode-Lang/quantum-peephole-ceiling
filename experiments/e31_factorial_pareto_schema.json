@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "q-research:e31-factorial-pareto-result:v1",
+  "title": "E31 factorial Pareto result row",
+  "type": "object",
+  "required": [
+    "run_id", "protocol_sha256", "design_manifest_sha256",
+    "input_circuit_sha256", "circuit_id", "circuit_family",
+    "listing_model", "rule_set", "window_gates", "budget_seconds",
+    "run_order", "primary_pair_orientation", "status", "valid_equivalent_output", "exact_fidelity",
+    "output_circuit_sha256",
+    "common_basis_gate_reduction_pct", "wall_seconds_end_to_end",
+    "peak_rss_mb"
+  ],
+  "properties": {
+    "run_id": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "protocol_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "design_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "input_circuit_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "circuit_id": {"type": "string", "minLength": 1},
+    "circuit_family": {"type": "string", "minLength": 1},
+    "listing_model": {"enum": ["LBL", "WCL", "RANDOM_TOPOLOGICAL"]},
+    "rule_set": {"enum": ["COMMUTATION_ONLY", "COMMUTATION_PLUS_TEMPLATES"]},
+    "window_gates": {"enum": [4, 16, 64]},
+    "budget_seconds": {"enum": [1, 10, 30, 120]},
+    "run_order": {"type": "integer", "minimum": 0},
+    "primary_pair_orientation": {"enum": [-1, 1]},
+    "status": {"enum": ["success", "timeout", "error", "invalid", "unavailable", "oom"]},
+    "valid_equivalent_output": {"type": "boolean"},
+    "exact_fidelity": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "output_circuit_sha256": {"type": "string", "pattern": "^$|^[0-9a-f]{64}$"},
+    "common_basis_gate_reduction_pct": {"type": "number"},
+    "wall_seconds_end_to_end": {"type": "number", "minimum": 0},
+    "peak_rss_mb": {"type": "number", "minimum": 0}
+  },
+  "additionalProperties": true
+}

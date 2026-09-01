@@ -1,0 +1,59 @@
+{
+  "protocol_version": "2.0.0",
+  "stage": "sealed-input-only-before-any-optimizer-outcome",
+  "base_seed": 2026081101,
+  "sizes": [4, 6, 8],
+  "trials_per_size": 8,
+  "required_global_unique_input_hashes": true,
+  "required_zero_hash_overlap_with_training_and_v1": true,
+  "required_zero_generator_ast_overlap_with_v1": true,
+  "fixed_model": {
+    "path": "data/v10/prepaper/heldout/sealed_predictions/model.json",
+    "sha256": "dd66b6bcdc8ff92441a99084edfdbb57cfdc806e6c3281fa95cab3a612972d0d",
+    "classifier": "L2_logistic_regression",
+    "threshold": 0.5,
+    "refit_allowed": false,
+    "feature_change_allowed": false
+  },
+  "fixed_inputs": {
+    "training_manifest": "data/v10/prepaper/sota/inputs/benchmark_manifest.csv",
+    "training_manifest_sha256": "3ab0bff77d9d39fa95920fae54094fb8e207cd2895e5642ec8305935c90db841",
+    "v1_heldout_manifest": "data/v10/prepaper/heldout/inputs/benchmark_manifest.csv",
+    "v1_heldout_manifest_sha256": "df549d356a4f751aafb31653da63550f61430e9f32f905a17f2919d1317ed90e"
+  },
+  "families": {
+    "FermionicHoppingRing": {
+      "mechanism_id": "number_conserving_xy_hopping_ring",
+      "distinction": "RXX/RYY excitation hopping; not inverse mirroring, Ising brickwork, or a compiler family already used for training"
+    },
+    "HypergraphPhaseState": {
+      "mechanism_id": "weighted_multi_body_hypergraph_phase",
+      "distinction": "random weighted 2/3-body diagonal hyperedges rather than the v1 line Pauli gadget ladder"
+    },
+    "ReversibleCellularAutomaton": {
+      "mechanism_id": "staggered_local_reversible_boolean_dynamics",
+      "distinction": "periodic CCX cellular update rule rather than Fredkin echo, arithmetic carry, or random Clifford generation"
+    },
+    "PermutationInterferometer": {
+      "mechanism_id": "wire_permutation_between_phase_sensitive_bases",
+      "distinction": "sampled permutation network embedded in noncommuting basis layers, not a circuit followed by its inverse"
+    },
+    "SignalProcessingSequence": {
+      "mechanism_id": "single_signal_alternating_controlled_rotation_sequence",
+      "distinction": "ordered signal-processing phase sequence; unlike v1 one-way controlled-rotation fanout"
+    },
+    "LinearReversibleNetwork": {
+      "mechanism_id": "gf2_row_operation_network_with_phase_tags",
+      "distinction": "random linear reversible map synthesized by GF(2) row operations, not a CNOT chain or general Clifford sampler"
+    },
+    "ButterflyMixingNetwork": {
+      "mechanism_id": "radix_two_long_range_butterfly_mixing",
+      "distinction": "logarithmic-stride long-range interaction schedule rather than nearest-neighbour layers or QFT rotations"
+    },
+    "CoherentClauseNetwork": {
+      "mechanism_id": "compute_phase_uncompute_boolean_clause_network",
+      "distinction": "reversible random clause evaluation with phase kick and uncomputation, not Grover diffusion or ripple-carry addition"
+    }
+  },
+  "prohibition": "No optimizer may read the v2 manifest until SEALED.json exists and all recorded hashes verify. This stage contains no optimization outcomes."
+}

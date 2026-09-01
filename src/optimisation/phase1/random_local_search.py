@@ -59,15 +59,20 @@ class RandomLocalSearch(BaseOptimizer):
         if target is None:
             target = circuit
         
-        best = copy.deepcopy(circuit)
-        best_fitness = self._fitness(best, target)
+        # ``current`` is the exploratory Markov state; ``incumbent`` is the
+        # smallest fidelity-valid circuit seen.  Keeping them separate is
+        # essential because the cancellation-potential bonus may deliberately
+        # favor a temporarily larger circuit during exploration.
+        current = copy.deepcopy(circuit)
+        current_fitness = self._fitness(current, target)
+        incumbent = copy.deepcopy(circuit)
         
-        fitness_history = [best_fitness]
+        fitness_history = [current_fitness]
         no_improvement = 0
         iteration = 0
         
         for iteration in range(self.max_iterations):
-            neighbors = self._generate_neighbors(best)
+            neighbors = self._generate_neighbors(current)
             
             best_neighbor = None
             best_neighbor_fitness = -np.inf
@@ -78,32 +83,38 @@ class RandomLocalSearch(BaseOptimizer):
                     best_neighbor_fitness = fitness
                     best_neighbor = neighbor
             
-            if best_neighbor_fitness > best_fitness:
-                best = best_neighbor
-                best_fitness = best_neighbor_fitness
+            if best_neighbor_fitness > current_fitness:
+                current = best_neighbor
+                current_fitness = best_neighbor_fitness
                 no_improvement = 0
             else:
                 no_improvement += 1
+
+            if current.size() < incumbent.size():
+                candidate_fidelity = self.calculate_fidelity(current, target)
+                if candidate_fidelity >= self.fidelity_threshold:
+                    incumbent = copy.deepcopy(current)
             
-            fitness_history.append(best_fitness)
+            fitness_history.append(current_fitness)
             
             # Early stopping
             if no_improvement >= 50:
                 break
         
         runtime = time.time() - start_time
-        fidelity = self.calculate_fidelity(best, target)
-        reduction = 1.0 - best.size() / circuit.size() if circuit.size() > 0 else 0.0
+        fidelity, equivalence_certificate = self.result_equivalence(incumbent, target)
+        reduction = 1.0 - incumbent.size() / circuit.size() if circuit.size() > 0 else 0.0
         success = self._is_success(reduction, fidelity)
         
         return OptimizationResult(
-            optimized_circuit=best,
+            optimized_circuit=incumbent,
             original_size=circuit.size(),
-            optimized_size=best.size(),
+            optimized_size=incumbent.size(),
             fidelity=fidelity,
             iterations=min(iteration + 1, self.max_iterations) if self.max_iterations > 0 else 0,
             runtime_seconds=runtime,
             success=success,
+            equivalence_certificate=equivalence_certificate,
             metadata={'algorithm': 'rls', 'fitness_history': fitness_history}
         )
     

@@ -1,0 +1,150 @@
+{
+  "contract": "fixed-width bound-parameter unitary circuits, up to global phase",
+  "created_utc": "2026-08-29T01:07:53.753493+00:00",
+  "limitations": [
+    "Ancilla support means declared extra qubits in a fixed-width unitary operator; it does not establish dynamic allocation or clean-ancilla recovery semantics.",
+    "Measurement, reset, classical operands or conditions, and dynamic control flow are outside the verifier contract and return unavailable rather than an equivalence claim.",
+    "Free parameters are neither symbolically verified nor checked at finitely selected parameter values; callers must bind them first.",
+    "Normalized complex-Gaussian state draws implement global Haar sampling with full distributional support over pure Hilbert-space states, but any finite sample is probabilistic rather than exhaustive."
+  ],
+  "policy": {
+    "ancilla": "SUPPORTED_AS_DECLARED_QUBITS_WITHIN_FIXED_WIDTH_UNITARY_SCOPE",
+    "barrier": "SUPPORTED_AS_A_SEMANTIC_NO_OP_WITHIN_UNITARY_SCOPE",
+    "classical_control": "REJECTED_FAIL_CLOSED",
+    "dynamic_control_flow": "REJECTED_FAIL_CLOSED",
+    "free_parameters": "REJECTED_FAIL_CLOSED_NO_SYMBOLIC_OR_FINITE_POINT_SUBSTITUTION",
+    "large_nonclifford_sampling": "GLOBAL_COMPLEX_GAUSSIAN_NORMALIZATION_EQUIVALENT_TO_HAAR_WITH_FULL_SUPPORT_BUT_FINITE_PROBABILISTIC_COVERAGE",
+    "measurement": "REJECTED_FAIL_CLOSED_AS_NONUNITARY",
+    "reset": "REJECTED_FAIL_CLOSED_AS_NONUNITARY"
+  },
+  "scenarios": {
+    "barrier_nonstructural_identity": {
+      "accepted": true,
+      "evidence": {
+        "dimension": 2,
+        "qubits": 1
+      },
+      "fidelity": 0.9999999999999997,
+      "is_verified": true,
+      "method": "numerical_unitary",
+      "passes_threshold": true,
+      "samples": null,
+      "scope": "fixed-width bound-parameter unitary, up to global phase",
+      "standard_error": null,
+      "status": "verified_equivalent",
+      "threshold": 0.999999999999
+    },
+    "classical_dynamic_if": {
+      "accepted": false,
+      "evidence": {
+        "blockers": [
+          "classical_bits",
+          "classical_condition",
+          "classical_operands",
+          "if_else"
+        ],
+        "reason": "unsupported_nonunitary_or_dynamic_semantics"
+      },
+      "fidelity": null,
+      "is_verified": false,
+      "method": "unavailable",
+      "passes_threshold": false,
+      "samples": null,
+      "scope": "fixed-width bound-parameter unitary, up to global phase",
+      "standard_error": null,
+      "status": "unavailable",
+      "threshold": 0.999999999999
+    },
+    "declared_ancilla_nonstructural_identity": {
+      "accepted": true,
+      "evidence": {
+        "dimension": 4,
+        "qubits": 2
+      },
+      "fidelity": 0.9999999999999997,
+      "is_verified": true,
+      "method": "numerical_unitary",
+      "passes_threshold": true,
+      "samples": null,
+      "scope": "fixed-width bound-parameter unitary, up to global phase",
+      "standard_error": null,
+      "status": "verified_equivalent",
+      "threshold": 0.999999999999
+    },
+    "free_parameter": {
+      "accepted": false,
+      "evidence": {
+        "free_parameters": [
+          "theta"
+        ],
+        "reason": "free_parameters_require_symbolic_or_probability-qualified_contract"
+      },
+      "fidelity": null,
+      "is_verified": false,
+      "method": "unavailable",
+      "passes_threshold": false,
+      "samples": null,
+      "scope": "fixed-width bound-parameter unitary, up to global phase",
+      "standard_error": null,
+      "status": "unavailable",
+      "threshold": 0.999999999999
+    },
+    "global_haar_sampled_identity": {
+      "accepted": true,
+      "evidence": {
+        "clifford_error": "not_clifford_gate_set",
+        "operator_error": "exact_unitary_budget_exceeded",
+        "qubits": 2
+      },
+      "fidelity": 1.0,
+      "is_verified": false,
+      "method": "sampled_global_haar",
+      "passes_threshold": true,
+      "samples": 256,
+      "scope": "fixed-width bound-parameter unitary, up to global phase",
+      "standard_error": 2.4052738928467763e-17,
+      "status": "estimated_equivalent",
+      "threshold": 0.999999999999
+    },
+    "measurement": {
+      "accepted": false,
+      "evidence": {
+        "blockers": [
+          "classical_bits",
+          "classical_operands",
+          "measure"
+        ],
+        "reason": "unsupported_nonunitary_or_dynamic_semantics"
+      },
+      "fidelity": null,
+      "is_verified": false,
+      "method": "unavailable",
+      "passes_threshold": false,
+      "samples": null,
+      "scope": "fixed-width bound-parameter unitary, up to global phase",
+      "standard_error": null,
+      "status": "unavailable",
+      "threshold": 0.999999999999
+    },
+    "reset": {
+      "accepted": false,
+      "evidence": {
+        "blockers": [
+          "reset"
+        ],
+        "reason": "unsupported_nonunitary_or_dynamic_semantics"
+      },
+      "fidelity": null,
+      "is_verified": false,
+      "method": "unavailable",
+      "passes_threshold": false,
+      "samples": null,
+      "scope": "fixed-width bound-parameter unitary, up to global phase",
+      "standard_error": null,
+      "status": "unavailable",
+      "threshold": 0.999999999999
+    }
+  },
+  "schema_version": "1.0.0",
+  "status": "PASS_EXPLICIT_FAIL_CLOSED_CIRCUIT_SEMANTICS_SCOPE"
+}

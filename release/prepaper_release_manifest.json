@@ -1,10 +1,22 @@
 {
+  "closure_repair": {
+    "added_files": [
+      "data/v11/e31_factorial_pareto/formal_run/formal_results_checkpoint.csv",
+      "docs/review/wave1/algorithmic_complexity.md",
+      "docs/review/wave4/compiler_audit.md",
+      "release/prepaper_archive_restore_audit.json"
+    ],
+    "all_existing_hashes_reverified": true,
+    "existing_entries_unchanged": true,
+    "repaired_utc": "2026-08-31T14:24:42.027759+00:00",
+    "rule": "every registry evidence_refs path must be pinned by the inner manifest so the restored verifier can re-evaluate all selectors"
+  },
   "counts": {
     "evidence_files": 194,
     "project_evidence_files": 34600,
     "source_files": 248
   },
-  "created_utc": "2026-08-31T15:23:49.274830+00:00",
+  "created_utc": "2026-08-31T09:44:39.598292+00:00",
   "evidence": [
     {
       "bytes": 1385,
@@ -279,7 +291,7 @@
     {
       "bytes": 1104,
       "file": "data/v10/prepaper/audit/workspace_coverage.json",
-      "sha256": "808ce0bec3cf0eec8f40474ce49c9627a15caac97da8b1865a0e10590443f736"
+      "sha256": "ccad946b98f573e46edad5956ec79f2eb8b23dff4e4588533c431177199c9739"
     },
     {
       "bytes": 3751417,
@@ -303,7 +315,7 @@
       ],
       "file": "data/v10/prepaper/audit/workspace_file_inventory.csv",
       "rows": 176766,
-      "sha256": "1def95735f8d6e440473f1f4c6a43394afa047a082cbe2e0a45364bb4847d8df"
+      "sha256": "1c5c9e166736c70172878f99571ac485752560f579859444e8071c8abeec2702"
     },
     {
       "bytes": 1563503,
@@ -4653,6 +4665,38 @@
         "window_gates"
       ],
       "file": "data/v11/e31_factorial_pareto/formal_run/final/formal_results.csv",
+      "rows": 28152,
+      "sha256": "76702c2c47e6e191e088bb2c10a7f382ec3f755ecba0bc5bdf19eea2d7af9167"
+    },
+    {
+      "bytes": 20245743,
+      "columns": [
+        "budget_seconds",
+        "circuit_family",
+        "circuit_id",
+        "common_basis_gate_reduction_pct",
+        "design_manifest_sha256",
+        "exact_fidelity",
+        "input_circuit_sha256",
+        "listing_model",
+        "optimized_common_basis_gate_count",
+        "optimizer_runtime_seconds",
+        "original_common_basis_gate_count",
+        "output_circuit_sha256",
+        "peak_rss_mb",
+        "primary_pair_orientation",
+        "protocol_sha256",
+        "rule_set",
+        "run_id",
+        "run_order",
+        "status",
+        "template_enabled",
+        "trace",
+        "valid_equivalent_output",
+        "wall_seconds_end_to_end",
+        "window_gates"
+      ],
+      "file": "data/v11/e31_factorial_pareto/formal_run/formal_results_checkpoint.csv",
       "rows": 28152,
       "sha256": "76702c2c47e6e191e088bb2c10a7f382ec3f755ecba0bc5bdf19eea2d7af9167"
     },
@@ -176646,22 +176690,22 @@
       ],
       "file": "docs/review/metric_audit_ledger_2026-08-24.csv",
       "rows": 592,
-      "sha256": "5e2569df351723acdef64bcdbacea82ebede1429d12c1ec020ad28519d667ed2"
+      "sha256": "f0a0ac1c05d92305a90fa88d5f8bf33d442c71df8b51538fa482ec5ae39b956b"
     },
     {
       "bytes": 887,
       "file": "docs/review/metric_audit_resolution_2026-08-24.md",
-      "sha256": "3b9ea53b046054d25139c730d9840e6246df355162b705aedb5a881db29678b5"
+      "sha256": "c6aa90af6812f8a943f20badbb72b25ad91486349a6f077cea75c6fb8ded7115"
     },
     {
       "bytes": 822,
       "file": "docs/review/metric_audit_summary_2026-08-24.json",
-      "sha256": "48f4c83d6f63f5deb4e1c06d801e943e99118d50583432e5a2738ca9d8a9ba41"
+      "sha256": "ffddeb1255125d3a9ee84f48e53c6664ca11f026f883d769267d4d2400e0a10f"
     },
     {
       "bytes": 1512046,
       "file": "docs/review/metric_evidence_registry_2026-08-26.json",
-      "sha256": "7b044d6790dbc45af2eb13c1d9c46b11b5a515cd5002d09e69bfa0c0d950854e"
+      "sha256": "6170358ee14183f606871d907138d492dd6861debe051f4b808c289a4481ac3b"
     },
     {
       "bytes": 301749,
@@ -176677,6 +176721,16 @@
       "bytes": 471358,
       "file": "docs/review/metric_registry_fragments/sections_13_18.json",
       "sha256": "574be3c74b635aec7031c55fe220b0b15bba8bf5a1517457b17ced2c59519abf"
+    },
+    {
+      "bytes": 7837,
+      "file": "docs/review/wave1/algorithmic_complexity.md",
+      "sha256": "7560e23dd417c2a6659105bec12039ebf7146538478d28f2ddc35f97053c2b6e"
+    },
+    {
+      "bytes": 8130,
+      "file": "docs/review/wave4/compiler_audit.md",
+      "sha256": "21be72968de8c5cff5868ebbcf3c752f9b53373b87032b4a0d843db391263312"
     },
     {
       "bytes": 5467,
@@ -176751,12 +176805,7 @@
     {
       "bytes": 2597,
       "file": "release/prepaper_archive_restore_audit.json",
-      "sha256": "9af8dad23406554e1ccda746e92dc1958695e1c5ca6db557c51beb96750b1859"
-    },
-    {
-      "bytes": 9832849,
-      "file": "release/prepaper_capsule_inner_manifest.json",
-      "sha256": "33909547430ede4c439a6a1090a45e3f712c1c84bf0c080265ded81f850585ef"
+      "sha256": "6e93f86da9395c2a1d372b4b90013e97eae36008e2e7fa77043d3efe9e26511e"
     },
     {
       "bytes": 5331,
@@ -176772,16 +176821,6 @@
       "file": "release/prepaper_external_blockers.csv",
       "rows": 28,
       "sha256": "51be4b5f9f46f8fca40ce838fbba607c5efdd3a7e900042edba63e5d868ec0c0"
-    },
-    {
-      "bytes": 5467,
-      "file": "release/prepaper_readiness_verdict.json",
-      "sha256": "1edd8ccea3aadca40e8d2f690c93d2f277fa8941cfdc294b427ab2d0bf721a78"
-    },
-    {
-      "bytes": 87101282,
-      "file": "release/prepaper_restore_capsule.zip",
-      "sha256": "306e3aae552e4c55972148ebd4b48a4b84afd440531acaa0a9679df7002fe1ba"
     },
     {
       "bytes": 7298,

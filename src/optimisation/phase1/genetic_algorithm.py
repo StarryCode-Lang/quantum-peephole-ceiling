@@ -88,18 +88,20 @@ class GeneticAlgorithmOptimizer(BaseOptimizer):
                 individual = self._generate_neighbor(individual)
             population.append(individual)
         
+        # Fitness contains an exploration bonus; never use it as the returned
+        # scientific incumbent because identity insertions can make a larger
+        # circuit score highly.  Track the smallest fidelity-valid individual.
         best = _fast_copy(circuit)
-        best_fitness = self._fitness(best, target)
         
         for generation in range(self.generations):
             # Evaluate fitness
             fitnesses = [self._fitness(ind, target) for ind in population]
             
-            # Find best
-            gen_best_idx = np.argmax(fitnesses)
-            if fitnesses[gen_best_idx] > best_fitness:
-                best = _fast_copy(population[gen_best_idx])
-                best_fitness = fitnesses[gen_best_idx]
+            for individual in population:
+                if individual.size() < best.size():
+                    candidate_fidelity = self.calculate_fidelity(individual, target)
+                    if candidate_fidelity >= self.fidelity_threshold:
+                        best = _fast_copy(individual)
             
             # Selection (tournament) — returns (circuit, fitness) tuples so
             # _crossover can reuse the already-computed fitness values
@@ -123,9 +125,16 @@ class GeneticAlgorithmOptimizer(BaseOptimizer):
                 new_population.extend([child1, child2])
             
             population = new_population[:self.population_size]
+
+        # The last offspring generation is not evaluated by the loop above.
+        for individual in population:
+            if individual.size() < best.size():
+                candidate_fidelity = self.calculate_fidelity(individual, target)
+                if candidate_fidelity >= self.fidelity_threshold:
+                    best = _fast_copy(individual)
         
         runtime = time.time() - start_time
-        fidelity = self.calculate_fidelity(best, target)
+        fidelity, equivalence_certificate = self.result_equivalence(best, target)
         reduction = 1.0 - best.size() / circuit.size() if circuit.size() > 0 else 0.0
         success = self._is_success(reduction, fidelity)
         
@@ -137,6 +146,7 @@ class GeneticAlgorithmOptimizer(BaseOptimizer):
             iterations=self.generations,
             runtime_seconds=runtime,
             success=success,
+            equivalence_certificate=equivalence_certificate,
             metadata={'algorithm': 'ga', 'population_size': self.population_size}
         )
     

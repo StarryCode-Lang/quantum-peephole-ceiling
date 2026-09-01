@@ -1,0 +1,79 @@
+{
+  "audit_role": "algorithmically independent numerical semantic verifier",
+  "created_utc": "2026-08-30T00:03:00.097278+00:00",
+  "limitations": [
+    "Qiskit is still trusted to parse QASM/QPY and expose instruction order, operands, parameters, and global phase.",
+    "Cells above the exact-width cutoff use deterministic randomized state probes; this is an independent probabilistic check, not a symbolic proof.",
+    "The verifier covers only the explicitly enumerated fixed-width bound-parameter unitary gate set and fails closed otherwise.",
+    "This audit does not provide decision-diagram, ZX-calculus, or path-sum verification."
+  ],
+  "method": {
+    "exact_policy": "all computational basis states for n_qubits <= 6",
+    "forbidden_numerical_paths": [
+      "qiskit.quantum_info.Operator",
+      "qiskit.quantum_info.Statevector"
+    ],
+    "large_policy": "two fixed basis anchors plus 16 deterministic normalized complex-Gaussian probes",
+    "large_probe_support": "full distributional support, finite probabilistic coverage",
+    "native_components": [
+      "gate matrices",
+      "little-endian tensor application",
+      "global-phase alignment",
+      "residual decision"
+    ],
+    "parser_only_dependency": "Qiskit qasm2/qpy readers",
+    "tolerance": 2e-06
+  },
+  "metric_dispositions": {
+    "7.15": "PASS: all 6,858 successful E31 semantic cells were independently replayed with native gate matrices and tensor application; widths above six qubits use deterministic finite probes and are therefore probabilistic rather than exact"
+  },
+  "residuals": {
+    "maximum": 2.0002728520762757e-14,
+    "mean_of_cell_maxima": 1.7752480639363768e-15
+  },
+  "schema_version": "1.0.0",
+  "scope": {
+    "cells_verified": 6858,
+    "exact_cells": 3942,
+    "expected_full_cell_count": 6858,
+    "gate_occurrence_counts": {
+      "ccx": 3114,
+      "cp": 20121,
+      "crz": 3892,
+      "cx": 588315,
+      "cz": 1187,
+      "h": 156047,
+      "p": 301153,
+      "ry": 5342,
+      "rz": 81616,
+      "s": 5883,
+      "sdg": 290,
+      "t": 156921,
+      "tdg": 130729,
+      "u": 12620,
+      "x": 20918,
+      "z": 837
+    },
+    "is_full_formal_scope": true,
+    "sampled_cells": 2916,
+    "unique_input_circuits_simulated": 381,
+    "unique_input_conditioned_outputs_simulated": 1802,
+    "width_counts": {
+      "10": 162,
+      "4": 1800,
+      "5": 378,
+      "6": 1764,
+      "7": 648,
+      "8": 1782,
+      "9": 324
+    },
+    "worker_processes": 8
+  },
+  "source_bindings": {
+    "analysis/e31_native_semantic_verifier.py": "3fd0a5a1853d68195a27f7cfb51bbb9d832e288d008afa297cbebda7ec759e10",
+    "data/v11/e31_factorial_pareto/design_manifest.csv": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86",
+    "semantic_cell_certificate_count": 6858,
+    "semantic_cell_certificate_tree_sha256": "cdfd4f6b579b4514d03403de967002496c336f62e168a6f752dcffca9e2a1725"
+  },
+  "status": "PASS_ALL_E31_SEMANTIC_CELLS_NATIVE_SECOND_VERIFIER"
+}

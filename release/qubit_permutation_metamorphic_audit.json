@@ -1,0 +1,915 @@
+{
+  "cases": 40,
+  "created_utc": "2026-08-29T01:07:57.738951+00:00",
+  "equivalence_decisions_checked": 160,
+  "failures": 0,
+  "interpretation": "Simultaneous global qubit relabeling preserved acceptance of identity rewrites and rejection of X-insertion mutants in every bounded seeded case.",
+  "limitation": "The Operator cross-check shares Qiskit's circuit semantics and is not a second independent verifier implementation.",
+  "nonidentity_permutations_checked": 40,
+  "records": [
+    {
+      "case": 0,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 2,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        0
+      ]
+    },
+    {
+      "case": 1,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 3,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "case": 2,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 4,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        2,
+        0,
+        3,
+        1
+      ]
+    },
+    {
+      "case": 3,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 5,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        3,
+        1,
+        2,
+        0,
+        4
+      ]
+    },
+    {
+      "case": 4,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 2,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        0
+      ]
+    },
+    {
+      "case": 5,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 3,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "case": 6,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 4,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        2,
+        1,
+        0,
+        3
+      ]
+    },
+    {
+      "case": 7,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 5,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        4,
+        2,
+        0,
+        3,
+        1
+      ]
+    },
+    {
+      "case": 8,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 2,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        0
+      ]
+    },
+    {
+      "case": 9,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 3,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "case": 10,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 4,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        0,
+        2,
+        3,
+        1
+      ]
+    },
+    {
+      "case": 11,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 5,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        2,
+        1,
+        0,
+        4,
+        3
+      ]
+    },
+    {
+      "case": 12,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 2,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        0
+      ]
+    },
+    {
+      "case": 13,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 3,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        0,
+        2
+      ]
+    },
+    {
+      "case": 14,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 4,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        2,
+        3,
+        1,
+        0
+      ]
+    },
+    {
+      "case": 15,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 5,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        0,
+        1,
+        3,
+        4,
+        2
+      ]
+    },
+    {
+      "case": 16,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 2,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        0
+      ]
+    },
+    {
+      "case": 17,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 3,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        2,
+        0,
+        1
+      ]
+    },
+    {
+      "case": 18,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 4,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        3,
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "case": 19,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 5,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        0,
+        3,
+        2,
+        4,
+        1
+      ]
+    },
+    {
+      "case": 20,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 2,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        0
+      ]
+    },
+    {
+      "case": 21,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 3,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "case": 22,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 4,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        2,
+        3,
+        1,
+        0
+      ]
+    },
+    {
+      "case": 23,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 5,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        2,
+        4,
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "case": 24,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 2,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        0
+      ]
+    },
+    {
+      "case": 25,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 3,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "case": 26,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 4,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        2,
+        3,
+        0
+      ]
+    },
+    {
+      "case": 27,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 5,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        0,
+        3,
+        4,
+        2
+      ]
+    },
+    {
+      "case": 28,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 2,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        0
+      ]
+    },
+    {
+      "case": 29,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 3,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "case": 30,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 4,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        2,
+        3,
+        0
+      ]
+    },
+    {
+      "case": 31,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 5,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        2,
+        4,
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "case": 32,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 2,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        0
+      ]
+    },
+    {
+      "case": 33,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 3,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        0,
+        2
+      ]
+    },
+    {
+      "case": 34,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 4,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        3,
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "case": 35,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 5,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        4,
+        1,
+        2,
+        3,
+        0
+      ]
+    },
+    {
+      "case": 36,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 2,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        0
+      ]
+    },
+    {
+      "case": 37,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 3,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        1,
+        0,
+        2
+      ]
+    },
+    {
+      "case": 38,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 4,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        3,
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "case": 39,
+      "decisions": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "n_qubits": 5,
+      "operator_cross_check": {
+        "equivalent_original": true,
+        "equivalent_permuted": true,
+        "mutant_original": false,
+        "mutant_permuted": false
+      },
+      "passed": true,
+      "permutation": [
+        4,
+        3,
+        2,
+        1,
+        0
+      ]
+    }
+  ],
+  "schema_version": "1.0.0",
+  "seed": 719031,
+  "source_sha256": "19de65ac1fb719c763ed60f4b3bb8655435b706976333c1bf5e569faa58834af",
+  "status": "PASS_ALL_QUBIT_PERMUTATION_METAMORPHIC_CHECKS"
+}

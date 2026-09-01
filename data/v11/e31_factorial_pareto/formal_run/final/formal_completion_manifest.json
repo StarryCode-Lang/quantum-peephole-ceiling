@@ -1,0 +1,326 @@
+{
+  "analysis_artifacts": {
+    "analysis_gate_audit.json": {
+      "bytes": 20377,
+      "sha256": "946bc642a73913f3be43922fa5a7ec4307e286a7a65dc436f6eaa24f500a5aff"
+    },
+    "equal_budget_pareto_summary.csv": {
+      "bytes": 15035,
+      "sha256": "a8bf665389d7d7b295f9ca3219d5c7335fc34fffb95e31519909ee7f425afa12"
+    },
+    "full_factorial_model_coefficients.csv": {
+      "bytes": 10812,
+      "sha256": "13e39f9a3f991b4844b211a71b2890c0d3fc4cf21f8a91a4567805fe8325e88a"
+    },
+    "full_factorial_model_diagnostics.json": {
+      "bytes": 1184,
+      "sha256": "1025f5cc57ff20af2a95fb2dad67cf61d39cff4853b836d56f87893f851e3106"
+    },
+    "host_environment_audit.json": {
+      "bytes": 2153,
+      "sha256": "78ffbbe6e64bf1dfb1cf8027dc8a1d0145b32470017263bf02428889b4d6fc69"
+    },
+    "pareto_aggregation_sensitivity.csv": {
+      "bytes": 71641,
+      "sha256": "93d0249fe8830870cc0114a3fc27b70033806b29df4d924c6df561a23c4652fd"
+    },
+    "pareto_hypervolume_audit.json": {
+      "bytes": 1278,
+      "sha256": "29ab8495621a91d0eed5c2223299c1114e66c63f1d9116f74466387619a5a3bd"
+    },
+    "posthoc_marginal_contrasts.csv": {
+      "bytes": 5521,
+      "sha256": "f3e26a194e46e147deb693f4394831c9c52203cb6018a349d52292363bf56e0b"
+    },
+    "run_order_temporal_diagnostics.csv": {
+      "bytes": 8179,
+      "sha256": "c198b6715243d58567719c7b4283e5e4c0a264d025d1a7c194bfb60ed9f5b43b"
+    }
+  },
+  "artifacts": {
+    "checkpoint_final.sqlite3": {
+      "bytes": 48111616,
+      "sha256": "95b8089aaac7fd573d439a522170b7e8b4cb0d1733c5d1bbf17271a676385bee"
+    },
+    "formal_results.csv": {
+      "bytes": 20245743,
+      "sha256": "76702c2c47e6e191e088bb2c10a7f382ec3f755ecba0bc5bdf19eea2d7af9167"
+    }
+  },
+  "bindings": {
+    "design_manifest_sha256": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86",
+    "environment_sha256": "15d695f9cc6c6acf153718a9adef445c886b89376b9d024aa36f1aca360be63e",
+    "formal_release_gate_sha256": "6f63886ad4929dcabbccac9d57153b6163300cdbfbead0081fb0d5ff71c662d2",
+    "host_environment_limitation_gate_sha256": "90b69aa4003c1639ef066127656f8db6a16d7b97d255a60482b0dd2047e02fa3",
+    "posthoc_contrast_expansion_gate_sha256": "adbb015a764822b4a7f6f674a70dd99b3d3c791594cbd3707d65a9ae9217aa05",
+    "posthoc_family_inference_correction_gate_sha256": "616642ed85022e131ef93d9691c47a8c4dcde53e0f113730fca66544cef47294",
+    "posthoc_pareto_aggregation_gate_sha256": "8f12fdea070bf70c788550b74e3c835856546d1a39ce296fae5159184400839c",
+    "preanalysis_method_erratum_gate_sha256": "89fa14eb5652caf358546658bd52df402324d2714d9bb3845bdc88c175c47c8a",
+    "protocol_sha256": "2464d1d531032a71c2947e9e8abd2b6b84de9fc6f048239944ee9357097365e8",
+    "temporal_gate_binding_audit_sha256": "1c9e05396502d3a125502a2997cb07e388b2f81855eb94a74bb68201141491ad",
+    "transitive_source_provenance_gate_sha256": "625dabfac9b667d3a3ae375fbfe99f5d91e009732999fe247bd40dd336f1e83a"
+  },
+  "complete_cryptographic_prerun_source_closure": false,
+  "created_utc": "2026-08-27T13:31:28.448163+00:00",
+  "dynamic_imports_not_proven": true,
+  "experiment_id": "E31-factorial-pareto-v1",
+  "family_inference_artifacts": {
+    "family_inference_correction_audit.json": {
+      "bytes": 13168,
+      "sha256": "8ab176f742bef8eb06475d61f045f971f5080460ee2b0df5e666c7c075d19a43"
+    },
+    "family_supportive_factorial_71.csv": {
+      "bytes": 20648,
+      "columns": [
+        "coefficient",
+        "equal_family_estimate_pp",
+        "family_cluster_se_pp",
+        "family_cluster_df",
+        "t14_ci95_low_pp",
+        "t14_ci95_high_pp",
+        "t14_p_value_model_based",
+        "wild_cluster_bootstrap_t_p_value",
+        "wild_cluster_bootstrap_replicates",
+        "wild_cluster_bootstrap_seed",
+        "inference_role",
+        "confirmatory_claim_allowed",
+        "probability_sample_of_families",
+        "unseen_family_generalization_status",
+        "multiplicity_family_id",
+        "multiplicity_family_size",
+        "holm_adjusted_t14_p",
+        "holm_adjusted_wild_cluster_p"
+      ],
+      "rows": 71,
+      "sha256": "150cb84ebc96cccc658992438b7d9eb4e182ec972ffd084e333ee97809f410c1"
+    },
+    "family_supportive_marginal_30.csv": {
+      "bytes": 9164,
+      "columns": [
+        "coefficient",
+        "equal_family_estimate_pp",
+        "family_cluster_se_pp",
+        "family_cluster_df",
+        "t14_ci95_low_pp",
+        "t14_ci95_high_pp",
+        "t14_p_value_model_based",
+        "wild_cluster_bootstrap_t_p_value",
+        "wild_cluster_bootstrap_replicates",
+        "wild_cluster_bootstrap_seed",
+        "inference_role",
+        "confirmatory_claim_allowed",
+        "probability_sample_of_families",
+        "unseen_family_generalization_status",
+        "multiplicity_family_id",
+        "multiplicity_family_size",
+        "holm_adjusted_t14_p",
+        "holm_adjusted_wild_cluster_p"
+      ],
+      "rows": 30,
+      "sha256": "ac0a09fd745382fcf9a32ee3017ab5397a8ed019168cbc6622111e5996018eda"
+    },
+    "fixed_panel_factorial_71_descriptive.csv": {
+      "bytes": 24436,
+      "columns": [
+        "coefficient",
+        "fixed_391_input_weighted_estimate_pp",
+        "population",
+        "estimate_role",
+        "inference_status",
+        "legacy_input_cluster_inference_status",
+        "invalid_legacy_fields",
+        "design_based_p_value",
+        "design_based_confidence_interval"
+      ],
+      "rows": 71,
+      "sha256": "0b8d3ae76abb510fcbf2ac63954094f517d67cb49f561593fd67734ba28c9074"
+    },
+    "fixed_panel_marginal_30_descriptive.csv": {
+      "bytes": 9514,
+      "columns": [
+        "coefficient",
+        "fixed_391_input_weighted_estimate_pp",
+        "population",
+        "estimate_role",
+        "inference_status",
+        "legacy_input_cluster_inference_status",
+        "invalid_legacy_fields",
+        "design_based_p_value",
+        "design_based_confidence_interval"
+      ],
+      "rows": 30,
+      "sha256": "6eac8b2234e65d5900f8368e2e464546066d53b101f99a45d8d251ca406a7d14"
+    },
+    "per_family_factorial_71_effects.csv": {
+      "bytes": 13718,
+      "columns": [
+        "circuit_family",
+        "C(listing_model)[T.WCL]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]",
+        "C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]",
+        "C(window_gates)[T.16]",
+        "C(window_gates)[T.64]",
+        "C(budget_seconds)[T.10]",
+        "C(budget_seconds)[T.30]",
+        "C(budget_seconds)[T.120]",
+        "C(listing_model)[T.WCL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]",
+        "C(listing_model)[T.WCL]:C(window_gates)[T.16]",
+        "C(listing_model)[T.WCL]:C(window_gates)[T.64]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(window_gates)[T.16]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(window_gates)[T.64]",
+        "C(listing_model)[T.WCL]:C(budget_seconds)[T.10]",
+        "C(listing_model)[T.WCL]:C(budget_seconds)[T.30]",
+        "C(listing_model)[T.WCL]:C(budget_seconds)[T.120]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(budget_seconds)[T.10]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(budget_seconds)[T.30]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(budget_seconds)[T.120]",
+        "C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.16]",
+        "C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.64]",
+        "C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(budget_seconds)[T.10]",
+        "C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(budget_seconds)[T.30]",
+        "C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(budget_seconds)[T.120]",
+        "C(window_gates)[T.16]:C(budget_seconds)[T.10]",
+        "C(window_gates)[T.16]:C(budget_seconds)[T.30]",
+        "C(window_gates)[T.16]:C(budget_seconds)[T.120]",
+        "C(window_gates)[T.64]:C(budget_seconds)[T.10]",
+        "C(window_gates)[T.64]:C(budget_seconds)[T.30]",
+        "C(window_gates)[T.64]:C(budget_seconds)[T.120]",
+        "C(listing_model)[T.WCL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.16]",
+        "C(listing_model)[T.WCL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.64]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.16]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.64]",
+        "C(listing_model)[T.WCL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(budget_seconds)[T.10]",
+        "C(listing_model)[T.WCL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(budget_seconds)[T.30]",
+        "C(listing_model)[T.WCL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(budget_seconds)[T.120]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(budget_seconds)[T.10]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(budget_seconds)[T.30]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(budget_seconds)[T.120]",
+        "C(listing_model)[T.WCL]:C(window_gates)[T.16]:C(budget_seconds)[T.10]",
+        "C(listing_model)[T.WCL]:C(window_gates)[T.16]:C(budget_seconds)[T.30]",
+        "C(listing_model)[T.WCL]:C(window_gates)[T.16]:C(budget_seconds)[T.120]",
+        "C(listing_model)[T.WCL]:C(window_gates)[T.64]:C(budget_seconds)[T.10]",
+        "C(listing_model)[T.WCL]:C(window_gates)[T.64]:C(budget_seconds)[T.30]",
+        "C(listing_model)[T.WCL]:C(window_gates)[T.64]:C(budget_seconds)[T.120]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(window_gates)[T.16]:C(budget_seconds)[T.10]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(window_gates)[T.16]:C(budget_seconds)[T.30]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(window_gates)[T.16]:C(budget_seconds)[T.120]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(window_gates)[T.64]:C(budget_seconds)[T.10]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(window_gates)[T.64]:C(budget_seconds)[T.30]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(window_gates)[T.64]:C(budget_seconds)[T.120]",
+        "C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.16]:C(budget_seconds)[T.10]",
+        "C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.16]:C(budget_seconds)[T.30]",
+        "C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.16]:C(budget_seconds)[T.120]",
+        "C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.64]:C(budget_seconds)[T.10]",
+        "C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.64]:C(budget_seconds)[T.30]",
+        "C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.64]:C(budget_seconds)[T.120]",
+        "C(listing_model)[T.WCL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.16]:C(budget_seconds)[T.10]",
+        "C(listing_model)[T.WCL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.16]:C(budget_seconds)[T.30]",
+        "C(listing_model)[T.WCL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.16]:C(budget_seconds)[T.120]",
+        "C(listing_model)[T.WCL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.64]:C(budget_seconds)[T.10]",
+        "C(listing_model)[T.WCL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.64]:C(budget_seconds)[T.30]",
+        "C(listing_model)[T.WCL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.64]:C(budget_seconds)[T.120]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.16]:C(budget_seconds)[T.10]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.16]:C(budget_seconds)[T.30]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.16]:C(budget_seconds)[T.120]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.64]:C(budget_seconds)[T.10]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.64]:C(budget_seconds)[T.30]",
+        "C(listing_model)[T.RANDOM_TOPOLOGICAL]:C(rule_set)[T.COMMUTATION_PLUS_TEMPLATES]:C(window_gates)[T.64]:C(budget_seconds)[T.120]"
+      ],
+      "rows": 15,
+      "sha256": "654ff0eb6cada38f8a851d73a8aa4a46d9c55308ebd4b92c12d61c171d16541c"
+    },
+    "per_family_marginal_30_effects.csv": {
+      "bytes": 7549,
+      "columns": [
+        "circuit_family",
+        "MARGINAL::listing_model[RANDOM_TOPOLOGICAL-vs-LBL]",
+        "MARGINAL::listing_model[WCL-vs-LBL]",
+        "MARGINAL::rule_set[COMMUTATION_PLUS_TEMPLATES-vs-COMMUTATION_ONLY]",
+        "MARGINAL::window_gates[16-vs-4]",
+        "MARGINAL::window_gates[64-vs-4]",
+        "MARGINAL::budget_seconds[10-vs-1]",
+        "MARGINAL::budget_seconds[30-vs-1]",
+        "MARGINAL::budget_seconds[120-vs-1]",
+        "MARGINAL::listing_model[RANDOM_TOPOLOGICAL-vs-LBL]:rule_set[COMMUTATION_PLUS_TEMPLATES-vs-COMMUTATION_ONLY]",
+        "MARGINAL::listing_model[RANDOM_TOPOLOGICAL-vs-LBL]:window_gates[16-vs-4]",
+        "MARGINAL::listing_model[RANDOM_TOPOLOGICAL-vs-LBL]:window_gates[64-vs-4]",
+        "MARGINAL::listing_model[WCL-vs-LBL]:window_gates[16-vs-4]",
+        "MARGINAL::listing_model[WCL-vs-LBL]:window_gates[64-vs-4]",
+        "MARGINAL::listing_model[RANDOM_TOPOLOGICAL-vs-LBL]:budget_seconds[10-vs-1]",
+        "MARGINAL::listing_model[RANDOM_TOPOLOGICAL-vs-LBL]:budget_seconds[30-vs-1]",
+        "MARGINAL::listing_model[RANDOM_TOPOLOGICAL-vs-LBL]:budget_seconds[120-vs-1]",
+        "MARGINAL::listing_model[WCL-vs-LBL]:budget_seconds[10-vs-1]",
+        "MARGINAL::listing_model[WCL-vs-LBL]:budget_seconds[30-vs-1]",
+        "MARGINAL::listing_model[WCL-vs-LBL]:budget_seconds[120-vs-1]",
+        "MARGINAL::rule_set[COMMUTATION_PLUS_TEMPLATES-vs-COMMUTATION_ONLY]:window_gates[16-vs-4]",
+        "MARGINAL::rule_set[COMMUTATION_PLUS_TEMPLATES-vs-COMMUTATION_ONLY]:window_gates[64-vs-4]",
+        "MARGINAL::rule_set[COMMUTATION_PLUS_TEMPLATES-vs-COMMUTATION_ONLY]:budget_seconds[10-vs-1]",
+        "MARGINAL::rule_set[COMMUTATION_PLUS_TEMPLATES-vs-COMMUTATION_ONLY]:budget_seconds[30-vs-1]",
+        "MARGINAL::rule_set[COMMUTATION_PLUS_TEMPLATES-vs-COMMUTATION_ONLY]:budget_seconds[120-vs-1]",
+        "MARGINAL::window_gates[16-vs-4]:budget_seconds[10-vs-1]",
+        "MARGINAL::window_gates[16-vs-4]:budget_seconds[30-vs-1]",
+        "MARGINAL::window_gates[16-vs-4]:budget_seconds[120-vs-1]",
+        "MARGINAL::window_gates[64-vs-4]:budget_seconds[10-vs-1]",
+        "MARGINAL::window_gates[64-vs-4]:budget_seconds[30-vs-1]",
+        "MARGINAL::window_gates[64-vs-4]:budget_seconds[120-vs-1]"
+      ],
+      "rows": 15,
+      "sha256": "8fd100ffb571a0b588761d6487aa99d8075699ac85fb1c8c44a9589b8f90343d"
+    },
+    "primary_estimand_validity.json": {
+      "bytes": 1094,
+      "sha256": "20e86bce179db868d03d17f006c444e57a2eab6798d42ce85309891a24580938"
+    }
+  },
+  "family_inference_correction_status": "PASS_POSTHOC_FAMILY_INFERENCE_CORRECTION",
+  "family_inference_degrees_of_freedom": 14,
+  "family_inference_n_independent_clusters": 15,
+  "family_inference_outer_cluster": "circuit_family",
+  "first_committed_utc": "2026-08-11T12:49:21.790965+00:00",
+  "formal_analysis_gate_passed": true,
+  "independent_release_verification_embedded_in_completion": false,
+  "independent_release_verification_required": true,
+  "last_committed_utc": "2026-08-26T09:00:20.151887+00:00",
+  "legacy_input_cluster_inference_valid": false,
+  "marginal_contrast_family_fully_preregistered": false,
+  "marginal_contrast_inference_role": "SUPPORTIVE_POSTHOC_OPERATIONALIZATION_OF_FROZEN_CLASS",
+  "marginal_contrast_multiplicity_family_size": 30,
+  "outer_families": 15,
+  "pareto_aggregation_disagreement_cell_count": 37,
+  "pareto_aggregation_functionals_preregistered": false,
+  "pareto_aggregation_invariant_claim_allowed": false,
+  "pareto_frontier_membership_agreement_all_schemes": false,
+  "pareto_inference_role": "EXPLORATORY_POSTHOC_AGGREGATION",
+  "release_eligibility_qualification": "eligible only with the full semantic replay and bound post-hoc transitive-source, contrast-expansion, Pareto-aggregation, and family-inference-correction limitations disclosed",
+  "release_rule": "only this sealed directory may become release-eligible after the independent release verifier passes; a live checkpoint CSV is never release-eligible",
+  "rows": 28152,
+  "run_order_contiguous": true,
+  "schedule_identity_exact": true,
+  "scheduled_rows": 28152,
+  "semantic_replay": {
+    "artifacts": {
+      "semantic_replay_gate.json": {
+        "bytes": 621,
+        "sha256": "d6600877bcb6b5ab462e4ab51d7cf256e3e20535f1c05cfa57405fad71be6498"
+      },
+      "semantic_replay_manifest.json": {
+        "bytes": 20337834,
+        "sha256": "54c5d5cfef49237a922ea1097b62d9db76fcc28e81fd53724a2963960a07b9df"
+      }
+    },
+    "status": "PASS",
+    "success_rows_verified_and_bound": 20314,
+    "unique_semantic_cells_replayed": 6858
+  },
+  "source_provenance_rating": "PARTIAL",
+  "static_first_party_source_closure_count": 23,
+  "status": "FORMAL_COMPLETE_PENDING_INDEPENDENT_RELEASE_VERIFICATION",
+  "status_counts": {
+    "success": 20314,
+    "timeout": 7838
+  },
+  "temporal_gate_provenance_rating": "PARTIAL",
+  "unique_input_hashes": 391,
+  "unseen_family_generalization_status": "BLOCKED"
+}

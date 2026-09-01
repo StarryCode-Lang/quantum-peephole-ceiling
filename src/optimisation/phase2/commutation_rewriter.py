@@ -112,7 +112,7 @@ class Phase2aCommutationRewriter(BaseOptimizer):
         runtime = time.time() - start_time
         
         # Calculate fidelity
-        fidelity = 1.0 if target is None else self.calculate_fidelity(optimized, target)
+        fidelity, equivalence_certificate = self.result_equivalence(optimized, target)
         reduction = 1.0 - optimized.size() / original.size() if original.size() > 0 else 0.0
         success = self._is_success(reduction, fidelity)
         
@@ -124,6 +124,7 @@ class Phase2aCommutationRewriter(BaseOptimizer):
             iterations=improvements,
             runtime_seconds=runtime,
             success=success,
+            equivalence_certificate=equivalence_certificate,
             metadata={'algorithm': 'commutation_rewriter', 'improvements': improvements, 'window_size': self.window_size}
         )
 
@@ -182,7 +183,7 @@ class HybridPhase2aRewrite(BaseOptimizer):
         runtime = time.time() - start_time
         
         # Calculate fidelity
-        fidelity = 1.0 if target is None else self.calculate_fidelity(optimized, target)
+        fidelity, equivalence_certificate = self.result_equivalence(optimized, target)
         reduction = 1.0 - optimized.size() / original.size() if original.size() > 0 else 0.0
         success = self._is_success(reduction, fidelity)
         
@@ -198,6 +199,7 @@ class HybridPhase2aRewrite(BaseOptimizer):
             iterations=total_improvements,
             runtime_seconds=runtime,
             success=success,
+            equivalence_certificate=equivalence_certificate,
             metadata={
                 'algorithm': 'hybrid_commute_rewrite',
                 'phase1_reduction': result1.reduction,

@@ -1,0 +1,24 @@
+{
+  "condition_number": 610.1428609400704,
+  "covariance": "NONE_FIXED_PANEL_DESCRIPTION_WRONG_OUTER_CLUSTER_INVALIDATED",
+  "design_matrix_columns": 462,
+  "design_matrix_rank": 462,
+  "formula": "common_basis_gate_reduction_pct_itt ~ C(input_circuit_sha256) + C(listing_model) * C(rule_set) * C(window_gates) * C(budget_seconds)",
+  "n_input_clusters": 391,
+  "n_outer_families_not_used_as_input_df": 15,
+  "n_rows": 28152,
+  "p_value_interpretation": "legacy 391-input-cluster SE/CI/p-values are invalid and intentionally null; supportive inference is reported separately at the 15-family outer-cluster level",
+  "posthoc_marginal_contrast_file": "posthoc_marginal_contrasts.csv",
+  "residual_quantiles": {
+    "0.0": -62.56253385229882,
+    "0.01": -36.96495549418211,
+    "0.05": -21.708875315712703,
+    "0.5": -1.8124863591783948,
+    "0.95": 19.206670492733405,
+    "0.99": 44.12698058732982,
+    "1.0": 62.47108058817952
+  },
+  "response": "common_basis_gate_reduction_pct_itt",
+  "treatment_parameter_interpretation": "baseline-conditional parameterization diagnostics, not marginal main effects",
+  "zero_inflated_response_rate": 0.6126385336743393
+}

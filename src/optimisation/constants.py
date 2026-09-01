@@ -12,12 +12,9 @@ MAX_EXACT_FIDELITY_QUBITS: int = 12
 # Default number of gate samples used when estimating fidelity for
 # circuits with more than MAX_EXACT_FIDELITY_QUBITS qubits.
 #
-# NOTE (review H4): Previous documentation referenced n_samples=1000
-# giving ~3% uncertainty, while the actual constant was 100 giving
-# ~10% uncertainty.  The constant has been raised to 1000 so that the
-# ~1/sqrt(n_samples) standard error (~3% at 1000 samples) matches the
-# documented guarantee.  If runtime becomes a concern for very large
-# circuits, callers may override ``n_samples`` explicitly, but the
-# default now reflects the published precision claim.
+# NOTE: Monte Carlo error scales as O(1/sqrt(n_samples)), but its actual
+# standard error depends on the variance of the sampled overlaps.  The
+# default of 1000 is a cost/precision choice, not a universal 3% guarantee;
+# publication analyses must report the observed standard error or use an
+# exact/certified method.  Callers may override ``n_samples`` explicitly.
 DEFAULT_FIDELITY_SAMPLES: int = 1000
-

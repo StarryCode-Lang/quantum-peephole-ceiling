@@ -1,15 +1,15 @@
 {
   "archive": {
-    "archive_members": 35043,
-    "bytes": 87101282,
-    "inner_manifest_sha256": "33909547430ede4c439a6a1090a45e3f712c1c84bf0c080265ded81f850585ef",
+    "archive_members": 34686,
+    "bytes": 86616296,
+    "inner_manifest_sha256": "72924041af35851fb243428b29f8b2517e4e1203a2a4c2e31dbb04222b3afdb9",
     "path": "release/prepaper_restore_capsule.zip",
-    "payload_entries": 35042,
-    "sha256": "306e3aae552e4c55972148ebd4b48a4b84afd440531acaa0a9679df7002fe1ba",
-    "uncompressed_payload_bytes": 405678880
+    "payload_entries": 34685,
+    "sha256": "597f1995f2c2c4e84a70e4e14af57f088744a07c88327bd063443d571dbd287b",
+    "uncompressed_payload_bytes": 404037769
   },
   "claim_boundary": "This proves byte-complete restoration and executable verification of one frozen local release capsule on the current Windows/Python dependency stack. It does not prove off-site durability, media longevity, disaster recovery on another operating system, or future dependency availability.",
-  "created_utc": "2026-08-31T14:45:11.544721+00:00",
+  "created_utc": "2026-08-30T15:00:49.526878+00:00",
   "layering_contract": {
     "inner_layer": "immutable ZIP containing the pre-registration pre-paper manifest and its complete pinned file closure",
     "outer_layer": "this audit receipt, stored outside the ZIP, pins the completed archive and inner manifest hashes",
@@ -20,8 +20,8 @@
     "15.41": "PASS: a layered release capsule was unpacked into a temporary directory, its inner manifest and complete hash closure were validated, and the restored release verifier passed under isolated Python mode"
   },
   "restore_test": {
-    "archive_members_extracted": 35043,
-    "inner_manifest_sha256": "33909547430ede4c439a6a1090a45e3f712c1c84bf0c080265ded81f850585ef",
+    "archive_members_extracted": 34686,
+    "inner_manifest_sha256": "72924041af35851fb243428b29f8b2517e4e1203a2a4c2e31dbb04222b3afdb9",
     "isolated_python_flag": "-I",
     "python_no_user_site": true,
     "pythonpath_removed": true,
@@ -29,17 +29,17 @@
     "temporary_directory_used": true,
     "verifier_exit_code": 0,
     "verifier_receipt": {
-      "csv_rows": 511512,
+      "csv_rows": 510373,
       "e31_formal_checks": 34134,
       "e31_independent_receipt_checks": 24,
       "e31_structural_semantic_cells_recomputed": 6858,
       "external_lineage_checks": 15,
-      "files": 35042,
-      "manifest_sha256": "33909547430ede4c439a6a1090a45e3f712c1c84bf0c080265ded81f850585ef",
+      "files": 34685,
+      "manifest_sha256": "72924041af35851fb243428b29f8b2517e4e1203a2a4c2e31dbb04222b3afdb9",
       "metric_ledger_rows_verified": 592,
       "nested_audit_hashes_verified": 31,
-      "numeric_columns_checked_for_infinity": 1590,
-      "python_files_dependency_audited": 126,
+      "numeric_columns_checked_for_infinity": 1559,
+      "python_files_dependency_audited": 106,
       "status": "verified"
     },
     "verifier_relative_path": "scripts/verify_prepaper_release_manifest.py"

@@ -1,0 +1,19 @@
+{
+  "budget_exhausted_but_valid_rate": 0.0,
+  "budget_exhausted_rows": 7838,
+  "budget_exhausted_with_nonempty_trace": 0,
+  "budget_exhausted_with_output_hash": 0,
+  "budget_exhausted_with_valid_retained_output": 0,
+  "created_utc": "2026-08-29T01:12:45.089512+00:00",
+  "formal_rows": 28152,
+  "interpretation": "The sealed schema records zero timeout rows with a retained valid output, output hash, or nonempty optimization trace; the observed budget-exhausted-but-valid rate is 0/7,838.",
+  "limitation": "This zero is a retained-artifact outcome under forced process timeout. It does not prove that no valid incumbent existed transiently before termination; incumbent checkpointing was not instrumented for timed-out workers.",
+  "schema_version": "1.0.0",
+  "source": "data/v11/e31_factorial_pareto/formal_run/final/formal_results.csv",
+  "source_sha256": "76702c2c47e6e191e088bb2c10a7f382ec3f755ecba0bc5bdf19eea2d7af9167",
+  "status": "PASS_E31_BUDGET_EXHAUSTED_VALID_RATE_MEASURED",
+  "status_counts": {
+    "success": 20314,
+    "timeout": 7838
+  }
+}

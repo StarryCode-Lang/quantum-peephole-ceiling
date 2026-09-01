@@ -1,0 +1,30 @@
+{
+  "audit_role": "E31_SUCCESS_ROW_TO_DETERMINISTIC_SEMANTIC_CELL_BINDING",
+  "budget_seconds": 10,
+  "cell_certificate_path": "data/v11/e31_factorial_pareto/formal_run/semantic_replay/cells/27920105b2a57cb5d6554363192bb6b810aa26ff0b7c8dd30ff08cadd953e411.json",
+  "cell_certificate_sha256": "ffbefc634a40194ce64616436d60934735be24b902989f5d8f90dee729d387b8",
+  "cross_budget_semantic_identity_verified": true,
+  "qpy_path": "data/v11/e31_factorial_pareto/formal_run/semantic_replay/outputs/27920105b2a57cb5d6554363192bb6b810aa26ff0b7c8dd30ff08cadd953e411.qpy",
+  "qpy_sha256": "920da7be036234b10a99e038d894a6c7de43c80520c12ad209cf11327e069e4a",
+  "recorded_common_basis_gate_reduction_pct": 6.451612903225811,
+  "recorded_exact_fidelity": 0.9999999999999971,
+  "recorded_optimized_common_basis_gate_count": 29,
+  "recorded_original_common_basis_gate_count": 31,
+  "recorded_output_circuit_sha256": "18e71606224020e5fc3895c02e292748c41691501b97e7a05a39f83a3c5e5d95",
+  "run_id": "86b2629f44573a91ad663096b410bfdea0478072624ea1ae6e1bd957ed4d19d3",
+  "run_order": 13774,
+  "schema_version": "1.0.0",
+  "semantic_cell_id": "27920105b2a57cb5d6554363192bb6b810aa26ff0b7c8dd30ff08cadd953e411",
+  "semantic_cell_key": {
+    "input_circuit_sha256": "a184604fe8e9fff65d7fc4b04a0374176884155f49835fc64a3e78eeea2e3335",
+    "listing_model": "RANDOM_TOPOLOGICAL",
+    "rule_set": "COMMUTATION_ONLY",
+    "window_gates": 4
+  },
+  "status": "PASS",
+  "successful_budget_seconds_in_cell": [
+    10,
+    30,
+    120
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "artifacts": {
+    "distributional_risk_summary.json": {
+      "bytes": 2082,
+      "sha256": "55322ff20e72026468b424e5ecc4cc20f7fffef4585412056c9c82ff814db522"
+    },
+    "semantic_cell_structural_metrics.csv": {
+      "bytes": 1959833,
+      "sha256": "c0d86aa15ed6b54ffb8fa07b8076c0ef384ceecf18e01ffc12013feddf760879"
+    },
+    "solution_diversity_by_input.csv": {
+      "bytes": 35418,
+      "sha256": "461a271a4118010e5f2189fffdbee74cd369d9613e246af0819f13fc8a4b41df"
+    }
+  },
+  "created_utc": "2026-08-28T14:23:54.286006+00:00",
+  "derivation_script": "analysis/e31_structural_distribution_metrics.py",
+  "derivation_script_sha256": "b4afdb74e30d2d713952f69e96873b364d3201cd178837aceeedde9f0fe09572",
+  "limitations": [
+    "structural counts are representation-bound to replayed logical QPY outputs",
+    "active_qubits_static is not a dynamic peak-live-qubit measurement",
+    "logical T/TDG layer depth is not fault-tolerant T-depth without synthesis",
+    "catastrophic expansion thresholds are post-seal descriptive sensitivities"
+  ],
+  "rows": {
+    "semantic_cell_structural_metrics.csv": 6858,
+    "solution_diversity_by_input.csv": 391
+  },
+  "schema_version": "1.0.0",
+  "source_bindings": {
+    "data/v11/e31_factorial_pareto/design_manifest.csv": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86",
+    "data/v11/e31_factorial_pareto/formal_run/final/formal_results.csv": "76702c2c47e6e191e088bb2c10a7f382ec3f755ecba0bc5bdf19eea2d7af9167",
+    "data/v11/e31_factorial_pareto/formal_run/semantic_replay/semantic_replay_manifest.json": "54c5d5cfef49237a922ea1097b62d9db76fcc28e81fd53724a2963960a07b9df"
+  },
+  "status": "PASS_POSTSEAL_STRUCTURAL_DISTRIBUTIONAL_AUDIT"
+}

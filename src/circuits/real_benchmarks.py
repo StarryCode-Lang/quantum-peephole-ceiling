@@ -9,7 +9,7 @@ from typing import Dict, Iterable, List, Optional
 
 import numpy as np
 from qiskit import QuantumCircuit
-from qiskit.circuit.library import TwoLocal
+from qiskit.circuit.library import n_local
 from qiskit.quantum_info import Operator
 
 
@@ -67,9 +67,17 @@ def average_gate_fidelity(circuit: QuantumCircuit, target: QuantumCircuit, max_q
         return None
     try:
         dim = 2 ** circuit.num_qubits
-        u1 = np.asarray(Operator(circuit).data)
-        u2 = np.asarray(Operator(target).data)
-        inner = np.abs(np.trace(np.conj(u1).T @ u2)) ** 2
+        # A transpiled Qiskit circuit may represent an output-wire permutation
+        # in ``circuit.layout.final_layout`` instead of materialized SWAP gates.
+        # ``Operator(circuit)`` ignores that metadata and therefore reports a
+        # false semantic mismatch.  The explicit constructor applies both the
+        # initial and final layouts while behaving identically for ordinary
+        # circuits with no configured layout.
+        u1 = np.asarray(Operator.from_circuit(circuit).data)
+        u2 = np.asarray(Operator.from_circuit(target).data)
+        # Tr(U1† U2) is the Frobenius inner product.  ``vdot`` is exactly the
+        # same scalar without materializing an O(d^3) matrix product.
+        inner = np.abs(np.vdot(u1, u2)) ** 2
         return float((inner + dim) / (dim**2 + dim))
     except Exception:
         return None
@@ -155,14 +163,13 @@ def make_qaoa_line(n_qubits: int, reps: int = 1, seed: int = 42) -> QuantumCircu
 
 
 def make_vqe_twolocal(n_qubits: int, reps: int = 1, seed: int = 42) -> QuantumCircuit:
-    """Construct a bound TwoLocal VQE-style ansatz."""
-    ansatz = TwoLocal(
+    """Construct a bound two-local VQE-style ansatz."""
+    ansatz = n_local(
         n_qubits,
         rotation_blocks=["ry", "rz"],
         entanglement_blocks="cx",
         entanglement="linear",
         reps=reps,
-        flatten=True,
     )
     return materialize_circuit(ansatz, seed)
 

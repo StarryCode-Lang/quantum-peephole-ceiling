@@ -1,0 +1,105 @@
+{
+  "artifacts": {
+    "resource_profile_cells.csv": {
+      "rows": 36,
+      "sha256": "d2d56abe0a383f1de356ee6063bf1dec23f5b1568db8fe4f312ef3261ade9224"
+    },
+    "same_process_cache_repeats.csv": {
+      "rows": 5,
+      "sha256": "935dde6d281ec23da8314f14282ac4b09bfbab3cbba8b88ea0c422d50cf38cc5"
+    },
+    "worker_sensitivity.csv": {
+      "rows": 3,
+      "sha256": "bebe9205b671a8729222e64b4fa80c035ff472f2ede6afbd857f3db963aa676b"
+    }
+  },
+  "cache_sensitivity": {
+    "first_execute_wall_seconds": 1.5306340000024647,
+    "limitation": "same-process warm-state diagnostic; operating-system caches were not flushed",
+    "median_subsequent_execute_wall_seconds": 0.012574349999340484,
+    "output_hash_stable": true,
+    "repetitions_same_process": 5,
+    "warm_to_first_ratio": 0.008215125235242544
+  },
+  "claim_boundary": "These measurements characterize the current Windows host and diagnostic panel; they do not retroactively decompose the sealed E31 formal run, establish energy or monetary cost, or generalize resource scaling beyond qubits 4-10.",
+  "created_utc": "2026-08-29T12:28:55.365786+00:00",
+  "main_panel": {
+    "all_semantically_valid": true,
+    "cpu_seconds_range": [
+      0.984375,
+      2.484375
+    ],
+    "disk_read_bytes_range": [
+      10434447,
+      10444236
+    ],
+    "disk_write_bytes_range": [
+      260,
+      260
+    ],
+    "families": 15,
+    "peak_rss_mb_range": [
+      143.90234375,
+      164.2578125
+    ],
+    "profile_directory_bytes_range": [
+      2700,
+      2764
+    ],
+    "qubit_range": [
+      4,
+      10
+    ],
+    "rows": 36
+  },
+  "memory_scaling": {
+    "bootstrap_ci95": [
+      -0.0021335268096431305,
+      0.25045536947618086
+    ],
+    "bootstrap_replicates_finite": 2000,
+    "exponent": 0.07915747680587523,
+    "limitation": "diagnostic worker RSS includes Python/Qiskit interpreter overhead",
+    "model": "log(peak_RSS_MB) = intercept + exponent * log(n_qubits)",
+    "n_scale_points": 7,
+    "qubit_range": [
+      4,
+      10
+    ]
+  },
+  "metric_dispositions": {
+    "10.02": "PASS: process CPU time is directly measured for every bounded resource-profile cell",
+    "10.05": "PASS: process disk read and write bytes are directly measured for every bounded profile cell",
+    "10.06": "PARTIAL: managed per-cell profiling-directory storage is measured, but operating-system temporary storage is not captured",
+    "10.09": "PASS: cold-process import initialization wall and CPU time are directly measured",
+    "10.10": "PASS: payload and QASM parsing wall and CPU time are directly measured",
+    "10.11": "PASS: common-basis conversion wall and CPU time are directly measured",
+    "10.13": "PASS: exact semantic verification wall and CPU time are directly measured",
+    "10.14": "PASS: substantive result JSON serialization time and byte size are directly probed",
+    "10.24": "PASS: a 4-10 qubit diagnostic peak-RSS scaling exponent with bootstrap interval is reported",
+    "10.33": "PASS: identical tasks are compared at 1, 2, and 4 workers with deterministic output-hash agreement",
+    "10.34": "PARTIAL: first versus repeated same-process execution is measured, but operating-system caches are not forcibly flushed"
+  },
+  "schema_version": "1.0.0",
+  "scope": "non-confirmatory diagnostic panel; 15 families, qubits 4-10, fixed 10-second design cells",
+  "source_bindings": {
+    "analysis/e31_resource_profile_audit.py": "100e0fdea6aabefb01f02c25ba7956f8612a06bb5810dc5e0b13b7bfd6f8c662",
+    "data/v11/e31_factorial_pareto/design_manifest.csv": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86",
+    "experiments/e31_factorial_pareto_protocol.json": "2464d1d531032a71c2947e9e8abd2b6b84de9fc6f048239944ee9357097365e8",
+    "experiments/e31_resource_profile_worker.py": "edc23782ca12e6f2c3f754288b6d3db5a0b03f32e784bab04b1ff8e847e52e70"
+  },
+  "status": "PASS_BOUNDED_E31_RESOURCE_PROFILE",
+  "worker_sensitivity": {
+    "deterministic_output_hashes_across_conditions": true,
+    "tasks_per_condition": 8,
+    "throughput_range_tasks_per_second": [
+      0.23525987626401704,
+      0.5332453940579672
+    ],
+    "worker_counts": [
+      1,
+      2,
+      4
+    ]
+  }
+}

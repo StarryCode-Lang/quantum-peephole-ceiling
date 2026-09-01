@@ -1,0 +1,37 @@
+{
+  "claim_boundary": "This gate supports paper-scale independence of the research package. It does not establish priority over all related work, guarantee venue acceptance, permit unseen-family universality, or convert post-hoc analyses into confirmatory evidence.",
+  "created_utc": "2026-08-30T00:15:26.573394+00:00",
+  "criteria": {
+    "formal_external_comparator_program_present": true,
+    "formal_factorial_program_complete": true,
+    "independent_generator_validation_present": true,
+    "independent_release_verification_passed": true,
+    "narrow_novelty_boundary_explicit": true
+  },
+  "metric_dispositions": {
+    "3.27": "PASS: the increment is a standalone empirical research package rather than a single ablation, combining a completed 28,152-row factorial program, independent 16-family held-out validation, and two formal external artifacts"
+  },
+  "observed_scope": {
+    "external_inputs_per_method": 520,
+    "formal_external_methods": [
+      "quartz",
+      "quasar"
+    ],
+    "formal_factorial_rows": 28152,
+    "formal_outer_families": 15,
+    "formal_unique_inputs": 391,
+    "heldout_outer_generator_families": 16,
+    "heldout_unique_inputs": 378,
+    "semantic_cells_replayed": 6858
+  },
+  "schema_version": "1.0.0",
+  "source_bindings": {
+    "analysis/contribution_independence_audit.py": "d0e4f9b891de195950d08993230043dd68964edb1b5a0e84351f2c3fa85c892a",
+    "data/v10/prepaper/analysis/external/audit.json": "e90192a6401f7bf1d930714e69221b2273b00e2df559a0e35bb7399bd8ee1e89",
+    "data/v10/prepaper/heldout_v2/analysis/combined_heldout_metrics.json": "cf7bd5493acf42191760b9561564f52330506e0239997c357d61bb3e14f19c85",
+    "data/v11/e31_factorial_pareto/formal_run/final/formal_completion_manifest.json": "4fdcf626b614c36bb7fd96952a44d967c3c13b28dc1f0acde0836a50c9c1a522",
+    "docs/review/prepaper_novelty_refresh_2026-08-24.md": "4e143b4ec954f44c41554c9c193c76719969af68cca6d50b8196702a78eacf57",
+    "release/e31_independent_release_verification_receipt.json": "b77b88c3ee10b6d3b71d0300780e1f37bda666fb5ee73a3695f294eb23878d76"
+  },
+  "status": "PASS_STANDALONE_EMPIRICAL_CONTRIBUTION_GATE"
+}

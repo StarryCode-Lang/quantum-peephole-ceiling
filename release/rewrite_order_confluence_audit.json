@@ -1,0 +1,1967 @@
+{
+  "cases": 60,
+  "convergence_failure_count": 0,
+  "convergence_failures": [],
+  "cost_nonconfluent_cases": 0,
+  "interpretation": "PASS means the bounded order-sensitivity audit completed without semantic drift; syntax or cost divergence is reported as non-confluence, not hidden as failure.",
+  "maximum_gate_count_spread": 0,
+  "pass_orders": {
+    "frozen_default": [
+      "gather_h",
+      "gather_pairs",
+      "templates",
+      "cancel",
+      "merge"
+    ],
+    "simplify_first": [
+      "cancel",
+      "merge",
+      "gather_h",
+      "gather_pairs",
+      "templates"
+    ],
+    "templates_first": [
+      "templates",
+      "cancel",
+      "merge",
+      "gather_h",
+      "gather_pairs"
+    ]
+  },
+  "records": [
+    {
+      "case": 0,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 14,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "210b88001072eb47b56cd41500feea7081df719a9091cba445fe0b112d4afe77",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 14,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "210b88001072eb47b56cd41500feea7081df719a9091cba445fe0b112d4afe77",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 14,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "210b88001072eb47b56cd41500feea7081df719a9091cba445fe0b112d4afe77",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 1,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 11,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "61dca42302d4cff6595e76c8851723399395249f86a5d70647caa3015db68a3f",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 11,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "61dca42302d4cff6595e76c8851723399395249f86a5d70647caa3015db68a3f",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 11,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "61dca42302d4cff6595e76c8851723399395249f86a5d70647caa3015db68a3f",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 2,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "55ce6b1f5c913e4ff53388ad407d5917b8d1d2b2632a8d178bd6e276eb795870",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "55ce6b1f5c913e4ff53388ad407d5917b8d1d2b2632a8d178bd6e276eb795870",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "55ce6b1f5c913e4ff53388ad407d5917b8d1d2b2632a8d178bd6e276eb795870",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 3,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "f299294a765467939f44f04c0b69ea73d2df4de842d57c8ce42a02fb64cb72f9",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "f299294a765467939f44f04c0b69ea73d2df4de842d57c8ce42a02fb64cb72f9",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "f299294a765467939f44f04c0b69ea73d2df4de842d57c8ce42a02fb64cb72f9",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 4,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "1452f8a7040dfa8af75c9e70a986cfd25d76cbb923e863218215f75c289b56a7",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "1452f8a7040dfa8af75c9e70a986cfd25d76cbb923e863218215f75c289b56a7",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "1452f8a7040dfa8af75c9e70a986cfd25d76cbb923e863218215f75c289b56a7",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 5,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 10,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "5148e61065b0d66d9a8d6288c704abc86047404682eb87b328e3502291e36609",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 10,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "5148e61065b0d66d9a8d6288c704abc86047404682eb87b328e3502291e36609",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 10,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "5148e61065b0d66d9a8d6288c704abc86047404682eb87b328e3502291e36609",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 6,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 15,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "d255273a76c267368a2d51334f84d7600da267ceb4faf5efcea58485c8df5bf4",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 15,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "d255273a76c267368a2d51334f84d7600da267ceb4faf5efcea58485c8df5bf4",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 15,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "d255273a76c267368a2d51334f84d7600da267ceb4faf5efcea58485c8df5bf4",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 7,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "cb6d8136c1a1c5c81d136e55123d351b74bf5c68006ac9d128f0a2d86bfe24f7",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "cb6d8136c1a1c5c81d136e55123d351b74bf5c68006ac9d128f0a2d86bfe24f7",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "cb6d8136c1a1c5c81d136e55123d351b74bf5c68006ac9d128f0a2d86bfe24f7",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 8,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 12,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "db04b137107178eab485668e74733b96a56aeccbb719cca54768f229b475de8f",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 12,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "db04b137107178eab485668e74733b96a56aeccbb719cca54768f229b475de8f",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 12,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "db04b137107178eab485668e74733b96a56aeccbb719cca54768f229b475de8f",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 9,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 17,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "29eb31d2939f84342c39f3dd1b3b9c26d7bda4fa6c7254b2e7f83d704e2e7545",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 17,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "29eb31d2939f84342c39f3dd1b3b9c26d7bda4fa6c7254b2e7f83d704e2e7545",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 17,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "29eb31d2939f84342c39f3dd1b3b9c26d7bda4fa6c7254b2e7f83d704e2e7545",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 10,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "a94c59e2912d38d1ebedf78d38728b5f9c4bf5772475203a105dcc2ab267edc0",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "a94c59e2912d38d1ebedf78d38728b5f9c4bf5772475203a105dcc2ab267edc0",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "a94c59e2912d38d1ebedf78d38728b5f9c4bf5772475203a105dcc2ab267edc0",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 11,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "c04e119ffc1e6f0a7cbe6f3f205f3b56c415c968bd0cb0f5f6353b7e95e46c8e",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "c04e119ffc1e6f0a7cbe6f3f205f3b56c415c968bd0cb0f5f6353b7e95e46c8e",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "c04e119ffc1e6f0a7cbe6f3f205f3b56c415c968bd0cb0f5f6353b7e95e46c8e",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 12,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 8,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "8eb3fcc3f2cc2ae32f5054d600575655ed834e328b21fe75e6ba188bdf4c5205",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 8,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "8eb3fcc3f2cc2ae32f5054d600575655ed834e328b21fe75e6ba188bdf4c5205",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 8,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "8eb3fcc3f2cc2ae32f5054d600575655ed834e328b21fe75e6ba188bdf4c5205",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 13,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "1c017e27177ff3ab260ba837db3cf3bdde522704db2d58cb1eade15e2cd0460c",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "1c017e27177ff3ab260ba837db3cf3bdde522704db2d58cb1eade15e2cd0460c",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "1c017e27177ff3ab260ba837db3cf3bdde522704db2d58cb1eade15e2cd0460c",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 14,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "ae57fede3c6ec2982e7136111eabda083f78214af22ed75d47b5c35e29c45c5e",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "ae57fede3c6ec2982e7136111eabda083f78214af22ed75d47b5c35e29c45c5e",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "ae57fede3c6ec2982e7136111eabda083f78214af22ed75d47b5c35e29c45c5e",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 15,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 8,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "f32219d6375cc11ffaaff5eb5bb28f95267e4d164d2628f6e28b325d38181072",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 8,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "f32219d6375cc11ffaaff5eb5bb28f95267e4d164d2628f6e28b325d38181072",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 8,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "f32219d6375cc11ffaaff5eb5bb28f95267e4d164d2628f6e28b325d38181072",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 16,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 12,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "c78c199c335d0d9b25abed85a89c211ac3800e967b9107078003fbd7f0d5f806",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 12,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "c78c199c335d0d9b25abed85a89c211ac3800e967b9107078003fbd7f0d5f806",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 12,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "c78c199c335d0d9b25abed85a89c211ac3800e967b9107078003fbd7f0d5f806",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 17,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 19,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "cf1a8371d16a0d9934fe989368f3b0ca8fdc49e28709056a54e14d00b089c24b",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 19,
+          "iterations": 4,
+          "operator_equivalent": true,
+          "qasm_sha256": "cf1a8371d16a0d9934fe989368f3b0ca8fdc49e28709056a54e14d00b089c24b",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 19,
+          "iterations": 4,
+          "operator_equivalent": true,
+          "qasm_sha256": "cf1a8371d16a0d9934fe989368f3b0ca8fdc49e28709056a54e14d00b089c24b",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 18,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "f4f3d2595583c0e1d5c9cbb9f3e47f04cbd2302e271d6055b3aa72d62dc944c9",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "f4f3d2595583c0e1d5c9cbb9f3e47f04cbd2302e271d6055b3aa72d62dc944c9",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "f4f3d2595583c0e1d5c9cbb9f3e47f04cbd2302e271d6055b3aa72d62dc944c9",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 19,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 15,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "d21bdf87206a91c6ce1222fcb78082d4edc9415f034987a9f89d49d232995497",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 15,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "d21bdf87206a91c6ce1222fcb78082d4edc9415f034987a9f89d49d232995497",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 15,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "d21bdf87206a91c6ce1222fcb78082d4edc9415f034987a9f89d49d232995497",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 20,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 7,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "7800c022587fd4c11593c18d885c8c4a553649d006554d981a87d4ba3f1b5be6",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 7,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "7800c022587fd4c11593c18d885c8c4a553649d006554d981a87d4ba3f1b5be6",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 7,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "7800c022587fd4c11593c18d885c8c4a553649d006554d981a87d4ba3f1b5be6",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 21,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "395901d47dfe1e0531264b8729af3466129d5a51e44c4d50426bcea6059788a0",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "395901d47dfe1e0531264b8729af3466129d5a51e44c4d50426bcea6059788a0",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "395901d47dfe1e0531264b8729af3466129d5a51e44c4d50426bcea6059788a0",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 22,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "00165e519eaa6e54ca4e47042d44bb78f59b4f87de9f2cce80258433fd5120c3",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "00165e519eaa6e54ca4e47042d44bb78f59b4f87de9f2cce80258433fd5120c3",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "00165e519eaa6e54ca4e47042d44bb78f59b4f87de9f2cce80258433fd5120c3",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 23,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "1c74651ce2544977afb991f9f84ab5c847cf020cd5b87d274a894efbd944a4f3",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "1c74651ce2544977afb991f9f84ab5c847cf020cd5b87d274a894efbd944a4f3",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "1c74651ce2544977afb991f9f84ab5c847cf020cd5b87d274a894efbd944a4f3",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 24,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 15,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "71f3341f9729140ead15beb90d4ee85f9a51e7c4f24fb209b6e3a799ed9cfbb7",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 15,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "71f3341f9729140ead15beb90d4ee85f9a51e7c4f24fb209b6e3a799ed9cfbb7",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 15,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "71f3341f9729140ead15beb90d4ee85f9a51e7c4f24fb209b6e3a799ed9cfbb7",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 25,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 16,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "ed7fa9274a1a5e2c3164a4b60c418ee8f1c3b7b07e245c069a6aa39cd39f8580",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 16,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "ed7fa9274a1a5e2c3164a4b60c418ee8f1c3b7b07e245c069a6aa39cd39f8580",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 16,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "ed7fa9274a1a5e2c3164a4b60c418ee8f1c3b7b07e245c069a6aa39cd39f8580",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 26,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 2,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 4,
+          "operator_equivalent": true,
+          "qasm_sha256": "d4bfd006bb6dcbd998e2ea5fb6c29659ab9db42bc3370f3916dc937014e1d3b1",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "e8917c58b1e8b5c9d014d7a4bc5f33562cc0667c2aae546a8f17f428d236edb0",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "e8917c58b1e8b5c9d014d7a4bc5f33562cc0667c2aae546a8f17f428d236edb0",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 27,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "e198018b209a7934a62b285aea0001fdcc28a935235b41a0b5b1244be27a8ac2",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "e198018b209a7934a62b285aea0001fdcc28a935235b41a0b5b1244be27a8ac2",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "e198018b209a7934a62b285aea0001fdcc28a935235b41a0b5b1244be27a8ac2",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 28,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "8269a0ef29754d7f1bd0c0684bcf0a3b416e81335dbbe3b7b2c3881738ffc15a",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "8269a0ef29754d7f1bd0c0684bcf0a3b416e81335dbbe3b7b2c3881738ffc15a",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "8269a0ef29754d7f1bd0c0684bcf0a3b416e81335dbbe3b7b2c3881738ffc15a",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 29,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "235cfc74869dfd42d993acbcbb963267b405ff6a8ac4ccd5d5759fd79a7a3ea7",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "235cfc74869dfd42d993acbcbb963267b405ff6a8ac4ccd5d5759fd79a7a3ea7",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "235cfc74869dfd42d993acbcbb963267b405ff6a8ac4ccd5d5759fd79a7a3ea7",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 30,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 22,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "3d43edfe2a79326c551ff6b97fa627132cfa1b759417464a595846702b6c330f",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 22,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "3d43edfe2a79326c551ff6b97fa627132cfa1b759417464a595846702b6c330f",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 22,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "3d43edfe2a79326c551ff6b97fa627132cfa1b759417464a595846702b6c330f",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 31,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 8,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "422b644f5b078bb38108d53c02f2a5d99e3b45d2c2fd6d2ea890a79d66d77e89",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 8,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "422b644f5b078bb38108d53c02f2a5d99e3b45d2c2fd6d2ea890a79d66d77e89",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 8,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "422b644f5b078bb38108d53c02f2a5d99e3b45d2c2fd6d2ea890a79d66d77e89",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 32,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "61114cde0c28a97a0e34cd490f55bb666eb6dcd6449a5229f4506e1a57cf4072",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "61114cde0c28a97a0e34cd490f55bb666eb6dcd6449a5229f4506e1a57cf4072",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "61114cde0c28a97a0e34cd490f55bb666eb6dcd6449a5229f4506e1a57cf4072",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 33,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 14,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "130f42fc0d67faf40052885ecbb91e93def5e60d21ac34bb3c8902ce7a21aaaf",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 14,
+          "iterations": 4,
+          "operator_equivalent": true,
+          "qasm_sha256": "130f42fc0d67faf40052885ecbb91e93def5e60d21ac34bb3c8902ce7a21aaaf",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 14,
+          "iterations": 4,
+          "operator_equivalent": true,
+          "qasm_sha256": "130f42fc0d67faf40052885ecbb91e93def5e60d21ac34bb3c8902ce7a21aaaf",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 34,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 16,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "b8708975bac9d0d317e083d94da83bd9f89ae66a5f852314405ce2d9d3d2cff1",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 16,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "b8708975bac9d0d317e083d94da83bd9f89ae66a5f852314405ce2d9d3d2cff1",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 16,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "b8708975bac9d0d317e083d94da83bd9f89ae66a5f852314405ce2d9d3d2cff1",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 35,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 6,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "75fcbcbbd0afbf686364391c6a0557b05e7aadc7295e2dba15a587fe6d30076d",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 6,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "75fcbcbbd0afbf686364391c6a0557b05e7aadc7295e2dba15a587fe6d30076d",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 6,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "75fcbcbbd0afbf686364391c6a0557b05e7aadc7295e2dba15a587fe6d30076d",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 36,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 7,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "264c50258bbcd9ea6de675a0402560d74eb2a1e2ae65f77b6255758de2c2d8ad",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 7,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "264c50258bbcd9ea6de675a0402560d74eb2a1e2ae65f77b6255758de2c2d8ad",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 7,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "264c50258bbcd9ea6de675a0402560d74eb2a1e2ae65f77b6255758de2c2d8ad",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 37,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 8,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "b7c16eaedbb2cad402e7054096a10373af1e3a81ca90e5aa8a21c88fd9118816",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 8,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "b7c16eaedbb2cad402e7054096a10373af1e3a81ca90e5aa8a21c88fd9118816",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 8,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "b7c16eaedbb2cad402e7054096a10373af1e3a81ca90e5aa8a21c88fd9118816",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 38,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "483ff39516674a99263d079fb457e7139905ad7f8e4ef64ddcd1606ba10cd523",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "483ff39516674a99263d079fb457e7139905ad7f8e4ef64ddcd1606ba10cd523",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "483ff39516674a99263d079fb457e7139905ad7f8e4ef64ddcd1606ba10cd523",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 39,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 12,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "1145ad04d9abebe3032b8a966ff9020dccf5db927d10f771152cdeeb1be8119f",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 12,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "1145ad04d9abebe3032b8a966ff9020dccf5db927d10f771152cdeeb1be8119f",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 12,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "1145ad04d9abebe3032b8a966ff9020dccf5db927d10f771152cdeeb1be8119f",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 40,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 22,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "75633b56c4691dcbfbe76c393bdf3f021b2cace90f6d2610a2c50eafe48e0cfc",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 22,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "75633b56c4691dcbfbe76c393bdf3f021b2cace90f6d2610a2c50eafe48e0cfc",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 22,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "75633b56c4691dcbfbe76c393bdf3f021b2cace90f6d2610a2c50eafe48e0cfc",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 41,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "2df6933f172b48632d3d3f5efe11cef97a1258ca89b30147814cfa18ca7c38bb",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "2df6933f172b48632d3d3f5efe11cef97a1258ca89b30147814cfa18ca7c38bb",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "2df6933f172b48632d3d3f5efe11cef97a1258ca89b30147814cfa18ca7c38bb",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 42,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 16,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "875238d6277097d3f2a7bddd8f8b84d144cd58d9dfd66630a81bbbfd348da46f",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 16,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "875238d6277097d3f2a7bddd8f8b84d144cd58d9dfd66630a81bbbfd348da46f",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 16,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "875238d6277097d3f2a7bddd8f8b84d144cd58d9dfd66630a81bbbfd348da46f",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 43,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "632686a85ed13c0b5bfdcfe59de73788045ef0a8a4403d5629e954f09a8ba92a",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "632686a85ed13c0b5bfdcfe59de73788045ef0a8a4403d5629e954f09a8ba92a",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "632686a85ed13c0b5bfdcfe59de73788045ef0a8a4403d5629e954f09a8ba92a",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 44,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 2,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "fcaca041a91091234246cfd2ab7e419618410b929730f4825d0be1db19adf8b2",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "9aa29eb13f6ab68641213cdd3aac428dc4f10498b9e679d3496e555820dab6eb",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "9aa29eb13f6ab68641213cdd3aac428dc4f10498b9e679d3496e555820dab6eb",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 45,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 16,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "c0236263f803483d920d6b2db7b19d22de42572b77e40f3e47c6948976e54b5e",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 16,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "c0236263f803483d920d6b2db7b19d22de42572b77e40f3e47c6948976e54b5e",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 16,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "c0236263f803483d920d6b2db7b19d22de42572b77e40f3e47c6948976e54b5e",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 46,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 12,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "f95bb4ebe4059c101b8054b55313456b3d1946b7ac7f9e7a71a537e9d4db5227",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 12,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "f95bb4ebe4059c101b8054b55313456b3d1946b7ac7f9e7a71a537e9d4db5227",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 12,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "f95bb4ebe4059c101b8054b55313456b3d1946b7ac7f9e7a71a537e9d4db5227",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 47,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 17,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "6c2abc64c5c3768423077bdcc11b9d6aab621ae66565d5c5102e5b99ae2ecfde",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 17,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "6c2abc64c5c3768423077bdcc11b9d6aab621ae66565d5c5102e5b99ae2ecfde",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 17,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "6c2abc64c5c3768423077bdcc11b9d6aab621ae66565d5c5102e5b99ae2ecfde",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 48,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 2,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "306dae4b592c912624b2ec7a0eb38c8b0d2b38755f9421db7bc80def2dea581c",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "eb353173477b119ee9821163575389850609f4dbe997678b3afb7bf71a59e00e",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "eb353173477b119ee9821163575389850609f4dbe997678b3afb7bf71a59e00e",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 49,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "2c1113832b486883b860355392512445684f2cb6e1f9821f1f16f6e6bd86c1de",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "2c1113832b486883b860355392512445684f2cb6e1f9821f1f16f6e6bd86c1de",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 9,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "2c1113832b486883b860355392512445684f2cb6e1f9821f1f16f6e6bd86c1de",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 50,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 11,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "f57b04b7cd59edd079746a61be7e00b1fa2c2379fb5ae9e662c9941b46f52ebf",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 11,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "f57b04b7cd59edd079746a61be7e00b1fa2c2379fb5ae9e662c9941b46f52ebf",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 11,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "f57b04b7cd59edd079746a61be7e00b1fa2c2379fb5ae9e662c9941b46f52ebf",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 51,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 15,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "c875fb026769b915b2187bac02cef443840a7af7414c236733d8e4b89af5136a",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 15,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "c875fb026769b915b2187bac02cef443840a7af7414c236733d8e4b89af5136a",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 15,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "c875fb026769b915b2187bac02cef443840a7af7414c236733d8e4b89af5136a",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 52,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "d11b374c4dde459a5bc18b6902bbbe06ecdcbe0c0b246ab6ef5198cf4f95faf6",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "d11b374c4dde459a5bc18b6902bbbe06ecdcbe0c0b246ab6ef5198cf4f95faf6",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 20,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "d11b374c4dde459a5bc18b6902bbbe06ecdcbe0c0b246ab6ef5198cf4f95faf6",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 53,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 11,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "de2bddd63417a0ea90706f84ac056a92a0e7ff1a963773828ffea7974a5d10e1",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 11,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "de2bddd63417a0ea90706f84ac056a92a0e7ff1a963773828ffea7974a5d10e1",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 11,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "de2bddd63417a0ea90706f84ac056a92a0e7ff1a963773828ffea7974a5d10e1",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 54,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "a829a4288fd2fcffb00048032b6b27e73316967adefbb3164544875c7d416072",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "a829a4288fd2fcffb00048032b6b27e73316967adefbb3164544875c7d416072",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "a829a4288fd2fcffb00048032b6b27e73316967adefbb3164544875c7d416072",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 55,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "34a5549096468d3471b6fbf1651eeb1d9f9d35eb8975b863ca1413de8a11fc05",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "34a5549096468d3471b6fbf1651eeb1d9f9d35eb8975b863ca1413de8a11fc05",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 13,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "34a5549096468d3471b6fbf1651eeb1d9f9d35eb8975b863ca1413de8a11fc05",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 56,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 11,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "baecbc00c6c59c3a104ee629e5f603078211d9e0401f090f87f8f8d986889801",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 11,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "baecbc00c6c59c3a104ee629e5f603078211d9e0401f090f87f8f8d986889801",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 11,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "baecbc00c6c59c3a104ee629e5f603078211d9e0401f090f87f8f8d986889801",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 57,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 14,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "fd3c272e06a01d5b08091175790255bb4d6cc596117154e7003192468fe5b639",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 14,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "fd3c272e06a01d5b08091175790255bb4d6cc596117154e7003192468fe5b639",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 14,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "fd3c272e06a01d5b08091175790255bb4d6cc596117154e7003192468fe5b639",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 58,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 2,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "629b5c370732b531c3c9259dfd3d6c44ef04c72b082f5bb33b9c23fe50fea409",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "9525d027e24203d991be1e0960ffea46502b973214434cfe6edad4a35cba817b",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "9525d027e24203d991be1e0960ffea46502b973214434cfe6edad4a35cba817b",
+          "structural_cycle_detected": false
+        }
+      }
+    },
+    {
+      "case": 59,
+      "distinct_gate_counts": 1,
+      "distinct_syntax_outputs": 1,
+      "gate_count_spread": 0,
+      "outputs": {
+        "frozen_default": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 2,
+          "operator_equivalent": true,
+          "qasm_sha256": "87989b7af5ced3e375ae79583b7a94a8ad34bc6b403099077482872407d40558",
+          "structural_cycle_detected": false
+        },
+        "simplify_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "87989b7af5ced3e375ae79583b7a94a8ad34bc6b403099077482872407d40558",
+          "structural_cycle_detected": false
+        },
+        "templates_first": {
+          "converged_at_structural_fixpoint": true,
+          "gate_count": 18,
+          "iterations": 3,
+          "operator_equivalent": true,
+          "qasm_sha256": "87989b7af5ced3e375ae79583b7a94a8ad34bc6b403099077482872407d40558",
+          "structural_cycle_detected": false
+        }
+      }
+    }
+  ],
+  "seed": 20260824,
+  "semantic_failure_count": 0,
+  "semantic_failures": [],
+  "source_sha256": {
+    "scripts/audit_rewrite_order_confluence.py": "3ab339f65308035f95aede3da948162fb7e4704d155a490331eaa9d929d14382",
+    "scripts/audit_rewrite_properties.py": "631d3e9f2c4e8e5086ed35712891a27aa33ecf05e3959ac0ffcb353c924d8e8d",
+    "src/equivalence.py": "19de65ac1fb719c763ed60f4b3bb8655435b706976333c1bf5e569faa58834af",
+    "src/optimisation/base.py": "f1c983c6273517cee511612137813c107a8a11940b71e0ac28bb4b3cdbbb4248",
+    "src/optimisation/constants.py": "ce80583a56732a3cc70cbef5ff0124cd0f03517fbfc718f06ebf4e5055ea3c41",
+    "src/optimisation/phase2/template_matcher.py": "4fc65e470a050079056a1c5445477fb5764f3c62e7009225170015f12b5f7760"
+  },
+  "status": "PASS_AUDIT_COMPLETE",
+  "structural_cycle_count": 0,
+  "syntax_nonconfluent_cases": 4
+}

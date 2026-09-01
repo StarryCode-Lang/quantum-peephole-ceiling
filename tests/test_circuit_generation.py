@@ -18,6 +18,8 @@ from src.circuits.generator_v2 import (
     generate_circuit, generate_circuit_batch,
     MetricsCalculator, create_generator
 )
+from src.circuits.ag_canonical import generate_ag_canonical_circuit
+from src.optimisation.ceiling_aware import count_phase1_actions
 from src.optimisation.base import BaseOptimizer, OptimizationResult
 from src.optimisation.phase1.greedy import GreedyGateCancellation
 from src.optimisation.phase1.random_local_search import RandomLocalSearch
@@ -389,6 +391,15 @@ class TestRealBenchmarksHelpers(unittest.TestCase):
         self.assertIsNotNone(fid)
         self.assertAlmostEqual(fid, 1.0, places=5)
 
+    def test_average_gate_fidelity_known_orthogonal_unitaries(self):
+        """Identity and X have exact one-qubit average gate fidelity 1/3."""
+        identity = QuantumCircuit(1)
+        bit_flip = QuantumCircuit(1)
+        bit_flip.x(0)
+        fid = average_gate_fidelity(identity, bit_flip)
+        self.assertIsNotNone(fid)
+        self.assertAlmostEqual(fid, 1.0 / 3.0, places=12)
+
     def test_average_gate_fidelity_too_large(self):
         """Test that fidelity returns None for circuits exceeding max_qubits."""
         qc = make_ghz(12)
@@ -462,6 +473,13 @@ class TestExtendedMetrics(unittest.TestCase):
         self.assertGreaterEqual(metrics['original_depth'], metrics['optimized_depth'])
         self.assertGreaterEqual(metrics['depth_reduction'], 0.0)
         self.assertLessEqual(metrics['depth_reduction'], 1.0)
+
+
+class TestAGStageGenerator(unittest.TestCase):
+    def test_empty_h_stage_cannot_expose_cnot_cancellation(self):
+        """Regression for the pre-fix n=2, seed=35 counterexample."""
+        circuit = generate_ag_canonical_circuit(2, seed=35)
+        self.assertEqual(count_phase1_actions(circuit), 0)
 
 
 # ============================================================================

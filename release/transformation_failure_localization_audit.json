@@ -1,0 +1,101 @@
+{
+  "claim_boundary": "The harness proves stage-addressable localization for targeted diagnostic circuits. It does not retroactively identify a particular gate-level rewrite inside a sealed E31 stage containing multiple actions; adding that granularity would change the formal worker trace contract and require a new formal execution.",
+  "correct_stage_checks": 5,
+  "created_utc": "2026-08-29T12:46:52.511679+00:00",
+  "fault_sentinels_localized": 5,
+  "metric_dispositions": {
+    "7.22": "PARTIAL: five Phase-2b transformation stages have semantic checkpoints that localize injected failures to iteration and stage, but the sealed E31 trace contains aggregate counters rather than one checkpoint per individual rewrite"
+  },
+  "records": [
+    {
+      "action_counters": {
+        "h_reorders": 1
+      },
+      "correct_transformation_average_gate_fidelity": 0.9999999999999992,
+      "correct_transformation_semantic_accept": true,
+      "expected_first_failing_transformation_id": "iteration=0:stage=gather_h_sandwiches",
+      "injected_fault": "append_x_on_q0_immediately_after_stage",
+      "injected_fault_average_gate_fidelity": 0.1111111111111111,
+      "localized_correctly": true,
+      "localized_first_failing_transformation_id": "iteration=0:stage=gather_h_sandwiches",
+      "post_stage_circuit_sha256": "c7f41304cedf5fc17a5ffe279a0ceb90f2ccfcc1ec77f2d8ac5aaf1f29f5bc66",
+      "pre_stage_circuit_sha256": "7594f408a9d9422d011cca7effb3e86e6e57bb334b67a60d76cb4fc818ac34c0",
+      "stage": "gather_h_sandwiches"
+    },
+    {
+      "action_counters": {
+        "pair_gathers": 1
+      },
+      "correct_transformation_average_gate_fidelity": 1.0,
+      "correct_transformation_semantic_accept": true,
+      "expected_first_failing_transformation_id": "iteration=0:stage=gather_commuting_pairs",
+      "injected_fault": "append_x_on_q0_immediately_after_stage",
+      "injected_fault_average_gate_fidelity": 0.2,
+      "localized_correctly": true,
+      "localized_first_failing_transformation_id": "iteration=0:stage=gather_commuting_pairs",
+      "post_stage_circuit_sha256": "f7c41550c5370d87657bfee0896745b479a10dd48ef74c3a76d46748ee4f821b",
+      "pre_stage_circuit_sha256": "0b273cdb735adf93e530d989119be8f1be15d6b215436797ee1f9b060479104c",
+      "stage": "gather_commuting_pairs"
+    },
+    {
+      "action_counters": {
+        "cz_conversions": 1
+      },
+      "correct_transformation_average_gate_fidelity": 0.9999999999999997,
+      "correct_transformation_semantic_accept": true,
+      "expected_first_failing_transformation_id": "iteration=0:stage=apply_conjugation_templates",
+      "injected_fault": "append_x_on_q0_immediately_after_stage",
+      "injected_fault_average_gate_fidelity": 0.2,
+      "localized_correctly": true,
+      "localized_first_failing_transformation_id": "iteration=0:stage=apply_conjugation_templates",
+      "post_stage_circuit_sha256": "db20e65b52f3dc54a038ed5a6fe673bdfe9d6f2e5bb7871dac247e122ad85770",
+      "pre_stage_circuit_sha256": "744e9aefe969e4a6acc2b959ea61047c78a003544071577e574c03cfccc786b3",
+      "stage": "apply_conjugation_templates"
+    },
+    {
+      "action_counters": {
+        "local_cancellations": 1
+      },
+      "correct_transformation_average_gate_fidelity": 1.0,
+      "correct_transformation_semantic_accept": true,
+      "expected_first_failing_transformation_id": "iteration=0:stage=cancel_inverse_pairs",
+      "injected_fault": "append_x_on_q0_immediately_after_stage",
+      "injected_fault_average_gate_fidelity": 0.3333333333333333,
+      "localized_correctly": true,
+      "localized_first_failing_transformation_id": "iteration=0:stage=cancel_inverse_pairs",
+      "post_stage_circuit_sha256": "7c77cdbee5a9db8fb2149323dab0f3a3110c289b80297291a89f2095d50fa1d9",
+      "pre_stage_circuit_sha256": "c51515fcb91acbca909e58d4f3a25ea47dc7fc4a695b8b45a91e58be2da54e61",
+      "stage": "cancel_inverse_pairs"
+    },
+    {
+      "action_counters": {
+        "phase_merges": 1
+      },
+      "correct_transformation_average_gate_fidelity": 1.0,
+      "correct_transformation_semantic_accept": true,
+      "expected_first_failing_transformation_id": "iteration=0:stage=merge_phase_gates",
+      "injected_fault": "append_x_on_q0_immediately_after_stage",
+      "injected_fault_average_gate_fidelity": 0.3333333333333333,
+      "localized_correctly": true,
+      "localized_first_failing_transformation_id": "iteration=0:stage=merge_phase_gates",
+      "post_stage_circuit_sha256": "73155d08776a9accc85960909e8df814416d08a855ed83405b0a5034899f2206",
+      "pre_stage_circuit_sha256": "b38484270582e51f92fe071222bd615c5f63c6dfdf56aaa7a60943004a321c34",
+      "stage": "merge_phase_gates"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "semantic_kernel": "explicit NumPy matrices from audit_equivalence_verifier_agreement; no Qiskit Operator/Statevector",
+  "source_bindings": {
+    "analysis/transformation_failure_localization_audit.py": "47932f5e17f198f117a8a68e6e2bcba24b5fdbbfec057373d6b0ae4a48f3f22b",
+    "scripts/audit_equivalence_verifier_agreement.py": "8a133183b85850787e539f608e96d930dc99ce2ef9724bc84f97f79d14ad238a",
+    "src/optimisation/phase2/template_matcher.py": "4fc65e470a050079056a1c5445477fb5764f3c62e7009225170015f12b5f7760"
+  },
+  "status": "PASS_STAGE_ADDRESSABLE_FAILURE_LOCALIZATION_SENTINELS",
+  "transformation_stages": [
+    "gather_h_sandwiches",
+    "gather_commuting_pairs",
+    "apply_conjugation_templates",
+    "cancel_inverse_pairs",
+    "merge_phase_gates"
+  ]
+}

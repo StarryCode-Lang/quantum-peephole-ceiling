@@ -1,0 +1,21 @@
+               Mixed Linear Model Regression Results
+===================================================================
+Model:               MixedLM  Dependent Variable:  itt_reduction_pp
+No. Observations:    1564     Method:              REML            
+No. Groups:          15       Scale:               47.6510         
+Min. group size:     12       Log-Likelihood:      -5431.5374      
+Max. group size:     240      Converged:           Yes             
+Mean group size:     104.3                                         
+-------------------------------------------------------------------
+                         Coef.  Std.Err.   z    P>|z| [0.025 0.975]
+-------------------------------------------------------------------
+Intercept                 9.422    4.768  1.976 0.048  0.076 18.768
+listing_wcl               2.656    1.187  2.238 0.025  0.330  4.981
+templates                 4.448    0.494  9.010 0.000  3.480  5.416
+listing_wcl:templates    -0.380    0.698 -0.544 0.586 -1.748  0.989
+Group Var               337.432   18.135                           
+Group x listing_wcl Cov  75.989    4.668                           
+listing_wcl Var          17.265    1.322                           
+instance Var             14.039    0.316                           
+===================================================================
+

@@ -1,0 +1,58 @@
+{
+  "protocol_version": "1.0.0",
+  "frozen_at": "2026-08-09",
+  "bootstrap_seed": 20260809,
+  "bootstrap_replicates": 10000,
+  "alpha": 0.05,
+  "multiplicity": "holm_within_research_question",
+  "sota": {
+    "base_seed": 42,
+    "trials": 10,
+    "target_qubits": [4, 6, 8],
+    "expected_rows_per_tool": 520,
+    "timeout_seconds": 120,
+    "tools": ["custom", "qiskit", "cirq", "tket"],
+    "common_basis": ["rz", "sx", "x", "cx"],
+    "coupling_map": null,
+    "routing": false,
+    "actual_qubit_range": [4, 10],
+    "exact_fidelity_max_qubits": 10,
+    "fidelity_threshold": 0.9999999999,
+    "pair_key": [
+      "benchmark_manifest_sha256",
+      "input_circuit_sha256",
+      "circuit_id",
+      "trial",
+      "seed"
+    ]
+  },
+  "heldout": {
+    "primary_metric": "generator_clustered_mcc",
+    "success_ci_rule": "bootstrap_95pct_lower_bound_gt_0",
+    "headroom_threshold_pct": 1.0,
+    "minimum_external_optimizers_agreeing": 2,
+    "thresholds_fit_on_training_only": true,
+    "outer_cluster": "generator_family",
+    "inner_cluster": "circuit_instance"
+  },
+  "reruns": ["E3", "E14", "E18", "E23", "E26"],
+  "rerun_output_root": "data/v10/prepaper",
+  "allowed_fidelity_sources": [
+    "exact",
+    "exact_clifford",
+    "sampled_global_haar",
+    "unavailable"
+  ],
+  "intention_to_treat": {
+    "retain_timeout": true,
+    "retain_error": true,
+    "retain_fidelity_unavailable": true,
+    "invalid_output_reduction_pct": 0.0
+  },
+  "publication_gate": {
+    "scholar_eval_min_weighted_score": 4.0,
+    "methodology_min": 4,
+    "data_min": 4,
+    "analysis_min": 4
+  }
+}

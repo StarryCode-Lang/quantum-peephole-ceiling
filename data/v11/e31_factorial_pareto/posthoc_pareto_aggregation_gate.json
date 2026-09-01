@@ -1,0 +1,46 @@
+{
+  "status": "POSTHOC_PARETO_AGGREGATION_FROZEN_BEFORE_AGGREGATE_ANALYSIS",
+  "created_date": "2026-08-24",
+  "created_utc": "2026-08-24T04:42:51.9204862+00:00",
+  "protocol_sha256": "2464d1d531032a71c2947e9e8abd2b6b84de9fc6f048239944ee9357097365e8",
+  "design_manifest_sha256": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86",
+  "aggregate_treatment_effects_inspected": false,
+  "changes_to_frozen_execution": false,
+  "row_exclusion_or_rerun_authorized": false,
+  "aggregation_functionals_preregistered_in_protocol": false,
+  "primary_descriptive_aggregation": {
+    "quality_itt": "mean",
+    "valid_rate": "mean",
+    "wall_seconds": "median",
+    "peak_rss_mb": "p95"
+  },
+  "primary_pareto_inference_role": "EXPLORATORY_POSTHOC_AGGREGATION",
+  "redundant_objective": {
+    "removed_from_hypervolume": "failure_rate",
+    "reason": "failure_rate equals 1 - valid_rate exactly under the frozen row contract"
+  },
+  "required_sensitivity_grid": {
+    "wall_seconds": ["median", "p95"],
+    "peak_rss_mb": ["median", "p95"],
+    "expected_schemes": 4,
+    "expected_treatment_cells_per_scheme": 72,
+    "artifact": "data/v11/e31_factorial_pareto/formal_run/analysis/pareto_aggregation_sensitivity.csv"
+  },
+  "interpretation": "Pareto results are exploratory and aggregation-conditional; disagreement across the four frozen post-hoc schemes blocks an aggregation-invariant frontier claim.",
+  "checkpoint_boundary": {
+    "committed_rows": 21366,
+    "first_committed_utc": "2026-08-11T12:49:21.790965+00:00",
+    "last_committed_utc": "2026-08-24T04:03:53.847310+00:00",
+    "min_run_order": 0,
+    "max_run_order": 21365,
+    "unique_run_ids": 21366,
+    "unique_run_orders": 21366,
+    "status_counts_only": {
+      "success": 15433,
+      "timeout": 5933
+    },
+    "sqlite_integrity": "ok"
+  },
+  "disclosure_path": "docs/review/e31_pareto_aggregation_limitation_2026-08-24.md",
+  "disclosure_sha256": "38385901607339b6de3cd8d4332ad8693fb71ce724dfba1c10087f7a158f6570"
+}

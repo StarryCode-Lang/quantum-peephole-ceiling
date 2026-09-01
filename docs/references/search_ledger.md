@@ -165,8 +165,8 @@ venue is TODAES 2026**; the earlier inconsistency (literature_review citing
 TODAES 2026 vs. manuscript [47] citing only "arXiv 2025") is resolved in
 favor of TODAES 2026. `literature_review.md` [45]/§10.10 has been annotated
 accordingly (2026-08-06); manuscript [47] still reads arXiv-only and should
-be updated at the next manuscript pass. Note that `unified_references.md`
-currently has **no SSR entry** — this is a gap, not an authority to defer to.
+be updated at the next manuscript pass. The former unified-catalog gap was
+resolved by entry [89]; this pre-paper stage does not edit manuscript prose.
 
 ---
 
@@ -209,3 +209,105 @@ currently has **no SSR entry** — this is a gap, not an authority to defer to.
 *Ledger executed: 2026-08-06. Tooling: arXiv export API, Crossref, DataCite,
 web search. Raw API outputs were consumed in-session; queries are fully
 specified above and in §2/§4 for re-execution.*
+
+---
+
+## 8. Pre-paper novelty refresh — 2026-08-10
+
+This pass was executed before outcome analysis under the frozen pre-paper
+protocol.  It used:
+
+1. SciSpace semantic query: “Which peer-reviewed or preprint papers from 2020
+   through 2026 present structure-aware, equivalence-class, tensor-based,
+   reinforcement-learning, or search-based methods for optimizing or
+   synthesizing quantum circuits, and what benchmark families, baselines,
+   equivalence checks, and limitations do they report?”
+2. Sider Scholar/OpenAlex queries: `Quartz quantum circuit optimizer`, `Quarl
+   quantum circuit reinforcement learning`, `Quasar quantum circuit
+   optimization`, and `GUOQ quantum circuit optimization` (10 results each),
+   plus a Google Scholar combined query for the named comparator set.
+3. Primary-record web queries for DOI 10.1145/3808254, arXiv:2502.19526,
+   arXiv:2411.04104, PCOAST, and the Quasar artifact.
+4. The existing local Scholar exports under
+   `data/v6/ceiling_repair/scholar/`.
+
+Newly promoted into the direct-comparator set: PCOAST (Pauli graph), GUOQ
+(rewrite/resynthesis unification), and cut-and-meld local optimization.  Quasar
+was reverified against the PLDI/QuICS record and Zenodo artifact.  The resulting
+claim constraints and evidence matrix are frozen in
+`docs/review/prepaper_novelty_matrix_2026-08-10.md`.
+
+### 8.1 Direct representation-dependence update
+
+A second full-question SciSpace query on gate ordering, linearization,
+dependency graphs, e-graphs, and local rewrite visibility surfaced
+**Q-PreSyn: Quantum Circuit Pre-Synthesis**. Sider Scholar's broad interfaces
+were low precision/no-result and were not used as absence evidence; its direct
+arXiv query resolved `arXiv:2601.19738`. The official arXiv record was then
+checked independently: submitted 2026-01-27, authors Bosco, Cincio, Serra, and
+Cerezo; the abstract explicitly states strong circuit-representation
+dependence of local synthesis and equivalence-preserving RL edits. It is now
+unified reference [90].
+
+The novelty consequence is negative but important: representation dependence
+itself is prior art. The remaining candidate is the narrower frozen
+flat-listing/window/rule diagnostic, family decomposition, and sealed
+out-of-family prediction.
+
+### 8.2 External artifact availability refresh
+
+- Quarl: Zenodo `10.5281/zenodo.10463907`; reproduction-guide MD5 verified as
+  `205546c37b04746d599c1065463a9de3`. The released evaluator contract requires
+  NVIDIA GPUs, GPU-indexed checkpoints, and W&B/cluster setup unavailable on
+  this host.
+- GUOQ: paper DOI `10.1145/3669940.3707240`, artifact DOI
+  `10.5281/zenodo.14055562`. Its appendix reports a roughly 50 GB Linux/amd64
+  artifact, 26-hour limited workflow, and four-year full workflow.
+- Cut-and-meld/OAC: arXiv:2502.19526 and QCE 2025 DOI
+  `10.1109/QCE65121.2025.00069`; no released code/artifact was located in the
+  official-record, author-page, GitHub, or Zenodo search performed 2026-08-10.
+
+Execution dispositions and interpretation limits are recorded in
+`docs/review/prepaper_external_artifact_disposition_2026-08-10.md`.
+# Live novelty refresh: 2026-08-11 metric audit
+
+This pass used primary paper, publisher/conference, and official-artifact pages.
+It is a targeted collision refresh, not a completed systematic review.
+
+| Topic | Primary source checked | Consequence for Q-research |
+|---|---|---|
+| representation-changing local edits for downstream T-count | Q-PreSyn, arXiv:2601.19738 | Direct collision with broad claims that changing an equivalent circuit representation before synthesis is new; preserve only the frozen flat-listing/rule/window diagnostic and family-transfer design |
+| graph plus sequence equality saturation and bounded optimality | Quasar, PLDI 2026, DOI 10.1145/3808254; official Zenodo artifact | Direct collision with broad sequence/graph search-space and local-optimality claims; local 520-input run remains a fixed-contract artifact comparison |
+| provable local optimality | Arora et al., arXiv:2502.19526 / QCE 2025 cut-and-meld | Bars any “first local ceiling/optimality guarantee” wording; their oracle-parametric segment optimality is a different formal object from this project's Greedy visibility diagnostic |
+| parameterized equivalence | Hong et al., arXiv:2404.18456; Peham et al., ASP-DAC 2023/QCEC | Finite numeric binding is not a symbolic equivalence certificate |
+| cutoff verification of parameterized families | Ross and Wesley, MFCS 2025, DOI 10.4230/LIPIcs.MFCS.2025.85 | Adds a published finite-cutoff and probabilistic route, including global-phase handling; Q-research currently has no comparable contract |
+
+Search date: 2026-08-11. Remaining required work is forward/backward citation
+chasing, version-difference tables, negative reproduction evidence, and a final
+refresh immediately before submission. No priority/first claim is licensed by
+this targeted pass.
+
+---
+
+## 9. Live pre-paper novelty refresh — 2026-08-24
+
+A primary-record refresh was executed for 2025--2026 representation, rewriting,
+parameterized verification, learned compilation, and multi-objective circuit
+optimization. The complete query list, inclusion logic, collision analysis, and
+claim consequences are recorded in
+`docs/review/prepaper_novelty_refresh_2026-08-24.md`.
+
+Four records were added to the verified comparison corpus:
+
+1. Abdulla et al., parameterized verification of infinite circuit families,
+   arXiv:2511.19897.
+2. Szyniszewski et al., approximate local ZX rewriting with randomized mixed
+   circuit replacements, arXiv:2601.15934.
+3. Ghlib et al., scalable multi-objective genetic optimization with block/window
+   fidelity surrogates, DOI 10.1038/s41598-026-47674-5.
+4. Rosenhahn et al., localized stochastic/database/ML term replacement, DOI
+   10.1088/1367-2630/ae0e40 and arXiv:2502.14715.
+
+The Q-PreSyn, cut-and-meld, and GUOQ arXiv records were re-opened; each remained
+at v1 on the search date. This targeted refresh found direct novelty constraints,
+not evidence of absence. No “first”, universal, or priority claim is licensed.

@@ -46,9 +46,9 @@ counterpart lives in ``real_hardware_protocol.py`` (requires an IBM Quantum
 token; not executed in this wave).
 
 Outputs (atomically written):
-    data/v8/hardware_validation/ehw_runs_<mode>_<ts>.csv
-    data/v8/hardware_validation/ehw_summary_<mode>_<ts>.csv
-    data/v8/hardware_validation/ehw_metadata_<mode>_<ts>.json
+    data/v10/prepaper/hardware_validation/ehw_runs_<mode>_<ts>.csv
+    data/v10/prepaper/hardware_validation/ehw_summary_<mode>_<ts>.csv
+    data/v10/prepaper/hardware_validation/ehw_metadata_<mode>_<ts>.json
 """
 
 from __future__ import annotations
@@ -56,6 +56,7 @@ from __future__ import annotations
 import argparse
 import importlib.metadata as importlib_metadata
 import json
+import math
 import os
 import sys
 import time
@@ -89,9 +90,9 @@ from src.provenance import run_metadata  # noqa: E402
 
 SCHEMA_VERSION = "1.0.0"
 EXPERIMENT_ID = "EHW"
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 
-OUTPUT_DIR = PROJECT_ROOT / "data" / "v8" / "hardware_validation"
+OUTPUT_DIR = PROJECT_ROOT / "data" / "v10" / "prepaper" / "hardware_validation"
 
 SEED = 42
 SEED_TRANSPILER = 12345
@@ -230,12 +231,62 @@ def dominant_mode_mass(p_sampled: np.ndarray, p_exact: np.ndarray) -> float:
 # Core experiment
 # ---------------------------------------------------------------------------
 
-def circuit_structural_metrics(qc: QuantumCircuit) -> Dict[str, int]:
-    return {
+def _calibration_success_probability(qc: QuantumCircuit, target) -> Optional[float]:
+    """Product-of-reported-gate-success proxy for one fixed target snapshot.
+
+    This is not a hardware-output fidelity estimate: it ignores correlated,
+    idle, measurement-context, and drift effects.  ``None`` is returned when
+    the target supplies no usable instruction error rates.
+    """
+    log_success = 0.0
+    covered = 0
+    for instruction in qc.data:
+        name = instruction.operation.name
+        qargs = tuple(qc.find_bit(qubit).index for qubit in instruction.qubits)
+        try:
+            properties = target[name].get(qargs)
+        except (KeyError, TypeError, AttributeError):
+            properties = None
+        error = getattr(properties, "error", None)
+        if error is None or not np.isfinite(error):
+            continue
+        error = min(max(float(error), 0.0), 1.0 - np.finfo(float).eps)
+        log_success += math.log1p(-error)
+        covered += 1
+    return float(math.exp(log_success)) if covered else None
+
+
+def circuit_structural_metrics(qc: QuantumCircuit, target=None) -> Dict[str, object]:
+    metrics: Dict[str, object] = {
         "gates": int(qc.size()),
         "depth": int(qc.depth() or 0),
+        "one_qubit_gates": int(sum(
+            1 for inst in qc.data if inst.operation.num_qubits == 1
+            and inst.operation.name not in {"measure", "reset"}
+        )),
         "two_qubit_gates": int(_two_qubit_count(qc)),
+        "multi_qubit_gates": int(sum(
+            1 for inst in qc.data if inst.operation.num_qubits > 2
+        )),
+        "two_qubit_depth": int(qc.depth(
+            lambda inst: inst.operation.num_qubits == 2
+        ) or 0),
+        "width": int(qc.num_qubits),
     }
+    if target is None:
+        metrics.update({
+            "scheduled_duration_seconds": None,
+            "calibration_success_probability": None,
+        })
+        return metrics
+    try:
+        metrics["scheduled_duration_seconds"] = float(qc.estimate_duration(target))
+    except (AttributeError, TypeError, ValueError):
+        metrics["scheduled_duration_seconds"] = None
+    metrics["calibration_success_probability"] = _calibration_success_probability(
+        qc, target
+    )
+    return metrics
 
 
 def sample_distribution(
@@ -279,6 +330,9 @@ def run(mode: str, shots: int, seed_reps: int) -> Tuple[pd.DataFrame, pd.DataFra
                 "circuit": qc,
                 "logical": circuit_structural_metrics(qc),
                 "unitary_fidelity_exact": 1.0,
+                "unitary_equivalence_method": "exact_structural",
+                "unitary_equivalence_status": "verified_equivalent",
+                "unitary_equivalence_is_verified": True,
                 "optimizer_success": True,
                 "optimizer_runtime_seconds": 0.0,
             }
@@ -296,6 +350,15 @@ def run(mode: str, shots: int, seed_reps: int) -> Tuple[pd.DataFrame, pd.DataFra
                     "circuit": result.optimized_circuit,
                     "logical": circuit_structural_metrics(result.optimized_circuit),
                     "unitary_fidelity_exact": float(result.fidelity),
+                    "unitary_equivalence_method": (
+                        result.equivalence_certificate or {}
+                    ).get("method", "unavailable"),
+                    "unitary_equivalence_status": (
+                        result.equivalence_certificate or {}
+                    ).get("status", "unavailable"),
+                    "unitary_equivalence_is_verified": bool(
+                        (result.equivalence_certificate or {}).get("is_verified", False)
+                    ),
                     "optimizer_success": bool(result.success),
                     "optimizer_runtime_seconds": runtime,
                 }
@@ -318,8 +381,11 @@ def run(mode: str, shots: int, seed_reps: int) -> Tuple[pd.DataFrame, pd.DataFra
                     backend=backend,
                     optimization_level=level,
                     seed_transpiler=SEED_TRANSPILER,
+                    initial_layout=list(range(qc.num_qubits)),
+                    routing_method="sabre",
+                    translation_method="translator",
                 )
-                physical = circuit_structural_metrics(tqc)
+                physical = circuit_structural_metrics(tqc, backend.target)
                 width = int(tqc.num_qubits)
                 p_exact = exact_probabilities(tqc)
 
@@ -344,17 +410,37 @@ def run(mode: str, shots: int, seed_reps: int) -> Tuple[pd.DataFrame, pd.DataFra
                     "output_sha256": circuit_sha256(qc),
                     "logical_gates": entry["logical"]["gates"],
                     "logical_depth": entry["logical"]["depth"],
+                    "logical_2q_depth": entry["logical"]["two_qubit_depth"],
                     "logical_2q_gates": entry["logical"]["two_qubit_gates"],
                     "unitary_fidelity_exact": entry["unitary_fidelity_exact"],
+                    "unitary_equivalence_method": entry[
+                        "unitary_equivalence_method"
+                    ],
+                    "unitary_equivalence_status": entry[
+                        "unitary_equivalence_status"
+                    ],
+                    "unitary_equivalence_is_verified": entry[
+                        "unitary_equivalence_is_verified"
+                    ],
                     "optimizer_success": entry["optimizer_success"],
                     "optimizer_runtime_seconds": round(entry["optimizer_runtime_seconds"], 6),
                     "backend_name": backend_name,
                     "backend_width": int(backend.num_qubits),
                     "transpile_optimization_level": level,
                     "seed_transpiler": SEED_TRANSPILER,
+                    "initial_layout_policy": "trivial_identity_on_logical_width",
+                    "routing_method": "sabre",
+                    "translation_method": "translator",
                     "transpiled_gates": physical["gates"],
                     "transpiled_depth": physical["depth"],
+                    "transpiled_1q_gates": physical["one_qubit_gates"],
                     "transpiled_2q_gates": physical["two_qubit_gates"],
+                    "transpiled_multiq_gates": physical["multi_qubit_gates"],
+                    "transpiled_2q_depth": physical["two_qubit_depth"],
+                    "scheduled_duration_seconds": physical["scheduled_duration_seconds"],
+                    "calibration_success_probability": physical[
+                        "calibration_success_probability"
+                    ],
                     "transpiled_orig_gates": orig_physical["gates"],
                     "transpiled_orig_2q_gates": orig_physical["two_qubit_gates"],
                     "shots": shots,
@@ -425,6 +511,11 @@ def run(mode: str, shots: int, seed_reps: int) -> Tuple[pd.DataFrame, pd.DataFra
                 "logical_reduction": float(first["logical_reduction"]),
                 "transpiled_gates": int(first["transpiled_gates"]),
                 "transpiled_2q_gates": int(first["transpiled_2q_gates"]),
+                "transpiled_2q_depth": int(first["transpiled_2q_depth"]),
+                "scheduled_duration_seconds": float(first["scheduled_duration_seconds"]),
+                "calibration_success_probability": float(
+                    first["calibration_success_probability"]
+                ),
                 "transpiled_2q_reduction": float(first["transpiled_2q_reduction"]),
                 "unitary_fidelity_exact": float(first["unitary_fidelity_exact"]),
                 "noisy_hellinger_mean": float(noisy["hellinger_fidelity"].mean()),

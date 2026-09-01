@@ -1,9 +1,29 @@
 # QMA-Hardness of the Circuit Optimization Decision Problem: Bounded Version Draft
 
-**Version**: 1.0 (Draft)
-**Date**: 2026-07-14
-**Status**: Working draft. Theorems 1-2 are rigorous; Theorem 3 is a proof sketch requiring completion; Theorem 4 is conditional.
-**Purpose**: Close Open Problem OP1 by providing a formal QMA-hardness reduction for CODP, replacing the conjectural status with a bounded but rigorous result.
+**Version**: 1.1 (Audit correction)
+**Date**: 2026-08-09
+**Status**: **Withdrawn as a proof.** Theorem 1 is not established; Theorems 2-4 are conditional sketches with additional gaps. Nothing in this file may be cited as a proved complexity result.
+**Purpose**: Preserve and diagnose an attempted route toward Open Problem OP1; this version does not close the problem.
+
+## Audit correction (2026-08-09)
+
+The argument below is retained as a record of an unsuccessful proof attempt.
+It has three fatal problems:
+
+1. The standard Non-Identity Check promise has the QMA YES case when a
+   circuit is *far* from the identity (up to global phase).  The proposed
+   reduction maps identity instances to CODP YES, reversing the promise and
+   therefore not establishing QMA-hardness.
+2. The diamond norm is a norm on channels (or superoperators), not directly
+   on unitary matrices as written throughout the draft.  The induced unitary
+   channels must be defined explicitly; they also identify global phases.
+3. A SWAP test on selected output or Choi states does not efficiently certify
+   the worst-case diamond-norm closeness claimed in the membership argument.
+   Supplying a classical description of a shorter circuit therefore does not
+   by itself give the stated QMA verification procedure.
+
+These are structural, not cosmetic, gaps.  The correct complexity class and
+promise formulation for the minimization decision problem remain open here.
 
 ---
 
@@ -13,18 +33,26 @@
 
 **Definition 1 (CODP).** Given a quantum circuit $C$ on $n$ qubits with $|C| = m$ gates from gate set $\mathcal{G}$, a target reduction ratio $r \in (0,1]$, and tolerance $\epsilon > 0$, decide:
 
-> Does there exist a circuit $C'$ with $|C'| \leq (1-r)m$ and $\|U(C) - U(C')\|_\diamond \leq \epsilon$?
+> Does there exist a circuit $C'$ with $|C'| \leq (1-r)m$ and
+> $\|\mathcal{U}_C-\mathcal{U}_{C'}\|_\diamond \leq \epsilon$?
 
-Here $\|\cdot\|_\diamond$ denotes the diamond norm (completely bounded trace norm). When $\epsilon = 0$, we require exact unitary equivalence $U(C) = U(C')$.
+Here $\mathcal{U}_C(\rho)=U(C)\rho U(C)^\dagger$ and the diamond norm is
+applied to channels, not unitary matrices. When $\epsilon=0$, equality is up
+to global phase.
 
 ### 1.2 Circuit Identity Testing (CIT)
 
-**Definition 2 (CIT / Non-Identity Check).** Given a circuit $C$ with $|C| = m$ gates and parameters $\delta > 0$, decide:
+**Definition 2 (standard Non-Identity Check; corrected orientation).** Given a
+circuit $C$ and thresholds $a<b$ separated by at least inverse polynomial,
+decide under the promise:
 
-> **YES**: $U(C) = I$ (exactly).
-> **NO**: $\|U(C) - I\|_\diamond \geq \delta$.
+> **YES**: $\mathcal{U}_C$ is at least $b$ from every global-phase identity
+> channel under the stated metric.
+> **NO**: $\mathcal{U}_C$ is at most $a$ from an identity channel.
 
-**Theorem (Janzing, Wocjan & Beth, 2003).** CIT is QMA-complete for $\delta = 1/\mathrm{poly}(m)$.
+**Theorem (Janzing, Wocjan & Beth, 2003/2005).** Non-Identity Check with its
+operator-norm promise formulation is QMA-complete. This does not validate the
+reversed identity-as-YES definition used in the withdrawn derivation below.
 
 *Reference.* [Janzing, Wocjan, Beth, "Non-identity-check is QMA-complete," Int. J. Quantum Inf. 1(4), 507-518, 2003.]
 
@@ -50,13 +78,14 @@ Here $\|\cdot\|_\diamond$ denotes the diamond norm (completely bounded trace nor
 
 ## 2. Main Results
 
-### 2.1 Full-Reduction CODP is QMA-Complete
+### 2.1 Withdrawn claim: Full-Reduction CODP is QMA-Complete
 
-**Theorem 1 (CODP with $r = 1$ is QMA-Complete).**
+**Withdrawn Claim 1 (not proved): CODP with $r = 1$ is QMA-Complete.**
 
 $\mathrm{CODP}(r = 1, \epsilon)$ is QMA-complete for $\epsilon = 1/\mathrm{poly}(m)$.
 
-*Proof.*
+*Invalid proof attempt retained for audit history; it uses the pre-correction
+reversed promise and matrix-level diamond-norm notation.*
 
 **QMA-hardness.** We reduce from CIT. Given a CIT instance $C$ with $|C| = m$ and promise gap $\delta = 1/\mathrm{poly}(m)$:
 
@@ -70,7 +99,9 @@ $\mathrm{CODP}(r = 1, \epsilon)$ is QMA-complete for $\epsilon = 1/\mathrm{poly}
 
 **QMA-membership.** A QMA verifier for CODP works as follows: given $(C, r, \epsilon)$, the prover sends a circuit $C'$ of size $\leq (1-r)|C|$. The verifier checks (a) $|C'| \leq (1-r)|C|$ (efficiently) and (b) $\|U(C) - U(C')\|_\diamond \leq \epsilon$ (via the SWAP test or its variants, using $O(1/\epsilon^2)$ repetitions for constant soundness). Both steps run in $\mathrm{poly}(|C|, 1/\epsilon)$ time. $\blacksquare$
 
-**Remark.** Theorem 1 is a clean but elementary observation: CODP at $r = 1$ is exactly the Non-Identity Check. The interesting question is whether CODP at $r < 1$ (partial reduction) is also QMA-hard, which we address next.
+**Invalid former remark.** CODP at $r=1$ maps circuits close to identity to
+YES, whereas standard Non-Identity Check has the far case as YES. The mapping
+therefore reverses the promise and is not a QMA-hardness reduction.
 
 ---
 
@@ -202,14 +233,14 @@ The key assumption is that Phase-2b template rewriting cannot discover shortcuts
 
 | Result | Status | Key Gap |
 |--------|--------|---------|
-| CODP($r=1$) is QMA-complete | **Proved** (Theorem 1) | None — clean reduction from CIT |
-| CODP($r \in (0,1)$) is QMA-hard | **Conditionally proved** (Theorem 2) | Requires circuit lower bound $\mathcal{C}(U(C)) = \Omega(m)$ |
-| CODP($r \in (0,1)$) is QMA-hard (unconditional) | **Proof sketch** (Theorem 3) | Requires circuit lower bound lemma for Feynman-Kitaev circuits |
-| Phase-2b-CODP is QMA-hard | **Conditionally proved** (Theorem 4) | Requires locally incompressible verification circuit |
+| CODP($r=1$) is QMA-complete | **WITHDRAWN / NOT PROVED** | Promise direction, norm definition, and membership verifier are invalid |
+| CODP($r \in (0,1)$) is QMA-hard | **Not proved; conditional sketch only** | Assumes the needed circuit lower bound and inherits the malformed promise/norm setup |
+| CODP($r \in (0,1)$) is QMA-hard (unconditional) | **Incomplete idea, not a reduction** | No valid map from Feynman--Kitaev energy to circuit compressibility is supplied |
+| Phase-2b-CODP is QMA-hard | **Not proved; conditional sketch only** | "Locally incompressible" is asserted, not constructed or reduced from a QMA problem |
 
 ### 3.2 The Circuit Lower Bound Challenge
 
-The fundamental obstacle in completing the unconditional proof is the **circuit lower bound problem**: we cannot currently prove that specific unitaries require $\Omega(m)$ gates to implement, except for Haar-random unitaries (where the bound is exponential, not linear).
+One obstacle is a suitable **circuit lower bound problem**, but it is not the only one: the decision promise and verification model must first be repaired.  The withdrawn Haar argument in `formal_results.md` does not supply such a lower bound for exact polynomial-size circuit instances.
 
 The Feynman-Kitaev approach (Theorem 3) offers a potential path: the spectral gap of $H_{\text{FK}}$ provides an information-theoretic barrier that any short approximating circuit would violate. However, formalizing this requires:
 
@@ -218,21 +249,17 @@ The Feynman-Kitaev approach (Theorem 3) offers a potential path: the spectral ga
 
 These are active research questions in quantum complexity theory and are beyond the scope of this draft.
 
-### 3.3 Impact on Publication Probability
+### 3.3 Research triage
 
-- **With Theorem 1 alone** (CODP $r=1$ is QMA-complete): This is a clean but elementary result. It converts OP1 from a conjecture to a theorem at the $r=1$ boundary, which is a modest but legitimate contribution. **Impact: marginal improvement** to the manuscript's theoretical depth.
+- **Theorem 1 cannot be used.** The cited Non-Identity Check problem has the opposite promise orientation from the attempted reduction, and membership of the proposed minimization problem was not established.
 
-- **With Theorem 2** (conditional hardness for $r < 1$): This provides a non-trivial reduction with a clearly stated assumption. It demonstrates that the authors understand the barrier (circuit lower bounds) and provides a conditional result. **Impact: moderate improvement**, especially if the assumption can be justified for specific circuit families.
+- **Theorem 2 cannot be called conditionally proved.** A conditional theorem would require a precise, independently justified assumption plus a valid promise-preserving reduction under a corrected channel metric.
 
 - **With Theorem 3 completed** (unconditional hardness): This would be a **significant result** comparable to the QMA-completeness of 2-Local Hamiltonian. It would elevate the theoretical contribution from "elementary proofs of empirical observations" to "non-trivial complexity-theoretic result." **Impact: major improvement**, potentially sufficient for a top-venue publication.
 
-### 3.4 Recommended Manuscript Integration
+### 3.4 Integration restriction
 
-1. **Immediate**: Include Theorem 1 in the manuscript, replacing the conjectural OP1 with a bounded theorem. State: "CODP with full reduction ($r = 1$) is QMA-complete, as it reduces to the Non-Identity Check [Janzing et al., 2003]."
-
-2. **Short-term**: Include Theorem 2 as a conditional result, clearly stating the circuit lower bound assumption. Frame it as: "Under standard circuit complexity assumptions, CODP with partial reduction is QMA-hard."
-
-3. **Long-term**: Pursue Theorem 3 as a major theoretical contribution. If completed, it would justify a separate section or even a companion paper.
+Do not integrate any theorem from this file into a manuscript.  A future attempt must (1) define induced channels and global-phase equivalence, (2) choose a promise whose YES/NO orientation matches the source problem, (3) establish the target problem's verification complexity, and (4) provide a complete promise-preserving reduction.  Until then OP1 remains open.
 
 ---
 

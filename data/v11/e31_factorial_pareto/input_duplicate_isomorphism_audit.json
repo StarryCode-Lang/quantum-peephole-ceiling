@@ -1,0 +1,23 @@
+{
+  "created_utc": "2026-08-29T01:07:55.888692+00:00",
+  "definition": "Global-qubit-relabel isomorphism preserves declared width, instruction order, operation spelling and parameters, and ordered gate operands while canonicalizing qubit identifiers by first occurrence.",
+  "design_manifest": "data/v11/e31_factorial_pareto/design_manifest.csv",
+  "design_manifest_sha256": "f290bdba0ec8bac68b2a817f8a9dd71e5246e2558288c6704e576946bc518a86",
+  "e31_scheduled_rows": 28152,
+  "e31_unique_input_hashes": 391,
+  "factorial_cells_per_unique_input": 72,
+  "global_qubit_relabel_cluster_count": 0,
+  "global_qubit_relabel_clusters": [],
+  "global_qubit_relabel_excess_inputs": 0,
+  "global_qubit_relabel_signature_count": 391,
+  "interpretation": "The 520-row source contained 129 repeated logical inputs, which were collapsed before freezing E31. The resulting 391-input panel has neither exact-hash duplicates nor duplicates under the declared global-qubit-relabel signature.",
+  "limitation": "This is not semantic circuit equivalence and does not merge circuits that become equivalent only after gate commutation, algebraic rewriting, or graph-only abstraction.",
+  "residual_exact_duplicate_inputs": 0,
+  "schema_version": "1.0.0",
+  "source_manifest": "data/v10/prepaper/sota/inputs/benchmark_manifest.csv",
+  "source_manifest_sha256": "3ab0bff77d9d39fa95920fae54094fb8e207cd2895e5642ec8305935c90db841",
+  "source_repeated_rows_collapsed_before_e31": 129,
+  "source_rows": 520,
+  "source_unique_logical_inputs": 391,
+  "status": "PASS_NO_RESIDUAL_EXACT_OR_GLOBAL_QUBIT_RELABEL_DUPLICATES"
+}

@@ -19,7 +19,7 @@ Execution:
     $PY experiments/hardware_validation/real_hardware_protocol.py --dry-run
 
 Design (mirrors run.py so real results are directly comparable to the
-fake-backend noise-model results in data/v8/hardware_validation/):
+    fake-backend noise-model results in data/v10/prepaper/hardware_validation/):
   * Circuits: GHZ n=4, Oracle/Bernstein-Vazirani n=4 (+ancilla = 5 qubits),
     random UNIVERSAL n=4 depth=24 seed=7 (same deterministic selection).
   * Versions: original + {greedy_phase1, commutation_phase2, hybrid_phase1_2}.
@@ -145,6 +145,21 @@ def job_queue_seconds(job) -> Optional[float]:
 def run_real(shots: int, seed_reps: int, backend_name: Optional[str], dry_run: bool) -> int:
     from qiskit_ibm_runtime import SamplerV2 as Sampler  # deferred: needs creds
 
+    if dry_run:
+        circuits, _ = build_circuits()
+        n_versions = len(circuits) * (1 + len(build_optimizers()))
+        n_pubs = n_versions * len(TRANSPILE_LEVELS)
+        backend_plan = backend_name or "least-busy operational non-simulator >=5 qubits"
+        print(f"[EHW-REAL] DRY RUN: backend={backend_plan}")
+        print(
+            f"[EHW-REAL] {len(circuits)} circuits x "
+            f"{1 + len(build_optimizers())} versions x "
+            f"{len(TRANSPILE_LEVELS)} levels = {n_pubs} PUBs per repetition; "
+            f"seed_reps={seed_reps}, shots={shots}."
+        )
+        print("[EHW-REAL] No credentials loaded and nothing submitted.")
+        return 0
+
     service = discover_service()
     if backend_name:
         backend = service.backend(backend_name)
@@ -160,19 +175,35 @@ def run_real(shots: int, seed_reps: int, backend_name: Optional[str], dry_run: b
     for circuit_id, family, qc in circuits:
         versions.append({"circuit_id": circuit_id, "family": family,
                          "version": "original", "circuit": qc,
-                         "unitary_fidelity_exact": 1.0})
+                         "unitary_fidelity_exact": 1.0,
+                         "unitary_equivalence_method": "exact_structural",
+                         "unitary_equivalence_status": "verified_equivalent",
+                         "unitary_equivalence_is_verified": True})
         for opt_name, optimizer in optimizers.items():
             result = optimizer.optimize(qc, target=qc)
             versions.append({"circuit_id": circuit_id, "family": family,
                              "version": opt_name, "circuit": result.optimized_circuit,
-                             "unitary_fidelity_exact": float(result.fidelity)})
+                             "unitary_fidelity_exact": float(result.fidelity),
+                             "unitary_equivalence_method": (
+                                 result.equivalence_certificate or {}
+                             ).get("method", "unavailable"),
+                             "unitary_equivalence_status": (
+                                 result.equivalence_certificate or {}
+                             ).get("status", "unavailable"),
+                             "unitary_equivalence_is_verified": bool(
+                                 (result.equivalence_certificate or {}).get(
+                                     "is_verified", False
+                                 )
+                             )})
 
     # Stage 2: local transpile + exact ideal reference
     isa_by_level: Dict[int, List[dict]] = {level: [] for level in TRANSPILE_LEVELS}
     for level in TRANSPILE_LEVELS:
         for entry in versions:
             tqc = transpile(entry["circuit"], backend=backend,
-                            optimization_level=level, seed_transpiler=SEED_TRANSPILER)
+                            optimization_level=level, seed_transpiler=SEED_TRANSPILER,
+                            initial_layout=list(range(entry["circuit"].num_qubits)),
+                            routing_method="sabre", translation_method="translator")
             tqc_meas = tqc.copy()
             tqc_meas.measure_all()
             isa_by_level[level].append({
@@ -182,13 +213,6 @@ def run_real(shots: int, seed_reps: int, backend_name: Optional[str], dry_run: b
                 "p_exact": exact_probabilities(tqc),
                 "width": int(tqc.num_qubits),
             })
-
-    if dry_run:
-        n_pubs = sum(len(v) for v in isa_by_level.values())
-        print(f"[EHW-REAL] DRY RUN: {len(versions)} versions x {len(TRANSPILE_LEVELS)} levels "
-              f"= {n_pubs} PUBs per job, {seed_reps} rep jobs per level, shots={shots}.")
-        print("[EHW-REAL] Nothing submitted.")
-        return 0
 
     # Stage 3: submit one job per (level, rep); record queue + usage
     rows: List[dict] = []
@@ -224,7 +248,7 @@ def run_real(shots: int, seed_reps: int, backend_name: Optional[str], dry_run: b
                 if counts is None:  # fall back to the first register
                     counts = next(iter(data.values())).get_counts()
                 p_sampled = counts_to_prob(counts, entry["width"], shots)
-                physical = circuit_structural_metrics(entry["transpiled"])
+                physical = circuit_structural_metrics(entry["transpiled"], backend.target)
                 logical = circuit_structural_metrics(entry["circuit"])
                 rows.append({
                     "experiment_id": EXPERIMENT_ID,
@@ -240,7 +264,21 @@ def run_real(shots: int, seed_reps: int, backend_name: Optional[str], dry_run: b
                     "logical_2q_gates": logical["two_qubit_gates"],
                     "transpiled_gates": physical["gates"],
                     "transpiled_2q_gates": physical["two_qubit_gates"],
+                    "transpiled_2q_depth": physical["two_qubit_depth"],
+                    "scheduled_duration_seconds": physical["scheduled_duration_seconds"],
+                    "calibration_success_probability": physical[
+                        "calibration_success_probability"
+                    ],
                     "unitary_fidelity_exact": entry["unitary_fidelity_exact"],
+                    "unitary_equivalence_method": entry[
+                        "unitary_equivalence_method"
+                    ],
+                    "unitary_equivalence_status": entry[
+                        "unitary_equivalence_status"
+                    ],
+                    "unitary_equivalence_is_verified": entry[
+                        "unitary_equivalence_is_verified"
+                    ],
                     "shots": shots,
                     "hellinger_fidelity": hellinger_fidelity(p_sampled, entry["p_exact"]),
                     "tvd": total_variation_distance(p_sampled, entry["p_exact"]),

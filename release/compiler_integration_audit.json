@@ -1,0 +1,20 @@
+{
+  "claim_boundary": "The adapter proves direct Qiskit PassManager interoperability for BaseOptimizer implementations and independently rejects semantically invalid output. It is not a Cirq, tket, MLIR, QIR, or production-plugin integration.",
+  "created_utc": "2026-08-30T00:21:20.826847+00:00",
+  "metric_dispositions": {
+    "16.13": "PARTIAL: Q-research optimizers now integrate directly as a fail-closed Qiskit TransformationPass, but native Cirq and tket pass adapters are not implemented"
+  },
+  "schema_version": "1.0.0",
+  "sentinel": {
+    "certificate_accepted": true,
+    "certificate_status": "verified_equivalent",
+    "optimized_size": 0,
+    "original_size": 6
+  },
+  "source_bindings": {
+    "analysis/compiler_integration_audit.py": "c66dd80ab273c183850fe76da0aa0f350cc1e23f267f8bc22570b7c02039ad4e",
+    "src/integrations/__init__.py": "7dfb9827ef77722da2ade41faa58135087e88958d9f53ba5726e0bf866ffcc48",
+    "src/integrations/qiskit_pass.py": "75deed9c3ea0f0dce711f23304315254e14ad1b5107d165f9836be1df95fed46"
+  },
+  "status": "PASS_QISKIT_PASSMANAGER_DIRECT_INTEGRATION"
+}

@@ -22,6 +22,8 @@ from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 from enum import Enum, auto
 
+from src.equivalence import EquivalenceCertificate, certify_equivalence
+
 logger = logging.getLogger(__name__)
 
 
@@ -48,6 +50,7 @@ class OptimizationResult:
     iterations: int
     runtime_seconds: float
     success: bool
+    equivalence_certificate: dict[str, Any] | None = None
     metadata: dict[str, Any] = field(default_factory=dict)
     
     @property
@@ -100,6 +103,7 @@ class OptimizationResult:
             'iterations': self.iterations,
             'runtime_seconds': self.runtime_seconds,
             'success': self.success,
+            'equivalence_certificate': self.equivalence_certificate,
             'metadata': self.metadata,
         }
 
@@ -143,10 +147,10 @@ class BaseOptimizer(ABC):
       The optional numeric commutation fallback is bounded to a combined
       support of <= 2 qubits (two 4x4 unitaries): still O(1).
     * ``calculate_fidelity`` exact path (n <= MAX_EXACT_FIDELITY_QUBITS,
-      default 12): O(m * d**2 + d**3) = O(m * 4**n + 8**n) time and
-      O(4**n) memory.  The m * 4**n term applies each gate matrix to the
-      running unitary; the 8**n term is the d-by-d matrix product inside
-      ``Tr(U1^dagger U2)``.  This dominates the runtime of every
+      default 12): O(m * d**2) = O(m * 4**n) time and O(4**n) memory.
+      The Frobenius inner product is O(d**2); no dense d-by-d matrix product
+      is materialized after constructing the two operators.  This dominates
+      the runtime of every
       stochastic optimizer whose fitness function calls it.
      * ``_estimate_fidelity`` (n > 12): Clifford shortcut O(m * n**2)
        when both circuits are Clifford; otherwise global-Haar state
@@ -159,7 +163,7 @@ class BaseOptimizer(ABC):
       success wins).
     * ``_fitness``: one ``calculate_fidelity`` call plus an O(m)
       cancellation-potential scan: O(F + m).  For n <= 12,
-      F = O(m * 4**n + 8**n), which is the dominant term in the RLS / SA
+      F = O(m * 4**n), which is the dominant term in the RLS / SA
       / GA runtimes (see the per-optimizer docstrings and
       docs/analysis/algorithmic_complexity.md for measured values).
 
@@ -178,10 +182,8 @@ class BaseOptimizer(ABC):
         Args:
             fidelity_threshold: Minimum fidelity to consider optimization valid
             success_reduction: Minimum gate reduction (fraction) for an optimization
-                to be flagged as ``meaningful`` (see ``_is_meaningful``). This is
-                retained for backward compatibility. The ``_is_success`` contract
-                now treats *success* as fidelity compliance only; the higher bar of
-                ``success_reduction`` is reported separately as ``meaningful``.
+                to be flagged as ``meaningful``. ``success`` remains the
+                semantic-validity flag for backward compatibility.
             random_seed: Optional seed for optimizer-internal stochastic moves
             enable_numeric_commutation: Enable exact 1-2 qubit matrix commutator
                 fallback when rule-based checks do not prove commutation. Disabled
@@ -191,11 +193,10 @@ class BaseOptimizer(ABC):
 
         Note on threshold choice (bug #5 fix):
             The previous default of ``0.20`` (20%) caused artificially high failure
-            rates in E10/E11 because many genuinely-optimized circuits that preserve
-            fidelity achieve <20% reduction. The new default of ``0.05`` (5%) aligns
-            with the recommendation in ``data/DATA_CANONICAL.md`` and separates
-            *success* (fidelity compliance) from *meaningful reduction* (threshold
-            crossing), avoiding conflation of the two concepts.
+            rates in E10/E11 because many valid improvements achieve <20% reduction.
+            The new default of ``0.05`` (5%) aligns with the future-run contract in
+            ``data/DATA_CANONICAL.md`` and keeps validity separate from the
+            scientifically meaningful reduction threshold.
         """
         self.fidelity_threshold = fidelity_threshold
         self.success_reduction = success_reduction
@@ -237,9 +238,9 @@ class BaseOptimizer(ABC):
         full unitary matrix would require O(4^n) memory. In that case, a lightweight
         sampling-based estimate is used instead.
 
-        Complexity: the exact path costs O(m * 4**n + 8**n) time and O(4**n)
-        memory (m = gate count): m * 4**n to apply each gate matrix to the
-        running unitary, 8**n for the d-by-d product inside the trace.  See
+        Complexity: the exact path costs O(m * 4**n) time and O(4**n)
+        memory (m = gate count), followed by an O(4**n) Frobenius inner
+        product.  See
         the ``BaseOptimizer`` class docstring for the full shared complexity
         model.  Note this cost is incurred inside every optimizer whose
         ``optimize``/``_fitness`` passes a target: in E21, a single exact
@@ -247,30 +248,39 @@ class BaseOptimizer(ABC):
         dominating naive-pipeline phase timings
         (docs/analysis/algorithmic_complexity.md).
         """
-        try:
-            if circuit.num_qubits != target.num_qubits:
-                return 0.0
+        certificate = self.equivalence_certificate(circuit, target)
+        return float(certificate.fidelity) if certificate.fidelity is not None else float("nan")
 
-            n = circuit.num_qubits
-            d = 2 ** n
+    def equivalence_certificate(self, circuit: QuantumCircuit,
+                                target: QuantumCircuit) -> EquivalenceCertificate:
+        """Return method-, scope-, and evidence-aware equivalence evidence."""
+        return certify_equivalence(
+            circuit,
+            target,
+            threshold=self.fidelity_threshold,
+            max_exact_qubits=MAX_EXACT_FIDELITY_QUBITS,
+            n_samples=DEFAULT_FIDELITY_SAMPLES,
+            rng=self.rng,
+        )
 
-            # For large circuits, use a lightweight estimate to avoid memory explosion
-            if n > MAX_EXACT_FIDELITY_QUBITS:
-                return self._estimate_fidelity(circuit, target)
+    def result_equivalence(
+        self, circuit: QuantumCircuit, target: QuantumCircuit | None
+    ) -> tuple[float, dict[str, Any] | None]:
+        """Return the compatibility float together with its full certificate.
 
-            # Compute unitary matrices from circuits
-            u1 = np.array(Operator(circuit).data)
-            u2 = np.array(Operator(target).data)
-
-            # Compute |Tr(U1† U2)|²
-            inner_product = np.abs(np.trace(np.conj(u1).T @ u2)) ** 2
-
-            # Average gate fidelity: (|Tr(U1† U2)|² + d) / (d² + d)
-            # This equals the mean fidelity averaged over all pure input states.
-            return float((inner_product + d) / (d ** 2 + d))
-        except Exception as e:
-            self.logger.warning(f"Failed to calculate fidelity: {e}")
-            return 0.0
+        A missing target preserves the legacy trusted-rewrite value ``1.0``
+        but deliberately carries no certificate and is not independent
+        equivalence evidence.
+        """
+        if target is None:
+            return 1.0, None
+        certificate = self.equivalence_certificate(circuit, target)
+        fidelity = (
+            float(certificate.fidelity)
+            if certificate.fidelity is not None
+            else float("nan")
+        )
+        return fidelity, certificate.to_dict()
     
     def _estimate_fidelity(self, circuit: QuantumCircuit, target: QuantumCircuit,
                            n_samples: int = DEFAULT_FIDELITY_SAMPLES) -> float:
@@ -348,60 +358,29 @@ class BaseOptimizer(ABC):
             estimated = float(np.mean(overlaps))
             return min(1.0, max(0.0, estimated))
         except Exception as e:
-            self.logger.warning(f"Random-state sampling failed: {e}, falling back to structural estimate")
-            # Last-resort fallback: structural similarity (clearly labeled)
-            #
-            # WARNING: This fallback computes a Jaccard-style gate-type overlap
-            # (Counter intersection / union of gate-type counts). It is a
-            # STRUCTURAL HEURISTIC, not a quantum fidelity measure:
-            #   - It ignores gate order, qubit assignment, and angles.
-            #   - Its correlation with true average gate fidelity has NOT been
-            #     characterized (no calibration study exists).
-            #   - It may over-estimate fidelity for circuits with the same gate
-            #     multiset but different topology.
-            #
-            # Experimental impact: this fallback is triggered for large circuits
-            # (n > max_qubits_fidelity) where exact unitary comparison is
-            # infeasible. If a significant fraction of experimental trials
-            # fall through to this path, the reported fidelity values for those
-            # trials are heuristic estimates, not verified fidelities.
-            #
-            # See: limitations_and_future_work.md §10 (conservative bounds /
-            #      uncharacterized fallback precision).
-            from collections import Counter
-            c_gates = Counter(inst.operation.name for inst in circuit.data)
-            t_gates = Counter(inst.operation.name for inst in target.data)
-            common = sum((c_gates & t_gates).values())
-            total = sum((c_gates | t_gates).values())
-            if total == 0:
-                return 1.0
-            return float(common / total)
+            # A gate-multiset/Jaccard score is not a quantum fidelity: it ignores
+            # gate order, operands, and parameters, and can therefore assign 1.0
+            # to inequivalent circuits.  Returning NaN makes the unavailable
+            # certificate fail closed in ``verify_functionality`` and
+            # ``_is_success`` instead of silently turning a structural heuristic
+            # into scientific evidence.
+            self.logger.warning(
+                "Random-state fidelity sampling failed: %s; fidelity unavailable",
+                e,
+            )
+            return float("nan")
 
     def verify_functionality(self, circuit: QuantumCircuit, target: QuantumCircuit) -> bool:
         """Verify that the optimized circuit preserves functionality."""
-        fidelity = self.calculate_fidelity(circuit, target)
-        return fidelity >= self.fidelity_threshold
+        return self.equivalence_certificate(circuit, target).accepted
     
     def _is_success(self, reduction: float, fidelity: float) -> bool:
-        """Determine if optimization was successful (fidelity-compliant).
-
-        As of bug #5 fix, ``success`` is defined by fidelity compliance only.
-        This avoids penalizing circuits that legitimately preserve functionality
-        but achieve a small reduction. Use :meth:`_is_meaningful` to additionally
-        require the reduction to cross ``success_reduction``.
-        """
+        """Return whether the result is semantically valid under the contract."""
         return fidelity >= self.fidelity_threshold
 
     def _is_meaningful(self, reduction: float, fidelity: float) -> bool:
-        """Determine if the optimization achieved a *meaningful* reduction.
-
-        A meaningful optimization both preserves functionality (fidelity
-        compliance, as in :meth:`_is_success`) AND crosses the
-        ``success_reduction`` threshold. Callers that previously relied on
-        ``_is_success`` requiring both conditions should switch here to keep
-        the old, stricter semantics.
-        """
-        return reduction >= self.success_reduction and fidelity >= self.fidelity_threshold
+        """Return whether a valid result also crosses the reduction threshold."""
+        return self._is_success(reduction, fidelity) and reduction >= self.success_reduction
 
     # ========================================================================
     # Shared Move Primitives (used by stochastic optimizers)
@@ -582,9 +561,12 @@ class BaseOptimizer(ABC):
         # Rotation gates with inverse angles
         if name1 == name2 and name1 in ('rx', 'ry', 'rz'):
             if len(inst1.operation.params) > 0 and len(inst2.operation.params) > 0:
-                angle_sum = float(inst1.operation.params[0]) + float(inst2.operation.params[0])
-                scale = max(1.0, abs(float(inst1.operation.params[0])), abs(float(inst2.operation.params[0])))
-                if abs(angle_sum) <= DEFAULT_PRECISION * scale:
+                first = float(inst1.operation.params[0])
+                second = float(inst2.operation.params[0])
+                angle_sum = first + second
+                wrapped = (angle_sum + np.pi) % (2.0 * np.pi) - np.pi
+                scale = max(1.0, abs(first), abs(second))
+                if abs(wrapped) <= DEFAULT_PRECISION * scale:
                     return True
         
         return False

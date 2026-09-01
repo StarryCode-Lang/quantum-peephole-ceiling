@@ -1,0 +1,39 @@
+{
+  "complete_cryptographic_prerun_source_closure": false,
+  "direct_prerun_frozen_count": 7,
+  "dynamic_imports_not_proven": true,
+  "entrypoints": [
+    "experiments/e31_formal_orchestrator.py",
+    "experiments/e31_shared_rule_worker.py"
+  ],
+  "environment_sha256": "15d695f9cc6c6acf153718a9adef445c886b89376b9d024aa36f1aca360be63e",
+  "posthoc_disclosed_count": 16,
+  "resolved_source_count": 23,
+  "resolved_sources": {
+    "experiments/e31_factorial_pareto_design.py": "3888690b3fa15395540707d596a4169a07582d12a1f3c1b7bd0c4e2deec73ea5",
+    "experiments/e31_formal_orchestrator.py": "73b7b954c05d6464dbbc9d9f79f3f4b2bff47051d3ed613b3adf3b21bd45823d",
+    "experiments/e31_listing_phase2b_interaction.py": "dc3cca1b6f5a4612de282b158c113875687cdf2ccdd538396a0da14f0868a78c",
+    "experiments/e31_resource_smoke.py": "0e57776ce250676b2a875ab3adfc2738d0eb925e889ac8694c7409a9e1b3cf96",
+    "experiments/e31_shared_rule_worker.py": "e20c7110a8cd24eeaa3528bf189e25d00fb22723ea4e5eec3bf76e10067affbf",
+    "src/circuits/__init__.py": "1797dafd16a572ebc1c4f11bcd661cb5aa6f44eee8c9510e95bcce48fd57ee4d",
+    "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
+    "src/circuits/real_benchmarks.py": "661a86d4400e3fada3e71d69c299da357826da752e20b090e3c6d0c5a4a34ad5",
+    "src/equivalence.py": "19de65ac1fb719c763ed60f4b3bb8655435b706976333c1bf5e569faa58834af",
+    "src/optimisation/__init__.py": "5dffe0a4aad9352fd0235ce51d66ebb6f46f1d83ecf7cc68e11681ebbc48bb45",
+    "src/optimisation/_gate_predicates.py": "c7c0c6a7c985e5e4f19b2699323679f94b3f5040376b9a3224d40364b6bf83f2",
+    "src/optimisation/base.py": "f1c983c6273517cee511612137813c107a8a11940b71e0ac28bb4b3cdbbb4248",
+    "src/optimisation/ceiling_aware.py": "db0afd66cd8a7eaef9b60e8bf317620b967cf298e8ad28bd32093fe87985bfb6",
+    "src/optimisation/constants.py": "ce80583a56732a3cc70cbef5ff0124cd0f03517fbfc718f06ebf4e5055ea3c41",
+    "src/optimisation/phase1/__init__.py": "802ef343ca499c03f5f7c2c3e9e6bde692c5bfd00296abf133b23ac0b560b5c7",
+    "src/optimisation/phase1/genetic_algorithm.py": "7e59e479d4b11fe5944859971c3f6f490705a7b394b558f2d620ccdb17fa2e5d",
+    "src/optimisation/phase1/greedy.py": "182346d4926282999dc193ce7156666f8cc98e105fd99c8d87a00d77081e37af",
+    "src/optimisation/phase1/random_local_search.py": "5846e76c0f696840b12b8faf7a45b95e4d57c12ab65d5758dccabf26d573971f",
+    "src/optimisation/phase1/simulated_annealing.py": "19f415ffd544be8deb772d9bd92891e716fd60a6e4abe226f0359263ca184034",
+    "src/optimisation/phase1/wire_traversal.py": "c78ce84f0ce8f5e5e1991d6322fed32817184959edb34569bdaa164126b457eb",
+    "src/optimisation/phase2/__init__.py": "8aa91ebf7630b23444d15e1538c44b35632e2b32915e3726327cf5bd8c1afa7d",
+    "src/optimisation/phase2/commutation_rewriter.py": "98a3eee5b88937e47c068707643b627c0bca1c54fd7a730acab4f2b5758fb976",
+    "src/optimisation/phase2/template_matcher.py": "4fc65e470a050079056a1c5445477fb5764f3c62e7009225170015f12b5f7760"
+  },
+  "status": "PASS_EXACT_STATIC_FIRST_PARTY_IMPORT_CLOSURE_RECONSTRUCTED",
+  "transitive_source_provenance_gate_sha256": "625dabfac9b667d3a3ae375fbfe99f5d91e009732999fe247bd40dd336f1e83a"
+}

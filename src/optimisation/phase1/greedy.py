@@ -113,7 +113,7 @@ class GreedyGateCancellation(BaseOptimizer):
         runtime = time.time() - start_time
         
         # Calculate fidelity
-        fidelity = 1.0 if target is None else self.calculate_fidelity(optimized, target)
+        fidelity, equivalence_certificate = self.result_equivalence(optimized, target)
         reduction = 1.0 - optimized.size() / original.size() if original.size() > 0 else 0.0
         success = self._is_success(reduction, fidelity)
         
@@ -125,6 +125,7 @@ class GreedyGateCancellation(BaseOptimizer):
             iterations=improvements,
             runtime_seconds=runtime,
             success=success,
+            equivalence_certificate=equivalence_certificate,
             metadata={'algorithm': 'greedy', 'improvements': improvements,
                       'version': '3.2.0', 'wire_traversal': self.wire_traversal}
         )
@@ -135,11 +136,12 @@ class GreedyGateCancellation(BaseOptimizer):
         Combines R(a1) followed by R(a2) on the same qubit into R(a1 + a2).
         The merged angle is reduced to the canonical [-pi, pi) range.
 
-        CRITICAL (v3.1.0): R(2*pi) = -I (global phase), NOT identity.
-        Therefore, gates whose angles sum to a non-zero multiple of 2*pi
-        must NOT be removed -- they contribute a global phase of -1.
-        Only when the reduced angle is ~0 (i.e., the raw sum is ~0, meaning
-        R(0) = I) are both gates safely removed.
+        The optimizer's equivalence contract is average gate fidelity, which
+        is invariant under global phase.  Therefore R(2*k*pi) may be removed:
+        it differs from identity only by (-1)^k.  This matches the Phase 2
+        template matcher and avoids biasing cross-phase comparisons.  A future
+        exact-matrix mode intended for controlled-subcircuit reuse would need
+        to retain or explicitly transfer that global phase.
 
         Applies to all rotation gate types: Rx, Ry, Rz.
 
@@ -169,10 +171,9 @@ class GreedyGateCancellation(BaseOptimizer):
                     angle2 = circuit.data[i + 1].operation.params[0]
                     raw_sum = angle1 + angle2
                     
-                    # Reduce to canonical [-pi, pi) range.
-                    # This correctly maps multiples of 2*pi to 0:
-                    #   raw_sum = 2*pi  ->  reduced = 0  (R(2pi) = -I, NOT removable)
-                    #   raw_sum = 0     ->  reduced = 0  (R(0) = I, removable)
+                    # Reduce to canonical [-pi, pi) range.  Under the
+                    # project-wide physical-equivalence contract, multiples
+                    # of 2*pi are removable global phases.
                     #   raw_sum = pi    ->  reduced = -pi (boundary, see NOTE below)
                     #
                     # NOTE (boundary behavior at raw_sum = -pi):
@@ -194,26 +195,8 @@ class GreedyGateCancellation(BaseOptimizer):
                     gate_cls = _ROTATION_GATE_CLASS[gate1]
 
                     if abs(reduced) < DEFAULT_PRECISION:
-                        # Reduced angle is near zero.  Two sub-cases:
-                        #
-                        # 1) raw_sum ~ 0:  R(0) = I  (true identity).
-                        #    Both gates are safely removed.
-                        #
-                        # 2) raw_sum ~ 2k*pi (k != 0):  R(2k*pi) = (-I)^k.
-                        #    This is a global phase, NOT identity.
-                        #    Must NOT remove -- keep a single gate with the
-                        #    raw_sum angle to preserve the unitary exactly.
-                        if abs(raw_sum) < DEFAULT_PRECISION:
-                            # True identity: R(0) = I.  Remove both gates.
-                            circuit.data.pop(i)
-                            circuit.data.pop(i)
-                        else:
-                            # raw_sum is a non-zero multiple of 2*pi.
-                            # Keep as a single gate with raw_sum angle to
-                            # preserve the unitary (e.g., Rz(2pi) = -I).
-                            new_gate = gate_cls(raw_sum)
-                            circuit.data[i] = circuit.data[i].replace(operation=new_gate)
-                            circuit.data.pop(i + 1)
+                        circuit.data.pop(i)
+                        circuit.data.pop(i)
                     else:
                         # Non-trivial merged angle: replace two gates with one.
                         # Use the reduced (canonical [-pi, pi)) representation.

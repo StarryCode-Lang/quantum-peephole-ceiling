@@ -1,0 +1,45 @@
+{
+  "claim_limits": [
+    "does not upgrade the method gate filesystem timestamp into a cryptographic precommit",
+    "does not establish continuous host exclusivity or continuous host telemetry",
+    "does not alter frozen execution rows or authorize row exclusion or rerun"
+  ],
+  "created_utc": "2026-08-27T13:30:21.035350+00:00",
+  "formal_checkpoint_sha256": "a6f299ec9d80dd77e58658397dda161d437d3bf25c11b88cd91b6f3f0244c3bd",
+  "host_gate": {
+    "boundary_recomputed_from_sqlite": {
+      "last_committed_utc": "2026-08-24T03:00:36.456307+00:00",
+      "max_run_order": 20404,
+      "rows": 20405,
+      "status_counts_only": {
+        "success": 14733,
+        "timeout": 5672
+      }
+    },
+    "continuous_host_exclusivity_verified": false,
+    "continuous_host_telemetry_recorded": false,
+    "gate_created_utc": "2026-08-24T03:02:30.829452+00:00",
+    "path": "data/v11/e31_factorial_pareto/host_environment_limitation_gate.json",
+    "sha256": "90b69aa4003c1639ef066127656f8db6a16d7b97d255a60482b0dd2047e02fa3",
+    "temporal_evidence": "PASS_EMBEDDED_CREATED_UTC_AFTER_RECOMPUTED_BOUNDARY"
+  },
+  "method_gate": {
+    "boundary_recomputed_from_sqlite": {
+      "last_committed_utc": "2026-08-24T02:00:54.640834+00:00",
+      "max_run_order": 19707,
+      "rows": 19708,
+      "status_counts_only": {
+        "success": 14227,
+        "timeout": 5481
+      }
+    },
+    "created_utc_embedded_in_original_gate": false,
+    "gate_file_last_write_utc": "2026-08-24T02:04:24.266255+00:00",
+    "path": "data/v11/e31_factorial_pareto/preanalysis_method_erratum_gate.json",
+    "sha256": "89fa14eb5652caf358546658bd52df402324d2714d9bb3845bdc88c175c47c8a",
+    "temporal_evidence": "PARTIAL_FILESYSTEM_MTIME_NOT_CRYPTOGRAPHIC_CREATION_PROOF"
+  },
+  "overall_temporal_provenance_rating": "PARTIAL",
+  "schema_version": "1.0.0",
+  "status": "PASS_LIMITATION_BOUND_NO_RETROACTIVE_PRECOMMIT_CLAIM"
+}

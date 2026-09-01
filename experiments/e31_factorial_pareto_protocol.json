@@ -1,0 +1,106 @@
+{
+  "protocol_version": "0.2.1-frozen-resource-cap-amendment",
+  "design_status": "FROZEN_BEFORE_EXECUTION",
+  "created_date": "2026-08-11",
+  "experiment_id": "E31-factorial-pareto-v1",
+  "randomization_seed": 20260811,
+  "independent_unit": "unique input_circuit_sha256",
+  "repeated_measure_block": "input_circuit_sha256",
+  "outer_inference_cluster": "circuit_family",
+  "factors": {
+    "listing_model": ["LBL", "WCL", "RANDOM_TOPOLOGICAL"],
+    "rule_set": ["COMMUTATION_ONLY", "COMMUTATION_PLUS_TEMPLATES"],
+    "window_gates": [4, 16, 64],
+    "budget_seconds": [1, 10, 30, 120]
+  },
+  "resource_contract": {
+    "memory_budget_mb_per_worker": 3072,
+    "workers_per_run": 1,
+    "threads_per_worker": 1,
+    "cold_start_each_run": true,
+    "include_parse_and_normalization_time": true,
+    "timeout_grace_seconds": 5
+  },
+  "pre_execution_amendment": {
+    "date": "2026-08-11",
+    "reason": "The formal runner correctly refused a 4096 MB worker because it exceeded 80% of then-available physical memory. Before any admissible formal result existed, the cap was reduced to 3072 MB and all protocol/design/power/release hashes were regenerated.",
+    "scientific_treatment_changed": false,
+    "resource_cap_change": "4096 MB to 3072 MB per worker",
+    "invalid_preflight_resume_forbidden": true
+  },
+  "semantic_contract": {
+    "fidelity_metric": "exact_average_gate_fidelity",
+    "fidelity_threshold": 0.9999999999,
+    "common_basis": ["rz", "sx", "x", "cx"],
+    "coupling_map": null,
+    "routing": false
+  },
+  "responses": {
+    "primary": "common_basis_gate_reduction_pct_itt",
+    "secondary": [
+      "valid_equivalent_output",
+      "wall_seconds_end_to_end",
+      "peak_rss_mb",
+      "time_to_first_valid_seconds",
+      "time_to_best_seconds"
+    ],
+    "pareto_objectives": {
+      "maximize": ["common_basis_gate_reduction_pct_itt", "valid_rate"],
+      "minimize": ["wall_seconds_end_to_end", "peak_rss_mb", "failure_rate"]
+    }
+  },
+  "failure_semantics": {
+    "allowed_status": ["success", "timeout", "error", "invalid", "unavailable", "oom"],
+    "retain_every_scheduled_run": true,
+    "nonvalid_reduction_pct_itt": 0.0,
+    "missing_scheduled_run_is_fatal": true
+  },
+  "analysis_contract": {
+    "estimand_A_fixed_benchmark": "finite-population paired causal ATE conditional on the frozen 391 unique input hashes; input hash is the repeated-measure block and family is a fixed blocking/heterogeneity stratum",
+    "estimand_B_new_family": "equal-family-weighted generalized ATE for a super-population of potentially unseen circuit families; family is the independent cluster",
+    "factor_model": "listing_model * rule_set * C(window_gates) * C(budget_seconds)",
+    "repeated_measure": "all treatment cells applied to each unique input hash",
+    "primary_contrast": "equal-weight mean over all 3 window_gates x 4 budget_seconds cells of [(WCL-LBL)_COMMUTATION_PLUS_TEMPLATES - (WCL-LBL)_COMMUTATION_ONLY]",
+    "primary_contrast_role": "single confirmatory contrast for estimand_A_fixed_benchmark",
+    "supportive_contrasts": [
+      "listing_model main effects averaged over all other factors",
+      "rule_set main effect averaged over all other factors",
+      "prespecified two-way interactions other than the primary listing-by-rule_set contrast",
+      "the same primary contrast under estimand_B_new_family"
+    ],
+    "exploratory_contrasts": [
+      "cellwise simple effects",
+      "all three-way and four-way interactions",
+      "post-hoc Pareto subgroup comparisons"
+    ],
+    "random_listing_role": "prespecified placebo/sensitivity listing, not an independent circuit instance",
+    "multiplicity": "exactly one confirmatory test at alpha 0.05; supportive and exploratory contrasts cannot be relabelled confirmatory",
+    "fixed_benchmark_inference": "paired family-blocked Monte Carlo randomization (or exact enumeration when feasible), with a family-blocked interval; conditions on the frozen hashes and cannot support unseen-family language",
+    "new_family_inference": "family-level interval/test with 15 independent family clusters; input rows cannot supply cluster degrees of freedom",
+    "alpha_two_sided": 0.05,
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20260811
+  },
+  "formal_gate": {
+    "required_design_status": "FROZEN_BEFORE_EXECUTION",
+    "require_unique_input_hashes": true,
+    "require_complete_factorial_per_input": true,
+    "require_shared_rule_engine_adapter": true,
+    "require_no_result_rows_before_freeze": true,
+    "smoke_results_are_confirmatory": false,
+    "required_power_report": "data/v11/e31_factorial_pareto/dual_estimand_power.json",
+    "required_fixed_benchmark_power_decision": "PASS",
+    "new_family_claims_require_separate_decision": "PASS"
+  },
+  "power_gate": {
+    "mcid_pp": 1.0,
+    "target_power": 0.8,
+    "familywise_alpha": 0.05,
+    "planned_primary_contrasts": 1,
+    "grid_correlation_sensitivity": [0.0, 0.5, 1.0],
+    "fixed_benchmark_decision": "PASS",
+    "new_family_generalized_decision": "BLOCK",
+    "formal_execution_scope": "licensed only for the fixed shared-391 benchmark primary; no generalized new-family confirmatory claim",
+    "mcid_mutation_after_freeze_forbidden": true
+  }
+}
