@@ -15,7 +15,7 @@ import json
 import math
 from collections import Counter, defaultdict, deque
 from dataclasses import dataclass
-from functools import lru_cache
+from functools import cached_property, lru_cache
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
@@ -83,11 +83,11 @@ class LandscapeState:
     def to_dict(self) -> dict[str, Any]:
         return {"num_qubits": self.num_qubits, "gates": [gate.to_dict() for gate in self.gates]}
 
-    @property
+    @cached_property
     def key(self) -> str:
         return _canonical_bytes(self.normalized().to_dict()).decode()
 
-    @property
+    @cached_property
     def state_hash(self) -> str:
         return hashlib.sha256(self.key.encode()).hexdigest()
 
@@ -256,6 +256,21 @@ def _quartz_index(path: Path, rule_scope: str = "full") -> dict[tuple[str, ...],
     return {signature: tuple(rules) for signature, rules in index.items()}
 
 
+@lru_cache(maxsize=8)
+def _quartz_first_index(path: Path, rule_scope: str = "full") -> dict[str, tuple[tuple[tuple[str, ...], tuple[dict[str, Any], ...]], ...]]:
+    """Index the immutable signature table by its first operation name.
+
+    The public action order remains governed by ``sort_key``.  This index only
+    removes the repeated scan over signatures that cannot match the gate at a
+    given listing position.
+    """
+    grouped: dict[str, list[tuple[tuple[str, ...], tuple[dict[str, Any], ...]]]] = defaultdict(list)
+    for signature, rules in _quartz_index(path, rule_scope).items():
+        if signature:
+            grouped[signature[0]].append((signature, rules))
+    return {name: tuple(entries) for name, entries in grouped.items()}
+
+
 def _map_binding(mapping: Mapping[int, int], source_values: Mapping[str, float], target_values: Mapping[str, float]) -> str:
     return json.dumps(
         {
@@ -270,11 +285,11 @@ def _map_binding(mapping: Mapping[int, int], source_values: Mapping[str, float],
 
 def _quartz_actions(
     state: LandscapeState,
-    rules_by_signature: Mapping[tuple[str, ...], tuple[dict[str, Any], ...]],
+    rules_by_first_name: Mapping[str, tuple[tuple[tuple[str, ...], tuple[dict[str, Any], ...]], ...]],
 ) -> list[LandscapeAction]:
     actions: list[LandscapeAction] = []
     for location in range(len(state.gates)):
-        for source_names, rules in rules_by_signature.items():
+        for source_names, rules in rules_by_first_name.get(state.gates[location].name, ()):
             if location + len(source_names) > len(state.gates):
                 continue
             if tuple(gate.name for gate in state.gates[location:location + len(source_names)]) != source_names:
@@ -434,7 +449,7 @@ def legal_actions(
     rule_library_path: Path,
     rule_scope: str = "full",
 ) -> list[LandscapeAction]:
-    actions = _quartz_actions(state, _quartz_index(rule_library_path, rule_scope)) + _pair_actions(state) + _exchange_actions(state)
+    actions = _quartz_actions(state, _quartz_first_index(rule_library_path, rule_scope)) + _pair_actions(state) + _exchange_actions(state)
     dedup: dict[tuple[Any, ...], LandscapeAction] = {}
     for action in actions:
         dedup[action.sort_key] = action
