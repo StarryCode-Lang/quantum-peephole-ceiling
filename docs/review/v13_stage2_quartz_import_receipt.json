@@ -1,0 +1,54 @@
+{
+  "status": "PASS_STAGE_S2_E43",
+  "stage": "S2",
+  "upstream": {
+    "repository": "https://github.com/quantum-compiler/quartz",
+    "commit": "c4abf876608b111b2900d59a3c4efd7982063c20",
+    "ecc_path": "data/v13/quartz_source/Nam_5_3_complete_ECC_set.json",
+    "ecc_sha256": "b2250c4136ad81f2d1d311602de54224a36ecfb72255ee77a7784cc929d85c5b",
+    "license_path": "data/v13/quartz_source/LICENSE",
+    "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "source_metadata_path": "data/v13/quartz_source/source_metadata.json",
+    "source_metadata_sha256": "b9b8acdf8beff0ed040b598e08ce404c163960a022380eefa06f58004f2068f4",
+    "clean_source_boundary_verified": true
+  },
+  "import_contract": {
+    "anchor_order": ["gate_count", "cx_count", "depth", "serialized_ops"],
+    "star_direction": "non_anchor_to_anchor",
+    "reverse_rule_condition": "equal_parameter_rank_only",
+    "quartz_v1_direction_count": 1474,
+    "quartz_v1_reversible_direction_count": 1472,
+    "quartz_v1_one_way_direction_count": 2,
+    "parameter_rank_distribution_nonanchor": {"0": 513, "1": 211, "2": 14},
+    "cost_delta_distribution_nonanchor_to_anchor": {"-2": 25, "-1": 199, "0": 514},
+    "auxiliary_rule_count": 14,
+    "combined_rule_count": 1488,
+    "content_hash_duplicate_count": 0
+  },
+  "semantic_audit": {
+    "symbolic_mismatch_count": 0,
+    "numeric_mismatch_count": 0,
+    "numeric_checks_per_direction": 32,
+    "numeric_tolerance": 1e-12,
+    "mutant_classes_checked": [
+      "gate_name",
+      "operand",
+      "parameter_binding",
+      "target_template",
+      "rank_increasing_reverse"
+    ],
+    "non_equivalent_mutant_escapes": 0
+  },
+  "independent_generation": {
+    "generation_a_rule_library_sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295",
+    "generation_b_rule_library_sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295",
+    "generation_a_summary_sha256": "c8b6d05fbbfe78af9c797b35ec22ab032ccbd6627378a3c7a3ed9fb1b4a0e07d",
+    "generation_b_summary_sha256": "c8b6d05fbbfe78af9c797b35ec22ab032ccbd6627378a3c7a3ed9fb1b4a0e07d",
+    "byte_identical": true
+  },
+  "canonical_outputs": {
+    "rule_library": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+    "summary": "data/v13/e43_quartz_rule_import/generation_a/summary.json",
+    "receipt": "data/v13/e43_quartz_rule_import/generation_a/receipt.json"
+  }
+}

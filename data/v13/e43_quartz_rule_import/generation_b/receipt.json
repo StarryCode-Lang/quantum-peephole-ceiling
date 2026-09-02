@@ -1,0 +1,54 @@
+{
+  "ecc_sha256": "b2250c4136ad81f2d1d311602de54224a36ecfb72255ee77a7784cc929d85c5b",
+  "independent_generation_required": true,
+  "rule_library_sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295",
+  "source_metadata_sha256": "b9b8acdf8beff0ed040b598e08ce404c163960a022380eefa06f58004f2068f4",
+  "status": "PASS_STAGE_S2_E43",
+  "summary": {
+    "anchor_count": 611,
+    "auxiliary_rule_count": 14,
+    "combined_rule_count": 1488,
+    "content_hash_duplicate_count": 0,
+    "cost_delta_distribution_nonanchor_to_anchor": {
+      "-1": 199,
+      "-2": 25,
+      "0": 514
+    },
+    "direction_counts": {
+      "bidirectional": 1472,
+      "one_way": 2
+    },
+    "mutant_audit": {
+      "checked": 5,
+      "classes": [
+        "gate_name",
+        "operand",
+        "parameter_binding",
+        "target_template",
+        "rank_increasing_reverse"
+      ],
+      "non_equivalent_mutant_escapes": 0,
+      "rejected": {
+        "gate_name": true,
+        "operand": true,
+        "parameter_binding": true,
+        "rank_increasing_reverse": true,
+        "target_template": true
+      }
+    },
+    "nonanchor_count": 738,
+    "numeric_mismatch_count": 0,
+    "parameter_rank_distribution_nonanchor": {
+      "0": 513,
+      "1": 211,
+      "2": 14
+    },
+    "quartz_v1_direction_count": 1474,
+    "quartz_v1_one_way_direction_count": 2,
+    "quartz_v1_reversible_direction_count": 1472,
+    "raw_class_count": 611,
+    "raw_member_count": 1349,
+    "symbolic_mismatch_count": 0
+  },
+  "summary_sha256": "c8b6d05fbbfe78af9c797b35ec22ab032ccbd6627378a3c7a3ed9fb1b4a0e07d"
+}

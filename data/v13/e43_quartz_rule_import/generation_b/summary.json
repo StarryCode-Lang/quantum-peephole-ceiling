@@ -1,0 +1,46 @@
+{
+  "anchor_count": 611,
+  "auxiliary_rule_count": 14,
+  "combined_rule_count": 1488,
+  "content_hash_duplicate_count": 0,
+  "cost_delta_distribution_nonanchor_to_anchor": {
+    "-1": 199,
+    "-2": 25,
+    "0": 514
+  },
+  "direction_counts": {
+    "bidirectional": 1472,
+    "one_way": 2
+  },
+  "mutant_audit": {
+    "checked": 5,
+    "classes": [
+      "gate_name",
+      "operand",
+      "parameter_binding",
+      "target_template",
+      "rank_increasing_reverse"
+    ],
+    "non_equivalent_mutant_escapes": 0,
+    "rejected": {
+      "gate_name": true,
+      "operand": true,
+      "parameter_binding": true,
+      "rank_increasing_reverse": true,
+      "target_template": true
+    }
+  },
+  "nonanchor_count": 738,
+  "numeric_mismatch_count": 0,
+  "parameter_rank_distribution_nonanchor": {
+    "0": 513,
+    "1": 211,
+    "2": 14
+  },
+  "quartz_v1_direction_count": 1474,
+  "quartz_v1_one_way_direction_count": 2,
+  "quartz_v1_reversible_direction_count": 1472,
+  "raw_class_count": 611,
+  "raw_member_count": 1349,
+  "symbolic_mismatch_count": 0
+}
