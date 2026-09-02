@@ -53,6 +53,20 @@
     "manuscript_modified": false,
     "stage_commit": "dafb1847a79516af64af82005e3b308fa7d51eb6"
   },
+  "stage_4": {
+    "status": "PASS_E44_ZERO_TOLERANCE",
+    "precondition": "stage_3_pass_method_contract_draft",
+    "receipt": "docs/review/v13_stage4_e44_receipt.json",
+    "core_module": "src/optimisation/certified_landscape.py",
+    "experiment": "experiments/e44_landscape_oracle.py",
+    "cases": 1024,
+    "horizons": [0, 1, 2, 3, 4],
+    "cells": 5120,
+    "mismatches": 0,
+    "replay_failures": 0,
+    "determinism_failures": 0,
+    "rule_scope": "e44_core_v1"
+  },
   "v13_method": {
     "status": "NOT_IMPLEMENTED",
     "rules_frozen": false,

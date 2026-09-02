@@ -1,0 +1,49 @@
+{
+  "case_count": 1024,
+  "determinism_failures": 0,
+  "horizon_count": 5,
+  "mismatch_count": 0,
+  "mismatch_fields": {},
+  "protocol_id": "E44_CERTIFIED_LANDSCAPE_ORACLE_V1",
+  "replay_failures": 0,
+  "rows": 5120,
+  "stratum_counts": {
+    "neutral_exposure": 256,
+    "no_escape_or_cycle": 256,
+    "positive_barrier_escape": 256,
+    "zero_barrier_escape": 256
+  },
+  "stratum_results": {
+    "neutral_exposure": {
+      "formal_status_counts": {
+        "EXACT_ESCAPE": 870,
+        "EXACT_H_LOCAL_OPTIMUM": 410
+      },
+      "mismatch_count": 0,
+      "rows": 1280
+    },
+    "no_escape_or_cycle": {
+      "formal_status_counts": {
+        "EXACT_H_LOCAL_OPTIMUM": 1280
+      },
+      "mismatch_count": 0,
+      "rows": 1280
+    },
+    "positive_barrier_escape": {
+      "formal_status_counts": {
+        "EXACT_ESCAPE": 512,
+        "EXACT_H_LOCAL_OPTIMUM": 768
+      },
+      "mismatch_count": 0,
+      "rows": 1280
+    },
+    "zero_barrier_escape": {
+      "formal_status_counts": {
+        "EXACT_ESCAPE": 767,
+        "EXACT_H_LOCAL_OPTIMUM": 513
+      },
+      "mismatch_count": 0,
+      "rows": 1280
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "certificates_sha256": "bbb827dc1084746655fa7ee107fa058795704d30bbaf9b0ac3493d7b12e99bdc",
+  "inputs_sha256": "dc852fb80ff76bcf467f5964c63df9ff2a38253ddc5d5028335b10dd8c4eae47",
+  "protocol_sha256": "e3814f2fc5b1203ece54551ca7b30b5bd9ccecc8a2e4d703976bad3b9676dc5f",
+  "rows_sha256": "a6e8ee25b03f47d58eb266120a158e22180e9fb82220f0e196e690520dd57397",
+  "status": "PASS_STAGE_S4_E44",
+  "summary": {
+    "case_count": 1024,
+    "determinism_failures": 0,
+    "horizon_count": 5,
+    "mismatch_count": 0,
+    "mismatch_fields": {},
+    "protocol_id": "E44_CERTIFIED_LANDSCAPE_ORACLE_V1",
+    "replay_failures": 0,
+    "rows": 5120,
+    "stratum_counts": {
+      "neutral_exposure": 256,
+      "no_escape_or_cycle": 256,
+      "positive_barrier_escape": 256,
+      "zero_barrier_escape": 256
+    },
+    "stratum_results": {
+      "neutral_exposure": {
+        "formal_status_counts": {
+          "EXACT_ESCAPE": 870,
+          "EXACT_H_LOCAL_OPTIMUM": 410
+        },
+        "mismatch_count": 0,
+        "rows": 1280
+      },
+      "no_escape_or_cycle": {
+        "formal_status_counts": {
+          "EXACT_H_LOCAL_OPTIMUM": 1280
+        },
+        "mismatch_count": 0,
+        "rows": 1280
+      },
+      "positive_barrier_escape": {
+        "formal_status_counts": {
+          "EXACT_ESCAPE": 512,
+          "EXACT_H_LOCAL_OPTIMUM": 768
+        },
+        "mismatch_count": 0,
+        "rows": 1280
+      },
+      "zero_barrier_escape": {
+        "formal_status_counts": {
+          "EXACT_ESCAPE": 767,
+          "EXACT_H_LOCAL_OPTIMUM": 513
+        },
+        "mismatch_count": 0,
+        "rows": 1280
+      }
+    }
+  },
+  "zero_tolerance": true
+}
