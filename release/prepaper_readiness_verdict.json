@@ -1,6 +1,6 @@
 {
   "blockers_sha256": "51be4b5f9f46f8fca40ce838fbba607c5efdd3a7e900042edba63e5d868ec0c0",
-  "created_utc": "2026-09-02T09:45:36.594249+00:00",
+  "created_utc": "2026-09-02T11:43:40.202424+00:00",
   "gates": {
     "engineering_verification": {
       "evidence": [
@@ -55,7 +55,7 @@
     "denominator": 592,
     "numerator": 182
   },
-  "ledger_sha256": "91bdc354dce0f0b11c1b0e9ee9d08574200a4f6720c0bd59b7ba4e658de09fdc",
+  "ledger_sha256": "a7cc6fd365496986df8402c956535df29693e97f5090acbb4714795d936cc8aa",
   "readiness_conditions": {
     "all_fail_external_items_have_blockers": true,
     "layered_archive_restorable": true,
@@ -64,7 +64,7 @@
     "sbom_verified": true,
     "workspace_scan_complete": true
   },
-  "registry_sha256": "cea89f323db1f71f7a7d4fb2f712367257f20c3549b14dc3291cd1cc1cbfc1e9",
+  "registry_sha256": "49673340b171938e8e06a650f5710e9b32af9a024b5a518761f3b435b7045476",
   "remaining_non_pass": {
     "EXTERNAL": [
       "1.20",
@@ -137,7 +137,7 @@
     "PARTIAL": 353,
     "PASS": 182
   },
-  "summary_sha256": "9a1b476989c3ac3b0f558925cbca611e0a1d1bd1e8b6ffb8e6730cfeaef010cf",
+  "summary_sha256": "2375a10a6a5972b4317c56bd230d8fc4f6b29e6c2add6bf842461bbdf88c42cd",
   "verdict": "READY_FOR_PAPER_WRITING_WITH_BOUNDARIES",
   "verdict_rationale": "All core-claim metrics carry item-specific, hash-pinned, machine-checkable satisfaction evidence and every key verifier passes; the release chain is independently restorable. Remaining FAIL/EXTERNAL items are genuine external, real-hardware, user-authorization, or new-frozen-protocol-experiment gaps and are honestly retained in release/prepaper_external_blockers.csv rather than fabricated to PASS. Paper writing may proceed on the bounded descriptive and supportive claims; it must not claim unseen-family universality, real-QPU results, or algorithm-independent ceilings.",
   "verification_inputs": {
@@ -160,9 +160,9 @@
     },
     "sbom": {
       "components": 94,
-      "direct_requirements_covered": 20,
+      "direct_requirements_covered": 21,
       "root_component": "q-research==10.1.0",
-      "sha256": "2a4fefea4b0e0161ebf90d4192af0dfcf0ced372f488f9e4569dc0e62e8731db",
+      "sha256": "5991fca2e5f31e5235563c9dfe9689669398dbd1b9601b88d684406a7e24a12e",
       "spec_version": "1.6",
       "status": "verified"
     },

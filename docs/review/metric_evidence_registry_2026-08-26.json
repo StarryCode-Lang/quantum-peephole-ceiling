@@ -1,12 +1,12 @@
 {
   "schema_version": "metric-evidence-registry-v2",
-  "created_utc": "2026-08-31T09:25:09.221857+00:00",
+  "created_utc": "2026-09-02T11:43:23.821266+00:00",
   "catalog_path": "docs/review/metric_catalog_2026-08-11.md",
   "catalog_sha256": "eb5f039ae5cfcd97e205afae9febb25f7b69bd52e57f4af4cdb8997d0393d36b",
   "source_attachment_sha256": "eb5f039ae5cfcd97e205afae9febb25f7b69bd52e57f4af4cdb8997d0393d36b",
   "source_fragments": {
-    "docs/review/metric_registry_fragments/sections_01_06.json": "de8751e6187eb71373a8b64daaf48d3ee8f035b4e8f4405d46589e5684a7fb0d",
-    "docs/review/metric_registry_fragments/sections_07_12.json": "b01731910e0fa184b18cfff38ed49bbd7b9c71b59869e2a0fdc9c0d502974800",
+    "docs/review/metric_registry_fragments/sections_01_06.json": "0977a69543650db3958d751513bef7c99460813c59bfa70e60e486c9f1d03c6e",
+    "docs/review/metric_registry_fragments/sections_07_12.json": "c6dd6a84be4dbef494646f83b93f0d3d247aec32b76f3fedece143e70ab0592d",
     "docs/review/metric_registry_fragments/sections_13_18.json": "574be3c74b635aec7031c55fe220b0b15bba8bf5a1517457b17ced2c59519abf"
   },
   "merge_policy": {
@@ -26535,7 +26535,7 @@
           "role": "satisfaction",
           "metric_id": "15.06",
           "path": "release/sbom.cdx.json",
-          "sha256": "2a4fefea4b0e0161ebf90d4192af0dfcf0ced372f488f9e4569dc0e62e8731db",
+          "sha256": "5991fca2e5f31e5235563c9dfe9689669398dbd1b9601b88d684406a7e24a12e",
           "selector": {
             "type": "json_pointer_equals",
             "pointer": "/bomFormat",
@@ -27982,7 +27982,7 @@
           "role": "satisfaction",
           "metric_id": "15.41",
           "path": "release/prepaper_archive_restore_audit.json",
-      "sha256": "9af8dad23406554e1ccda746e92dc1958695e1c5ca6db557c51beb96750b1859",
+          "sha256": "9af8dad23406554e1ccda746e92dc1958695e1c5ca6db557c51beb96750b1859",
           "selector": {
             "type": "json_pointer_equals",
             "pointer": "/metric_dispositions/15.41",
