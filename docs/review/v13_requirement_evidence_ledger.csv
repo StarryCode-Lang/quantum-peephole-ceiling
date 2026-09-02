@@ -1,0 +1,12 @@
+stage,requirement,status,code_or_protocol,evidence,verifier,boundary
+S0,baseline evidence and layered restore,PASS,baseline e4250beec73da9404323fb92ea2fc1549ea838ba,docs/review/v13_s0_baseline_receipt.json,scripts/verify_prepaper_release_manifest.py,595-test baseline is historical S0 gate
+S1,novelty red-team with fixed queries,PASS_WITH_BOUNDARIES,docs/review/v13_novelty_comparison_matrix.md,docs/review/v13_stage1_novelty_receipt.json,manual primary-source audit,QALM remains the closest threat and no absence claim is universal
+S2,Quartz v1 import and E43 zero tolerance,PASS_STAGE_S2_E43,src/optimisation/quartz_rule_import.py,docs/review/v13_stage2_quartz_import_receipt.json,tests/test_v13_quartz_rule_import.py,actual upstream ECC bytes are pinned by receipt
+S3,method contract propositions draft,DRAFT_UNTIL_E44,docs/review/v13_method_contract_draft.md,docs/review/v13_stage3_theory_receipt.json,tests/test_v13_certified_landscape.py,propositions are not manuscript theorems
+S4,exact finite-horizon landscape and E44 oracle,PASS_STAGE_S4_E44,src/optimisation/certified_landscape.py, data/v13/e44_certified_landscape_oracle/receipt.json,tests/test_v13_certified_landscape.py,rule scope is e44_core_v1 and not the unrestricted full library
+S5,E45 18-configuration development screening,BLOCKED_RESOURCE_GATE,experiments/e45_development_grid/run.py,data/v13/e45_development_grid/receipt.json;s docs/review/v13_stage5_e45_receipt.json,scripts/verify_e45_development_grid.py,no M0 configuration satisfies the preregistered resource eligibility gate
+S6,E46 independent MQT panel,NOT_OPENED,goal-objective.md,docs/review/v13_execution_state.json,v13 release verifier,future panel intentionally unopened
+S7,E47 R1-R3,NOT_OPENED,goal-objective.md,docs/review/v13_execution_state.json,v13 release verifier,blocked by S5
+S8,E48 FINAL confirmation,NOT_OPENED,goal-objective.md,docs/review/v13_execution_state.json,v13 release verifier,blocked by S5
+S9,E49 mechanism ablation and scale,NOT_OPENED,goal-objective.md,docs/review/v13_execution_state.json,v13 release verifier,blocked by S5
+S10,E50 external fair comparison,NOT_OPENED,goal-objective.md,docs/review/v13_execution_state.json,v13 release verifier,blocked by S5

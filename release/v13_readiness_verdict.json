@@ -1,0 +1,31 @@
+{
+  "verdict": "NOT_READY_FOR_PAPER",
+  "project": "Q-research v13 certified rewrite landscape",
+  "as_of": "2026-09-02",
+  "engineering_verification": {
+    "status": "PASS",
+    "compileall": "PASS",
+    "full_pytest": "PASS",
+    "skipped": 0,
+    "semantic_failures_in_e45": 0,
+    "release_verifier": "PASS"
+  },
+  "scientific_gates": {
+    "S0": "PASS",
+    "S1": "PASS_WITH_BOUNDARIES",
+    "S2_E43": "PASS_STAGE_S2_E43",
+    "S3": "PASS_METHOD_CONTRACT_DRAFT",
+    "S4_E44": "PASS_STAGE_S4_E44",
+    "S5_E45": "BLOCKED_RESOURCE_GATE",
+    "S6_to_S50": "NOT_OPENED"
+  },
+  "blocking_evidence": {
+    "receipt": "docs/review/v13_stage5_e45_receipt.json",
+    "eligible_m0_configurations": 0,
+    "certificate_guided_escape_max_observed_failure_rate": 0.6328125,
+    "required_max_failure_rate": 0.05,
+    "future_panels_opened": false
+  },
+  "claim_boundary": "E43 and E44 establish rule and finite-horizon certificate correctness within their pinned scopes. E45 establishes a bounded development implementation and a resource-gate failure; it does not establish a confirmatory advantage, FINAL result, or unseen-family claim.",
+  "paper_status": "Do not draft or claim a certified-landscape paper from this run; a future independently authorized v14 may revisit the resource bottleneck."
+}
