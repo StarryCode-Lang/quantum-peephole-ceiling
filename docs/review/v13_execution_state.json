@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "project": "Q-research v13 certified rewrite landscape",
-  "status": "STAGE_S2_PASS",
+  "status": "STAGE_S5_BLOCKED_RESOURCE_GATE",
   "manuscript_modified": false,
   "historical_e1_e37_modified": false,
   "active_worktree": "D:/Desktop/Q-research-certified-landscape-v13",
@@ -66,12 +66,25 @@
     "replay_failures": 0,
     "determinism_failures": 0,
     "rule_scope": "e44_core_v1",
-    "stage_commit": "322eafc5e446efdb03289ae5ceb536015eb799e7"
+    "stage_commit": "6ef4d8a9b137c559e154213d788530686b733713"
+  },
+  "stage_5": {
+    "status": "BLOCKED_RESOURCE_GATE",
+    "precondition": "stage_4_pass_e44_zero_tolerance",
+    "receipt": "docs/review/v13_stage5_e45_receipt.json",
+    "experiment": "data/v13/e45_development_grid",
+    "screening_sources": 128,
+    "configurations": 18,
+    "arms": 6,
+    "result_rows": 13824,
+    "eligible_m0_configurations": 0,
+    "future_panels_opened": false,
+    "stop_reason": "resource_failure_rate_above_5_percent_for_all_CGEO_configurations"
   },
   "v13_method": {
-    "status": "NOT_IMPLEMENTED",
-    "rules_frozen": false,
-    "certificates_available": false
+    "status": "BOUNDED_LANDSCAPE_CORE_IMPLEMENTED_E45_BLOCKED",
+    "rules_frozen": true,
+    "certificates_available": true
   },
   "historical_v12": {
     "state": "MERGED_AND_WORKTREE_REMOVED",

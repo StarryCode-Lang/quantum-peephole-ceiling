@@ -1,0 +1,185 @@
+{
+  "arms": [
+    "greedy",
+    "wcl_greedy",
+    "v12_cgl_greedy",
+    "phase2b_greedy",
+    "unguided_beam",
+    "certificate_guided_escape"
+  ],
+  "cell_limits": {
+    "blas_threads": 1,
+    "full_development_seconds": 180,
+    "precheck_gate_limit": 80,
+    "rss_limit_gib": 8,
+    "screening_seconds": 60,
+    "workers": 1
+  },
+  "configuration_grid": [
+    {
+      "barrier_cap": 2,
+      "beam_width": 16,
+      "config_id": "h2_b16_s10k",
+      "horizon": 2,
+      "state_budget": 10000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 16,
+      "config_id": "h2_b16_s50k",
+      "horizon": 2,
+      "state_budget": 50000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 16,
+      "config_id": "h2_b16_s200k",
+      "horizon": 2,
+      "state_budget": 200000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 64,
+      "config_id": "h2_b64_s10k",
+      "horizon": 2,
+      "state_budget": 10000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 64,
+      "config_id": "h2_b64_s50k",
+      "horizon": 2,
+      "state_budget": 50000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 64,
+      "config_id": "h2_b64_s200k",
+      "horizon": 2,
+      "state_budget": 200000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 16,
+      "config_id": "h3_b16_s10k",
+      "horizon": 3,
+      "state_budget": 10000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 16,
+      "config_id": "h3_b16_s50k",
+      "horizon": 3,
+      "state_budget": 50000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 16,
+      "config_id": "h3_b16_s200k",
+      "horizon": 3,
+      "state_budget": 200000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 64,
+      "config_id": "h3_b64_s10k",
+      "horizon": 3,
+      "state_budget": 10000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 64,
+      "config_id": "h3_b64_s50k",
+      "horizon": 3,
+      "state_budget": 50000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 64,
+      "config_id": "h3_b64_s200k",
+      "horizon": 3,
+      "state_budget": 200000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 16,
+      "config_id": "h4_b16_s10k",
+      "horizon": 4,
+      "state_budget": 10000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 16,
+      "config_id": "h4_b16_s50k",
+      "horizon": 4,
+      "state_budget": 50000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 16,
+      "config_id": "h4_b16_s200k",
+      "horizon": 4,
+      "state_budget": 200000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 64,
+      "config_id": "h4_b64_s10k",
+      "horizon": 4,
+      "state_budget": 10000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 64,
+      "config_id": "h4_b64_s50k",
+      "horizon": 4,
+      "state_budget": 50000
+    },
+    {
+      "barrier_cap": 2,
+      "beam_width": 64,
+      "config_id": "h4_b64_s200k",
+      "horizon": 4,
+      "state_budget": 200000
+    }
+  ],
+  "experiment_id": "E45_CERTIFIED_ESCAPE_DEVELOPMENT_V1",
+  "future_panel_access": "E46_AND_LATER_NOT_READ",
+  "normalization": {
+    "basis": [
+      "h",
+      "x",
+      "rz",
+      "cx"
+    ],
+    "id": "Nam-normalize-v1",
+    "layout_method": "trivial",
+    "optimization_level": 0,
+    "policy": "remove terminal measurements and tail barriers only; reject mid-circuit measurement, reset, dynamic control, free parameters, and post-translation operations outside Nam basis",
+    "routing_method": "basic",
+    "seed_transpiler": 0
+  },
+  "phase": "screening",
+  "rule_library": {
+    "path": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+    "rule_scope": "e44_core_v1",
+    "sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295"
+  },
+  "selection_rule": [
+    "exclude_semantic_or_resource_failure_rate_above_5_percent",
+    "rank_by_family_mean_paired_ITT_gate_reduction",
+    "retain_within_0.25_percentage_points_of_best",
+    "choose_lower_median_runtime",
+    "if_runtime_within_10_percent_choose_smaller_state_budget_then_horizon_then_beam"
+  ],
+  "source_contract": {
+    "e39_families": 15,
+    "e39_path": "data/v12/e39_development_grid/inputs.csv",
+    "e39_sha256": "0b9bd90e3972c520c2fffa5c19c2b042d42c053166b3d9fe17fc79186fe7d077",
+    "e39_unique_inputs": 391,
+    "e44_cases": 1024,
+    "e44_path": "data/v13/e44_certified_landscape_oracle/inputs.jsonl",
+    "e44_sha256": "dc852fb80ff76bcf467f5964c63df9ff2a38253ddc5d5028335b10dd8c4eae47"
+  },
+  "status": "DEVELOPMENT_ONLY"
+}

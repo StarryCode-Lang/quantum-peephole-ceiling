@@ -1,0 +1,55 @@
+{
+  "status": "BLOCKED_S5_RESOURCE_GATE",
+  "experiment_id": "E45_CERTIFIED_ESCAPE_DEVELOPMENT_V1",
+  "phase": "screening",
+  "source_count": 128,
+  "source_breakdown": {
+    "e39_screening_inputs": 96,
+    "e44_screening_cases": 32,
+    "e39_total_available": 391,
+    "e44_total_available": 1024
+  },
+  "configuration_count": 18,
+  "arm_count": 6,
+  "result_rows": 13824,
+  "resource_gate": {
+    "required_max_failure_rate": 0.05,
+    "certificate_guided_escape_eligible_configurations": 0,
+    "certificate_guided_escape_max_observed_failure_rate": 0.6328125,
+    "reason": "The bounded landscape implementation records resource-bounded cells for inputs exceeding the precheck gate-or-qubit work budget; no configuration satisfies the preregistered resource eligibility gate."
+  },
+  "zero_tolerance_checks": {
+    "semantic_failure_count": 0,
+    "exact_local_claim_for_resource_bound": false,
+    "future_panel_access": false,
+    "independent_verifier": "scripts/verify_e45_development_grid.py",
+    "independent_verifier_status": "PASS"
+  },
+  "artifacts": {
+    "protocol": {
+      "path": "data/v13/e45_development_grid/protocol.json",
+      "sha256": "e34c5a530c6248b62cf1576645ff98aac54bea15c97831691b5798bee4442759"
+    },
+    "normalization_manifest": {
+      "path": "data/v13/e45_development_grid/normalization_manifest.csv",
+      "sha256": "629b5738e4bb68fb3757d7dad420d5d8637b4ae79c94c2606660da17e0d8ad3f"
+    },
+    "grid_results": {
+      "path": "data/v13/e45_development_grid/grid_results.csv",
+      "sha256": "44d3424baf47f70d330acacc19647d3f72701d7e84262d81945876178a6fc7d9"
+    },
+    "config_summaries": {
+      "path": "data/v13/e45_development_grid/config_summaries.json",
+      "sha256": "e6b1c2af58eea78311776ff8966ff3dc8681220a49fca590f942451a0951fcba"
+    },
+    "selection": {
+      "path": "data/v13/e45_development_grid/selection.json",
+      "sha256": "437a9b7f3a2c2a2543c154139d7af9597cb5d5a390621059be9d610a77c4590d"
+    },
+    "receipt": {
+      "path": "data/v13/e45_development_grid/receipt.json",
+      "sha256": "4f5b288c11c3d8acd4df61cac22d3ef5fc493f2d85accca753fbf0b6db4c6550"
+    }
+  },
+  "stop_rule": "E46 and later panels remain unopened; no M0 configuration is frozen and no confirmatory or final result is claimed."
+}
