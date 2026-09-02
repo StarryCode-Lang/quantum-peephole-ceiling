@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0.0",
+  "status": "PASS_STAGE_S0_BASELINE",
+  "scope_boundary": "Stage S0 only; no manuscript changes, no v13 method implementation, and no changes to E31 raw inputs.",
+  "branch": "codex/certified-rewrite-landscape-v13",
+  "worktree": "D:/Desktop/Q-research-certified-landscape-v13",
+  "baseline": {
+    "fixed_commit": "e4250beec73da9404323fb92ea2fc1549ea838ba",
+    "master_commit": "e4250beec73da9404323fb92ea2fc1549ea838ba",
+    "origin_master_commit": "e4250beec73da9404323fb92ea2fc1549ea838ba",
+    "tracked_tree_clean_at_start": true,
+    "baseline_ancestor_verified": true
+  },
+  "v12_state_migration": {
+    "state_file": "docs/review/v12_execution_state.json",
+    "status": "MERGED_AND_WORKTREE_REMOVED",
+    "historical_worktree": "D:/Desktop/Q-research-rewrite-exposure",
+    "historical_branch": "codex/rewrite-exposure-v12",
+    "worktree_present": false
+  },
+  "capsule": {
+    "path": "release/prepaper_restore_capsule.zip",
+    "sha256": "306e3aae552e4c55972148ebd4b48a4b84afd440531acaa0a9679df7002fe1ba",
+    "inner_manifest_sha256": "33909547430ede4c439a6a1090a45e3f712c1c84bf0c080265ded81f850585ef",
+    "archive_members": 35043,
+    "payload_entries": 35042
+  },
+  "derived_evidence": {
+    "metric_registry": {
+      "path": "docs/review/metric_evidence_registry_2026-08-26.json",
+      "sha256": "cea89f323db1f71f7a7d4fb2f712367257f20c3549b14dc3291cd1cc1cbfc1e9"
+    },
+    "metric_ledger": {
+      "path": "docs/review/metric_audit_ledger_2026-08-24.csv",
+      "sha256": "91bdc354dce0f0b11c1b0e9ee9d08574200a4f6720c0bd59b7ba4e658de09fdc",
+      "rows": 592,
+      "status_counts": {
+        "PASS": 182,
+        "PARTIAL": 353,
+        "FAIL": 24,
+        "EXTERNAL": 4,
+        "NA": 29
+      }
+    },
+    "metric_audit_summary": {
+      "path": "docs/review/metric_audit_summary_2026-08-24.json",
+      "sha256": "9a1b476989c3ac3b0f558925cbca611e0a1d1bd1e8b6ffb8e6730cfeaef010cf"
+    },
+    "metric_audit_resolution": {
+      "path": "docs/review/metric_audit_resolution_2026-08-24.md",
+      "sha256": "e174f2222af1349d24ddb2e1106880379df7034ee1a61b00f36bd816b6c540fa"
+    },
+    "readiness_verdict": {
+      "path": "release/prepaper_readiness_verdict.json",
+      "sha256": "50ae13f46f9e8635fecbf82515413c1120f0322b77c45296b82592135c016777",
+      "verdict": "READY_FOR_PAPER_WRITING_WITH_BOUNDARIES"
+    }
+  },
+  "environment": {
+    "python_executable": "D:/Downloads/miniforge3/python.exe",
+    "python_version": "3.12.12",
+    "compileall_exit_code": 0
+  },
+  "tests": {
+    "command": "D:/Downloads/miniforge3/python.exe -m pytest -q --junitxml release/pytest_junit.xml",
+    "collected": 595,
+    "passed": 595,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "junit_sha256": "be96d091232351cb1cd71a092cd91c713e68c982d6efecd2d42e25182869af65"
+  },
+  "independent_metric_verification": {
+    "status": "VERIFIED_INDEPENDENT_REGISTRY_V2",
+    "rows": 592,
+    "status_counts": {
+      "PASS": 182,
+      "PARTIAL": 353,
+      "FAIL": 24,
+      "EXTERNAL": 4,
+      "NA": 29
+    },
+    "ledger_sha256": "91bdc354dce0f0b11c1b0e9ee9d08574200a4f6720c0bd59b7ba4e658de09fdc",
+    "registry_sha256": "cea89f323db1f71f7a7d4fb2f712367257f20c3549b14dc3291cd1cc1cbfc1e9"
+  },
+  "archive_restore": {
+    "status": "PASS_LAYERED_ARCHIVE_RESTORE_TEST",
+    "archive_members_extracted": 35043,
+    "restored_files_verified": 35042,
+    "verifier_exit_code": 0,
+    "isolated_python_flag": "-I",
+    "temporary_directory_removed_after_test": true,
+    "verifier_relative_path": "scripts/verify_prepaper_release_manifest.py",
+    "verifier_receipt": {
+      "csv_rows": 511512,
+      "e31_formal_checks": 34134,
+      "e31_independent_receipt_checks": 24,
+      "e31_structural_semantic_cells_recomputed": 6858,
+      "external_lineage_checks": 15,
+      "metric_ledger_rows_verified": 592,
+      "nested_audit_hashes_verified": 31,
+      "numeric_columns_checked_for_infinity": 1590,
+      "python_files_dependency_audited": 126,
+      "status": "verified"
+    }
+  },
+  "failure_boundary": "The historical pre-paper verdict remains bounded; S1-S5 v13 claims are not implemented or validated by this receipt."
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "project": "Q-research v13 certified rewrite landscape",
+  "status": "STAGE_S0_PASS",
+  "manuscript_modified": false,
+  "historical_e1_e37_modified": false,
+  "active_worktree": "D:/Desktop/Q-research-certified-landscape-v13",
+  "active_branch": "codex/certified-rewrite-landscape-v13",
+  "baseline_commit": "e4250beec73da9404323fb92ea2fc1549ea838ba",
+  "stage_0": {
+    "status": "PASS",
+    "receipt": "docs/review/v13_s0_baseline_receipt.json",
+    "hard_gate": "595 passed, 0 failed, 0 skipped",
+    "compileall": "PASS",
+    "metric_registry": "docs/review/metric_evidence_registry_2026-08-26.json",
+    "metric_ledger": "docs/review/metric_audit_ledger_2026-08-24.csv",
+    "independent_verifier": "VERIFIED_INDEPENDENT_REGISTRY_V2",
+    "capsule_restore": "PASS_LAYERED_ARCHIVE_RESTORE_TEST",
+    "v12_state_migration": "MERGED_AND_WORKTREE_REMOVED"
+  },
+  "stage_1": {
+    "status": "PENDING",
+    "precondition": "stage_0_pass"
+  },
+  "v13_method": {
+    "status": "NOT_IMPLEMENTED",
+    "rules_frozen": false,
+    "certificates_available": false
+  },
+  "historical_v12": {
+    "state": "MERGED_AND_WORKTREE_REMOVED",
+    "worktree": "D:/Desktop/Q-research-rewrite-exposure",
+    "branch": "codex/rewrite-exposure-v12",
+    "worktree_present": false,
+    "state_file": "docs/review/v12_execution_state.json"
+  }
+}
