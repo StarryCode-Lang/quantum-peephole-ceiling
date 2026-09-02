@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "status": "DRAFT_UNTIL_E44",
+  "method": "certified_rewrite_landscape",
+  "state_key": ["ordered_gate_listing", "original_qubit_indices", "angles_mod_2pi"],
+  "action_order": ["rule_id", "location", "binding", "post_hash"],
+  "exact_search": ["complete_bfs", "barrier_threshold_enumeration"],
+  "propositions": [
+    "P1_edge_soundness",
+    "P2_contextual_closure",
+    "P3_replay_implication",
+    "P4_bfs_and_barrier_correctness",
+    "P5_horizon_monotonicity"
+  ],
+  "proposition_status": "draft_until_E44",
+  "statuses": [
+    "EXACT_ESCAPE",
+    "EXACT_H_LOCAL_OPTIMUM",
+    "WITNESS_CERTIFIED_SEARCH_INCOMPLETE",
+    "RESOURCE_BOUNDED_NO_WITNESS",
+    "UNSUPPORTED_INPUT",
+    "INVALID_RULE_LIBRARY",
+    "SEMANTIC_FAILURE"
+  ],
+  "no_improvement_explanations": [
+    "RULE_LIBRARY_GAP",
+    "H_INSUFFICIENT",
+    "RESOURCE_TRUNCATED",
+    "HEURISTIC_OMISSION",
+    "GREEDY_FAILURE"
+  ],
+  "manuscript_modified": false
+}

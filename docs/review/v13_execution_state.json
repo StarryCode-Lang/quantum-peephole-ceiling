@@ -43,6 +43,15 @@
     "independent_generation_byte_identical": true,
     "stage_commit": "3441b313380d8e8c09606b7487588699ece5c256"
   },
+  "stage_3": {
+    "status": "PASS_METHOD_CONTRACT_DRAFT",
+    "precondition": "stage_2_pass_e43_zero_tolerance",
+    "contract": "docs/review/v13_method_contract_draft.md",
+    "machine_contract": "data/v13/v13_method_contract.json",
+    "receipt": "docs/review/v13_stage3_theory_receipt.json",
+    "proposition_status": "draft_until_E44",
+    "manuscript_modified": false
+  },
   "v13_method": {
     "status": "NOT_IMPLEMENTED",
     "rules_frozen": false,
