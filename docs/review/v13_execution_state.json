@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "project": "Q-research v13 certified rewrite landscape",
-  "status": "STAGE_S0_PASS",
+  "status": "STAGE_S1_PASS_WITH_BOUNDARIES",
   "manuscript_modified": false,
   "historical_e1_e37_modified": false,
   "active_worktree": "D:/Desktop/Q-research-certified-landscape-v13",
@@ -16,11 +16,18 @@
     "metric_ledger": "docs/review/metric_audit_ledger_2026-08-24.csv",
     "independent_verifier": "VERIFIED_INDEPENDENT_REGISTRY_V2",
     "capsule_restore": "PASS_LAYERED_ARCHIVE_RESTORE_TEST",
-    "v12_state_migration": "MERGED_AND_WORKTREE_REMOVED"
+    "v12_state_migration": "MERGED_AND_WORKTREE_REMOVED",
+    "stage_commit": "02553f7f2c1a9c50cca540bc5e6497bf90b16011"
   },
   "stage_1": {
-    "status": "PENDING",
-    "precondition": "stage_0_pass"
+    "status": "PASS_WITH_BOUNDARIES",
+    "precondition": "stage_0_pass",
+    "receipt": "docs/review/v13_stage1_novelty_receipt.json",
+    "matrix": "docs/review/v13_novelty_comparison_matrix.md",
+    "searched_on": "2026-09-02",
+    "substantive_isomorphism_found": false,
+    "closest_threat": "QALM's explicit exploration-depth parameter and local-minimum escape workflow",
+    "boundary": "No required comparator was found to publish all three of minimum escape depth, minimum barrier height, and replayable step proof for a fixed gate listing under a declared rewrite rule contract."
   },
   "v13_method": {
     "status": "NOT_IMPLEMENTED",

@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0.0",
+  "status": "PASS_WITH_BOUNDARIES",
+  "stage": "S1_NOVELTY_RED_TEAM",
+  "searched_on": "2026-09-02",
+  "comparison_matrix": "docs/review/v13_novelty_comparison_matrix.md",
+  "comparison_matrix_sha256": "6f321e81652b9b99d7c787dae8beeb215844ef5c617eeef2a99ff881e7b34b2f",
+  "candidate_object": "minimum escape depth, minimum barrier height, H-local-optimum classification, and replayable step certificates for a fixed ordered unitary gate listing under a frozen finite rewrite library",
+  "databases": [
+    "arXiv abstract and HTML full text",
+    "ACM/DOI and QuICS publication pages",
+    "IBM Quantum documentation",
+    "official GitHub repositories and artifacts"
+  ],
+  "fixed_queries": [
+    "quantum circuit rewrite landscape barrier certificate",
+    "minimum escape depth circuit rewriting",
+    "local minima quantum circuit optimizer",
+    "bounded rewrite reachability certificate",
+    "proof-carrying quantum circuit optimization",
+    "representation-conditioned rewrite landscape"
+  ],
+  "required_comparators": [
+    "QALM",
+    "Quasar",
+    "Quartz",
+    "GUOQ",
+    "cut-and-meld / Local Optimization of Quantum Circuits",
+    "Q-PreSyn",
+    "QuTuner",
+    "SSR",
+    "HOPPS",
+    "MILP exact synthesis / QuantumCircuitOpt"
+  ],
+  "additional_comparators": [
+    "Qiskit DAGDependency / exact pattern matching",
+    "VOQC"
+  ],
+  "claims_red_teamed": [
+    "minimum escape depth within H",
+    "minimum barrier height within H",
+    "exhaustive H-local-optimum classification",
+    "stepwise semantic replay certificate",
+    "representation-conditioned rewrite landscape"
+  ],
+  "result": {
+    "substantive_isomorphism_found": false,
+    "closest_threat": "QALM's explicit exploration-depth parameter and local-minimum escape workflow",
+    "closest_certification_precedents": [
+      "Quartz symbolic transformation verification",
+      "HOPPS block-level SAT optimality",
+      "MILP exact synthesis depth optimality",
+      "VOQC Coq semantic transformation proofs"
+    ],
+    "hard_rule_applied": "No required comparator was found to expose minimum escape depth, minimum barrier height, and a replayable step proof for one fixed ordered listing under one explicit rewrite contract.",
+    "novelty_status": "PASS_WITH_BOUNDARIES"
+  },
+  "threat_boundaries": [
+    "QALM's k is a chosen/progressively advanced exploration depth, not a minimum escape-depth certificate.",
+    "Exact synthesis optimality is not rewrite-landscape optimality from a fixed listing.",
+    "Semantic verification of a rewrite does not certify exhaustive reachability or the absence of an improving path.",
+    "All later claims must remain bounded by the frozen rule library, representation, horizon, and resource status."
+  ],
+  "primary_sources": [
+    "https://arxiv.org/html/2606.16221",
+    "https://www.quics.umd.edu/publications/equality-saturation-quantum-circuit-optimization",
+    "https://arxiv.org/abs/2204.09033",
+    "https://github.com/qqq-wisc/guoq",
+    "https://arxiv.org/abs/2502.19526",
+    "https://arxiv.org/abs/2601.19738",
+    "https://arxiv.org/html/2607.04586",
+    "https://arxiv.org/abs/2503.03227",
+    "https://arxiv.org/html/2511.18770",
+    "https://arxiv.org/html/2510.00649",
+    "https://qiskit.qotlabs.org/docs/api/qiskit/qiskit.dagcircuit.DAGDependency",
+    "https://arxiv.org/abs/1912.02250"
+  ],
+  "decision": "Proceed to S2 with the stated boundaries; stop or narrow the contribution if rule import or certificate semantics become substantively isomorphic to an existing object."
+}
