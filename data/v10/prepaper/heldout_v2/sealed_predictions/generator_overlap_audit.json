@@ -1,0 +1,110 @@
+{
+  "family_name_overlap": [],
+  "generator_ast_overlap": [],
+  "input_hash_overlap_count": 0,
+  "mechanism_rationale": {
+    "ButterflyMixingNetwork": {
+      "distinction": "logarithmic-stride long-range interaction schedule rather than nearest-neighbour layers or QFT rotations",
+      "mechanism_id": "radix_two_long_range_butterfly_mixing"
+    },
+    "CoherentClauseNetwork": {
+      "distinction": "reversible random clause evaluation with phase kick and uncomputation, not Grover diffusion or ripple-carry addition",
+      "mechanism_id": "compute_phase_uncompute_boolean_clause_network"
+    },
+    "FermionicHoppingRing": {
+      "distinction": "RXX/RYY excitation hopping; not inverse mirroring, Ising brickwork, or a compiler family already used for training",
+      "mechanism_id": "number_conserving_xy_hopping_ring"
+    },
+    "HypergraphPhaseState": {
+      "distinction": "random weighted 2/3-body diagonal hyperedges rather than the v1 line Pauli gadget ladder",
+      "mechanism_id": "weighted_multi_body_hypergraph_phase"
+    },
+    "LinearReversibleNetwork": {
+      "distinction": "random linear reversible map synthesized by GF(2) row operations, not a CNOT chain or general Clifford sampler",
+      "mechanism_id": "gf2_row_operation_network_with_phase_tags"
+    },
+    "PermutationInterferometer": {
+      "distinction": "sampled permutation network embedded in noncommuting basis layers, not a circuit followed by its inverse",
+      "mechanism_id": "wire_permutation_between_phase_sensitive_bases"
+    },
+    "ReversibleCellularAutomaton": {
+      "distinction": "periodic CCX cellular update rule rather than Fredkin echo, arithmetic carry, or random Clifford generation",
+      "mechanism_id": "staggered_local_reversible_boolean_dynamics"
+    },
+    "SignalProcessingSequence": {
+      "distinction": "ordered signal-processing phase sequence; unlike v1 one-way controlled-rotation fanout",
+      "mechanism_id": "single_signal_alternating_controlled_rotation_sequence"
+    }
+  },
+  "new_execution_rows": 192,
+  "new_families": [
+    "FermionicHoppingRing",
+    "HypergraphPhaseState",
+    "ReversibleCellularAutomaton",
+    "PermutationInterferometer",
+    "SignalProcessingSequence",
+    "LinearReversibleNetwork",
+    "ButterflyMixingNetwork",
+    "CoherentClauseNetwork"
+  ],
+  "new_family_count": 8,
+  "new_generator_ast_sha256": {
+    "ButterflyMixingNetwork": "11ece4aea0ca1b8d8bf91a48f9888b17d6619f5be7cf6dc4f2c8e837d7b4d5c6",
+    "CoherentClauseNetwork": "fdcdc857373001442afd48194d5ddcd175707504d6b1eb50eaaa8b95ecaf586a",
+    "FermionicHoppingRing": "58e1680e60993f79869e447deedd88d4c7cb175fd9e96586585099718c001b4f",
+    "HypergraphPhaseState": "61d99d8aaf196aa53d254d45dfdcbb7b45630842ab20246cbf5879d0ab4056fa",
+    "LinearReversibleNetwork": "d297c2e7725b0ada34042111ab1baa5630a861cf59e655ccf64b7bacd11f4a2b",
+    "PermutationInterferometer": "7a9a3436b699380288d70996dd3780449dc6c10c421f4905f9c9ebd071ad6cad",
+    "ReversibleCellularAutomaton": "8e32cafce26c432f7a368746e67367319eed8d52a19e10e46afb9bf3fe29555c",
+    "SignalProcessingSequence": "0df0a7baed1c8a07ad5fdd2e2aee5ad4769c813800f95168b09f633950ca829b"
+  },
+  "new_unique_input_hashes": 192,
+  "per_family_unique_inputs": {
+    "ButterflyMixingNetwork": 24,
+    "CoherentClauseNetwork": 24,
+    "FermionicHoppingRing": 24,
+    "HypergraphPhaseState": 24,
+    "LinearReversibleNetwork": 24,
+    "PermutationInterferometer": 24,
+    "ReversibleCellularAutomaton": 24,
+    "SignalProcessingSequence": 24
+  },
+  "status": "PASS_BEFORE_ANY_HELDOUT_V2_OPTIMIZATION",
+  "training_families": [
+    "Adder",
+    "CNOT",
+    "GHZ",
+    "Grover",
+    "HaarRandom",
+    "HardwareEfficient",
+    "IQP",
+    "Oracle",
+    "QAOA",
+    "QFT",
+    "QuantumWalk",
+    "RandomClifford",
+    "SurfaceCode",
+    "UCCSD_inspired",
+    "VQE"
+  ],
+  "v1_generator_ast_sha256": {
+    "ClusterEcho": "3e21fe568d87a8bc83be411bf1b6dcc0976d5d97cd5f6c44923fba6ba6e6595b",
+    "ControlledRotationFanout": "c2de6374b4f0577211ab7d34a1486592d1ddb1cd97ccedf4a4eff1209b7b265e",
+    "DihedralAlternation": "f8d8671a5893b3ca71034000d43e0b3e801e56b12d90a1dc8ddcd788022ce79d",
+    "FredkinChain": "57f5de6996a4ee020a2ecb4033ab1a15e06d13577bdd87356c057dd65e44dbd0",
+    "IsingBrickwork": "8ce8cae72814261a6f7652f1db6e3f2ba48dfab3f0899adc7b8d881e38a2a059",
+    "MirrorRandom": "6215b78812b2a5c1958771475e689e9ed7227eb5bf4b40073981141e6a11ec0c",
+    "PauliGadgetLadder": "8e0ef4cda71836bc5a70d26e542e3589e7b93e73f68cbf26778eb3cf208229a9",
+    "SeparatedInverse": "e19b4510f4e5dfd0d70ed196c564b93e6231931819b93e61f49bc69ad50c43ae"
+  },
+  "v1_heldout_families": [
+    "ClusterEcho",
+    "ControlledRotationFanout",
+    "DihedralAlternation",
+    "FredkinChain",
+    "IsingBrickwork",
+    "MirrorRandom",
+    "PauliGadgetLadder",
+    "SeparatedInverse"
+  ]
+}

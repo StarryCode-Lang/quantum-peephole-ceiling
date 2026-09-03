@@ -1,0 +1,95 @@
+{
+  "purpose": "Record driver revisions across an atomically checkpointed formal run",
+  "segments": [
+    {
+      "completed_checkpoint_rows": 217,
+      "checkpoint_sha256_at_break": "2db369c051147288606cace6d232fea93bee850de3e067c97b1866cd5d30d03b",
+      "driver_source_sha256": "cee05f70e92be227af89b70069d06278e5c0295171b0fca5aa5282f2486b377c",
+      "execution_controls": "single worker; BLAS threads 1; subprocess.run direct-child timeout",
+      "disposition": "rows retained; inputs and algorithm contract valid",
+      "break_reason": "parent disappeared without traceback after repeated wrapper-child timeouts"
+    },
+    {
+      "starts_after_checkpoint_rows": 217,
+      "driver_source_sha256": "f379872f5d65250743b57bf2eb3285f677261780a140d5822cd34dd8faa47aec",
+      "execution_controls": "single worker; BLAS threads 1; stale outputs unlinked; Popen outer timeout terminates exact Windows PID tree",
+      "algorithm_change": false,
+      "input_or_outcome_change": false,
+      "completed_checkpoint_rows": 226,
+      "checkpoint_sha256_at_break": "95f33a88158be5cd7db72547eabd26e97d14404ee37cff2f16add3e2e904a14e",
+      "status": "retained_until_checkpoint_stall",
+      "break_reason": "worker advanced beyond a checkpoint whose timestamp remained fixed; parent was terminated before more uncheckpointed work accumulated"
+    },
+    {
+      "starts_after_checkpoint_rows": 226,
+      "driver_source_sha256": "c58ae2a372a8d8d00e9ca5e6f560806195790ca0e2dfb1e1e439c7274146d779",
+      "execution_controls": "segment-2 controls plus bounded exponential retry for Windows PermissionError during atomic checkpoint replacement",
+      "algorithm_change": false,
+      "input_or_outcome_change": false,
+      "completed_checkpoint_rows": 266,
+      "checkpoint_sha256_at_break": "d2c16e89f44dafbd1d788cbb6823667f4e6676cb738394c8b2401ad5179ab37b",
+      "status": "retained_after_parent_exit",
+      "break_reason": "parent process disappeared without traceback after atomically retaining 266 rows; stderr remained empty"
+    },
+    {
+      "starts_after_checkpoint_rows": 266,
+      "driver_source_sha256": "c58ae2a372a8d8d00e9ca5e6f560806195790ca0e2dfb1e1e439c7274146d779",
+      "execution_controls": "segment-3 controls; fresh detached host log pair; single worker",
+      "algorithm_change": false,
+      "input_or_outcome_change": false,
+      "completed_checkpoint_rows": 266,
+      "checkpoint_sha256_at_break": "d2c16e89f44dafbd1d788cbb6823667f4e6676cb738394c8b2401ad5179ab37b",
+      "status": "launch_exited_without_results",
+      "break_reason": "detached Windows host was reclaimed; stdout and stderr remained empty and checkpoint bytes were unchanged"
+    },
+    {
+      "starts_after_checkpoint_rows": 266,
+      "driver_source_sha256": "c58ae2a372a8d8d00e9ca5e6f560806195790ca0e2dfb1e1e439c7274146d779",
+      "execution_controls": "segment-3 controls; foreground process owned by the active task; single worker",
+      "algorithm_change": false,
+      "input_or_outcome_change": false,
+      "completed_checkpoint_rows": 370,
+      "checkpoint_sha256_at_break": "66d4351435888d5a42f1ca137918e74b7bbedcae7e282a6135ef5837178cec38",
+      "status": "retained_after_host_reclaim",
+      "break_reason": "active-task process cell disappeared at a continuation boundary without a final result; 370 atomically checkpointed rows retained",
+      "status_counts_at_break": {"ok": 307, "outer_timeout": 30, "error": 33}
+    },
+    {
+      "starts_after_checkpoint_rows": 370,
+      "driver_source_sha256": "c58ae2a372a8d8d00e9ca5e6f560806195790ca0e2dfb1e1e439c7274146d779",
+      "execution_controls": "segment-3 controls; foreground process owned by the active task; single worker",
+      "algorithm_change": false,
+      "input_or_outcome_change": false,
+      "completed_checkpoint_rows": 422,
+      "checkpoint_sha256_at_break": "5096e2830e977d65b351ab920f75a9234823ddb257c47df40f97ae3348746a97",
+      "status": "retained_after_host_reclaim",
+      "break_reason": "active-task process cell disappeared at the next continuation boundary; 422 atomically checkpointed rows retained",
+      "status_counts_at_break": {"ok": 349, "outer_timeout": 34, "error": 39}
+    },
+    {
+      "starts_after_checkpoint_rows": 422,
+      "driver_source_sha256": "c58ae2a372a8d8d00e9ca5e6f560806195790ca0e2dfb1e1e439c7274146d779",
+      "execution_controls": "segment-3 controls; foreground process owned by the active task; single worker",
+      "algorithm_change": false,
+      "input_or_outcome_change": false,
+      "completed_checkpoint_rows": 430,
+      "checkpoint_sha256_at_break": "eac0b970c8251269c6f26694b22bb1b879a62745d3373faa062751d9a720b0b3",
+      "status": "retained_after_checkpoint_exception_wait",
+      "break_reason": "checkpoint stopped advancing while pre-submitted futures continued during executor exception unwinding; exact PID tree terminated and only 430 atomically retained rows kept",
+      "status_counts_at_break": {"ok": 354, "outer_timeout": 36, "error": 40}
+    },
+    {
+      "starts_after_checkpoint_rows": 430,
+      "driver_source_sha256": "e27021d5e4b8a324f0b7c6ad4c88060d1bf1a3a0d58ae4e45847c587cccdce91",
+      "execution_controls": "single-worker sequential loop; no pre-submitted futures; process-tree timeout cleanup; ten-attempt atomic checkpoint retry",
+      "algorithm_change": false,
+      "input_or_outcome_change": false,
+      "completed_checkpoint_rows": 520,
+      "status": "complete",
+      "result_sha256": "de06547361f718bef9f76103fd085822263ff35a2897a87b1a874ed9fa3a1fd4",
+      "status_counts_final": {"ok": 428, "outer_timeout": 42, "error": 50},
+      "valid_exact_outputs_final": 408,
+      "invalid_itt_zero_final": 112
+    }
+  ]
+}

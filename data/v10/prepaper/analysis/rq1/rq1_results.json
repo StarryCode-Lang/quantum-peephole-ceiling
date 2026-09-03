@@ -1,0 +1,100 @@
+{
+  "equivalence_margin_pp": 1.0,
+  "estimand": "instance-weighted mean; cluster sign flips use cluster sums over fixed total n",
+  "input_sha256": {
+    "extended": "fbbae5095f32239ac2c7f30ae6cf9a5957ab8bd99df5f05c7ffb45eb827781fc",
+    "replication": "cbc2b78823a9e67c833842bb9af94f5f9f0663b224f71a3be7569328d67b5845"
+  },
+  "mixed_model": {
+    "converged": false,
+    "fallback": "family-outer instance-inner bootstrap plus cluster sign permutation",
+    "formula": "reduction_itt ~ listing_wcl",
+    "parameters": {
+      "Group Var": 4.434635878774723,
+      "Intercept": 0.06281651202240014,
+      "instance Var": 0.03922631130271863,
+      "listing_wcl": 0.059008639187167325,
+      "seed Var": 0.03922631130271863
+    },
+    "random_intercepts": [
+      "circuit_family",
+      "instance",
+      "seed"
+    ]
+  },
+  "multifamily_primary": {
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20260809,
+    "ci95_lower_pp": 2.0044769564420655,
+    "ci95_upper_pp": 10.615129772519369,
+    "cluster_aware_mde_80pct_power_pp": 6.211546081436215,
+    "cluster_sign_permutation_p": 0.017698230176982303,
+    "equivalence_ci90_lower_pp": 2.552128847391105,
+    "equivalence_ci90_upper_pp": 9.79061974442391,
+    "equivalent_within_plusminus_1pp": false,
+    "evidence": "multi-family canonical E19 extended",
+    "hodges_lehmann_pp": 3.84615384615384,
+    "inner_unit": "circuit_instance",
+    "n_outer_clusters": 16,
+    "n_pairs": 480,
+    "outer_cluster": "circuit_family",
+    "rank_biserial": 1.0,
+    "wcl_minus_lbl_mean_pp": 5.900863918716739,
+    "wcl_minus_lbl_median_pp": 0.0,
+    "wilcoxon_p_two_sided": 1.378857609773582e-41
+  },
+  "multiple_testing": "Holm across family-specific listing contrasts",
+  "output_sha256": {
+    "bootstrap_source": "dbdf43b9032cf96e8a77ed0c091ec2aafcc400836ddf78ac0e8a2905d8a0fa14",
+    "family_contrasts": "697e137fdee9bb7a0869ca926bbda0e0de0b7a79628289fbfaa7f05a0eb56cf6",
+    "leave_one_family_out": "6737d05d9d0c9ba31581fa8c4061ecd3a23428de3175af09528f7c075631d906"
+  },
+  "pilot": {
+    "input_sha256": "2f994fe3fe3801c6d0042f63e07705c9d0fd779eb4937bfa551e54f0f4ac5d6f",
+    "interpretation": "may probe listing-by-phase interaction but cannot confirm it",
+    "listings": [
+      "LBL",
+      "SHUFFLE",
+      "WCL"
+    ],
+    "n_rows": 396,
+    "n_source_circuits": 44,
+    "phases": [
+      "phase1",
+      "phase2a",
+      "phase2b"
+    ],
+    "status": "supporting_noncanonical_pilot_only"
+  },
+  "power_analysis": {
+    "alpha_two_sided": 0.05,
+    "caveat": "random-depth replication has one generator family and is supporting evidence",
+    "target_power": 0.8,
+    "type": "normal approximation using cluster-bootstrap standard error"
+  },
+  "protocol_sha256": "e47928f6f2edc0bace451fa47eee575dd3b241bc13d9e78e5900d43a279c5b6c",
+  "random_depth_replication": {
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20260819,
+    "ci95_lower_pp": 7.366600879607351,
+    "ci95_upper_pp": 8.192029023821473,
+    "cluster_aware_mde_80pct_power_pp": 0.5817048110199036,
+    "cluster_caveat": "single generator family: depth strata are a sensitivity resampling unit, not independent generator-family clusters",
+    "cluster_sign_permutation_p": 9.999000099990002e-05,
+    "equivalence_ci90_lower_pp": 7.464427622757496,
+    "equivalence_ci90_upper_pp": 8.141350417725937,
+    "equivalent_within_plusminus_1pp": false,
+    "evidence": "independent 5000-pair random-depth replication",
+    "hodges_lehmann_pp": 7.848837209302324,
+    "inner_unit": "circuit_instance",
+    "n_outer_clusters": 50,
+    "n_pairs": 5000,
+    "outer_cluster": "depth_cluster",
+    "rank_biserial": 1.0,
+    "wcl_minus_lbl_mean_pp": 7.828503893953923,
+    "wcl_minus_lbl_median_pp": 7.9166666666666705,
+    "wilcoxon_p_two_sided": 0.0
+  },
+  "source_sha256": "ca1e3905437255fce722f3e7ce462cb9b9ae5123f6752e384675abdcfcf1576e",
+  "status": "complete"
+}

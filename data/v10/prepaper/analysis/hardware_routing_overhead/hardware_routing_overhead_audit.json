@@ -1,0 +1,117 @@
+{
+  "artifact": {
+    "path": "data/v10/prepaper/analysis/hardware_routing_overhead/hardware_routing_cells.csv",
+    "rows": 48,
+    "sha256": "aa26ec224ad659e7cfc9c86b5322aa37ba1580105394d4dd12f009d27321d52b"
+  },
+  "claim_boundary": "Three reconstructed circuits, four logical versions, two archived fake-backend snapshots, identity initial layout, SABRE routing, and Qiskit transpiler levels 0/1 only. The all-to-all comparison is a compiler counterfactual; results are not real-QPU communication, pulse, latency, crosstalk, or broad-topology evidence.",
+  "communication_nonlocal_operations": {
+    "cells_with_nonlocal_operations": 32,
+    "definition": "logical two-qubit instructions whose operands have undirected shortest-path distance greater than one under the frozen identity layout",
+    "excess_edge_hop_count_range": [
+      0,
+      9
+    ],
+    "maximum_logical_2q_distance": 3,
+    "nonlocal_2q_count_range": [
+      0,
+      9
+    ]
+  },
+  "created_utc": "2026-08-30T05:01:12.828240+00:00",
+  "design": {
+    "all_archived_routing_cells_replayed_exactly": true,
+    "backend_snapshots": [
+      "FakeManilaV2",
+      "FakeNairobiV2"
+    ],
+    "circuits": 3,
+    "design_cells": 48,
+    "logical_versions": 12,
+    "transpile_levels": [
+      0,
+      1
+    ]
+  },
+  "metric_dispositions": {
+    "16.17": "PARTIAL: commutation_phase2 and hybrid_phase1_2 each reduce mapped native two-qubit gates in 4 of 12 paired fake-backend cells (maximum 2 gates) with no paired increases, but no real-QPU duration reduction is measured",
+    "9.14": "PASS: identity-layout nonlocal two-qubit operation count and excess edge-hop count are directly reported for all 48 bounded design cells",
+    "9.16": "PASS: paired topology-constrained versus all-to-all native two-qubit gate and depth overhead are directly reported for all 48 bounded design cells"
+  },
+  "physical_native_2q_reduction_vs_original": {
+    "all_paired_increases_absent": true,
+    "by_version": [
+      {
+        "equal_cells": 8,
+        "increased_cells": 0,
+        "mean_reduction_gates": 0.6666666666666666,
+        "paired_cells": 12,
+        "reduced_cells": 4,
+        "reduction_gate_range": [
+          0,
+          2
+        ],
+        "version": "commutation_phase2"
+      },
+      {
+        "equal_cells": 12,
+        "increased_cells": 0,
+        "mean_reduction_gates": 0.0,
+        "paired_cells": 12,
+        "reduced_cells": 0,
+        "reduction_gate_range": [
+          0,
+          0
+        ],
+        "version": "greedy_phase1"
+      },
+      {
+        "equal_cells": 8,
+        "increased_cells": 0,
+        "mean_reduction_gates": 0.6666666666666666,
+        "paired_cells": 12,
+        "reduced_cells": 4,
+        "reduction_gate_range": [
+          0,
+          2
+        ],
+        "version": "hybrid_phase1_2"
+      }
+    ],
+    "definition": "original routed native two-qubit gates minus optimized-version routed native two-qubit gates at the same circuit, backend snapshot, and transpiler optimization level",
+    "paired_cells": 36,
+    "pairing_key": [
+      "circuit_id",
+      "backend_name",
+      "transpile_optimization_level"
+    ],
+    "versions_with_any_reduction": [
+      "commutation_phase2",
+      "hybrid_phase1_2"
+    ]
+  },
+  "routing_overhead": {
+    "all_level_0_overheads_nonnegative": true,
+    "all_levels_native_2q_gate_overhead_range": [
+      0,
+      9
+    ],
+    "counterfactual": "all-to-all connectivity with the same rz/sx/x/cx basis, transpiler optimization level, and seed",
+    "level_0_native_2q_gate_overhead_range": [
+      0,
+      9
+    ],
+    "level_0_native_2q_gate_overhead_ratio_range": [
+      0.0,
+      6.0
+    ],
+    "positive_overhead_cells": 32
+  },
+  "schema_version": "1.0.0",
+  "source_bindings": {
+    "data/v10/prepaper/hardware_validation/ehw_metadata_full_20260811_123958.json": "49f6a6b29db7fc2f89c542175a2ab6c2b96adac7f0c7f0520b542c7e4e0f3930",
+    "data/v10/prepaper/hardware_validation/ehw_runs_full_20260811_123958.csv": "906ff8790b9bf2ed8b29478f058b12fd3a9f6d569e701e156090bb5b00d2c879",
+    "experiments/hardware_validation/run.py": "43d533ce493a6b120484ece8ade2c5f1dd904e1ba570ee514279d7d1e6eab695"
+  },
+  "status": "PASS_BOUNDED_FAKE_BACKEND_ROUTING_AUDIT"
+}

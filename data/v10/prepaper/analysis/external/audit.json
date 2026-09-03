@@ -1,0 +1,27 @@
+{
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 20260810,
+  "estimand": "unique-input-weighted mean; repeated executions remain operational rows",
+  "inner_unit": "unique input_circuit_sha256 within family",
+  "input_sha256": {
+    "quartz": "da3a3a50fd8d6a50a1e8452a61e6eb3442670601e574f1e8956a45caaae86a85",
+    "quasar": "54542229e9d11a913b2473b9c9e9f1e49ef9e5ae54efd16f54b09e4acb29f884"
+  },
+  "manifest_sha256": "64492983c3c4773156a9d54e6bbe578baf52d2e398f58b7254a04e045438202a",
+  "methods": [
+    "quasar",
+    "quartz"
+  ],
+  "multiple_testing": "Holm across validity and gate-reduction endpoints for the one external-method pair",
+  "n_per_method": 520,
+  "outer_cluster": "circuit_family",
+  "output_sha256": {
+    "external_bootstrap_source_10000.csv": "2cd61532be039760fd1a529b1b8efa11a6a3bf32592ae2d6dd5d96603c1cf5f3",
+    "external_family_diagnostics.csv": "e5ca19bb583dd597b97e9e403dd93bcad75ed76f82a8eaf6b2575343bde0b001",
+    "external_pairwise.csv": "94f2550592a60eae42e9d7e698b2b8a23c7e46cfef42a466338b96bd9b4d95fe",
+    "external_summary.csv": "cca6287923704eda9fa2133ce8473ff95057f77c70304d0b6b28a6f44baa427a"
+  },
+  "source_sha256": "b82c55d8a84e5987127d1d63ad1d7951afcbae5a61dae070f6591d5ca7577cf1",
+  "status": "complete",
+  "upstream_source_manifest_sha256": "3ab0bff77d9d39fa95920fae54094fb8e207cd2895e5642ec8305935c90db841"
+}

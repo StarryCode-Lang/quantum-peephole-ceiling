@@ -1,0 +1,71 @@
+{
+  "calibration": {
+    "equal_count_bins": 10,
+    "expected_calibration_error": 0.09014665439682036,
+    "glm_converged": true,
+    "intercept": 2.8030457573174554,
+    "intercept_ci95_high": 4.439951093517951,
+    "intercept_ci95_low": 1.1661404211169595,
+    "slope": 1.4660851972198778,
+    "slope_ci95_high": 2.1877540423456665,
+    "slope_ci95_low": 0.7444163520940891
+  },
+  "calibration_bins_csv": "data/v10/prepaper/heldout/analysis/calibration_null/calibration_bins.csv",
+  "calibration_bins_csv_sha256": "e609a363ebff11430f32c02b759d9d512506eb6f830202662d4e44a4682dd073",
+  "created_utc": "2026-08-29T06:36:52.869113+00:00",
+  "exact_family_block_label_permutation": {
+    "exact_assignments": 56,
+    "exact_inclusive_p_values": {
+      "auroc_greater_or_equal": 0.017857142857142856,
+      "brier_less_or_equal": 0.017857142857142856,
+      "mcc_greater_or_equal": 0.17857142857142858
+    },
+    "null": "five positive family labels assigned across all choose(8,5)=56 family-block allocations; predictions fixed",
+    "observed_equal_family_metrics": {
+      "auroc": 1.0,
+      "brier": 0.07825481976455692,
+      "mcc": 0.6
+    },
+    "positive_families_per_assignment": 5,
+    "requested_monte_carlo_permutations_not_used": 20000
+  },
+  "execution_rows": 240,
+  "families": 8,
+  "figure_pdf": "data/v10/prepaper/heldout/analysis/calibration_null/reliability_diagram.pdf",
+  "figure_pdf_sha256": "d10f2fc4b1ce2f05480d86627206a3ce4b5cde702a2d6bacc16f818b3e99df77",
+  "figure_png": "data/v10/prepaper/heldout/analysis/calibration_null/reliability_diagram.png",
+  "figure_png_sha256": "4d9fe4969d03bd5f3b2e361ac2490787c38d21d6fb102aaa640f83334dd18f88",
+  "interpretation": "Predictions, labels, and threshold remain sealed. Calibration and null comparisons are post-seal diagnostics and do not refit or select the classifier.",
+  "limitations": [
+    "Only eight held-out generator families and 186 unique circuit hashes are available.",
+    "The prevalence baseline uses the sealed evaluation prevalence and is a diagnostic no-information reference, not a deployable prior estimate.",
+    "All observed labels are constant within family, so within-family permutation is degenerate; the audit therefore uses exact whole-family label allocation.",
+    "The exact null has only 56 allocations, so attainable p-values are discrete and family-level power is limited."
+  ],
+  "no_information_baseline": {
+    "accuracy": 0.6612903225806451,
+    "auroc": 0.5,
+    "balanced_accuracy": 0.5,
+    "brier": 0.22398543184183145,
+    "definition": "constant observed sealed-panel prevalence probability plus majority class",
+    "log_loss": 0.6401759023504382,
+    "mcc": 0.0,
+    "prevalence_probability": 0.6612903225806451
+  },
+  "observed_positive_prevalence": 0.6612903225806451,
+  "permutation_csv": "data/v10/prepaper/heldout/analysis/calibration_null/exact_family_block_label_permutations.csv",
+  "permutation_csv_sha256": "f6efdeca96cd0cade58ceba95f4dcc2ea97617cb9de73bacec1509af25684e18",
+  "schema_version": "1.0.0",
+  "sealed_model_metrics": {
+    "accuracy": 0.8978494623655914,
+    "auroc": 0.9858046199509614,
+    "balanced_accuracy": 0.9227642276422765,
+    "brier": 0.07273853588464561,
+    "log_loss": 0.2299809616771911,
+    "mcc": 0.8059859337491857
+  },
+  "sealed_prediction_sha256": "f59733708b54ebd605a03940d5aede1b06b9efbc0df310283674b42beb1e5967",
+  "source_sha256": "862324903410639564ad999c8c3a21a2c0649815b43abc9afe2b845e00298332",
+  "status": "PASS_HELDOUT_CALIBRATION_NULL_BASELINE_AND_LABEL_PERMUTATION_COMPLETE",
+  "unique_inputs": 186
+}

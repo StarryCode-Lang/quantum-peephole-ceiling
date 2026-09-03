@@ -1,0 +1,131 @@
+{
+  "experiment_id": "E26_phase2b_full_v8",
+  "version": "2.0.0",
+  "description": "Phase-2b full-scale validation with the v2.0.0 template matcher (extended Clifford + phase-polynomial library). Grid: BV full n=3..10 x 10 secrets; depth families full factor n=3..10 x depth={20..50 step 5} x 3 seeds (wave-6 complete); other algorithmic families n={3,5,8} x 2 seeds.",
+  "timestamp": "2026-08-11T14:59:51.802639",
+  "canonical_data_file": "phase2b_full_validation_v8.csv",
+  "summary_files": [
+    "family_summary_v8.csv",
+    "core_question_v8.csv",
+    "bv_theory_v8.csv",
+    "bootstrap_ci_v8.csv"
+  ],
+  "chunk_files": [
+    "phase2b_v8_all_20260810_103009.csv",
+    "phase2b_v8_depth_fill2_20260810_103735.csv",
+    "phase2b_v8_depth_fill_20260810_103107.csv",
+    "phase2b_v8_qw8_20260810_104452.csv"
+  ],
+  "n_rows": 2427,
+  "n_families": 16,
+  "families": [
+    "Adder",
+    "BV",
+    "CNOT_chain",
+    "GHZ",
+    "Grover",
+    "HardwareEfficient",
+    "IQP",
+    "QAOA",
+    "QFT",
+    "QuantumWalk",
+    "RandomClifford",
+    "Structured",
+    "SurfaceCode",
+    "UCCSD_inspired",
+    "Universal",
+    "VQE"
+  ],
+  "optimizers": [
+    "commutation_phase2a",
+    "greedy_phase1",
+    "template_phase2b"
+  ],
+  "grid": {
+    "bv_sizes": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "bv_secrets_per_size": 10,
+    "stratified_sizes": [
+      3,
+      5,
+      8
+    ],
+    "stratified_depths": [
+      20,
+      35,
+      50
+    ],
+    "depth_family_seeds": [
+      1,
+      2,
+      3
+    ],
+    "algo_seeds": [
+      1,
+      2
+    ],
+    "base_seed": 45
+  },
+  "coverage": {
+    "bv_theorem_family": "FULL grid n=3..10 (8 sizes) x 10 secrets/size",
+    "depth_parameterized_families": "FULL factor grid n=3..10 x depth={20,25,30,35,40,45,50} (56/56 combos) x 3 seeds per depth family",
+    "other_algorithmic_families": "n={3,5,8} x 2 seeds (stratified); QuantumWalk covered at n=[3, 5, 8] (full stratified grid); n=8 rows use exact fidelity -- exact Operator fidelity measured at ~133 s/row for the 9-qubit, 36-MCX walk circuit exceeds the compute envelope (wave-4 gap-fill, chunk qw8)",
+    "fidelity_methods": {
+      "exact": 2285,
+      "exact_clifford": 62,
+      "sampled_global_haar": 80
+    }
+  },
+  "phase2b_template_matcher_version": "2.0.0",
+  "script_sha256": "29643a805559711b9eefaf64685aefe31a1fee2f60a7150c00728165541d4798",
+  "protocol_sha256": "e47928f6f2edc0bace451fa47eee575dd3b241bc13d9e78e5900d43a279c5b6c",
+  "provenance": {
+    "version": "2.0.0",
+    "run_id": "E26_phase2b_full_v8",
+    "git_commit": "d463d7a04ae22ec3ee9df9c97166ce5f007b36c0",
+    "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "package_versions": {
+      "qiskit": "2.4.1",
+      "numpy": "1.26.4",
+      "scipy": "1.13.1",
+      "pandas": "2.2.2"
+    },
+    "source_hashes": {
+      "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
+      "src/circuits/real_benchmarks.py": "5b3ed28ce5fa994d2a5b85836789dc38c2270a003a2b18f28efcdcb1551ca356",
+      "src/optimisation/base.py": "5724930d7a15f9891461ec33f752589f0f6ca03172f4d4d46359dfb80f2a33dd",
+      "src/optimisation/_gate_predicates.py": "c7c0c6a7c985e5e4f19b2699323679f94b3f5040376b9a3224d40364b6bf83f2",
+      "src/optimisation/ceiling_aware.py": "f0f8268617d0cd04459fcfaa767625eade353abe695286fd6ec78961af75cd4d",
+      "src/optimisation/phase1/greedy.py": "8fc2d8843cf015ee4b97194b2fdfd41a32cf1d1678f6793e5330c3fcfdac39e1",
+      "src/optimisation/phase1/random_local_search.py": "05c088abfadfda9cc145621214167a09cb3c0f8846182ed1323566fe1313fe20",
+      "src/optimisation/phase1/simulated_annealing.py": "a49a6fcbf22af73acd5508eafc6a770c55d3a36385821b22a8fe4dd89a6ee8f9",
+      "src/optimisation/phase1/genetic_algorithm.py": "886f423e44f3ad0ba142389f55f102ac87bf6d0ca98e427a2255d6f50d98a80e",
+      "src/optimisation/phase1/wire_traversal.py": "c78ce84f0ce8f5e5e1991d6322fed32817184959edb34569bdaa164126b457eb",
+      "src/optimisation/phase2/commutation_rewriter.py": "a53769804a1e7e5d6a1e02146e12dbe79774a011fca4fc0990755ced3475a83d",
+      "src/optimisation/phase2/template_matcher.py": "ca20a31e266fa0640a11b157f948f9826fa7baac02f230fe4983207d6b1997c8",
+      "analysis/structural_ceiling.py": "c36dbb5e951cf5fd7ea2e9655ada682d1bf05b9d2934e394ebba65bad57e5102",
+      "experiments/phase2b_full_validation.py": "29643a805559711b9eefaf64685aefe31a1fee2f60a7150c00728165541d4798"
+    }
+  },
+  "schema_version": "v8",
+  "confirmatory_analysis": {
+    "intention_to_treat_column": "analysis_reduction_itt",
+    "tests": "two-sided paired Wilcoxon",
+    "multiplicity": "Holm within E26 family",
+    "bootstrap": "family-outer instance-inner nested percentile",
+    "bootstrap_replicates": 10000,
+    "bootstrap_base_seed": 20260809
+  },
+  "theorems_validated": {
+    "Thm_9_BV_oracle": "all-ones construction achieves 2n/(3n+2); no global optimality claim: see bv_theory_v8.csv"
+  }
+}

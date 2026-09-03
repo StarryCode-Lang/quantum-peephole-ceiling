@@ -1,0 +1,72 @@
+{
+  "execution_artifact": {
+    "expected_md5": "8fe405b8f0dd61a48e7248d8bd0681b6",
+    "expected_sha256": "df09a32ea7d3df8e6c7877f833531f1f250d58590439cafcfc08d7a9a6ba8895",
+    "jar_name": "GUOQ-1.0-jar-with-dependencies.jar",
+    "observed_md5": "8fe405b8f0dd61a48e7248d8bd0681b6",
+    "observed_sha256": "df09a32ea7d3df8e6c7877f833531f1f250d58590439cafcfc08d7a9a6ba8895",
+    "rule_files_expected_sha256": {
+      "rules_q3_s3_nam_symb.txt": "a5c3923c75975d04a9e59fc93a6233d5bf6d015f365f95bc50a8ac2614470490",
+      "rules_q3_s6_nam.txt": "1e9c436f0261c9052b8b0a1b874095267cabdb60c4ef1b8c02950e8800499ba8"
+    },
+    "rule_files_observed_sha256": {
+      "rules_q3_s3_nam_symb.txt": "a5c3923c75975d04a9e59fc93a6233d5bf6d015f365f95bc50a8ac2614470490",
+      "rules_q3_s6_nam.txt": "1e9c436f0261c9052b8b0a1b874095267cabdb60c4ef1b8c02950e8800499ba8"
+    },
+    "rules_archive_expected_md5": "dc66b0b1b371374dd14bd85a0cf130e2",
+    "rules_archive_expected_sha256": "02345092cc2384d006ec9ced28df68329ced51cbddfade2181480eb96f9ffd76"
+  },
+  "full_resynthesis": {
+    "decision": "NOT_ASSESSED",
+    "reason": "rewrite-only smoke does not start the BQSKit/Python server"
+  },
+  "host": {
+    "docker_path": null,
+    "java_major": 21,
+    "java_path": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\qresearch-guoq-smoke\\jre21\\jdk-21.0.12+8-jre\\bin\\java.exe",
+    "java_version": "openjdk version \"21.0.12\" 2026-07-21 LTS\nOpenJDK Runtime Environment Temurin-21.0.12+8 (build 21.0.12+8-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.12+8 (build 21.0.12+8-LTS, mixed mode, sharing)",
+    "jre_distribution_used_for_recorded_smoke": {
+      "archive": "OpenJDK21U-jre_x64_windows_hotspot_21.0.12_8.zip",
+      "archive_sha256": "b8aa18fef5edb69bee8618f99677d66d0873d22cb40d974c15ac9ffcdecf73ba",
+      "vendor": "Eclipse Temurin",
+      "version": "21.0.12+8 LTS"
+    },
+    "logical_cpu_count": 8,
+    "machine": "AMD64",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "total_ram_gib": 15.788383483886719
+  },
+  "official_artifact_concept_doi": "10.5281/zenodo.14055562",
+  "official_artifact_doi": "10.5281/zenodo.14057840",
+  "official_container": {
+    "blockers": [
+      "docker_not_found",
+      "host_ram_below_official_32_GiB_recommendation"
+    ],
+    "decision": "NO_GO",
+    "official_platform": "linux/amd64",
+    "official_recommended_ram_gib": 32
+  },
+  "official_license": "Apache-2.0",
+  "official_repository": "https://github.com/qqq-wisc/guoq",
+  "official_source_commit": "8c4c3a5a6dfc9f7fc375ec16c2180139f0a8cb1a",
+  "recorded_at_utc": "2026-08-11T11:50:46Z",
+  "rewrite_only_smoke": {
+    "blockers": [],
+    "configuration": {
+      "gate_set": "NAM",
+      "heap_limit": "4g",
+      "non_symbolic_rules": "rules_q3_s6_nam.txt",
+      "objective": "TWO_Q",
+      "resynthesis": "NONE",
+      "symbolic_rules": "rules_q3_s3_nam_symb.txt"
+    },
+    "decision": "GO"
+  },
+  "schema_version": "1.0.0",
+  "scope": "go_no_go_only_no_shared_520",
+  "shared_520": {
+    "decision": "NOT_RUN",
+    "reason": "parent task authorizes go/no-go evidence only"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "status": "INVALID_RESOURCE_OVERLAP_EXCLUDED_FROM_CONFIRMATORY_ANALYSIS",
+  "reason": "heldout-v2 execution overlapped the still-active GUOQ BQSKit pilot Python/Java process tree, violating the frozen single-experiment resource-isolation contract",
+  "detected_local_time": "2026-08-11T20:09:00+08:00",
+  "heldout_v2_root_pid": 22692,
+  "heldout_v2_worker_pid": 23012,
+  "termination_evidence": {
+    "root_pid": "precisely identified by command line containing experiments/heldout_v2_execute.py and stopped by the coordinating root agent",
+    "worker_pid": "precisely identified as multiprocessing spawn_main with parent_pid=22692; explicitly stopped after the root process was absent",
+    "heldout_v2_processes_remaining_after_stop": 0
+  },
+  "formal_exclusion": {
+    "use_for_confirmatory_metrics": false,
+    "use_for_runtime_or_resource_metrics": false,
+    "resume_checkpoint_allowed": false,
+    "required_restart": "restart from the sealed 192-input manifest only after the GUOQ Python/Java tree has fully exited",
+    "canonical_result_directory": "data/v10/prepaper/heldout_v2/results",
+    "archive_is_outside_canonical_result_directory": true
+  },
+  "files": [
+    {"path": "execution/START_GATE_PRELAUNCH_SCHEMA_FAILURE.json", "rows": null, "bytes": 1767, "sha256": "61e6d874302871e00f68dfeb7c653c914caf2474b7c6bdb022d5a63bac7e4f89"},
+    {"path": "execution/START_GATE.json", "rows": null, "bytes": 1767, "sha256": "e33076bd63b64f63adfccc68d70e8f400752a97aac36d8a8b740547784b7662d"},
+    {"path": "results/metadata/cirq_default_metadata.json", "rows": null, "bytes": 3187, "sha256": "f741dc51f98021a7cad7b9794259b3e7a8cdcc6f9d005b6f7a026ede6c16c087"},
+    {"path": "results/metadata/custom_default_metadata.json", "rows": null, "bytes": 3200, "sha256": "a78b3fc77d0d3b8d421741aacd5b00b08b5c7eac8f5899f0792f219d52b77894"},
+    {"path": "results/metadata/qiskit_default_metadata.json", "rows": null, "bytes": 3193, "sha256": "5b6469b805781636dcf7b4bb9a39e7cb04c5ec595100061ae6ea97ed669fd852"},
+    {"path": "results/raw/cirq_default_20260811_120427_424423.csv", "rows": 192, "bytes": 164034, "sha256": "424a30c6fad0a7c42bc43f8a52e3c24682ab863a933144798abd510a3beaf635"},
+    {"path": "results/raw/custom_default_20260811_120319_810903.csv", "rows": 192, "bytes": 160021, "sha256": "e7b59652a2301d4b6d54e6676a8b3bbf0cda2c92dc9a28d25de6b76e154ab28e"},
+    {"path": "results/raw/qiskit_default_20260811_120350_657957.csv", "rows": 192, "bytes": 160655, "sha256": "66394aed98b0747c12d549c3ea37df7e4ae58c2d1e91030e7df8efdd4a6a3f51"},
+    {"path": "results/raw/tket_default_8187fd93db26_checkpoint.csv", "rows": 160, "bytes": 135748, "sha256": "0f9823e0a97ce238f1f1bcc039b6f7f4e3a7800494d997816416b3da2e00322b"}
+  ]
+}

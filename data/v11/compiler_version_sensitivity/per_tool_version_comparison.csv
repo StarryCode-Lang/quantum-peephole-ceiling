@@ -1,0 +1,4 @@
+tool,left_environment,right_environment,rows,structurally_identical_rows,all_rows_structurally_identical,left_success_rows,right_success_rows,left_exact_equivalent_rows,right_exact_equivalent_rows,left_runtime_median_seconds,right_runtime_median_seconds,runtime_role
+qiskit,qiskit-2.3.1,qiskit-2.4.1,15,15,True,15,15,15,15,0.0062417000008281,0.0058238999918103,descriptive only; one execution per panel circuit
+cirq,cirq-1.6.0,cirq-1.6.1,15,15,True,15,15,15,15,0.0847557999950368,0.077156700004707,descriptive only; one execution per panel circuit
+tket,pytket-2.17.0,pytket-2.18.0,15,15,True,15,15,15,15,0.177352200000314,0.1737185000092722,descriptive only; one execution per panel circuit

@@ -1,0 +1,169 @@
+{
+  "all_shared_scientific_rows_match": true,
+  "artifacts": {
+    "shared_key_comparison.csv": {
+      "rows": 560,
+      "sha256": "f506e759e8e16411eaea07325f61f91b78f7bf47a813948170386c387c135fdb"
+    }
+  },
+  "canonical_rows": 568,
+  "canonical_unique_keys": 568,
+  "claim_boundary": "This is E12-only cross-stack evidence. It is not Qiskit-version sensitivity, does not cover Cirq/tket/custom optimizers, does not reproduce E31 conclusions, and is not an independent platform or hardware replication.",
+  "created_utc": "2026-08-29T23:56:24.099633+00:00",
+  "environment_change": {
+    "canonical_packages": {
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "qiskit": "2.4.1",
+      "scipy": "1.15.3"
+    },
+    "canonical_python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+    "changed_source_hash_paths": [
+      "src/optimisation/_gate_predicates.py",
+      "src/optimisation/base.py",
+      "src/optimisation/ceiling_aware.py",
+      "src/optimisation/phase1/genetic_algorithm.py",
+      "src/optimisation/phase1/greedy.py",
+      "src/optimisation/phase1/random_local_search.py",
+      "src/optimisation/phase1/simulated_annealing.py",
+      "src/optimisation/phase1/wire_traversal.py",
+      "src/optimisation/phase2/commutation_rewriter.py",
+      "src/optimisation/phase2/template_matcher.py"
+    ],
+    "platform_strings": [
+      "Windows-10-10.0.26200-SP0",
+      "Windows-11-10.0.26200-SP0"
+    ],
+    "qiskit_version_changed": false,
+    "qiskit_versions": [
+      "2.4.1",
+      "2.4.1"
+    ],
+    "rerun_packages": {
+      "numpy": "1.26.4",
+      "pandas": "2.2.2",
+      "qiskit": "2.4.1",
+      "scipy": "1.13.1"
+    },
+    "rerun_python": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+    "shared_source_hashes": {
+      "analysis/structural_ceiling.py": "c36dbb5e951cf5fd7ea2e9655ada682d1bf05b9d2934e394ebba65bad57e5102",
+      "experiments/e12_compiler_baseline/run.py": "10f7595c9adbe703d05441e503aea4ad795eaacfc60f43ce1fc71f9253dfbf1e",
+      "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
+      "src/circuits/real_benchmarks.py": "5f137e8efaf872cc2205f2e2cac5e4420c014d7fa3ac0cf440e04dad7e4dd82a"
+    }
+  },
+  "exact_field_comparison": {
+    "baseline_gate_count": {
+      "matching_rows": 560,
+      "rows": 560
+    },
+    "compiled_depth": {
+      "matching_rows": 560,
+      "rows": 560
+    },
+    "compiled_gate_counts_json": {
+      "matching_rows": 560,
+      "rows": 560
+    },
+    "input_circuit_sha256": {
+      "matching_rows": 560,
+      "rows": 560
+    },
+    "optimized_gate_count": {
+      "matching_rows": 560,
+      "rows": 560
+    },
+    "output_circuit_sha256": {
+      "matching_rows": 560,
+      "rows": 560
+    },
+    "success": {
+      "matching_rows": 560,
+      "rows": 560
+    }
+  },
+  "metric_dispositions": {
+    "12.26": "PARTIAL: 560 shared E12 circuit-by-optimization-level keys reproduce scientific outputs across Python/numerical-stack changes, but Qiskit stayed at 2.4.1, eight rows were deferred, runtime changed, and central E31 analyses were not replayed"
+  },
+  "missing_rerun_keys": [
+    {
+      "circuit_id": "qwalk_9",
+      "compiler_optimization_level": 0
+    },
+    {
+      "circuit_id": "qwalk_9",
+      "compiler_optimization_level": 1
+    },
+    {
+      "circuit_id": "qwalk_9",
+      "compiler_optimization_level": 2
+    },
+    {
+      "circuit_id": "qwalk_9",
+      "compiler_optimization_level": 3
+    },
+    {
+      "circuit_id": "grover_10",
+      "compiler_optimization_level": 0
+    },
+    {
+      "circuit_id": "grover_10",
+      "compiler_optimization_level": 1
+    },
+    {
+      "circuit_id": "grover_10",
+      "compiler_optimization_level": 2
+    },
+    {
+      "circuit_id": "grover_10",
+      "compiler_optimization_level": 3
+    }
+  ],
+  "numeric_field_comparison": {
+    "fidelity": {
+      "both_missing_pairs": 128,
+      "finite_pairs": 432,
+      "matching_rows_at_1e_12": 560,
+      "maximum_absolute_difference": 0.0,
+      "rows": 560
+    },
+    "reduction": {
+      "both_missing_pairs": 0,
+      "finite_pairs": 560,
+      "matching_rows_at_1e_12": 560,
+      "maximum_absolute_difference": 0.0,
+      "rows": 560
+    },
+    "reduction_pct": {
+      "both_missing_pairs": 0,
+      "finite_pairs": 560,
+      "matching_rows_at_1e_12": 560,
+      "maximum_absolute_difference": 2.842170943040401e-14,
+      "rows": 560
+    }
+  },
+  "rerun_rows": 560,
+  "rerun_unique_keys": 560,
+  "runtime_comparison": {
+    "exact_matching_rows": 0,
+    "maximum_absolute_difference_seconds": 1.322185277938843,
+    "median_absolute_difference_seconds": 0.0029826164245605,
+    "role": "volatile performance diagnostic; excluded from scientific equality",
+    "rows": 560
+  },
+  "schema_version": "1.0.0",
+  "scientific_key": [
+    "circuit_id",
+    "compiler_optimization_level"
+  ],
+  "shared_unique_keys": 560,
+  "source_bindings": {
+    "analysis/e12_version_stack_reconciliation.py": "15406112c3e54bbac6d86a41fefc72ca57bf8939f25dc019d08261378f05f638",
+    "canonical_csv": "798e6d81ec8f327da27fd9768704ccfef2d9ae5006043b6a284e56fdbc10f49c",
+    "canonical_metadata": "4d6211426884e1e3a2fe9c046f08488a609e62693cb8cf4781b1b7f5132f04e8",
+    "rerun_csv": "f22924ee8b4c2b101ba0af516fd458915504b8d6abc92eb522ae35804cd2ae4a",
+    "rerun_metadata": "cad49fcb8cfecdc16d34457579758961869bfa353c53d2fafd4d60d1141ba248"
+  },
+  "status": "PASS_BOUNDED_E12_CROSS_STACK_RECONCILIATION"
+}

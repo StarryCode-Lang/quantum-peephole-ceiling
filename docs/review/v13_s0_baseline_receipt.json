@@ -52,7 +52,7 @@
     },
     "readiness_verdict": {
       "path": "release/prepaper_readiness_verdict.json",
-      "sha256": "de0ef1e86b2d629710e3a519f6ae970d001e184c307576ab0cbe69d4cb343809",
+      "sha256": "fdcaa91f0ee55bffc723d2e75a816b6de7646d4f90dbf581c337e00ee58f0613",
       "verdict": "READY_FOR_PAPER_WRITING_WITH_BOUNDARIES"
     }
   },
@@ -63,13 +63,13 @@
   },
   "tests": {
     "command": "D:/Downloads/miniforge3/python.exe -m pytest -q --junitxml release/pytest_junit.xml",
-    "collected": 595,
-    "passed": 595,
+    "collected": 605,
+    "passed": 605,
     "failed": 0,
     "errors": 0,
     "skipped": 0,
     "exit_code": 0,
-    "junit_sha256": "be96d091232351cb1cd71a092cd91c713e68c982d6efecd2d42e25182869af65"
+    "junit_sha256": "32d6d4abda6583bb060a56e536fb5a49b8a583bb888d2e6b9cca4e67f652fdfb"
   },
   "independent_metric_verification": {
     "status": "VERIFIED_INDEPENDENT_REGISTRY_V2",

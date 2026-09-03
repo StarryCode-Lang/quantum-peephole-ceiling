@@ -1,0 +1,52 @@
+{
+  "accuracy": 0.8571428571428571,
+  "auroc": 0.9496850015538041,
+  "balanced_accuracy": 0.8558352402745995,
+  "bootstrap_finite_replicates": 10000,
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 20260809,
+  "bootstrap_sha256": "9187e005a4c67ab01046a7408807f2aa6bf0f4dd43de1ff8a4d8cd5a35bc3d2a",
+  "claim_boundary": "This expands outer generator mechanisms from eight to sixteen under the frozen classifier contract. It does not establish unseen-family universality; the finite family-clustered interval remains the supported inferential boundary.",
+  "classifier_threshold": 0.5,
+  "combined_data_sha256": "d476ce85f23dd9da96cc8a34909d36794dae3e57539502e86bf6634e6e1e409b",
+  "combined_interval": {
+    "half_width": 0.29904063548134374,
+    "lower": 0.36081742534202116,
+    "upper": 0.9588986963047087
+  },
+  "execution_contract_audit_sha256": "55bfee039002bdbf8567e6ad1c510cfa60e0422488ffc0bd2791e2110ebba5e7",
+  "execution_protocol_sha256": "c1719fe6dde592034a55525e11d4eba65c320a0d0e82628e0e981e9d4c4d0e00",
+  "f1": 0.8421052631578947,
+  "family_diagnostics_sha256": "2ac2aedc09fb0fba093b480c151326be421a3037f3fc2f7546a61dcae4288943",
+  "feature_or_threshold_change": false,
+  "headroom_threshold_pct": 1.0,
+  "instance_unit": "globally unique input_circuit_sha256",
+  "interval_half_width_fractional_change_vs_v1": -0.12119466084622796,
+  "layout_verifier_before_after_sha256": "14c39ca5b72316896d232302cffcc2eebf7ef0bbaa497b6ad7c282acd7e045d0",
+  "mcc_ci95_lower": 0.36081742534202116,
+  "mcc_ci95_upper": 0.9588986963047087,
+  "mcc_point": 0.7116704805491991,
+  "merged_v2_sha256": "0eb76ef9d721138c5493aaf19922b0dd206bc8df1ff8f1bc7811333badbdb477",
+  "metric_dispositions": {
+    "18.03": "PASS: the sealed v1+v2 held-out program contains 16 independent generator families and 378 globally unique inputs, with no model refit or feature/threshold change"
+  },
+  "model_refit": false,
+  "n_unique_inputs": 378,
+  "outer_clusters": 16,
+  "predictions_sha256": "50515a84b18a0e7fc45f8bc4a25cdd2150a7917e6b51e8971e63d245ba63c84f",
+  "primary_metric": "generator_clustered_nested_bootstrap_mcc",
+  "seal_hashes_verified": true,
+  "seal_sha256": "20406285e0281c634ca3747fbd182e18277fae8ea0715803d5fd1de8e8f88832",
+  "source_sha256": "611fcfdd3a680d92247d4c3977ec09804723639fd34ef0b92fa9501e59a8876c",
+  "success_ci_lower_gt_zero": true,
+  "tool_diagnostics_sha256": "18702c10e56e71e13b77a449a035cb192c0d49f58d897e4562f25fd9e66e6da0",
+  "v1_analysis_sha256": "862324903410639564ad999c8c3a21a2c0649815b43abc9afe2b845e00298332",
+  "v1_interval": {
+    "half_width": 0.340280858750015,
+    "lower": 0.3194382824999699,
+    "upper": 1.0
+  },
+  "v1_metrics_sha256": "928e71c32fa99a962c3c2623f78fdd702a8edfe1694cad273a46dfed41c9fabf",
+  "v1_unique_inputs": 186,
+  "v2_unique_inputs": 192
+}

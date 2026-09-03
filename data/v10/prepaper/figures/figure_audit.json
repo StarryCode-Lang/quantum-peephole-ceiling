@@ -1,0 +1,115 @@
+{
+  "figures": [
+    {
+      "pdf_sha256": "82f9d00ddfbb1aa7fc9255decd682ce577630149e49afc86accdd1b36d0b8429",
+      "png_dpi_x": 599.9988,
+      "png_dpi_y": 599.9988,
+      "png_height": 3846,
+      "png_sha256": "392a58e3f2c266edb361d0568e3a3b06057b8703ebdcf379cfe892e5a733db41",
+      "png_width": 4391,
+      "stem": "fig01_rq1_listing_forest",
+      "svg_sha256": "87c17e37dfd7c8669640ba7d2ec7bd559f667f4288c2529ab3d1199c905578ab"
+    },
+    {
+      "pdf_sha256": "bf6032e02a074e9058f7c353cb77bded89ac0ab63de1c17e76bdc3a6c59c25ea",
+      "png_dpi_x": 599.9988,
+      "png_dpi_y": 599.9988,
+      "png_height": 2771,
+      "png_sha256": "c8d43187199d89bbf617eddbd5a81afd6dc165a10c3488dc8226455d9c11f27f",
+      "png_width": 5455,
+      "stem": "fig02_heldout_generator_rates",
+      "svg_sha256": "379b485a752eca9ff214e788ab7ae9fb80a486da08b20f34a41eca3e5e6e5f68"
+    },
+    {
+      "pdf_sha256": "f2acc6bab5073a93b4ce6919ca8fa76bf2942136c68f867b4dfc1f4fc5dbd560",
+      "png_dpi_x": 599.9988,
+      "png_dpi_y": 599.9988,
+      "png_height": 2043,
+      "png_sha256": "36acbc38dafd689213734dd287b516d1965645ec70be8ced01abaef40c2478e4",
+      "png_width": 4274,
+      "stem": "fig03_tool_summary",
+      "svg_sha256": "c8e2cde707ddbd8c96a32c6dd00839f979a9694b8895eea2d619a208aa720cf2"
+    },
+    {
+      "pdf_sha256": "3ed23b7800d0505177e056f47b29e2c9006f639368021256cef07873752a9a70",
+      "png_dpi_x": 599.9988,
+      "png_dpi_y": 599.9988,
+      "png_height": 2042,
+      "png_sha256": "9106322d3ee34b90b612c345c329e3ce3117fa71c52de7a13e6b4da00cec8405",
+      "png_width": 4274,
+      "stem": "fig04_external_baselines",
+      "svg_sha256": "12b15396ae07f4c2fe176eeb898b2ecbd045e19e0d06d796b2fc3cf3117a1108"
+    }
+  ],
+  "manual_gate_remaining": "visual inspection for clipping, legibility, and interpretation",
+  "source_data": [
+    {
+      "columns": [
+        "label",
+        "estimate_pp",
+        "lower_pp",
+        "upper_pp",
+        "evidence"
+      ],
+      "file": "fig01_rq1_listing_forest.csv",
+      "rows": 18,
+      "sha256": "0549f3bbe0fbad0450475729c3fda7e2351414514276e852deba93185f455182"
+    },
+    {
+      "columns": [
+        "circuit_family",
+        "n_unique_inputs",
+        "observed_positive_rate",
+        "predicted_positive_rate",
+        "mcc",
+        "accuracy",
+        "qiskit_valid_rate",
+        "tket_valid_rate"
+      ],
+      "file": "fig02_heldout_generator_rates.csv",
+      "rows": 8,
+      "sha256": "84265fd0d6d530ed691ebd8950f8a4aaed49a040f7b2ce490204fed9706875b9"
+    },
+    {
+      "columns": [
+        "tool",
+        "n_execution_rows",
+        "n_unique_inputs",
+        "valid_equivalent_execution_rows",
+        "valid_rate",
+        "valid_rate_ci95_lower",
+        "valid_rate_ci95_upper",
+        "valid_rate_bootstrap_precision_halfwidth",
+        "common_reduction_pct_itt_mean",
+        "common_reduction_ci95_lower",
+        "common_reduction_ci95_upper",
+        "common_reduction_bootstrap_precision_halfwidth_pp",
+        "timeout_n",
+        "error_n"
+      ],
+      "file": "fig03_tool_summary.csv",
+      "rows": 4,
+      "sha256": "111a3cfc53bcbe4b5e5c0cc145cf4aed563f6774186575511094e0cfa29af89a"
+    },
+    {
+      "columns": [
+        "method",
+        "n_execution_rows",
+        "n_unique_inputs",
+        "valid_equivalent_execution_rows",
+        "valid_rate",
+        "valid_ci95_lower",
+        "valid_ci95_upper",
+        "gate_reduction_itt_mean",
+        "gate_reduction_ci95_lower",
+        "gate_reduction_ci95_upper",
+        "timeout_n",
+        "error_n"
+      ],
+      "file": "fig04_external_baselines.csv",
+      "rows": 2,
+      "sha256": "9031042a69710076280f980214a38454f9782049b0c6753bd68c38f41a91a1f0"
+    }
+  ],
+  "status": "mechanically_verified"
+}

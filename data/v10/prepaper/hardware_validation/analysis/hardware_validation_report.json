@@ -1,0 +1,37 @@
+{
+  "status": "descriptive_calibration_snapshot_simulation",
+  "experimental_unit": "distinct input circuit",
+  "design_cell": "circuit x backend calibration snapshot x transpile level x optimizer output",
+  "sampling_seed_role": "repeated measurement, not independent circuit",
+  "n_input_circuits": 3,
+  "n_backend_snapshots": 2,
+  "n_transpile_levels": 2,
+  "n_run_rows": 288,
+  "n_eligible_design_cells": 16,
+  "n_duplicate_output_groups_across_optimizer_labels": 8,
+  "optimizer_summaries": [
+    {
+      "version": "commutation_phase2",
+      "n_design_cells": 8,
+      "n_distinct_circuits": 2,
+      "n_backend_snapshots": 2,
+      "hellinger_gain_mean_across_cells": 0.0018101106241705197,
+      "hellinger_gain_worst_cell": 0.0,
+      "cells_positive_hellinger_gain": 6,
+      "duration_reduction_mean_across_cells": 0.047842627896683074,
+      "calibration_success_gain_mean_across_cells": 0.008083594826208657
+    },
+    {
+      "version": "hybrid_phase1_2",
+      "n_design_cells": 8,
+      "n_distinct_circuits": 2,
+      "n_backend_snapshots": 2,
+      "hellinger_gain_mean_across_cells": 0.0018101106241705197,
+      "hellinger_gain_worst_cell": 0.0,
+      "cells_positive_hellinger_gain": 6,
+      "duration_reduction_mean_across_cells": 0.047842627896683074,
+      "calibration_success_gain_mean_across_cells": 0.008083594826208657
+    }
+  ],
+  "claim_boundary": "Supports paired noise-model evidence under two archived calibration snapshots only; it is not real-QPU, device-transfer, or broad-family evidence."
+}

@@ -1,0 +1,117 @@
+{
+  "C": 1.0,
+  "class_weight": "balanced",
+  "classes": [
+    0,
+    1
+  ],
+  "coefficients": [
+    [
+      -1.260788301990113,
+      0.10081444946890883,
+      1.594753924026435,
+      1.8031515961095599,
+      1.0366767046232146,
+      -0.6718279556345805,
+      2.073156299854952,
+      -0.39321631819207514,
+      -0.09176396979779816,
+      -1.5116235871262387,
+      -0.03157642853616985,
+      -4.186354515582314
+    ]
+  ],
+  "features": [
+    "n_qubits",
+    "log1p_n_gates",
+    "inverse_pair_density",
+    "wire_inverse_density",
+    "commutation_density",
+    "gate_diversity",
+    "rotation_fraction",
+    "clifford_fraction",
+    "t_fraction",
+    "multi_q_fraction",
+    "has_multi_controlled",
+    "depth_to_gate_ratio"
+  ],
+  "heldout_features_sha256": "69ce8e47dcd7857ecd834ea5d1b61211d5346056500a4472b440256d98e25eb8",
+  "heldout_manifest_sha256": "df549d356a4f751aafb31653da63550f61430e9f32f905a17f2919d1317ed90e",
+  "imputer_statistics": [
+    6.0,
+    3.4339872044851463,
+    0.0,
+    0.321745,
+    0.5366925,
+    3.0,
+    0.0,
+    0.51104,
+    0.0,
+    0.401959,
+    0.0,
+    0.55
+  ],
+  "intercept": [
+    -2.5965298126279177
+  ],
+  "model": "L2_logistic_regression",
+  "protocol_sha256": "e47928f6f2edc0bace451fa47eee575dd3b241bc13d9e78e5900d43a279c5b6c",
+  "qiskit_csv_sha256": "99e97df57d25b5b31a063df9a24c9b65a26f189e8478a9e495b55a7ad3294681",
+  "random_state": 20260809,
+  "scaler_mean": [
+    6.1923076923076925,
+    3.8550210333959565,
+    0.03445244615384615,
+    0.40181436730769227,
+    0.5380879557692309,
+    3.6346153846153846,
+    0.10230272692307692,
+    0.6028530711538462,
+    0.02820360576923077,
+    0.46418918846153845,
+    0.19230769230769232,
+    0.5715627576923077
+  ],
+  "scaler_scale": [
+    1.75453765045493,
+    1.7671865033275977,
+    0.11975193364069558,
+    0.4014144623550166,
+    0.22617420512281775,
+    2.624066472494743,
+    0.20570260115155992,
+    0.28177659597099386,
+    0.07236392751670309,
+    0.26751752567519016,
+    0.3941134909984461,
+    0.2411412740676633
+  ],
+  "schema_version": "1.0.0",
+  "solver": "lbfgs",
+  "source_sha256": "ac5e11011fbb0a150c498530ea3f10a4018946dea223a4e4cd29d88604bba03b",
+  "threshold": 0.5,
+  "tket_csv_sha256": "12f3b5e13dc70b532a58dd2964ab2c3d0f9677786b703df7df6f9704c48d367f",
+  "training_families": [
+    "Adder",
+    "CNOT",
+    "GHZ",
+    "Grover",
+    "HaarRandom",
+    "HardwareEfficient",
+    "IQP",
+    "Oracle",
+    "QAOA",
+    "QFT",
+    "QuantumWalk",
+    "RandomClifford",
+    "SurfaceCode",
+    "UCCSD_inspired",
+    "VQE"
+  ],
+  "training_label_counts": {
+    "0": 308,
+    "1": 212
+  },
+  "training_manifest_sha256": "3ab0bff77d9d39fa95920fae54094fb8e207cd2895e5642ec8305935c90db841",
+  "training_n": 520
+}

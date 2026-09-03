@@ -1,0 +1,81 @@
+{
+  "artifacts": {
+    "algorithm_class_taxonomy.csv": {
+      "rows": 15,
+      "sha256": "0de560c9e6e7f2f3c42ca69101da96cffae1b583eb877d076bd84fd0d098321d"
+    },
+    "leave_one_algorithm_class_out.csv": {
+      "rows": 4,
+      "sha256": "3692a5d94e4ebdcc8e04d065493cf8f46886e2ee591b897880b3965afc302c90"
+    },
+    "leave_one_exact_gate_set_out.csv": {
+      "rows": 18,
+      "sha256": "49ccf4a1f47d8fbbfad906b2152117a509b42458a1fec8381a6418065d4b782f"
+    }
+  },
+  "claim_boundary": "These are post-seal diagnostic refits on the training packet, not changes to the sealed classifier and not untouched external tests. Algorithm classes follow manuscript Table 2. Gate-set folds use exact observed vocabularies; some folds are small or single-outcome, so pooled metrics do not establish broad unseen-basis generalization.",
+  "created_utc": "2026-08-29T12:50:40.412003+00:00",
+  "integrity": {
+    "algorithm_classes": 4,
+    "exact_gate_set_signatures": 18,
+    "families": 15,
+    "model_features": [
+      "n_qubits",
+      "log1p_n_gates",
+      "inverse_pair_density",
+      "wire_inverse_density",
+      "commutation_density",
+      "gate_diversity",
+      "rotation_fraction",
+      "clifford_fraction",
+      "t_fraction",
+      "multi_q_fraction",
+      "has_multi_controlled",
+      "depth_to_gate_ratio"
+    ],
+    "rows": 520
+  },
+  "leave_one_algorithm_class_out": {
+    "classes": [
+      "Algorithmic",
+      "Error-correcting",
+      "Random",
+      "Variational"
+    ],
+    "folds": 4,
+    "pooled_cross_fitted_metrics": {
+      "accuracy": 0.7865384615384615,
+      "auroc": 0.9222463856897819,
+      "brier": 0.15164500686290916,
+      "mcc": 0.5809711586622938,
+      "n": 520,
+      "positive_rate": 0.4076923076923077
+    }
+  },
+  "leave_one_exact_gate_set_out": {
+    "definition": "exact sorted gate-name vocabulary recorded in gate_type_str",
+    "folds": 18,
+    "pooled_cross_fitted_metrics": {
+      "accuracy": 0.8634615384615385,
+      "auroc": 0.951359960793923,
+      "brier": 0.09221070937290198,
+      "mcc": 0.7154412352038905,
+      "n": 520,
+      "positive_rate": 0.4076923076923077
+    },
+    "smallest_fold_n": 1
+  },
+  "metric_dispositions": {
+    "13.10": "PASS: all four manuscript-defined algorithm classes are left out in turn and every training row receives one cross-fitted diagnostic prediction",
+    "13.11": "PASS: all 18 observed exact gate-set signatures are left out in turn and every training row receives one cross-fitted diagnostic prediction"
+  },
+  "schema_version": "1.0.0",
+  "scope": "diagnostic cross-fitted refits on the 520-row, 15-family training packet",
+  "source_bindings": {
+    "analysis/heldout_class_gateset_generalization_audit.py": "02b24a5c2cb753ecf5883e400dfd375c1189111927c23b617e1a2ba462dd3470",
+    "docs/manuscript/manuscript.md": "7095b65b0598ac422f2a1e849de7990be74c819249746b92b9d58534135202bb",
+    "model.json": "dd66b6bcdc8ff92441a99084edfdbb57cfdc806e6c3281fa95cab3a612972d0d",
+    "training_features_labels.csv": "4d07a653df79270684578cbac35d683c491814d3e6e4a59155b998be6ab91666"
+  },
+  "status": "PASS_DIAGNOSTIC_CLASS_AND_GATESET_GENERALIZATION_AUDIT"
+}

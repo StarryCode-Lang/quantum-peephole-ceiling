@@ -1,0 +1,60 @@
+{
+  "basis_gates": [
+    "h",
+    "s",
+    "sdg",
+    "t",
+    "tdg",
+    "cx",
+    "x",
+    "y",
+    "z"
+  ],
+  "canonical_data_file": "e18_clifford_t_e18_full_20260809_172558.csv",
+  "circuit_families": [
+    "AdjacentInverse",
+    "CommutingExposure",
+    "NativeRandom",
+    "ParityPhase",
+    "PhaseEcho",
+    "ToffoliBlocks"
+  ],
+  "description": "Exact native Clifford+T gate-set optimization experiment",
+  "experiment_id": "E18",
+  "gate_set": "clifford_t",
+  "git_commit": "d463d7a04ae22ec3ee9df9c97166ce5f007b36c0",
+  "max_qubits_fidelity": 10,
+  "mode": "full",
+  "n_input_circuits": 360,
+  "n_rows": 1080,
+  "package_versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "qiskit": "2.4.1",
+    "scipy": "1.13.1"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "protocol_file": "experiments/prepaper_protocol.json",
+  "protocol_sha256": "e47928f6f2edc0bace451fa47eee575dd3b241bc13d9e78e5900d43a279c5b6c",
+  "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+  "run_id": "e18_full_20260809_172558",
+  "schema_version": "2.0.0",
+  "seed": 42,
+  "source_hashes": {
+    "analysis/structural_ceiling.py": "c36dbb5e951cf5fd7ea2e9655ada682d1bf05b9d2934e394ebba65bad57e5102",
+    "experiments/e18_clifford_t/run.py": "ebdcc69739a0ae49b05d65bee11e76850e7528e45f2a1b21a97c2d81305846a2",
+    "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
+    "src/circuits/real_benchmarks.py": "e5ea0c40c2972bb20dffa555bc26b721cfd854d0a063f7c441d0f3c03b873034",
+    "src/optimisation/_gate_predicates.py": "c7c0c6a7c985e5e4f19b2699323679f94b3f5040376b9a3224d40364b6bf83f2",
+    "src/optimisation/base.py": "5724930d7a15f9891461ec33f752589f0f6ca03172f4d4d46359dfb80f2a33dd",
+    "src/optimisation/ceiling_aware.py": "f0f8268617d0cd04459fcfaa767625eade353abe695286fd6ec78961af75cd4d",
+    "src/optimisation/phase1/genetic_algorithm.py": "8d6f49439efa1af2b7eff090513870448a6bae0c05e908c5288cef6914498d88",
+    "src/optimisation/phase1/greedy.py": "8fc2d8843cf015ee4b97194b2fdfd41a32cf1d1678f6793e5330c3fcfdac39e1",
+    "src/optimisation/phase1/random_local_search.py": "6a80965d806a5d6f7432612dbb2d47b4e73f864e034d33c2ad339c9b107a3bba",
+    "src/optimisation/phase1/simulated_annealing.py": "d0d41781d939165d515bd875fbe496ec1f09ed233faf311a5eeac9bc60faa18c",
+    "src/optimisation/phase1/wire_traversal.py": "c78ce84f0ce8f5e5e1991d6322fed32817184959edb34569bdaa164126b457eb",
+    "src/optimisation/phase2/commutation_rewriter.py": "a53769804a1e7e5d6a1e02146e12dbe79774a011fca4fc0990755ced3475a83d",
+    "src/optimisation/phase2/template_matcher.py": "ca20a31e266fa0640a11b157f948f9826fa7baac02f230fe4983207d6b1997c8"
+  },
+  "version": "5.0.0"
+}

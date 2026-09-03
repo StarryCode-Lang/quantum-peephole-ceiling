@@ -1,0 +1,58 @@
+{
+  "benchmark_manifest": "D:\\Desktop\\Q-research\\data\\v10\\prepaper\\heldout\\inputs\\benchmark_manifest.csv",
+  "benchmark_manifest_sha256": "df549d356a4f751aafb31653da63550f61430e9f32f905a17f2919d1317ed90e",
+  "canonical_data_file": "qiskit_default_20260810_022340_840941.csv",
+  "common_basis": [
+    "rz",
+    "sx",
+    "x",
+    "cx"
+  ],
+  "expected_manifest_rows": 240,
+  "families": null,
+  "git_commit": "d463d7a04ae22ec3ee9df9c97166ce5f007b36c0",
+  "mode": "full",
+  "n_errors": 0,
+  "n_ok": 240,
+  "n_rows": 240,
+  "n_timeouts": 0,
+  "n_trials": 10,
+  "n_valid_equivalent_outputs": 240,
+  "package_versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "qiskit": "2.4.1",
+    "scipy": "1.13.1"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python_version": "3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:13:34) [MSC v.1944 64 bit (AMD64)]",
+  "run_id": "qiskit_default_20260810_022340_840941",
+  "schema_version": "1.0.0",
+  "seed": 42,
+  "source_hashes": {
+    "analysis/structural_ceiling.py": "c36dbb5e951cf5fd7ea2e9655ada682d1bf05b9d2934e394ebba65bad57e5102",
+    "experiments/sota_benchmark.py": "26ef814d616177b755178b2d6245bd87732a0a14ca68eb05c17659f74310f4be",
+    "src/circuits/generator_v2.py": "75bb4876f85c2b5bf9f77d515eb2a3076c6cedaab1054471e88343f27655d232",
+    "src/circuits/real_benchmarks.py": "e5ea0c40c2972bb20dffa555bc26b721cfd854d0a063f7c441d0f3c03b873034",
+    "src/optimisation/_gate_predicates.py": "c7c0c6a7c985e5e4f19b2699323679f94b3f5040376b9a3224d40364b6bf83f2",
+    "src/optimisation/base.py": "5724930d7a15f9891461ec33f752589f0f6ca03172f4d4d46359dfb80f2a33dd",
+    "src/optimisation/ceiling_aware.py": "f0f8268617d0cd04459fcfaa767625eade353abe695286fd6ec78961af75cd4d",
+    "src/optimisation/phase1/genetic_algorithm.py": "8d6f49439efa1af2b7eff090513870448a6bae0c05e908c5288cef6914498d88",
+    "src/optimisation/phase1/greedy.py": "8fc2d8843cf015ee4b97194b2fdfd41a32cf1d1678f6793e5330c3fcfdac39e1",
+    "src/optimisation/phase1/random_local_search.py": "6a80965d806a5d6f7432612dbb2d47b4e73f864e034d33c2ad339c9b107a3bba",
+    "src/optimisation/phase1/simulated_annealing.py": "d0d41781d939165d515bd875fbe496ec1f09ed233faf311a5eeac9bc60faa18c",
+    "src/optimisation/phase1/wire_traversal.py": "c78ce84f0ce8f5e5e1991d6322fed32817184959edb34569bdaa164126b457eb",
+    "src/optimisation/phase2/commutation_rewriter.py": "a53769804a1e7e5d6a1e02146e12dbe79774a011fca4fc0990755ced3475a83d",
+    "src/optimisation/phase2/template_matcher.py": "ca20a31e266fa0640a11b157f948f9826fa7baac02f230fe4983207d6b1997c8"
+  },
+  "target_qubits": [
+    4,
+    6,
+    8
+  ],
+  "timeout_s": 120.0,
+  "tool": "qiskit",
+  "tool_config": "default",
+  "tool_version": "2.4.1",
+  "version": "1.1.0"
+}

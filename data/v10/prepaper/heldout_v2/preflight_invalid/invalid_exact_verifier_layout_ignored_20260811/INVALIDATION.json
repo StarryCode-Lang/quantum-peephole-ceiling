@@ -1,0 +1,41 @@
+{
+  "status": "INVALID_EXACT_VERIFIER_IGNORED_QISKIT_FINAL_LAYOUT",
+  "formal_exclusion": {
+    "use_for_confirmatory_metrics": false,
+    "use_for_runtime_or_resource_metrics": false,
+    "use_combined_analysis": false,
+    "resume_checkpoint_allowed": false,
+    "canonical_results_analysis_and_execution_paths_are_empty_after_archive": true
+  },
+  "failure": {
+    "qiskit_rows": 192,
+    "qiskit_exact_equivalence_pass": 144,
+    "qiskit_false_fail": 48,
+    "false_fail_families": [
+      "FermionicHoppingRing",
+      "PermutationInterferometer"
+    ],
+    "rows_per_false_fail_family": 24,
+    "legacy_fidelity_range": [0.0, 0.294117647058825],
+    "itt_invalid_reduction_was_zero_for_all_48": true,
+    "root_cause": "Operator(circuit) ignored circuit.layout.final_layout emitted when Qiskit represented terminal SWAPs as an implicit output permutation"
+  },
+  "reproduction": {
+    "path": "LAYOUT_REPRODUCTION.json",
+    "sha256": "6dfe6c83253fdb0d17305920fb43fa8740444e4ce945317fd29418e9e3b28581",
+    "layout_aware_sample_fidelities": [1.0000000000000058, 0.999999999999999]
+  },
+  "invalid_raw_result_hashes": {
+    "custom": "828f9c820d799fdcefee866f0554432e8d7ae14f73f989c185b59607bc0f6702",
+    "qiskit": "466d522e04df9e625c8ee7978e4f21dbb83fabb0b4ca0c26af35ccc07fce1c29",
+    "cirq": "89360054341a9d1d2f507a9a7a66647f39c1977a66d9396647daba9b48e8d058",
+    "tket": "78fba9eded5d7addb477ba0e20c033705db38bbec59e82654b30a5d713932f69"
+  },
+  "invalid_combined_metrics_sha256": "2a4a84b74f69b030cf2390d25f4d83ac132bf3bfaa21e424a90a8e37a92eaf30",
+  "repair": {
+    "method": "replace Operator(circuit) with Operator.from_circuit(circuit) for both compared circuits",
+    "fixed_exact_fidelity_source_sha256": "661a86d4400e3fada3e71d69c299da357826da752e20b090e3c6d0c5a4a34ad5",
+    "regression_scope": "minimal terminal SWAP plus 12 deterministic random output permutations across 4, 6, and 8 qubits",
+    "required_action": "fresh full four-tool rerun from sealed inputs with no reuse of this archive"
+  }
+}

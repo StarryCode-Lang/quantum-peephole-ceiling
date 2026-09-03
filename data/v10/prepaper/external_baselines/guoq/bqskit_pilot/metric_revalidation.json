@@ -1,0 +1,33 @@
+{
+  "raw_result_sha256": "fc278b3ef8bfa627f7e256b6a3d6b4462fafb8c1fc5eb9843e192bb42e507d88",
+  "recorded_at_utc": "2026-08-11T12:13:14Z",
+  "revalidated_result_sha256": "d06870658506a342d02b85ae216012978a86436a3e33f26a2fea76cb7c0f9114",
+  "rows": [
+    {
+      "circuit_id": "cnot_chain_4",
+      "exact_equivalent": true,
+      "new_common_input_gate_count": 24,
+      "old_common_input_gate_count": 24,
+      "output_qasm_sha256": "10750dbc79aa77a751ed48c225d08463c760dedff93df243a7bb71695492b4e3",
+      "source_common_qasm_sha256": "7b1d0b1850a20a62bb7d0acc8213696f4bf12a454d645cb89dbc9a6117b2b888"
+    },
+    {
+      "circuit_id": "ghz_4",
+      "exact_equivalent": true,
+      "new_common_input_gate_count": 6,
+      "old_common_input_gate_count": 10,
+      "output_qasm_sha256": "54ecb350a737aa39a2cd3193fd556344bdabf8f89f7e18a83810289b9182d8a1",
+      "source_common_qasm_sha256": "648579fe49cd479744cd9515ff7c96494fc03369e01099837458dc2cac89eb71"
+    },
+    {
+      "circuit_id": "qft_4",
+      "exact_equivalent": true,
+      "new_common_input_gate_count": 42,
+      "old_common_input_gate_count": 58,
+      "output_qasm_sha256": "ff42fcff86ffee72ec6cf56f97f3ce651edc0e5fa73a35fb7686cba223f9495c",
+      "source_common_qasm_sha256": "a197c727cdf748bc6717f563dd71226310b609ce3e18a03b08724a25f9df7edd"
+    }
+  ],
+  "scope": "metric-only revalidation; GUOQ and BQSKit were not executed",
+  "status": "pass"
+}

@@ -1,0 +1,165 @@
+{
+  "artifacts": {
+    "family_distance_calibration.pdf": {
+      "bytes": 22168,
+      "sha256": "589fc04744100c9519cd1a6dbd7df724c83f2369f67d0a211315224818c78bd3"
+    },
+    "family_distance_calibration.png": {
+      "bytes": 146695,
+      "sha256": "7c93f3c3fd8b6f0cdaafc68abf8cf773e4612d253f19b2534d30bb8390d3ad3a"
+    },
+    "heldout_family_calibration_ood.csv": {
+      "bytes": 3795,
+      "sha256": "870debf5c862873d201f3d84bd7067ddf2a918aadd5a2092377582583e5b4c33"
+    },
+    "heldout_feature_ablation.csv": {
+      "bytes": 5041,
+      "sha256": "25ce30ef23b4d5bead3140b430552d5c962a5f9ca8b05ef70b9427c100ea3df7"
+    },
+    "heldout_instance_domain_distance.csv": {
+      "bytes": 89793,
+      "sha256": "727f3db339447e581b479da7ec5d877c4f8426e68555ad4c816ece3865e4de21"
+    },
+    "training_leave_one_generator_out.csv": {
+      "bytes": 1209,
+      "sha256": "c8b71bc1ea5917c9026a9e16a18bace1ab914e899c4d063e834543e2c925066b"
+    }
+  },
+  "claim_boundary": "Supports post-seal diagnostics for unseen synthetic generators only. It does not establish cross-topology, cross-version, cross-platform, cross-group, real-world, or out-of-range-qubit generalization. Prediction intervals are conditional on frozen probabilities and omit model-parameter uncertainty.",
+  "created_utc": "2026-08-29T08:44:32.063668+00:00",
+  "domain_shift": {
+    "families_with_any_range_excursion": 8,
+    "far_families": 16,
+    "heldout_instance_ood_rate": 1.0,
+    "near_families": 0,
+    "training_loo_nn_95pct_threshold": 0.2930177936013195
+  },
+  "family_calibration": {
+    "complete_classification_failure_families": 1,
+    "families": 16,
+    "families_observed_inside_conditional_prediction_interval": 12,
+    "mean_absolute_family_calibration_error": 0.17059575615118602
+  },
+  "integrity": {
+    "family_overlap": [],
+    "heldout_families": 16,
+    "heldout_rows": 378,
+    "input_hash_overlap": 0,
+    "model_refit_for_primary_predictions": false,
+    "sealed_probability_replay_max_abs_error": 1.1102230246251565e-16,
+    "threshold_changed": false,
+    "training_families": 15,
+    "training_rows": 520
+  },
+  "metric_dispositions": {
+    "13.01": "PASS: 15 training and 16 held-out generator families are disjoint, with zero input-hash overlap",
+    "13.02": "PASS: the sealed model, 12 features, imputation, scaling, and 0.5 threshold replay all 378 probabilities without refit",
+    "13.03": "PARTIAL: 16 outer families improve evidence but the clustered MCC 95% interval remains wide at 0.598081",
+    "13.04": "PARTIAL: training-derived OOD classification identifies 0 near and 16 far held-out families, so both regimes are not represented",
+    "13.05": "PASS: nearest-training, shrinkage-Mahalanobis, and training-range excursion distances are reported per input and family",
+    "13.06": "PASS: outcomes, probabilities, calibration, distance, prediction intervals, and failure flags are reported for every held-out family",
+    "13.07": "PASS: family-level observed rate, mean predicted probability, calibration error, and Brier score are reported",
+    "13.08": "PASS: complete family-level classification failures are explicitly counted (1)",
+    "13.09": "PASS: diagnostic leave-one-generator-out refits cover all 15 training generators; this is separate from the sealed held-out test",
+    "13.12": "FAIL: held-out qubits span 4 to 8 inside the training range 4 to 10, so no out-of-range qubit extrapolation was tested",
+    "13.18": "PASS: the audit explicitly limits all 16 held-out generators to synthetic-distribution evidence, not real-world representativeness",
+    "13.19": "PASS: covariate shift is quantified from training-only feature geometry at instance and family levels",
+    "13.20": "PASS: conditional Poisson-binomial 95% family outcome-count prediction intervals are reported alongside the clustered MCC confidence interval",
+    "13.21": "PASS: frozen full-model performance is compared against gate-count-only and size-only refits; unseen family identity is unavailable as a predictor",
+    "13.22": "PASS: shortcut risk is audited with gate-count-only, size-only, range-excursion, OOD, and feature-ablation diagnostics",
+    "13.23": "PASS: all 12 leave-one-feature-out diagnostic refits are evaluated on the untouched combined held-out packet",
+    "13.24": "PASS: OOD scores and a training leave-one-out 95th-percentile threshold are reported without held-out threshold tuning",
+    "13.25": "PARTIAL: a training-only abstention rule is implemented, but it rejects all 378 held-out inputs and has zero useful selective coverage"
+  },
+  "outer_interval": {
+    "mcc_ci95_lower": 0.36081742534202116,
+    "mcc_ci95_upper": 0.9588986963047087,
+    "mcc_point": 0.7116704805491991,
+    "n_outer_families": 16,
+    "narrow_interval_criterion_met": false,
+    "width": 0.5980812709626875
+  },
+  "qubit_extrapolation": {
+    "heldout_range": [
+      4,
+      8
+    ],
+    "out_of_range_test_present": false,
+    "training_range": [
+      4,
+      10
+    ]
+  },
+  "schema_version": "1.0.0",
+  "scope": "sealed classifier diagnostics on 378 unique inputs from 16 unseen synthetic generator families",
+  "selective_prediction": {
+    "abstained_metrics": {
+      "accuracy": 0.8571428571428571,
+      "auroc": 0.9496850015538041,
+      "balanced_accuracy": 0.8558352402745995,
+      "brier": 0.1069760306821961,
+      "log_loss": 0.3413615135897366,
+      "mcc": 0.7116704805491991,
+      "n": 378,
+      "positive_rate": 0.4523809523809524
+    },
+    "abstained_n": 378,
+    "accepted_metrics": {
+      "accuracy": null,
+      "auroc": null,
+      "balanced_accuracy": null,
+      "brier": null,
+      "log_loss": null,
+      "mcc": null,
+      "n": 0,
+      "positive_rate": null
+    },
+    "accepted_n": 0,
+    "coverage": 0.0,
+    "rule": "abstain when nearest sealed-standardized training distance exceeds the training leave-one-out 95th percentile",
+    "status": "POST_SEAL_DIAGNOSTIC_NOT_PRIMARY_CLASSIFIER_CHANGE",
+    "threshold": 0.2930177936013195,
+    "threshold_source": "training features only"
+  },
+  "shortcut_diagnostics": {
+    "diagnostic_full_refit_metrics": {
+      "accuracy": 0.8571428571428571,
+      "auroc": 0.9496850015538041,
+      "balanced_accuracy": 0.8558352402745995,
+      "brier": 0.10697603068219605,
+      "log_loss": 0.34136151358973615,
+      "mcc": 0.7116704805491991
+    },
+    "feature_ablation_specs": 15,
+    "frozen_full_model_metrics": {
+      "accuracy": 0.8571428571428571,
+      "auroc": 0.9496850015538041,
+      "balanced_accuracy": 0.8558352402745995,
+      "brier": 0.1069760306821961,
+      "log_loss": 0.3413615135897366,
+      "mcc": 0.7116704805491991,
+      "n": 378,
+      "positive_rate": 0.4523809523809524
+    },
+    "gate_count_only_metrics": {
+      "accuracy": 0.23015873015873015,
+      "auroc": 0.16968952171087945,
+      "balanced_accuracy": 0.23201118738876175,
+      "brier": 0.26878674440221617,
+      "log_loss": 0.7308271433637873,
+      "mcc": -0.5357128384224558
+    },
+    "interpretation": "These post-seal refits diagnose shortcut dependence; they do not replace the frozen classifier or create a second confirmatory test.",
+    "training_logo_folds": 15
+  },
+  "source_bindings": {
+    "data/v10/prepaper/heldout/inputs/preoptimization_features.csv": "69ce8e47dcd7857ecd834ea5d1b61211d5346056500a4472b440256d98e25eb8",
+    "data/v10/prepaper/heldout/sealed_predictions/model.json": "dd66b6bcdc8ff92441a99084edfdbb57cfdc806e6c3281fa95cab3a612972d0d",
+    "data/v10/prepaper/heldout/sealed_predictions/training_features_labels.csv": "4d07a653df79270684578cbac35d683c491814d3e6e4a59155b998be6ab91666",
+    "data/v10/prepaper/heldout_v2/analysis/combined_generator_diagnostics.csv": "2ac2aedc09fb0fba093b480c151326be421a3037f3fc2f7546a61dcae4288943",
+    "data/v10/prepaper/heldout_v2/analysis/combined_heldout_metrics.json": "7f65dfd366ee6d63aa520ea1a454e35a1e1be5962be78d0133a574cb4974804a",
+    "data/v10/prepaper/heldout_v2/analysis/heldout_v1_v2_unique_inputs.csv": "d476ce85f23dd9da96cc8a34909d36794dae3e57539502e86bf6634e6e1e409b",
+    "data/v10/prepaper/heldout_v2/inputs/preoptimization_features.csv": "b423b7db6a0840e06cf3bc487a0ff4f1fbf1f8dcf54c5998873b38275e110ff6"
+  },
+  "status": "PASS_POSTSEAL_GENERALIZATION_OOD_AUDIT"
+}

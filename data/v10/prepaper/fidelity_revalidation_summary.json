@@ -1,0 +1,106 @@
+{
+  "timestamp_utc": "2026-08-10T01:43:56.709845+00:00",
+  "source_file": "analysis/revalidate_prepareruns.py",
+  "source_sha256": "968b8f2389296cbdfb398203dcdf300b59f48d95b69295989f285c4882bc9225",
+  "protocol_sha256": "e47928f6f2edc0bace451fa47eee575dd3b241bc13d9e78e5900d43a279c5b6c",
+  "outputs": [
+    {
+      "dataset": "E3",
+      "input_file": "e03_scaling_v2_20260810_033256.csv",
+      "output_file": "e03_scaling_v2_20260810_033256_revalidated.csv",
+      "target_rows": 75,
+      "revalidated_rows": 75,
+      "failures": []
+    },
+    {
+      "dataset": "E14",
+      "input_file": "e14_extended_benchmark_e14_full_20260809_172233.csv",
+      "output_file": "e14_extended_benchmark_e14_full_20260809_172233_revalidated.csv",
+      "target_rows": 27,
+      "revalidated_rows": 7,
+      "above_limit_unavailable_rows": 480,
+      "failures": [
+        {
+          "index": 1191,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1192,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1193,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1194,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1195,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1196,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1197,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1198,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1199,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1200,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1201,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1202,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1203,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1204,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1205,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1206,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1207,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1208,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1209,
+          "reason": "exact_still_unavailable"
+        },
+        {
+          "index": 1211,
+          "reason": "exact_still_unavailable"
+        }
+      ]
+    }
+  ]
+}

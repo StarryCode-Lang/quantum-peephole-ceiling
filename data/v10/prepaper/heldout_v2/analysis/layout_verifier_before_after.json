@@ -1,0 +1,37 @@
+{
+  "status": "LAYOUT_AWARE_EXACT_VERIFIER_REPAIR_CONFIRMED",
+  "affected_rows": 48,
+  "affected_families": {
+    "FermionicHoppingRing": {
+      "rows": 24,
+      "old_mean_fidelity": 0.26952479884501185,
+      "new_mean_fidelity": 1.0000000000000095,
+      "new_mean_common_reduction_pct_itt": 50.628312500000014
+    },
+    "PermutationInterferometer": {
+      "rows": 24,
+      "old_mean_fidelity": 0.0655981087249326,
+      "new_mean_fidelity": 0.9999999999999991,
+      "new_mean_common_reduction_pct_itt": 53.829179166666655
+    }
+  },
+  "aggregate": {
+    "old_fidelity_min": 0.003951848249027237,
+    "old_fidelity_max": 0.294117647058825,
+    "old_fidelity_mean": 0.16756145378497225,
+    "new_fidelity_min": 0.9999999999999973,
+    "new_fidelity_max": 1.000000000000016,
+    "new_fidelity_mean": 1.0000000000000047,
+    "old_valid_equivalent_outputs": 0,
+    "new_valid_equivalent_outputs": 48,
+    "old_mean_common_reduction_pct_itt": 0.0,
+    "new_mean_common_reduction_pct_itt": 52.228745833333356,
+    "identical_common_reduction_before_and_after": 48,
+    "identical_output_circuit_hash_before_and_after": 48
+  },
+  "old_invalid_qiskit_result_sha256": "466d522e04df9e625c8ee7978e4f21dbb83fabb0b4ca0c26af35ccc07fce1c29",
+  "new_formal_qiskit_result_sha256": "b548e964270c8dfde6071b964b9b60e9a84ff37c795a859643338043cc879216",
+  "old_reproduction_sha256": "6dfe6c83253fdb0d17305920fb43fa8740444e4ce945317fd29418e9e3b28581",
+  "exact_fidelity_source_sha256": "661a86d4400e3fada3e71d69c299da357826da752e20b090e3c6d0c5a4a34ad5",
+  "equivalence_contract_source_sha256": "19de65ac1fb719c763ed60f4b3bb8655435b706976333c1bf5e569faa58834af"
+}

@@ -1,0 +1,19 @@
+                  Mixed Linear Model Regression Results
+=========================================================================
+Model:               MixedLM   Dependent Variable:   common_reduction_itt
+No. Observations:    2080      Method:               REML                
+No. Groups:          15        Scale:                13912.4709          
+Min. group size:     40        Log-Likelihood:       -13020.9947         
+Max. group size:     240       Converged:            No                  
+Mean group size:     138.7                                               
+-------------------------------------------------------------------------
+                          Coef.   Std.Err.   z    P>|z|  [0.025   0.975] 
+-------------------------------------------------------------------------
+Intercept                -252.645   29.899 -8.450 0.000 -311.246 -194.044
+C(tool_label)[T.custom]   270.050    7.315 36.917 0.000  255.713  284.387
+C(tool_label)[T.qiskit]   283.010    7.315 38.689 0.000  268.673  297.347
+C(tool_label)[T.tket]     237.170    7.315 32.422 0.000  222.832  251.507
+Group Var               12900.547   72.792                               
+instance Var             2089.610                                        
+seed Var                  185.272                                        
+=========================================================================

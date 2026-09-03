@@ -1,0 +1,31 @@
+{
+  "retrieved_at_utc": "2026-08-11T11:10:00Z",
+  "source": "https://zenodo.org/api/records/14055562",
+  "concept_doi_requested": "10.5281/zenodo.14055562",
+  "resolved_record_id": 14057840,
+  "resolved_version_doi": "10.5281/zenodo.14057840",
+  "title": "Optimizing Quantum Circuits, Fast and Slow Artifact (GUOQ)",
+  "publication_date": "2024-11-08",
+  "record_updated": "2024-11-09T11:03:06.493265+08:00",
+  "declared_version": null,
+  "license": "Apache-2.0",
+  "access_right": "open",
+  "total_file_bytes": 13084927521,
+  "files": [
+    {"key": "guoq.tar.gz", "size": 68466, "checksum": "md5:528a79076463d227538af14b854c33e1"},
+    {"key": "benchmarks.tar.gz", "size": 12047842, "checksum": "md5:ddbb5c83294c029c5cdcfc66f7732ead"},
+    {"key": "GUOQ-1.0-jar-with-dependencies.jar", "size": 9686998, "checksum": "md5:8fe405b8f0dd61a48e7248d8bd0681b6"},
+    {"key": "transfer_quarl_data.sh", "size": 762, "checksum": "md5:550fded393472be95c4fcec1e2e4fa7e"},
+    {"key": "queso_rules.tar.gz", "size": 1986574, "checksum": "md5:dc66b0b1b371374dd14bd85a0cf130e2"},
+    {"key": "README.md", "size": 11784, "checksum": "md5:e9de6033a3dfd3d30b8b3b0bad21f074"},
+    {"key": "quarl_docker_image.tar.gz", "size": 7293986743, "checksum": "md5:e64e1d7052df7384421d8142e06a8703"},
+    {"key": "guoq_docker_image.tar.gz", "size": 5767138352, "checksum": "md5:904e5ebcd5d1a113ebc5f49bb52d8619"}
+  ],
+  "repository": {
+    "url": "https://github.com/qqq-wisc/guoq",
+    "default_branch": "main",
+    "head_verified_by_git_ls_remote": "8c4c3a5a6dfc9f7fc375ec16c2180139f0a8cb1a",
+    "license_at_head": "Apache-2.0",
+    "artifact_source_correspondence": "not asserted: the Zenodo execution artifact predates the recorded current repository HEAD"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "raw_results_preserved": true,
+  "records": [
+    {
+      "cache_hits": 72,
+      "exact_operator_pairs_computed": 356,
+      "fidelity_formula": "(abs(Tr(U_dagger V))^2 + d) / (d^2 + d)",
+      "legacy_valid_n": 408,
+      "manifest_sha256": "64492983c3c4773156a9d54e6bbe578baf52d2e398f58b7254a04e045438202a",
+      "method": "quasar",
+      "raw_sha256": "de06547361f718bef9f76103fd085822263ff35a2897a87b1a874ed9fa3a1fd4",
+      "revalidated_sha256": "54542229e9d11a913b2473b9c9e9f1e49ef9e5ae54efd16f54b09e4acb29f884",
+      "revalidated_valid_n": 408,
+      "rows": 520,
+      "threshold": 0.9999999999
+    },
+    {
+      "cache_hits": 121,
+      "exact_operator_pairs_computed": 399,
+      "fidelity_formula": "(abs(Tr(U_dagger V))^2 + d) / (d^2 + d)",
+      "legacy_valid_n": 399,
+      "manifest_sha256": "cd28e3d69c6b02dd3f4b28d07bf813d4476c7aeae55f18008e00f5176a7cdde5",
+      "method": "quartz",
+      "raw_sha256": "8ede048c0388537de6d473b70bea2e5a43c9948159a684e369b32030553ff149",
+      "revalidated_sha256": "da3a3a50fd8d6a50a1e8452a61e6eb3442670601e574f1e8956a45caaae86a85",
+      "revalidated_valid_n": 519,
+      "rows": 520,
+      "threshold": 0.9999999999
+    }
+  ],
+  "rule": "frozen exact full-operator average gate fidelity >= 1 - 1e-10",
+  "source_sha256": "9b299a61a7fffc697eda4c1c702c0478ac8f0111d0f6825406a073431888c34f",
+  "status": "complete"
+}

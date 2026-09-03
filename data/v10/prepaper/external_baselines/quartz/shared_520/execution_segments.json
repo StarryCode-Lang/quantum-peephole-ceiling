@@ -1,0 +1,33 @@
+{
+  "purpose": "Record host-level resumptions of the atomically checkpointed formal Quartz run",
+  "segments": [
+    {
+      "starts_after_checkpoint_rows": 0,
+      "completed_checkpoint_rows": 300,
+      "checkpoint_sha256_at_break": "4a6a286245be5636359232b3a946c954a82ea54ac6f8d9c40cee728ebe9bb998",
+      "driver_source_sha256": "01d8f0d2ae769a7fbf2c3c331824e6b0cc6f75536bc4e431b260d6ce363745c3",
+      "executable_sha256": "1b8b50a9c0d938ea9858113b530ec329bbee1b6dcfc0ae0b73789f79ca8a198e",
+      "execution_controls": "single-worker sequential loop; official Graph::optimize default search; 120-second outer timeout",
+      "algorithm_change": false,
+      "input_or_outcome_change": false,
+      "status": "retained_after_host_reclaim",
+      "break_reason": "active task crossed an automatic continuation boundary; 300 atomically checkpointed rows retained",
+      "status_counts_at_break": {"ok": 300},
+      "valid_exact_outputs_at_break": 233
+    },
+    {
+      "starts_after_checkpoint_rows": 300,
+      "driver_source_sha256": "5e0faf397102f5440fa8c4917508d48ed3cc0f13b3ff08d904209f1c0be26e26",
+      "executable_sha256": "1b8b50a9c0d938ea9858113b530ec329bbee1b6dcfc0ae0b73789f79ca8a198e",
+      "execution_controls": "segment-1 controls; execution-segment hash added to final metadata",
+      "algorithm_change": false,
+      "input_or_outcome_change": false,
+      "completed_checkpoint_rows": 520,
+      "status": "complete",
+      "result_sha256": "8ede048c0388537de6d473b70bea2e5a43c9948159a684e369b32030553ff149",
+      "status_counts_final": {"ok": 520},
+      "legacy_operator_equiv_outputs_final": 399,
+      "note": "frozen exact-average-gate-fidelity revalidation is recorded separately and yields 519 valid outputs"
+    }
+  ]
+}

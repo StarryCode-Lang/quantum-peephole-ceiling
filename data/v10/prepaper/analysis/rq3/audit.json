@@ -1,0 +1,63 @@
+{
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 20260809,
+  "estimand": "unique-input-weighted mean; repeated executions remain operational rows",
+  "inner_unit": "unique input_circuit_sha256 within family",
+  "input_sha256": {
+    "cirq": "7ddbd974d82b11b0461a4ad572d566f8e91a36487d3fbea6077b848676c78609",
+    "custom": "93d79d766d3f818abdaaa65fe17a228b3466fbe5fc56e6b0d9ad757c27b7df9c",
+    "qiskit": "99e97df57d25b5b31a063df9a24c9b65a26f189e8478a9e495b55a7ad3294681",
+    "tket": "12f3b5e13dc70b532a58dd2964ab2c3d0f9677786b703df7df6f9704c48d367f"
+  },
+  "manifest_sha256": "3ab0bff77d9d39fa95920fae54094fb8e207cd2895e5642ec8305935c90db841",
+  "model_status": {
+    "continuous_mixed_model_converged": false,
+    "continuous_mixed_model_formula": "common_reduction_itt ~ C(tool)",
+    "continuous_mixed_model_parameters": {
+      "C(tool_label)[T.custom]": 270.0500638461543,
+      "C(tool_label)[T.qiskit]": 283.0099330769235,
+      "C(tool_label)[T.tket]": 237.16960807692354,
+      "Group Var": 0.9272650072481039,
+      "Intercept": -252.64529212877886,
+      "instance Var": 0.15019686617131434,
+      "seed Var": 0.013316937864336223
+    },
+    "continuous_mixed_model_random_effects": "family + instance + seed intercepts",
+    "primary_binary_model": "family-clustered nested bootstrap plus cluster sign permutation",
+    "primary_binary_model_reason": "valid-output rates are boundary concentrated; the preregistered nonparametric fallback avoids separation and singular random-effect estimates"
+  },
+  "multiple_testing": "Holm within endpoint across six tool pairs",
+  "n_manifest": 520,
+  "outer_cluster": "circuit_family",
+  "output_sha256": {
+    "bootstrap_source_10000.csv": "1e3c9fecb46a42f762861fe850cdf2f71a8bb5bd05551e4b002c1848ea084355",
+    "family_tool_diagnostics.csv": "85f09fa8f37a8f0db90da5c057d535f9482983d8aee614f5df6e1906592494fe",
+    "leave_one_family_out.csv": "4ca2f703438aff51d8bc92cbd22790cda29e618a51020fe278c63ac488b3b77a",
+    "pairwise_contrasts.csv": "18190018fb3a63438b8fdd8a8deb4dd7de972544f735fb100c8fefd90bdbf51c",
+    "quality_runtime_pareto_frontier.csv": "1bd27b13262ec8483dd7bad157fd8a3dccba15decc8bd5cbaf2cf41ee819720e",
+    "quality_runtime_pareto_pairwise.csv": "25d112546b69b640f20c2737d619846737525b37200d5437eb5835587e90f728",
+    "quality_runtime_pareto_summary.csv": "c6b343da4fbaefe7230de7687dbc2bc96de278c4220e230bc56ede6255111996",
+    "tool_summary.csv": "5d49b86e552e4d80aaf151c3e265ed1a93871ee0288425e33ea18c0dc4813870"
+  },
+  "pair_key": [
+    "circuit_id",
+    "trial",
+    "seed",
+    "input_circuit_sha256"
+  ],
+  "power_analysis": {
+    "alpha_two_sided": 0.05,
+    "scope": "paired tool contrasts; descriptive tool summaries report precision, not MDE",
+    "target_power": 0.8,
+    "type": "normal approximation using cluster-bootstrap standard error"
+  },
+  "protocol_sha256": "e47928f6f2edc0bace451fa47eee575dd3b241bc13d9e78e5900d43a279c5b6c",
+  "source_sha256": "442acceb17703ae9f902f39c12eed96d72294e95392f8e867d12c323300a46ec",
+  "status": "complete",
+  "tools": [
+    "custom",
+    "qiskit",
+    "cirq",
+    "tket"
+  ]
+}

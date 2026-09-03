@@ -1,0 +1,142 @@
+{
+  "artifacts": {
+    "e18_dependency_t_depth.csv": {
+      "rows": 1080,
+      "sha256": "c6699157496c7b9ed3c95ca98b7d0ee6ea8f7d5c3e1152f5890590dde79288f8"
+    }
+  },
+  "created_utc": "2026-08-29T08:37:59.754129+00:00",
+  "fixed_unitary_scope": {
+    "ancilla_qubits_total": 0,
+    "cells_with_idle_declared_wires": 965,
+    "declared_qubit_range": [
+      4,
+      10
+    ],
+    "dynamic_cost_disposition": "classical feed-forward latency and dynamic-branch cost are not applicable to this benchmark scope; they are not asserted to be zero for dynamic circuits",
+    "measurement_count_total": 0,
+    "peak_live_qubits_interpretation": "Within the fixed-width unitary contract, every declared input wire (including an identity wire with no gates) is part of the input/output Hilbert space and must be preserved; peak stored live qubits therefore equals declared width.",
+    "reset_count_total": 0,
+    "semantic_cells": 6858,
+    "status": "PASS_FIXED_WIDTH_UNITARY_SCOPE_CLASSIFIED"
+  },
+  "hardware_snapshot": {
+    "backend_snapshots": [
+      "FakeManilaV2",
+      "FakeNairobiV2"
+    ],
+    "calibration_success_probability_range": [
+      0.7815790255639192,
+      0.9661081218186048
+    ],
+    "claim_boundary": "Two qiskit fake-provider calibration snapshots and three circuits only; not a real-QPU, cross-device-transfer, queue-time, pulse, idle-time, or crosstalk measurement.",
+    "initial_layout_policy": [
+      "trivial_identity_on_logical_width"
+    ],
+    "input_circuits": 3,
+    "native_2q_count_range": [
+      3,
+      29
+    ],
+    "native_2q_depth_range": [
+      3,
+      29
+    ],
+    "noise_aware_cost_definition": "1 - calibration_success_probability",
+    "routing_policy": [
+      "sabre"
+    ],
+    "run_rows": 288,
+    "samplers": [
+      "aer_ideal",
+      "aer_noisy_fakebackend"
+    ],
+    "sampling_seed_repeats": 3,
+    "scheduled_duration_seconds_range": [
+      1.1377777777777775e-06,
+      1.0965333333333338e-05
+    ],
+    "seed_transpiler": [
+      12345
+    ],
+    "shots": [
+      8192
+    ],
+    "status": "PASS_BOUNDED_CALIBRATION_SNAPSHOT_COST_VECTOR",
+    "structural_design_cells": 48,
+    "translation_policy": [
+      "translator"
+    ],
+    "transpile_levels": [
+      0,
+      1
+    ]
+  },
+  "metric_dispositions": {
+    "14.03": "PASS: one identical initial-layout policy is enforced across compared versions",
+    "14.07": "PASS: native two-qubit gate count is reported",
+    "14.08": "PASS: native two-qubit depth is reported",
+    "14.09": "PASS: scheduled duration is reported",
+    "14.12": "PASS: fixed-snapshot product-of-gate-success proxy is reported with limitations",
+    "14.13": "PASS: bounded noise-aware cost 1-p_success is defined and finite",
+    "14.32": "NA: dynamic circuits are outside the frozen unitary benchmark scope",
+    "9.08": "PASS: scheduled critical-path duration is directly reported for every bounded hardware design cell",
+    "9.18": "PASS: peak live qubits equals declared width under the verified fixed-width unitary contract",
+    "9.19": "NA: the evaluated circuits contain no measurement or classical feed-forward",
+    "9.20": "NA: the evaluated circuits contain no dynamic branches",
+    "9.22": "PASS: dependency-preserving T/TDG depth reconstructed for all 1,080 native Clifford+T rows"
+  },
+  "native_clifford_t": {
+    "all_historical_input_hashes_reproduced": true,
+    "all_historical_output_hashes_reproduced": true,
+    "all_rows_recorded_exact_equivalence_valid": true,
+    "claim_boundary": "This is exact for the recorded emitted-circuit dependency schedule. It is not globally minimized T-depth, magic-state factory demand, or a fault-tolerant architecture estimate.",
+    "definition": "maximum T/TDG stage on any emitted-circuit causal path; Clifford operations propagate but do not increment the stage",
+    "n_families": 6,
+    "n_native_clifford_t_inputs": 360,
+    "n_qubits_max": 8,
+    "n_qubits_min": 3,
+    "n_reconstructed_rows": 1080,
+    "optimizer_summaries": [
+      {
+        "mean_baseline_dependency_t_depth": 7.980555555555555,
+        "mean_optimized_dependency_t_depth": 7.802777777777778,
+        "mean_relative_reduction_nonzero_baseline": 0.058403755868544606,
+        "optimizer": "commutation_phase2",
+        "regression_rows": 0,
+        "rows": 360,
+        "rows_with_nonzero_baseline_t_depth": 355
+      },
+      {
+        "mean_baseline_dependency_t_depth": 7.980555555555555,
+        "mean_optimized_dependency_t_depth": 5.669444444444444,
+        "mean_relative_reduction_nonzero_baseline": 0.4991079812206573,
+        "optimizer": "greedy_phase1",
+        "regression_rows": 0,
+        "rows": 360,
+        "rows_with_nonzero_baseline_t_depth": 355
+      },
+      {
+        "mean_baseline_dependency_t_depth": 7.980555555555555,
+        "mean_optimized_dependency_t_depth": 5.625,
+        "mean_relative_reduction_nonzero_baseline": 0.5106572769953052,
+        "optimizer": "hybrid_phase1_2",
+        "regression_rows": 0,
+        "rows": 360,
+        "rows_with_nonzero_baseline_t_depth": 355
+      }
+    ],
+    "status": "PASS_RECONSTRUCTED_NATIVE_CLIFFORD_T_DEPENDENCY_DEPTH"
+  },
+  "overall_claim_boundary": "The artifact closes item-specific measurement gaps only in the recorded Clifford+T, fixed-width unitary, and fake-backend snapshot scopes. It does not license real-QPU, pulse-level, globally optimal fault-tolerant, or dynamic-circuit claims.",
+  "schema_version": "1.0.0",
+  "source_bindings": {
+    "data/v10/prepaper/e18/e18_clifford_t_e18_full_20260809_172558.csv": "f4df79e47c1b41b713b78fcfe661056a9a49233723aa779847a596012b5a087f",
+    "data/v10/prepaper/e18/metadata.json": "ebf45e33ad7be74f02f4c9075133a3f00490a19a8a3af50c4e9f7722cbe483a6",
+    "data/v10/prepaper/hardware_validation/ehw_metadata_full_20260811_123958.json": "49f6a6b29db7fc2f89c542175a2ab6c2b96adac7f0c7f0520b542c7e4e0f3930",
+    "data/v10/prepaper/hardware_validation/ehw_runs_full_20260811_123958.csv": "906ff8790b9bf2ed8b29478f058b12fd3a9f6d569e701e156090bb5b00d2c879",
+    "data/v11/e31_factorial_pareto/formal_run/postseal_structural_distribution_metrics/semantic_cell_structural_metrics.csv": "c0d86aa15ed6b54ffb8fa07b8076c0ef384ceecf18e01ffc12013feddf760879",
+    "experiments/e18_clifford_t/run.py": "ebdcc69739a0ae49b05d65bee11e76850e7528e45f2a1b21a97c2d81305846a2"
+  },
+  "status": "PASS_BOUNDED_COST_VECTOR_AND_SCOPE_AUDIT"
+}

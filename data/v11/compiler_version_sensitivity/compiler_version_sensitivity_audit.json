@@ -1,0 +1,191 @@
+{
+  "all_outputs_exact_equivalent": true,
+  "all_runs_successful": true,
+  "all_tools_have_two_versions": true,
+  "all_version_pairs_structurally_identical": true,
+  "artifacts": {
+    "all_version_results.csv": {
+      "rows": 105,
+      "sha256": "a18375d92835a3c154d44e31db31badc3d14823675e476a2f5b8a098b8c6fd24"
+    },
+    "per_tool_version_comparison.csv": {
+      "rows": 3,
+      "sha256": "dff4bbd64eb6cb63a32eebb8572cd28abce127f2a3d2b71f2c4b5a477739769b"
+    }
+  },
+  "claim_boundary": "This is a 15-circuit, 15-family, 4-5-qubit Windows panel. It is direct version-sensitivity evidence for the exact versions listed; custom-current has only one version. It is not a full benchmark rerun, not E31 replication, not unseen-family evidence, and not Windows/Linux or cross-CPU robustness.",
+  "created_utc": "2026-08-30T05:15:40.944269+00:00",
+  "equivalence_method": "numerical full-unitary trace overlap, invariant to global phase, threshold 1-1e-10; optimized QASM artifacts are retained for independent replay",
+  "executed_environments": [
+    {
+      "environment_id": "qiskit-2.4.1",
+      "environment_sha256": "52e17642860aae1af2a08de987f0bd7a6db29de500cad2d1e914815594a557d8",
+      "requested_requirements": [
+        "qiskit==2.4.1",
+        "numpy==1.26.4",
+        "scipy==1.13.1"
+      ],
+      "resolved_requirements_sha256": "9a484260a2ebb1e19a0c32a185d9f4c0ebd9d8aef0ff18491af08394b5f1984e",
+      "result_path": "data/v11/compiler_version_sensitivity/runs/qiskit-2.4.1/results.csv",
+      "result_sha256": "13e6bdb1aa354daadf3a1f7497e6a5e854430ab4593deadb79935ff6cad90e1b",
+      "tool": "qiskit"
+    },
+    {
+      "environment_id": "qiskit-2.3.1",
+      "environment_sha256": "97383e36bf7e2b112e488603faa032397f69da61f76760142964bea312651f23",
+      "requested_requirements": [
+        "qiskit==2.3.1",
+        "numpy==1.26.4",
+        "scipy==1.13.1"
+      ],
+      "resolved_requirements_sha256": "100c0be2c0381b120d99793bd2114e4c511760cfc4467bc0a1c56b3e3a3373fe",
+      "result_path": "data/v11/compiler_version_sensitivity/runs/qiskit-2.3.1/results.csv",
+      "result_sha256": "da04d32108a28111cbdeb2928c5c3127c1cccbd3485c6f4fa41ad47fc352f8f8",
+      "tool": "qiskit"
+    },
+    {
+      "environment_id": "cirq-1.6.1",
+      "environment_sha256": "4f8c33107859f1a3d5710239fbb86cb6488e0995728b1dc0d4c5f1a67b18a9e4",
+      "requested_requirements": [
+        "qiskit==2.4.1",
+        "numpy==1.26.4",
+        "scipy==1.13.1",
+        "cirq-core==1.6.1",
+        "ply==3.11"
+      ],
+      "resolved_requirements_sha256": "fc1230e9314f5a6e56738d81d9a7392f0cef30f28d7626ce63f79dafb1203394",
+      "result_path": "data/v11/compiler_version_sensitivity/runs/cirq-1.6.1/results.csv",
+      "result_sha256": "e808d363310f3d995761dc63752a488af4c1b0e38cb0689f682f65d3befcfb93",
+      "tool": "cirq"
+    },
+    {
+      "environment_id": "cirq-1.6.0",
+      "environment_sha256": "4d892f10de14d5ddb5c02ffa8b088b936e22bdaf923b88311c3d0b13f2e8dd8c",
+      "requested_requirements": [
+        "qiskit==2.4.1",
+        "numpy==1.26.4",
+        "scipy==1.13.1",
+        "cirq-core==1.6.0",
+        "ply==3.11"
+      ],
+      "resolved_requirements_sha256": "052c914a42cf66fbe5c12eb2b5fbcc44702be30881bd6f37beb99b9a433707d8",
+      "result_path": "data/v11/compiler_version_sensitivity/runs/cirq-1.6.0/results.csv",
+      "result_sha256": "74f8aa53a4239617ece0887caea7ae62c9f88795ee17066d01f7d40558fdfaaf",
+      "tool": "cirq"
+    },
+    {
+      "environment_id": "pytket-2.18.0",
+      "environment_sha256": "07b79fb5914e3b30595bae2fd2e912daeb9d92478f8c9629927dece9b9f19d10",
+      "requested_requirements": [
+        "qiskit==2.4.1",
+        "numpy==1.26.4",
+        "scipy==1.13.1",
+        "pytket==2.18.0",
+        "pytket-qiskit==0.77.0"
+      ],
+      "resolved_requirements_sha256": "f515292a7fbc1ab5a7e87d7c238b569647af6be4e9c58f910b9321865bc5da56",
+      "result_path": "data/v11/compiler_version_sensitivity/runs/pytket-2.18.0/results.csv",
+      "result_sha256": "481a5c2867ab69f9a20a5b07c39adaf395bedf7dfd4ecde0d2cc4655f4078167",
+      "tool": "tket"
+    },
+    {
+      "environment_id": "pytket-2.17.0",
+      "environment_sha256": "f52739cd97231625943cc2f17476ea5e450fe474c0a163485840fda7cd1e5b87",
+      "requested_requirements": [
+        "qiskit==2.4.1",
+        "numpy==1.26.4",
+        "scipy==1.13.1",
+        "pytket==2.17.0",
+        "pytket-qiskit==0.77.0"
+      ],
+      "resolved_requirements_sha256": "e1b53dfe1d0db91a12c04aa311fd00d9106a877884f421a3f983dcb68ea9e5e2",
+      "result_path": "data/v11/compiler_version_sensitivity/runs/pytket-2.17.0/results.csv",
+      "result_sha256": "6d02563b69e085d948f4e420f166f1217dd86f68af9ebff2684bb8cbf5423ea0",
+      "tool": "tket"
+    },
+    {
+      "environment_id": "custom-current",
+      "environment_sha256": "6514cdc858307aa3f693b40041a6bdfe6f748dfb5e773e65ae29edcb136c0319",
+      "requested_requirements": [
+        "qiskit==2.4.1",
+        "numpy==1.26.4",
+        "scipy==1.13.1"
+      ],
+      "resolved_requirements_sha256": "9a484260a2ebb1e19a0c32a185d9f4c0ebd9d8aef0ff18491af08394b5f1984e",
+      "result_path": "data/v11/compiler_version_sensitivity/runs/custom-current/results.csv",
+      "result_sha256": "083461dfdd3a4d7483eb9991610013ecd959193693588729e8fd68534d333fc2",
+      "tool": "custom"
+    }
+  ],
+  "isolation": "each environment was created in an independent temporary uv virtual environment; the project environment was not modified",
+  "metric_dispositions": {
+    "18.10": "PARTIAL: three compiler stacks have two-version evidence on one Windows host, but no Linux or different-CPU execution exists",
+    "8.28": "PARTIAL: Qiskit, Cirq, and tket each have a two-version frozen 15-family structural panel, but the panel is not the full formal benchmark and external Quasar/Quartz versions are not varied"
+  },
+  "panel": {
+    "families": 15,
+    "path": "data/v11/compiler_version_sensitivity/frozen_panel.csv",
+    "qubit_range": [
+      4,
+      5
+    ],
+    "rows": 15,
+    "selection": "smallest-n circuit per family from the frozen shared-520 SOTA manifest, trial 0 seed 42",
+    "sha256": "bf3d6ba65ec7aca449e1812e7006463fd5c61d72f3aeface832df3195cc22d81",
+    "source_manifest_sha256": "3ab0bff77d9d39fa95920fae54094fb8e207cd2895e5642ec8305935c90db841"
+  },
+  "runtime_boundary": "Runtime is reported separately and descriptively from a single execution per circuit; no performance-equivalence claim is made.",
+  "schema_version": "1.0.0",
+  "source_bindings": {
+    "analysis/compiler_version_sensitivity_audit.py": "80a10f7f1d6639a7cff7018682f1f9f8d8b0fbdfc454d94e41c8b763a168c8a0",
+    "experiments/compiler_version_panel_worker.py": "28c58b66a8b47c94afcd50cb5554b942b4247cb8a7661a197ece30f36c066383"
+  },
+  "status": "PASS_BOUNDED_COMPILER_VERSION_PANEL",
+  "tool_version_comparisons": [
+    {
+      "all_rows_structurally_identical": true,
+      "left_environment": "qiskit-2.3.1",
+      "left_exact_equivalent_rows": 15,
+      "left_runtime_median_seconds": 0.0062417000008281,
+      "left_success_rows": 15,
+      "right_environment": "qiskit-2.4.1",
+      "right_exact_equivalent_rows": 15,
+      "right_runtime_median_seconds": 0.0058238999918103,
+      "right_success_rows": 15,
+      "rows": 15,
+      "runtime_role": "descriptive only; one execution per panel circuit",
+      "structurally_identical_rows": 15,
+      "tool": "qiskit"
+    },
+    {
+      "all_rows_structurally_identical": true,
+      "left_environment": "cirq-1.6.0",
+      "left_exact_equivalent_rows": 15,
+      "left_runtime_median_seconds": 0.0847557999950368,
+      "left_success_rows": 15,
+      "right_environment": "cirq-1.6.1",
+      "right_exact_equivalent_rows": 15,
+      "right_runtime_median_seconds": 0.077156700004707,
+      "right_success_rows": 15,
+      "rows": 15,
+      "runtime_role": "descriptive only; one execution per panel circuit",
+      "structurally_identical_rows": 15,
+      "tool": "cirq"
+    },
+    {
+      "all_rows_structurally_identical": true,
+      "left_environment": "pytket-2.17.0",
+      "left_exact_equivalent_rows": 15,
+      "left_runtime_median_seconds": 0.177352200000314,
+      "left_success_rows": 15,
+      "right_environment": "pytket-2.18.0",
+      "right_exact_equivalent_rows": 15,
+      "right_runtime_median_seconds": 0.1737185000092722,
+      "right_success_rows": 15,
+      "rows": 15,
+      "runtime_role": "descriptive only; one execution per panel circuit",
+      "structurally_identical_rows": 15,
+      "tool": "tket"
+    }
+  ]
+}
