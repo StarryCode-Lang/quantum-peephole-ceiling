@@ -1,0 +1,158 @@
+{
+  "as_of": "2026-09-08",
+  "blocking_evidence": {
+    "arm_count": 6,
+    "configuration_count": 18,
+    "eligible_config_count": 18,
+    "full_development": {
+      "artifacts": {
+        "certificates": {
+          "path": "data/v14/e45_full_development/certificates.jsonl",
+          "predicate": "verify_e45_exact_development.py --output-root data/v14/e45_full_development exits 0",
+          "selector": "$.certificates_sha256",
+          "sha256": "8a6ae277772533270a69795b20a680b6c660ca78e5eb2a2cc91357ade4c8e48b"
+        },
+        "config_summaries": {
+          "path": "data/v14/e45_full_development/config_summaries.json",
+          "predicate": "verify_e45_exact_development.py --output-root data/v14/e45_full_development exits 0",
+          "selector": "$.config_summaries_sha256",
+          "sha256": "43137b483b9bf1daca1f161a2925e80c2dffe51e478231b637e38c0fa7e6ff7b"
+        },
+        "grid_results": {
+          "path": "data/v14/e45_full_development/grid_results.csv",
+          "predicate": "verify_e45_exact_development.py --output-root data/v14/e45_full_development exits 0",
+          "selector": "$.grid_results_sha256",
+          "sha256": "0c1bada82fccba0f9203c7e414b19c3e6a5372f8488f56a300d61a733b97aac8"
+        },
+        "normalization_manifest": {
+          "path": "data/v14/e45_full_development/normalization_manifest.csv",
+          "predicate": "verify_e45_exact_development.py --output-root data/v14/e45_full_development exits 0",
+          "selector": "$.normalization_manifest_sha256",
+          "sha256": "0de35d33ad281b0b43dc8f5e38e76567d8c4afc14747a9eff0e7756196b1ba84"
+        },
+        "protocol": {
+          "path": "data/v14/e45_full_development/protocol.json",
+          "predicate": "verify_e45_exact_development.py --output-root data/v14/e45_full_development exits 0",
+          "selector": "$.protocol_sha256",
+          "sha256": "0d0e86c69d15b5577930d8399c6e5963ab8bc5e356c6f8e80afd44b729afc05c"
+        },
+        "selection": {
+          "path": "data/v14/e45_full_development/selection.json",
+          "predicate": "verify_e45_exact_development.py --output-root data/v14/e45_full_development exits 0",
+          "selector": "$.selection_sha256",
+          "sha256": "8838a3e1bcd527add76dfe1054af9f1ce4a013afe27e5d16ef8e1620464ea666"
+        }
+      },
+      "exact_finite_horizon_certificates": 93,
+      "phase": "full_development",
+      "receipt_sha256": "4df5a050e3acd048571c7b3516bb8bb32433b091010d47183f54129f17f6a0ae",
+      "resource_bounded_rows": 35,
+      "resource_or_error_rate": 0.2734375,
+      "result_rows": 768,
+      "selected_config": "h3_b64_s200k",
+      "semantic_failure_count": 0,
+      "source_count": 128,
+      "status": "DEVELOPMENT_COMPLETE_WITH_RESOURCE_BOUNDARY"
+    },
+    "guided_resource_bounded_rows": 90,
+    "guided_resource_or_error_rate_max": 0.0390625,
+    "guided_rows": 2304,
+    "receipt": {
+      "config_summaries": {
+        "path": "data/v14/e45_development_grid/config_summaries.json",
+        "predicate": "all 18 guided configurations have resource_or_error_rate <= 0.05",
+        "selector": "$.selection.eligible_config_count",
+        "sha256": "7ddf4928d7bfc465cd8f87c38da86f681e3e214d9d6bbd2a99de3eec25a4226e"
+      },
+      "grid_results": {
+        "path": "data/v14/e45_development_grid/grid_results.csv",
+        "predicate": "CSV has 13,824 rows and zero semantic failures in the guided arm",
+        "selector": "$.result_rows",
+        "sha256": "4bac8e8a1189881c80f45aaae291d08316815e6b1042ac88af003fdb10a11683"
+      },
+      "normalization_manifest": {
+        "path": "data/v14/e45_development_grid/normalization_manifest.csv",
+        "predicate": "manifest has 128 rows and exact source_sha256 order of the sealed v13 panel",
+        "selector": "$.source_count and source_sha256 order",
+        "sha256": "0f4babe8cd8a2b07efd5ee826152775ae0bc290649a4f48bd39eb25a811b4e09"
+      },
+      "protocol": {
+        "path": "data/v14/e45_development_grid/protocol.json",
+        "predicate": "verify_e45_development_grid.py --output-root data/v14/e45_development_grid exits 0",
+        "selector": "$.protocol_sha256",
+        "sha256": "af47aaf5b910273a6780c438d6aa92d0f6e9dd546c26d9d1b657345a8c3f9843"
+      },
+      "selection": {
+        "path": "data/v14/e45_development_grid/selection.json",
+        "predicate": "selection status is screening-complete and selection_is_frozen_for_e48 is false",
+        "selector": "$.selected_config.config_id",
+        "sha256": "877946a997cda4b7aca48b1adcfe0eae29c8f499ef7a43a91917c4d0ee70a556"
+      }
+    },
+    "required_max_rate": 0.05,
+    "result_rows": 13824,
+    "selected_config": "h3_b64_s200k",
+    "selected_config_resource_or_error_rate": 0.0390625,
+    "selection_is_frozen_for_e48": false,
+    "source_count": 128,
+    "v13_readiness_verdict": "release/v13_readiness_verdict.json"
+  },
+  "claim_boundary": "The v14 result establishes a fixed 128-source screening resource gate and a full selected-configuration development panel with 93 complete finite-horizon certificates and 35 resource-truncated cells. It does not establish a complete exact landscape over all 128 sources, a confirmatory advantage, or a paper-ready landscape claim.",
+  "derivation": {
+    "evidence": [
+      {
+        "path": "data/v14/e45_development_grid/protocol.json",
+        "predicate": "verify_e45_development_grid.py --output-root data/v14/e45_development_grid exits 0",
+        "selector": "$.protocol_sha256",
+        "sha256": "af47aaf5b910273a6780c438d6aa92d0f6e9dd546c26d9d1b657345a8c3f9843"
+      },
+      {
+        "path": "data/v14/e45_development_grid/normalization_manifest.csv",
+        "predicate": "manifest has 128 rows and exact source_sha256 order of the sealed v13 panel",
+        "selector": "$.source_count and source_sha256 order",
+        "sha256": "0f4babe8cd8a2b07efd5ee826152775ae0bc290649a4f48bd39eb25a811b4e09"
+      },
+      {
+        "path": "data/v14/e45_development_grid/grid_results.csv",
+        "predicate": "CSV has 13,824 rows and zero semantic failures in the guided arm",
+        "selector": "$.result_rows",
+        "sha256": "4bac8e8a1189881c80f45aaae291d08316815e6b1042ac88af003fdb10a11683"
+      },
+      {
+        "path": "data/v14/e45_development_grid/config_summaries.json",
+        "predicate": "all 18 guided configurations have resource_or_error_rate <= 0.05",
+        "selector": "$.selection.eligible_config_count",
+        "sha256": "7ddf4928d7bfc465cd8f87c38da86f681e3e214d9d6bbd2a99de3eec25a4226e"
+      },
+      {
+        "path": "data/v14/e45_development_grid/selection.json",
+        "predicate": "selection status is screening-complete and selection_is_frozen_for_e48 is false",
+        "selector": "$.selected_config.config_id",
+        "sha256": "877946a997cda4b7aca48b1adcfe0eae29c8f499ef7a43a91917c4d0ee70a556"
+      }
+    ],
+    "metric_id": "E45.v14.S5.screening_resource_gate",
+    "script": "scripts/generate_v14_readiness_verdict.py",
+    "state_upgrade_predicate": "python scripts/verify_v14_readiness_verdict.py exits 0 and every guided configuration has resource_or_error_rate <= 0.05 with zero semantic failures"
+  },
+  "engineering_verification": {
+    "semantic_failures_in_guided_arm": 0,
+    "source_scope_matches_sealed_v13": true,
+    "v13_readiness_verdict_unchanged_sha256": "f3dff990ccb7d800cfdbb89d4034e4df76a9207664625b8a0950028dad453fc2",
+    "v14_e45_verifier": "PASS"
+  },
+  "paper_status": "Do not claim v14 certified-landscape completion or complete exact landscape quantities: 35 of 128 selected-configuration development cells remain resource-truncated, and external cold-start, real-QPU, title, and release gates remain open.",
+  "project": "Q-research v14 certified landscape screening",
+  "schema_version": "v14-readiness-verdict-v1",
+  "scientific_gates": {
+    "C3_title_and_positioning": "USER_DECISION_PENDING",
+    "EXACT_CERTIFIED_LANDSCAPE": "NOT_ESTABLISHED",
+    "S0_to_S4": "INHERITED_WITH_BOUNDARIES",
+    "S5_E45_full_development": "COMPLETE_WITH_RESOURCE_BOUNDARY",
+    "S5_E45_v14_screening": "PASS_RESOURCE_GATE_WITH_BOUNDARIES",
+    "external_cold_start": "OPEN",
+    "real_qpu": "OPEN",
+    "release_authority": "OPEN"
+  },
+  "verdict": "NOT_READY_FOR_PAPER"
+}

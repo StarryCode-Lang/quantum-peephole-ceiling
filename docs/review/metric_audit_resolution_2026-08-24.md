@@ -3,10 +3,12 @@
 Status: supersedes the legacy section-status/shared-evidence ledger.
 
 - Registry: `docs/review/metric_evidence_registry_2026-08-26.json`
-- Registry SHA-256: `49673340b171938e8e06a650f5710e9b32af9a024b5a518761f3b435b7045476`
+- Registry SHA-256: `1b9413c2d280fa208b93d25d1f18d7d51cdf0f729f1fb03aa9fb3f395ca6bd09`
 - Catalog SHA-256: `eb5f039ae5cfcd97e205afae9febb25f7b69bd52e57f4af4cdb8997d0393d36b`
-- Item-specific PASS coverage: **182/592**.
-- Status counts: `{"EXTERNAL": 4, "FAIL": 24, "NA": 29, "PARTIAL": 353, "PASS": 182}`.
+- Item-specific PASS coverage: **190/592**.
+- Status counts: `{"EXTERNAL": 10, "FAIL": 18, "NA": 31, "PARTIAL": 343, "PASS": 190}`.
+
+- v14 D1 evidence package: `release/v14_metric_dispositions.json`; its selectors are verified before the registry merge and the derived ledger regeneration.
 
 A row is PASS only when item-specific satisfaction evidence is a file, its current SHA-256 matches, its selector/predicate passes, and the registry assessment predicate is true. Directories and criterion-source references cannot satisfy a metric.
 

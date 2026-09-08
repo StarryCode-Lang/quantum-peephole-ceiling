@@ -1,0 +1,400 @@
+"""Generate the v14 item-specific evidence package for the 592-item ledger."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+OUTPUT = ROOT / "release" / "v14_metric_dispositions.json"
+
+
+METRIC_DISPOSITIONS = {
+    "1.18": {
+        "status": "PARTIAL",
+        "disposition": (
+            "A clean-environment reproduction protocol and executable commands are prepared, "
+            "but no independent clean execution has been recorded."
+        ),
+    },
+    "14.16": {
+        "status": "EXTERNAL",
+        "disposition": (
+            "The frozen real-QPU protocol is present, but authorization and execution are "
+            "external; execution_status remains NOT_EXECUTED."
+        ),
+    },
+    "15.08": {
+        "status": "PASS",
+        "disposition": "The repository contains an explicit MIT License text for software and associated documentation.",
+    },
+    "15.09": {
+        "status": "EXTERNAL",
+        "disposition": (
+            "The data and documentation license scope remains a user decision in the deposit "
+            "metadata; no published data license is asserted."
+        ),
+    },
+    "15.10": {
+        "status": "EXTERNAL",
+        "disposition": (
+            "Zenodo deposit metadata is drafted, but upload_performed is false and the DOI is "
+            "NOT_ASSIGNED."
+        ),
+    },
+    "15.20": {
+        "status": "PASS",
+        "disposition": (
+            "The repository has a machine-readable release manifest with datasets, environment, "
+            "git, and reproduction sections."
+        ),
+    },
+    "15.21": {
+        "status": "PARTIAL",
+        "disposition": (
+            "A one-command reproduction pipeline exists, but a separately executed one-command "
+            "rebuild for every table is not recorded in the v14 package."
+        ),
+    },
+    "15.22": {
+        "status": "PARTIAL",
+        "disposition": (
+            "The historical figure generator has an executable entrypoint, but a complete "
+            "one-command rebuild receipt for every figure is not recorded."
+        ),
+    },
+    "15.23": {
+        "status": "PARTIAL",
+        "disposition": (
+            "The E45 screening and exact-development runners are present and their outputs verify, "
+            "but the v14 package does not claim a fresh all-experiment rebuild receipt."
+        ),
+    },
+    "15.24": {
+        "status": "PARTIAL",
+        "disposition": (
+            "The retained v14 package provides the complete 128-source selected-development path; "
+            "superseded one-source smoke outputs were removed during cleanup."
+        ),
+    },
+    "15.25": {
+        "status": "PARTIAL",
+        "disposition": (
+            "The E45 protocol declares state and time budgets and the historical package records "
+            "host resources, but the v14 evidence does not provide a complete CPU, memory, GPU, "
+            "and disk forecast."
+        ),
+    },
+    "15.26": {
+        "status": "PARTIAL",
+        "disposition": (
+            "The E45 protocol fixes deterministic normalization, seeds, and ranking, but the "
+            "592-item question is broader than the bounded v14 determinism contract."
+        ),
+    },
+    "15.27": {
+        "status": "PARTIAL",
+        "disposition": (
+            "Resource exhaustion is classified fail-closed in the E45 protocol, while a project-wide "
+            "non-determinism tolerance is not declared."
+        ),
+    },
+    "15.28": {
+        "status": "EXTERNAL",
+        "disposition": "The clean-machine protocol is prepared, but its independent execution remains external and pending.",
+    },
+    "15.29": {
+        "status": "EXTERNAL",
+        "disposition": "The protocol requires an independent executor, and no non-author verification record is present.",
+    },
+    "15.30": {
+        "status": "PARTIAL",
+        "disposition": (
+            "The v14 development package preserves resource-truncated and incomplete rows with their "
+            "certificates, but this does not close failed reproduction logging for the entire project."
+        ),
+    },
+    "15.31": {
+        "status": "NA",
+        "disposition": "GitHub Actions is excluded from the user-authorized v14 project scope.",
+    },
+    "15.32": {
+        "status": "NA",
+        "disposition": "CI command coverage is not applicable because GitHub Actions is excluded from scope.",
+    },
+    "15.33": {
+        "status": "PASS",
+        "disposition": "The v14 readiness verdict and E45 receipts bind the selected results through current SHA-256 assertions.",
+    },
+    "15.34": {
+        "status": "PASS",
+        "disposition": (
+            "The v14 E45 verifiers check fixed CSV row counts and schemas, and the verified result "
+            "tables contain finite numeric fields."
+        ),
+    },
+    "15.35": {
+        "status": "PARTIAL",
+        "disposition": (
+            "The retained historical figure generator is executable, but the manuscript-only v14 "
+            "extension bundle and its dedicated source-data verifier were removed from scope."
+        ),
+    },
+    "15.36": {
+        "status": "PARTIAL",
+        "disposition": (
+            "Active document consistency and receipt checks pass for the v14 package, but a corpus-wide "
+            "numeric cross-check of every manuscript value is not claimed."
+        ),
+    },
+    "15.37": {
+        "status": "PASS",
+        "disposition": (
+            "The v14 status record and verdict explicitly separate sealed canonical/v13 evidence from "
+            "derived exploratory v14 development evidence."
+        ),
+    },
+    "15.38": {
+        "status": "PASS",
+        "disposition": (
+            "The v14 verdict and full receipt keep resource-truncated cells incomplete and do not promote "
+            "them to exact landscape claims."
+        ),
+    },
+    "15.39": {
+        "status": "PASS",
+        "disposition": "The existing release manifest records the repository git state as dirty, making the working-tree boundary explicit.",
+    },
+    "15.40": {
+        "status": "EXTERNAL",
+        "disposition": "A fixed clean release commit is still pending authorization and has not been used for a final release.",
+    },
+    "15.43": {
+        "status": "PASS",
+        "disposition": "The v14 verdict and real-QPU protocol expose their contracts in machine-readable JSON.",
+    },
+    "18.09": {
+        "status": "EXTERNAL",
+        "disposition": "Independent cold-start reproduction remains an external execution gate and has not been claimed.",
+    },
+}
+
+
+EVIDENCE_SPECS = {
+    "v14_verdict_screening": {
+        "path": "release/v14_readiness_verdict.json",
+        "predicate": "sha256_and_json_pointer_equals",
+        "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/scientific_gates/S5_E45_v14_screening",
+            "expected": "PASS_RESOURCE_GATE_WITH_BOUNDARIES",
+        },
+    },
+    "v14_verdict_full": {
+        "path": "release/v14_readiness_verdict.json",
+        "predicate": "sha256_and_json_pointer_equals",
+        "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/scientific_gates/S5_E45_full_development",
+            "expected": "COMPLETE_WITH_RESOURCE_BOUNDARY",
+        },
+    },
+    "v14_verdict_not_ready": {
+        "path": "release/v14_readiness_verdict.json",
+        "predicate": "sha256_and_json_pointer_equals",
+        "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/verdict",
+            "expected": "NOT_READY_FOR_PAPER",
+        },
+    },
+    "v14_screening_receipt": {
+        "path": "data/v14/e45_development_grid/receipt.json",
+        "predicate": "sha256_and_json_pointer_equals",
+        "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/status",
+            "expected": "SCREENING_COMPLETE_SELECTION_PENDING_FULL_DEVELOPMENT",
+        },
+    },
+    "v14_full_receipt": {
+        "path": "data/v14/e45_full_development/receipt.json",
+        "predicate": "sha256_and_json_pointer_equals",
+        "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/status",
+            "expected": "DEVELOPMENT_COMPLETE_WITH_RESOURCE_BOUNDARY",
+        },
+    },
+    "v14_protocol": {
+        "path": "data/v14/e45_full_development/protocol.json",
+        "predicate": "sha256_matches_and_required_json_fields_exist",
+        "selector": {
+            "type": "json_fields",
+            "required": ["arms", "cell_limits", "configuration_grid", "search_method", "source_contract", "status"],
+        },
+    },
+    "v14_protocol_boundary": {
+        "path": "data/v14/e45_full_development/protocol.json",
+        "predicate": "sha256_and_json_pointer_equals",
+        "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/search_method/resource_status",
+            "expected": "EXACT only when state and time budgets are complete",
+        },
+    },
+    "v14_metric_generator": {
+        "path": "scripts/generate_v14_metric_dispositions.py",
+        "predicate": "sha256_and_text_contains",
+        "selector": {"type": "text_contains", "text": "METRIC_DISPOSITIONS = {"},
+    },
+    "v14_metric_verifier": {
+        "path": "scripts/verify_v14_metric_dispositions.py",
+        "predicate": "sha256_and_text_contains",
+        "selector": {"type": "text_contains", "text": "def evaluate_evidence"},
+    },
+    "license": {
+        "path": "LICENSE",
+        "predicate": "sha256_and_text_contains",
+        "selector": {"type": "text_contains", "text": "MIT License"},
+    },
+    "release_manifest": {
+        "path": "release/release_manifest.json",
+        "predicate": "sha256_matches_and_required_json_fields_exist",
+        "selector": {
+            "type": "json_fields",
+            "required": ["schema_version", "datasets", "environment", "git", "reproduction"],
+        },
+    },
+    "reproduction_script": {
+        "path": "scripts/reproduce_all.py",
+        "predicate": "sha256_and_text_contains",
+        "selector": {"type": "text_contains", "text": "One-Command Reproduction Script for Q-Research Project"},
+    },
+    "figure_generator": {
+        "path": "analysis/generate_figures.py",
+        "predicate": "sha256_and_text_contains",
+        "selector": {"type": "text_contains", "text": "Generates all publication-quality figures"},
+    },
+    "e45_runner": {
+        "path": "experiments/e45_development_grid/run.py",
+        "predicate": "sha256_and_text_contains",
+        "selector": {"type": "text_contains", "text": "E45_CERTIFIED_ESCAPE_DEVELOPMENT_V14"},
+    },
+    "e45_exact_verifier": {
+        "path": "scripts/verify_e45_exact_development.py",
+        "predicate": "sha256_and_text_contains",
+        "selector": {"type": "text_contains", "text": "grid_results"},
+    },
+    "hardware_protocol": {
+        "path": "experiments/hardware_validation/real_qpu_protocol.json",
+        "predicate": "sha256_and_json_pointer_equals",
+        "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/authorization/execution_status",
+            "expected": "NOT_EXECUTED",
+        },
+    },
+    "hardware_status": {
+        "path": "experiments/hardware_validation/real_qpu_protocol.json",
+        "predicate": "sha256_and_json_pointer_equals",
+        "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/status",
+            "expected": "FROZEN_PROTOCOL_PENDING_USER_AUTHORIZATION",
+        },
+    },
+    "zenodo_status": {
+        "path": "release/zenodo_deposit_metadata.json",
+        "predicate": "sha256_and_json_pointer_equals",
+        "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/status",
+            "expected": "DRAFT_PENDING_USER_AUTHORIZATION",
+        },
+    },
+    "zenodo_release_boundary": {
+        "path": "release/zenodo_deposit_metadata.json",
+        "predicate": "sha256_and_json_pointer_equals",
+        "selector": {"type": "json_pointer_equals", "pointer": "/release_boundary/upload_performed", "expected": False},
+    },
+    "cold_start_status": {
+        "path": "docs/verification/cold_start_protocol.md",
+        "predicate": "sha256_and_text_contains",
+        "selector": {"type": "text_contains", "text": "protocol prepared; independent execution pending"},
+    },
+    "v14_status": {
+        "path": "docs/review/v14_execution_status_2026-09-07.md",
+        "predicate": "sha256_and_text_contains",
+        "selector": {"type": "text_contains", "text": "The v14 artifacts are bounded engineering and screening evidence."},
+    },
+}
+
+
+METRIC_EVIDENCE = {
+    "1.18": ["cold_start_status", "reproduction_script"],
+    "14.16": ["hardware_status", "hardware_protocol"],
+    "15.08": ["license"],
+    "15.09": ["zenodo_status", "zenodo_release_boundary"],
+    "15.10": ["zenodo_status", "zenodo_release_boundary"],
+    "15.20": ["release_manifest"],
+    "15.21": ["reproduction_script"],
+    "15.22": ["figure_generator"],
+    "15.23": ["e45_runner", "v14_full_receipt"],
+    "15.24": ["v14_full_receipt"],
+    "15.25": ["v14_protocol"],
+    "15.26": ["v14_protocol"],
+    "15.27": ["v14_protocol_boundary"],
+    "15.28": ["cold_start_status"],
+    "15.29": ["cold_start_status"],
+    "15.30": ["v14_full_receipt", "v14_verdict_full"],
+    "15.31": ["v14_metric_generator", "v14_metric_verifier"],
+    "15.32": ["v14_metric_generator", "v14_metric_verifier"],
+    "15.33": ["v14_verdict_full", "v14_full_receipt"],
+    "15.34": ["e45_exact_verifier", "v14_full_receipt"],
+    "15.35": ["figure_generator"],
+    "15.36": ["v14_status"],
+    "15.37": ["v14_status", "v14_verdict_not_ready"],
+    "15.38": ["v14_verdict_full", "v14_verdict_not_ready"],
+    "15.39": ["release_manifest"],
+    "15.40": ["zenodo_release_boundary"],
+    "15.43": ["hardware_protocol", "v14_verdict_full"],
+    "18.09": ["cold_start_status"],
+}
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def main() -> int:
+    evidence: dict[str, dict[str, object]] = {}
+    for evidence_id, specification in EVIDENCE_SPECS.items():
+        path = ROOT / str(specification["path"])
+        if not path.is_file():
+            raise RuntimeError(f"missing v14 metric evidence: {path}")
+        evidence[evidence_id] = {
+            **specification,
+            "sha256": sha256(path),
+        }
+
+    if set(METRIC_DISPOSITIONS) != set(METRIC_EVIDENCE):
+        raise RuntimeError("v14 metric disposition/evidence key mismatch")
+    payload = {
+        "schema_version": "v14-metric-dispositions-v1",
+        "status": "VERIFIED_ITEM_SPECIFIC_BOUNDARIES",
+        "as_of": "2026-09-08",
+        "evidence": evidence,
+        "metric_dispositions": METRIC_DISPOSITIONS,
+        "metric_evidence": METRIC_EVIDENCE,
+    }
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+    print(OUTPUT.resolve())
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,0 +1,39 @@
+{
+  "arm_count": 1,
+  "certificates_sha256": "de8a829d6d52c011945408484c57abf65b66bc22bba9be3cfa4e6d80345d0516",
+  "config_summaries_sha256": "0a63cfcb62260192ef7dfaca3fe4fecff41f2a73bf3719cb255fa36c2b13a5ee",
+  "configuration_count": 1,
+  "experiment_id": "E45_CERTIFIED_ESCAPE_IDASTAR_V14",
+  "grid_results_sha256": "f47b1e0f4ea504cead6d9b5af747f3372b888dd723b9ec7b07298fa87642b471",
+  "normalization_manifest_sha256": "7e8fe01528f9a2fb011458e31a907a6318b086017350fb1ff52f735949028524",
+  "normalized_count": 128,
+  "phase": "full_development",
+  "protocol_sha256": "0765c305bbfce1cd6be74ffc235a5e8d94c8e9876c073a5bb183b8c662392bc8",
+  "result_rows": 128,
+  "selected_config": {
+    "barrier_cap": 2,
+    "beam_width": 64,
+    "config_id": "h3_b64_s200k",
+    "horizon": 3,
+    "state_budget": 200000
+  },
+  "selection_sha256": "b24a6dd53ea374cb6c1fc0f08b42942fda6beb1188ad4c7ef8a0f5d5c0996622",
+  "source_count": 128,
+  "status": "COMPLETE",
+  "summary": {
+    "arm": "idastar_escape",
+    "barrier_cap": 2,
+    "beam_width": 64,
+    "config_id": "h3_b64_s200k",
+    "exact_count": 63,
+    "experiment_id": "E45_CERTIFIED_ESCAPE_IDASTAR_V14",
+    "horizon": 3,
+    "median_runtime_seconds": 0.0032207000003836583,
+    "p95_runtime_seconds": 0.6739544000010937,
+    "replay_failure_count": 0,
+    "resource_bounded_count": 0,
+    "resource_or_error_rate": 0.0,
+    "row_count": 128,
+    "state_budget": 200000
+  }
+}

@@ -8,8 +8,9 @@
 
 This document preserves four historical review-gap protocols and their
 reproduction commands. The gaps have since been closed or narrowed by the
-recorded E26, E19-extended, E22, E29, and E30 evidence. The current residual
-listing/Phase-2b pilot is E31 and is documented below as non-canonical support.
+recorded E26, E19-extended, E22, E29, and E30 evidence. The sealed E31
+factorial and the E32–E37 extensions are documented below as separately
+hash-bound v11 evidence layers.
 
 ## Current Evidence Map
 
@@ -20,11 +21,19 @@ listing/Phase-2b pilot is E31 and is documented below as non-canonical support.
 | E22 shuffle control | Complete for Phase-1/Phase-2a | `data/v7/e22/` |
 | E29 multi-seed replication | Complete; 800-row run | `data/v7/e29/` |
 | E30 corrected Theorem 1(a) validation | Complete; 27 cells / 13,500 trials | `data/v10/e30/` |
-| E31 listing x Phase-2b pilot | Non-canonical smoke support only; full factorial remains open | `data/v11/e31_listing_phase2b/` |
+| E31 listing x Phase-2b factorial | Sealed formal panel; 28,152 rows / 20,314 successful rows; family inference supportive only | `data/v11/e31_factorial_pareto/formal_run/` |
+| E31 listing x Phase-2b pilot | Historical smoke support; superseded for the formal factorial claim | `data/v11/e31_listing_phase2b/` |
+| E32 event-level telemetry | Independently verified fixed 90-cell panel; 89 timing-available cells | `data/v11/e32_telemetry/` |
+| E33 external real-scale | Independently verified fixed 22-cell panel, 11–36 qubits | `data/v11/e33_real_scale/` |
+| E34 MQT cross-abstraction | Independently verified 3 algorithms × 4 levels | `data/v11/e34_mqt_cross_abstraction/` |
+| E35 Benchpress-derived stress | Independently verified 5-file bounded stress panel | `data/v11/e35_benchpress_stress/` |
+| E36 PyZX third artifact | Independently verified 3-input comparator panel | `data/v11/e36_pyzx_third_artifact/` |
+| E37 energy/cost telemetry | Independently verified 5 paired CPU-package measurements | `data/v11/e37_energy_cost_telemetry/` |
 
 Canonical status is governed by `data/DATA_CANONICAL.md` and
-`release/release_manifest.json`. E31 must not be added to the manifest without
-an explicit evidence-version decision.
+`release/release_manifest.json`. The E31–E37 extensions are not silently added
+to the historical canonical totals; their admissible claims and receipt hashes
+remain bound by their independent verification receipts under `release/`.
 
 ## Environment
 
@@ -369,12 +378,36 @@ python experiments/multi_seed_e04.py --seeds 42,142,242 --n-trials 50
 
 ---
 
+## Sealed Formal Panel: E31 Listing x Phase-2b
+
+**Design**: `experiments/e31_factorial_pareto_design.py`
+**Protocol**: `experiments/e31_factorial_pareto_protocol.json`
+**Orchestrator**: `experiments/e31_formal_orchestrator.py`
+**Output**: `data/v11/e31_factorial_pareto/formal_run/`
+**Independent receipt**: `release/e31_independent_release_verification_receipt.json`
+**Status**: sealed formal panel; independently verified
+
+The formal panel contains 391 unique input circuits from 15 families crossed
+with 3 listing models, 2 rule sets, 3 window sizes, and 4 budgets: 72
+treatments per input and 28,152 scheduled rows. It retains 20,314 successful
+rows and 7,838 timeout rows, with 6,858 successful semantic cells replayed by
+the independent verifier. All rows remain in the ITT denominator. The fixed
+finite-panel listing-by-rule-set interaction is −0.3798 percentage points; the
+15-family outer-cluster analysis is supportive only. Legacy input-cluster
+standard errors, confidence intervals, and p-values are invalid and must not
+be reported.
+
+The formal panel supersedes the smoke pilot for the listing × Phase-2b claim,
+but it remains outside the historical canonical totals. Do not modify its
+inputs, results, protocol, seeds, or frozen receipts.
+
 ## Supporting Pilot: E31 Listing x Phase-2b
 
 **Script**: `experiments/e31_listing_phase2b_interaction.py`
 **Analysis**: `analysis/e31_listing_phase2b_analysis.py`
 **Output**: `data/v11/e31_listing_phase2b/`
-**Status**: supporting non-canonical pilot; not a confirmatory interaction test
+**Status**: historical supporting non-canonical pilot; superseded by the sealed
+formal panel for the formal interaction claim
 
 E31 crosses the original listing, WCL, and one seeded random topological listing
 with Phase-1, Phase-2a, and Phase-2b on 44 smoke-scale source circuits. It
@@ -402,7 +435,7 @@ limitations.
 | E22 | gate_shuffle_ablation.py | No random gate shuffler control | MEDIUM→FATAL | Closes gap |
 | E29 | multi_seed_e04.py | E04 single seed | MEDIUM | Closes gap (800-row full run) |
 | E30 | e30_thm1a_wcl/run.py | Theorem 1(a) WCL density never directly tested | MAJOR | Closes gap (2026-08-06, corrected formula) |
-| E31 | e31_listing_phase2b_interaction.py | WCL x Phase-2b interaction | MAJOR | Smoke pilot only; full factorial remains open |
+| E31 | e31_formal_orchestrator.py | WCL x Phase-2b interaction | MAJOR | Sealed 28,152-row factorial; fixed-panel claim closed, unseen-family inference remains blocked |
 
 ## Running All Experiments
 

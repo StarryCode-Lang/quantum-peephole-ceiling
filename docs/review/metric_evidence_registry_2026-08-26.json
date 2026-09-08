@@ -1,12 +1,12 @@
 {
   "schema_version": "metric-evidence-registry-v2",
-  "created_utc": "2026-09-02T11:43:23.821266+00:00",
+  "created_utc": "2026-09-08T06:52:14.175994+00:00",
   "catalog_path": "docs/review/metric_catalog_2026-08-11.md",
   "catalog_sha256": "eb5f039ae5cfcd97e205afae9febb25f7b69bd52e57f4af4cdb8997d0393d36b",
   "source_attachment_sha256": "eb5f039ae5cfcd97e205afae9febb25f7b69bd52e57f4af4cdb8997d0393d36b",
   "source_fragments": {
-    "docs/review/metric_registry_fragments/sections_01_06.json": "0977a69543650db3958d751513bef7c99460813c59bfa70e60e486c9f1d03c6e",
-    "docs/review/metric_registry_fragments/sections_07_12.json": "c6dd6a84be4dbef494646f83b93f0d3d247aec32b76f3fedece143e70ab0592d",
+    "docs/review/metric_registry_fragments/sections_01_06.json": "de8751e6187eb71373a8b64daaf48d3ee8f035b4e8f4405d46589e5684a7fb0d",
+    "docs/review/metric_registry_fragments/sections_07_12.json": "b01731910e0fa184b18cfff38ed49bbd7b9c71b59869e2a0fdc9c0d502974800",
     "docs/review/metric_registry_fragments/sections_13_18.json": "574be3c74b635aec7031c55fe220b0b15bba8bf5a1517457b17ced2c59519abf"
   },
   "merge_policy": {
@@ -1041,7 +1041,7 @@
       "catalog_text_sha256": "d22a76ff8de6de4504b7b9c93bc15febed7c48f6a97701b67457a978b3eb079b",
       "target_sha256": "4eef70b1ae5acf2c65c40fb08583d64c244554b28ba1883a3d84800995eaaecb",
       "criterion": "从干净环境一条命令重建主要表图",
-      "observed_value": "Reproduction commands exist, but a clean-environment numerator/denominator for all main tables and figures is not currently sealed.",
+      "observed_value": "v14 item-specific evidence: A clean-environment reproduction protocol and executable commands are prepared, but no independent clean execution has been recorded.",
       "criterion_met": false,
       "status": "PARTIAL",
       "scope": "This catalog metric only; evidence is item-bound and no neighboring metric or section-level status is inherited.",
@@ -1070,6 +1070,21 @@
             "text": "python"
           },
           "predicate": "sha256_and_text_contains"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "1.18",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/1.18",
+            "expected": {
+              "disposition": "A clean-environment reproduction protocol and executable commands are prepared, but no independent clean execution has been recorded.",
+              "status": "PARTIAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -1078,7 +1093,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Execute the full clean rebuild and record exact rebuilt/expected experiment, table, and figure counts.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-26T14:27:51.682201+00:00",
       "legacy_status_2026_08_24": "PARTIAL",
       "legacy_status_is_authoritative": false
@@ -25475,9 +25490,9 @@
       "catalog_text_sha256": "f74c5c1da5180545af3fb8dadf6a3620322abf7b5d27dfaa25c9321d2d379b47",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=FAIL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: The frozen real-QPU protocol is present, but authorization and execution are external; execution_status remains NOT_EXECUTED.",
       "criterion_met": false,
-      "status": "FAIL",
+      "status": "EXTERNAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -25493,15 +25508,30 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "14.16",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/14.16",
+            "expected": {
+              "disposition": "The frozen real-QPU protocol is present, but authorization and execution are external; execution_status remains NOT_EXECUTED.",
+              "status": "EXTERNAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "FAIL"
+        "on_false": "EXTERNAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "FAIL",
       "legacy_status_is_authoritative": false
@@ -26606,9 +26636,9 @@
       "catalog_text_sha256": "1cf677382e86cd40503062f72cd5f02a0c14777e02a5b7fe485ff8e731abdb9f",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
-      "criterion_met": false,
-      "status": "PARTIAL",
+      "observed_value": "v14 item-specific evidence: The repository contains an explicit MIT License text for software and associated documentation.",
+      "criterion_met": true,
+      "status": "PASS",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -26624,6 +26654,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "satisfaction",
+          "metric_id": "15.08",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.08",
+            "expected": {
+              "disposition": "The repository contains an explicit MIT License text for software and associated documentation.",
+              "status": "PASS"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -26632,7 +26677,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "None for the explicitly bounded audit scope; retain the recorded claim boundary.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PASS",
       "legacy_status_is_authoritative": false
@@ -26647,9 +26692,9 @@
       "catalog_text_sha256": "07b72f8d3b00138fc18bc332d2c77426e7a10c5bfe6bbbaa431bae96aea2f928",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=FAIL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: The data and documentation license scope remains a user decision in the deposit metadata; no published data license is asserted.",
       "criterion_met": false,
-      "status": "FAIL",
+      "status": "EXTERNAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -26665,15 +26710,30 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.09",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.09",
+            "expected": {
+              "disposition": "The data and documentation license scope remains a user decision in the deposit metadata; no published data license is asserted.",
+              "status": "EXTERNAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "FAIL"
+        "on_false": "EXTERNAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "FAIL",
       "legacy_status_is_authoritative": false
@@ -26688,9 +26748,9 @@
       "catalog_text_sha256": "8eef641945b3dd88a99295f09b108591b5f854fbde46e3e8a3974595cad49cf6",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=FAIL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: Zenodo deposit metadata is drafted, but upload_performed is false and the DOI is NOT_ASSIGNED.",
       "criterion_met": false,
-      "status": "FAIL",
+      "status": "EXTERNAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -26706,15 +26766,30 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.10",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.10",
+            "expected": {
+              "disposition": "Zenodo deposit metadata is drafted, but upload_performed is false and the DOI is NOT_ASSIGNED.",
+              "status": "EXTERNAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "FAIL"
+        "on_false": "EXTERNAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "FAIL",
       "legacy_status_is_authoritative": false
@@ -27098,9 +27173,9 @@
       "catalog_text_sha256": "27283e9d3cddb2411db4adc2729b43a08d18173fe8ed370e4ed6e63b1f876fd9",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
-      "criterion_met": false,
-      "status": "PARTIAL",
+      "observed_value": "v14 item-specific evidence: The repository has a machine-readable release manifest with datasets, environment, git, and reproduction sections.",
+      "criterion_met": true,
+      "status": "PASS",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -27116,6 +27191,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "satisfaction",
+          "metric_id": "15.20",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.20",
+            "expected": {
+              "disposition": "The repository has a machine-readable release manifest with datasets, environment, git, and reproduction sections.",
+              "status": "PASS"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27124,7 +27214,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "None for the explicitly bounded audit scope; retain the recorded claim boundary.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PASS",
       "legacy_status_is_authoritative": false
@@ -27139,7 +27229,7 @@
       "catalog_text_sha256": "6b2425140299232db75ed922e2c616be07207c28fe267154c2a810aaf50a7c0d",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: A one-command reproduction pipeline exists, but a separately executed one-command rebuild for every table is not recorded in the v14 package.",
       "criterion_met": false,
       "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
@@ -27157,6 +27247,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.21",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.21",
+            "expected": {
+              "disposition": "A one-command reproduction pipeline exists, but a separately executed one-command rebuild for every table is not recorded in the v14 package.",
+              "status": "PARTIAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27165,7 +27270,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PARTIAL",
       "legacy_status_is_authoritative": false
@@ -27180,7 +27285,7 @@
       "catalog_text_sha256": "95640002c48524d80bb217b06c4305125e8b40ed94d7e29caf06b0cab93c4a21",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: The historical figure generator has an executable entrypoint, but a complete one-command rebuild receipt for every figure is not recorded.",
       "criterion_met": false,
       "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
@@ -27198,6 +27303,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.22",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.22",
+            "expected": {
+              "disposition": "The historical figure generator has an executable entrypoint, but a complete one-command rebuild receipt for every figure is not recorded.",
+              "status": "PARTIAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27206,7 +27326,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PARTIAL",
       "legacy_status_is_authoritative": false
@@ -27221,7 +27341,7 @@
       "catalog_text_sha256": "163df26db432e5b93e09e87fb3df14346ce44f9cf7dd49c2c0624ac1de87dc3d",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: The E45 screening and exact-development runners are present and their outputs verify, but the v14 package does not claim a fresh all-experiment rebuild receipt.",
       "criterion_met": false,
       "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
@@ -27239,6 +27359,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.23",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.23",
+            "expected": {
+              "disposition": "The E45 screening and exact-development runners are present and their outputs verify, but the v14 package does not claim a fresh all-experiment rebuild receipt.",
+              "status": "PARTIAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27247,7 +27382,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PASS",
       "legacy_status_is_authoritative": false
@@ -27262,7 +27397,7 @@
       "catalog_text_sha256": "09878072d429def80026708cb5909bea731f2449cfd02cbda60347a309cd2e73",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: The retained v14 package provides the complete 128-source selected-development path; superseded one-source smoke outputs were removed during cleanup.",
       "criterion_met": false,
       "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
@@ -27280,6 +27415,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.24",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.24",
+            "expected": {
+              "disposition": "The retained v14 package provides the complete 128-source selected-development path; superseded one-source smoke outputs were removed during cleanup.",
+              "status": "PARTIAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27288,7 +27438,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PASS",
       "legacy_status_is_authoritative": false
@@ -27303,7 +27453,7 @@
       "catalog_text_sha256": "f453105c1c534234cefadc2ed7380e2c16bcbc7a579ff55e8790d413a56b9dfe",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: The E45 protocol declares state and time budgets and the historical package records host resources, but the v14 evidence does not provide a complete CPU, memory, GPU, and disk forecast.",
       "criterion_met": false,
       "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
@@ -27321,6 +27471,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.25",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.25",
+            "expected": {
+              "disposition": "The E45 protocol declares state and time budgets and the historical package records host resources, but the v14 evidence does not provide a complete CPU, memory, GPU, and disk forecast.",
+              "status": "PARTIAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27329,7 +27494,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PARTIAL",
       "legacy_status_is_authoritative": false
@@ -27344,7 +27509,7 @@
       "catalog_text_sha256": "05fa770fc96997348ece5df9600399b4bdfa0ac6ac6f78a4570ad7aeaf43bfea",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: The E45 protocol fixes deterministic normalization, seeds, and ranking, but the 592-item question is broader than the bounded v14 determinism contract.",
       "criterion_met": false,
       "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
@@ -27362,6 +27527,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.26",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.26",
+            "expected": {
+              "disposition": "The E45 protocol fixes deterministic normalization, seeds, and ranking, but the 592-item question is broader than the bounded v14 determinism contract.",
+              "status": "PARTIAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27370,7 +27550,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PARTIAL",
       "legacy_status_is_authoritative": false
@@ -27385,7 +27565,7 @@
       "catalog_text_sha256": "1128b5d854c81752501ec3c17c170b210bf6b7727e3e02964608386e902b6ef5",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: Resource exhaustion is classified fail-closed in the E45 protocol, while a project-wide non-determinism tolerance is not declared.",
       "criterion_met": false,
       "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
@@ -27403,6 +27583,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.27",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.27",
+            "expected": {
+              "disposition": "Resource exhaustion is classified fail-closed in the E45 protocol, while a project-wide non-determinism tolerance is not declared.",
+              "status": "PARTIAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27411,7 +27606,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PARTIAL",
       "legacy_status_is_authoritative": false
@@ -27426,9 +27621,9 @@
       "catalog_text_sha256": "bf6faad7175bf8ef31dcdc66d03500d5414e4fbbcad773337fd6711340c92c27",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=FAIL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: The clean-machine protocol is prepared, but its independent execution remains external and pending.",
       "criterion_met": false,
-      "status": "FAIL",
+      "status": "EXTERNAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -27444,15 +27639,30 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.28",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.28",
+            "expected": {
+              "disposition": "The clean-machine protocol is prepared, but its independent execution remains external and pending.",
+              "status": "EXTERNAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "FAIL"
+        "on_false": "EXTERNAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "FAIL",
       "legacy_status_is_authoritative": false
@@ -27467,9 +27677,9 @@
       "catalog_text_sha256": "8aba015274044eaf3a3f080fbcf6440317c9840db996cc9105094c3d27eb6b97",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=FAIL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: The protocol requires an independent executor, and no non-author verification record is present.",
       "criterion_met": false,
-      "status": "FAIL",
+      "status": "EXTERNAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -27485,15 +27695,30 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.29",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.29",
+            "expected": {
+              "disposition": "The protocol requires an independent executor, and no non-author verification record is present.",
+              "status": "EXTERNAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "FAIL"
+        "on_false": "EXTERNAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "FAIL",
       "legacy_status_is_authoritative": false
@@ -27508,7 +27733,7 @@
       "catalog_text_sha256": "00c79b78e2cbe40ba328178c636826fb064f99bb5d1e0f6f78f703dcc041c611",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: The v14 development package preserves resource-truncated and incomplete rows with their certificates, but this does not close failed reproduction logging for the entire project.",
       "criterion_met": false,
       "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
@@ -27526,6 +27751,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.30",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.30",
+            "expected": {
+              "disposition": "The v14 development package preserves resource-truncated and incomplete rows with their certificates, but this does not close failed reproduction logging for the entire project.",
+              "status": "PARTIAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27534,7 +27774,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PASS",
       "legacy_status_is_authoritative": false
@@ -27549,9 +27789,9 @@
       "catalog_text_sha256": "4767cced8b4af1590545590c272cc8e77812198c7ad6f9ac2005f04efbd4e698",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: GitHub Actions is excluded from the user-authorized v14 project scope.",
       "criterion_met": false,
-      "status": "PARTIAL",
+      "status": "NA",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -27567,15 +27807,30 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.31",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.31",
+            "expected": {
+              "disposition": "GitHub Actions is excluded from the user-authorized v14 project scope.",
+              "status": "NA"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "PARTIAL"
+        "on_false": "NA"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Not applicable under the frozen unitary scope; reassess if dynamic circuits enter the target population.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PASS",
       "legacy_status_is_authoritative": false
@@ -27590,9 +27845,9 @@
       "catalog_text_sha256": "836f976d1bc9da0579066bc5c7cf8f828d60c404a08bdccaf1d08543882aa49b",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: CI command coverage is not applicable because GitHub Actions is excluded from scope.",
       "criterion_met": false,
-      "status": "PARTIAL",
+      "status": "NA",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -27608,15 +27863,30 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.32",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.32",
+            "expected": {
+              "disposition": "CI command coverage is not applicable because GitHub Actions is excluded from scope.",
+              "status": "NA"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "PARTIAL"
+        "on_false": "NA"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Not applicable under the frozen unitary scope; reassess if dynamic circuits enter the target population.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PASS",
       "legacy_status_is_authoritative": false
@@ -27631,9 +27901,9 @@
       "catalog_text_sha256": "837df11fe9230ef9f65ebff4b9d156287dc8196ba7f239e1bcf0eba3707b51e7",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
-      "criterion_met": false,
-      "status": "PARTIAL",
+      "observed_value": "v14 item-specific evidence: The v14 readiness verdict and E45 receipts bind the selected results through current SHA-256 assertions.",
+      "criterion_met": true,
+      "status": "PASS",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -27649,6 +27919,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "satisfaction",
+          "metric_id": "15.33",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.33",
+            "expected": {
+              "disposition": "The v14 readiness verdict and E45 receipts bind the selected results through current SHA-256 assertions.",
+              "status": "PASS"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27657,7 +27942,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "None for the explicitly bounded audit scope; retain the recorded claim boundary.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PASS",
       "legacy_status_is_authoritative": false
@@ -27672,9 +27957,9 @@
       "catalog_text_sha256": "b86bf0410a2c232c0bd8998e27c31b650fcbd1a329fa109f13c48f622cb48ea5",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
-      "criterion_met": false,
-      "status": "PARTIAL",
+      "observed_value": "v14 item-specific evidence: The v14 E45 verifiers check fixed CSV row counts and schemas, and the verified result tables contain finite numeric fields.",
+      "criterion_met": true,
+      "status": "PASS",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -27690,6 +27975,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "satisfaction",
+          "metric_id": "15.34",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.34",
+            "expected": {
+              "disposition": "The v14 E45 verifiers check fixed CSV row counts and schemas, and the verified result tables contain finite numeric fields.",
+              "status": "PASS"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27698,7 +27998,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "None for the explicitly bounded audit scope; retain the recorded claim boundary.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PASS",
       "legacy_status_is_authoritative": false
@@ -27713,7 +28013,7 @@
       "catalog_text_sha256": "a0ff30ae36692a4850127372b2f044ffd2e4bd13dc53502339ec54b207b51dfe",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: The retained historical figure generator is executable, but the manuscript-only v14 extension bundle and its dedicated source-data verifier were removed from scope.",
       "criterion_met": false,
       "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
@@ -27731,6 +28031,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.35",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.35",
+            "expected": {
+              "disposition": "The retained historical figure generator is executable, but the manuscript-only v14 extension bundle and its dedicated source-data verifier were removed from scope.",
+              "status": "PARTIAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27739,7 +28054,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PASS",
       "legacy_status_is_authoritative": false
@@ -27754,7 +28069,7 @@
       "catalog_text_sha256": "9991f734957cdebac308ce0c0ae802e0ad6dfa091ce6a48fc83e28c997c31979",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: Active document consistency and receipt checks pass for the v14 package, but a corpus-wide numeric cross-check of every manuscript value is not claimed.",
       "criterion_met": false,
       "status": "PARTIAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
@@ -27772,6 +28087,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.36",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.36",
+            "expected": {
+              "disposition": "Active document consistency and receipt checks pass for the v14 package, but a corpus-wide numeric cross-check of every manuscript value is not claimed.",
+              "status": "PARTIAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27780,7 +28110,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PARTIAL",
       "legacy_status_is_authoritative": false
@@ -27795,9 +28125,9 @@
       "catalog_text_sha256": "1f60bfa0509c369a4a7b6908288032896f6d27de4367b750611856076159faa4",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
-      "criterion_met": false,
-      "status": "PARTIAL",
+      "observed_value": "v14 item-specific evidence: The v14 status record and verdict explicitly separate sealed canonical/v13 evidence from derived exploratory v14 development evidence.",
+      "criterion_met": true,
+      "status": "PASS",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -27813,6 +28143,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "satisfaction",
+          "metric_id": "15.37",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.37",
+            "expected": {
+              "disposition": "The v14 status record and verdict explicitly separate sealed canonical/v13 evidence from derived exploratory v14 development evidence.",
+              "status": "PASS"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27821,7 +28166,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "None for the explicitly bounded audit scope; retain the recorded claim boundary.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PASS",
       "legacy_status_is_authoritative": false
@@ -27836,9 +28181,9 @@
       "catalog_text_sha256": "cf5bc20bed89e1d8e6602b8cab9bdf7dbfe398363dc12c641af29eb8104ebd16",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
-      "criterion_met": false,
-      "status": "PARTIAL",
+      "observed_value": "v14 item-specific evidence: The v14 verdict and full receipt keep resource-truncated cells incomplete and do not promote them to exact landscape claims.",
+      "criterion_met": true,
+      "status": "PASS",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -27854,6 +28199,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "satisfaction",
+          "metric_id": "15.38",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.38",
+            "expected": {
+              "disposition": "The v14 verdict and full receipt keep resource-truncated cells incomplete and do not promote them to exact landscape claims.",
+              "status": "PASS"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27862,7 +28222,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "None for the explicitly bounded audit scope; retain the recorded claim boundary.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PASS",
       "legacy_status_is_authoritative": false
@@ -27877,9 +28237,9 @@
       "catalog_text_sha256": "4354df1f270579add9b069e28a1c6e14659725d68c5aa8c0115560c18103a30e",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
-      "criterion_met": false,
-      "status": "PARTIAL",
+      "observed_value": "v14 item-specific evidence: The existing release manifest records the repository git state as dirty, making the working-tree boundary explicit.",
+      "criterion_met": true,
+      "status": "PASS",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -27895,6 +28255,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "satisfaction",
+          "metric_id": "15.39",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.39",
+            "expected": {
+              "disposition": "The existing release manifest records the repository git state as dirty, making the working-tree boundary explicit.",
+              "status": "PASS"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -27903,7 +28278,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "None for the explicitly bounded audit scope; retain the recorded claim boundary.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PASS",
       "legacy_status_is_authoritative": false
@@ -27918,9 +28293,9 @@
       "catalog_text_sha256": "6ca496ab8aeb297796449abe3b9bc75cb26d3d5091838ce540820224f328e466",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=FAIL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: A fixed clean release commit is still pending authorization and has not been used for a final release.",
       "criterion_met": false,
-      "status": "FAIL",
+      "status": "EXTERNAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -27936,15 +28311,30 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "15.40",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.40",
+            "expected": {
+              "disposition": "A fixed clean release commit is still pending authorization and has not been used for a final release.",
+              "status": "EXTERNAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
         "type": "all_satisfaction_evidence_matches",
         "minimum_satisfaction_refs": 1,
         "on_true": "PASS",
-        "on_false": "FAIL"
+        "on_false": "EXTERNAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "FAIL",
       "legacy_status_is_authoritative": false
@@ -28065,9 +28455,9 @@
       "catalog_text_sha256": "e8bc0cd6b50ce5e3d09fd1ae137c2ea2e9d0e150fb6f9d5a5b17bdaaeb696849",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=PARTIAL; no item-specific satisfaction evidence is registered in the source registry.",
-      "criterion_met": false,
-      "status": "PARTIAL",
+      "observed_value": "v14 item-specific evidence: The v14 verdict and real-QPU protocol expose their contracts in machine-readable JSON.",
+      "criterion_met": true,
+      "status": "PASS",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
       "evidence_refs": [
         {
@@ -28083,6 +28473,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "satisfaction",
+          "metric_id": "15.43",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/15.43",
+            "expected": {
+              "disposition": "The v14 verdict and real-QPU protocol expose their contracts in machine-readable JSON.",
+              "status": "PASS"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -28091,7 +28496,7 @@
         "on_true": "PASS",
         "on_false": "PARTIAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "None for the explicitly bounded audit scope; retain the recorded claim boundary.",
       "assessed_utc": "2026-08-27T14:49:05.9771357+08:00",
       "legacy_status_2026_08_24": "PASS",
       "legacy_status_is_authoritative": false
@@ -31168,7 +31573,7 @@
       "catalog_text_sha256": "35a2fd135c3d94c4773d6b443fb319aaccc9a87c9bc595a77869220df353c817",
       "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be",
       "criterion": "Provide a direct, item-specific answer to this audit question, supported by file-hashed evidence and a reproducible selector/predicate.",
-      "observed_value": "SOURCE_REGISTRY_STATUS=EXTERNAL; no item-specific satisfaction evidence is registered in the source registry.",
+      "observed_value": "v14 item-specific evidence: Independent cold-start reproduction remains an external execution gate and has not been claimed.",
       "criterion_met": false,
       "status": "EXTERNAL",
       "scope": "This catalog metric only; no neighboring metric or section-level evidence is inherited.",
@@ -31186,6 +31591,21 @@
             "target_sha256": "933e8a3f0263acf87859dc36b744f408075c21ff07757d6b7c771e3762d215be"
           },
           "predicate": "sha256_and_catalog_selector_match"
+        },
+        {
+          "role": "supporting",
+          "metric_id": "18.09",
+          "path": "release/v14_metric_dispositions.json",
+          "sha256": "098ef734f6943894f36f80e31db30a6f2e912c1628714f1a4739da9bd0f2c786",
+          "selector": {
+            "type": "json_pointer_equals",
+            "pointer": "/metric_dispositions/18.09",
+            "expected": {
+              "disposition": "Independent cold-start reproduction remains an external execution gate and has not been claimed.",
+              "status": "EXTERNAL"
+            }
+          },
+          "predicate": "sha256_and_json_pointer_equals"
         }
       ],
       "assessment_predicate": {
@@ -31194,7 +31614,7 @@
         "on_true": "PASS",
         "on_false": "EXTERNAL"
       },
-      "residual": "Register at least one item-specific satisfaction evidence file with its SHA-256, a machine-checkable selector, and a predicate that directly answers this metric.",
+      "residual": "Complete the residual work stated in the evidence claim boundary before upgrading this item to PASS.",
       "assessed_utc": "2026-08-27T14:51:55.8123868+08:00",
       "legacy_status_2026_08_24": "EXTERNAL",
       "legacy_status_is_authoritative": false

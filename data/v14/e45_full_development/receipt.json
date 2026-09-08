@@ -1,0 +1,39 @@
+{
+  "arm_count": 6,
+  "certificates_sha256": "8a6ae277772533270a69795b20a680b6c660ca78e5eb2a2cc91357ade4c8e48b",
+  "config_summaries_sha256": "43137b483b9bf1daca1f161a2925e80c2dffe51e478231b637e38c0fa7e6ff7b",
+  "configuration_count": 1,
+  "experiment_id": "E45_CERTIFIED_ESCAPE_DEVELOPMENT_V14",
+  "grid_results_sha256": "0c1bada82fccba0f9203c7e414b19c3e6a5372f8488f56a300d61a733b97aac8",
+  "guided_summary": {
+    "arm": "certificate_guided_escape",
+    "barrier_cap": 2,
+    "beam_width": 64,
+    "config_id": "h3_b64_s200k",
+    "family_mean_paired_itt_pp": 28.8601738703986,
+    "horizon": 3,
+    "median_runtime_seconds": 0.062342850000277394,
+    "p95_runtime_seconds": 30.917422800004715,
+    "resource_bounded_count": 35,
+    "resource_or_error_rate": 0.2734375,
+    "row_count": 128,
+    "semantic_failure_count": 0,
+    "state_budget": 200000,
+    "valid_row_count": 128
+  },
+  "normalization_manifest_sha256": "0de35d33ad281b0b43dc8f5e38e76567d8c4afc14747a9eff0e7756196b1ba84",
+  "normalized_count": 128,
+  "phase": "full_development",
+  "protocol_sha256": "0d0e86c69d15b5577930d8399c6e5963ab8bc5e356c6f8e80afd44b729afc05c",
+  "result_rows": 768,
+  "selected_config": {
+    "barrier_cap": 2,
+    "beam_width": 64,
+    "config_id": "h3_b64_s200k",
+    "horizon": 3,
+    "state_budget": 200000
+  },
+  "selection_sha256": "8838a3e1bcd527add76dfe1054af9f1ce4a013afe27e5d16ef8e1620464ea666",
+  "source_count": 128,
+  "status": "DEVELOPMENT_COMPLETE_WITH_RESOURCE_BOUNDARY"
+}

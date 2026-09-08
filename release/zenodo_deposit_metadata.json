@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0.0-v14-zenodo-draft",
+  "status": "DRAFT_PENDING_USER_AUTHORIZATION",
+  "title_candidates": [
+    {
+      "title": "Representation-Conditioned Action Spaces in Quantum Circuit Rewriting",
+      "role": "recommended",
+      "reason": "Matches the current manuscript positioning and avoids reading 'ceilings' as a complexity lower bound."
+    },
+    {
+      "title": "Representation-Conditioned Peephole Ceilings: An Empirical, Certificate-Verified Study",
+      "role": "alternative",
+      "reason": "Preserves the historical project title while adding an explicit empirical boundary."
+    }
+  ],
+  "description": "Q-research studies how circuit representation, listing rules, and bounded rewrite search shape peephole optimization outcomes. The repository contains hash-bound benchmark data, formal factorial evidence, independent verification receipts, certificate-guided landscape experiments, reproducibility scripts, and a CycloneDX SBOM. Scientific claims remain bounded by the recorded external-hardware, independent-cold-start, and release-authority gates.",
+  "creators": [
+    {
+      "name": "Q-research Project Contributors"
+    }
+  ],
+  "keywords": [
+    "quantum circuit optimization",
+    "peephole rewriting",
+    "circuit representation",
+    "reproducible research",
+    "certified search",
+    "Qiskit"
+  ],
+  "license_candidates": [
+    {
+      "spdx_id": "MIT",
+      "role": "current_repository_license",
+      "status": "available",
+      "reason": "Matches the checked-in LICENSE for software and associated documentation."
+    },
+    {
+      "spdx_id": "CC-BY-4.0",
+      "role": "data_and_documentation_candidate",
+      "status": "user_decision_required",
+      "reason": "Could be selected for separately identified prose and data, but requires an explicit scope decision."
+    },
+    {
+      "spdx_id": "CC0-1.0",
+      "role": "data_candidate",
+      "status": "user_decision_required",
+      "reason": "Could maximize downstream reuse for data, but is not the current repository license."
+    }
+  ],
+  "recommended_license": "USER_DECISION_REQUIRED",
+  "package_inventory": [
+    {
+      "path": "release/prepaper_restore_capsule.zip",
+      "bytes": 87101282,
+      "sha256": "306e3aae552e4c55972148ebd4b48a4b84afd440531acaa0a9679df7002fe1ba",
+      "role": "restore capsule"
+    },
+    {
+      "path": "release/sbom.cdx.json",
+      "bytes": 454788,
+      "sha256": "5991fca2e5f31e5235563c9dfe9689669398dbd1b9601b88d684406a7e24a12e",
+      "role": "CycloneDX SBOM"
+    },
+    {
+      "path": "release/prepaper_release_manifest.json",
+      "bytes": 9832849,
+      "sha256": "33909547430ede4c439a6a1090a45e3f712c1c84bf0c080265ded81f850585ef",
+      "role": "pre-paper manifest; refresh after the authorized release commit"
+    }
+  ],
+  "release_boundary": {
+    "repository_snapshot": "PENDING_AUTHORIZED_CLEAN_RELEASE_COMMIT",
+    "doi": "NOT_ASSIGNED",
+    "upload_performed": false,
+    "authorization_required_for": [
+      "choosing the published license",
+      "creating the final repository snapshot",
+      "uploading to Zenodo"
+    ]
+  }
+}

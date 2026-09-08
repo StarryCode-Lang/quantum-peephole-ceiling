@@ -1,4 +1,4 @@
-"""Run the v13 E45 development grid.
+"""Run the v14 E45 certified escape development grid.
 
 E45 is a development experiment, not a confirmatory panel.  It consumes only
 the frozen E39 inputs and the independent E44 synthetic cases.  Every arm
@@ -8,7 +8,8 @@ recorded as a bounded result and never converted to a local-optimum claim.
 The implementation deliberately keeps the E44 state/action core as the
 single source of legal v13 transitions.  The two beam arms differ only in
 their deterministic ranking rule: the unguided arm ranks by current cost,
-whereas CGEO adds terminal Greedy cost and a v12 exposure lower-bound feature.
+whereas CGEO adds a bounded pair-exposure feature before applying terminal
+Greedy only to retained beam states.
 """
 
 from __future__ import annotations
@@ -42,7 +43,10 @@ from src.optimisation.certified_landscape import (  # noqa: E402
     STATUS_UNSUPPORTED,
     STATUS_WITNESS_INCOMPLETE,
     legal_actions,
+    _pair_action,
     _pair_actions,
+    _iter_pair_candidates,
+    _iter_pair_actions,
     state_from_spec,
 )
 from src.optimisation.phase1.greedy import GreedyGateCancellation  # noqa: E402
@@ -58,11 +62,11 @@ from src.optimisation.rewrite_exposure import (  # noqa: E402
 )
 
 
-EXPERIMENT_ID = "E45_CERTIFIED_ESCAPE_DEVELOPMENT_V1"
+EXPERIMENT_ID = "E45_CERTIFIED_ESCAPE_DEVELOPMENT_V14"
 E39_INPUTS = ROOT / "data" / "v12" / "e39_development_grid" / "inputs.csv"
 E44_INPUTS = ROOT / "data" / "v13" / "e44_certified_landscape_oracle" / "inputs.jsonl"
 RULE_LIBRARY = ROOT / "data" / "v13" / "e43_quartz_rule_import" / "generation_a" / "rule_library.json"
-OUTPUT_ROOT = ROOT / "data" / "v13" / "e45_development_grid"
+OUTPUT_ROOT = ROOT / "data" / "v14" / "e45_development_grid"
 NAM_BASIS = ["h", "x", "rz", "cx"]
 FROZEN_CONFIGS = [
     {
@@ -85,11 +89,12 @@ ARM_NAMES = (
     "certificate_guided_escape",
 )
 # Full Quartz matching is a product of listing positions, rule signatures,
-# and qubit permutations.  This conservative precheck keeps the development
-# cell watchdog meaningful; larger inputs remain in the manifest and receive
-# an explicit bounded result.
-MAX_PRECHECK_GATES = 80
-MAX_PRECHECK_WORK = 80
+# and qubit permutations.  B0 froze this wider v14 screening budget from the
+# 128-input resource profile; larger inputs remain in the manifest and
+# receive an explicit bounded result.
+MAX_PRECHECK_GATES = 2_000
+MAX_PRECHECK_WORK = 16_000
+MAX_BASELINE_GATES = 80
 SEMANTIC_SCOPE = "fixed-width bound-parameter unitary, up to global phase"
 
 
@@ -99,6 +104,12 @@ def sha256_file(path: Path) -> str:
 
 def sha256_bytes(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
+
+
+def compact_state_hash(state_hash: str) -> bytes:
+    """Store a full SHA-256 digest without the hex-string allocation."""
+
+    return bytes.fromhex(state_hash)
 
 
 def atomic_text(path: Path, value: str) -> None:
@@ -320,21 +331,59 @@ def state_to_circuit(state: LandscapeState) -> QuantumCircuit:
     return circuit
 
 
-def greedy_state(state: LandscapeState, library: Path) -> tuple[LandscapeState, list[LandscapeAction]]:
+def greedy_state(
+    state: LandscapeState,
+    library: Path,
+    *,
+    pair_cache: dict[str, list[LandscapeAction]] | None = None,
+) -> tuple[LandscapeState, list[LandscapeAction]]:
     current = state.normalized()
     trace: list[LandscapeAction] = []
     while True:
         # This is the same deterministic adjacent pair contract as the
         # Greedy arm.  It intentionally does not scan Quartz/exchange rules.
-        reducing = [action for action in _pair_actions(current) if action.cost_delta < 0]
-        if not reducing:
+        if pair_cache is None:
+            candidate = min(
+                _iter_pair_candidates(current),
+                key=lambda item: (item[1], item[0]),
+                default=None,
+            )
+            chosen = None if candidate is None else _pair_action(current, *candidate)
+        else:
+            key = current.state_hash
+            if key not in pair_cache:
+                pair_cache[key] = _pair_actions(current)
+            pair_actions = pair_cache[key]
+            reducing = (action for action in pair_actions if action.cost_delta < 0)
+            chosen = min(reducing, key=lambda action: action.sort_key, default=None)
+        if chosen is None:
             return current, trace
-        chosen = min(reducing, key=lambda action: action.sort_key)
         trace.append(chosen)
         current = chosen.post_state
 
 
-def exposure_lower_bound(state: LandscapeState, library: Path) -> int:
+def pair_exposure_count(state: LandscapeState) -> int:
+    """Count reducing adjacent pair opportunities without materializing states."""
+
+    count = 0
+    for left, right in zip(state.gates, state.gates[1:]):
+        if left.qubits != right.qubits:
+            continue
+        if left.name == right.name and left.name in {"h", "x", "y", "z", "cx", "cz", "swap"}:
+            count += 1
+        elif {left.name, right.name} in ({"t", "tdg"}, {"s", "sdg"}):
+            count += 1
+        elif left.name == right.name and left.name in {"rx", "ry", "rz"}:
+            count += 1
+    return count
+
+
+def exposure_lower_bound(
+    state: LandscapeState,
+    library: Path,
+    *,
+    pair_cache: dict[str, list[LandscapeAction]] | None = None,
+) -> int:
     """Return a bounded local exposure proxy for CGEO ranking.
 
     Full v12 dependency certification remains an independent comparison arm.
@@ -343,7 +392,8 @@ def exposure_lower_bound(state: LandscapeState, library: Path) -> int:
     certified adjacent-pair exposure count as its bounded feature.
     """
     del library
-    return sum(action.cost_delta < 0 for action in _pair_actions(state))
+    del pair_cache
+    return pair_exposure_count(state)
 
 
 @dataclass
@@ -379,7 +429,7 @@ def beam_search(
         )
     # Each tuple is state, path, peak cost, and exposure feature.
     frontier: list[tuple[LandscapeState, list[LandscapeAction], int, int]] = [(root, root_trace, root.cost, 0)]
-    seen = {root.state_hash}
+    seen = {compact_state_hash(root.state_hash)}
     best = root
     best_path = root_trace
     best_peak = root.cost
@@ -387,9 +437,26 @@ def beam_search(
     pruned = 0
     exposure_calls = 0
     resource_reason = ""
+    terminal_cache: dict[str, tuple[LandscapeState, list[LandscapeAction]]] = {}
+
+    def terminal_state(state: LandscapeState) -> tuple[LandscapeState, list[LandscapeAction]]:
+        cached = terminal_cache.get(state.state_hash)
+        if cached is None:
+            cached = greedy_state(state, library)
+            terminal_cache[state.state_hash] = cached
+        return cached
+
+    def rank(item: tuple[LandscapeState, list[LandscapeAction], int, int]) -> tuple[Any, ...]:
+        state, _path, peak, exposure = item
+        if guided:
+            return (state.cost, -exposure, peak, len(_path), state.state_hash)
+        return (state.cost, peak, len(_path), state.state_hash)
+
     max_horizon = int(config["horizon"])
     for _depth in range(max_horizon):
-        candidates: dict[str, tuple[LandscapeState, list[LandscapeAction], int, int]] = {}
+        candidate_hashes: set[bytes] = set()
+        frontier_candidates: list[tuple[LandscapeState, list[LandscapeAction], int, int]] = []
+        beam_width = int(config["beam_width"])
         for current, path, peak, _old_exposure in frontier:
             if expanded >= int(config["state_budget"]):
                 resource_reason = "state_budget"
@@ -406,50 +473,60 @@ def beam_search(
                     continue
                 child_path = path + [action]
                 child_peak = max(peak, child.cost)
-                if child.state_hash in seen or child.state_hash in candidates:
+                child_hash = compact_state_hash(child.state_hash)
+                if child_hash in seen or child_hash in candidate_hashes:
                     pruned += 1
                     continue
                 feature = exposure_lower_bound(child, library) if guided else 0
                 exposure_calls += int(guided)
-                candidates[child.state_hash] = (child, child_path, child_peak, feature)
-                seen.add(child.state_hash)
+                candidate_hashes.add(child_hash)
+                seen.add(child_hash)
+                item = (child, child_path, child_peak, feature)
+                if len(frontier_candidates) < beam_width:
+                    frontier_candidates.append(item)
+                else:
+                    worst_index = max(range(len(frontier_candidates)), key=lambda index: rank(frontier_candidates[index]))
+                    if rank(item) < rank(frontier_candidates[worst_index]):
+                        frontier_candidates[worst_index] = item
+                    else:
+                        pruned += 1
             if resource_reason:
                 break
         if resource_reason:
             break
-        if not candidates:
+        if not frontier_candidates:
             break
-
-        def rank(item: tuple[LandscapeState, list[LandscapeAction], int, int]) -> tuple[Any, ...]:
-            state, path, peak, exposure = item
-            if guided:
-                terminal, _ = greedy_state(state, library)
-                return (terminal.cost, -exposure, peak, len(path), state.state_hash)
-            return (state.cost, peak, len(path), state.state_hash)
-
-        frontier = sorted(candidates.values(), key=rank)[: int(config["beam_width"])]
-        pruned += max(0, len(candidates) - len(frontier))
+        frontier = sorted(frontier_candidates, key=rank)
         for state, path, peak, _exposure in frontier:
-            terminal, terminal_trace = greedy_state(state, library)
+            terminal, terminal_trace = terminal_state(state)
             if (terminal.cost, len(path), terminal.state_hash) < (best.cost, len(best_path), best.state_hash):
                 best = terminal
                 best_path = path + terminal_trace
                 best_peak = max(peak, terminal.cost)
+            if best.cost < root.cost:
+                # A legal improving witness is sufficient for this bounded
+                # arm. Continuing to expand later horizons repeats expensive
+                # terminal passes without upgrading the incomplete status;
+                # record the heuristic omission explicitly below.
+                resource_reason = "HEURISTIC_OMISSION:first_improving_witness"
+                break
+        if resource_reason:
+            break
     if resource_reason:
         status = STATUS_WITNESS_INCOMPLETE if best.cost < root.cost else STATUS_RESOURCE_NO_WITNESS
     else:
         status = STATUS_WITNESS_INCOMPLETE if max_horizon > 0 else STATUS_EXACT_LOCAL
     escape_depth = None
     if best.cost < root.cost:
-        for depth in range(1, len(best_path) + 1):
-            intermediate, _ = greedy_state(root, library)
-            # Replay the prefix through the state transitions without relying
-            # on the final greedy trace to identify the first improvement.
-            current = root
-            for action in best_path[:depth]:
-                current = action.post_state
-            terminal, _ = greedy_state(current, library)
-            if terminal.cost < root.cost:
+        # The returned path already contains the retained beam path followed
+        # by its terminal Greedy trace.  Replay it once and report the first
+        # actually improving state; probing Greedy from every prefix repeats
+        # the same long-list scan dozens of times and cannot improve the
+        # witness path itself.
+        current = root
+        for depth, action in enumerate(best_path, start=1):
+            current = action.post_state
+            if current.cost < root.cost:
                 escape_depth = depth
                 break
     barrier = max(0, best_peak - root.cost) if best.cost < root.cost else None
@@ -607,13 +684,22 @@ def run(output_root: Path = OUTPUT_ROOT, phase: str = "screening", include_e44: 
             "rule_scope": "e44_core_v1",
         },
         "configuration_grid": FROZEN_CONFIGS,
+        "search_method": {
+            "id": "deterministic_beam_v2",
+            "unguided_rank": ["state_cost", "peak_cost", "path_length", "state_sha256"],
+            "guided_rank": ["state_cost", "negative_pair_exposure", "peak_cost", "path_length", "state_sha256"],
+            "terminal_greedy": "retained_frontier_only",
+            "early_stop": "first_improving_retained_terminal",
+        },
         "cell_limits": {
             "screening_seconds": 60,
             "full_development_seconds": 180,
             "rss_limit_gib": 8,
             "workers": 1,
             "blas_threads": 1,
+            "baseline_gate_limit": MAX_BASELINE_GATES,
             "precheck_gate_limit": MAX_PRECHECK_GATES,
+            "precheck_gate_qubit_work_limit": MAX_PRECHECK_WORK,
         },
         "selection_rule": [
             "exclude_semantic_or_resource_failure_rate_above_5_percent",
@@ -632,7 +718,10 @@ def run(output_root: Path = OUTPUT_ROOT, phase: str = "screening", include_e44: 
     for index, (source, circuit) in enumerate(prepared_sources, start=1):
         print(f"evaluating {index}/{len(prepared_sources)} {source['circuit_id']}", flush=True)
         try:
-            if circuit.size() > MAX_PRECHECK_GATES:
+            # Baseline optimizers keep their historical small-input budget;
+            # the widened B0 budget applies only to the certified landscape
+            # arm and must not turn a comparator arm into an unbounded pass.
+            if circuit.size() > MAX_BASELINE_GATES:
                 baselines = {
                     arm: (circuit, 0.0, "RESOURCE_BOUNDED_NO_WITNESS:precheck_gate_budget")
                     for arm in ("greedy", "wcl_greedy", "v12_cgl_greedy", "phase2b_greedy")

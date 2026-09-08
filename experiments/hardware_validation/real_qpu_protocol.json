@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0.0-v14-real-qpu",
+  "status": "FROZEN_PROTOCOL_PENDING_USER_AUTHORIZATION",
+  "experiment_id": "EHW-REAL",
+  "authorization": {
+    "required": true,
+    "provider": "IBM Quantum",
+    "credential_source": "QISKIT_IBM_TOKEN or an explicitly saved QiskitRuntimeService account",
+    "credentials_stored_in_repository": false,
+    "execution_status": "NOT_EXECUTED"
+  },
+  "backend": {
+    "selection_rule": "least_busy operational non-simulator backend with at least 5 qubits, resolved once at execution start",
+    "explicit_backend_override": null,
+    "minimum_qubits": 5,
+    "simulator": false,
+    "backend_selection_is_not_tuned_after_observing_results": true
+  },
+  "circuits": [
+    {
+      "circuit_id": "ghz_n4",
+      "family": "GHZ",
+      "n_qubits": 4,
+      "seed": null,
+      "role": "primary irreducible control"
+    },
+    {
+      "circuit_id": "oracle_bv_n4",
+      "family": "Oracle/BV",
+      "n_qubits": 5,
+      "seed": 42,
+      "role": "primary reducible circuit"
+    },
+    {
+      "circuit_id": "random_uni_n4_d{selected_depth}_s{selected_seed}",
+      "family": "Random/UNIVERSAL",
+      "n_qubits": 4,
+      "depth_candidates": [16, 24, 32],
+      "seed_candidates": [42, 7, 123, 2024],
+      "selection_rule": "first deterministic scan cell with hybrid reduction >= 0.05 and at least one removed two-qubit gate",
+      "role": "primary reducible random circuit; selected depth and seed are recorded in metadata"
+    }
+  ],
+  "versions": [
+    "original",
+    "greedy_phase1",
+    "commutation_phase2",
+    "hybrid_phase1_2"
+  ],
+  "transpilation": {
+    "levels": [0, 1],
+    "seed_transpiler": 12345,
+    "initial_layout": "logical_qubit_order",
+    "routing_method": "sabre",
+    "translation_method": "translator"
+  },
+  "sampling": {
+    "shots_per_pub": 8192,
+    "independent_repetitions": 3,
+    "replication_labels": [0, 1, 2],
+    "seed_simulator": null,
+    "seed_policy": "real-device repetitions are independent jobs; no simulator seed is claimed"
+  },
+  "metrics": [
+    "hellinger_fidelity_to_local_exact_ideal_distribution",
+    "total_variation_distance_to_local_exact_ideal_distribution",
+    "dominant_mode_mass",
+    "logical_and_post_transpile_gate_counts",
+    "two_qubit_gate_counts",
+    "queue_seconds_when_available",
+    "qpu_usage_seconds_when_available"
+  ],
+  "pre_registered_predictions": {
+    "ghz_n4": "All optimizer versions are structurally identical; optimizer gain is expected to be zero.",
+    "oracle_bv_n4_level_0": "Reduced versions may improve sampled fidelity through fewer logical one-qubit operations, subject to routing and device noise.",
+    "oracle_bv_n4_level_1": "The backend transpiler may absorb the logical one-qubit reduction; no positive hardware gain is required.",
+    "interpretation": "These are directional predictions and do not authorize causal claims from a single backend."
+  },
+  "success_criteria": [
+    "For each circuit with positive post-transpile two-qubit reduction, optimized noisy Hellinger fidelity is no lower than original within two standard errors at the same backend and transpilation level.",
+    "GHZ dominant-mode mass is at least 0.5, otherwise classify the entanglement-witness criterion as failed without retuning.",
+    "BV success probability differs from the matched fake-backend prediction by no more than 0.15.",
+    "All three repetitions are retained; missing jobs are classified rather than silently excluded."
+  ],
+  "stop_rules": [
+    "Stop and classify UNAVAILABLE if no eligible operational backend can be selected.",
+    "Stop and classify AUTHENTICATION_FAILURE for missing or rejected credentials.",
+    "Stop and classify JOB_FAILURE or PARTIAL_EXECUTION for runtime submission/result failures; do not replace failed jobs after inspecting outcomes.",
+    "Do not add circuits, versions, shots, repetitions, backends, or metrics after the first result is observed."
+  ],
+  "failure_classes": [
+    "AUTHENTICATION_FAILURE",
+    "BACKEND_UNAVAILABLE",
+    "TRANSPILE_FAILURE",
+    "JOB_FAILURE",
+    "PARTIAL_EXECUTION",
+    "RESULT_SCHEMA_FAILURE",
+    "SEMANTIC_EQUIVALENCE_FAILURE",
+    "PREDICTION_CRITERION_FAILURE"
+  ],
+  "implementation": {
+    "script": "experiments/hardware_validation/real_hardware_protocol.py",
+    "dry_run_command": "python experiments/hardware_validation/real_hardware_protocol.py --dry-run",
+    "execution_command": "python experiments/hardware_validation/real_hardware_protocol.py --shots 8192 --seed-reps 3"
+  },
+  "outputs": {
+    "runs_csv": "data/v8/hardware_validation/ehw_real_runs_<timestamp>.csv",
+    "metadata_json": "data/v8/hardware_validation/ehw_real_metadata_<timestamp>.json",
+    "no_results_written_by_protocol_preparation": true
+  }
+}

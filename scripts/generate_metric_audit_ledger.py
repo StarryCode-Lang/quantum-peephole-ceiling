@@ -213,7 +213,7 @@ def write_outputs(rows: list[dict[str, object]], registry: dict[str, object], *,
                   summary_path: Path, report_path: Path) -> dict[str, object]:
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     counts: dict[str, int] = {}
@@ -228,13 +228,15 @@ def write_outputs(rows: list[dict[str, object]], registry: dict[str, object], *,
         f"- Catalog SHA-256: `{sha256(catalog_path)}`",
         f"- Item-specific PASS coverage: **{pass_count}/592**.",
         f"- Status counts: `{json.dumps(counts, sort_keys=True)}`.", "",
+        "- v14 D1 evidence package: `release/v14_metric_dispositions.json`; its selectors are "
+        "verified before the registry merge and the derived ledger regeneration.", "",
         "A row is PASS only when item-specific satisfaction evidence is a file, its current SHA-256 "
         "matches, its selector/predicate passes, and the registry assessment predicate is true. "
         "Directories and criterion-source references cannot satisfy a metric.", "",
         "The former CSV/summary contents are stale and superseded. Their section-level PASS values "
         "must not be cited as evidence of completion.", "",
     ])
-    report_path.write_text(report, encoding="utf-8")
+    report_path.write_text(report, encoding="utf-8", newline="\n")
     summary = {
         "schema_version": "metric-audit-ledger-v2",
         "status": "SUPERSEDES_LEGACY_SHARED_EVIDENCE_LEDGER", "rows": 592,
@@ -245,7 +247,7 @@ def write_outputs(rows: list[dict[str, object]], registry: dict[str, object], *,
         "legacy_outputs_stale": True, "registry_created_utc": registry.get("created_utc"),
         "superseded_legacy_contract": registry.get("supersedes"),
     }
-    summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     return summary
 
 

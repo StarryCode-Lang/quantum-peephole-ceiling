@@ -723,6 +723,27 @@ DIRECT_DISPOSITION_OVERLAYS = {
     ),
 }
 
+# v14 D1 closes only the catalog items that have new, independently checked
+# v14 evidence.  The generated package remains separate from this registry so
+# its file hashes and selectors can be verified before the merge is run.
+V14_DISPOSITION_PACKAGE = ROOT / "release" / "v14_metric_dispositions.json"
+if not V14_DISPOSITION_PACKAGE.is_file():
+    raise RuntimeError(
+        "v14 metric disposition package is required; run "
+        "scripts/generate_v14_metric_dispositions.py first"
+    )
+_v14_payload = json.loads(V14_DISPOSITION_PACKAGE.read_text(encoding="utf-8"))
+_v14_dispositions = _v14_payload.get("metric_dispositions", {})
+for _metric_id, _disposition in _v14_dispositions.items():
+    if not isinstance(_disposition, dict):
+        raise RuntimeError(f"invalid v14 metric disposition: {_metric_id}")
+    DIRECT_DISPOSITION_OVERLAYS[_metric_id] = (
+        "release/v14_metric_dispositions.json",
+        _disposition,
+        str(_disposition["status"]),
+        "v14 item-specific evidence: " + str(_disposition["disposition"]),
+    )
+
 DIRECT_REF_OVERLAYS = {
     "4.20": ({
         "path": "release/rewrite_order_confluence_audit.json",
@@ -1023,7 +1044,7 @@ def main() -> int:
     args = parser.parse_args()
     payload = merge()
     args.output.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     print(args.output.resolve())
     return 0

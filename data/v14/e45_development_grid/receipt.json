@@ -1,0 +1,39 @@
+{
+  "arm_count": 6,
+  "config_summaries_sha256": "7ddf4928d7bfc465cd8f87c38da86f681e3e214d9d6bbd2a99de3eec25a4226e",
+  "configuration_count": 18,
+  "experiment_id": "E45_CERTIFIED_ESCAPE_DEVELOPMENT_V14",
+  "grid_results_sha256": "4bac8e8a1189881c80f45aaae291d08316815e6b1042ac88af003fdb10a11683",
+  "normalization_manifest_sha256": "0f4babe8cd8a2b07efd5ee826152775ae0bc290649a4f48bd39eb25a811b4e09",
+  "normalized_count": 128,
+  "protocol_sha256": "af47aaf5b910273a6780c438d6aa92d0f6e9dd546c26d9d1b657345a8c3f9843",
+  "result_rows": 13824,
+  "selection": {
+    "best_cgeo_family_mean_itt_pp": 40.96422664193978,
+    "eligible_config_count": 18,
+    "experiment_id": "E45_CERTIFIED_ESCAPE_DEVELOPMENT_V14",
+    "future_panel_access": "E46_AND_LATER_NOT_READ",
+    "phase": "screening",
+    "selected_config": {
+      "arm": "certificate_guided_escape",
+      "barrier_cap": 2,
+      "beam_width": 64,
+      "config_id": "h3_b64_s200k",
+      "family_mean_paired_itt_pp": 40.861012719175555,
+      "horizon": 3,
+      "median_runtime_seconds": 0.0063188999993144535,
+      "p95_runtime_seconds": 0.5359554000024218,
+      "resource_bounded_count": 5,
+      "resource_or_error_rate": 0.0390625,
+      "row_count": 128,
+      "semantic_failure_count": 0,
+      "state_budget": 200000,
+      "valid_row_count": 128
+    },
+    "selection_is_frozen_for_e48": false,
+    "status": "SCREENING_COMPLETE_SELECTION_PENDING_FULL_DEVELOPMENT"
+  },
+  "selection_sha256": "877946a997cda4b7aca48b1adcfe0eae29c8f499ef7a43a91917c4d0ee70a556",
+  "source_count": 128,
+  "status": "SCREENING_COMPLETE_SELECTION_PENDING_FULL_DEVELOPMENT"
+}

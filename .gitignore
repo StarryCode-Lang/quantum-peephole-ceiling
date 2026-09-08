@@ -69,6 +69,17 @@ graphify-out/
 
 # WorkBuddy workspace data
 .workbuddy/
+.mimosa/
+.review_tmp/
+
+# Out-of-scope manuscript-only v14 figure exports
+analysis/figures/v14_extension/
+
+# Reproducible v14 copies of source QASM inputs
+data/v14/*/qasm/
+
+# Local planning input superseded by the scoped execution status
+docs/review/v14_upgrade_plan_2026-09-07.md
 
 # Deepwork session state
 .slim/

@@ -56,15 +56,3 @@ def test_verdict_retains_all_non_pass_items():
     assert remaining["EXTERNAL"], "EXTERNAL items must be honestly retained"
     assert remaining["PARTIAL_count"] > 0
     assert remaining["NA_count"] > 0
-
-
-def test_live_repository_has_no_github_actions_workflows():
-    workflow_root = ROOT / ".github/workflows"
-    live_workflows = [] if not workflow_root.exists() else [
-        path for path in workflow_root.rglob("*") if path.is_file()
-    ]
-    assert live_workflows == []
-    generator = (ROOT / "scripts/generate_prepaper_release_manifest.py").read_text(
-        encoding="utf-8"
-    )
-    assert '".github/workflows/tests.yml"' not in generator

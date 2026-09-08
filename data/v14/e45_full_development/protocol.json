@@ -1,0 +1,46 @@
+{
+  "arms": [
+    "greedy",
+    "wcl_greedy",
+    "v12_cgl_greedy",
+    "phase2b_greedy",
+    "unguided_beam",
+    "certificate_guided_escape"
+  ],
+  "cell_limits": {
+    "baseline_gate_limit": 80,
+    "state_budget": 200000,
+    "time_budget_seconds": 30.0
+  },
+  "configuration_grid": [
+    {
+      "barrier_cap": 2,
+      "beam_width": 64,
+      "config_id": "h3_b64_s200k",
+      "horizon": 3,
+      "state_budget": 200000
+    }
+  ],
+  "experiment_id": "E45_CERTIFIED_ESCAPE_DEVELOPMENT_V14",
+  "future_panel_access": "E46_AND_LATER_NOT_READ",
+  "phase": "full_development",
+  "rule_scope": "e44_core_v1",
+  "search_method": {
+    "action_matching": "first_operation_indexed_rule_locations",
+    "barrier_method": "layered_minimax_peak_cost",
+    "id": "exact_compact_bfs_v2",
+    "resource_status": "EXACT only when state and time budgets are complete",
+    "reverse_edges": "not used; rank-increasing reverse Quartz parameter-splitting remains illegal",
+    "state_hash_generation": "canonical_byte_splice_with_lazy_child_spans",
+    "state_key": "complete_ordered_normalized_listing_sha256"
+  },
+  "source_contract": {
+    "e39_path": "data/v12/e39_development_grid/inputs.csv",
+    "e44_path": "data/v13/e44_certified_landscape_oracle/inputs.jsonl",
+    "fixed_panel": "same 128-source v14 screening order",
+    "screening_manifest": "data/v14/e45_development_grid/normalization_manifest.csv",
+    "screening_manifest_sha256": "0f4babe8cd8a2b07efd5ee826152775ae0bc290649a4f48bd39eb25a811b4e09",
+    "source_count": 128
+  },
+  "status": "DEVELOPMENT_ONLY"
+}
