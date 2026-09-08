@@ -1,348 +1,117 @@
-# Quantum Peephole Ceiling: Representation-Conditioned Optimization in Quantum Circuits
+# Quantum Peephole Ceiling
 
-**Project Version**: v14 certified rewrite landscape screening + pre-paper evidence chain
-**Date**: 2026-09-08
-**Readiness (layered, 2026-09-08 snapshot)**:
+[![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Evidence: verified](https://img.shields.io/badge/evidence-receipt--verified-2E7D32.svg)](docs/PROJECT_STATUS.md)
 
-| Evidence layer | Verdict | Source |
+Quantum Peephole Ceiling studies when a quantum circuit optimizer can see and
+apply local rewrites, and when the circuit representation hides those
+opportunities. The repository combines executable optimizers, controlled
+experiments, frozen datasets, replayable certificates, and independent
+verification scripts.
+
+![v14 certified landscape overview](docs/assets/v14-overview.png)
+
+The current v14 result is a large engineering improvement over v13: all 18
+screening configurations pass the declared 5% resource threshold, compared
+with 0 of 18 in v13. The selected exact finite-horizon run certifies 93 of 128
+inputs and records the other 35 as resource-truncated. A complementary IDA*
+panel classifies all 128 inputs as 63 exact escapes and 65 exact local optima,
+with no resource boundary and no replay failure.
+
+## What the project does
+
+```mermaid
+flowchart LR
+    A[Circuit families] --> B[Listing model]
+    B --> C[Frozen rewrite library]
+    C --> D[Bounded or exact search]
+    D --> E[Replayable certificate]
+    E --> F[Receipt and verifier]
+    F --> G[Bounded scientific claim]
+```
+
+The project has three connected research layers:
+
+- **Representation sensitivity:** layer-by-layer and wire-consecutive listings
+  expose different local action spaces for the same circuits.
+- **Optimizer boundaries:** prototype and production compilers are compared
+  across circuit families, rewrite models, and resource budgets.
+- **Certified search:** v12-v14 add frozen rule libraries, exact or explicitly
+  incomplete search, certificate replay, and fail-closed readiness verdicts.
+
+## Evidence snapshot
+
+| Evidence layer | Result | Current boundary |
 |---|---|---|
-| Pre-paper evidence chain (E1–E37, 592-metric ledger) | `READY_FOR_PAPER_WRITING_WITH_BOUNDARIES` | `release/prepaper_readiness_verdict.json` |
-| v12 rewrite-exposure package (E38–E41) | `NOT_READY_FOR_PAPER` (E40 availability boundary) | `release/prepaper_v12_readiness_verdict.json` |
-| v13 certified rewrite landscape (E43–E45) | `NOT_READY_FOR_PAPER` (E45 resource gate) | `release/v13_readiness_verdict.json` |
-| v14 E45 screening + selected development | `NOT_READY_FOR_PAPER` with screening gate pass and full-development resource boundary (93/128 exact certificates; 35/128 truncated) | `release/v14_readiness_verdict.json` |
+| E1-E30 canonical benchmark | 96,205 active rows across 35 datasets | Historical release is hash-pinned |
+| E31-E37 extensions | Sealed factorial, telemetry, scale, external and cost panels | Reported separately from canonical totals |
+| v13 E45 | 0/18 screening configurations eligible | Closed as a recorded resource failure |
+| v14 E45 screening | 18/18 eligible; 13,824 rows; 0 semantic failures | Screening optimization complete |
+| v14 exact finite horizon | 93 exact; 35 resource-truncated | Full exact landscape remains open |
+| v14 IDA* escape depth | 63 exact escapes; 65 exact local optima | Complete for the declared 128-input panel |
 
-Execution status and evidence boundaries: `docs/review/v14_execution_status_2026-09-07.md`.
+The repository is engineering-verified but the v14 scientific verdict remains
+`NOT_READY_FOR_PAPER` because a complete exact landscape and external execution
+gates have not been established. Paper writing and GitHub Actions are outside
+the current project scope.
 
----
+## Quick start
 
-## Project Overview
-
-This project characterizes the boundaries of quantum circuit peephole optimization across 15 circuit families and 6 optimizer types, with 96,205 active canonical rows across 35 datasets. The release manifest also retains 2 superseded provenance entries (84 rows), for 37 listed entries and 96,289 rows in total. The central contribution is a representation-conditioned analysis of the action space available to bounded local rewrites.
-
-### Core Scientific Question
-> When and why does peephole optimization succeed or fail across diverse circuit families?
-
-### Current v12 extension
-
-v12 adds a representation-conditioned rewrite-exposure certificate and a
-certificate-guided lower-bound search. The implementation is deliberately
-bounded to the declared `pair_v1` rule library and the `wire_order_v1` /
-`conservative_commutation_v1` dependence models. The current evidence package
-is independently verified, but it does not replace the historical canonical
-datasets or establish a universal optimizer theorem.
-
-The v12 package reports:
-
-- E38 exact exhaustive oracle: 512 cases, 1,024 model rows, with all
-  theorem/solver/bound/certificate checks passing.
-- E39 development-only selection: 391 inputs, 15 families, six configurations;
-  `b32_c256` is frozen for development follow-up only.
-- E40 prospective MQT panel: 168 generation attempts and zero eligible
-  pure-unitary, classical-free, fully-bound inputs; the primary efficacy
-  estimand is therefore not estimable and no substitution is made.
-- E41 scale/resource panel: 16 cells and 48 arm rows, with 12 successful and
-  four explicitly recorded resource/error outcomes; it does not update E40
-  efficacy.
-
-The machine-readable ledger, test gate, source/environment manifest, and final
-readiness disposition are under `data/v12/` and `release/prepaper_v12_*`.
-
-### Historical v13 extension
-
-v13 (closed 2026-09-02 at the E45 resource gate) defines a **certified rewrite
-landscape**: exact BFS quantities (best cost within horizon H, minimum escape
-depth, minimum barrier height) over a frozen rule library (pinned Quartz v1
-directions + `pair_v1` + conservative structural exchanges), with hash-pinned
-replay certificates and five machine-readable "no improvement" explanations.
-Method contract: `docs/review/v13_method_contract_draft.md` (P1–P5 proof
-obligations, `DRAFT_UNTIL_E44`).
-
-- E43 certified Quartz v1 rule import (S2 PASS).
-- E44 exact landscape oracle: 512 cases / 1,024 model rows; all theorem,
-  solver, bound, and certificate checks pass (S4 PASS).
-- E45 development grid: 128 sources × 18 configurations × 6 arms = 13,824
-  rows; 0 of 18 configurations satisfy the preregistered resource eligibility
-  gate (certificate-guided escape failure rate 63.28% vs required ≤5%) —
-  recorded as `BLOCKED_S5_RESOURCE_GATE`, an honest resource boundary, not a
-  negative scientific result. The v13 receipt and readiness verdict remain
-  unchanged.
-
-### Current v14 extension
-
-v14 applies resource-safe optimizations within the existing certified landscape
-contract: complete Quartz signature lookup, constrained qubit mappings,
-one-pass state normalization, full-width state digests, lazy pair candidate
-generation, bounded top-K beam retention, deterministic ranking, and an early
-stop after the first retained improving witness. The beam route remains a
-witness-certified incomplete search; it does not create an `EXACT_*` claim.
-
-- The v14 screening reruns the same 128 sources × 18 configurations × 6 arms
-  (13,824 rows) into `data/v14/`, leaving v13 outputs untouched.
-- All 18 guided configurations satisfy the preregistered ≤5% resource gate;
-  each has 5 bounded guided rows out of 128 (3.90625%), with zero semantic
-  failures. The selected screening configuration is `h3_b64_s200k`.
-- The receipt, protocol, normalization manifest, results, summaries, and
-  selection record are independently checked by
-  `scripts/verify_e45_development_grid.py --output-root data/v14/e45_development_grid`.
-- The derived v14 readiness verdict is checked by
-  `scripts/verify_v14_readiness_verdict.py`; it binds the screening artifacts,
-  the full-development receipt, preserves the v13 verdict SHA, and records the
-  remaining resource boundary.
-- The selected configuration has an exact finite-horizon path in
-  `experiments/e45_development_grid/exact_development.py`; its bounded output
-  is recorded in `data/v14/e45_full_development/` and checked by
-  `scripts/verify_e45_exact_development.py`. The full panel has 93 complete
-  certificates and 35 explicitly incomplete resource-truncated cells. The
-  complementary IDA* escape-depth panel in `data/v14/e45_idastar_escape/`
-  has 63 exact escapes, 65 exact local optima, and no time-budget boundary.
-
-### Key Findings
-1. **Listing Model Sensitivity**: Layer-by-layer listing (LBL) structurally empties the Phase-1 action space for n >= 2 (Observation 1(b)); wire-consecutive listing (WCL) exposes ~7.8% reduction hidden under LBL (E19, 10,000 rows)
-2. **Empirical Trichotomy**: CNOT chains achieve 100% Phase-1 reduction; oracle/Clifford circuits yield 14-16% via Phase-2a commutation; 3 of 15 families at genuine structural ceiling (QFT/GHZ/SurfaceCode) + 7 of 15 at prototype action-space ceiling
-3. **Prototype vs Production**: Production peephole optimizers (t|ket> FullPeepholeOptimise) achieve 5-63% on 5 of 7 "ceiling" families, confirming the ceiling is prototype-specific, not a structural limit of peephole optimization
-4. **Theory-Experiment Validation**: 17-row theory-experiment scorecard (14 MATCH / 3 PARTIAL / 0 MISMATCH as of 2026-08-06). Theorem 1(a)'s corrected WCL density formula directly validated by E30 (13,500 trials, max |z| = 2.86). Theorem 9 (BV oracle Phase-2b advantage >= n/(4.5n+4)) validated at full scale: Phase-2b v2 reaches the exact k+2 optimum on all 80 BV instances, exceeding the rigorous bound by 3.1-4.2×; IQP 92.0%, Structured 40.2%, RandomClifford 51.6% mean reduction
-5. **Ceiling-Aware Optimization (Exploratory)**: 1.6x-228x speedup (aggregate 34.97×) with bitwise-identical reduction on the 15 training families; the original heuristic predictor failed held-out validation (MAE=0.2775, Pearson=NaN), but a repaired hybrid model (mechanism gate + random forest) reaches LOFO MAE 0.0172 [0.0129, 0.0218], pooled r=0.977 -- the gate was selected post hoc on a single dataset, so this is not a validated off-the-shelf predictor (family-mean prediction remains underpowered at n=15 folds; wave-6 20-family robustness: pooled MAE 0.0188, r=0.967, family-mean r=0.780 pure-RF / 0.887 gated, but a RepetitionCode fold failure — MAE 0.303, r=-0.826 — marks the generalization boundary for unseen intermediate-density mechanisms)
-6. **Fidelity Verified**: Optimizations preserve unitary equivalence where exact/scalable checks are available; E18 includes documented decomposition/fidelity-failure rows (44.4% failure rate, survivorship-biased)
-7. **Rewrite Exposure Certificate**: v12 makes the representation-dependent
-   exposure opportunity explicit and fail-closed; its efficacy conclusion is
-   bounded by the finite E38--E41 protocols and the E40 availability boundary
-
----
-
-## Directory Structure
-
-Source-of-truth, data-role, and gate policies are summarized below the tree.
-Publication readiness and remaining blockers: `docs/review/publication_readiness_2026-08.md`.
-
-```
-Q-research/
-├── src/                          # Source code
-│   ├── circuits/                 # Circuit generation (v2.1)
-│   ├── optimisation/
-│   │   ├── base.py              # Base optimizer class
-│   │   ├── _gate_predicates.py  # Shared gate predicate functions
-│   │   ├── ceiling_aware.py     # Ceiling-aware optimizer
-│   │   ├── phase1/              # Phase 1: Adjacent-search optimizers
-│   │   │   ├── greedy.py        # GreedyGateCancellation v3.0.0
-│   │   │   ├── simulated_annealing.py
-│   │   │   ├── genetic_algorithm.py
-│   │   │   ├── random_local_search.py
-│   │   │   └── wire_traversal.py # WCL preprocessing
-│   │   └── phase2/              # Phase 2: Commutation + template matching
-│   │       ├── commutation_rewriter.py  # Phase-2a
-│   │       └── template_matcher.py      # Phase-2b (full-scale v2)
-│   └── provenance.py            # Data provenance tracking
-│
-├── experiments/                  # Experiment scripts (by ID, E1-E41)
-├── data/                         # Canonical data plus bounded v10-v14 evidence packages
-├── analysis/                     # Analysis scripts, figures, statistics
-├── docs/                         # Documentation
-│   ├── theory/                  # Theoretical framework + formal results + proof audits
-│   ├── results/                 # Experimental design + analysis summary
-│   ├── analysis/                # Issue-specific analyses and bounded diagnostics
-│   ├── manuscript/              # Manuscript (active draft) + supporting docs
-│   ├── references/              # Unified references + literature review + search ledger
-│   ├── review/                  # Audit reports, evidence maps, and wave history
-│   ├── supplementary/           # Supplementary materials
-│   └── data_dictionary.md       # Canonical data dictionary
-├── scripts/                      # Reproduction scripts
-├── release/                      # Machine-readable manifests, receipts, and restore capsules
-├── tests/                        # Unit, integration, and statistical tests
-├── environment.yml              # Conda environment (Python 3.12)
-├── requirements.txt             # Pip requirements (pinned)
-├── pyproject.toml               # Modern packaging metadata
-└── Dockerfile                   # Docker container
-```
-
-### Source of Truth
-
-- `src/`: reusable circuit generators, optimizers, predicates, configuration, and provenance helpers.
-- `experiments/`: experiment drivers. Each driver records parameters and writes versioned outputs under `data/`.
-- `analysis/`: statistical analysis and figure-generation code. `analysis/figures/` contains derived publication artifacts.
-- `tests/`: unit, integration, optimizer-correctness, data-schema, and statistical tests.
-- `data/DATA_CANONICAL.md`: canonical dataset policy and active file list.
-- `release/release_manifest.json`: SHA-256 and row-count release gate for canonical datasets.
-- `docs/manuscript/`: active manuscript and claim-evidence map.
-- `docs/analysis/`: reproducible issue-specific analyses and non-canonical diagnostics.
-- `docs/theory/`: definitions, proofs, conjectures, scope notes, and proof audits.
-- `docs/supplementary/`: supplementary methods, tables, and provenance context.
-- `docs/review/`: audit reports and historical wave decisions; historical files are not active evidence unless referenced by the current claim map.
-- `docs/**/archive/` and `docs/review/wave*/`: historical provenance only; they are not synchronized claim sources.
-- `docs/verification/`: reproducibility and calibration artifacts.
-- `docs/verification/cold_start_protocol.md`: independent extraction and verification protocol.
-- `data/v12/v12_requirement_to_evidence_ledger.json`: current v12 requirement-to-evidence map.
-- `release/prepaper_v12_readiness_verdict.json`: current v12 readiness disposition.
-- `release/v14_readiness_verdict.json`: receipt-bound v14 screening and selected
-  development disposition; complete exact-landscape claims remain blocked by
-  the recorded resource boundary.
-- `docs/review/v14_e45_exact_development_2026-09-08.md`: exact-engine full-panel
-  evidence and its resource boundary.
-- `release/zenodo_deposit_metadata.json`: archival metadata draft; no upload or DOI is claimed.
-- `experiments/hardware_validation/real_qpu_protocol.json`: frozen real-device protocol pending account authorization.
-- `scripts/verify_v12_readiness_package.py`: independent v12 package verifier.
-- `scripts/`: repository-level verification, manifest, and calibration entrypoints.
-
-### Data Roles
-
-- Canonical evidence: files listed in `release/release_manifest.json`.
-- Derived evidence: regenerated summaries under experiment `derived/` directories or `analysis/figures/`.
-- Rerun evidence: `data/v9/` and `data/v11/e20_corrected/`; current-code reconciliation outputs are non-canonical and must not replace frozen release data without an explicit version decision.
-- Sealed E31 factorial: the formal E31 listing × Phase-2b full factorial contains 28,152 result rows, 20,314 success rows, and 6,858 semantic certificates, independently verified in `release/e31_independent_release_verification_receipt.json`; the earlier `data/v11/e31_listing_phase2b/` smoke pilot is historical only, and family-level inference from the formal panel is supportive only per `docs/review/e31_family_inference_correction_2026-08-26.md`.
-- v12 bounded evidence: `data/v12/` records the rewrite-exposure certificate, E38 oracle, E39 development grid, E40 availability boundary, and E41 scale/resource panel; it is not added to the historical canonical totals.
-- Disposable local state: Python caches, timestamped backups, agent sessions, and logs. These are ignored and removed during final cleanup.
-
-### Required Gates
-
-```text
-python -m pytest tests/ -q
-python -m compileall -q src experiments scripts analysis
-python scripts/reproduce_all.py --verify
-python scripts/characterize_fidelity_fallback.py --n-values 3 5 8 --samples 1000
-python scripts/verify_v12_readiness_package.py
-python scripts/verify_e45_development_grid.py --output-root data/v14/e45_development_grid
-python scripts/verify_v14_readiness_verdict.py
-python scripts/verify_e45_exact_development.py --output-root data/v14/e45_full_development
-python scripts/verify_sbom.py
-```
-
-Use `conda run -n q-research python ...` when the environment is not activated.
-
----
-
-## Experiment Registry
-
-| ID | Name | Status | Rows | Key Result |
-|----|------|--------|------|------------|
-| E1 | Phase Transition | COMPLETE | 25,000 | Mean reduction = 0.0000% at all depths 1-50 (LBL) |
-| E2 | Entanglement Density | COMPLETE | 2,100 | No correlation with entanglement entropy |
-| E3 | Scaling | COMPLETE | 12,000 | Mean reduction = 0.0000% for n = 3-10 |
-| E4 | Algorithm Comparison | COMPLETE | 400 | All Phase-1 optimizers converge to ~0% |
-| E5 | Landscape | COMPLETE | 6,000 | Flat landscape, rare deep minima (max 26.67%) |
-| E10 | Phase 1 vs Phase 2 | COMPLETE | 1,905 | Phase-2a context-dependent advantage |
-| E10p2b | Phase-2b Validation | COMPLETE | 1,017 | Fixture-scale Phase-2b template matching |
-| E11 | Real-Circuit Benchmark | COMPLETE | 519 | 15 circuit families x 3 optimizers |
-| E12 | Compiler Baseline | COMPLETE | 568 | Qiskit transpiler levels 0-3 |
-| E13 | Structural Ceiling | COMPLETE | 56 | Prototype action-space ceiling proxy |
-| E14 | Extended Benchmark | COMPLETE | 2,130 | 15 circuit families, extended metrics |
-| E15 | Compiler Comparison | COMPLETE | 994 | Custom peephole vs Qiskit |
-| E16 | Window Scaling | COMPLETE | 696 | Phase-2 window size saturation |
-| E17 | Connectivity | COMPLETE | 755 | Linear/grid/heavy-hex topology |
-| E18 | Clifford+T | COMPLETE | 270 | Survivorship-biased (44.4% failure) |
-| E19 | WCL Listing | COMPLETE | 10,000 | WCL 7.83% vs LBL 0% on random circuits |
-| E20 | Multi-Compiler Full | COMPLETE | 1,070 | Qiskit/Cirq/t|ket> on 15 families |
-| E21 | Ceiling-Aware | COMPLETE | 1,140 | 1.6x-228x speedup (exploratory) |
-| E23 | AG Canonical Form | COMPLETE | 160 | Thm 6: Phase-1 = 0% on AG canonical Clifford |
-| E24 | Theorem 7 Hardness | COMPLETE | 75 | Phase-2a reduction = 79.8% (exceeds 1/6 bound) |
-| E25 | Industry Benchmarks | COMPLETE | 66 | Industry proxy circuit benchmarks |
-| E22 | Gate Shuffle Ablation | COMPLETE | 2,240 | Shuffle 10.34% > original 6.30% (counterintuitive) |
-| E26 | Phase-2b Full v2 | COMPLETE | 2,427 | Full-scale Phase-2b; full-factorial depth grid (56/56, wave 6); pooled reduction 48.5% (95% CI [46.5, 50.5]); BV exact k+2 optimum 80/80 |
-| E26-pilot | BV Theory Pilot | SUPERSEDED | 4 | Thm 9 bound pilot (n=3..7), superseded by bv_theory_v8.csv inside E26 |
-| E27 | New Families | COMPLETE | 675 | QPE/Trotter/QuantumVolume/WState/RepetitionCode (robustness suite) |
-| E29 | Multi-Seed E04 | COMPLETE | 800 | E04 single-seed estimates not reproduced (RLS -176.5%) |
-| E30 | Thm 1(a) WCL Validation | COMPLETE | 13,500 | Corrected WCL density formula: 27 cells, max |z| = 2.86, median rel. err. 1.4% |
-| E31 | Listing × Phase-2b Full Factorial | SEALED (formal) | 28,152 | Full family × listing × size × depth × seed factorial; independently verified; family-level inference supportive only |
-| E32 | Telemetry Panel (time-to-first-valid / time-to-best) | COMPLETE | verified | Event-level timing telemetry; `release/e32_telemetry_independent_verification_receipt.json` |
-| E33 | Real-Scale Panel | COMPLETE | verified | Large-circuit scale layer; `release/e33_real_scale_independent_verification_receipt.json` |
-| E34 | MQT Bench Cross-Abstraction | COMPLETE | verified | External MQT Bench alignment across abstraction levels; `release/e34_mqt_cross_abstraction_independent_verification_receipt.json` |
-| E35 | Benchpress-Style Stress | COMPLETE | verified | Pre-frozen scale tiers with timeout/memory caps and ITT failure accounting; `release/e35_benchpress_stress_independent_verification_receipt.json` |
-| E36 | PyZX Third Artifact | COMPLETE | verified | Third executable external comparator (PyZX); `release/e36_pyzx_third_artifact_independent_verification_receipt.json` |
-| E37 | Energy/Cost Telemetry | COMPLETE | verified | Event-level energy/cost accounting; `release/e37_energy_cost_independent_verification_receipt.json` |
-| E43 | Certified Quartz v1 Rule Import | COMPLETE (S2) | pinned | Frozen rule library with symbolic proof hashes |
-| E44 | Certified Landscape Oracle | COMPLETE (S4) | 1,024 model rows | Exact finite oracle; all zero-tolerance checks pass |
-| E45 | Certified Escape Development Grid | BLOCKED (S5 resource gate) | 13,824 | 0/18 configs meet the ≤5% resource-eligibility gate (observed 63.28%); boundary recorded, not a negative result |
-| E45-v14 | Certified Escape Screening | SCREENING COMPLETE; SELECTED DEVELOPMENT COMPLETE WITH RESOURCE BOUNDARY | 13,824 + 768 | 18/18 configs meet the ≤5% guided resource gate; selected `h3_b64_s200k`; the selected full panel has 93 complete exact certificates and 35 resource-truncated cells |
-| E45-v14 exact development | Selected-configuration finite-horizon exact engine | COMPLETE WITH RESOURCE BOUNDARY | 768 rows / 128 certificates | 93 complete exact finite-horizon certificates and 35 explicit resource-truncated cells; no complete 128-source exact-landscape claim |
-| E38 | Rewrite Exposure Oracle | COMPLETE | 1,024 model rows | Exact finite oracle and certificate contract: all zero-tolerance checks pass |
-| E39 | Rewrite Exposure Development Grid | DEVELOPMENT-ONLY | 2,346 | Six bounded configurations; frozen selector `b32_c256` |
-| E40 | Prospective Rewrite Exposure | EXTERNAL BOUNDARY | 168 attempts / 0 eligible | No eligible MQT input under the frozen pure-unitary panel; efficacy not estimable |
-| E41 | Rewrite Exposure Scale | RESOURCE-BOUND | 48 arm rows | 12 successful cells and 4 declared resource/error cells; scale evidence only |
-| EHW | Noise-Model Validation (fake backends) | COMPLETE | 288 | Noise-model only, NOT real hardware; BV 46.15% logical -> 0% physical L1 |
-
-**Historical canonical evidence total**: 96,205 rows across 35 canonical datasets. The release manifest lists 37 entries / 96,289 rows when the two superseded provenance entries are included. v12 and v14 evidence are separately bounded packages and are not folded into those historical totals.
-
----
-
-## Statistical Protocol
-
-1. **Multiple Comparison Correction**: Benjamini-Hochberg FDR control (q=0.05)
-2. **Effect Size Reporting**: Cliff's delta + Hedges' g (small-sample-corrected Cohen's d) + Glass's Delta; Cliff's delta is the primary metric for near-zero-variance comparisons where parametric effect sizes are undefined
-3. **Power Analysis**: Target beta > 0.80; underpowered experiments labeled exploratory
-4. **Bootstrap CI**: 10,000 resamples with percentile method
-5. **Fidelity Distribution**: Full distribution reported (min, 25%, median, 75%, max)
-6. **Threshold Sensitivity**: Results reported at theta in {1%, 5%, 10%, 20%}
-
----
-
-## Known Limitations
-
-> Full details in `docs/manuscript/manuscript.md` Section 7.5 (20 items).
-
-Key limitations:
-- Trichotomy is empirical observation on 15 pre-selected families, not universal law
-- Held-out generalization: the original heuristic ceiling-aware model failed (MAE=0.2775, Pearson=NaN); the repaired hybrid model (mechanism gate + random forest) generalizes strongly per-circuit (LOFO MAE 0.0172 [0.0129, 0.0218], pooled r=0.977; gate selected post hoc) but family-mean prediction remains underpowered at n=15 folds (r=0.059; wave-6 20-family check: r=0.780 pure-RF / 0.887 gated, with a RepetitionCode fold failure MAE 0.303 / r=-0.826 as the generalization boundary)
-- Phase-2b v2 full-scale validation complete (2,427 rows; BV/IQP/Structured/RandomClifford exceed 30% mean reduction; depth grid closed to the full factorial, 56/56 combos, wave 6); residual limitation: no parity-gadget phase-polynomial templates (QAOA/VQE/HardwareEfficient remain 0%)
-- E18 Clifford+T results are survivorship-biased (44.4% failure rate)
-- WCL cross-family validation (E19-extended, 960 rows): 7 of 16 families show WCL advantage > 0 (BV +30.8pp, RandomClifford +22.3pp, Structured +12.9pp, UCCSD +10.7pp, IQP +7.2pp, Universal +6.8pp, Grover +3.7pp); the other 9 show no WCL benefit (including CNOT, saturated at 100% under both listings)
-- Gate-shuffler control (E22) complete -- counterintuitive: shuffled circuits yield higher greedy Phase-1 reduction than original (10.3% vs 6.3%)
-- E04 single-seed results failed E29 ten-seed replication (RLS -176.5%, SA -22.1%, GA -8.3%); E04 conclusions must be qualified as seed/config fragile
-- t|ket> RandomClifford correctness caveat: 14 of 30 SOTA outputs fail exact-unitary fidelity verification (see Appendix E)
-- Listing-sensitivity coverage complete (wave 6): 15/15 families, 6,720 rows, 168 combos; production compilers 0/126 sensitive, prototype 15/42 (6 sensitive families incl. UCCSD_inspired); qwalk_8 has 20/20 variants and all 80 rows use the documented structural-preservation route instead of exact 9-qubit Operator checks
-- Rerun reconciliation (wave 6): 11 experiments rerun under current code (E12-E21 plus E25) and reconciled; canonical retained for all; IQP commutation/hybrid reductions in canonical E14/E15/E16/E21 are systematically conservative under the strengthened commutation predicate (optimizer-capability enhancement, not a data error); E20 is bit-for-bit identical, while E18 diverges because current BasisTranslator coverage differs from the frozen generator snapshot (see `docs/review/wave6/reconciliation_disposition.md`)
-- E31 listing/Phase-2b interaction: the sealed formal panel closes the declared fixed-panel factorial (28,152 rows); its 15-family outer-cluster inference remains supportive only, and it does not alter historical canonical totals.
-- v12 rewrite-exposure results remain finite-panel claims: E38 validates the certificate on its declared oracle panel, E39 is development-only, E40 has no eligible efficacy inputs, and E41 records scale/resource behavior without sampled-fidelity substitution.
-
----
-
-## Quick Start
-
-### One-Command Reproduction
+Python 3.12 is required.
 
 ```bash
-# Verify data integrity (fast, no reruns)
-python scripts/reproduce_all.py --verify
-
-# Verify the bounded v12 certificate and readiness package
-python scripts/verify_v12_readiness_package.py
-
-# Full reproduction: tests, all experiments, figures, and verification
-python scripts/reproduce_all.py --all
-```
-
-### Manual Setup
-
-```bash
-# Setup environment
 conda env create -f environment.yml
 conda activate q-research
-
-# Or use pip
-pip install -r requirements.txt
-
-# Run tests
 python -m pytest tests/ -q
-
-# Run E1 (example)
-python experiments/e01_phase_transition/run.py
-
-# Generate figures
-python analysis/generate_figures.py
 ```
 
-### Docker
+Verify the frozen data and current v14 evidence without rerunning the full
+experiment suite:
 
 ```bash
-docker build -t q-research .
-docker run q-research
+python scripts/reproduce_all.py --verify
+python scripts/verify_e45_development_grid.py --output-root data/v14/e45_development_grid
+python scripts/verify_e45_exact_development.py --output-root data/v14/e45_full_development
+python scripts/verify_v14_idastar_escape.py --output-root data/v14/e45_idastar_escape
+python scripts/verify_v14_readiness_verdict.py
 ```
 
----
+Regenerate the overview figure:
 
-## License
+```bash
+python scripts/generate_showcase_figure.py
+```
 
-MIT License. See `LICENSE` for details.
+## Repository layout
 
-## Contact
+| Path | Purpose |
+|---|---|
+| `src/` | Reusable circuit and optimization code |
+| `experiments/` | Versioned experiment entrypoints |
+| `data/` | Canonical, sealed, and bounded evidence packages |
+| `analysis/` | Statistical analysis and research figures |
+| `scripts/` | Reproduction, verification, and release checks |
+| `tests/` | Unit, integration, schema, and evidence tests |
+| `docs/` | Current documentation, theory, results, and audit records |
+| `release/` | Hash manifests, receipts, restore capsules, and verdicts |
 
-**Data Integrity**: See `src/provenance.py` for the data provenance tracking implementation.  
-**Reproducibility**: See `docs/reproducibility.md` for full reproducibility documentation.  
-**Release Manifest**: `release/release_manifest.json` contains SHA-256 checksums for all datasets.
+Start with the [project status](docs/PROJECT_STATUS.md),
+[experiment history](docs/EXPERIMENT_HISTORY.md),
+[documentation map](docs/README.md), and [data guide](data/README.md).
+
+## Reproducibility rules
+
+- Canonical data are controlled by `data/DATA_CANONICAL.md` and
+  `release/release_manifest.json`.
+- Sealed historical evidence is never rewritten to improve a later result.
+- Resource and semantic failures remain visible in receipts.
+- A verifier passing supports only the gate that verifier checks.
+- Generated summaries and figures can be rebuilt from recorded evidence.
+
+See [docs/reproducibility.md](docs/reproducibility.md) for the complete protocol.
+
+## License and citation
+
+The code is released under the [MIT License](LICENSE). Citation metadata are
+available in [CITATION.cff](CITATION.cff).

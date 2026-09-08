@@ -118,7 +118,7 @@ Created:
 - `docs/review/wave1/compiler_baseline.md` (this file)
 
 Not touched (per scope): `docs/manuscript/manuscript.md`, release manifest,
-`docs/manuscript/sections/sota_comparison_tables.md` (superseded by the new fragment —
+The former `docs/manuscript/sections/sota_comparison_tables.md` fragment (now retained only in Git history —
 flagged for the integration worker).
 
 ## 3. Verification performed
@@ -139,7 +139,7 @@ flagged for the integration worker).
 ## 4. Remaining gaps / handoffs
 
 1. **Cirq numbers changed materially** after the pipeline fix (protocol-conformant).
-   The older fragment `sections/sota_comparison_tables.md` and any manuscript text
+   The older fragment (retained in Git history) and any manuscript text
    citing the 2026-07-18 Cirq values (e.g. RandomClifford +47.4, GHZ −18.1) are stale;
    integration worker should reconcile against Table S1 of the new fragment.
 2. **Prototype full-scale v6 run** still missing (smoke only); prototype column in

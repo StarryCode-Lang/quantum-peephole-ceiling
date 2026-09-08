@@ -1,6 +1,6 @@
 # Wave-6 Report: Phase-2b cross-product grid completion (depth_fill2)
 
-> **Task**: Phase-2b 交叉积补全（wave5 finalize.md §5 第 7 条缺口）
+> **Task**: Phase-2b 交叉积补全（历史 wave-5 收尾阶段识别的第 7 条缺口）
 > **Date**: 2026-07-21
 > **Status**: COMPLETE — 无剩余缺口
 > **Files produced**:

@@ -1,38 +1,41 @@
-# Documentation Map
+# Documentation
 
-This directory separates current project guidance from dated research history.
-Use the current-facing documents below for the active implementation and
-evidence boundaries. Dated review files, manuscript text, and `archive/`
-directories remain historical records and are not silently rewritten.
+This directory separates current project guidance from immutable evidence and
+historical research records.
 
-## Current entry points
+## Start here
 
-| Purpose | Document |
+| Question | Document |
 |---|---|
-| Project overview and release boundaries | [`../README.md`](../README.md) |
-| Reproduction and verification commands | [`reproducibility.md`](reproducibility.md) |
-| Dataset schemas and provenance | [`data_dictionary.md`](data_dictionary.md) |
-| Experiment design and protocol history | [`results/experimental_design.md`](results/experimental_design.md) |
-| Current aggregate results and claim limits | [`results/analysis_summary.md`](results/analysis_summary.md) |
-| Theoretical framework | [`theory/framework.md`](theory/framework.md) |
-| v12 rewrite-exposure theory draft | [`theory/v12_rewrite_exposure_theory.md`](theory/v12_rewrite_exposure_theory.md) |
-| v12 execution state and boundaries | [`review/v12_execution_state.json`](review/v12_execution_state.json) |
-| v12 requirement-to-evidence ledger | [`../data/v12/v12_requirement_to_evidence_ledger.json`](../data/v12/v12_requirement_to_evidence_ledger.json) |
-| v12 readiness disposition | [`../release/prepaper_v12_readiness_verdict.json`](../release/prepaper_v12_readiness_verdict.json) |
+| What is complete, improved, or still open? | [`PROJECT_STATUS.md`](PROJECT_STATUS.md) |
+| How did the experiments evolve? | [`EXPERIMENT_HISTORY.md`](EXPERIMENT_HISTORY.md) |
+| How can the results be reproduced? | [`reproducibility.md`](reproducibility.md) |
+| Which data are canonical or derived? | [`../data/README.md`](../data/README.md) |
+| What are the data fields? | [`data_dictionary.md`](data_dictionary.md) |
+| What was the experimental design? | [`results/experimental_design.md`](results/experimental_design.md) |
+| What are the aggregate findings? | [`results/analysis_summary.md`](results/analysis_summary.md) |
+| What is the theoretical framework? | [`theory/framework.md`](theory/framework.md) |
 
-## Evidence conventions
+## Directory roles
 
-- Historical canonical totals are controlled by `data/DATA_CANONICAL.md` and
-  `release/release_manifest.json`.
-- v12 is a separately bounded evidence package. It does not silently replace
-  E1--E37 data or become manuscript evidence merely because its verifier passes.
-- `PASS`, `EXTERNAL_BOUNDARY`, `NOT_ESTIMABLE_EXTERNAL_BOUNDARY`, and
-  `NOT_READY_FOR_PAPER` are distinct dispositions and must be preserved.
-- The active manuscript is intentionally unchanged while the v12 E40 efficacy
-  estimand is not estimable.
+- `analysis/` contains issue-specific analyses that remain useful for
+  interpreting results.
+- `results/` contains experiment design and result summaries.
+- `theory/` contains definitions, proofs, scope notes, and proof audits.
+- `review/` contains hash-bound audit records plus the active v12-v14 execution
+  state. Dated files are evidence records, not the recommended reading order.
+- `verification/` contains independent and cold-start verification protocols.
+- `references/` contains the literature record and search ledger.
+- `manuscript/` is retained as research material but is outside the current
+  implementation and repository-cleanup scope.
 
-## Historical material
+## Evidence boundaries
 
-`docs/review/wave*/`, `docs/**/archive/`, dated review notes, and the active
-manuscript's historical sections are retained for provenance. Their dates and
-claims should not be rewritten to make them appear to be current v12 results.
+Historical canonical totals are controlled by `data/DATA_CANONICAL.md` and
+`release/release_manifest.json`. E31-E37 and v12-v14 are separately bounded
+packages. Status labels such as `PASS`, `RESOURCE_BOUNDED`, `EXTERNAL`, and
+`NOT_READY_FOR_PAPER` are distinct and must remain distinct.
+
+Older process notes removed from the live documentation remain recoverable
+from the frozen restore capsule and Git history. Their useful conclusions are
+summarized in [`EXPERIMENT_HISTORY.md`](EXPERIMENT_HISTORY.md).

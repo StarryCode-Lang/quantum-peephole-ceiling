@@ -7,12 +7,17 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SMOKE = ROOT / "data" / "v14" / "e45_idastar_escape_smoke"
+FULL_PANEL = ROOT / "data" / "v14" / "e45_idastar_escape"
 
 
-def test_idastar_escape_smoke_package_verifies():
+def test_idastar_escape_checked_in_package_verifies():
     completed = subprocess.run(
-        [sys.executable, "scripts/verify_v14_idastar_escape.py", "--output-root", str(SMOKE)],
+        [
+            sys.executable,
+            "scripts/verify_v14_idastar_escape.py",
+            "--output-root",
+            str(FULL_PANEL),
+        ],
         cwd=ROOT,
         capture_output=True,
         text=True,
