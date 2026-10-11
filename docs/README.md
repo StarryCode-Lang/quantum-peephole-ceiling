@@ -37,5 +37,8 @@ packages. Status labels such as `PASS`, `RESOURCE_BOUNDED`, `EXTERNAL`, and
 `NOT_READY_FOR_PAPER` are distinct and must remain distinct.
 
 Older process notes removed from the live documentation remain recoverable
-from the frozen restore capsule and Git history. Their useful conclusions are
-summarized in [`EXPERIMENT_HISTORY.md`](EXPERIMENT_HISTORY.md).
+from Git history; the pre-paper restore capsules were retired on 2026-10-11
+as unpinned, git-redundant bulk (see
+[`review/v15_cleanup_2026-10-11.md`](review/v15_cleanup_2026-10-11.md)).
+Their useful conclusions are summarized in
+[`EXPERIMENT_HISTORY.md`](EXPERIMENT_HISTORY.md).

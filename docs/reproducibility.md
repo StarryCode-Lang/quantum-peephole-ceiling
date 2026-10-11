@@ -159,7 +159,9 @@ python -m piptools compile --generate-hashes --output-file=requirements-lock.txt
   verifier alone.
 - Local disposable state is not release evidence: Python caches, virtual
   environments, external baseline source checkouts, generated build trees,
-  timestamped logs, and test reports are excluded from the v12 restore capsule.
+  timestamped logs, and test reports are excluded from release packages. The
+  pre-paper restore capsules were retired on 2026-10-11; the files they
+  snapshotted remain recoverable from Git history.
 
 ## Figure regeneration
 

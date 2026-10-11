@@ -109,7 +109,7 @@ python scripts/generate_showcase_figure.py
 | `scripts/` | Reproduction, verification, and release checks |
 | `tests/` | Unit, integration, schema, and evidence tests |
 | `docs/` | Current documentation, theory, results, and audit records |
-| `release/` | Hash manifests, receipts, restore capsules, and verdicts |
+| `release/` | Hash manifests, receipts, and readiness verdicts |
 
 Start with the [project status](docs/PROJECT_STATUS.md),
 [experiment history](docs/EXPERIMENT_HISTORY.md),

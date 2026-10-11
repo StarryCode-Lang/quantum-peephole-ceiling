@@ -102,4 +102,5 @@ deterministic runner regenerates the complete witness set on demand.
 Use `docs/PROJECT_STATUS.md` for the current disposition,
 `data/DATA_CANONICAL.md` for canonical-data policy, and machine-readable
 receipts under `release/` and `data/v12`-`data/v15` for exact claims. Removed
-process notes remain available in the frozen restore capsule and Git history.
+process notes remain available in Git history; the pre-paper restore capsules
+were retired on 2026-10-11 as unpinned, git-redundant bulk.

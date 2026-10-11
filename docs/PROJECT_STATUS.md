@@ -24,6 +24,7 @@ result remains the baseline that makes the improvement measurable.
 | Historical E1-E37 evidence | Multiple audit waves and receipts | Canonical and sealed packages remain hash-bound; the 592-metric ledger keeps PASS/PARTIAL/FAIL/EXTERNAL/NA separate | **Preserved; no rerun justified by v14** |
 | E45 classification bookkeeping | v14 left 35/128 compact cells truncated with no derived claims | v15 integration: 128/128 classified; 63 exact escapes with exact minimum depth; 65 exact local optima; 94 exact best costs; 34 witness-bounded extras; 0 replay failures | **Closed for classification (v15)** |
 | Window-local certified landscape | Did not exist | E46: 76,236 window searches over the fixed panel, 0 truncations, 39,474 certified window escapes, first-escape witnesses stored | **New v15 evidence layer** |
+| Repository footprint | Restore capsules 173 MB, vendored tool checkout 365 MB, cache and garbage objects | Capsules retired (unpinned, git-redundant), checkout removed, caches purged; all pinned evidence untouched | **Closed (v15 cleanup; see `docs/review/v15_cleanup_2026-10-11.md`)** |
 | Independent cold start | Protocol exists; full independent extraction was not completed | Sparse package verification is recorded; clean non-author execution remains pending | **External/open** |
 | Real QPU validation | Protocol prepared without credentials or device run | No real-device result is claimed | **External/open** |
 | Enumerated exact landscape quantities | Required all 128 selected cells to finish compact enumeration | Classification is complete; 34 long-listing escape cells keep witness-bounded best-cost and barrier values instead of enumerated ones | **Open (bounded form)** |
@@ -62,6 +63,7 @@ local engineering readiness.
 - v15 landscape integration: `data/v15/e45_landscape_integration/receipt.json`
 - v15 E46 window landscape: `data/v15/e46_window_landscape/receipt.json`
 - v15 verdict: `release/v15_readiness_verdict.json`
+- v15 cleanup record: `docs/review/v15_cleanup_2026-10-11.md`
 - detailed execution record: `docs/review/v14_execution_status_2026-09-07.md`
 
 The repository remains `NOT_READY_FOR_PAPER` under the current v15 verdict.
