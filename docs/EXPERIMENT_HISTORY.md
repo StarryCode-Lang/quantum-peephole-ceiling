@@ -61,6 +61,29 @@ deadline propagation, and exact escape search. The screening gate moved from
 exact certificates and 35 resource-truncated cells. The complementary IDA*
 panel classified all 128 inputs with no resource or replay failures.
 
+## v15: classification-complete integration and window-local profiles
+
+v15 did not rerun any frozen search. The compact exact panel and the IDA*
+panel were integrated into one classification-complete statement: all 128
+fixed-panel sources are classified (63 exact escapes with exact minimum
+escape depth, 65 exact local optima). Sixty-four compact-complete local
+optima and 29 escapes keep enumerated certificates; one truncated local
+optimum inherits a complete derived certificate from the IDA* proof; the 34
+truncated escape cells keep exact escape depths with witness-bounded
+best-cost and barrier values. Every derived claim is fail-closed: package
+identity checks, root-state hash rebuilds, and witness replays all pass.
+
+E46 added the first position-resolved certified landscape layer: for every
+fixed-panel root listing, contiguous windows of 8 and 16 gates were searched
+exactly at horizons 2 and 3 with the E45 engine and rule scope. The panel
+ran 76,236 window searches with zero resource truncations and found 39,474
+certified window escapes. On the 123 greedy fixed-point roots, 37.2 percent
+of 16-gate windows (179 of 481) hide a certified escape of depth at least
+two, and depth-one escapes occur exclusively on the five raw-listing roots
+that exceed the baseline gate budget — a built-in correctness check. Only
+the first escape certificate per (source, width, horizon) is stored; the
+deterministic runner regenerates the complete witness set on demand.
+
 ## Superseded interpretations
 
 - The original phase-transition hypothesis is refuted by the data.
@@ -68,6 +91,9 @@ panel classified all 128 inputs with no resource or replay failures.
 - The early E31 smoke pilot is historical support; the sealed formal panel is
   the controlling E31 evidence.
 - v13's resource failure remains the baseline; v14 does not rewrite it.
+- v14's unclassified resource-truncated cells remain the enumerated-certificate
+  boundary; v15 replaces the unclassified outcomes with derived and bounded
+  evidence without rewriting the v14 receipts.
 - Passing engineering verifiers does not establish paper readiness or external
   reproduction.
 
@@ -75,5 +101,5 @@ panel classified all 128 inputs with no resource or replay failures.
 
 Use `docs/PROJECT_STATUS.md` for the current disposition,
 `data/DATA_CANONICAL.md` for canonical-data policy, and machine-readable
-receipts under `release/` and `data/v12`-`data/v14` for exact claims. Removed
+receipts under `release/` and `data/v12`-`data/v15` for exact claims. Removed
 process notes remain available in the frozen restore capsule and Git history.

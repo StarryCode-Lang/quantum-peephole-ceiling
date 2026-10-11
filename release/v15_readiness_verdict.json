@@ -1,0 +1,105 @@
+{
+  "as_of": "2026-10-11",
+  "blocking_evidence": {
+    "landscape_integration": {
+      "bounded_best_cost_count": 34,
+      "certificate_tiers": {
+        "CLASSIFICATION_EXACT_EXTRAS_BOUNDED": 34,
+        "COMPACT_COMPLETE_DERIVED": 1,
+        "COMPACT_COMPLETE_ENUMERATED": 93
+      },
+      "classified_count": 128,
+      "escape_count": 63,
+      "exact_best_cost_count": 94,
+      "local_optimum_count": 65,
+      "receipt": "data/v15/e45_landscape_integration/receipt.json",
+      "receipt_sha256": "5a2d67d48fc9f8395b2af46b5f9aca4af05e029a7563423cc84ac7c0be55f5bd",
+      "source_count": 128,
+      "unclassified_count": 0
+    },
+    "v14_readiness_verdict": "release/v14_readiness_verdict.json",
+    "window_landscape": {
+      "by_config": {
+        "w16_h2": {
+          "escape_count": 10477,
+          "escape_rate": 0.5586243668355105,
+          "inputs_with_escape": 59,
+          "local_optimum_count": 8278,
+          "window_count": 18755
+        },
+        "w16_h3": {
+          "escape_count": 10692,
+          "escape_rate": 0.5700879765395894,
+          "inputs_with_escape": 62,
+          "local_optimum_count": 8063,
+          "window_count": 18755
+        },
+        "w8_h2": {
+          "escape_count": 9071,
+          "escape_rate": 0.4684707948148531,
+          "inputs_with_escape": 59,
+          "local_optimum_count": 10292,
+          "window_count": 19363
+        },
+        "w8_h3": {
+          "escape_count": 9234,
+          "escape_rate": 0.4768889118421732,
+          "inputs_with_escape": 62,
+          "local_optimum_count": 10129,
+          "window_count": 19363
+        }
+      },
+      "escape_certificate_count": 242,
+      "escape_row_count": 39474,
+      "receipt": "data/v15/e46_window_landscape/receipt.json",
+      "receipt_sha256": "865d4babe29d305bafc92c6ea781cbed500525ce91e35141b8204bd7ce433793",
+      "resource_truncated_windows": 0,
+      "source_count": 128,
+      "status": "PANEL_COMPLETE",
+      "window_rows": 76236
+    }
+  },
+  "claim_boundary": "v15 closes the E45 classification bookkeeping: every one of the 128 fixed-panel sources now carries either a complete compact certificate (enumerated or IDA*-derived) or an exact classification with witness-bounded landscape extras. The compact landscape quantities for 34 long-listing escape cells remain bounded rather than enumerated, the window profiles are window-local by construction, and external cold-start, real-QPU, title, and release gates remain open.",
+  "derivation": {
+    "evidence": [
+      {
+        "path": "data/v15/e45_landscape_integration/protocol.json",
+        "predicate": "verify_v15_landscape_integration.py exits 0",
+        "sha256": "16fd15600b59331f00498921acecc1b67b055df173d1e44cec1bc933a0038970"
+      },
+      {
+        "path": "data/v15/e45_landscape_integration/classification_complete.csv",
+        "predicate": "128 rows, tiers 93/1/34, zero replay failures",
+        "sha256": "786b8a0c4fbeb46f7813fcad5874c353402dbc565e8f07ee5d4229ade09826fc"
+      },
+      {
+        "path": "data/v15/e45_landscape_integration/derivations.jsonl",
+        "predicate": "per-source derivation log",
+        "sha256": "fe23cc82cb20aa35edf1a25c1fe15d3bd39e26aa7a68e3b5af86cce226e4be7d"
+      }
+    ],
+    "script": "scripts/generate_v15_readiness_verdict.py",
+    "state_upgrade_predicate": "python scripts/verify_v15_readiness_verdict.py exits 0; the v14 verdict remains hash-unchanged; no frozen v14 package is modified"
+  },
+  "engineering_verification": {
+    "v14_readiness_verdict_unchanged_sha256": "4f81c4af898f39c15153a054b0ee34cf3db70b39c3d1d0e73ad0224bbd1bca6a",
+    "v15_landscape_integration_verifier": "PASS",
+    "witness_replay_failures": 0
+  },
+  "paper_status": "Do not claim complete enumerated landscape quantities for the 34 bounded cells, whole-listing meaning for window-local profiles, or paper readiness. The v14 resource boundary remains the enumerated-certificate boundary; v15 replaces the unclassified outcome with derived and bounded evidence.",
+  "project": "Q-research v15 certified landscape integration and window profiles",
+  "schema_version": "v15-readiness-verdict-v1",
+  "scientific_gates": {
+    "C3_title_and_positioning": "USER_DECISION_PENDING",
+    "S0_to_S4": "INHERITED_WITH_BOUNDARIES",
+    "S5_E45_full_development": "COMPLETE_WITH_RESOURCE_BOUNDARY",
+    "S5_E45_v14_screening": "PASS_RESOURCE_GATE_WITH_BOUNDARIES",
+    "S6_E45_classification": "COMPLETE_128_OF_128",
+    "S6_E46_window_landscape": "PANEL_COMPLETE",
+    "S6_landscape_quantities": "EXACT_FOR_94_OF_128_WITNESS_BOUNDED_FOR_34",
+    "external_cold_start": "OPEN",
+    "real_qpu": "OPEN",
+    "release_authority": "OPEN"
+  },
+  "verdict": "NOT_READY_FOR_PAPER"
+}

@@ -29,6 +29,8 @@ hash-bound v11 evidence layers.
 | E35 Benchpress-derived stress | Independently verified 5-file bounded stress panel | `data/v11/e35_benchpress_stress/` |
 | E36 PyZX third artifact | Independently verified 3-input comparator panel | `data/v11/e36_pyzx_third_artifact/` |
 | E37 energy/cost telemetry | Independently verified 5 paired CPU-package measurements | `data/v11/e37_energy_cost_telemetry/` |
+| v15 E45 landscape integration | Classification-complete for 128/128 sources; 94 exact best costs; 34 witness-bounded | `data/v15/e45_landscape_integration/` |
+| v15 E46 window landscape | 76,236 certified window searches, 0 truncations; position-resolved profiles | `data/v15/e46_window_landscape/` |
 
 Canonical status is governed by `data/DATA_CANONICAL.md` and
 `release/release_manifest.json`. The E31–E37 extensions are not silently added

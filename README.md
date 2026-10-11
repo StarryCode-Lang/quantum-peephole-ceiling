@@ -12,12 +12,21 @@ verification scripts.
 
 ![v14 certified landscape overview](docs/assets/v14-overview.png)
 
-The current v14 result is a large engineering improvement over v13: all 18
-screening configurations pass the declared 5% resource threshold, compared
-with 0 of 18 in v13. The selected exact finite-horizon run certifies 93 of 128
-inputs and records the other 35 as resource-truncated. A complementary IDA*
-panel classifies all 128 inputs as 63 exact escapes and 65 exact local optima,
-with no resource boundary and no replay failure.
+The v14 result was a large engineering improvement over v13: all 18 screening
+configurations pass the declared 5% resource threshold, compared with 0 of 18
+in v13. Its selected exact finite-horizon run certified 93 of 128 inputs and
+left 35 resource-truncated, while a complementary IDA* panel classified all
+128 inputs as 63 exact escapes and 65 exact local optima.
+
+The current v15 result closes the classification bookkeeping without rerunning
+any frozen search: all 128 sources now carry an exact classification, with 94
+exact best-cost quantities and 34 witness-bounded landscape extras. The new
+E46 window-landscape panel adds a position-resolved certified profile over the
+same fixed panel: 76,236 window searches with zero truncations. On greedy
+fixed-point listings, 37.2 percent of 16-gate windows hide a certified escape
+of depth at least two — an exchange-then-reduce path that the whole-listing
+greedy optimizer cannot see (depth-one escapes occur only on the five
+raw-listing roots that exceed the baseline gate budget).
 
 ## What the project does
 
@@ -37,8 +46,9 @@ The project has three connected research layers:
   expose different local action spaces for the same circuits.
 - **Optimizer boundaries:** prototype and production compilers are compared
   across circuit families, rewrite models, and resource budgets.
-- **Certified search:** v12-v14 add frozen rule libraries, exact or explicitly
-  incomplete search, certificate replay, and fail-closed readiness verdicts.
+- **Certified search:** v12-v15 add frozen rule libraries, exact or explicitly
+  incomplete search, certificate replay, classification-complete landscape
+  integration, and fail-closed readiness verdicts.
 
 ## Evidence snapshot
 
@@ -48,13 +58,15 @@ The project has three connected research layers:
 | E31-E37 extensions | Sealed factorial, telemetry, scale, external and cost panels | Reported separately from canonical totals |
 | v13 E45 | 0/18 screening configurations eligible | Closed as a recorded resource failure |
 | v14 E45 screening | 18/18 eligible; 13,824 rows; 0 semantic failures | Screening optimization complete |
-| v14 exact finite horizon | 93 exact; 35 resource-truncated | Full exact landscape remains open |
+| v14 exact finite horizon | 93 exact; 35 resource-truncated | Enumerated quantities remain bounded for 35 cells |
 | v14 IDA* escape depth | 63 exact escapes; 65 exact local optima | Complete for the declared 128-input panel |
+| v15 landscape integration | 128/128 classified; 94 exact best costs; 34 witness-bounded | Zero unclassified cells; zero replay failures |
+| v15 E46 window landscape | 76,236 windows; 39,474 certified window escapes; 0 truncations | Window-local by construction; first-escape witnesses stored |
 
-The repository is engineering-verified but the v14 scientific verdict remains
-`NOT_READY_FOR_PAPER` because a complete exact landscape and external execution
-gates have not been established. Paper writing and GitHub Actions are outside
-the current project scope.
+The repository is engineering-verified but the v15 scientific verdict remains
+`NOT_READY_FOR_PAPER` because enumerated landscape quantities for 34 long-listing
+cells and external execution gates have not been established. Paper writing and
+GitHub Actions are outside the current project scope.
 
 ## Quick start
 
@@ -66,7 +78,7 @@ conda activate q-research
 python -m pytest tests/ -q
 ```
 
-Verify the frozen data and current v14 evidence without rerunning the full
+Verify the frozen data and current v14/v15 evidence without rerunning the full
 experiment suite:
 
 ```bash
@@ -75,6 +87,9 @@ python scripts/verify_e45_development_grid.py --output-root data/v14/e45_develop
 python scripts/verify_e45_exact_development.py --output-root data/v14/e45_full_development
 python scripts/verify_v14_idastar_escape.py --output-root data/v14/e45_idastar_escape
 python scripts/verify_v14_readiness_verdict.py
+python scripts/verify_v15_landscape_integration.py
+python scripts/verify_e46_window_landscape.py
+python scripts/verify_v15_readiness_verdict.py
 ```
 
 Regenerate the overview figure:

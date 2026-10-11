@@ -311,3 +311,40 @@ Four records were added to the verified comparison corpus:
 The Q-PreSyn, cut-and-meld, and GUOQ arXiv records were re-opened; each remained
 at v1 on the search date. This targeted refresh found direct novelty constraints,
 not evidence of absence. No “first”, universal, or priority claim is licensed.
+
+---
+
+## 11. v15 landscape scan — 2026-10-11
+
+A targeted scan of 2025–2026 quantum-circuit-optimization literature checked
+whether the project's three claim classes have direct prior art. Findings:
+
+| Claim class | Nearest records found | Direct prior art |
+|---|---|---|
+| Listing-representation sensitivity of rewrite visibility | Maciejewski et al., PRApplied 22, 044074 (2024) (gate-order effects, algorithmic); To et al., pass-order study, arXiv:2609.29406 (QCE 2026) (pass order, not representation) | None found |
+| Per-input exact local-optima certification for greedy peephole optimization | Fischbach et al., arXiv:2503.10983 (OLA 2025) (exhaustive IDDFS over ZX rewrites, no certificates or per-input classification); Arora et al., arXiv:2502.19526 (QCE 2025) and POPQC, SPAA 2025 (oracle-relative local optimality, certificate-free) | None found |
+| Certified rewrite landscape with replayable per-step certificates | QALM, arXiv:2606.16221 (2026) (escapes local minima over Quartz rules, does not certify them); Quasar (PLDI 2026) (equality saturation) | None found as a package |
+
+Novelty constraints to respect in any positioning text:
+
+1. QALM (Wagner, Xu, Liu, Jia, Acar; CMU, June 2026) works in the same
+   problem space — greedy rule-based optimizers trapped in local minima over
+   Quartz-derived rule sets — and must be cited and differentiated: it
+   escapes minima heuristically and certifies neither escape depth nor
+   representation dependence.
+2. The Acar-group "local optimality" line (arXiv:2502.19526, POPQC) uses the
+   phrase "local optimality" for an oracle-relative algorithm output
+   guarantee; the project's exact, certificate-backed per-input classification
+   is a different object and the overlap in vocabulary must be handled
+   explicitly.
+3. Equality saturation (Quasar, PLDI 2026) is the natural "why certify?"
+   counterpoint: certification answers a different question (what a bounded,
+   faithful optimizer can and cannot see) than closure-based global search.
+
+Toolchain context recorded for protocol freshness: Qiskit 2.5.0 (July 2026)
+added a multithreaded two-qubit peephole pass; mqt-core 4.0.0 (September 2026)
+removed its ZX library and CircuitOptimizer; Quartz has been dormant since
+v0.3.2 (December 2024).
+
+This scan is a targeted v15 refresh, not a final systematic review or
+novelty conclusion.

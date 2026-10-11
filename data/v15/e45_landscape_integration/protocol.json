@@ -1,0 +1,31 @@
+{
+  "derivation_rules": {
+    "escape_bounded": "For truncated compact cells the certified witness bounds the extras from above: best_cost <= witness endpoint cost and minimum barrier <= witness peak cost.  The witness endpoint must improve on the baseline.",
+    "escape_enumerated": "When the compact ball enumeration completed, best_cost and barrier_height are exact and the IDA* minimum escape depth must agree with the compact escape depth.",
+    "local_optimum": "IDA* proves no improving state exists in the horizon ball.  The initial state is in the ball, so best_cost = baseline_cost exactly.  No improving path exists, so the barrier quantity is vacuous.",
+    "witness_replay": "every replayed witness must reapply through replay_actions against the hash-checked root state"
+  },
+  "experiment_id": "E45_LANDSCAPE_INTEGRATION_V15",
+  "identity_checks": [
+    "both packages cover exactly the same 128 source ids",
+    "initial_state_sha256 agreement per source (root state also rebuilt and hash-checked)",
+    "baseline_cost agreement per source",
+    "compact EXACT_ESCAPE implies matching IDA* EXACT_ESCAPE with equal minimum escape depth",
+    "a truncated compact cell with a recorded witness cannot be a local optimum"
+  ],
+  "inputs": {
+    "compact_certificates_sha256": "8a6ae277772533270a69795b20a680b6c660ca78e5eb2a2cc91357ade4c8e48b",
+    "compact_grid_results_sha256": "0c1bada82fccba0f9203c7e414b19c3e6a5372f8488f56a300d61a733b97aac8",
+    "compact_package": "data/v14/e45_full_development",
+    "compact_receipt_status": "DEVELOPMENT_COMPLETE_WITH_RESOURCE_BOUNDARY",
+    "idastar_certificates_sha256": "de8a829d6d52c011945408484c57abf65b66bc22bba9be3cfa4e6d80345d0516",
+    "idastar_package": "data/v14/e45_idastar_escape",
+    "idastar_receipt_status": "COMPLETE",
+    "rule_library_sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295",
+    "rule_scope": "e44_core_v1",
+    "screening_manifest_sha256": "0f4babe8cd8a2b07efd5ee826152775ae0bc290649a4f48bd39eb25a811b4e09"
+  },
+  "purpose": "Integrate the frozen v14 compact exact panel and the frozen v14 IDA* panel into one classification-complete statement for the same 128-source panel.  No search is rerun and no frozen package is modified.",
+  "resource_contracts": "none; this package consumes frozen evidence only",
+  "status": "DERIVATION_ONLY_NO_NEW_SEARCH"
+}
