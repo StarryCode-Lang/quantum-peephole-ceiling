@@ -671,7 +671,7 @@ def save_summary_csv(pass_df: pd.DataFrame,
 
     summary_df = pd.DataFrame(summary_rows)
     out_path = OUTPUT_DIR / "qiskit_pass_analysis_summary.csv"
-    summary_df.to_csv(out_path, index=False)
+    summary_df.to_csv(out_path, index=False, lineterminator="\n")
     print(f"  Saved summary: {out_path}")
 
 

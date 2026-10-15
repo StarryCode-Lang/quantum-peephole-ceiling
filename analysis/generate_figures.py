@@ -1161,7 +1161,7 @@ for i, (test_name, raw_p) in enumerate(pvalue_collection):
         'Effect_size_note': es.get('note'),
     })
 fdr_df = pd.DataFrame(fdr_results_rows)
-fdr_df.to_csv(OUTPUT_DIR / 'fdr_correction_results.csv', index=False)
+fdr_df.to_csv(OUTPUT_DIR / 'fdr_correction_results.csv', index=False, lineterminator='\n')
 print(f"\nFDR correction results (with effect sizes) saved to: {OUTPUT_DIR / 'fdr_correction_results.csv'}")
 
 # ============================================================
@@ -1645,7 +1645,7 @@ for i, opt_a in enumerate(e4_optimizers):
             'Hedges_g_CI95': f"[{hg_low:.4f}, {hg_high:.4f}]",
         })
 e4_effect_df = pd.DataFrame(e4_effect_size_rows)
-e4_effect_df.to_csv(OUTPUT_DIR / 'e4_effect_sizes.csv', index=False)
+e4_effect_df.to_csv(OUTPUT_DIR / 'e4_effect_sizes.csv', index=False, lineterminator='\n')
 print(f"E4 effect sizes saved to: {OUTPUT_DIR / 'e4_effect_sizes.csv'}")
 
 # Append FDR-corrected statistical tests summary to the CSV
@@ -1669,7 +1669,7 @@ for i, (test_name, raw_p) in enumerate(pvalue_collection):
     })
 fdr_summary_append = pd.DataFrame(fdr_summary_rows)
 full_summary_df = pd.concat([summary_df, fdr_summary_append], ignore_index=True)
-full_summary_df.to_csv(OUTPUT_DIR / 'statistical_summary.csv', index=False)
+full_summary_df.to_csv(OUTPUT_DIR / 'statistical_summary.csv', index=False, lineterminator='\n')
 
 print("\n" + "="*60)
 print("STATISTICAL SUMMARY")
