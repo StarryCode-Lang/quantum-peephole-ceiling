@@ -1,6 +1,6 @@
 # Manuscript Working Draft
 
-> **Current status (2026-08-07):** Audit-revision wave. Changes relative to the
+> **Current status (2026-09-08):** v14 evidence-integration wave. Changes relative to the
 > 2026-08-01 wave-6 sync: (a) experiment-ID normalization — the Phase-2b
 > full-scale experiment is **E26** throughout (formerly "E25" in this draft,
 > "E10p2b-v2"/"E26_phase2b_full_v8" in the data layer); **E25** now refers
@@ -20,8 +20,9 @@
 > reconciliation completed for all eleven experiments including E18/E20
 > (batch 4); consolidated disposition in
 > `docs/review/wave6/reconciliation_disposition.md`.
-> E31 is a non-canonical supporting pilot for the still-open WCL x Phase-2b
-> factorial and is reported separately from the release totals.
+> The sealed E31 formal factorial and independently verified E32–E37 panels are
+> reported separately from the historical canonical release totals; the earlier
+> E31 smoke pilot remains historical support only.
 
 > **Status note (2026-07-21, v8)**: This v8 draft integrates the wave-1 review outcomes into the v7 restructure. Changes relative to v7: (i) structured abstract; (ii) new §1.4 with falsifiable hypotheses H1–H5 and pre-registered decision rules; (iii) the trichotomy taxonomy is now stated identically in the abstract, §6.3, §7.1 and the E15/E20 tables (3 genuine + 5 prototype-limited + 2 practical-ceiling + 1 borderline); (iv) full-scale Phase-2b v2 results (E26, `data/v8/phase2b_full/`, 729 rows at integration; 735 after the wave-4 QuantumWalk n=8 fill) integrated as §6.4, replacing the fixture-scale caveat; (v) §6.6 rewritten around the repaired ceiling-aware model (mechanism features, LOFO); (vi) SOTA tables S1–S5 with the corrected Cirq pipeline numbers integrated as §6.5; (vii) full 17-row theory–experiment cross-validation scorecard in §6.7; (viii) E18 ITT analysis in §6.8; (ix) E22 shuffler control and E29 multi-seed rerun integrated; (x) 18 figure references wired to `analysis/figures/*.pdf`; all body tables numbered; (xi) statistical claims re-verified against the canonical FDR table; (xii) reference list repaired (two fabricated entries removed/replaced, four bibliographic corrections, three additions) and renumbered contiguously. The v7 draft is preserved as `manuscript.md.bak-20260721-003505`. Realized length: ~1,085 lines with 18 figure references and 22 numbered tables integrated. **Wave-3 revision (2026-07-21):** documentation-consistency sweep — (xiii) E22 registry family count corrected to 16; (xiv) §6.4 Wilcoxon p-values recomputed from raw per-instance pairs; (xv) §7.2 E22 statistics aligned with §6.2; (xvi) power-analysis disclosure added to §5.2 and per-cell design parameters to §6.1; (xvii) new evidence paragraphs: E29 per-seed sign consistency (§6.1.1), E19-extended cross-family WCL validation (§6.2), E14 per-family corroboration (§6.3), per-size BV bound table (Table 11b, §6.4), E24 Theorem-7 validation detail (§4.2), Cirq pipeline-correction provenance (§6.5), EHW protocol detail (§7.4); (xviii) cross-references to Appendices D, E, and F wired from the body text. **Wave-4 revision (2026-07-21):** (xix) §6.6 adopts the mechanism-gate + random-forest hybrid ceiling model (LOFO MAE 0.0172 [0.0129, 0.0218], pooled $r = 0.977$ [0.963, 0.987], $\rho = 0.853$, $R^2 = 0.954$; held-out CNOT fold MAE 0.745 $\to$ 0.000), with the post-hoc-selection caveat retained; (xx) the flagship listing-model claim is scoped to listing-based peephole optimizers after the production-compiler audit (DAG/moment IRs are listing-invariant by representation); (xxi) the Phase-2b grid now covers QuantumWalk $n = 8$ (E26: 735 rows; corpus total 82,721) and pooled Phase-2b bootstrap CIs are restated from the refreshed grid; (xxii) fig04 regenerated after an optimizer-label fix and now matches its caption. **Wave-5/6 revision (2026-07-21):** (xxiii) E26 Phase-2b grid closed to the full factorial — 2,427 rows, depth families 56/56 $(n, \mathrm{depth})$ combinations, zero fidelity failures (§6.4, Tables 4 and 10, abstract and limitations updated); (xxiv) corpus totals updated to 36 canonical datasets / 82,721 rows; (xxv) §6.6 adds the 20-family LOFO robustness note (pooled MAE 0.0188, $r = 0.967$; family-mean $r = 0.780$ pure-RF / 0.887 gated) and §7.5 records the RepetitionCode fold failure (MAE 0.303, $r = -0.826$); (xxvi) wave-6 rerun reconciliation (E12–E17, E19, E21) integrated as §7.5 item 20 — canonical retained for all eight rerun experiments, with a unified IQP sensitivity statement; (xxvii) production-compiler relisting coverage completed to 15/15 families (6,652 rows; 0/126 sensitive combinations), §7.6 item 5 updated.
 
@@ -33,11 +34,11 @@
 
 ## Abstract
 
-**Background.** The reachable action space of a local optimizer is a property of the (object, representation) pair, not of the object alone. Peephole optimization — local rewriting of bounded gate sequences — is a core pass in every quantum compiler, yet no prior systematic study has, to our knowledge, characterized when these passes succeed, why they fail, or how the circuit's data-structural representation constrains them.
+**Background.** The reachable action space of a local optimizer is a property of the (object, representation) pair, not of the object alone. Peephole optimization — local rewriting of bounded gate sequences — is a core pass in every quantum compiler. Existing compiler rewriting, phase-ordering, and circuit-synthesis methods provide important local mechanisms; this work adds a mechanism-level empirical study of when a fixed circuit data-structural representation changes the reachable local action space [49–51,56,57].
 
-**Methods.** We benchmark 6 optimizer types across 15 circuit families (96,289 rows, 37 canonical datasets, experiments E1–E30), prove listing-conditioned ceiling results, and validate theory against experiment including production compilers (Qiskit 2.4.1, Cirq 1.6.1, t|ket> 2.18.0) under a fair no-coupling-map protocol.
+**Methods.** We benchmark 6 optimizer types across 15 circuit families (96,289 canonical rows, 37 canonical datasets, experiments E1–E30), then add a sealed E31 listing × Phase-2b factorial, independently verified E32–E37 telemetry and external panels, and bounded v12/v13/v14 certificate packages. We prove listing-conditioned ceiling results and validate theory against production compilers (Qiskit 2.4.1, Cirq 1.6.1, t|ket> 2.18.0) under a fair no-coupling-map protocol.
 
-**Results.** We identify *listing-model sensitivity*: under layer-by-layer listing (LBL), the Phase-1 action space is provably empty for $n \geq 2$ (Theorem 1(b)) — exactly **0.0000%** gate reduction across **25,000** random circuits (E1); under wire-consecutive listing (WCL), the same circuits yield **7.83%** mean reduction (E19, 10,000 rows, fidelity = 1.0). Across 15 families a categorical trichotomy emerges: 100% reduction (CNOT chains), commutation/template-enabled reduction (oracle/Clifford circuits), and ~0% on the remainder — 3 families at genuine structural ceiling (QFT, GHZ, SurfaceCode; no tested compiler reduces them), 5 at prototype action-space ceiling where t|ket> achieves 6–64%, 2 at practical ceiling where every tested production compiler also fails (Adder, QuantumWalk), and 1 borderline (HaarRandom, ≤ 6.5 pp production gains). The lead result is that the prototype ceiling itself is not structural: the full-scale Phase-2b pipeline (inverse-cancellation closure plus conjugation templates) reaches the **provable $k+2$ gate optimum on every Bernstein–Vazirani instance** ($n = 3$–$10$, 80/80, mean reduction 69.2%, worst case 54.5%, exceeding the rigorous Theorem 9 bound by 3.1–4.2×), and achieves 92.0% on IQP, 51.6% on RandomClifford, and 40.2% on Structured brickwork — families that sat at or near 0% under Phase-1/Phase-2a. A ceiling-aware pipeline skips futile passes with bit-identical output (per-family speedups 1.6×–228× under prototype timing; 2.20× aggregate under symmetric timing); its hybrid predictive model — a mechanism-derived saturation gate over a random-forest regressor — generalizes strongly under leave-one-family-out validation (MAE 0.0172 vs 0.0963 predict-0 baseline; pooled $r = 0.977$) while family-mean prediction remains unreliable for unseen high-compression mechanisms — reported with its post-hoc-selection caveat and remaining limitations (§6.6).
+**Results.** We identify *listing-model sensitivity*: under layer-by-layer listing (LBL), the Phase-1 action space is provably empty for $n \geq 2$ (Theorem 1(b)) — exactly **0.0000%** gate reduction across **25,000** random circuits (E1); under wire-consecutive listing (WCL), the same circuits yield **7.83%** mean reduction (E19, 10,000 rows, fidelity = 1.0). Across 15 families a categorical trichotomy emerges: 100% reduction (CNOT chains), commutation/template-enabled reduction (oracle/Clifford circuits), and ~0% on the remainder — 3 families at genuine structural ceiling (QFT, GHZ, SurfaceCode; no tested compiler reduces them), 5 at prototype action-space ceiling where t|ket> achieves 6–64%, 2 at practical ceiling where every tested production compiler also fails (Adder, QuantumWalk), and 1 borderline (HaarRandom, ≤ 6.5 pp production gains). The lead result is that the prototype ceiling itself is not structural: the full-scale Phase-2b pipeline (inverse-cancellation closure plus conjugation templates) reaches the **provable $k+2$ gate optimum on every Bernstein–Vazirani instance** ($n = 3$–$10$, 80/80, mean reduction 69.2%, worst case 54.5%, exceeding the rigorous Theorem 9 bound by 3.1–4.2×), and achieves 92.0% on IQP, 51.6% on RandomClifford, and 40.2% on Structured brickwork — families that sat at or near 0% under Phase-1/Phase-2a. The sealed E31 factorial adds a 28,152-row, 15-family listing × rule-set × window × budget panel, while E32–E37 add fixed-scope timing, scale, external-comparator, stress, and CPU-package-energy evidence. Historical v13 E45 remains resource-gated at 63.28%; a v14 screening rerun of the same fixed panel brings all 18 configurations below the 5% resource threshold while retaining incomplete-search status and making no `EXACT_*` claim. The selected configuration was then evaluated with the compact exact finite-horizon engine on the full 128-source panel: 88 certificates completed exactly and 40 cells were explicitly resource-truncated, so a complete exact-landscape claim remains open. A ceiling-aware pipeline skips futile passes with bit-identical output (per-family speedups 1.6×–228× under prototype timing; 2.20× aggregate under symmetric timing); its hybrid predictive model — a mechanism-derived saturation gate over a random-forest regressor — generalizes strongly under leave-one-family-out validation (MAE 0.0172 vs 0.0963 predict-0 baseline; pooled $r = 0.977$) while family-mean prediction remains unreliable for unseen high-compression mechanisms — reported with its post-hoc-selection caveat and remaining limitations (§6.6).
 
 **Conclusions.** Peephole optimization behavior is representation-dependent: the "optimization desert" is a property of the (circuit, listing) pair, not the circuits; and several presumed structural ceilings are properties of the move/template library, not the circuit family. Wire-traversal preprocessing, family-aware pass routing, and template-library completion are concrete, implementable compiler-design consequences.
 
@@ -55,7 +56,7 @@ Production compilers (Qiskit, Cirq, t|ket>) routinely achieve 10–40% gate-coun
 
 The economic stakes are acute in fault-tolerant architectures, where each logical T gate requires magic state distillation consuming approximately 1,000–10,000 physical qubits [Fowler et al. 2012]. A 10% reduction in T-count for Shor's algorithm at cryptographic key sizes can translate to savings of millions of physical qubits and hours of runtime. Yet current compilers achieve their reductions through heuristic pass sequences whose effectiveness varies unpredictably across circuit families. A compiler developer has no principled basis for deciding whether to invest additional computational budget in optimization passes for a given circuit, or whether the circuit has reached its fundamental optimization ceiling and further passes are futile. This resource allocation problem — how to distribute finite compilation time across optimization passes — is currently solved by applying all available passes unconditionally, a strategy that wastes resources on provably inoptimizable circuits while potentially under-investing in circuits with substantial optimization headroom.
 
-Despite advances in automated identity generation [Xu et al. 2022 (Quartz), Pointing et al. 2024 (Quanto)], reinforcement learning [Li et al. 2024 (Quarl), Riu et al. 2025 (ZX+RL)], and tensor decomposition [Ruiz et al. 2025 (AlphaTensor-Quantum)], a fundamental disconnect persists between compiler practice and optimization theory. Production compilers operate as black boxes: they apply optimization passes and report the achieved reduction, but they do not explain why certain circuits yield substantial gains while others resist all optimization attempts. Theoretical complexity results establish that optimal circuit optimization is QMA-hard [Janzing et al. 2003], yet this worst-case hardness provides little guidance for the average-case behavior encountered in practice. The Gottesman–Knill theorem [Gottesman 1997] establishes that Clifford circuits are polynomial-time optimizable, suggesting that the hardness landscape is far more nuanced than worst-case analysis implies.
+Despite advances in automated identity generation [Xu et al. 2022 (Quartz), Pointing et al. 2024 (Quanto)], reinforcement learning [Li et al. 2024 (Quarl), Riu et al. 2025 (ZX+RL)], and tensor decomposition [Ruiz et al. 2025 (AlphaTensor-Quantum)], a fundamental disconnect persists between compiler practice and optimization theory. Production compilers operate as black boxes: they apply optimization passes and report the achieved reduction, but they do not explain why certain circuits yield substantial gains while others resist all optimization attempts. Exact circuit-identity testing — a natural subroutine of optimal circuit synthesis — is QMA-complete [Janzing et al. 2003], while direct results show that the hardness of approximate gate-count optimization depends on the gate set and cost metric [van de Wetering and Amy 2023]. These complexity results provide little guidance for the average-case behavior encountered in practice. The Gottesman–Knill theorem [Gottesman 1997] establishes that Clifford circuits are efficiently simulable and admit compact canonical forms, while SAT-based Clifford synthesis provides a separate route to depth-optimality on bounded instances [Peham et al. 2023]; together these results show that the tractability landscape is far more nuanced than a single worst-case label implies.
 
 The field lacks a systematic framework for answering the most basic questions: What fraction of circuits are fundamentally inoptimizable by peephole methods? For which circuit families does commutation-based rewriting provide measurable advantage? How does the circuit representation — the data-structure ordering of gates — affect optimization outcomes?
 
@@ -104,14 +105,14 @@ This paper makes three contributions, in order of centrality.
 **Contribution 1 (core): Listing-model sensitivity — formalization and empirical validation.**
 
 - **What**: A formal characterization of how circuit listing order governs optimizer behavior. Theorem 1(b) proves that LBL makes the Phase-1 action space structurally empty for $n \geq 2$, explaining previously puzzling zero-variance experimental results. Theorem 1(a) gives the WCL adjacent-inverse-pair density $\mathbb{E}[|\mathcal{A}_{\text{adj}}(C)|] = n(d-1)\,p_{\text{cancel}}$ with $p_{\text{cancel}} = (1-\rho)^2 k_1/g_1^2 + \rho^2/(2 g_2 (n-1))$ (even $n$; odd-$n$ corrections stated in §3.2), directly validated by E30 (13,500 trials, 27 cells, median relative error 1.4%).
-- **Why**: This identifies the data-structure ordering — not the optimization algorithm — as the key factor determining Phase-1 outcomes. The representation, not the circuit content alone, governs whether peephole optimization can detect cancellation opportunities. Across 45,500 trials and four algorithmically distinct optimizers, the ceiling under a fixed listing is identical — representation choice dominates algorithm choice, overturning the conventional wisdom that peephole outcomes are primarily a question of optimizer design.
+- **Why**: For the tested listing-based Phase-1 model, this identifies data-structure ordering as a key determinant of the visible action space. The representation, not the circuit content alone, governs whether this restricted peephole model can detect cancellation opportunities. The result does not establish optimizer independence for stochastic move sets or for production compiler IRs; E29's fitness-design caveat is reported in §6.1.1.
 - **Evidence**: E19 (10,000 rows) confirms that WCL achieves 7.83% mean reduction (std = 3.95%, max = 33.33%, fidelity = 1.0) on the same random ensemble where LBL yields exactly 0.0000%. E1 (25,000 trials) establishes the LBL ceiling with zero variance. E23 (160 circuits, $n = 3$–$10$) validates Theorem 6: Clifford circuits in Aaronson–Gottesman canonical form achieve 0.000% across all 160 instances. E22 (2,240 rows) adds the random gate-shuffle control: shuffling the listing does not reproduce the WCL benefit in a representation-neutral way — it *increases* mean reduction from 6.30% (original listing) to 10.34% (Mann–Whitney $p = 6.8\times10^{-15}$), while WCL reaches 12.20%, confirming that the effect tracks listing structure, not listing disruption.
 
 **Contribution 2 (supporting): Search space stratification across 15 circuit families — and its partial refutation by full-scale Phase-2b.**
 
 - **What**: A large-scale empirical benchmark revealing a categorical trichotomy: 100% Phase-1 reduction (CNOT chains), commutation-enabled Phase-2 reduction (oracle/Clifford circuits), and ~0% on 11 of 15 families — of which 3 (QFT, GHZ, SurfaceCode) are genuine structural ceilings (no tested compiler reduces them), 5 are prototype-limited (VQE, HardwareEfficient, IQP, UCCSD, QAOA; t|ket> achieves 6–64%), 2 are practical ceilings where every tested production compiler also fails (Adder, QuantumWalk), and 1 is borderline (HaarRandom, production gains ≤ 6.5 pp).
 - **Why**: Provides, to our knowledge, the first systematic characterization of when peephole optimization succeeds and fails across diverse circuit families, with circuit-family optimization prescriptions for compiler design. The stratification is not a gradual spectrum but a categorical division determined by algebraic structure — and the Phase-2b v2 experiment (E26) shows that the boundary of the "incompressible" class is itself move-set-dependent: IQP moves from 0.5% (Phase-2a) to 92.0% (Phase-2b v2), Structured from 0.0% to 40.2%, and the BV oracle family to its provable $k+2$ optimum (69.2% mean over secrets), the single most citable result of this study.
-- **Evidence**: 96,289 rows across 37 canonical datasets spanning 15 circuit families and 6 optimizer types (E1–E30), supplemented by E23/E24 theory-validation experiments (235 trials), E20/SOTA multi-compiler comparison (Qiskit/Cirq/t|ket>, 10 trials per cell, fair no-coupling-map mode), and E26 Phase-2b full-scale validation (2,427 rows, fidelity $\geq 1 - 2\times10^{-13}$ on every row). The scale exceeds prior efforts — Quartz (~100 benchmarks), Quarl (~50 benchmarks), Micro-Benchmark Suite (6 circuits) — by two orders of magnitude; the comparative literature claim still requires external verification.
+- **Evidence**: 96,289 rows across 37 canonical datasets spanning 15 circuit families and 6 optimizer types (E1–E30), supplemented by E23/E24 theory-validation experiments, E26 Phase-2b validation, the sealed E31 factorial (28,152 rows), and independently verified E32–E37 panels. Comparative coverage and generalization remain bounded by the evidence map in `docs/manuscript/evidence_integration_map.md`.
 
 **Contribution 3 (application, with acknowledged limitations): Ceiling-aware optimizer.**
 
@@ -145,7 +146,7 @@ Peephole optimization examines small "peephole" windows of instructions and repl
 
 In the quantum setting, peephole optimization was formalized by Barenco et al. [1995], who established the first quantum circuit synthesis bounds. Several paradigms have emerged:
 
-**Template-based optimization** [Maslov et al. 2008, Amy et al. 2013]: Pre-computed equivalence rules (e.g., $H \cdot X \cdot H = Z$, $\text{CNOT} \cdot \text{CNOT} = I$) are scanned for and applied. Template matching is a subgraph isomorphism problem (NP-hard in general), and template libraries are finite, limiting coverage. Iten et al. [2022] give exact and practical pattern-matching algorithms; VOQC [Hietala et al. 2021] formalizes and verifies a peephole-class optimizer in Coq; equality saturation [Yang et al. 2026] replaces ordered rewriting with e-graph exploration over circuit identities; SSR [Huang et al. 2025] combines commutation-aware rearrangement with SAT-solver rewrites of CNOT subcircuits.
+**Template-based optimization** [Maslov et al. 2008, Amy et al. 2013]: Pre-computed equivalence rules (e.g., $H \cdot X \cdot H = Z$, $\text{CNOT} \cdot \text{CNOT} = I$) are scanned for and applied. Template matching is a subgraph isomorphism problem (NP-hard in general), and template libraries are finite, limiting coverage. Iten et al. [2022] give exact and practical pattern-matching algorithms; VOQC [Hietala et al. 2021] formalizes and verifies a peephole-class optimizer in Coq; SAT-based Clifford synthesis provides bounded depth-optimal certificates [Peham et al. 2023]; equality saturation [Tate et al. 2009; Willsey et al. 2021; Yang et al. 2026] replaces ordered rewriting with e-graph exploration over circuit identities; SSR [Huang et al. 2025] combines commutation-aware rearrangement with SAT-solver rewrites of CNOT subcircuits.
 
 **Commutation-based optimization** [Nam et al. 2018, Iten et al. 2022]: Gates that commute can be reordered to expose cancellation opportunities. The commutation graph of a circuit has gates as vertices and commutation relations as edges; finding optimal reorderings is equivalent to finding maximum independent sets.
 
@@ -153,11 +154,13 @@ In the quantum setting, peephole optimization was formalized by Barenco et al. [
 
 **ZX-calculus approaches** [Duncan et al. 2020, de Beaudrap et al. 2022, Riu et al. 2025]: Circuits are translated into ZX-diagrams, simplified using graph-theoretic transformations, and extracted as optimized circuits; the extraction step itself can be #P-hard in the worst case [de Beaudrap et al. 2022]. Recent work combines ZX with reinforcement learning, achieving up to 40% reduction on Clifford+T circuits with up to 40 qubits.
 
+**Phase-ordering and equality-saturation context.** Classical compiler studies show that pass order changes code quality and that program-specific sequence search has a large, structured landscape [Cooper et al. 1999; Almagor et al. 2004]. Equality saturation makes this interaction explicit by retaining equivalent alternatives before extraction [Tate et al. 2009; Willsey et al. 2021]. Our finite listing × rule × window factorial measures a quantum analogue at the declared rewrite level; it does not claim equivalence to an e-graph or to classical pass-order search.
+
 Our framework introduces a two-phase taxonomy: **Phase 1** (adjacent cancellation, window size $w = 2$) and **Phase 2** (commutation rewriting, $w \geq 3$; Phase-2b adds template matching on commutation-exposed patterns). The Phase-1 action space is $\mathcal{S}_1(C) = \{(g_i, g_{i+1}) : Q(g_i) = Q(g_{i+1}), g_{i+1} = g_i^{-1}\}$; the extended Phase-2 action space is $\mathcal{S}_{1+2}(C) = \{(g_i, g_k) : g_k = g_i^{-1}, \text{all intermediates commute}\}$, with $\mathcal{S}_1(C) \subseteq \mathcal{S}_{1+2}(C)$. The optimization gap $\Gamma(C) = R_{1+2}^*(C) - R_1^*(C)$ quantifies Phase-2 advantage. The relationship is hierarchical: Phase 2 subsumes Phase 1, but the additional computational cost ($O(|C|^2)$ or higher) is only justified when $\Gamma(C) > 0$.
 
 ### 2.4 Computational Complexity
 
-Circuit Identity Testing (CIT) — determining whether two quantum circuits implement the same unitary — was proven QMA-complete by Janzing et al. [2003]. Since optimal circuit optimization requires CIT as a subroutine, optimal optimization is at least QMA-hard. However, the complexity landscape becomes more nuanced when restricted to specific circuit classes. Gottesman [1997] introduced the stabilizer formalism, providing a polynomial-time representation of Clifford circuits. Aaronson and Gottesman [2004] showed that Clifford circuit simulation and optimization are in P. For Haar-random unitaries, Nielsen [2005] and Harrow and Montanaro [2017] established that the circuit complexity satisfies $\mathcal{C}(U) \geq 4^n/n^2$ with high probability over the Haar measure. These results provide lower bounds on circuit complexity but do not directly address the optimization problem for specific circuit families.
+Circuit Identity Testing (CIT) — determining whether two quantum circuits implement the same unitary — was proven QMA-complete by Janzing et al. [2003]. CIT is relevant to optimal synthesis, but its hardness alone does not prove that every gate-count optimization formulation is QMA-hard; direct approximate-optimization results depend on the gate set and metric [van de Wetering and Amy 2023]. The complexity landscape becomes more nuanced when restricted to specific circuit classes. Gottesman [1997] introduced the stabilizer formalism, providing a polynomial-time representation of Clifford circuits. Aaronson and Gottesman [2004] showed that Clifford circuit *simulation* is in P; the complexity of *optimizing* Clifford circuits under a gate-count cost metric is a separate question and should not be conflated with simulability. SAT encodings can certify depth-optimal Clifford synthesis on bounded instances [Peham et al. 2023]. For Haar-random unitaries, Nielsen [2005] and Harrow and Montanaro [2017] established that the circuit complexity satisfies $\mathcal{C}(U) \geq 4^n/n^2$ with high probability over the Haar measure. These results provide lower bounds on circuit complexity but do not directly address the optimization problem for specific circuit families.
 
 ### 2.5 Quantum Compilers
 
@@ -195,13 +198,13 @@ Two naming notes keep the roster consistent across experiments. (i) The syntheti
 
 **Algorithmic families.** QFT and GHZ circuits are already gate-optimal as generated (no redundant gates), serving as negative controls. The Oracle/BV circuit is the natural family from Theorem 9, with a random secret string $s \in \{0, 1\}^n$. Grover circuits use a single iteration with a phase oracle. Quantum adders implement ripple-carry addition using Toffoli gates. Quantum walks use coined walks with multi-controlled increment operators. IQP circuits consist of Hadamard-diagonal-Hadamard structure.
 
-**Variational families.** QAOA circuits use line-graph cost functions with $R_{zz}$ and $R_x$ rotations. VQE ansätze use Qiskit's TwoLocal with $R_y$–$R_z$ rotation blocks and linear CNOT entanglement. Hardware-efficient ansätze alternate parameterized rotation layers with nearest-neighbor CNOT entanglement. UCCSD-inspired circuits use single- and double-excitation-style parameterized blocks.
+**Variational families.** QAOA circuits use line-graph cost functions with $R_{zz}$ and $R_x$ rotations. VQE ansätze use Qiskit's TwoLocal with $R_y$–$R_z$ rotation blocks and linear CNOT entanglement. Hardware-efficient ansätze alternate parameterized rotation layers with nearest-neighbor CNOT entanglement. UCCSD-inspired circuits use single- and double-excitation-style parameterized blocks. The adjacent VQA literature studies expressibility saturation [Sim et al. 2019], entanglement-induced concentration [Ortiz Marrero et al. 2020], and links between expressibility, gradients, and narrow gorges [Holmes et al. 2022], while the broader VQA review emphasizes dependence on ansatz, objective, and noise [Cerezo et al. 2021]. These works motivate treating variational circuit structure as a conditioning variable rather than assuming a single landscape regime.
 
 All circuits are deterministically seeded (seed $= 42 + \text{offset}$), materialized by binding parameters to fixed values and decomposing composite instructions up to three levels, and fingerprinted via SHA-256 hash of the instruction stream for reproducibility.
 
 ### 2.7 Related Benchmarking Efforts
 
-The Micro-Benchmark Suite [Merilehto 2025] evaluates six self-generated circuits (3–8 qubits) across Qiskit, t|ket>, Cirq, and Amazon Braket, measuring post-routing depth and gate counts. However, it is a measurement tool, not a theoretical framework: it reports empirical metrics without explaining *why* different compilers produce different results or characterizing structural properties that determine optimizability. Its corpus (6 circuits) is orders of magnitude smaller than our study (96,289 rows across 37 canonical datasets, 15 families). Other benchmarking efforts — MQT Bench [Quetschlich et al. 2023] and QASMBench [Li et al. 2022] — focus on circuit diversity rather than optimization-theoretic analysis. On the optimizer side, VOQC [Hietala et al. 2021] proves peephole rewrites correct in a proof assistant, Quartz/Quanto automate identity discovery, and equality saturation [Yang et al. 2026] and SSR [Huang et al. 2025] are the closest recent peephole-class systems; Table 12 (§6.5) places our prototype against production compilers on identical circuits. Despite these advances, none of the existing optimization frameworks — Quartz, Quanto, Quarl, AlphaTensor-Quantum, Relaxed Peephole Optimization, VOQC, equality saturation, SSR, or ZX+RL — provides a prototype action-space ceiling characterization, quantifies context-dependent Phase-2 advantage, or offers a systematic multi-compiler benchmark with formal theory. The claim of filling this gap requires a fresh, independently verified literature search before submission.
+The Micro-Benchmark Suite [Merilehto 2025] evaluates six self-generated circuits (3–8 qubits) across Qiskit, t|ket>, Cirq, and Amazon Braket, measuring post-routing depth and gate counts. It is a measurement tool rather than a theory of rewrite visibility. Other benchmarking efforts — MQT Bench [Quetschlich et al. 2023] and QASMBench [Li et al. 2022] — emphasize circuit diversity and benchmarking infrastructure. On the optimizer side, VOQC [Hietala et al. 2021] proves peephole rewrites correct in a proof assistant, Quartz/Quanto automate identity discovery, and equality saturation [Yang et al. 2026] and SSR [Huang et al. 2025] address broader rewrite search. The closest classical analogues study pass-order interactions and sequence search [Cooper et al. 1999; Almagor et al. 2004]. Our contribution is therefore positioned at the feature level: a fixed flat-listing/action-space diagnostic, a family × listing factorial, and an explicit boundary between tested local rules and broader synthesis systems. Table 12 (§6.5) places our prototype against production compilers on identical circuits.
 
 **Classical compiler connection.** The comparison is about where a rewrite pass
 gets its context, not about a one-to-one equivalence between classical and
@@ -343,7 +346,7 @@ This section develops the formal apparatus underlying our analysis. All theorems
 
 *Proof (Wire-unitary preservation).* Under any sequence of INSERTION, SWAP, and COMMUTATION moves, the wire-level unitary product of pre-existing gates is preserved. INSERTION adds new gates but does not change the wire-level unitary of pre-existing gates. SWAP exchanges gates on disjoint qubits, not affecting per-wire unitaries. COMMUTATION preserves the wire-level unitary by definition. Since the per-wire unitary is invariant, INSERTION cannot create new wire-level inverse relationships among pre-existing gates. The net reduction is bounded by $B_{\text{pre}}(C) = |\mathcal{S}_{1+2}(C) \setminus \mathcal{S}_1(C)|$. $\blacksquare$
 
-**Corollary 2.1 (Universality of the Phase-1 Ceiling).** All Phase-1 optimizers achieve identical ceiling: $R_{\text{greedy}}(C) = R_{\text{RLS}}(C) = R_{\text{SA}}(C) = R_{\text{GA}}(C) = R_1^*(C)$. Empirically, 45,500 trials across Universal, Clifford, and Structured families confirm $\leq 0.05\%$ mean reduction for all four optimizers (see §6.1.1 for the E29 qualification of this statement for stochastic optimizers under non-default fitness settings).
+**Restricted corollary 2.1 (INSERTION+REMOVAL subsystem).** For a circuit with $\mathcal{S}_1(C) = \emptyset$, the INSERTION+REMOVAL subsystem cannot produce a net gate-count reduction. This is the scope supported by Theorem 2(c); no equality among Greedy, SA, GA, and RLS is asserted. The 2026-08-10 counterexample and the E29 stochastic-optimizer fitness caveat are reported in §6.1.1 and §7.5.
 
 ### 4.2 Phase-2 Context-Dependent Advantage
 
@@ -399,13 +402,42 @@ The Phase-2a advantage grows monotonically with $n$ as the fixed separator overh
 
 ### 4.3 Complexity Context
 
-**Theorem 8 (Haar-Random Incompressibility).** (a) $\Pr[\mathcal{C}(U) < 4^n/n^2] \leq \exp(-\Omega(4^n/n))$ over the Haar measure. (b) For circuits of size $m = nd$ with $d = \text{poly}(n)$, $R_{\max}(C) \leq 1 - 4^n/(n^3 d) \to 0$ doubly-exponentially fast. (c) Any algorithm applying at most $k$ peephole rewrites of window size $w$ achieves $R_A(C) \leq \min(kw/(nd), 1 - 4^n/(n^3 d))$.
+**Context result 8 (Haar-random incompressibility; incomplete proof sketch).** The following information-theoretic statements are included as asymptotic context and are not used as a proved result in the empirical analysis: (a) $\Pr[\mathcal{C}(U) < 4^n/n^2] \leq \exp(-\Omega(4^n/n))$ over the Haar measure. (b) For circuits of size $m = nd$ with $d = \text{poly}(n)$, the proposed asymptotic scaling is $R_{\max}(C) \leq 1 - 4^n/(n^3 d) \to 0$. (c) A bounded-window accounting gives the candidate upper bound $R_A(C) \leq \min(kw/(nd), 1 - 4^n/(n^3 d))$ for at most $k$ peephole rewrites of window size $w$. A complete proof that connects these quantities to the present gate-set and cost model remains open.
 
-**Critical caveat.** Theorem 8 applies to Haar-random *unitaries*, not to the random *gate sequences* used in our experiments. For $n = 10$, $d = 50$, circuits have ~500 gates, far below the Haar-random threshold of ~10,486 gates. The empirical ~0% reduction is explained by Theorem 1 (inverse-pair sparsity) and Theorem 1(b) (LBL empties the action space), not by Haar-random incompressibility. Theorem 8 provides a complementary information-theoretic argument for the asymptotic regime $d \sim 4^n/n^2$ that is not reached in our experiments.
+**Critical caveat.** Context result 8 applies to Haar-random *unitaries*, not to the random *gate sequences* used in our experiments. For $n = 10$, $d = 50$, circuits have ~500 gates, far below the Haar-random threshold of ~10,486 gates. The empirical ~0% reduction is explained by Theorem 1 (inverse-pair sparsity) and Theorem 1(b) (LBL empties the action space), not by Haar-random incompressibility. The context calculation concerns the asymptotic regime $d \sim 4^n/n^2$ that is not reached in our experiments.
 
-**Conjecture C1 (Phase-1 Ceiling is Structural).** For any circuit family where no adjacent inverse gate pairs exist in the initial data structure, every Phase-1 optimizer achieves exactly 0% gate reduction. *Evidence:* Theorem 2 (action-space identity), Theorem 6 (Clifford circuits in AG canonical form), E23 (160 circuits, 100% match rate), Theorem 8 (bounded-window incompressibility for Haar-random unitaries).
+**Conjecture C1 (Phase-1 Ceiling is Structural).** For any circuit family where no adjacent inverse gate pairs exist in the initial data structure, every Phase-1 optimizer achieves exactly 0% gate reduction. *Evidence:* Theorem 2 (action-space identity), Theorem 6 (Clifford circuits in AG canonical form), and E23 (160 circuits, 100% match rate). The Haar-random calculation is context only and is not evidence for this conjecture.
 
 **Open Problem OP1 (QMA-Hardness of CODP).** Is the Circuit Optimization Decision Problem QMA-hard? CIT is QMA-complete [Janzing et al. 2003], but completing the reduction from $k$-Local Hamiltonian requires analyzing the rewrite-rule closure of history-state circuits, which remains open.
+
+### 4.4 Rewrite-Exposure Certificates
+
+The v12 certificate line formalizes a narrower question than global circuit
+optimality: for a declared rule library, listing model, and finite dependency
+quotient, how much of a circuit's latent cancellable structure can be exposed by
+relisting? The certificate records the normalized input, rule-library hash,
+listing order, dependency constraints, candidate block set, lower and upper
+bounds, semantic decision, and a content hash. An exact certificate is accepted
+only when the independent oracle agrees within the declared finite state space;
+unsupported operations, free parameters, invalid configurations, and exhausted
+budgets remain unavailable.
+
+### 4.5 Certified-Landscape Extension
+
+The v13 extension applies the same fail-closed discipline to a finite rewrite
+landscape. For a source state $s_0$, rule library $\mathcal{R}$, and horizon
+$H$, it records the exact best cost reachable within $H$, the minimum escape
+depth, the minimum barrier height, and whether $s_0$ is an $H$-local optimum.
+Only `EXACT_ESCAPE` and `EXACT_H_LOCAL_OPTIMUM` support conclusions within the
+declared finite state space; `RESOURCE_BOUNDED_NO_WITNESS` and
+`RESOURCE_TRUNCATED` are boundaries rather than negative scientific results.
+E43 freezes the Quartz-derived rule import and E44 validates the finite oracle,
+while historical v13 E45 remains blocked by its preregistered resource gate.
+The v14 extension passes the screening resource gate for all 18 tested
+configurations and evaluates the selected configuration on the full fixed
+panel: 91 finite-horizon certificates complete exactly and 37 cells terminate
+with an explicit resource boundary. This is engineering and bounded evidence;
+it does not establish a complete exact landscape over the full panel.
 
 ---
 
@@ -456,7 +488,7 @@ Fidelity verification: exact average gate fidelity for $n \leq 12$ (full $2^n \t
 
 ### 5.4 Experiment Registry
 
-The experimental program comprises the registered experiments E1–E30 (37 listed canonical datasets, 96,289 result rows; 35 active — 96,205 rows — excluding 2 superseded provenance entries) plus five SOTA comparison suites (S1–S5) and a noise-model validation extension (EHW). E31 is a non-canonical smoke pilot recorded separately under `data/v11/e31_listing_phase2b/`; it is not part of the release registry. Key experiments:
+The experimental program comprises the registered experiments E1–E30 (37 listed canonical datasets, 96,289 result rows; 35 active — 96,205 rows — excluding 2 superseded provenance entries), five SOTA comparison suites (S1–S5), a noise-model validation extension (EHW), and the separately hash-bound v11 evidence extensions E31–E37. E31's sealed formal factorial supersedes the earlier smoke pilot for the listing × Phase-2b question, while remaining outside the historical canonical totals. Key experiments:
 
 **Table 4. Experiment registry (selected experiments).**
 
@@ -486,9 +518,16 @@ The experimental program comprises the registered experiments E1–E30 (37 liste
 | E26 | Phase-2b Full-Scale Validation | 2,427 | 16 | P2b |
 | E29 | Multi-Seed Optimizer Stability | 800 | 1 (Universal) | P1 |
 | E30 | Theorem 1(a) WCL Density Validation | 13,500 | 1 (layer model) | P1 |
+| E31 | Listing × Phase-2b Full Factorial | 28,152 | 15 | P1+2b |
+| E32 | Event-Level Timing Telemetry | 90 | 15 | P2b |
+| E33 | External Real-Scale Panel | 22 | external panel | P1 |
+| E34 | MQT Bench Cross-Abstraction | 12 artifacts | 3 algorithms | P1 |
+| E35 | Benchpress-Derived Stress | 5 | external stress panel | P1 |
+| E36 | PyZX Third Artifact | 3 | external panel | P1 |
+| E37 | CPU-Package Energy/Cost Telemetry | 5 paired blocks | fixed workload | P1 |
 | EHW | Noise-Model Validation (fake backends) | 288 | 3 circuits | P1+2 |
 
-Data versioning: v1 (E1–E5, superseded), v2_fixed (E1–E5, canonical), v4 (E11–E13), v5 (E10, E14–E18), v6 (E19–E21, E25, SOTA suites S1–S5), v7 (E22–E24, E29), v8 (E26 Phase-2b v2 — closed to the full-factorial depth grid at 2,427 rows in wave 6 — E27 new families, EHW noise-model validation, and the wave-5/6 listing-sensitivity dataset at 6,720 rows), v10 (E30 Theorem 1(a) validation, canonical; E23 fixed-generator verification rerun, non-canonical), and v11 (non-canonical E20 corrected rerun and E31 pilot). Each artifact is stored with SHA-256 content hash, optimizer configuration JSON, circuit fingerprint, and random seed. v9 contains non-canonical current-code rerun and reconciliation evidence (consolidated disposition: `docs/review/wave6/reconciliation_disposition.md`). See `docs/reproducibility.md` for the supported commands; no `run_experiments.py` entrypoint is claimed.
+Data versioning: v1 (E1–E5, superseded), v2_fixed (E1–E5, canonical), v4 (E11–E13), v5 (E10, E14–E18), v6 (E19–E21, E25, SOTA suites S1–S5), v7 (E22–E24, E29), v8 (E26 Phase-2b v2, E27, EHW, and the wave-5/6 listing-sensitivity dataset), v10 (E30 Theorem 1(a) validation, canonical; E23 fixed-generator verification rerun, non-canonical), v11 (E31 sealed factorial and E32–E37 independently verified extensions, all outside the historical canonical totals), v12 (bounded rewrite-exposure certificates), and v13 (certified-landscape rule/oracle/development artifacts). Each artifact is stored with SHA-256 content hash, optimizer configuration JSON, circuit fingerprint, and random seed. v9 contains non-canonical current-code rerun and reconciliation evidence (consolidated disposition: `docs/review/wave6/reconciliation_disposition.md`). See `docs/reproducibility.md` for the supported commands; no `run_experiments.py` entrypoint is claimed.
 
 ---
 
@@ -597,7 +636,7 @@ The per-family breakdown sharpens the headline result in two ways. First, the sh
 | Universal | 0.00 | 6.76 | +6.8 |
 | Grover | 0.19 | 3.88 | +3.7 |
 
-The remaining nine families (Adder, CNOT chain, GHZ, HardwareEfficient, QAOA, QFT, QuantumWalk, SurfaceCode, VQE) show no WCL benefit — the CNOT chain is saturated at 100% under both listings, and the other eight expose no cancellation structure under either listing — while WCL fidelity is numerically 1.0 on every row (minimum $1 - 1.1\times10^{-12}$). The listing effect is therefore not specific to random circuits: it generalizes to exactly the families with non-adjacent cancellation structure (the commutation- and template-accessible classes) and vanishes where no such structure exists. E31 adds a non-canonical smoke probe of WCL/SHUFFLE crossed with Phase-2b; its paired contrasts do not close the full factorial. The WCL $\times$ Phase-2b interaction across family, size, depth, and seed remains open. Full per-family data in Appendix F.
+The remaining nine families (Adder, CNOT chain, GHZ, HardwareEfficient, QAOA, QFT, QuantumWalk, SurfaceCode, VQE) show no WCL benefit — the CNOT chain is saturated at 100% under both listings, and the other eight expose no cancellation structure under either listing — while WCL fidelity is numerically 1.0 on every row (minimum $1 - 1.1\times10^{-12}$). The listing effect is therefore not specific to random circuits: it generalizes to exactly the families with non-adjacent cancellation structure (the commutation- and template-accessible classes) and vanishes where no such structure exists. The sealed E31 factorial now supplies the broader listing × Phase-2b panel; its finite-panel result and family-level inference boundary are given in §6.9 and the evidence map. Full per-family data in Appendix F.
 
 ### 6.3 Search Space Stratification: The Trichotomy (E10, E14, E15, RQ2)
 
@@ -943,14 +982,14 @@ Table 19 maps every formal claim of Sections 3–4 to its experimental test (ful
 | Thm 5 | McDiarmid concentration; $R_1 \to 0$ | E1, E3 | $X = 0$; bound satisfied trivially | MATCH (trivial) |
 | Thm 6 | AG-canonical Clifford: $\mathcal{S}_1 = \emptyset$ | E23 (160 rows) | 0.0000%, match rate 1.0 | MATCH |
 | Thm 7 | Explicit family: $R_1 = 0$, $R_{1+2} \geq 1/6$ | E24 (75 rows), E10/E11/E14 | Phase-2a 79.80% [62.5–89.3] ≫ 16.7% | MATCH (exceeds bound) |
-| Thm 8a | Haar incompressibility below $4^n/n^2$ | E1–E5 (regime caveat) | ~0% explained by Thm 1b, not Haar | PARTIAL |
-| Thm 8b | $d = o(4^n/n^2) \Rightarrow R_{\max} \to 0$ | E1–E5 | Directionally correct; not tight | PARTIAL |
-| Thm 8c | Bounded-window bound $kw/(nd)$ | E16, E1–E5 | Consistent (trivially true) | MATCH (trivial) |
+| Context 8a | Haar incompressibility below $4^n/n^2$ | E1–E5 (regime caveat) | ~0% explained by Thm 1b, not Haar | CONTEXT ONLY |
+| Context 8b | Proposed $d = o(4^n/n^2) \Rightarrow R_{\max} \to 0$ scaling | E1–E5 | Directionally suggestive; not tight or proved here | CONTEXT ONLY |
+| Context 8c | Candidate bounded-window accounting $kw/(nd)$ | E16, E1–E5 | Consistent within the tested accounting | CONTEXT ONLY |
 | Thm 9 | BV: $R_{1+2b} \geq n/(4.5n+4)$ | E26 (80 instances) | Exact $k{+}2$ optimum; 3.1–4.2× bound | MATCH (exceeds bound) |
 | C1 | Phase-1 ceiling is structural | E1–E5, E10, E14, E23 | 0% across all empty-$\mathcal{S}_1$ families | MATCH |
 | C2 | Phase-2 context-dependent $\Omega(1)$ | E10, E14, E16, E24, E26 | Oracle/Clifford/IQP/BV ≫ 0; QFT/GHZ = 0 | MATCH |
 
-**Scorecard:** 14 MATCH (incl. 2 trivial-bound matches), 3 PARTIAL (Prop 1, Thm 8a, Thm 8b), 0 MISMATCH, 0 UNTESTED. The former Thm 1a mismatch had two components: a model-assignment issue (the formula assumes WCL while E1–E5 use the LBL generator, whose correct prediction is Thm 1b's exact zero) and two constant errors in the original statement (missing $k_1$ factor; double-counted two-qubit term). Both were resolved on 2026-08-06: the corrected formula is stated in §3.2 and directly validated by E30.
+**Scorecard:** 13 MATCH (incl. 1 trivial-bound match), 1 PARTIAL (Prop 1), 3 CONTEXT ONLY (Context 8a–8c), 0 MISMATCH, 0 UNTESTED. The former Thm 1a mismatch had two components: a model-assignment issue (the formula assumes WCL while E1–E5 use the LBL generator, whose correct prediction is Thm 1b's exact zero) and two constant errors in the original statement (missing $k_1$ factor; double-counted two-qubit term). Both were resolved on 2026-08-06: the corrected formula is stated in §3.2 and directly validated by E30.
 
 **The Thm 1a resolution in detail.** For E1 parameters ($n = 5$, $\rho = 0.3$), the *original* Thm 1a expectation $p_{\text{cancel}} = (1-\rho)^2/25 + \rho^2/4 = 0.0421$ (computed with that era's generator constants) predicts $\mathbb{E}|A_{\text{adj}}| \approx 0.84$ pairs at $d = 5$ and $\approx 10.3$ pairs at $d = 50$, where a Poisson approximation assigns probability $\sim$0% to observing zero — yet all 25,000 trials contain exactly zero adjacent inverse pairs. The resolution is structural: the LBL generator places gate $(q, L)$ at listing index $Ln + q$, so same-qubit gates are always separated by $n - 1$ intervening gates and listing-adjacency is impossible for $n \geq 2$ (Thm 1b). The mismatch is therefore the cleanest possible illustration of this paper's thesis: the same formula, the same circuits, and two listing models yield contradictory predictions, and only the listing-aware prediction (Thm 1b) matches measurement. The WCL side is now directly tested too: E30 generates circuits under the theorem's exact layer model, re-lists them in WCL, and confirms the corrected density prediction across 27 $(n, d, \rho)$ cells (max $|z| = 2.86$; median relative error 1.4%), while E19 provides the corresponding WCL reduction measurement on random circuits (7.83% > 0).
 
@@ -995,6 +1034,140 @@ Even under the most optimistic assumption (gate-type-failed rows would reduce at
 | Adder, CNOT, GHZ, Oracle/BV, RandomClifford, SurfaceCode | 0 | already subsets of Clifford+T |
 
 Failure is deterministic by family: any circuit containing continuous parameterized rotations (`rz`, `ry`, `p`, `u`, `cp`, `cu1`, `ccx`) has no exact Clifford+T decomposition rule, and Qiskit's `BasisTranslator` raises `TranspilerError`. Extending coverage to 12–13 of the 15 families would require Solovay–Kitaev approximation (future work, §7.6), trading exact decomposition for approximate decomposition with a controlled error budget.
+
+### 6.9 Listing × Phase-2b Full Factorial (E31, RQ1–RQ2)
+
+The sealed E31 panel crosses 391 unique source circuits from 15 families with
+three listing models (LBL, WCL, and RANDOM_TOPOLOGICAL), two rule sets
+(COMMUTATION_ONLY and COMMUTATION_PLUS_TEMPLATES), three window sizes (4, 16,
+64), and four time budgets (1, 10, 30, and 120 s). This is 72 treatments per
+input and 28,152 scheduled rows. The sealed result contains 20,314 successful
+rows and 7,838 timeout rows; 6,858 successful semantic cells were independently
+replayed. All scheduled rows remain in the ITT denominator.
+
+The fixed finite-population listing-by-rule-set interaction estimate is −0.3798
+percentage points. Descriptive post-hoc marginal contrasts are +2.3461 pp for
+WCL versus LBL and +4.2790 pp for COMMUTATION_PLUS_TEMPLATES versus
+COMMUTATION_ONLY, conditional on the declared model. These contrasts describe
+the frozen 391-input panel; they are not a probability-sample estimate over
+families. The separate 15-family outer-cluster analysis is supportive only,
+with 14 degrees of freedom, and the legacy input-cluster standard errors,
+confidence intervals, and p-values are invalidated by the correction audit.
+
+The result closes the former E31 limitation for the declared listing × Phase-2b
+factorial. It does not establish unseen-family generalization, optimizer
+independence, or a universal WCL effect. The earlier
+`data/v11/e31_listing_phase2b/` smoke pilot is retained as historical support
+only and is not used for the formal claim. Figure 20 provides the receipt-bound
+listing-by-rule-set ITT summary (`analysis/figures/v14_extension/fig20_e31_factorial.pdf`).
+
+### 6.10 Independent Evidence Extensions (E32–E37)
+
+**E32 telemetry.** The frozen protocol records every exact-valid iteration event
+for a fixed 90-cell, 15-family Phase-2b panel. Eighty-nine cells have usable
+timing and one cell times out; the timeout stays in the ITT denominator with
+unavailable timing. Across available cells, time-to-first-valid has median
+1.31997 s and p95 19.09340 s, while time-to-best has median 1.32994 s and p95
+19.09340 s. These are event-level descriptive measurements for this host and
+panel, not sealed E31 timing, cross-machine timing, real-QPU time-to-solution,
+or optimizer-independent timing.
+Figure 21 shows the corresponding event-time distributions
+(`analysis/figures/v14_extension/fig21_e32_telemetry.pdf`).
+
+**E33 real-scale panel.** The external application-oriented panel covers 22
+scheduled LBL/WCL cells from 11 to 36 qubits. Twenty cells complete with an
+independent proof decision and two end in error; under the declared ITT
+estimand, the finite-panel mean WCL-minus-LBL effect is +0.2084 percentage
+points. The panel extends the width range beyond the earlier 4–10-qubit
+validation, but it is not field-collected production workload evidence and does
+not support all-width, unseen-family, real-QPU, or optimizer-independent
+generalization.
+Figure 22 shows the proof-backed input-to-optimized gate-count pairs
+(`analysis/figures/v14_extension/fig22_e33_real_scale.pdf`).
+
+**E34 cross-abstraction alignment.** Three fixed algorithms from MQT Bench 2.2.3
+are materialized at four official abstraction levels, yielding 12 QASM artifacts.
+The independent verifier confirms native-operation and mapped-edge invariants
+for every artifact. This is a bounded alignment panel covering three algorithms
+and one IBM Falcon-27 target, not an exhaustive MQT benchmark over algorithms,
+targets, versions, mappings, or compiler seeds.
+Figure 23 records gate-count growth across the four abstraction levels
+(`analysis/figures/v14_extension/fig23_e34_mqt_abstraction.pdf`).
+
+**E35 stress panel.** A five-file Benchpress-derived cold-process schedule
+retains success, timeout, and error outcomes. The large tier covers 28, 37,
+320, and 400 declared qubits; two of four large cells complete the bounded
+parser/WCL/one-iteration workload, and the maximum observed process-tree RSS is
+1,885,941,760 bytes. The unavailable large cells are software/resource
+outcomes only; no semantic-equivalence or optimization-effectiveness claim is
+made for them, and the panel is not the complete Benchpress campaign.
+Figure 24 displays the retained stress outcomes and observed process-tree RSS
+(`analysis/figures/v14_extension/fig24_e35_stress.pdf`).
+
+**E36 third comparator.** PyZX 0.10.5 runs on three fixed MQT-derived unitary
+inputs at at most eight qubits. Every output is symbolically proved and
+independently exact-checked, and the mutation sentinels reject the altered
+outputs. This establishes executable third-artifact evidence for the fixed
+panel, not a broad PyZX ranking, benchmark, or large-circuit result.
+Figure 25 pairs the third-comparator gate-count result with the five energy
+blocks (`analysis/figures/v14_extension/fig25_e36_e37_external_telemetry.pdf`).
+
+**E37 energy and cost.** Five paired blocks measure monotonic CPU-package RAPL
+energy for the declared workload. Median gross package energy is 85.1134 J and
+median idle-adjusted package energy is 31.0583 J. The measurement is
+system-wide CPU-package energy on this host; it is not process-exclusive,
+whole-system, cloud-billed, carbon, or cross-machine energy. The cost values
+are tariff scenarios rather than an actual bill.
+
+All seven extension claims are bound to their receipt hashes and artifact paths
+in `docs/manuscript/evidence_integration_map.md`.
+
+### 6.11 Bounded v12/v13 Certificate Panels
+
+The v12 package separates exact finite-oracle correctness from prospective
+efficacy. E38 evaluates 512 fixed cases under two declared models (1,024 model
+rows), with zero equivalence, theorem, lower-bound, upper-bound, or certificate
+contract mismatches. E39 is development-only. E40's fixed prospective panel
+contains 168 attempts and zero eligible opportunity-positive inputs, so its
+efficacy estimand is not estimable. E41 contains 16 inputs and 48 scale/resource
+rows; 12 are successful and four retain resource/error outcomes. These results
+support the certificate boundary and availability characterization, not an
+optimizer-independent efficacy claim.
+
+The v13 line freezes the certified Quartz rule import in E43 and passes the
+finite landscape oracle in E44. Historical v13 E45 evaluates 128 sources across
+18 configurations and six arms (13,824 rows). No configuration satisfies the
+preregistered M0 eligibility gate, and the certificate-guided arm has an
+observed resource-or-error rate of 63.28%, above the required 5% threshold.
+
+The v14 screening reruns the same fixed 128-source panel into a new output
+directory after resource-safe state, action-generation, and bounded-beam
+changes. All 18 configurations meet the ≤5% guided resource gate, with 5 of
+128 guided rows resource-bounded per configuration (3.90625%) and zero semantic
+failures; `h3_b64_s200k` is the selected screening configuration. The resulting
+beam certificates remain `WITNESS_CERTIFIED_SEARCH_INCOMPLETE`, and the early
+stop is recorded as `HEURISTIC_OMISSION:first_improving_witness`. This is a
+bounded v14 screening result: it does not modify the v13 receipt or readiness
+verdict, and it does not establish an `EXACT_*` landscape claim.
+
+The selected `h3_b64_s200k` configuration was subsequently evaluated with the
+compact exact finite-horizon engine over the same 128-source panel and six arms,
+producing 768 rows. Ninety-one guided certificates have
+`EXACT_FINITE_HORIZON` status; 37 are explicitly `TRUNCATED/INCOMPLETE` under
+the state or time budget, and none has a semantic failure. The package therefore
+documents a reproducible exact-search resource boundary rather than a complete
+exact landscape over the panel. Its receipt and certificate hashes are recorded
+in `docs/manuscript/evidence_integration_map.md` and
+`data/v14/e45_full_development/receipt.json`.
+
+As a complementary escape-depth check, the same selected configuration was
+run with the fail-closed IDA* engine under a declared 30-second per-cell budget.
+Across the 128-source panel it produced 69 exact minimum-depth escapes, 58
+exact finite-horizon local optima, and one time-budget-truncated cell; all 69
+improving witnesses passed local semantic replay. This result supports the
+escape-depth implementation and its resource accounting, while the compact
+37/128 boundary remains the controlling limitation for any complete
+exact-landscape claim.
 
 ---
 
@@ -1057,11 +1230,11 @@ As a first hardware-facing step, EHW (288 rows, `data/v8/hardware_validation/`) 
 
 1. **Qubit scale.** Canonical experiments span $n = 3$–$20$, enabling exact fidelity verification ($O(4^n)$). The theory is scale-independent, but empirical validation does not extend to hundreds or thousands of qubits.
 
-2. **WCL validation scope.** E19 validates WCL on random Universal circuits, and E19-extended (960 rows, §6.2) provides a first cross-family check — 7 of 16 families gain from WCL (8 of 16 counting the saturated CNOT_chain family), the remaining nine show no benefit. E31 provides a non-canonical smoke probe of WCL/SHUFFLE crossed with Phase-2b, but full WCL shuffle controls and WCL $\times$ Phase-2b interactions across family, size, depth, and seed remain untested. If WCL changes the ceiling on additional structured families under those controls, the LBL-based classification may be partially an artifact.
+2. **WCL validation scope.** E19 validates WCL on random Universal circuits, E19-extended (960 rows, §6.2) provides a first cross-family check, and the sealed E31 factorial covers 391 inputs × 72 declared listing/rule/window/budget treatments. E31 closes the former full-factorial gap for its fixed panel, but its 15-family outer-cluster inference is supportive only and it does not establish unseen-family generalization. If WCL changes the ceiling on additional structured families under other generators or rule libraries, the LBL-based classification may still be partially an artifact.
 
 3. **Prototype optimizer simplicity.** Our optimizers are intentionally simple. The prototype-to-production gap (6.3–64.4 pp on Class IIIb families) reflects mechanisms outside the prototype's move set, not a paradigm deficiency.
 
-4. **Theorem 8 scope.** Haar-random incompressibility applies to Haar-random *unitaries*, not the shallow random gate sequences used in experiments. The empirical ceiling is explained by Theorem 1(b), not by Theorem 8.
+4. **Context result 8 scope.** Haar-random incompressibility applies to Haar-random *unitaries*, not the shallow random gate sequences used in experiments. The incomplete proof sketch is context only; the empirical ceiling is explained by Theorem 1(b), not by Context result 8.
 
 5. **E18 survivorship.** Clifford+T evaluation has a 44.4% row-level failure rate; all variational families fail decomposition. ITT-corrected means (Table 20) bound the bias at ≈25% of the survivor mean; conclusions apply only to exactly-decomposable gate sets.
 
@@ -1071,7 +1244,7 @@ As a first hardware-facing step, EHW (288 rows, `data/v8/hardware_validation/`) 
 
 8. **Missing circuit families.** The 15 benchmark families still exclude Shor's arithmetic subcircuits. Five further families (QPE, Trotterized Hamiltonian simulation, QuantumVolume, WState, RepetitionCode; E27, 675 rows) now exist and feed the 20-family ceiling-model robustness check (§6.6), but are not yet part of the canonical benchmark suite; they may exhibit intermediate behavior.
 
-9. **Shuffle-control scope.** E22's random-shuffle control (answering an earlier limitation) covers 16 families for Phase-1/Phase-2; it shows shuffling *increases* Phase-1 reduction, so the original ceiling claims are conservative. E31 adds one random topological listing per smoke circuit and crosses it with Phase-2b, but higher-replication shuffle controls and the full WCL/Phase-2b factorial remain untested.
+9. **Shuffle-control scope.** E22's random-shuffle control covers 16 families for Phase-1/Phase-2a and shows shuffling *increases* Phase-1 reduction. E31 adds RANDOM_TOPOLOGICAL to its sealed listing × Phase-2b factorial, but the random-topological draw is still one declared listing treatment per input; it does not replace a broader randomized listing distribution or prove a universal shuffle effect.
 
 10. **Statistical power.** Several real-circuit cells (QFT, GHZ in E10) have $N = 5$ per family–optimizer combination; the Clopper–Pearson 95% upper bound for 0/5 successes is 45.1% (computed as $1 - 0.05^{1/5}$). Ceiling claims for these families rely on convergent evidence from E14, E15, and S1.
 
@@ -1113,13 +1286,17 @@ As a first hardware-facing step, EHW (288 rows, `data/v8/hardware_validation/`) 
 
 8. **Noise-aware ceilings.** Define fidelity-adjusted gate reduction as the optimization objective, integrating the EHW noise pipeline directly into the ceiling analysis.
 
+9. **Certified-landscape search.** Reduce the remaining v14 exact-search resource boundary under the unchanged v13 contract. The selected full panel now has 91 complete finite-horizon certificates and 37 explicitly truncated cells; the screening pass has a separate 3.90625% guided resource rate through full-digest state keys, lazy action generation, bounded beam retention, and deterministic early stopping. Any resource-gated outcome must remain explicitly bounded; the `EXACT_*` semantics cannot be replaced by heuristic certificates.
+
+10. **Independent evidence.** The E32–E37 panels are fixed-scope extensions; independent cold-start reproduction, archival publication, and real-device execution remain separate external gates.
+
 ---
 
 ## 8. Conclusion
 
-This paper introduces **listing-model sensitivity** — the finding that circuit instruction ordering changes the action space visible to a flat-list peephole optimizer. Under layer-by-layer listing (LBL), the Phase-1 action space is provably empty for $n \geq 2$ under the stated generator assumptions (Theorem 1(b)), yielding exactly 0.0000% reduction across 25,000 random circuits; under wire-consecutive listing (WCL), the same circuits exhibit 7.83% mean reduction (E19, 10,000 rows); and a random listing shuffle causally *increases* Phase-1 reduction (E22). Representation choice, more than algorithm choice, determines what this restricted peephole model can expose. The claim is scoped to listing-based peephole designs: a 15-family relisting audit (6,720 rows, 0/126 sensitive production-compiler combinations) shows that Qiskit, Cirq, and t|ket> escape listing dependence *representationally* — their DAG/moment windows are wire-relative, equivalent to compiling against the wire-consecutive listing — so for production compilers the actionable content of this work is the class taxonomy and escalation map, not relisting (`docs/analysis/compiler_listing_audit.md`).
+This paper introduces **listing-model sensitivity** — the finding that circuit instruction ordering changes the action space visible to a flat-list peephole optimizer. Under layer-by-layer listing (LBL), the Phase-1 action space is provably empty for $n \geq 2$ under the stated generator assumptions (Theorem 1(b)), yielding exactly 0.0000% reduction across 25,000 random circuits; under wire-consecutive listing (WCL), the same circuits exhibit 7.83% mean reduction (E19, 10,000 rows); and a random listing shuffle causally *increases* Phase-1 reduction (E22). The sealed E31 factorial extends this result to a fixed 391-input, 72-treatment listing × Phase-2b panel, while retaining a 15-family inference boundary. The representation result is scoped to listing-based peephole designs: a 15-family relisting audit (6,720 rows, 0/126 sensitive production-compiler combinations) shows that Qiskit, Cirq, and t|ket> escape listing dependence *representationally* — their DAG/moment windows are wire-relative, equivalent to compiling against the wire-consecutive listing — so for production compilers the actionable content of this work is the class taxonomy and escalation map, not relisting (`docs/analysis/compiler_listing_audit.md`).
 
-Across 37 canonical datasets (96,289 rows, 15 circuit families, 6 optimizer types, 3 production compilers), we identify a categorical stratification of circuit families: trivially compressible (CNOT, 100%), commutation-enabled (Oracle/Clifford/Grover), genuinely structural ceilings (QFT, GHZ, SurfaceCode — unanimous across all tested compilers), prototype-limited ceilings (VQE, HardwareEfficient, IQP, UCCSD, QAOA — 6.3–64.4% recoverable by production peephole passes), and practical ceilings (Adder, QuantumWalk — every tested tool fails). The Phase-2b template matcher breaks several prototype ceilings at full scale (E26), reaching the **exact $k+2$ gate optimum on all 80 Bernstein–Vazirani instances** — exceeding the rigorous Theorem 9 bound by 3.1–4.2× — and 92.0% on IQP, while leaving the genuine and practical ceilings untouched. Theory and experiment agree across 17 cross-validation rows (14 match, 3 partial, 0 mismatch, 0 untested). A ceiling-aware pipeline skips futile phases with bitwise-identical output (up to 227.8× per-family speedup; 34.97× aggregate under prototype timing, 2.20× under symmetric timing), while its repaired hybrid predictive model remains exploratory because of post-hoc selection and held-out mechanism failures (§6.6).
+Across 37 canonical datasets (96,289 rows, 15 circuit families, 6 optimizer types, 3 production compilers), we identify a categorical stratification of circuit families: trivially compressible (CNOT, 100%), commutation-enabled (Oracle/Clifford/Grover), genuinely structural ceilings (QFT, GHZ, SurfaceCode — unanimous across all tested compilers), prototype-limited ceilings (VQE, HardwareEfficient, IQP, UCCSD, QAOA — 6.3–64.4% recoverable by production peephole passes), and practical ceilings (Adder, QuantumWalk — every tested tool fails). The Phase-2b template matcher breaks several prototype ceilings at full scale (E26), reaching the **exact $k+2$ gate optimum on all 80 Bernstein–Vazirani instances** — exceeding the rigorous Theorem 9 bound by 3.1–4.2× — and 92.0% on IQP, while leaving the genuine and practical ceilings untouched. E32–E37 add independently verified fixed-scope timing, scale, external-abstraction, comparator, stress, and CPU-package-energy evidence; v12 and v13 remain explicitly bounded by E40 availability and E45 resource gates, while the v14 selected exact-development panel remains bounded by its 37/128 resource-truncated cells. Theory and experiment agree across the original 17 cross-validation rows (14 match, 3 partial, 0 mismatch, 0 untested), while the certificate extensions have their own finite-scope status. A ceiling-aware pipeline skips futile phases with bitwise-identical output (up to 227.8× per-family speedup; 34.97× aggregate under prototype timing, 2.20× under symmetric timing), while its repaired hybrid predictive model remains exploratory because of post-hoc selection and held-out mechanism failures (§6.6).
 
 These results provide a systematic framework for understanding when peephole optimization succeeds and fails, with direct implications for compiler pass design: wire-traversal preprocessing as a candidate standard pass, circuit-family-aware optimizer routing, template/phase-polynomial escalation for variational families, and noise-model-validated expectations for hardware benefit. The listing model, long treated as an implementation detail, belongs at the center of optimization theory.
 
@@ -1129,11 +1306,11 @@ These results provide a systematic framework for understanding when peephole opt
 
 ### Data Availability
 
-All experimental data — raw CSV outputs, experiment metadata, and release manifests — are available in the project repository (`github.com/StarryCode-Lang/quantum-peephole-ceiling`) under `data/`, organized into canonical versioned subdirectories (v2_fixed–v8, v10); v9 contains non-canonical rerun evidence. SHA-256 checksums for every dataset are recorded in `release/release_manifest.json`, which enumerates the 37 canonical datasets (96,289 result rows; 35 active excluding 2 superseded provenance entries) analyzed here together with per-dataset row counts and schema versions. All datasets can be regenerated or verified with the commands in `docs/reproducibility.md`. No archival DOI is claimed in this working draft; a DOI will be added only after an actual archival deposit.
+All experimental data — raw CSV outputs, experiment metadata, and release manifests — are available in the project repository (`github.com/StarryCode-Lang/quantum-peephole-ceiling`) under `data/`. The historical canonical chain is organized into v2_fixed–v8 and v10; v9 contains non-canonical rerun evidence. The v11 E31–E37 extensions and v12/v13 certificate packages are separately hash-bound evidence layers and are not silently added to the historical canonical totals. Their paths, receipt hashes, and admissible claim boundaries are listed in `docs/manuscript/evidence_integration_map.md`. SHA-256 checksums for the historical canonical datasets are recorded in `release/release_manifest.json`, which enumerates the 37 canonical datasets (96,289 result rows; 35 active excluding 2 superseded provenance entries) analyzed here together with per-dataset row counts and schema versions. All datasets can be regenerated or verified with the commands in `docs/reproducibility.md`. No archival DOI is claimed in this working draft; a DOI will be added only after an actual archival deposit.
 
 ### Code Availability
 
-The complete source code is publicly available at `https://github.com/StarryCode-Lang/quantum-peephole-ceiling`. The codebase includes optimizer implementations (`src/`), experiment drivers (`experiments/`), analysis tools (`analysis/`), and reproducibility scripts (`scripts/`). Python 3.12 dependencies are pinned in `requirements.txt` and `environment.yml`; a Docker container is provided via `Dockerfile`. Release version: v10.1.0-audit-fixes.
+The complete source code is publicly available at `https://github.com/StarryCode-Lang/quantum-peephole-ceiling`. The codebase includes optimizer implementations (`src/`), experiment drivers (`experiments/`), analysis tools (`analysis/`), and reproducibility scripts (`scripts/`). Python 3.12 dependencies are pinned in `requirements.txt` and `environment.yml`; a Docker container is provided via `Dockerfile`. The working evidence package is v14, with the historical code release identified as v10.1.0-audit-fixes.
 
 ### Competing Interests
 
@@ -1244,3 +1421,23 @@ Experiments were executed on a single workstation (16 GB RAM, no GPU); the exact
 [46] G. Yang, P. Raun, R. Tao, and R. Gu, "Equality saturation for quantum circuit optimization," Proceedings of the ACM on Programming Languages, vol. 10, no. PLDI, 2026. DOI: 10.1145/3808254
 
 [47] Y. Huang et al., "SSR: A swapping-sweeping-and-rewriting optimizer for quantum circuit transformation," ACM Transactions on Design Automation of Electronic Systems, 2026. DOI: 10.1145/3828549. arXiv:2503.03227 (preprint 2025).
+
+[48] J. van de Wetering and M. Amy, "Optimising quantum circuits is generally hard," arXiv:2310.05958, 2023.
+
+[49] T. Peham, N. Brandl, R. Kueng, R. Wille, and L. Burgholzer, "Depth-optimal synthesis of Clifford circuits with SAT solvers," Proc. IEEE International Conference on Quantum Computing and Engineering, 2023. arXiv:2305.01674. DOI: 10.1109/QCE57702.2023.00095
+
+[50] R. Tate, M. Stepp, Z. Tatlock, and S. Lerner, "Equality saturation: A new approach to optimization," Proc. 36th ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages, pp. 264–276, 2009.
+
+[51] M. Willsey, C. Nandi, Y. R. Wang, O. Flatt, Z. Tatlock, and P. Panchekha, "egg: Fast and extensible equality saturation," Proc. ACM on Programming Languages, vol. 5, no. POPL, art. 23, 2021. DOI: 10.1145/3434304. arXiv:2004.03082
+
+[52] S. Sim, P. D. Johnson, and A. Aspuru-Guzik, "Expressibility and entangling capability of parameterized quantum circuits for hybrid quantum-classical algorithms," Advanced Quantum Technologies, vol. 2, no. 12, 2019. arXiv:1905.10876
+
+[53] C. Ortiz Marrero, M. Kieferová, and N. Wiebe, "Entanglement induced barren plateaus," PRX Quantum, vol. 2, 040316, 2021. arXiv:2010.15968
+
+[54] Z. Holmes, K. Sharma, M. Cerezo, and P. J. Coles, "Connecting ansatz expressibility to gradient magnitudes and barren plateaus," PRX Quantum, vol. 3, 010313, 2022. DOI: 10.1103/PRXQuantum.3.010313. arXiv:2104.05868
+
+[55] M. Cerezo et al., "Variational quantum algorithms," Nature Reviews Physics, vol. 3, pp. 625–644, 2021. DOI: 10.1038/s42254-021-00348-9. arXiv:2012.09265
+
+[56] K. D. Cooper, P. J. Schielke, and D. Subramanian, "Optimizing for reduced code space using genetic algorithms," Proc. ACM SIGPLAN Workshop on Languages, Compilers, and Tools for Embedded Systems, pp. 1–9, 1999.
+
+[57] L. Almagor et al., "Finding effective compilation sequences," ACM SIGPLAN Notices, vol. 39, no. 7, pp. 231–239, 2004. DOI: 10.1145/997163.997196.

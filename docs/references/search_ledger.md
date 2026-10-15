@@ -314,6 +314,32 @@ not evidence of absence. No “first”, universal, or priority claim is license
 
 ---
 
+## 10. v14 manuscript reference delta — 2026-09-07
+
+The v14 C2 pass checked the following primary records before adding manuscript
+references [48]–[57]. The active manuscript uses these works for scoped
+positioning and context only; none is used as absence or priority evidence.
+
+| Record | Primary verification | Manuscript consequence |
+|---|---|---|
+| van de Wetering and Amy, *Optimising quantum circuits is generally hard* | arXiv:2310.05958, https://arxiv.org/abs/2310.05958 | Replace broad QMA-hard wording with gate-set- and metric-dependent hardness context |
+| Peham et al., *Depth-Optimal Synthesis of Clifford Circuits with SAT Solvers* | arXiv:2305.01674, https://arxiv.org/abs/2305.01674; QCE DOI 10.1109/QCE57702.2023.00095 | Position bounded depth-optimal Clifford synthesis separately from listing rewrites |
+| Tate et al., *Equality saturation: A new approach to optimization* | author-hosted record, https://www.cs.cornell.edu/~lerner/papers/popl09.html | Add classical equality-saturation origin and avoid e-graph equivalence claims |
+| Willsey et al., *egg: Fast and Extensible Equality Saturation* | POPL 2021 record, https://popl21.sigplan.org/details/POPL-2021-research-papers/23/egg-Fast-and-Extensible-Equality-Saturation; DOI 10.1145/3434304 | Add modern e-graph context |
+| Sim et al., *Expressibility and entangling capability of parameterized quantum circuits* | arXiv:1905.10876, https://arxiv.org/abs/1905.10876 | Add variational expressibility/depth-saturation context |
+| Ortiz Marrero et al., *Entanglement Induced Barren Plateaus* | arXiv:2010.15968, https://arxiv.org/abs/2010.15968 | Add entanglement-induced landscape context with a separate estimand boundary |
+| Holmes et al., *Connecting Ansatz Expressibility to Gradient Magnitudes and Barren Plateaus* | PRX Quantum, https://journals.aps.org/prxquantum/abstract/10.1103/PRXQuantum.3.010313 | Add expressibility/gradient/narrow-gorge context |
+| Cerezo et al., *Variational quantum algorithms* | Nature Reviews Physics, https://www.nature.com/articles/s42254-021-00348-9 | Add broad ansatz/objective/noise context |
+| Cooper et al., *Optimizing for Reduced Code Space using Genetic Algorithms* | LCTES author record, https://dblp.org/rec/conf/lctrts/CooperSS99 | Add classical sequence-interaction analogy |
+| Almagor et al., *Finding Effective Compilation Sequences* | ACM DOI 10.1145/997163.997196, https://doi.org/10.1145/997163.997196 | Add classical phase-ordering context |
+
+The inclusion file and claim boundaries are recorded in
+`docs/references/manuscript_reference_delta.md`. This is a targeted v14
+refresh, not a final systematic-review or novelty conclusion.
+
+
+---
+
 ## 11. v15 landscape scan — 2026-10-11
 
 A targeted scan of 2025–2026 quantum-circuit-optimization literature checked

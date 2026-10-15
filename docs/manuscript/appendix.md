@@ -22,7 +22,7 @@ partitioned as follows:
 | Phase-2b template library | E26, 2,427 canonical rows | Full-scale evidence covers the implemented library, not the complete template universe. |
 | Ceiling-model robustness | E21, E27, P7 diagnostic | RepetitionCode exposes a learned-model extrapolation failure; the model remains exploratory. |
 | Noise transfer | EHW | Noise-model simulation only; no real-device result is claimed. |
-| Listing x Phase-2b interaction | E31, 396 rows | Supporting non-canonical smoke pilot; full family x size/depth/seed factorial remains open. |
+| Listing x Phase-2b interaction | E31, 28,152 sealed rows | Fixed 391-input, 15-family listing × rule-set × window × budget factorial; family-level inference is supportive only and does not establish unseen-family generalization. |
 
 Historical claim tables, review waves, and draft fragments are retained only for
 audit provenance. They must not override the active map above.
@@ -165,23 +165,20 @@ reported with the E29 qualification wherever E04 is cited.
 
 ---
 
-## G. E31 Listing x Phase-2b Pilot
+## G. E31 Listing x Phase-2b Full Factorial
 
-**Data:** `data/v11/e31_listing_phase2b/` (396 rows, non-canonical).
-**Code:** `experiments/e31_listing_phase2b_interaction.py`.
-**Analysis:** `analysis/e31_listing_phase2b_analysis.py`.
+**Data:** `data/v11/e31_factorial_pareto/formal_run/final/` (28,152 sealed
+rows). **Code:** `experiments/e31_formal_orchestrator.py` and
+`analysis/e31_listing_phase2b_analysis.py`. **Independent receipt:**
+`release/e31_independent_release_verification_receipt.json`.
 
-E31 crosses LBL, WCL, and one seeded random topological listing with Phase-1,
-Phase-2a, and Phase-2b on 44 smoke-scale source circuits. It verifies listing
-fidelity, preserves source-circuit pairing, and reports descriptive cell and
-paired-contrast summaries. It does not estimate the full listing space or
-establish a confirmatory WCL x Phase-2b interaction. The full family x
-size/depth/seed factorial remains open.
-
-```bash
-python experiments/e31_listing_phase2b_interaction.py
-python analysis/e31_listing_phase2b_analysis.py
-```
+E31 crosses 391 unique source circuits from 15 families with LBL, WCL, and
+random-topological listings; two rule sets; three windows; and four budgets.
+The formal panel contains 20,314 successful rows and 6,858 successful semantic
+cells. Its fixed-panel contrast is descriptive, and the 15-family outer-cluster
+inference is supportive only. The earlier
+`data/v11/e31_listing_phase2b/` smoke pilot remains historical and is not used
+for the formal claim.
 
 ---
 
