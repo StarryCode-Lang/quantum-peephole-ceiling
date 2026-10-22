@@ -1,0 +1,62 @@
+{
+  "by_panel": {
+    "A_ghz_scaling": {
+      "beats_baseline": 0,
+      "beats_reference": 0,
+      "beats_theorem": 0,
+      "equivalence_failures": 0,
+      "equivalence_unchecked": 10,
+      "ok": 17,
+      "rows": 17
+    },
+    "B_genuine_escapes": {
+      "beats_baseline": 14,
+      "beats_reference": 12,
+      "beats_theorem": 0,
+      "equivalence_failures": 0,
+      "equivalence_unchecked": 0,
+      "ok": 14,
+      "rows": 14
+    },
+    "C_ceiling_families": {
+      "beats_baseline": 0,
+      "beats_reference": 0,
+      "beats_theorem": 0,
+      "equivalence_failures": 0,
+      "equivalence_unchecked": 0,
+      "ok": 10,
+      "rows": 10
+    }
+  },
+  "date": "2026-10-22",
+  "experiment_id": "E53_BQSKIT_TZAP_FALSIFIER_2026_10_22",
+  "ghz_by_size": {
+    "10": 10,
+    "11": 11,
+    "12": 12,
+    "13": 13,
+    "14": 14,
+    "15": 15,
+    "16": 16,
+    "17": 17,
+    "18": 18,
+    "19": 19,
+    "20": 20,
+    "4": 4,
+    "5": 5,
+    "6": 6,
+    "7": 7,
+    "8": 8,
+    "9": 9
+  },
+  "ok_count": 41,
+  "optimizers": {
+    "bqskit_qsearch": "bqskit.compile with MachineModel(gate_set=[U3Gate, CNOTGate]), all-to-all"
+  },
+  "reading": "A tool that beats the theorem bound falsifies the GHZ claim; a tool that beats the certified reference cost demotes that cell's certificate from optimum to local optimum.",
+  "row_count": 41,
+  "unavailable": {
+    "mqt_qcec": "installed but the Windows wheel has no DLL directory (mqt/core/bin); unusable.",
+    "tzap": "no wheel for this interpreter; not installed. Reported as a gap, not as a negative result."
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "as_of": "2026-10-19",
+  "bounded_sources": [
+    {
+      "baseline_cost": 148,
+      "circuit_family": "QFT",
+      "resource_reason": "time_budget",
+      "source_id": "e39:b2f83603b76f95e86e3b51898d6ea360adf3a62f51aa296baf0178913d4108b2"
+    }
+  ],
+  "by_cost_band": {
+    "cost_3_to_9": {
+      "bounded": 0,
+      "certified": 3,
+      "escape": 0,
+      "probed": 3
+    },
+    "cost_ge_10": {
+      "bounded": 1,
+      "certified": 22,
+      "escape": 6,
+      "probed": 29
+    },
+    "cost_le_2": {
+      "bounded": 0,
+      "certified": 33,
+      "escape": 0,
+      "probed": 33
+    }
+  },
+  "by_source_kind": {
+    "e39": {
+      "bounded": 1,
+      "certified": 26,
+      "escape": 6,
+      "probed": 33
+    },
+    "e44": {
+      "bounded": 0,
+      "certified": 32,
+      "escape": 0,
+      "probed": 32
+    }
+  },
+  "claim_boundary": "Every row is a finite-horizon statement under the frozen rule scope and the declared state/time budget. H4_RESOURCE_BOUNDED is a resource boundary, not a negative result. No frozen v14/v15 package is read-modify-written.",
+  "escape_sources": [
+    {
+      "baseline_cost": 10,
+      "best_cost": 8,
+      "circuit_family": "Oracle",
+      "escape_depth": 4,
+      "source_id": "e39:0ed63ca188a0b57909ea58f75b874bc3ffbc1cf811ad49c73522148c5bd18b55"
+    },
+    {
+      "baseline_cost": 10,
+      "best_cost": 8,
+      "circuit_family": "Oracle",
+      "escape_depth": 4,
+      "source_id": "e39:7130c27a527965bb0f258cb842a9113fb05e3fbe44a5dfbedcb9b9003b5cc534"
+    },
+    {
+      "baseline_cost": 10,
+      "best_cost": 8,
+      "circuit_family": "Oracle",
+      "escape_depth": 4,
+      "source_id": "e39:8a0f6aa4d86982e6f5d44dfb1933a65cba2e861eeaa794468785325cd7f38e8a"
+    },
+    {
+      "baseline_cost": 10,
+      "best_cost": 8,
+      "circuit_family": "Oracle",
+      "escape_depth": 4,
+      "source_id": "e39:a8db7c393892d2adec545708e5f0d633c2a3a558227f079b35365b5a62cf7950"
+    },
+    {
+      "baseline_cost": 10,
+      "best_cost": 8,
+      "circuit_family": "Oracle",
+      "escape_depth": 4,
+      "source_id": "e39:b81e1fce8a1444d85177c6bc7af38bad39960f4060e55d08611f399ee4619722"
+    },
+    {
+      "baseline_cost": 10,
+      "best_cost": 8,
+      "circuit_family": "Oracle",
+      "escape_depth": 4,
+      "source_id": "e39:d666adb13ce66e444e16398e08fd2d7d2169fcc728eb154e78b91f40918df82c"
+    }
+  ],
+  "experiment_id": "E47_HORIZON4_PROBE_2026_10_19",
+  "outcome_counts": {
+    "H4_CERTIFIED_LOCAL_OPTIMUM": 58,
+    "H4_ESCAPE_FOUND": 6,
+    "H4_RESOURCE_BOUNDED": 1
+  },
+  "probe": {
+    "horizon": 4,
+    "panel_source": "data\\v15\\e45_landscape_integration\\classification_complete.csv",
+    "panel_source_sha256": "786b8a0c4fbeb46f7813fcad5874c353402dbc565e8f07ee5d4229ade09826fc",
+    "probed_sources": 65,
+    "reference_horizon": 3,
+    "rule_library": "data\\v13\\e43_quartz_rule_import\\generation_a\\rule_library.json",
+    "rule_library_sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295",
+    "rule_scope": "e44_core_v1",
+    "state_budget": 200000,
+    "time_budget_seconds": 30.0,
+    "wall_clock_seconds": 32.555
+  }
+}

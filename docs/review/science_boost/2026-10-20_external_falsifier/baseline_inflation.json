@@ -1,0 +1,134 @@
+{
+ "date": "2026-10-20",
+ "panel_sources": 128,
+ "families": {
+  "Adder": {
+   "sources": 3,
+   "mean_source_gates": 15.3,
+   "mean_normalized_gates": 127.3,
+   "mean_baseline_cost": 127.3,
+   "mean_baseline_over_source": 8.304,
+   "max_baseline_over_source": 9.4
+  },
+  "VQE": {
+   "sources": 10,
+   "mean_source_gates": 47.6,
+   "mean_normalized_gates": 345.2,
+   "mean_baseline_cost": 345.2,
+   "mean_baseline_over_source": 7.252,
+   "max_baseline_over_source": 7.4
+  },
+  "QAOA": {
+   "sources": 6,
+   "mean_source_gates": 45.0,
+   "mean_normalized_gates": 255.7,
+   "mean_baseline_cost": 255.7,
+   "mean_baseline_over_source": 5.681,
+   "max_baseline_over_source": 5.8
+  },
+  "QFT": {
+   "sources": 2,
+   "mean_source_gates": 23.0,
+   "mean_normalized_gates": 91.0,
+   "mean_baseline_cost": 91.0,
+   "mean_baseline_over_source": 3.957,
+   "max_baseline_over_source": 4.111
+  },
+  "HaarRandom": {
+   "sources": 3,
+   "mean_source_gates": 275.0,
+   "mean_normalized_gates": 1059.0,
+   "mean_baseline_cost": 1059.0,
+   "mean_baseline_over_source": 3.851,
+   "max_baseline_over_source": 3.851
+  },
+  "UCCSD_inspired": {
+   "sources": 8,
+   "mean_source_gates": 52.0,
+   "mean_normalized_gates": 152.0,
+   "mean_baseline_cost": 148.9,
+   "mean_baseline_over_source": 2.863,
+   "max_baseline_over_source": 3.182
+  },
+  "HardwareEfficient": {
+   "sources": 7,
+   "mean_source_gates": 39.1,
+   "mean_normalized_gates": 94.0,
+   "mean_baseline_cost": 92.9,
+   "mean_baseline_over_source": 2.372,
+   "max_baseline_over_source": 2.412
+  },
+  "IQP": {
+   "sources": 8,
+   "mean_source_gates": 32.4,
+   "mean_normalized_gates": 46.4,
+   "mean_baseline_cost": 39.0,
+   "mean_baseline_over_source": 1.205,
+   "max_baseline_over_source": 1.4
+  },
+  "QuantumWalk": {
+   "sources": 10,
+   "mean_source_gates": 5242.0,
+   "mean_normalized_gates": 5513.6,
+   "mean_baseline_cost": 5513.6,
+   "mean_baseline_over_source": 1.052,
+   "max_baseline_over_source": 1.471
+  },
+  "Grover": {
+   "sources": 6,
+   "mean_source_gates": 620.7,
+   "mean_normalized_gates": 625.7,
+   "mean_baseline_cost": 625.7,
+   "mean_baseline_over_source": 1.008,
+   "max_baseline_over_source": 1.013
+  },
+  "GHZ": {
+   "sources": 1,
+   "mean_source_gates": 8.0,
+   "mean_normalized_gates": 8.0,
+   "mean_baseline_cost": 8.0,
+   "mean_baseline_over_source": 1.0,
+   "max_baseline_over_source": 1.0
+  },
+  "SurfaceCode": {
+   "sources": 8,
+   "mean_source_gates": 10.5,
+   "mean_normalized_gates": 10.5,
+   "mean_baseline_cost": 10.5,
+   "mean_baseline_over_source": 1.0,
+   "max_baseline_over_source": 1.0
+  },
+  "Oracle": {
+   "sources": 17,
+   "mean_source_gates": 18.6,
+   "mean_normalized_gates": 18.6,
+   "mean_baseline_cost": 12.8,
+   "mean_baseline_over_source": 0.69,
+   "max_baseline_over_source": 1.0
+  },
+  "RandomClifford": {
+   "sources": 6,
+   "mean_source_gates": 43.0,
+   "mean_normalized_gates": 43.0,
+   "mean_baseline_cost": 28.0,
+   "mean_baseline_over_source": 0.651,
+   "max_baseline_over_source": 0.857
+  },
+  "E44:neutral_exposure": {
+   "sources": 32,
+   "mean_source_gates": 6.9,
+   "mean_normalized_gates": 6.9,
+   "mean_baseline_cost": 1.4,
+   "mean_baseline_over_source": 0.204,
+   "max_baseline_over_source": 0.333
+  },
+  "CNOT": {
+   "sources": 1,
+   "mean_source_gates": 40.0,
+   "mean_normalized_gates": 40.0,
+   "mean_baseline_cost": 0.0,
+   "mean_baseline_over_source": 0.0,
+   "max_baseline_over_source": 0.0
+  }
+ }
+}

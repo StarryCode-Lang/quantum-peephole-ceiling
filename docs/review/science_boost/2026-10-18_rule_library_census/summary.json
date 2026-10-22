@@ -1,0 +1,138 @@
+{
+  "as_of": "2026-10-18",
+  "by_family": [
+    {
+      "increasing": 222,
+      "max_reduction": 2,
+      "n_rules": 1474,
+      "neutral": 1028,
+      "reducing": 224,
+      "reducing_fraction": 0.151967,
+      "reverse_closure_rate": 0.995516,
+      "rule_family": "quartz_v1"
+    }
+  ],
+  "claim_boundary": "Descriptive census of the frozen rule library. cost_delta is read from the library metadata and cross-checked against operation counts; it is not a semantic-equivalence claim. Reverse closure is exact-match only and does not account for rules that reach the reverse by composition.",
+  "core_scope": {
+    "closure": {
+      "n_directional": 65,
+      "n_reducing": 11,
+      "n_reducing_reverse_present": 9,
+      "n_reverse_present": 63,
+      "reverse_closure_rate": 0.969231
+    },
+    "definition": "quartz_v1 rules with source num_qubits <= 2, source operations <= 4, target operations <= 6, plus every pair_v1 / structural_exchange_v1 rule",
+    "increasing": 54,
+    "max_increase": 2,
+    "max_reduction": 2,
+    "n": 149,
+    "neutral": 84,
+    "reducing": 11,
+    "reducing_fraction": 0.073826,
+    "source_collisions": 24,
+    "sum_cost_delta": 47
+  },
+  "library": {
+    "n_entries": 1488,
+    "n_pattern_rules": 1474,
+    "n_schema_rules": 14,
+    "path": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+    "schema_version": "1.0.0",
+    "sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295"
+  },
+  "reverse_closure": {
+    "n_directional": 446,
+    "n_reducing": 224,
+    "n_reducing_reverse_present": 222,
+    "n_reverse_present": 444,
+    "reverse_closure_rate": 0.995516
+  },
+  "schema_rules": [
+    {
+      "rule_family": "pair_v1",
+      "rule_id": "pair_v1.self_inverse",
+      "semantics": "same gate and operands; self inverse"
+    },
+    {
+      "rule_family": "pair_v1",
+      "rule_id": "pair_v1.t_tdg",
+      "semantics": "t and tdg inverse pair"
+    },
+    {
+      "rule_family": "pair_v1",
+      "rule_id": "pair_v1.s_sdg",
+      "semantics": "s and sdg inverse pair"
+    },
+    {
+      "rule_family": "pair_v1",
+      "rule_id": "pair_v1.rotation_zero",
+      "semantics": "same-axis rotations sum to zero modulo 2pi"
+    },
+    {
+      "rule_family": "pair_v1",
+      "rule_id": "pair_v1.rotation_merge",
+      "semantics": "same-axis rotations merge by angle addition"
+    },
+    {
+      "rule_family": "structural_exchange_v1",
+      "rule_id": "exchange.disjoint",
+      "semantics": "disjoint supports commute"
+    },
+    {
+      "rule_family": "structural_exchange_v1",
+      "rule_id": "exchange.same_single",
+      "semantics": "same single-qubit gate commutes with itself"
+    },
+    {
+      "rule_family": "structural_exchange_v1",
+      "rule_id": "exchange.same_axis_rotation",
+      "semantics": "same-axis rotations commute"
+    },
+    {
+      "rule_family": "structural_exchange_v1",
+      "rule_id": "exchange.z_family",
+      "semantics": "Z-family gates commute on one wire"
+    },
+    {
+      "rule_family": "structural_exchange_v1",
+      "rule_id": "exchange.cx_control_z",
+      "semantics": "CX commutes with Z-family gate on control"
+    },
+    {
+      "rule_family": "structural_exchange_v1",
+      "rule_id": "exchange.cx_target_x",
+      "semantics": "CX commutes with X-family gate on target"
+    },
+    {
+      "rule_family": "structural_exchange_v1",
+      "rule_id": "exchange.cz_z",
+      "semantics": "CZ commutes with Z-family gate on either wire"
+    },
+    {
+      "rule_family": "structural_exchange_v1",
+      "rule_id": "exchange.same_swap",
+      "semantics": "SWAP gates on the same pair commute"
+    },
+    {
+      "rule_family": "structural_exchange_v1",
+      "rule_id": "exchange.same_cz",
+      "semantics": "CZ gates on the same pair commute"
+    }
+  ],
+  "source_collision": {
+    "max_distinct_targets": 3,
+    "n_colliding_sources": 143,
+    "n_rules_involved": 323,
+    "n_sources_with_multiple_distinct_targets": 97
+  },
+  "whole_library": {
+    "increasing": 222,
+    "max_increase": 2,
+    "max_reduction": 2,
+    "n": 1474,
+    "neutral": 1028,
+    "reducing": 224,
+    "reducing_fraction": 0.151967,
+    "sum_cost_delta": -2
+  }
+}

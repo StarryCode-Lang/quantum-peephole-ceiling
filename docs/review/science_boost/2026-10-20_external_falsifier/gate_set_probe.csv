@@ -1,0 +1,15 @@
+n_qubits,basis,status,cost,two_qubit
+8,cx_only,OK,8,7
+8,cz_only,OK,22,7
+8,rzz_native,OK,50,7
+8,ecr_native,OK,43,7
+8,iswap_native,OK,78,14
+8,swap_allowed,OK,8,7
+8,one_2q_gate_u_1q,OK,8,7
+12,cx_only,OK,12,11
+12,cz_only,OK,34,11
+12,rzz_native,OK,78,11
+12,ecr_native,OK,67,11
+12,iswap_native,OK,122,22
+12,swap_allowed,OK,12,11
+12,one_2q_gate_u_1q,OK,12,11

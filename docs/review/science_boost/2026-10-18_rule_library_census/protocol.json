@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-18",
+  "frozen_paths_untouched": [
+    "data/",
+    "release/",
+    "docs/manuscript/"
+  ],
+  "inputs_read_only": {
+    "rule_library": {
+      "n_entries": 1488,
+      "n_pattern_rules": 1474,
+      "n_schema_rules": 14,
+      "path": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+      "schema_version": "1.0.0",
+      "sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295"
+    }
+  },
+  "outputs": {
+    "census": "docs/review/science_boost/2026-10-18_rule_library_census/rule_census.csv",
+    "family_summary": "docs/review/science_boost/2026-10-18_rule_library_census/rule_family_summary.csv",
+    "summary": "docs/review/science_boost/2026-10-18_rule_library_census/summary.json"
+  },
+  "protocol_id": "RULE_LIBRARY_CENSUS_V1",
+  "provenance": {
+    "generated_at_utc": "2026-10-17T22:08:30+00:00",
+    "script": "scripts/census_rule_library.py"
+  }
+}

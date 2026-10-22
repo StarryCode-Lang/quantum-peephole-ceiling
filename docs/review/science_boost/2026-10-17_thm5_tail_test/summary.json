@@ -1,0 +1,23 @@
+{
+  "N_eff_over_N_max": 0.1118,
+  "N_eff_over_N_median": 0.0525,
+  "N_eff_over_N_min": 0.0235,
+  "as_of": "2026-10-17",
+  "cell_count": 27,
+  "claim_boundary": "This is a necessary-condition test of the stated exponent on one frozen ensemble. Satisfying it does not prove Thm 5; violating it would refute the stated bound for the E30 generator. Tail resolution is bounded by the 500 trials per cell.",
+  "dispersion_index_interpretation": "Variance/mean ratio of X per cell; a value near 1 is consistent with Poisson/Poisson-binomial counting behaviour, which would place the true concentration scale near E[X] rather than near N = n(d-1).",
+  "dispersion_index_max": 1.225362,
+  "dispersion_index_median": 0.975858,
+  "dispersion_index_min": 0.913336,
+  "input": {
+    "path": "data/v10/e30/e30_thm1a_wcl_results.csv",
+    "sha256": "e7195d2b3fa68f6b5b9552a3fec34ce077d2893d1bbfe64898d6d3691ba3f318"
+  },
+  "necessary_condition_violations": 0,
+  "total_trials": 13500,
+  "variance_over_N_max": 0.066737,
+  "variance_over_N_median": 0.046703,
+  "variance_over_N_min": 0.022363,
+  "verdict": "THM5_EXPONENT_NOT_EXCLUDED",
+  "violating_cells": []
+}

@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-17",
+  "derivation": "per-gate-class bounded-decrease argument + aggregate action ceiling",
+  "frozen_paths_untouched": [
+    "data/",
+    "release/",
+    "docs/manuscript/"
+  ],
+  "horizon": 3,
+  "inputs_read_only": {
+    "classification": {
+      "path": "data/v15/e45_landscape_integration/classification_complete.csv",
+      "sha256": "786b8a0c4fbeb46f7813fcad5874c353402dbc565e8f07ee5d4229ade09826fc"
+    },
+    "normalization_manifest": {
+      "path": "data/v14/e45_full_development/normalization_manifest.csv",
+      "sha256": "0de35d33ad281b0b43dc8f5e38e76567d8c4afc14747a9eff0e7756196b1ba84"
+    },
+    "qasm_dir": "data/v14/e45_full_development/qasm",
+    "qasm_file_count": 128,
+    "rule_library": {
+      "path": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+      "sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295"
+    }
+  },
+  "output": {
+    "csv": "docs/review/science_boost/2026-10-17_certified_lower_bounds/certified_lower_bounds.csv",
+    "summary": "docs/review/science_boost/2026-10-17_certified_lower_bounds/summary.json"
+  },
+  "predicate": "for every legal action a in e44_core_v1, n_g(post(a)) >= n_g(pre(a)) - r_g ; hence cost(s_H) >= sum_g max(0, n_g(s_0) - H*r_g)",
+  "protocol_id": "V15_CERTIFIED_LOWER_BOUND_V1",
+  "provenance": {
+    "generated_at_utc": "2026-10-16T22:18:00+00:00",
+    "script": "scripts/derive_v15_certified_lower_bounds.py"
+  },
+  "rule_scope": "e44_core_v1"
+}

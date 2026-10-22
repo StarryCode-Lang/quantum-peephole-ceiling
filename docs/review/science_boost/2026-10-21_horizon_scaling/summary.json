@@ -1,0 +1,895 @@
+{
+  "contract": {
+    "baseline_rule": "greedy fixed point of the normalised circuit; raw normalised circuit when it exceeds MAX_BASELINE_GATES=80",
+    "generator": "src.circuits.real_benchmarks.make_bernstein_vazirani(seed=42)",
+    "horizons": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "rule_scope": "e44_core_v1",
+    "state_budget": 200000,
+    "time_budget_seconds": 30.0
+  },
+  "date": "2026-10-21",
+  "experiment_id": "E50_BV_HORIZON_SCALING_2026_10_21",
+  "first_improving_horizon_by_size": {
+    "10": 6,
+    "12": 6,
+    "14": 6,
+    "16": 7,
+    "20": null,
+    "4": 2,
+    "6": 4,
+    "8": 4
+  },
+  "reading": "A monotone increase of first_improving_horizon with n supports a size-dependent reachability barrier. A flat curve supports a bounded-horizon phenomenon. Either way the statement is about this generator, this normaliser and e44_core_v1.",
+  "script": "scripts/e50_horizon_scaling.py",
+  "sizes": [
+    {
+      "best_cost_at_max_horizon": 2,
+      "elapsed_seconds": 0.685,
+      "escape_witness_cost_deltas": [
+        0,
+        -2
+      ],
+      "escape_witness_replay": "REPLAY_PASS",
+      "escape_witness_rule_ids": [
+        "quartz_v1:15_2:6984096ccd0f->9302b827fe85:from_anchor",
+        "pair_v1.self_inverse"
+      ],
+      "first_improving_horizon": 2,
+      "horizon_rows": [
+        {
+          "best_cost": 7,
+          "elapsed_seconds": 0.685,
+          "horizon": 1,
+          "improved": false,
+          "initial_cost": 7,
+          "n_qubits": 4,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 5,
+          "elapsed_seconds": 0.685,
+          "horizon": 2,
+          "improved": true,
+          "initial_cost": 7,
+          "n_qubits": 4,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 5,
+          "elapsed_seconds": 0.685,
+          "horizon": 3,
+          "improved": true,
+          "initial_cost": 7,
+          "n_qubits": 4,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 3,
+          "elapsed_seconds": 0.685,
+          "horizon": 4,
+          "improved": true,
+          "initial_cost": 7,
+          "n_qubits": 4,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 2,
+          "elapsed_seconds": 0.685,
+          "horizon": 5,
+          "improved": true,
+          "initial_cost": 7,
+          "n_qubits": 4,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 2,
+          "elapsed_seconds": 0.685,
+          "horizon": 6,
+          "improved": true,
+          "initial_cost": 7,
+          "n_qubits": 4,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 2,
+          "elapsed_seconds": 0.685,
+          "horizon": 7,
+          "improved": true,
+          "initial_cost": 7,
+          "n_qubits": 4,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 2,
+          "elapsed_seconds": 0.685,
+          "horizon": 8,
+          "improved": true,
+          "initial_cost": 7,
+          "n_qubits": 4,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        }
+      ],
+      "initial_cost": 7,
+      "n_qubits": 4,
+      "neutral_prefix_length": 1,
+      "normalized_gate_count": 13,
+      "root_kind": "GREEDY_FIXED_POINT",
+      "source_gate_count": 13,
+      "status": "OK"
+    },
+    {
+      "best_cost_at_max_horizon": 6,
+      "elapsed_seconds": 1.704,
+      "escape_witness_cost_deltas": [
+        0,
+        0,
+        0,
+        -2
+      ],
+      "escape_witness_replay": "REPLAY_PASS",
+      "escape_witness_rule_ids": [
+        "exchange.disjoint",
+        "quartz_v1:10_2:e2064f1fd3b7->380b44d566a1:from_anchor",
+        "quartz_v1:15_2:6984096ccd0f->9302b827fe85:from_anchor",
+        "pair_v1.self_inverse"
+      ],
+      "first_improving_horizon": 4,
+      "horizon_rows": [
+        {
+          "best_cost": 10,
+          "elapsed_seconds": 1.704,
+          "horizon": 1,
+          "improved": false,
+          "initial_cost": 10,
+          "n_qubits": 6,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 10,
+          "elapsed_seconds": 1.704,
+          "horizon": 2,
+          "improved": false,
+          "initial_cost": 10,
+          "n_qubits": 6,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 10,
+          "elapsed_seconds": 1.704,
+          "horizon": 3,
+          "improved": false,
+          "initial_cost": 10,
+          "n_qubits": 6,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 8,
+          "elapsed_seconds": 1.704,
+          "horizon": 4,
+          "improved": true,
+          "initial_cost": 10,
+          "n_qubits": 6,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 8,
+          "elapsed_seconds": 1.704,
+          "horizon": 5,
+          "improved": true,
+          "initial_cost": 10,
+          "n_qubits": 6,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 8,
+          "elapsed_seconds": 1.704,
+          "horizon": 6,
+          "improved": true,
+          "initial_cost": 10,
+          "n_qubits": 6,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 6,
+          "elapsed_seconds": 1.704,
+          "horizon": 7,
+          "improved": true,
+          "initial_cost": 10,
+          "n_qubits": 6,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 6,
+          "elapsed_seconds": 1.704,
+          "horizon": 8,
+          "improved": true,
+          "initial_cost": 10,
+          "n_qubits": 6,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        }
+      ],
+      "initial_cost": 10,
+      "n_qubits": 6,
+      "neutral_prefix_length": 3,
+      "normalized_gate_count": 18,
+      "root_kind": "GREEDY_FIXED_POINT",
+      "source_gate_count": 18,
+      "status": "OK"
+    },
+    {
+      "best_cost_at_max_horizon": 6,
+      "elapsed_seconds": 1.71,
+      "escape_witness_cost_deltas": [
+        0,
+        0,
+        0,
+        -2
+      ],
+      "escape_witness_replay": "REPLAY_PASS",
+      "escape_witness_rule_ids": [
+        "exchange.disjoint",
+        "quartz_v1:10_2:e2064f1fd3b7->380b44d566a1:from_anchor",
+        "quartz_v1:15_2:6984096ccd0f->9302b827fe85:from_anchor",
+        "pair_v1.self_inverse"
+      ],
+      "first_improving_horizon": 4,
+      "horizon_rows": [
+        {
+          "best_cost": 10,
+          "elapsed_seconds": 1.71,
+          "horizon": 1,
+          "improved": false,
+          "initial_cost": 10,
+          "n_qubits": 8,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 10,
+          "elapsed_seconds": 1.71,
+          "horizon": 2,
+          "improved": false,
+          "initial_cost": 10,
+          "n_qubits": 8,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 10,
+          "elapsed_seconds": 1.71,
+          "horizon": 3,
+          "improved": false,
+          "initial_cost": 10,
+          "n_qubits": 8,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 8,
+          "elapsed_seconds": 1.71,
+          "horizon": 4,
+          "improved": true,
+          "initial_cost": 10,
+          "n_qubits": 8,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 8,
+          "elapsed_seconds": 1.71,
+          "horizon": 5,
+          "improved": true,
+          "initial_cost": 10,
+          "n_qubits": 8,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 8,
+          "elapsed_seconds": 1.71,
+          "horizon": 6,
+          "improved": true,
+          "initial_cost": 10,
+          "n_qubits": 8,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 6,
+          "elapsed_seconds": 1.71,
+          "horizon": 7,
+          "improved": true,
+          "initial_cost": 10,
+          "n_qubits": 8,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 6,
+          "elapsed_seconds": 1.71,
+          "horizon": 8,
+          "improved": true,
+          "initial_cost": 10,
+          "n_qubits": 8,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        }
+      ],
+      "initial_cost": 10,
+      "n_qubits": 8,
+      "neutral_prefix_length": 3,
+      "normalized_gate_count": 22,
+      "root_kind": "GREEDY_FIXED_POINT",
+      "source_gate_count": 22,
+      "status": "OK"
+    },
+    {
+      "best_cost_at_max_horizon": 11,
+      "elapsed_seconds": 4.693,
+      "escape_witness_cost_deltas": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        -2
+      ],
+      "escape_witness_replay": "REPLAY_PASS",
+      "escape_witness_rule_ids": [
+        "exchange.disjoint",
+        "exchange.disjoint",
+        "exchange.disjoint",
+        "exchange.disjoint",
+        "quartz_v1:11_2:d893089b42e1->4db10501ff4e:to_anchor",
+        "pair_v1.self_inverse"
+      ],
+      "first_improving_horizon": 6,
+      "horizon_rows": [
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.693,
+          "horizon": 1,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 10,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.693,
+          "horizon": 2,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 10,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.693,
+          "horizon": 3,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 10,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.693,
+          "horizon": 4,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 10,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.693,
+          "horizon": 5,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 10,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 11,
+          "elapsed_seconds": 4.693,
+          "horizon": 6,
+          "improved": true,
+          "initial_cost": 13,
+          "n_qubits": 10,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 11,
+          "elapsed_seconds": 4.693,
+          "horizon": 7,
+          "improved": true,
+          "initial_cost": 13,
+          "n_qubits": 10,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 11,
+          "elapsed_seconds": 4.693,
+          "horizon": 8,
+          "improved": true,
+          "initial_cost": 13,
+          "n_qubits": 10,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        }
+      ],
+      "initial_cost": 13,
+      "n_qubits": 10,
+      "neutral_prefix_length": 5,
+      "normalized_gate_count": 27,
+      "root_kind": "GREEDY_FIXED_POINT",
+      "source_gate_count": 27,
+      "status": "OK"
+    },
+    {
+      "best_cost_at_max_horizon": 11,
+      "elapsed_seconds": 4.505,
+      "escape_witness_cost_deltas": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        -2
+      ],
+      "escape_witness_replay": "REPLAY_PASS",
+      "escape_witness_rule_ids": [
+        "exchange.disjoint",
+        "exchange.disjoint",
+        "exchange.disjoint",
+        "exchange.disjoint",
+        "quartz_v1:15_2:6984096ccd0f->9302b827fe85:from_anchor",
+        "pair_v1.self_inverse"
+      ],
+      "first_improving_horizon": 6,
+      "horizon_rows": [
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.505,
+          "horizon": 1,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 12,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.505,
+          "horizon": 2,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 12,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.505,
+          "horizon": 3,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 12,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.505,
+          "horizon": 4,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 12,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.505,
+          "horizon": 5,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 12,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 11,
+          "elapsed_seconds": 4.505,
+          "horizon": 6,
+          "improved": true,
+          "initial_cost": 13,
+          "n_qubits": 12,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 11,
+          "elapsed_seconds": 4.505,
+          "horizon": 7,
+          "improved": true,
+          "initial_cost": 13,
+          "n_qubits": 12,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 11,
+          "elapsed_seconds": 4.505,
+          "horizon": 8,
+          "improved": true,
+          "initial_cost": 13,
+          "n_qubits": 12,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        }
+      ],
+      "initial_cost": 13,
+      "n_qubits": 12,
+      "neutral_prefix_length": 5,
+      "normalized_gate_count": 31,
+      "root_kind": "GREEDY_FIXED_POINT",
+      "source_gate_count": 31,
+      "status": "OK"
+    },
+    {
+      "best_cost_at_max_horizon": 11,
+      "elapsed_seconds": 4.472,
+      "escape_witness_cost_deltas": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        -2
+      ],
+      "escape_witness_replay": "REPLAY_PASS",
+      "escape_witness_rule_ids": [
+        "exchange.disjoint",
+        "exchange.disjoint",
+        "exchange.disjoint",
+        "exchange.disjoint",
+        "quartz_v1:11_2:d893089b42e1->4db10501ff4e:to_anchor",
+        "pair_v1.self_inverse"
+      ],
+      "first_improving_horizon": 6,
+      "horizon_rows": [
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.472,
+          "horizon": 1,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 14,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.472,
+          "horizon": 2,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 14,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.472,
+          "horizon": 3,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 14,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.472,
+          "horizon": 4,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 14,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 13,
+          "elapsed_seconds": 4.472,
+          "horizon": 5,
+          "improved": false,
+          "initial_cost": 13,
+          "n_qubits": 14,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 11,
+          "elapsed_seconds": 4.472,
+          "horizon": 6,
+          "improved": true,
+          "initial_cost": 13,
+          "n_qubits": 14,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 11,
+          "elapsed_seconds": 4.472,
+          "horizon": 7,
+          "improved": true,
+          "initial_cost": 13,
+          "n_qubits": 14,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 11,
+          "elapsed_seconds": 4.472,
+          "horizon": 8,
+          "improved": true,
+          "initial_cost": 13,
+          "n_qubits": 14,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        }
+      ],
+      "initial_cost": 13,
+      "n_qubits": 14,
+      "neutral_prefix_length": 5,
+      "normalized_gate_count": 35,
+      "root_kind": "GREEDY_FIXED_POINT",
+      "source_gate_count": 35,
+      "status": "OK"
+    },
+    {
+      "best_cost_at_max_horizon": 14,
+      "elapsed_seconds": 15.254,
+      "escape_witness_cost_deltas": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -2
+      ],
+      "escape_witness_replay": "REPLAY_PASS",
+      "escape_witness_rule_ids": [
+        "exchange.disjoint",
+        "exchange.disjoint",
+        "exchange.disjoint",
+        "exchange.disjoint",
+        "exchange.disjoint",
+        "quartz_v1:11_2:d893089b42e1->4db10501ff4e:to_anchor",
+        "pair_v1.self_inverse"
+      ],
+      "first_improving_horizon": 7,
+      "horizon_rows": [
+        {
+          "best_cost": 16,
+          "elapsed_seconds": 15.254,
+          "horizon": 1,
+          "improved": false,
+          "initial_cost": 16,
+          "n_qubits": 16,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 16,
+          "elapsed_seconds": 15.254,
+          "horizon": 2,
+          "improved": false,
+          "initial_cost": 16,
+          "n_qubits": 16,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 16,
+          "elapsed_seconds": 15.254,
+          "horizon": 3,
+          "improved": false,
+          "initial_cost": 16,
+          "n_qubits": 16,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 16,
+          "elapsed_seconds": 15.254,
+          "horizon": 4,
+          "improved": false,
+          "initial_cost": 16,
+          "n_qubits": 16,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 16,
+          "elapsed_seconds": 15.254,
+          "horizon": 5,
+          "improved": false,
+          "initial_cost": 16,
+          "n_qubits": 16,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 16,
+          "elapsed_seconds": 15.254,
+          "horizon": 6,
+          "improved": false,
+          "initial_cost": 16,
+          "n_qubits": 16,
+          "resource_reason": "",
+          "status": "EXACT_H_LOCAL_OPTIMUM"
+        },
+        {
+          "best_cost": 14,
+          "elapsed_seconds": 15.254,
+          "horizon": 7,
+          "improved": true,
+          "initial_cost": 16,
+          "n_qubits": 16,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        },
+        {
+          "best_cost": 14,
+          "elapsed_seconds": 15.254,
+          "horizon": 8,
+          "improved": true,
+          "initial_cost": 16,
+          "n_qubits": 16,
+          "resource_reason": "",
+          "status": "EXACT_ESCAPE"
+        }
+      ],
+      "initial_cost": 16,
+      "n_qubits": 16,
+      "neutral_prefix_length": 6,
+      "normalized_gate_count": 40,
+      "root_kind": "GREEDY_FIXED_POINT",
+      "source_gate_count": 40,
+      "status": "OK"
+    },
+    {
+      "best_cost_at_max_horizon": 25,
+      "elapsed_seconds": 30.784,
+      "escape_witness_cost_deltas": [],
+      "escape_witness_replay": "",
+      "escape_witness_rule_ids": [],
+      "first_improving_horizon": null,
+      "horizon_rows": [
+        {
+          "best_cost": 25,
+          "elapsed_seconds": 30.784,
+          "horizon": 1,
+          "improved": false,
+          "initial_cost": 25,
+          "n_qubits": 20,
+          "resource_reason": "time_budget",
+          "status": "RESOURCE_BOUNDED_NO_WITNESS"
+        },
+        {
+          "best_cost": 25,
+          "elapsed_seconds": 30.784,
+          "horizon": 2,
+          "improved": false,
+          "initial_cost": 25,
+          "n_qubits": 20,
+          "resource_reason": "time_budget",
+          "status": "RESOURCE_BOUNDED_NO_WITNESS"
+        },
+        {
+          "best_cost": 25,
+          "elapsed_seconds": 30.784,
+          "horizon": 3,
+          "improved": false,
+          "initial_cost": 25,
+          "n_qubits": 20,
+          "resource_reason": "time_budget",
+          "status": "RESOURCE_BOUNDED_NO_WITNESS"
+        },
+        {
+          "best_cost": 25,
+          "elapsed_seconds": 30.784,
+          "horizon": 4,
+          "improved": false,
+          "initial_cost": 25,
+          "n_qubits": 20,
+          "resource_reason": "time_budget",
+          "status": "RESOURCE_BOUNDED_NO_WITNESS"
+        },
+        {
+          "best_cost": 25,
+          "elapsed_seconds": 30.784,
+          "horizon": 5,
+          "improved": false,
+          "initial_cost": 25,
+          "n_qubits": 20,
+          "resource_reason": "time_budget",
+          "status": "RESOURCE_BOUNDED_NO_WITNESS"
+        },
+        {
+          "best_cost": 25,
+          "elapsed_seconds": 30.784,
+          "horizon": 6,
+          "improved": false,
+          "initial_cost": 25,
+          "n_qubits": 20,
+          "resource_reason": "time_budget",
+          "status": "RESOURCE_BOUNDED_NO_WITNESS"
+        },
+        {
+          "best_cost": 25,
+          "elapsed_seconds": 30.784,
+          "horizon": 7,
+          "improved": false,
+          "initial_cost": 25,
+          "n_qubits": 20,
+          "resource_reason": "time_budget",
+          "status": "RESOURCE_BOUNDED_NO_WITNESS"
+        },
+        {
+          "best_cost": 25,
+          "elapsed_seconds": 30.784,
+          "horizon": 8,
+          "improved": false,
+          "initial_cost": 25,
+          "n_qubits": 20,
+          "resource_reason": "time_budget",
+          "status": "RESOURCE_BOUNDED_NO_WITNESS"
+        }
+      ],
+      "initial_cost": 25,
+      "n_qubits": 20,
+      "neutral_prefix_length": null,
+      "normalized_gate_count": 51,
+      "root_kind": "GREEDY_FIXED_POINT",
+      "source_gate_count": 51,
+      "status": "OK"
+    }
+  ]
+}

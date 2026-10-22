@@ -1205,8 +1205,8 @@ def _minimax_barrier_compact(
                     # remaining horizon from the earlier occurrence.
                     if prior_min_peak.get(child_hash, math.inf) <= child_peak:
                         continue
-                    previous = next_level.get(child_hash)
-                    if previous is not None and child_peak >= previous[1]:
+                    prior_entry = next_level.get(child_hash)
+                    if prior_entry is not None and child_peak >= prior_entry[1]:
                         continue
                     next_level[child_hash] = (action.post_state, child_peak)
                     key = (depth + 1, child_hash)
@@ -1215,13 +1215,13 @@ def _minimax_barrier_compact(
                         order += 1
                     parents[key] = ((depth, current_hash), action)
                     if action.post_state.cost < initial.cost and child_peak == initial.cost:
-                        path: list[LandscapeAction] = []
+                        immediate_path: list[LandscapeAction] = []
                         winning_key = key
                         while winning_key[0] > 0:
-                            previous, winning_action = parents[winning_key]
-                            path.append(winning_action)
-                            winning_key = previous
-                        return (0, list(reversed(path))), False
+                            parent_key, winning_action = parents[winning_key]
+                            immediate_path.append(winning_action)
+                            winning_key = parent_key
+                        return (0, list(reversed(immediate_path))), False
                     candidate = (
                         child_peak,
                         depth + 1,
@@ -1241,9 +1241,8 @@ def _minimax_barrier_compact(
     path: list[LandscapeAction] = []
     key = improving_key
     while key[0] > 0:
-        previous, action = parents[key]
+        key, action = parents[key]
         path.append(action)
-        key = previous
     return (improving[0] - initial.cost, list(reversed(path))), False
 
 

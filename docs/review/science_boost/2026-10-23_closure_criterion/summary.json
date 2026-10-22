@@ -1,0 +1,72 @@
+{
+  "bv": {
+    "agreement": {
+      "compared": 0,
+      "matched": 0,
+      "rows": []
+    },
+    "growth_law": {
+      "intercept": 0.0,
+      "points": [
+        [
+          32,
+          0
+        ],
+        [
+          48,
+          0
+        ],
+        [
+          64,
+          0
+        ]
+      ],
+      "r_squared": null,
+      "reading": "D_min grows linearly in n => required lookahead h* = D+1 is Theta(n)",
+      "slope": 0.0
+    }
+  },
+  "contract": {
+    "closure_selection": "smallest D first, non-overlapping, repeat to fixpoint",
+    "criterion": "g_i,g_j exposable iff every intervening gate commutes with both",
+    "max_passes": 12,
+    "root_states": "experiments.e46_window_landscape.run.load_root_states (hash-checked)",
+    "rule_library": "data\\v13\\e43_quartz_rule_import\\generation_a\\rule_library.json",
+    "rule_scope": "e44_core_v1",
+    "time_budget_seconds_per_source": 60.0
+  },
+  "date": "2026-10-23",
+  "experiment_id": "E56_CLOSURE_CRITERION_2026_10_23",
+  "inputs": {
+    "data\\v15\\e45_landscape_integration\\classification_complete.csv": "786b8a0c4fbeb46f7813fcad5874c353402dbc565e8f07ee5d4229ade09826fc"
+  },
+  "panel": {
+    "certified_comparable_count": 128,
+    "closure_beats_certified_count": 60,
+    "closure_matches_certified_count": 64,
+    "d_min_histogram": {
+      "0": 49,
+      "1": 6,
+      "2": 3,
+      "4": 5,
+      "6": 1,
+      "none": 64
+    },
+    "h3_blind_but_exposable": 6,
+    "h3_could_see_count": 58,
+    "replay_fail": 0,
+    "replay_pass": 128,
+    "sources": 128,
+    "sources_with_exposable_pair": 64,
+    "total_closure_gates": 62952,
+    "total_root_gates": 70293,
+    "truncated": 0
+  },
+  "predicate_self_check": {
+    "examples": [],
+    "mismatched": 0,
+    "pairs_checked": 56028,
+    "states_checked": 16
+  },
+  "script": "scripts/e56_closure_criterion.py"
+}

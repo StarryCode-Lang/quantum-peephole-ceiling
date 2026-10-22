@@ -1,0 +1,79 @@
+{
+  "contract": {
+    "baseline_rule": "uniform greedy fixed point; NO MAX_BASELINE_GATES bypass",
+    "greedy": "GreedyGateCancellation(max_iterations=50, fidelity_threshold=1.0, success_reduction=0.0)",
+    "inputs": {
+      "normalization_manifest": "data/v14/e45_full_development/normalization_manifest.csv"
+    },
+    "search": {
+      "horizon": 3,
+      "rule_scope": "e44_core_v1",
+      "state_budget": 200000,
+      "time_budget_seconds": 30.0
+    },
+    "writes": "docs/review/science_boost/2026-10-22_d2_rebaseline/ only"
+  },
+  "date": "2026-10-22",
+  "experiment_id": "E54_D2_UNIFORM_REBASELINE_2026_10_22",
+  "part_a_rebaseline": {
+    "max_reduction": 313,
+    "max_seconds": 8.754,
+    "median_reduction": 8,
+    "source_count": 128,
+    "sources_over_80_gates": 50,
+    "sources_reduced": 116,
+    "total_gates_after": 66825,
+    "total_gates_before": 70789
+  },
+  "part_b_h1_fixed_points": {
+    "adjacent_by_kind": {
+      "rotation_merge": 2628
+    },
+    "h1_fixed_points": 104,
+    "sources_with_adjacent_pair": 24,
+    "sources_with_single_gate_reduction": 13
+  },
+  "part_c_survivors": {
+    "genuine_escape_count": 14,
+    "lost": 0,
+    "status_counts": {
+      "EXACT_ESCAPE": 14
+    },
+    "still_escape_after_rebaseline": 14
+  },
+  "part_d_corrected_rates": {
+    "old_escape_rate_all": 0.4922,
+    "old_escape_rate_greedy_roots": 0.1795,
+    "old_escape_rate_real_only": 0.6562,
+    "reading": "With the >80-gate bypass removed, the 49 depth-1 escapes disappear. The rebased panel rate comes from part_e when --full-panel-search is used; otherwise it is the survivor count and is a lower bound only.",
+    "rebased_escape_count": 22,
+    "rebased_escape_rate": 0.1719
+  },
+  "part_e_full_panel": {
+    "coverage_note": "The frozen contract keeps every visited state in memory, so sources above MAX_SAFE_GATES cannot be searched without changing the contract. That is why the panel must be reported in two strata rather than uniformly re-baselined.",
+    "decided": 95,
+    "escape_count": 22,
+    "escape_rate_all": 0.1719,
+    "escape_rate_decided": 0.2316,
+    "escapes_by_family": {
+      "Grover": 1,
+      "IQP": 7,
+      "Oracle": 1,
+      "QAOA": 3,
+      "RandomClifford": 3,
+      "UCCSD_inspired": 7
+    },
+    "h1_fixed_points_that_escape": 19,
+    "memory_errors": 0,
+    "panel_rows": 128,
+    "resource_bounded": 33,
+    "skipped_memory_risk": 27,
+    "status_counts": {
+      "EXACT_ESCAPE": 22,
+      "EXACT_H_LOCAL_OPTIMUM": 73,
+      "RESOURCE_BOUNDED_NO_WITNESS": 2,
+      "SKIPPED_MEMORY_RISK": 27,
+      "WITNESS_CERTIFIED_SEARCH_INCOMPLETE": 4
+    }
+  }
+}

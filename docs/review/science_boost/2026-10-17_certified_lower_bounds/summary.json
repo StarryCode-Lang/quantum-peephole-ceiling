@@ -1,0 +1,58 @@
+{
+  "aggregate_action_ceiling": 2,
+  "as_of": "2026-10-17",
+  "bounded_cells": 34,
+  "bounded_cells_closed_by_bound": 0,
+  "bounded_interval_width_as_fraction_of_baseline_max": 0.028736,
+  "bounded_interval_width_max": 5,
+  "bounded_interval_width_mean": 4.5588,
+  "claim_boundary": "The lower bound is certified for the e44_core_v1 action set within the declared horizon; it is not a bound for unrestricted rewriting, and it does not by itself upgrade any certificate tier in the frozen v15 package.",
+  "core_rule_count": 149,
+  "horizon": 3,
+  "inputs": {
+    "classification": {
+      "path": "data/v15/e45_landscape_integration/classification_complete.csv",
+      "sha256": "786b8a0c4fbeb46f7813fcad5874c353402dbc565e8f07ee5d4229ade09826fc"
+    },
+    "normalization_manifest": {
+      "path": "data/v14/e45_full_development/normalization_manifest.csv",
+      "sha256": "0de35d33ad281b0b43dc8f5e38e76567d8c4afc14747a9eff0e7756196b1ba84"
+    },
+    "qasm_dir": "data/v14/e45_full_development/qasm",
+    "qasm_file_count": 128,
+    "rule_library": {
+      "path": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+      "sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295"
+    }
+  },
+  "panel_interval_width_max": 6,
+  "panel_source_count": 128,
+  "per_gate_action_ceiling": {
+    "cx": 2,
+    "cz": 2,
+    "h": 2,
+    "rx": 2,
+    "ry": 2,
+    "rz": 2,
+    "s": 1,
+    "sdg": 1,
+    "swap": 2,
+    "t": 1,
+    "tdg": 1,
+    "x": 2,
+    "y": 2,
+    "z": 2
+  },
+  "root_reconstruction_failed": [],
+  "root_reconstruction_verified": 128,
+  "root_states_reconstructed": 128,
+  "rule_scope": "e44_core_v1",
+  "sources_resolved": 128,
+  "sources_unresolved": [],
+  "verdict_reference": {
+    "bounded_best_cost_count": 34,
+    "classified_count": 128,
+    "path": "release/v15_readiness_verdict.json",
+    "sha256": "f2a74bf58a15f26604b4ba98ba885d534aa93d8d5d0f3e71f3939b852f55f9fd"
+  }
+}

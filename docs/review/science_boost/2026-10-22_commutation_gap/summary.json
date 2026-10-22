@@ -1,0 +1,150 @@
+{
+  "by_case": {
+    "A_control_k1": {
+      "bqskit": {
+        "cost": 3,
+        "solved": false,
+        "status": "OK"
+      },
+      "project_e44_core_v1_h1": {
+        "cost": 3,
+        "solved": false,
+        "status": "EXACT_H_LOCAL_OPTIMUM"
+      },
+      "project_e44_core_v1_h3": {
+        "cost": 1,
+        "solved": true,
+        "status": "EXACT_ESCAPE"
+      },
+      "qiskit_l3": {
+        "cost": 1,
+        "solved": true,
+        "status": "OK"
+      },
+      "tket_fpo": {
+        "cost": 1,
+        "solved": true,
+        "status": "OK"
+      },
+      "tket_remove": {
+        "cost": 3,
+        "solved": false,
+        "status": "OK"
+      }
+    },
+    "B_control_k6": {
+      "bqskit": {
+        "cost": 8,
+        "solved": false,
+        "status": "OK"
+      },
+      "project_e44_core_v1_h1": {
+        "cost": 8,
+        "solved": false,
+        "status": "EXACT_H_LOCAL_OPTIMUM"
+      },
+      "project_e44_core_v1_h3": {
+        "cost": 8,
+        "solved": false,
+        "status": "EXACT_H_LOCAL_OPTIMUM"
+      },
+      "qiskit_l3": {
+        "cost": 6,
+        "solved": true,
+        "status": "OK"
+      },
+      "tket_fpo": {
+        "cost": 6,
+        "solved": true,
+        "status": "OK"
+      },
+      "tket_remove": {
+        "cost": 8,
+        "solved": false,
+        "status": "OK"
+      }
+    },
+    "C_target_neg": {
+      "bqskit": {
+        "cost": 3,
+        "solved": true,
+        "status": "OK"
+      },
+      "project_e44_core_v1_h1": {
+        "cost": 3,
+        "solved": true,
+        "status": "EXACT_H_LOCAL_OPTIMUM"
+      },
+      "project_e44_core_v1_h3": {
+        "cost": 3,
+        "solved": true,
+        "status": "EXACT_H_LOCAL_OPTIMUM"
+      },
+      "qiskit_l3": {
+        "cost": 3,
+        "solved": true,
+        "status": "OK"
+      },
+      "tket_fpo": {
+        "cost": 3,
+        "solved": true,
+        "status": "OK"
+      },
+      "tket_remove": {
+        "cost": 3,
+        "solved": true,
+        "status": "OK"
+      }
+    },
+    "E_control_x_mid": {
+      "bqskit": {
+        "cost": 4,
+        "solved": false,
+        "status": "OK"
+      },
+      "project_e44_core_v1_h1": {
+        "cost": 4,
+        "solved": false,
+        "status": "EXACT_H_LOCAL_OPTIMUM"
+      },
+      "project_e44_core_v1_h3": {
+        "cost": 2,
+        "solved": true,
+        "status": "EXACT_ESCAPE"
+      },
+      "qiskit_l3": {
+        "cost": 2,
+        "solved": true,
+        "status": "OK"
+      },
+      "tket_fpo": {
+        "cost": 2,
+        "solved": true,
+        "status": "OK"
+      },
+      "tket_remove": {
+        "cost": 4,
+        "solved": false,
+        "status": "OK"
+      }
+    }
+  },
+  "cases": [
+    "A_control_k1",
+    "B_control_k6",
+    "C_target_neg",
+    "E_control_x_mid"
+  ],
+  "date": "2026-10-22",
+  "experiment_id": "E55_COMMUTATION_GAP_2026_10_22",
+  "reading": "Case C is the negative control: a tool that 'solves' it is wrong, not good. If every external engine solves A/B/E and the project engine does not, the gap is the project's engine implementation, not the field's. If some external engine also fails, the blind spot is a property of a class of engines and the statement survives as an engine-class theorem.",
+  "solved_counts": {
+    "bqskit": 1,
+    "project_e44_core_v1_h1": 1,
+    "project_e44_core_v1_h3": 3,
+    "qiskit_l3": 4,
+    "tket_fpo": 4,
+    "tket_remove": 1
+  },
+  "theta": 0.7853981633974483
+}

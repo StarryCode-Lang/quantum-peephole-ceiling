@@ -1,0 +1,118 @@
+# Reference additions and catalogue-defect register — 2026-10-17
+
+**Status:** additive companion to `docs/references/unified_references.md` (v2.2, 94 entries).
+**Why a separate file:** `docs/references/unified_references.md` is a path-bound entry of
+`release/prepaper_release_manifest.json`. Editing it in place would add a new hash-drift
+entry to a frozen release manifest, which the project's own discipline forbids
+(see `docs/review/v15_cleanup_2026-10-11.md` for the same decision applied to
+`docs/theory/`). This file therefore carries the additions and the defect register
+verbatim, so the owner can merge them in a single controlled drift-disposition commit.
+
+**Verification:** every arXiv identifier below was retrieved from
+`https://export.arxiv.org/api/query` on the date in the last column. Titles, dates and
+author lists are quoted from the API response. No entry is included on the strength of a
+secondary source.
+
+---
+
+## A. New entries, proposed numbering [95]–[107]
+
+### A.1 Direct novelty pressure — representation as a first-class compiler variable
+
+| # | Reference | Verified | Why it matters |
+|---|---|---|---|
+| **[95]** | To, Quetschlich, Elsharkawy, Schulz, Wille, Kranzlmüller, "Evaluating the Effect of the Order of Optimization Passes in Quantum Circuit Optimization," arXiv:2609.29406 (2026-09-24) | 2026-10-17 | The **pass-ordering** counterpart of this project's listing-ordering result; MQT group (authors of MQT Bench, already ref. [69]). The single most likely novelty objection. Cite in §1.1 and §7.2 and state the distinction explicitly. |
+| **[105]** | Yang, Li, Deng, "Representation-Dependent Recoverability in Quantum Compilation," arXiv:2609.29210 (2026-09-24) | 2026-10-17 | **New since the 2026-10-16 scan.** Proves an entropy lower bound $\overline{A}_p+(2p-1)S\ge(1-\delta)m\log_2 K_\varepsilon-h_2(\delta)$ on what a downstream compiler can recover across a representation change, and measures a per-generator toll under a preregistered protocol. Same *conceptual* claim as this project ("representation determines downstream capability"), different object (information-theoretic recoverability of phase data, not the combinatorial action space of a local rewriter), and — importantly — **already in the "provable bound" style** that Direction P0-1 targets. |
+| **[106]** | Ye, Liang, Khan, "When Equivalent Quantum Circuits Lose Synthesis Choices," arXiv:2610.06142 (2026-10-05) | 2026-10-17 | **New since the 2026-10-16 scan.** Introduces *synthesis availability*: representation changes (OpenQASM round trips) remove high-level operations, so requested synthesis has no effect in **360/360** conditions; the MQT pipeline gains 37.2% two-qubit gates on an 8-qubit Grover circuit after an OpenQASM 2 interchange. A third independent 2026 demonstration that representation choice gates optimizer capability. |
+| **[99]** | Rovara, Haag, Koch, Izaac, Sivarajah, Wille, Borgna, "Why Are We Unrolling? The Importance of Structured Quantum Programs for Compilation," arXiv:2609.16171 (2026-09-14) | 2026-10-17 | Structured-vs-unrolled argument; the generalisation frame that a theorem covering both axes would subsume. |
+
+**Consequence for positioning.** Three independent 2026 papers now argue that
+representation choice determines what a compiler can do ([95], [99], [105], [106]).
+The project's differentiator is no longer "representation matters" — that is becoming
+consensus — but **the certified landscape**: an exact, replayable map of the reachable
+action space per source. The abstract and introduction must lead with the certified
+object, not with the phenomenon.
+
+### A.2 Methodological templates for the certified-barrier upgrade
+
+| # | Reference | Verified | Why it matters |
+|---|---|---|---|
+| **[97]** | Kam, Mahasinghe, De Silva, Cadet, Wang, "An Exactness Barrier for ZX-Calculus Optimization of Synthesized Clifford+T Circuits," arXiv:2608.22801 (2026-08-24) | 2026-10-17 | **The template.** A per-instance computable lower bound that *explains* a near-null optimization. This is what the project's empirical "structural ceiling" must become. |
+| **[100]** | Bruzzone, Cazzola, "A Multi-Dimensional, Per-Pass Empirical Study of the LLVM Optimization Pipeline," arXiv:2606.31238 (2026-06-30) | 2026-10-16 | Classical methodological twin: 113 cumulative prefixes, non-monotonicity 6.6–9.7%, back-loadedness 84.8%, and a search-free additive bound (46.35%). Supplies the measurement design for the representation × pass-order factorial. |
+| **[101]** | Schifferer, Ullrich, Hack, "Augmenting Rewrite Rule Sets via Knuth-Bendix Completion," arXiv:2610.01246 (2026-10-01) | 2026-10-16 | Automatic rule generation — the direct attack on "the trichotomy is a library artefact". |
+| **[103]** | Hong, Soi, Zhang, Aiken, "Rewrite System Showdown: Stochastic Search vs. EqSat," arXiv:2605.19005 (2026-05-18) | 2026-10-16 | Honest negative-control baseline for the EqSat route. |
+| **[98]** | Laabs, "AlchemQ: Proof-Carrying Quantum Circuit Optimization with Per-Result Equivalence Certificates," arXiv:2609.19160 (2026-08-24) | 2026-10-17 | Certificate-protocol precedent: versioned certificates + standalone Apache-2.0 verifier + a real IBM Heron r2 pilot. |
+| **[104]** | "Testing and Verification of Quantum Compilers through Assurance Contracts and Evidence," arXiv:2610.00255 (2026-09-24) | 2026-10-16 | Ready-made framing reference for the evidence-chain methodology. |
+| **[107]** | Fujii, "Computational Complexity of Clifford Template Compilation: Are Quantum Computers Useful for Compiling Quantum Circuits?," arXiv:2609.35239 (2026-09-28) | 2026-10-17 | **New since the 2026-10-16 scan.** Complexity landscape for *template compilation*: NP∩BQP for commuting templates with unrestricted exponents; NP-complete for binary exponents even for CNOT-only exactly commuting operations; polynomial for commuting self-inverse actions, but NP-complete once the total repetition count is bounded. This is the missing complexity backdrop for this project's Phase-2b template matching, and a candidate route to classifying it. |
+
+### A.3 Comparator and explanation candidates
+
+| # | Reference | Verified | Why it matters |
+|---|---|---|---|
+| **[102]** | "Leveraging Phase Polynomials for Quantum Circuit Optimization" (PhasePoly), arXiv:2506.20624 (2025-06-25) | 2026-10-17 | Up to 50.00% gate reduction (34.70% avg) via a cross-block parity representation — a representation change that beats this project's local rewriting on exactly the families it classifies as IIIb. Must be engaged, not ignored. |
+| **[96]** | Lee, Jeong, Kim, "Quantum Circuit Optimization by Graph Coloring," *Quantum* (2026), arXiv:2501.14447 | 2026-10-16 | Reduces depth minimisation of commuting operations to vertex colouring on a non-parallelisability graph — that graph is this project's commutation graph. Published in *Quantum*, a target venue. |
+| **[108]** | Escofet, Almudéver, Abadal, Alarcón, "Quantum Circuit Pruning: From NISQ Architectures to Fault-Tolerant Operations," arXiv:2610.00669 (2026-09-30) | 2026-10-17 | **New since the 2026-10-16 scan.** Architecture-independent lower bound on fidelity cost vs. hardware routing model; up to 48.6% gate reduction with fidelity improvements. Evidence that "lower bound + hardware consequence" is a publishable combination — the exact shape of Direction P0-1 + P1-4. |
+| **[109]** | "Discovering state-of-the-art quantum circuits with large language models," arXiv:2610.22367 (2026-10-15) | 2026-10-17 | Newest LLM-for-circuits result; relevant to Direction P2-6. |
+| **[110]** | "Provably Optimal Quantum Circuits with Mixed-Integer Programming," arXiv:2510.00649 (2025-10-01) | 2026-10-17 | A second route (besides SAT) to global-optimality certificates for the BV family — directly relevant to upgrading Theorem 9. |
+
+### A.4 Tool references (no arXiv identifier)
+
+| # | Tool | Verified | Note |
+|---|---|---|---|
+| **[111]** | BQSKit (Berkeley Quantum Synthesis Toolkit, LBNL), `BQSKit/bqskit` | GitHub API 2026-10-17: 188★, last push 2026-08-11, not archived | Major SOTA compiler, absent from every comparison in this project. Add to the SOTA panel. |
+| **[112]** | `qqq-wisc/tzap` | GitHub API 2026-10-17: 48★, last push 2026-10-16, not archived | "A very fast and scalable quantum circuit optimizer" — brand new, direct SOTA comparator and novelty risk. Pin the commit before benchmarking. |
+
+---
+
+## B. Defect register for `unified_references.md` (report only, not edited)
+
+| Defect | Location | Detail |
+|---|---|---|
+| §P contradicts §L | line 353 vs line 237 | §P lists `[76] Hietala et al. (2022) Quartz superoptimizer (PLDI)`; §L's `[76]` is Xu et al., Quartz (correct). |
+| §P contradicts §L | line 354 vs line 239 | §P lists `[77] Ravi et al. (2022) QUASAR compiler`; §L's `[77]` is Yang et al., equality saturation for quantum circuit optimization. |
+| §P header vs §L | line 355 vs line 69 | §P claims `[20] Amy, Glaudell, Ross (2018)` was "missing from the original 42-reference list"; §L already contains it. The same over-claim applies to [5] and [6]. |
+| Non-contiguous numbering | §L | `[74]` and `[81]` are removed placeholders, so §A–§M is not contiguous while §P counts them. |
+| Stale repository URLs | `docs/analysis/archive/sota_availability.md` line 28; `docs/results/tket_bug_report_final.md` lines 4, 169 | `https://github.com/CQCL/tket` → the repository is now `https://github.com/Quantinuum/tket` (verified live 2026-10-17: 318★, last push 2026-10-08). Both files are path-bound in `release/prepaper_v12_capsule_inner_manifest.json`, so they were **not** edited; the correction is recorded here. |
+| Unresolved tool homes | manuscript tool citations | `softwareQinc/quartz`, `gwwatkin/quanto` and `epiqc/voqc` all return 404. The PLDI'22 Quartz *artifact* repository resolves at `quantum-compiler/quartz-artifact` (9★, last push 2024-03-02); the live Quartz, Quanto and VOQC homes were **not** resolved within this run's GitHub API budget (rate limit). Resolve before citing URLs; do not guess. |
+
+---
+
+## C. Merge instruction for the owner
+
+1. Apply §A as `[95]`–`[112]` in `unified_references.md` (or renumber to keep §L contiguous).
+2. Fix the four §B consistency defects in the same commit.
+3. Record the resulting hash change as one explicit drift-disposition entry, following the
+   existing pattern in `release/prepaper_external_blockers.csv` /
+   `docs/review/prepaper_final_audit_2026-08-10.md`.
+4. Do **not** fold this file into `unified_references.md` without step 3; a silent merge
+   is exactly the failure mode the release manifest exists to catch.
+
+---
+
+## D. Additions 2026-10-23 (E56/E57 round)
+
+Retrieved from `https://export.arxiv.org/api/query` on 2026-10-23. Proposed numbering
+continues §A: **[113]–[116]**. Still additive only — `unified_references.md` remains
+unmodified.
+
+| # | Reference | Verified | Why it matters |
+|---|---|---|---|
+| **[113]** | "Fast Template Matching for Quantum Circuits Using Hypergraph," arXiv:2610.29095 (2026-10-21) | 2026-10-23 | Newest representation paper. Replaces the DAG template-matching representation with a *hypergraph* that collapses commutativity classes, and reports lower matching complexity. This is the closest published work to the E56 criterion's object (commutativity classes as a data structure), and it must be compared explicitly in the related-work section or the criterion will read as a re-derivation. |
+| **[114]** | "Complexity Thresholds for the Constrained Colored Token Swapping Problem," arXiv:2601.09681 (2026-01-14) | 2026-10-23 | Proves PSPACE-completeness for constrained coloured token swapping. This is the **hardness source** for Direction P1-2: listing-reachability under a commutation constraint is a constrained token-swapping problem, so the order class is polynomial exactly where the constraint graph is a path. |
+| **[115]** | "Settling Weighted Token Swapping up to Algorithmic Barriers," arXiv:2507.22450 (2025-07-30) | 2026-10-23 | Weighted token swapping with algorithmic lower bounds. Supplies the language for "distance to a reachable configuration" that $D_{\min}$ instantiates in the unweighted case. |
+| **[116]** | "OpenQudit: Extensible and Accelerated Numerical Quantum Compilation via a JIT-Compiled DSL," arXiv:2511.16585 (2025-11-20) | 2026-10-23 | Current numerical-synthesis baseline missing from the SOTA panel (S1–S5). Needed before any "no tested compiler reduces them" claim is restated. |
+
+### D.1 Repository-path corrections found on 2026-10-23
+
+| Item | Correction | How verified |
+|---|---|---|
+| MQT QCEC | `mqt/qcec` returns 404. Live home is `munich-quantum-toolkit/qcec` (120★, last push 2026-10-22). | GitHub REST, authenticated. |
+| Quanto | No public GitHub repository resolves under that name; the 2026-10-17 note that `gwwatkin/quanto` 404s is confirmed, and no replacement was found. Cite the paper, not a URL. | GitHub REST search. |
+| tket | `CQCL/tket` redirects (HTTP 301) to `Quantinuum/tket`; already recorded in §B, still unfixed in the two path-bound files. | GitHub REST redirect resolution. |
+
+### D.2 Status of the §B defect register
+
+Unchanged. The owner merge described in §C has still not been performed, and the
+2026-10-23 round again declined to touch `unified_references.md` for the same reason:
+it is path-bound in three release manifests, so an editorial merge would create a
+sixteenth drift entry before the re-pin decision is made.

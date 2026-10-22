@@ -1,0 +1,181 @@
+{
+  "accepted_drift": [
+    {
+      "attribution_commit": "8255a1634",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 454,
+      "expected_sha256": "e5ff81c19e8e27a6e5acbe89faacf6475d81937b02f2319309f86f3689a3bab0",
+      "file": "requirements.txt",
+      "observed_bytes": 489,
+      "observed_sha256": "9b82251b1e72e87abcf8a5fb028b529c1d8c4b5720f50cc05fc263e64e1cf3f7",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "af8ed604b",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 483,
+      "expected_sha256": "ffd75627541b9c277429b4933d589f969cc4458c7db405746ffd665cfc9cdfdb",
+      "file": "data/v10/prepaper/external_baselines/quartz/adapter/build_quartz_windows.cmd",
+      "observed_bytes": 496,
+      "observed_sha256": "5635055a70a1cd09fd148e38fffca16824234a37eb2d55b6360c8c3c25145718",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "af8ed604b",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 1441,
+      "expected_sha256": "6c46befb190c55099aec685c8c9e09c41530fd82fdbc930d1f2d7c9a6a12eb2a",
+      "file": "data/v10/prepaper/external_baselines/quartz/adapter/quartz_test_optimize_io.patch",
+      "observed_bytes": 1483,
+      "observed_sha256": "2c58f5202c13b033e86202aff42ca4d84452d4f9901a0c4ae19fbf28c7386baa",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "87019d8fc",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 14545,
+      "expected_sha256": "550476344300266a95264ccd33ac27964a05d718a528b6dce15dc5cb4f63401d",
+      "file": "scripts/generate_metric_audit_ledger.py",
+      "observed_bytes": 14777,
+      "observed_sha256": "efb4fdd209eddc7a6ecc4495c98361a49985cd626be068072490f5dc141b5693",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "87019d8fc",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 68309,
+      "expected_sha256": "b4ebfbe59cb4cb40b135e1355d30f795114152033d1db0a48e34df06a40b075d",
+      "file": "scripts/merge_metric_registry_fragments.py",
+      "observed_bytes": 69375,
+      "observed_sha256": "6bd96fcf1964d348b5538fe14a16047290098616cdc267063d6647daf7f5152c",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "c52b48083",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 454757,
+      "expected_sha256": "2a4fefea4b0e0161ebf90d4192af0dfcf0ced372f488f9e4569dc0e62e8731db",
+      "file": "release/sbom.cdx.json",
+      "observed_bytes": 454788,
+      "observed_sha256": "5991fca2e5f31e5235563c9dfe9689669398dbd1b9601b88d684406a7e24a12e",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "e4250beec",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 54484,
+      "expected_sha256": "e389c7285a49dd56c04d10b9adb0fecc57c84867bf22ad4cc2e3594d4f8a68db",
+      "file": "docs/data_dictionary.md",
+      "observed_bytes": 56312,
+      "observed_sha256": "5a529d4fa36c625a47b0f37cf090a1e44c41fc6272a29d2fd16cdecb16fba324",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "d6c5ce2f5",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 25710,
+      "expected_sha256": "9fa5992da23f3dcae2535a0d09156ca61bf4529563efafe562db28246d6de91c",
+      "file": "docs/references/search_ledger.md",
+      "observed_bytes": 30553,
+      "observed_sha256": "f8b100b764f2a870d7fc6641ffae4b3bb3d37aa4f9df6ac24439263d4d42475e",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "e4250beec",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 41890,
+      "expected_sha256": "e6d7471f3998da89edb94a534ac1656a76c3ad3ed87c3f5b5470bc5138c03220",
+      "file": "docs/theory/framework.md",
+      "observed_bytes": 42987,
+      "observed_sha256": "d49ef104789a6bacbf1a38f904c9998d8c674265908029352901ba1761adb195",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "e4250beec",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 45751,
+      "expected_sha256": "c082a36038c06710771984c796cb455d01cd4f924bc549d5934379d166a595ab",
+      "file": "docs/results/analysis_summary.md",
+      "observed_bytes": 47398,
+      "observed_sha256": "169238ae51732a7f007cbc2bb33422162cbfd448faf6736a30eeb0e80e9d093a",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "87019d8fc",
+      "disposition": "SUPERSEDED_PENDING_OWNER_REPIN",
+      "expected_bytes": 1091059,
+      "expected_sha256": "f0a0ac1c05d92305a90fa88d5f8bf33d442c71df8b51538fa482ec5ae39b956b",
+      "file": "docs/review/metric_audit_ledger_2026-08-24.csv",
+      "observed_bytes": 1104488,
+      "observed_sha256": "46bb73faebf4b6fc26849af31888b60e573ea84dd92bf57b737923674acd83c5",
+      "recommended_option": "B",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "87019d8fc",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 887,
+      "expected_sha256": "c6aa90af6812f8a943f20badbb72b25ad91486349a6f077cea75c6fb8ded7115",
+      "file": "docs/review/metric_audit_resolution_2026-08-24.md",
+      "observed_bytes": 1033,
+      "observed_sha256": "857d59bdb835d0c41ebdb9cecebb8193fdf8334a70aaec0ac69e3b6a0e34d97e",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "87019d8fc",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 822,
+      "expected_sha256": "ffddeb1255125d3a9ee84f48e53c6664ca11f026f883d769267d4d2400e0a10f",
+      "file": "docs/review/metric_audit_summary_2026-08-24.json",
+      "observed_bytes": 800,
+      "observed_sha256": "715b3a97f8b5948e5bcc5729ed8ab6a3ddf1e10736fdd7c6447b59273f8dd4b0",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "87019d8fc",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 1512046,
+      "expected_sha256": "6170358ee14183f606871d907138d492dd6861debe051f4b808c289a4481ac3b",
+      "file": "docs/review/metric_evidence_registry_2026-08-26.json",
+      "observed_bytes": 1498338,
+      "observed_sha256": "1b9413c2d280fa208b93d25d1f18d7d51cdf0f729f1fb03aa9fb3f395ca6bd09",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "926c76407",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 2597,
+      "expected_sha256": "6e93f86da9395c2a1d372b4b90013e97eae36008e2e7fa77043d3efe9e26511e",
+      "file": "release/prepaper_archive_restore_audit.json",
+      "observed_bytes": 2597,
+      "observed_sha256": "9af8dad23406554e1ccda746e92dc1958695e1c5ca6db557c51beb96750b1859",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    }
+  ],
+  "date": "2026-10-22",
+  "entry_count": 35042,
+  "failures": [],
+  "manifest": "release/prepaper_release_manifest.json",
+  "note": "PASS_WITH_ACCEPTED_DRIFT means every mismatch is registered and attributed. It does not mean the manifest is correct: the owner still has to re-pin or supersede the entry in release/, which this project's write scope excludes.",
+  "register": "docs/review/release_drift_register.json",
+  "schema_version": "release-chain-verification-v1",
+  "status_counts": {
+    "KNOWN_DRIFT_ACCEPTED": 15,
+    "MATCH": 35027
+  },
+  "verdict": "PASS_WITH_ACCEPTED_DRIFT"
+}

@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-17",
+  "derivation": "E[(X-EX)^2] = 2*int t P[X>=EX+t] dt <= 2*int t exp(-t^2/(2N)) dt = 2N",
+  "frozen_paths_untouched": [
+    "data/",
+    "release/",
+    "docs/manuscript/"
+  ],
+  "inputs_read_only": {
+    "e30": {
+      "path": "data/v10/e30/e30_thm1a_wcl_results.csv",
+      "sha256": "e7195d2b3fa68f6b5b9552a3fec34ce077d2893d1bbfe64898d6d3691ba3f318"
+    }
+  },
+  "output": {
+    "csv": "docs/review/science_boost/2026-10-17_thm5_tail_test/thm5_tail_test.csv"
+  },
+  "protocol_id": "THM5_TAIL_NECESSARY_CONDITION_TEST_V1",
+  "statistic": "Var(X) <= 2N, N = n(d-1), X = a_adj_raw"
+}

@@ -1,0 +1,276 @@
+{
+  "contract": {
+    "inputs": {
+      "classification_complete": {
+        "path": "data/v15/e45_landscape_integration/classification_complete.csv",
+        "sha256": "786b8a0c4fbeb46f7813fcad5874c353402dbc565e8f07ee5d4229ade09826fc"
+      },
+      "idastar_certificates": {
+        "path": "data/v14/e45_idastar_escape/certificates.jsonl",
+        "sha256": "de8a829d6d52c011945408484c57abf65b66bc22bba9be3cfa4e6d80345d0516"
+      }
+    },
+    "root_states": "rebuilt via experiments.e46_window_landscape.run.load_root_states (hash-checked)",
+    "search_rerun": false,
+    "writes": "docs/review/science_boost/2026-10-22_escape_mechanism/ only"
+  },
+  "date": "2026-10-22",
+  "experiment_id": "E52_ESCAPE_MECHANISM_CENSUS_2026_10_22",
+  "part_a_escape_decomposition": {
+    "by_status": {
+      "EXACT_ESCAPE": 63,
+      "EXACT_H_LOCAL_OPTIMUM": 65
+    },
+    "neutral_prefix_histogram": {
+      "0": 49,
+      "1": 8,
+      "2": 6
+    },
+    "path_length_histogram": {
+      "1": 49,
+      "2": 8,
+      "3": 6
+    },
+    "reducing_family_counts": {
+      "pair_v1": 63
+    },
+    "reducing_rule_counts": {
+      "pair_v1.rotation_merge": 34,
+      "pair_v1.rotation_zero": 8,
+      "pair_v1.self_inverse": 21
+    },
+    "rule_family_usage_all_steps": {
+      "pair_v1": 63,
+      "quartz_v1": 5,
+      "structural_exchange_v1": 15
+    },
+    "source_count": 128,
+    "with_witness": 63
+  },
+  "part_b_cancellation_census": {
+    "root_count": 128,
+    "root_kind_counts": {
+      "GREEDY_FIXED_POINT": 78,
+      "RAW_NORMALIZED_OVER_BASELINE_BUDGET": 50
+    },
+    "roots_with_distant_feasible_pair": 0,
+    "roots_with_no_reducible_pair": 34,
+    "roots_with_only_blocked_pairs": 45,
+    "roots_with_zero_distance_pair": 49
+  },
+  "part_c_mechanism_split": {
+    "depth_prediction_agreement": 114,
+    "depth_prediction_counts": {
+      "MATCH": 49,
+      "MISSED_ESCAPE": 14,
+      "NO_ESCAPE_PREDICTED": 65
+    },
+    "depth_prediction_disagreements": [
+      {
+        "circuit_family": "IQP",
+        "escape_depth": 3,
+        "min_commutation_distance": null,
+        "predicted_depth": null,
+        "source_id": "e39:061145114cca873e3d8fcf98f0fa0a719cdf86dc6144864cc899a7493711240b",
+        "status": "EXACT_ESCAPE"
+      },
+      {
+        "circuit_family": "IQP",
+        "escape_depth": 3,
+        "min_commutation_distance": null,
+        "predicted_depth": null,
+        "source_id": "e39:0ea94971bc42ea5f21350b8ee791f5ddd3a86cabd0502a4f2ecd331789793740",
+        "status": "EXACT_ESCAPE"
+      },
+      {
+        "circuit_family": "IQP",
+        "escape_depth": 3,
+        "min_commutation_distance": null,
+        "predicted_depth": null,
+        "source_id": "e39:1af7528f5f0b083d8fb217d2aaa8db5ea8fabaefadf375ad667c53198edfbaae",
+        "status": "EXACT_ESCAPE"
+      },
+      {
+        "circuit_family": "IQP",
+        "escape_depth": 2,
+        "min_commutation_distance": null,
+        "predicted_depth": null,
+        "source_id": "e39:2d71c39b26582071bf61dcf0fd75c33b46d5626b7983e36e786fa74e823155c6",
+        "status": "EXACT_ESCAPE"
+      },
+      {
+        "circuit_family": "IQP",
+        "escape_depth": 2,
+        "min_commutation_distance": null,
+        "predicted_depth": null,
+        "source_id": "e39:411fb287ad09f5ba59dc8928c41c7d63890830c6fb4a8d8bbc17d6aa448f59f5",
+        "status": "EXACT_ESCAPE"
+      },
+      {
+        "circuit_family": "IQP",
+        "escape_depth": 2,
+        "min_commutation_distance": null,
+        "predicted_depth": null,
+        "source_id": "e39:dce7762d954de1250538ce0ef1982983332ffbdb47daa6e5f864c86712de8393",
+        "status": "EXACT_ESCAPE"
+      },
+      {
+        "circuit_family": "IQP",
+        "escape_depth": 2,
+        "min_commutation_distance": null,
+        "predicted_depth": null,
+        "source_id": "e39:e00e580e23474658e32e03271e9930d065185c3eea39cd126893c951749d2ca8",
+        "status": "EXACT_ESCAPE"
+      },
+      {
+        "circuit_family": "Oracle",
+        "escape_depth": 2,
+        "min_commutation_distance": null,
+        "predicted_depth": null,
+        "source_id": "e39:02163c542c157c61ed7195186ff2f5485f3042166bff997c922c173ac06103d0",
+        "status": "EXACT_ESCAPE"
+      },
+      {
+        "circuit_family": "RandomClifford",
+        "escape_depth": 2,
+        "min_commutation_distance": null,
+        "predicted_depth": null,
+        "source_id": "e39:8b29e59e3a39db333187ef02a279d7723f487d94b438e8e97ce4d73eab48b4e8",
+        "status": "EXACT_ESCAPE"
+      },
+      {
+        "circuit_family": "RandomClifford",
+        "escape_depth": 2,
+        "min_commutation_distance": null,
+        "predicted_depth": null,
+        "source_id": "e39:96561fd3e0765c0456e8f0b0e5c9c800074d4f866c985077bc85ca4c0fb159aa",
+        "status": "EXACT_ESCAPE"
+      },
+      {
+        "circuit_family": "RandomClifford",
+        "escape_depth": 2,
+        "min_commutation_distance": null,
+        "predicted_depth": null,
+        "source_id": "e39:e26eca49b8903c7b025bb5c3be2146eaa21c6fab5a1606c2bb182de89c74b664",
+        "status": "EXACT_ESCAPE"
+      },
+      {
+        "circuit_family": "UCCSD_inspired",
+        "escape_depth": 3,
+        "min_commutation_distance": null,
+        "predicted_depth": null,
+        "source_id": "e39:569144f1f4ed5900a4ee35afd5c24a98a42de6ce3c141773dc514b4ea44405f4",
+        "status": "EXACT_ESCAPE"
+      },
+      {
+        "circuit_family": "UCCSD_inspired",
+        "escape_depth": 3,
+        "min_commutation_distance": null,
+        "predicted_depth": null,
+        "source_id": "e39:6b50423744cf6c022eecde33a07e710ea071ad97745eda5ae14badb443b4a3d4",
+        "status": "EXACT_ESCAPE"
+      },
+      {
+        "circuit_family": "UCCSD_inspired",
+        "escape_depth": 3,
+        "min_commutation_distance": null,
+        "predicted_depth": null,
+        "source_id": "e39:de6c0eaa11dbb8cb038759ba22e2ae33584fddad76d7f93a185f16b9e2034ea9",
+        "status": "EXACT_ESCAPE"
+      }
+    ],
+    "escape_count": 63,
+    "mechanism_by_circuit_family": {
+      "Adder": {
+        "CANCELLATION_ONLY": 3
+      },
+      "CNOT": {
+        "NO_ESCAPE": 1
+      },
+      "E44:neutral_exposure": {
+        "NO_ESCAPE": 32
+      },
+      "GHZ": {
+        "NO_ESCAPE": 1
+      },
+      "Grover": {
+        "CANCELLATION_ONLY": 6
+      },
+      "HaarRandom": {
+        "CANCELLATION_ONLY": 3
+      },
+      "HardwareEfficient": {
+        "CANCELLATION_ONLY": 6,
+        "NO_ESCAPE": 1
+      },
+      "IQP": {
+        "CANCELLATION_ONLY": 7,
+        "NO_ESCAPE": 1
+      },
+      "Oracle": {
+        "CANCELLATION_ONLY": 1,
+        "NO_ESCAPE": 16
+      },
+      "QAOA": {
+        "CANCELLATION_ONLY": 6
+      },
+      "QFT": {
+        "NO_ESCAPE": 2
+      },
+      "QuantumWalk": {
+        "CANCELLATION_ONLY": 10
+      },
+      "RandomClifford": {
+        "CANCELLATION_ONLY": 3,
+        "NO_ESCAPE": 3
+      },
+      "SurfaceCode": {
+        "NO_ESCAPE": 8
+      },
+      "UCCSD_inspired": {
+        "CANCELLATION_ONLY": 8
+      },
+      "VQE": {
+        "CANCELLATION_ONLY": 10
+      }
+    },
+    "mechanism_counts": {
+      "CANCELLATION_ONLY": 63,
+      "NO_ESCAPE": 65
+    }
+  },
+  "part_d_neutral_step_effects": {
+    "barrier_kind_counts": {
+      "CONTENT": 10,
+      "ORDER_ONLY": 11
+    },
+    "by_family": {
+      "BernsteinVazirani": {
+        "CONTENT": 7
+      },
+      "IQP": {
+        "CONTENT": 2,
+        "ORDER_ONLY": 5
+      },
+      "Oracle": {
+        "CONTENT": 1
+      },
+      "RandomClifford": {
+        "ORDER_ONLY": 3
+      },
+      "UCCSD_inspired": {
+        "ORDER_ONLY": 3
+      }
+    },
+    "cases": 21,
+    "neutral_rule_counts": {
+      "exchange.cx_control_z": 10,
+      "exchange.disjoint": 24,
+      "quartz_v1:10_2:e2064f1fd3b7->380b44d566a1:from_anchor": 4,
+      "quartz_v1:11_2:d893089b42e1->4db10501ff4e:to_anchor": 3,
+      "quartz_v1:15_2:6984096ccd0f->9302b827fe85:from_anchor": 5,
+      "quartz_v1:45_2:9f27c1d5db0d->890711354af3:from_anchor": 2
+    }
+  },
+  "reading": "Part C separates escapes whose reducing step is Phase-1 cancellation (pair_v1) from escapes whose reducing step is a Quartz rewrite. If the Quartz share dominates, the certified landscape measures rewrite-library reachability, not cancellation reachability, and the two narratives in the manuscript must be reported as two mechanisms."
+}

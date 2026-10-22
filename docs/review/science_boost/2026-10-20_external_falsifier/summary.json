@@ -1,0 +1,296 @@
+{
+ "experiment_id": "E48_EXTERNAL_FALSIFIER_2026_10_20",
+ "date": "2026-10-20",
+ "qiskit_version": "2.4.1",
+ "pytket_version": "2.18.0",
+ "pyzx_version": "0.10.5",
+ "normalizer_audit": {
+  "status": "SKIPPED"
+ },
+ "part_a": {
+  "sizes": [
+   4,
+   6,
+   8,
+   10,
+   12,
+   14,
+   16,
+   20
+  ],
+  "rows": 32,
+  "theorem_violations": 0,
+  "baseline_beaten": 0,
+  "equivalence_failures": 0,
+  "min_cost_by_n": {
+   "4": 4,
+   "6": 6,
+   "8": 8,
+   "10": 10,
+   "12": 12,
+   "14": 14,
+   "16": 16,
+   "20": 20
+  }
+ },
+ "part_b": {
+  "rows": 384,
+  "real_sources": 96,
+  "by_family": {
+   "Adder": {
+    "sources": 3,
+    "rows_beating_baseline": 9,
+    "sources_beaten": 3,
+    "largest_gain_over_baseline": 32,
+    "errors": 0,
+    "skipped": 3
+   },
+   "CNOT": {
+    "sources": 1,
+    "rows_beating_baseline": 0,
+    "sources_beaten": 0,
+    "largest_gain_over_baseline": 0,
+    "errors": 0,
+    "skipped": 0
+   },
+   "GHZ": {
+    "sources": 1,
+    "rows_beating_baseline": 0,
+    "sources_beaten": 0,
+    "largest_gain_over_baseline": 0,
+    "errors": 0,
+    "skipped": 0
+   },
+   "Grover": {
+    "sources": 6,
+    "rows_beating_baseline": 14,
+    "sources_beaten": 6,
+    "largest_gain_over_baseline": 131,
+    "errors": 0,
+    "skipped": 10
+   },
+   "HaarRandom": {
+    "sources": 3,
+    "rows_beating_baseline": 3,
+    "sources_beaten": 3,
+    "largest_gain_over_baseline": 395,
+    "errors": 0,
+    "skipped": 9
+   },
+   "HardwareEfficient": {
+    "sources": 7,
+    "rows_beating_baseline": 20,
+    "sources_beaten": 7,
+    "largest_gain_over_baseline": 80,
+    "errors": 0,
+    "skipped": 7
+   },
+   "IQP": {
+    "sources": 8,
+    "rows_beating_baseline": 16,
+    "sources_beaten": 8,
+    "largest_gain_over_baseline": 42,
+    "errors": 0,
+    "skipped": 8
+   },
+   "Oracle": {
+    "sources": 17,
+    "rows_beating_baseline": 34,
+    "sources_beaten": 17,
+    "largest_gain_over_baseline": 2,
+    "errors": 0,
+    "skipped": 17
+   },
+   "QAOA": {
+    "sources": 6,
+    "rows_beating_baseline": 18,
+    "sources_beaten": 6,
+    "largest_gain_over_baseline": 306,
+    "errors": 0,
+    "skipped": 6
+   },
+   "QFT": {
+    "sources": 2,
+    "rows_beating_baseline": 4,
+    "sources_beaten": 2,
+    "largest_gain_over_baseline": 21,
+    "errors": 0,
+    "skipped": 2
+   },
+   "QuantumWalk": {
+    "sources": 10,
+    "rows_beating_baseline": 16,
+    "sources_beaten": 10,
+    "largest_gain_over_baseline": 336,
+    "errors": 0,
+    "skipped": 24
+   },
+   "RandomClifford": {
+    "sources": 6,
+    "rows_beating_baseline": 16,
+    "sources_beaten": 6,
+    "largest_gain_over_baseline": 31,
+    "errors": 0,
+    "skipped": 0
+   },
+   "SurfaceCode": {
+    "sources": 8,
+    "rows_beating_baseline": 1,
+    "sources_beaten": 1,
+    "largest_gain_over_baseline": 2,
+    "errors": 0,
+    "skipped": 0
+   },
+   "UCCSD_inspired": {
+    "sources": 8,
+    "rows_beating_baseline": 21,
+    "sources_beaten": 8,
+    "largest_gain_over_baseline": 180,
+    "errors": 0,
+    "skipped": 8
+   },
+   "VQE": {
+    "sources": 10,
+    "rows_beating_baseline": 30,
+    "sources_beaten": 10,
+    "largest_gain_over_baseline": 407,
+    "errors": 0,
+    "skipped": 10
+   }
+  },
+  "ceiling_families": {
+   "GHZ": {
+    "sources": 1,
+    "rows_beating_baseline": 0,
+    "sources_beaten": 0,
+    "largest_gain_over_baseline": 0,
+    "errors": 0,
+    "skipped": 0
+   },
+   "QFT": {
+    "sources": 2,
+    "rows_beating_baseline": 4,
+    "sources_beaten": 2,
+    "largest_gain_over_baseline": 21,
+    "errors": 0,
+    "skipped": 2
+   },
+   "SurfaceCode": {
+    "sources": 8,
+    "rows_beating_baseline": 1,
+    "sources_beaten": 1,
+    "largest_gain_over_baseline": 2,
+    "errors": 0,
+    "skipped": 0
+   }
+  },
+  "equivalence_failures": 0,
+  "rows_beating_baseline": 202,
+  "sources_beaten_by_any_tool": 87
+ },
+ "gate_set_probe": [
+  {
+   "n_qubits": 8,
+   "basis": "cx_only",
+   "status": "OK",
+   "cost": 8,
+   "two_qubit": 7
+  },
+  {
+   "n_qubits": 8,
+   "basis": "cz_only",
+   "status": "OK",
+   "cost": 22,
+   "two_qubit": 7
+  },
+  {
+   "n_qubits": 8,
+   "basis": "rzz_native",
+   "status": "OK",
+   "cost": 50,
+   "two_qubit": 7
+  },
+  {
+   "n_qubits": 8,
+   "basis": "ecr_native",
+   "status": "OK",
+   "cost": 43,
+   "two_qubit": 7
+  },
+  {
+   "n_qubits": 8,
+   "basis": "iswap_native",
+   "status": "OK",
+   "cost": 78,
+   "two_qubit": 14
+  },
+  {
+   "n_qubits": 8,
+   "basis": "swap_allowed",
+   "status": "OK",
+   "cost": 8,
+   "two_qubit": 7
+  },
+  {
+   "n_qubits": 8,
+   "basis": "one_2q_gate_u_1q",
+   "status": "OK",
+   "cost": 8,
+   "two_qubit": 7
+  },
+  {
+   "n_qubits": 12,
+   "basis": "cx_only",
+   "status": "OK",
+   "cost": 12,
+   "two_qubit": 11
+  },
+  {
+   "n_qubits": 12,
+   "basis": "cz_only",
+   "status": "OK",
+   "cost": 34,
+   "two_qubit": 11
+  },
+  {
+   "n_qubits": 12,
+   "basis": "rzz_native",
+   "status": "OK",
+   "cost": 78,
+   "two_qubit": 11
+  },
+  {
+   "n_qubits": 12,
+   "basis": "ecr_native",
+   "status": "OK",
+   "cost": 67,
+   "two_qubit": 11
+  },
+  {
+   "n_qubits": 12,
+   "basis": "iswap_native",
+   "status": "OK",
+   "cost": 122,
+   "two_qubit": 22
+  },
+  {
+   "n_qubits": 12,
+   "basis": "swap_allowed",
+   "status": "OK",
+   "cost": 12,
+   "two_qubit": 11
+  },
+  {
+   "n_qubits": 12,
+   "basis": "one_2q_gate_u_1q",
+   "status": "OK",
+   "cost": 12,
+   "two_qubit": 11
+  }
+ ],
+ "corrections_applied": {
+  "pyzx_phase_units": "phases multiplied by pi; pyzx channel re-run",
+  "pytket_implicit_swaps": "tk_to_qiskit(..., replace_implicit_swaps=True)",
+  "comparison_target": "delta and beats_baseline re-derived against frozen baseline_cost"
+ }
+}

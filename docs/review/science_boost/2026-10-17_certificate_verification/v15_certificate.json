@@ -1,0 +1,276 @@
+{
+  "artifacts": {
+    "classification": {
+      "path": "data/v15/e45_landscape_integration/classification_complete.csv",
+      "sha256": "786b8a0c4fbeb46f7813fcad5874c353402dbc565e8f07ee5d4229ade09826fc"
+    },
+    "landscape_receipt": {
+      "path": "data/v15/e45_landscape_integration/receipt.json",
+      "sha256": "5a2d67d48fc9f8395b2af46b5f9aca4af05e029a7563423cc84ac7c0be55f5bd"
+    },
+    "verdict": {
+      "path": "release/v15_readiness_verdict.json",
+      "sha256": "f2a74bf58a15f26604b4ba98ba885d534aa93d8d5d0f3e71f3939b852f55f9fd"
+    },
+    "window_receipt": {
+      "path": "data/v15/e46_window_landscape/receipt.json",
+      "sha256": "865d4babe29d305bafc92c6ea781cbed500525ce91e35141b8204bd7ce433793"
+    },
+    "window_results": {
+      "path": "data/v15/e46_window_landscape/window_results.csv",
+      "sha256": "81367fde9f26a782449b7d3bac0d52695f23a88ef6e986f1652e18a8f57c6a1a"
+    }
+  },
+  "certificate_protocol": "qrcert/v1",
+  "checks": [
+    {
+      "check": "landscape_receipt_sha256",
+      "detail": "data/v15/e45_landscape_integration/receipt.json",
+      "expected": "5a2d67d48fc9f8395b2af46b5f9aca4af05e029a7563423cc84ac7c0be55f5bd",
+      "observed": "5a2d67d48fc9f8395b2af46b5f9aca4af05e029a7563423cc84ac7c0be55f5bd",
+      "status": "PASS"
+    },
+    {
+      "check": "window_receipt_sha256",
+      "detail": "data/v15/e46_window_landscape/receipt.json",
+      "expected": "865d4babe29d305bafc92c6ea781cbed500525ce91e35141b8204bd7ce433793",
+      "observed": "865d4babe29d305bafc92c6ea781cbed500525ce91e35141b8204bd7ce433793",
+      "status": "PASS"
+    },
+    {
+      "check": "v14_verdict_unchanged_sha256",
+      "detail": "release/v14_readiness_verdict.json",
+      "expected": "4f81c4af898f39c15153a054b0ee34cf3db70b39c3d1d0e73ad0224bbd1bca6a",
+      "observed": "4f81c4af898f39c15153a054b0ee34cf3db70b39c3d1d0e73ad0224bbd1bca6a",
+      "status": "PASS"
+    },
+    {
+      "check": "classification_csv_sha256",
+      "detail": "data/v15/e45_landscape_integration/classification_complete.csv",
+      "expected": "786b8a0c4fbeb46f7813fcad5874c353402dbc565e8f07ee5d4229ade09826fc",
+      "observed": "786b8a0c4fbeb46f7813fcad5874c353402dbc565e8f07ee5d4229ade09826fc",
+      "status": "PASS"
+    },
+    {
+      "check": "source_count",
+      "detail": "rows in classification_complete.csv",
+      "expected": 128,
+      "observed": 128,
+      "status": "PASS"
+    },
+    {
+      "check": "classified_count",
+      "detail": "rows minus UNCLASSIFIED",
+      "expected": 128,
+      "observed": 128,
+      "status": "PASS"
+    },
+    {
+      "check": "unclassified_count",
+      "detail": "tier UNCLASSIFIED",
+      "expected": 0,
+      "observed": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "certificate_tiers",
+      "detail": "tier histogram",
+      "expected": {
+        "CLASSIFICATION_EXACT_EXTRAS_BOUNDED": 34,
+        "COMPACT_COMPLETE_DERIVED": 1,
+        "COMPACT_COMPLETE_ENUMERATED": 93
+      },
+      "observed": {
+        "CLASSIFICATION_EXACT_EXTRAS_BOUNDED": 34,
+        "COMPACT_COMPLETE_DERIVED": 1,
+        "COMPACT_COMPLETE_ENUMERATED": 93
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "escape_count",
+      "detail": "classification_status EXACT_ESCAPE",
+      "expected": 63,
+      "observed": 63,
+      "status": "PASS"
+    },
+    {
+      "check": "local_optimum_count",
+      "detail": "classification_status EXACT_H_LOCAL_OPTIMUM",
+      "expected": 65,
+      "observed": 65,
+      "status": "PASS"
+    },
+    {
+      "check": "exact_best_cost_count",
+      "detail": "rows whose best_cost_exactness is EXACT*",
+      "expected": 94,
+      "observed": 94,
+      "status": "PASS"
+    },
+    {
+      "check": "bounded_best_cost_count",
+      "detail": "tier CLASSIFICATION_EXACT_EXTRAS_BOUNDED",
+      "expected": 34,
+      "observed": 34,
+      "status": "PASS"
+    },
+    {
+      "check": "witness_replay_failures",
+      "detail": "rows with a FAIL replay flag",
+      "expected": 0,
+      "observed": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "window_rows",
+      "detail": "rows in window_results.csv",
+      "expected": 76236,
+      "observed": 76236,
+      "status": "PASS"
+    },
+    {
+      "check": "escape_row_count",
+      "detail": "status == EXACT_ESCAPE",
+      "expected": 39474,
+      "observed": 39474,
+      "status": "PASS"
+    },
+    {
+      "check": "resource_truncated_windows",
+      "detail": "verdict declares zero truncated windows",
+      "expected": 0,
+      "observed": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "window_by_config",
+      "detail": "per-configuration window / escape / local-optimum counts",
+      "expected": {
+        "w16_h2": {
+          "escape_count": 10477,
+          "escape_rate": 0.5586243668355105,
+          "inputs_with_escape": 59,
+          "local_optimum_count": 8278,
+          "window_count": 18755
+        },
+        "w16_h3": {
+          "escape_count": 10692,
+          "escape_rate": 0.5700879765395894,
+          "inputs_with_escape": 62,
+          "local_optimum_count": 8063,
+          "window_count": 18755
+        },
+        "w8_h2": {
+          "escape_count": 9071,
+          "escape_rate": 0.4684707948148531,
+          "inputs_with_escape": 59,
+          "local_optimum_count": 10292,
+          "window_count": 19363
+        },
+        "w8_h3": {
+          "escape_count": 9234,
+          "escape_rate": 0.4768889118421732,
+          "inputs_with_escape": 62,
+          "local_optimum_count": 10129,
+          "window_count": 19363
+        }
+      },
+      "observed": {
+        "w16_h2": {
+          "expected": {
+            "escape_count": 10477,
+            "escape_rate": 0.5586243668355105,
+            "inputs_with_escape": 59,
+            "local_optimum_count": 8278,
+            "window_count": 18755
+          },
+          "observed": {
+            "escape_count": 10477,
+            "inputs_with_escape": 59,
+            "local_optimum_count": 8278,
+            "window_count": 18755
+          }
+        },
+        "w16_h3": {
+          "expected": {
+            "escape_count": 10692,
+            "escape_rate": 0.5700879765395894,
+            "inputs_with_escape": 62,
+            "local_optimum_count": 8063,
+            "window_count": 18755
+          },
+          "observed": {
+            "escape_count": 10692,
+            "inputs_with_escape": 62,
+            "local_optimum_count": 8063,
+            "window_count": 18755
+          }
+        },
+        "w8_h2": {
+          "expected": {
+            "escape_count": 9071,
+            "escape_rate": 0.4684707948148531,
+            "inputs_with_escape": 59,
+            "local_optimum_count": 10292,
+            "window_count": 19363
+          },
+          "observed": {
+            "escape_count": 9071,
+            "inputs_with_escape": 59,
+            "local_optimum_count": 10292,
+            "window_count": 19363
+          }
+        },
+        "w8_h3": {
+          "expected": {
+            "escape_count": 9234,
+            "escape_rate": 0.4768889118421732,
+            "inputs_with_escape": 62,
+            "local_optimum_count": 10129,
+            "window_count": 19363
+          },
+          "observed": {
+            "escape_count": 9234,
+            "inputs_with_escape": 62,
+            "local_optimum_count": 10129,
+            "window_count": 19363
+          }
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "verdict_value",
+      "detail": "release/v15_readiness_verdict.json:verdict",
+      "expected": "NOT_READY_FOR_PAPER",
+      "observed": "NOT_READY_FOR_PAPER",
+      "status": "PASS"
+    },
+    {
+      "check": "window_status",
+      "detail": "e46 receipt status vs verdict",
+      "expected": "PANEL_COMPLETE",
+      "observed": "PANEL_COMPLETE",
+      "status": "PASS"
+    },
+    {
+      "check": "landscape_status",
+      "detail": "e45 integration receipt status",
+      "expected": "CLASSIFICATION_COMPLETE",
+      "observed": "CLASSIFICATION_COMPLETE",
+      "status": "PASS"
+    }
+  ],
+  "independent_of_producer_verifiers": true,
+  "issued_at_utc": "2026-10-17T22:12:25+00:00",
+  "result": "CERTIFIED_CONSISTENT",
+  "scope": "Consistency of the published v15 numbers with the released artifacts. This certificate does not re-run the search engine, does not validate the rule library semantics, and does not upgrade the scientific verdict.",
+  "subject": "Q-research v15 certified-landscape certificate chain",
+  "summary": {
+    "failed": 0,
+    "passed": 20,
+    "total": 20
+  },
+  "verifier": "scripts/verify_certificate_qrcert_v1.py"
+}
