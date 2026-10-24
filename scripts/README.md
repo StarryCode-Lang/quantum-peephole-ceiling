@@ -1,6 +1,6 @@
 # scripts/ index
 
-80 scripts. The naming is intentionally verb-first: the prefix tells you what the script
+84 scripts. The naming is intentionally verb-first: the prefix tells you what the script
 *does*, not which experiment it belongs to. Read this file before adding a new one.
 
 ## Naming convention
@@ -10,7 +10,7 @@
 | `verify_*` | Independent checker for one frozen evidence package. Exits non-zero on mismatch. These are the reproducibility chain — do not delete. | 27 |
 | `generate_*` | Builds a verdict, manifest, or disposition JSON from frozen receipts. | 12 |
 | `audit_*` | Read-only audit that writes a CSV/JSON report and mutates nothing. | 11 |
-| `e4x_*` / `e5x_*` | Experiment scripts introduced by the review rounds (E47–E57). | 13 |
+| `e4x_*` / `e5x_*` | Experiment scripts introduced by the review rounds (E47–E61). | 17 |
 | `build_*` | Packaging (restore capsules, readiness packages). | 2 |
 | `reproduce_*` / `regenerate_*` | Full-corpus replay entry points. | 2 |
 
@@ -45,6 +45,10 @@ and carries an `EXPERIMENT_ID` plus a contract block in its docstring.
 | `e55_commutation_gap_probe.py` | E55 (2026-10-22) | Six-engine probe of diagonal-through-control commutation. |
 | `e56_closure_criterion.py` | E56 (2026-10-23) | Exposability criterion (Theorem 1) + certified closure; `--self-check` compares the local predicate with `_commutes`. |
 | `e57_closure_vs_tket.py` | E57 (2026-10-23) | Closure vs tket 2.18.0 `RemoveRedundancies` on the same roots. |
+| `e58_cross_engine_closure.py` | E58 (2026-10-24) | Two-qubit cost split of the closure gain + closure applied on top of qiskit L3 / tket FPO / BQSKit, with residual-pair diagnosis. |
+| `e59_qcec_oracle.py` | E59 (2026-10-24) | Third-party equivalence oracle (MQT QCEC 3.11.0) over the closure panel. Carries the `sysconfig` DLL shim that makes QCEC importable on Windows. |
+| `e60_closure_selection_order.py` | E60 (2026-10-24) | Closure under three pair-selection keys (distance / finish / random) — tests Theorem 2's per-pass optimality on the real panel. |
+| `e61_opt_level_monotonicity.py` | E61 (2026-10-24) | Qiskit L0–L3 in the frozen basis: is `optimization_level` monotone? Found L3 worse than L2 on 6/101 sources. |
 
 ## Analysis helpers introduced by review rounds
 

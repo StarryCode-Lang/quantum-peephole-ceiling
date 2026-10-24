@@ -71,6 +71,50 @@ Do not substitute E33/E35 external inputs, sampled fidelity, or E41 resource
 outcomes for the missing E40 efficacy population. The implementation scope is
 the declared `pair_v1` rule library and dependence models only.
 
+## Cross-engine comparison rule (added 2026-10-24)
+
+**Any comparison between optimizers must fix the gate basis first, and must report the
+basis-translation expansion factor.**
+
+This is not stylistic. The project's cost metric is a gate count in the frozen basis
+`{h, x, rz, cx}`. Engines that emit a richer native basis cannot be compared to it directly:
+
+| Engine | Native basis | Expansion when forced into `{h,x,rz,cx}` |
+|---|---|---|
+| Qiskit 2.4.1 | already `{h,x,rz,cx}` when `basis_gates` is passed | **1.00x** |
+| pytket 2.18.0 | `{TK1, CX}` | 5.75x |
+| BQSKit 1.2.1 | `{U3, CNOT}` | 6.40x |
+
+The expansion is not neutral: projecting a `TK1` or `U3` into `{h,rz}` creates adjacent
+same-axis rotations, i.e. exactly the `D = 0` pairs the commutation criterion flags. A
+naive "closure applied to the engine output" therefore reports a 58-61% reduction that is
+an artefact of the canonicalisation, not a property of the engine
+(`docs/review/science_boost/2026-10-24_cross_engine_closure/`).
+
+Rule: compare `canonicalise(engine output)` against `closure(canonicalise(engine output))`,
+never `native` against `canonical`, and drop rows whose expansion factor exceeds 1.05 from
+any headline aggregate.
+
+## Third-party equivalence oracle (MQT QCEC, added 2026-10-24)
+
+`mqt.qcec` 3.11.0 is usable on this machine, but only after a shim: `mqt/core/__init__.py`
+derives its DLL directory from `sysconfig.get_paths()["purelib"]`, which is the *system*
+prefix. When the package is installed in the user site that path does not exist and
+`os.add_dll_directory` raises `WinError 3`. The fix touches no installed file:
+
+```python
+import site, sysconfig
+_orig, _user = sysconfig.get_paths, site.getusersitepackages()
+sysconfig.get_paths = lambda *a, **k: {**_orig(*a, **k), "purelib": _user}
+from mqt.qcec import verify   # 3.11.0
+```
+
+`scripts/e59_qcec_oracle.py` carries this shim and reproduces 128/128 closure outputs as
+equivalent to their roots (100 `equivalent`, 28 `equivalent_up_to_global_phase`, 0
+counterexamples, 5.01 s). Its negative control rejects 13 of 16 perturbed circuits and
+returns `no_information` on the other 3, so it must be described as a decisive-but-incomplete
+oracle, never as a complete decision procedure.
+
 ## Smoke reproduction
 
 Use the project reproduction entry point for selected experiments or smoke defaults:

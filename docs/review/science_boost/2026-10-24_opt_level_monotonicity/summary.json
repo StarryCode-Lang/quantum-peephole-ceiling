@@ -1,0 +1,76 @@
+{
+  "contract": {
+    "basis": [
+      "h",
+      "x",
+      "rz",
+      "cx"
+    ],
+    "levels": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "qiskit_version": "2.4.1",
+    "root_states": "experiments.e46_window_landscape.run.load_root_states (hash-checked)",
+    "rule_scope": "e44_core_v1",
+    "seed_transpiler": 42,
+    "size_cap": 300
+  },
+  "date": "2026-10-24",
+  "experiment_id": "E61_OPT_LEVEL_MONOTONICITY_2026_10_24",
+  "fix_check": {
+    "gates_removed_by_closure": 207,
+    "sources_with_l3_d0_pairs": 6,
+    "unitary_checked": 6,
+    "unitary_fail": 0,
+    "unitary_pass": 6
+  },
+  "monotonicity": {
+    "comparable_sources": 101,
+    "equal": 95,
+    "l3_better_than_l2": 0,
+    "l3_worse_than_l2": 6,
+    "total_gate_inflation_l3_over_l2": 226,
+    "worst_l3_minus_l2": 57
+  },
+  "per_level": {
+    "L0_frozen": {
+      "d0_pairs": 803,
+      "sources": 101,
+      "sources_with_d0": 22,
+      "total_gates": 4790,
+      "two_qubit": 803
+    },
+    "L1_frozen": {
+      "d0_pairs": 781,
+      "sources": 101,
+      "sources_with_d0": 18,
+      "total_gates": 4750,
+      "two_qubit": 803
+    },
+    "L2_frozen": {
+      "d0_pairs": 0,
+      "sources": 101,
+      "sources_with_d0": 0,
+      "total_gates": 3291,
+      "two_qubit": 717
+    },
+    "L3_default": {
+      "d0_pairs": 0,
+      "sources": 101,
+      "sources_with_d0": 0,
+      "total_gates": 1742,
+      "two_qubit": 717
+    },
+    "L3_frozen": {
+      "d0_pairs": 191,
+      "sources": 101,
+      "sources_with_d0": 6,
+      "total_gates": 3517,
+      "two_qubit": 717
+    }
+  },
+  "wall_clock_seconds": 7.6
+}

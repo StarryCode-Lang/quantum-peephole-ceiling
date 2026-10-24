@@ -1,0 +1,77 @@
+{
+ "queries": [
+  {
+   "label": "confluence",
+   "query": "all:\"rewriting\" AND all:\"confluence\" AND all:\"quantum\"",
+   "kept": 4
+  },
+  {
+   "label": "commutation_completeness",
+   "query": "all:\"commutation\" AND all:\"completeness\" AND all:\"circuit\"",
+   "kept": 19
+  },
+  {
+   "label": "two_qubit_count",
+   "query": "all:\"two-qubit gate count\" AND all:\"optimization\"",
+   "kept": 27
+  },
+  {
+   "label": "cx_count_opt",
+   "query": "all:\"CX\" AND all:\"count\" AND all:\"optimization\" AND all:\"Clifford\"",
+   "kept": 0
+  },
+  {
+   "label": "pass_fixpoint",
+   "query": "all:\"compiler\" AND all:\"fixed point\" AND all:\"optimization\"",
+   "kept": 7
+  },
+  {
+   "label": "saturation_compiler",
+   "query": "all:\"equality saturation\" AND all:\"compiler\"",
+   "kept": 18
+  },
+  {
+   "label": "termination_rewrite",
+   "query": "all:\"termination\" AND all:\"rewriting\" AND all:\"circuit\"",
+   "kept": 7
+  },
+  {
+   "label": "phase_gadget",
+   "query": "all:\"phase gadget\" AND all:\"optimization\"",
+   "kept": 4
+  },
+  {
+   "label": "qiskit_transpiler",
+   "query": "all:\"Qiskit\" AND all:\"transpiler\" AND all:\"benchmark\"",
+   "kept": 13
+  },
+  {
+   "label": "compiler_repro",
+   "query": "all:\"quantum compiler\" AND all:\"reproducib\"",
+   "kept": 0
+  },
+  {
+   "label": "local_search_opt",
+   "query": "all:\"local search\" AND all:\"quantum circuit\" AND all:\"optim\"",
+   "kept": 7
+  },
+  {
+   "label": "clifford_template",
+   "query": "all:\"template\" AND all:\"Clifford\" AND all:\"synthesis\"",
+   "kept": 0
+  },
+  {
+   "label": "tcount_alg",
+   "query": "all:\"T-count\" AND all:\"algorithm\" AND all:\"optimal\"",
+   "kept": 32
+  },
+  {
+   "label": "lower_bound_avg",
+   "query": "all:\"circuit\" AND all:\"lower bound\" AND all:\"average case\"",
+   "kept": 9
+  }
+ ],
+ "new_ids": 121,
+ "total_records": 415,
+ "previous_total": 294
+}

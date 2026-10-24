@@ -18,6 +18,7 @@ still live.
 | `proof_audit_2026-08-06.md` | Proof-status audit record. |
 | `v12_rewrite_exposure_theory.md` | Active but bounded: status `conjecture_or_draft_until_e38`. Defines the claim boundary for the v12 representation-robust rewrite-exposure method. |
 | `exposability_criterion_2026-10-23.md` | **Active, new 2026-10-23.** Theorem 1: a cancellable pair is reachable by commutation alone iff every intervening gate is independent of both; the crossing distance is the required horizon. Backed by E56 (128/128 certificate replay) and E57. |
+| `closure_termination_and_optimality_2026-10-24.md` | **Active, new 2026-10-24.** Lemmas 1-2 (span locality, disjoint spans do not interfere); Thm 2 (a single closure pass is an interval-scheduling problem, greedy by right endpoint is optimal); Cor. 1 (the shipped distance-order key has no optimality proof, with a three-interval counterexample); Thm 3 (termination in <= m0/2 passes, O(m0^2 w)); **Thm 4 (fixpoint certificate: an empty exposable set means no commutation sequence of any length can expose another cancellation)**. Backed by E56/E58/E59/E61. |
 | `thm10_horizon_vs_closure_2026-10-22.md` | Superseded in form by Theorem 1 above, but retained: it records the correction from "industry-wide gap" to "bounded horizon vs closure". |
 | `thm5_concentration_repair_2026-10-17.md` | Repair note: Thm 5-A/5-B valid, 5-C proposed (Chen–Stein). Priority lowered 2026-10-23 — the closure result does not need concentration. |
 

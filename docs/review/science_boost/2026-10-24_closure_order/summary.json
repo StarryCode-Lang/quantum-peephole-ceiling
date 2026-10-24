@@ -1,0 +1,76 @@
+{
+  "by_order": {
+    "distance": {
+      "errors": 0,
+      "final_total": 62952,
+      "final_two_qubit": 24408,
+      "gain_total": 7341,
+      "passes_total": 324,
+      "replay_pass": 128,
+      "root_total": 70293,
+      "sources": 128
+    },
+    "finish": {
+      "errors": 0,
+      "final_total": 62952,
+      "final_two_qubit": 24408,
+      "gain_total": 7341,
+      "passes_total": 321,
+      "replay_pass": 128,
+      "root_total": 70293,
+      "sources": 128
+    },
+    "random": {
+      "errors": 0,
+      "final_total": 62952,
+      "final_two_qubit": 24408,
+      "gain_total": 7341,
+      "passes_total": 337,
+      "replay_pass": 128,
+      "root_total": 70293,
+      "sources": 128
+    }
+  },
+  "contract": {
+    "max_passes": 12,
+    "orders": [
+      "distance",
+      "finish",
+      "random"
+    ],
+    "random_seed": 42,
+    "root_states": "experiments.e46_window_landscape.run.load_root_states (hash-checked)",
+    "rule_library": "data\\v13\\e43_quartz_rule_import\\generation_a\\rule_library.json",
+    "rule_scope": "e44_core_v1"
+  },
+  "date": "2026-10-24",
+  "experiment_id": "E60_CLOSURE_SELECTION_ORDER_2026_10_24",
+  "finish_vs_distance": {
+    "distance_strictly_better": 0,
+    "finish_strictly_better": 0,
+    "tied": 128
+  },
+  "inputs": {
+    "data\\v13\\e43_quartz_rule_import\\generation_a\\rule_library.json": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295"
+  },
+  "interval_demo": [
+    {
+      "chosen": "[[9, 11]]",
+      "gates_removed": 2,
+      "intervals": "[[1, 9], [9, 11], [11, 20]]",
+      "order": "distance",
+      "pairs_cancelled": 1
+    },
+    {
+      "chosen": "[[1, 9], [11, 20]]",
+      "gates_removed": 4,
+      "intervals": "[[1, 9], [9, 11], [11, 20]]",
+      "order": "finish",
+      "pairs_cancelled": 2
+    }
+  ],
+  "unitary_checked": 106,
+  "unitary_fail": 0,
+  "unitary_pass": 106,
+  "wall_clock_seconds": 381.8
+}

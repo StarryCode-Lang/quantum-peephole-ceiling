@@ -1,0 +1,204 @@
+{
+  "queries": [
+    {
+      "label": "peephole",
+      "query": "all:\"peephole\" AND all:\"quantum circuit\"",
+      "status": "OK",
+      "fetched": 7,
+      "kept": 3
+    },
+    {
+      "label": "equality_saturation",
+      "query": "all:\"equality saturation\" AND all:\"quantum\"",
+      "status": "OK",
+      "fetched": 2,
+      "kept": 2
+    },
+    {
+      "label": "egraph",
+      "query": "all:\"e-graph\" AND all:\"quantum circuit\"",
+      "status": "OK",
+      "fetched": 1,
+      "kept": 1
+    },
+    {
+      "label": "zx_calculus",
+      "query": "all:\"ZX-calculus\" AND all:\"optimization\"",
+      "status": "OK",
+      "fetched": 50,
+      "kept": 36
+    },
+    {
+      "label": "template_matching",
+      "query": "all:\"template matching\" AND all:\"quantum circuit\"",
+      "status": "OK",
+      "fetched": 5,
+      "kept": 1
+    },
+    {
+      "label": "rl_compilation",
+      "query": "all:\"reinforcement learning\" AND all:\"quantum circuit compilation\"",
+      "status": "OK",
+      "fetched": 7,
+      "kept": 6
+    },
+    {
+      "label": "llm_compilation",
+      "query": "all:\"large language model\" AND all:\"quantum circuit\"",
+      "status": "OK",
+      "fetched": 51,
+      "kept": 51
+    },
+    {
+      "label": "landscape",
+      "query": "all:\"local optimum\" AND all:\"quantum circuit\"",
+      "status": "OK",
+      "fetched": 1,
+      "kept": 1
+    },
+    {
+      "label": "cnot_lower_bound",
+      "query": "all:\"CNOT\" AND all:\"lower bound\" AND all:\"Clifford\"",
+      "status": "OK",
+      "fetched": 5,
+      "kept": 4
+    },
+    {
+      "label": "tcount_lower_bound",
+      "query": "all:\"T-count\" AND all:\"lower bound\"",
+      "status": "OK",
+      "fetched": 24,
+      "kept": 17
+    },
+    {
+      "label": "phase_polynomial",
+      "query": "all:\"phase polynomial\" AND all:\"optimization\"",
+      "status": "OK",
+      "fetched": 10,
+      "kept": 9
+    },
+    {
+      "label": "exact_synthesis",
+      "query": "all:\"exact synthesis\" AND all:\"quantum circuit\"",
+      "status": "OK",
+      "fetched": 15,
+      "kept": 9
+    },
+    {
+      "label": "hardware_co_design",
+      "query": "all:\"quantum compiler\" AND all:\"hardware\" AND all:\"co-design\"",
+      "status": "OK",
+      "fetched": 4,
+      "kept": 4
+    },
+    {
+      "label": "commutation",
+      "query": "all:\"commutation\" AND all:\"quantum circuit\" AND all:\"optimization\"",
+      "status": "OK",
+      "fetched": 62,
+      "kept": 37
+    },
+    {
+      "label": "cx_direction",
+      "query": "all:\"CX\" AND all:\"direction\" AND all:\"circuit\" AND all:\"synthesis\"",
+      "status": "OK",
+      "fetched": 1,
+      "kept": 1
+    },
+    {
+      "label": "normal_form",
+      "query": "all:\"normal form\" AND all:\"quantum circuit\"",
+      "status": "OK",
+      "fetched": 36,
+      "kept": 15
+    },
+    {
+      "label": "windowed_local",
+      "query": "all:\"local\" AND all:\"rewriting\" AND all:\"quantum\"",
+      "status": "OK",
+      "fetched": 94,
+      "kept": 34
+    },
+    {
+      "label": "representation",
+      "query": "all:\"circuit representation\" AND all:\"compiler\"",
+      "status": "OK",
+      "fetched": 13,
+      "kept": 11
+    },
+    {
+      "label": "pass_order",
+      "query": "all:\"pass order\" AND all:\"quantum\"",
+      "status": "OK",
+      "fetched": 2,
+      "kept": 2
+    },
+    {
+      "label": "average_case",
+      "query": "all:\"average-case\" AND all:\"quantum circuit\"",
+      "status": "OK",
+      "fetched": 34,
+      "kept": 18
+    },
+    {
+      "label": "certificate",
+      "query": "all:\"certificate\" AND all:\"quantum circuit optimization\"",
+      "status": "OK",
+      "fetched": 1,
+      "kept": 1
+    },
+    {
+      "label": "benchmark",
+      "query": "all:\"benchmark\" AND all:\"quantum circuit optimization\" AND all:\"reproducib\"",
+      "status": "OK",
+      "fetched": 0,
+      "kept": 0
+    },
+    {
+      "label": "trace_monoid",
+      "query": "all:\"trace monoid\" AND all:\"quantum\"",
+      "status": "OK",
+      "fetched": 3,
+      "kept": 1
+    },
+    {
+      "label": "commutation_closure",
+      "query": "all:\"commutation\" AND all:\"closure\" AND all:\"circuit\"",
+      "status": "OK",
+      "fetched": 5,
+      "kept": 5
+    },
+    {
+      "label": "peephole_lookahead",
+      "query": "all:\"peephole\" AND all:\"lookahead\"",
+      "status": "OK",
+      "fetched": 0,
+      "kept": 0
+    },
+    {
+      "label": "rewrite_saturation",
+      "query": "all:\"rewriting\" AND all:\"saturation\" AND all:\"quantum\"",
+      "status": "OK",
+      "fetched": 7,
+      "kept": 5
+    },
+    {
+      "label": "gate_count_bound",
+      "query": "all:\"gate count\" AND all:\"lower bound\" AND all:\"circuit\"",
+      "status": "OK",
+      "fetched": 23,
+      "kept": 16
+    },
+    {
+      "label": "token_swapping",
+      "query": "all:\"token swapping\"",
+      "status": "OK",
+      "fetched": 39,
+      "kept": 22
+    }
+  ],
+  "unique_records": 294,
+  "uncovered": 252,
+  "earliest": "2023-01-13",
+  "latest": "2026-10-21"
+}

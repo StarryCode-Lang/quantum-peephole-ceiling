@@ -27,7 +27,13 @@ result remains the baseline that makes the improvement measurable.
 | Repository footprint | Restore capsules 173 MB, vendored tool checkout 365 MB, cache and garbage objects | Capsules retired (unpinned, git-redundant), checkout removed, caches purged; all pinned evidence untouched | **Closed (v15 cleanup; see `docs/review/v15_cleanup_2026-10-11.md`)** |
 | Independent cold start | Protocol exists; full independent extraction was not completed | Sparse package verification is recorded; clean non-author execution remains pending | **External/open** |
 | Real QPU validation | Protocol prepared without credentials or device run | No real-device result is claimed | **External/open** |
-| Enumerated exact landscape quantities | Required all 128 selected cells to finish compact enumeration | Classification is complete; 34 long-listing escape cells keep witness-bounded best-cost and barrier values instead of enumerated ones | **Open (bounded form)** |
+| Enumerated exact landscape quantities | Required all 128 selected cells to finish compact enumeration | Classification is complete; 34 long-listing escape cells keep witness-bounded `best_cost_at_h3` and barrier values instead of enumerated ones | **Open (bounded form)** |
+
+All landscape costs in this page are **horizon-relative**: `best_cost_at_h3` means the
+exact best cost reachable within `h = 3` actions under rule scope `e44_core_v1`. It is
+not an unconstrained optimum, and it is not a claim of gate-count optimality. A
+search-free commutation closure beats it on 60/128 sources; 98.2% of that gain is
+single-qubit gate merging (2026-10-24 scan, §2.1).
 
 ## What no longer needs another optimization pass
 

@@ -116,3 +116,38 @@ Unchanged. The owner merge described in §C has still not been performed, and th
 2026-10-23 round again declined to touch `unified_references.md` for the same reason:
 it is path-bound in three release manifests, so an editorial merge would create a
 sixteenth drift entry before the re-pin decision is made.
+
+---
+
+## §E Round 11 additions (2026-10-24)
+
+Retrieved from `https://export.arxiv.org/api/query` on 2026-10-24 (294 records from the
+28-query base sweep plus 121 from 14 round-specific queries; see
+`docs/review/science_boost/2026-10-24_literature_scan/`). Numbering continues §D:
+**[117]–[119]**. Additive only — `unified_references.md` remains unmodified for the same
+drift reason as §D.2.
+
+| # | Reference | Verified | Why it matters |
+|---|---|---|---|
+| **[117]** | "Quantum Term Rewrite Systems: Applications to Complexity Analysis," arXiv:2607.20170 (2026-07-22) | 2026-10-24 | **The single most important new citation.** It gives a general framework for *termination certificates* and *reduction-length bounds* on quantum rewrite systems. The project's closure fixpoint is an instance of that framework, and Thm 3/4 of `docs/theory/closure_termination_and_optimality_2026-10-24.md` should be presented as a concrete instance rather than as a new theory. Omitting it invites "this is a special case of known TRS termination analysis". |
+| **[118]** | "E-Graphs as a Persistent Compiler Abstraction," arXiv:2602.16707 (2026-02-18) | 2026-10-24 | Tamagoyaki: e-graph state kept through the whole compilation flow. Relevant to the "closure vs equality saturation" positioning: e-graphs *discover* equivalences, the closure *decides* a fixpoint. Needed if the paper argues that saturation and closure answer different questions. |
+| **[119]** | "Equality saturation theory exploration à la carte," arXiv:2609.14527 (2026-09-13) | 2026-10-24 | Enumo, a DSL for programmable rule inference. Context for the rule-library-completeness argument (the project's `e44_core_v1` is a hand-curated 149-rule subset); a reviewer will ask why the library was not inferred. |
+
+### E.1 Nothing in this round displaces an earlier must-cite
+
+`2610.29095` [113], `2601.09681` [114], `2507.22450` [115], `2511.16585` [116] remain
+unmerged and remain required reading. The four "zero coverage" ids flagged in earlier
+rounds (`2609.20873`, `2610.02029`, `2609.04160`, `2610.01024`) are still absent from the
+catalogue; that defect register is unchanged.
+
+### E.2 Ecosystem snapshot corrections (2026-10-24, GitHub REST, authenticated)
+
+| Item | Correction |
+|---|---|
+| Quartz | `quartz-tools/quartz` returns 404. Live home is **`quantum-compiler/quartz`** (93★, last push 2026-10-06); the artifact repo is `quantum-compiler/quartz-artifact` (9★). |
+| Qiskit | `Qiskit/qiskit` 7,922★, last push **2026-10-23** — the most active of the set. Evidence remains pinned at 2.4.1. |
+| tket | `Quantinuum/tket` 318★, last push 2026-10-08. |
+| pyzx | `zxcalc/pyzx` 553★, last push 2026-10-22. |
+| BQSKit | `BQSKit/bqskit` 188★, last push 2026-10-17. |
+| tzap | `qqq-wisc/tzap` 48★, last push 2026-10-16. |
+| MQT QCEC | `munich-quantum-toolkit/qcec` 120★, last push 2026-10-23. **Now usable on this machine** — see `docs/review/science_boost/2026-10-24_qcec_oracle/`. |

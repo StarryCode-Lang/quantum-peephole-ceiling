@@ -1,0 +1,30 @@
+{
+  "contract": {
+    "dll_shim": "sysconfig.get_paths['purelib'] -> site.getusersitepackages()",
+    "negative_control": "first rz angle +0.01 rad, n<=16",
+    "oracle": "MQT QCEC (decision-diagram equivalence checker, C++)",
+    "root_states": "experiments.e46_window_landscape.run.load_root_states",
+    "rule_library": "data\\v13\\e43_quartz_rule_import\\generation_a\\rule_library.json",
+    "rule_scope": "e44_core_v1"
+  },
+  "date": "2026-10-24",
+  "experiment_id": "E59_QCEC_ORACLE_2026_10_24",
+  "inputs": {
+    "data\\v13\\e43_quartz_rule_import\\generation_a\\rule_library.json": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295"
+  },
+  "summary": {
+    "equivalent": 100,
+    "negative_controls": 16,
+    "negative_controls_correctly_rejected": 13,
+    "not_equivalent": 0,
+    "oracle_available": true,
+    "oracle_version": "3.11.0",
+    "other_verdicts": {
+      "equivalent_up_to_global_phase": 28
+    },
+    "purelib_patched_to": "C:\\Users\\Administrator\\AppData\\Roaming\\Python\\Python312\\site-packages",
+    "sources": 128,
+    "total_qcec_seconds": 5.01
+  },
+  "wall_clock_seconds": 167.5
+}

@@ -60,8 +60,15 @@ The project has three connected research layers:
 | v14 E45 screening | 18/18 eligible; 13,824 rows; 0 semantic failures | Screening optimization complete |
 | v14 exact finite horizon | 93 exact; 35 resource-truncated | Enumerated quantities remain bounded for 35 cells |
 | v14 IDA* escape depth | 63 exact escapes; 65 exact local optima | Complete for the declared 128-input panel |
-| v15 landscape integration | 128/128 classified; 94 exact best costs; 34 witness-bounded | Zero unclassified cells; zero replay failures |
+| v15 landscape integration | 128/128 classified; 94 exact `best_cost_at_h3`; 34 witness-bounded | Zero unclassified cells; zero replay failures |
 | v15 E46 window landscape | 76,236 windows; 39,474 certified window escapes; 0 truncations | Window-local by construction; first-escape witnesses stored |
+
+`best_cost_at_h3` is the exact best cost reachable within the declared horizon
+`h = 3` under rule scope `e44_core_v1`; it is **not** an unconstrained optimum.
+A search-free commutation closure reaches a strictly lower cost on 60/128 of the
+same sources (see `docs/review/science_boost/2026-10-23_innovation_scan.md`), and
+98.2% of that extra reduction is single-qubit gate merging (see
+`docs/review/science_boost/2026-10-24_innovation_scan.md`).
 
 The repository is engineering-verified but the v15 scientific verdict remains
 `NOT_READY_FOR_PAPER` because enumerated landscape quantities for 34 long-listing
