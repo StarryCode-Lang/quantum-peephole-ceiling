@@ -1,0 +1,47 @@
+{
+ "authority": "review-grade; NOT part of release/release_manifest.json",
+ "contract": {
+  "fragment": "{x, rz, cx}",
+  "metric": "rz gate count",
+  "read_only": [
+   "data/",
+   "release/",
+   "docs/manuscript/"
+  ],
+  "rule_scope": "e44_core_v1"
+ },
+ "created_utc": "2026-10-24T18:19:10Z",
+ "experiment_id": "E62_ROTATION_GAP_2026_10_25",
+ "files": {
+  "panel_hfree.csv": {
+   "bytes": 20780,
+   "sha256": "0796a8e5d645584f98f7641d98ed7899aa296c9a4123b6708d525884549c0b35"
+  },
+  "residual_census.csv": {
+   "bytes": 159315,
+   "sha256": "0cab7b21bc491aa74f3a455744a05fff4cf53bbe7c568e316ea8f0964ec15241"
+  },
+  "residual_census_synthetic.csv": {
+   "bytes": 1190,
+   "sha256": "52942e1c72a23ca925010a8a61d616e351cc0f7790e05afb0fb9e3b3950ebcd9"
+  },
+  "summary.json": {
+   "bytes": 4942,
+   "sha256": "89e18d24334d4946dafea277411d1699b59b0b0f6270a645e86c269f2827269a"
+  },
+  "synthetic_ladder.csv": {
+   "bytes": 3336,
+   "sha256": "51094425d766f1be0e4a6510953eb447dd87bdc2c513d85de962dca49aa093c3"
+  },
+  "unitary_checks.csv": {
+   "bytes": 1886,
+   "sha256": "90ff297c187abbc7c1792498171c84de9c5d30408d52ed9889f4f05aea65a825"
+  }
+ },
+ "inputs": {
+  "data/v15/e45_landscape_integration/classification_complete.csv": "786b8a0c4fbeb46f7813fcad5874c353402dbc565e8f07ee5d4229ade09826fc"
+ },
+ "package": "2026-10-25_rotation_gap",
+ "produced_by": "round 12 science_boost scan (automation 408cca6d)",
+ "script": "scripts/e62_rotation_gap.py"
+}

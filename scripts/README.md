@@ -1,6 +1,6 @@
 # scripts/ index
 
-84 scripts. The naming is intentionally verb-first: the prefix tells you what the script
+89 scripts. The naming is intentionally verb-first: the prefix tells you what the script
 *does*, not which experiment it belongs to. Read this file before adding a new one.
 
 ## Naming convention
@@ -10,8 +10,8 @@
 | `verify_*` | Independent checker for one frozen evidence package. Exits non-zero on mismatch. These are the reproducibility chain — do not delete. | 27 |
 | `generate_*` | Builds a verdict, manifest, or disposition JSON from frozen receipts. | 12 |
 | `audit_*` | Read-only audit that writes a CSV/JSON report and mutates nothing. | 11 |
-| `e4x_*` / `e5x_*` | Experiment scripts introduced by the review rounds (E47–E61). | 17 |
-| `build_*` | Packaging (restore capsules, readiness packages). | 2 |
+| `e4x_*` / `e5x_*` | Experiment scripts introduced by the review rounds (E47–E63). | 19 |
+| `build_*` | Packaging (restore capsules, readiness packages, evidence manifests). | 3 |
 | `reproduce_*` / `regenerate_*` | Full-corpus replay entry points. | 2 |
 
 ## Entry points
@@ -24,7 +24,7 @@
 | v15 readiness | `python scripts/verify_v15_readiness_verdict.py` |
 | Certificate verifier (standalone) | `python scripts/verify_certificate_qrcert_v1.py <cert>` |
 
-## Review-round experiments (E47–E57)
+## Review-round experiments (E47–E63)
 
 Each writes a dated evidence package under `docs/review/science_boost/<date>_<topic>/`
 and carries an `EXPERIMENT_ID` plus a contract block in its docstring.
@@ -49,6 +49,10 @@ and carries an `EXPERIMENT_ID` plus a contract block in its docstring.
 | `e59_qcec_oracle.py` | E59 (2026-10-24) | Third-party equivalence oracle (MQT QCEC 3.11.0) over the closure panel. Carries the `sysconfig` DLL shim that makes QCEC importable on Windows. |
 | `e60_closure_selection_order.py` | E60 (2026-10-24) | Closure under three pair-selection keys (distance / finish / random) — tests Theorem 2's per-pass optimality on the real panel. |
 | `e61_opt_level_monotonicity.py` | E61 (2026-10-24) | Qiskit L0–L3 in the frozen basis: is `optimization_level` monotone? Found L3 worse than L2 on 6/101 sources. |
+| `e62_rotation_gap.py` | E62 (2026-10-25) | Phase-polynomial rotation bound `R >= |supp(f)|`, the reorder/content gap decomposition, and the Hadamard-annihilation counterexamples. Parts A/B/C via `--skip-parts`. |
+| `e63_qiskit_261_recheck.py` | E63 (2026-10-25) | Does E61's L3 defect survive qiskit 2.6.1? Three stages so two interpreters can share one panel: `dump` (2.4.1) → `sweep` (2.6.1) → `compare`. |
+| `round12_literature_scan.py` | Round 12 literature + ecosystem sweep | 20 structured arXiv queries + authenticated GitHub snapshot. Writes a dated package; network failures are logged, never papered over. |
+| `build_round12_evidence_manifest.py` | Round 12 packaging | Adds a self-describing SHA-256 `MANIFEST.json` to each round-12 evidence package without touching the frozen release chain. |
 
 ## Analysis helpers introduced by review rounds
 

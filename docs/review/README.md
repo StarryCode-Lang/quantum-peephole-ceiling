@@ -3,13 +3,14 @@
 本目录是**审计与评审留痕**：每一份文件对应一次可追溯的判断（或一次被推翻的判断）。
 文件按日期或实验号命名，**不覆盖、不改写**；结论被推翻时在新文件里写明推翻关系。
 
-共 62 项。`science_boost/` 是独立的十一轮扫描子目录，索引见其 `README.md`。
+共 63 项。`science_boost/` 是独立的十二轮扫描子目录，索引见其 `README.md`。
 
 ## 文件清单
 
 | 文件 | 类型 | 首行标题 / 用途 |
 |---|---|---|
 | `cleanup_2026-10-24.md` | md | 2026-10-24 cleanup record: what was deleted, what was restored, and why `data/` was not touched |
+| `qiskit_l3_monotonicity_issue_2026-10-24.md` | md | Qiskit L3 non-monotonicity — historical record; **closed 2026-10-25**: fixed in 2.6.1 per E63 |
 | `e31_contrast_expansion_limitation_2026-08-24.md` | md | E31 factorial contrast-expansion limitation (2026-08-24) |
 | `e31_factorial_pareto_protocol_2026-08-11.md` | md | E31 full-factorial and equal-budget Pareto frozen protocol |
 | `e31_family_inference_correction_2026-08-26.md` | md | E31 post-hoc family-inference correction |

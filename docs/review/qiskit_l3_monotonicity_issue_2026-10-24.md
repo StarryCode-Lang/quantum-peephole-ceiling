@@ -1,11 +1,21 @@
 # Upstream report draft — Qiskit `optimization_level=3` is not monotone under a restricted basis
 
-**Status**: draft only, **not submitted**. Prepared 2026-10-24 from experiment E61
+> **2026-10-25 update — CLOSED, no longer a bug report.** E63
+> (`scripts/e63_qiskit_261_recheck.py`,
+> `docs/review/science_boost/2026-10-25_qiskit_261/`) re-ran the identical panel
+> (101 sources, same basis, same seed) on **qiskit 2.6.1**: 0 sources with
+> `L3 > L2`, 0 residual adjacent `rz` pairs, total inflation 0. All six affected
+> sources now have `L2 == L3` exactly. The defect is fixed upstream, so this file
+> is retained as the historical record of the 2.4.1 behaviour and as the
+> specification of the regression test — **do not file it as an issue**.
+> The surviving use is positive: the fixpoint certificate acts as a compiler
+> monotonicity regression test that caught a real defect and later confirmed its
+> repair.
+
+**Status**: historical record, **superseded by E63** (was: draft only, not submitted).
+Prepared 2026-10-24 from experiment E61
 (`scripts/e61_opt_level_monotonicity.py`,
 `docs/review/science_boost/2026-10-24_opt_level_monotonicity/`).
-
-**Why it is not submitted**: filing a public issue is an external action that needs the
-owner's explicit go-ahead. Everything needed to file it is in this file.
 
 ---
 

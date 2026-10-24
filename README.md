@@ -66,7 +66,7 @@ The project has three connected research layers:
 `best_cost_at_h3` is the exact best cost reachable within the declared horizon
 `h = 3` under rule scope `e44_core_v1`; it is **not** an unconstrained optimum.
 A search-free commutation closure reaches a strictly lower cost on 60/128 of the
-same sources (see `docs/review/science_boost/2026-10-23_innovation_scan.md`), and
+same sources (see `docs/theory/exposability_criterion_2026-10-23.md`), and
 98.2% of that extra reduction is single-qubit gate merging (see
 `docs/review/science_boost/2026-10-24_innovation_scan.md`).
 

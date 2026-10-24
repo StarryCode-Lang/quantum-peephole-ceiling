@@ -151,3 +151,49 @@ catalogue; that defect register is unchanged.
 | BQSKit | `BQSKit/bqskit` 188★, last push 2026-10-17. |
 | tzap | `qqq-wisc/tzap` 48★, last push 2026-10-16. |
 | MQT QCEC | `munich-quantum-toolkit/qcec` 120★, last push 2026-10-23. **Now usable on this machine** — see `docs/review/science_boost/2026-10-24_qcec_oracle/`. |
+
+---
+
+## §F Round 12 additions (2026-10-25)
+
+Sweep: 20 structured arXiv queries → **274 unique records** (≥2023, latest 2026-10-21),
+authenticated GitHub REST over 10 repositories, 2 web searches. Package:
+`docs/review/science_boost/2026-10-25_literature_scan/`.
+Channels unavailable this round and disclosed: Tavily (no key), Exa (no MCP server),
+multi-search-engine (no key), arxiv-reader (no LLM key), citation-manager (no Crossref
+dependency), github-trending (replaced by authenticated REST).
+
+| # | Reference | Verified | Why it matters |
+|---|---|---|---|
+| **[120]** | "Exact $T$-counts of CCZ layers from an isotropy bound," arXiv:2610.01024 (2026-10-01) | 2026-10-25 | **The most dangerous citation of this round.** It gives a per-instance lower bound on the $T$-count of every third-level diagonal gate, computable by Gaussian elimination, and proves the CCZ-layer count exactly. The project's Lemma 1 (`R >= |supp(f)|`) is the same *kind* of statement in a simpler setting and is a literature fact, not a new theorem. Must be cited, and the novelty claim must be restricted to the gap decomposition and the Hadamard-annihilation wall. |
+| **[121]** | "On the completeness of transformation rules in reversible logic synthesis," arXiv:2607.19059 (2026-07-21) | 2026-10-25 | Proves that practically adopted transformation rule sets are already complete for reversible circuits (no ancillae, no garbage). Directly attacks the framing "the hand-curated rule library is the bottleneck". Any claim about rule-library incompleteness must be stated relative to this result. |
+| **[122]** | "Augmenting Rewrite Rule Sets via Knuth-Bendix Completion," arXiv:2610.01246 (2026-10-01) | 2026-10-25 | Rule sets for equality saturation can be completed automatically. Raises the obvious reviewer question "why not run KBC instead of curating 1,474 rules?" — and points at the cheapest way to answer it (run it and measure). |
+| **[123]** | "Undecidability of Confluence for Binary Length-Reducing Cycle Rewriting," arXiv:2608.18859 (2026-08-19) | 2026-10-25 | Confluence of finite length-reducing cycle rewriting over a fixed two-letter alphabet is $\Pi^0_1$-complete. **No general confluence theorem can be claimed.** Round 11's plan to prove confluence via Newman's lemma must be downgraded to a per-panel empirical statement plus cost invariance. |
+| **[124]** | "Associativity and Commutativity in Equality Saturation," arXiv:2610.01198 (2026-10-01) | 2026-10-25 | Native AC matching in relational e-matching. The commutation closure is an AC-style canonicalisation; this is the closest methodological relative and must be compared explicitly. |
+| **[125]** | "Depth-Optimal Quantum Compilation," arXiv:2609.34659 (2026-09-28) | 2026-10-25 | First constant-depth single-qubit synthesis with a **matching** $\Omega(\log\log(1/\varepsilon))$ lower bound. Sets the current bar for what "optimal" means in a top-tier compilation paper: construction plus matching bound. |
+| **[126]** | "CNOT-Distance is NP-complete under all-to-all connectivity," arXiv:2608.03825 (2026-08-04) | 2026-10-25 | Supplies the hardness anchor for the content class (cross-wire monomial merging is a CNOT-routing problem). |
+| **[127]** | "Parallelizable Exact Synthesis of Quantum Circuits via Semi-Tensor Product," arXiv:2607.24195 (2026-07-27) | 2026-10-25 | Candidate external-validity comparator for exact synthesis; not yet benchmarked here. |
+| **[128]** | "Normal-Form Characterization of Adaptivity and Entanglement in Pauli-Based Computation," arXiv:2610.30315 (2026-10-21) | 2026-10-25 | Normal-form characterisation of a computation model. Related-work anchor for the "what a normal form buys you" argument. |
+
+### F.1 Non-arXiv competitive signal (verify before citing)
+
+2026-10-16: Anthropic reported that Claude designed quantum circuits beating published
+results on 8 task classes (up to ~17x gate reduction), with an automatic evaluation loop,
+simulation and formal verification, **not** validated on hardware. Relevance: the
+"LLM + independent verifier" loop is now a competing paradigm, and the project's
+certificate/verifier layer is the judgement layer of that paradigm. No primary technical
+report was retrieved this round, so it is recorded as competitive context only, not as a
+citation.
+
+### F.2 Ecosystem snapshot corrections (2026-10-25)
+
+| Item | Correction |
+|---|---|
+| Qiskit | **2.6.1 released 2026-10-22** (2.6.0 was 2026-10-16). E63 re-ran the E61 panel on 2.6.1: the L3 non-monotonicity is **gone** (0/101, 0 residual `rz` pairs). Evidence remains pinned at 2.4.1. |
+| Quartz | `quantum-compiler/quartz`, v0.3.2, last release 2025-12-10, last push 2026-10-06. |
+| pyzx | `zxcalc/pyzx` v0.10.7 (2026-10-01). |
+| tket | `Quantinuum/tket` v2.18.5 (2026-10-08). |
+| BQSKit | 1.2.1 (2025-08-30), last push 2026-10-17. |
+| tzap | v0.8.0 (2026-10-11). |
+| MQT QCEC | v3.11.0 (2026-10-09), last push 2026-10-24. |
+| Quanto / VOQC | Both queried paths return 404; correct repository paths still unidentified. |

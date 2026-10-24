@@ -1,0 +1,52 @@
+{
+ "authority": "review-grade; NOT part of release/release_manifest.json",
+ "contract": {
+  "basis": [
+   "h",
+   "x",
+   "rz",
+   "cx"
+  ],
+  "levels": [
+   2,
+   3
+  ],
+  "read_only": [
+   "data/",
+   "release/",
+   "docs/manuscript/"
+  ],
+  "seed_transpiler": 42,
+  "size_cap": 300,
+  "versions": [
+   "qiskit 2.4.1 (repo env)",
+   "qiskit 2.6.1 (isolated uv venv)"
+  ]
+ },
+ "created_utc": "2026-10-24T18:19:10Z",
+ "experiment_id": "E63_QISKIT_261_RECHECK_2026_10_25",
+ "files": {
+  "cross_version.csv": {
+   "bytes": 11095,
+   "sha256": "e59b11021d2cd321af04e67b82d1a80dc160a678f9252a86fda7b4e2a074d3f6"
+  },
+  "panel_qasm.json": {
+   "bytes": 92049,
+   "sha256": "3d6bd767666e94630a04c1ca3117f5b236f7d573a23cdadf9963f390a3e1150d"
+  },
+  "summary.json": {
+   "bytes": 247,
+   "sha256": "1a1ba464bbd2b2672040a0ff46423615eb4a3152a0278009685b256ab9a6804e"
+  },
+  "sweep_261.csv": {
+   "bytes": 17493,
+   "sha256": "074a170df941012ed5a0157eaeca5421626e599ff81e15ba5984fb2618a6b996"
+  }
+ },
+ "inputs": {
+  "docs/review/science_boost/2026-10-24_opt_level_monotonicity/level_sweep.csv": "980e30e99a061bdd3390564025f6014c36ebbc6bb8ed84d93a3d552c7c54b123"
+ },
+ "package": "2026-10-25_qiskit_261",
+ "produced_by": "round 12 science_boost scan (automation 408cca6d)",
+ "script": "scripts/e63_qiskit_261_recheck.py"
+}

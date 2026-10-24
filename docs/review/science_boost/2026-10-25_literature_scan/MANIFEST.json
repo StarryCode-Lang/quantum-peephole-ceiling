@@ -1,0 +1,43 @@
+{
+ "authority": "review-grade; NOT part of release/release_manifest.json",
+ "contract": {
+  "channels_unavailable": [
+   "tavily (no key)",
+   "exa (no MCP server)",
+   "multi-search-engine (no key)",
+   "arxiv-reader (no LLM key)",
+   "citation-manager (no Crossref dependency)",
+   "github-trending (replaced by authenticated REST)"
+  ],
+  "channels_used": [
+   "arXiv API (20 structured queries)",
+   "GitHub REST (authenticated)",
+   "WebSearch (2)"
+  ],
+  "read_only": [
+   "data/",
+   "release/",
+   "docs/manuscript/"
+  ]
+ },
+ "created_utc": "2026-10-24T18:19:10Z",
+ "experiment_id": "ROUND12_LITERATURE_2026_10_25",
+ "files": {
+  "arxiv_records.json": {
+   "bytes": 396294,
+   "sha256": "944708598f80a327488b15cad82287cbbbc23c0c8491f9fa39f9daff9f58e1c7"
+  },
+  "github_snapshot.json": {
+   "bytes": 1574,
+   "sha256": "180d9adda0d32653c1149aadd51ce81553fc91db49554635b48625347b2d7503"
+  },
+  "query_log.json": {
+   "bytes": 2151,
+   "sha256": "7579800aeea1b9ebaafbb6be1ed3fae519917a46b465f859c685dcefc5e86205"
+  }
+ },
+ "inputs": {},
+ "package": "2026-10-25_literature_scan",
+ "produced_by": "round 12 science_boost scan (automation 408cca6d)",
+ "script": "scripts/round12_literature_scan.py"
+}
