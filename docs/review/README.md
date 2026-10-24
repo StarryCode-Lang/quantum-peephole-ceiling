@@ -3,12 +3,13 @@
 本目录是**审计与评审留痕**：每一份文件对应一次可追溯的判断（或一次被推翻的判断）。
 文件按日期或实验号命名，**不覆盖、不改写**；结论被推翻时在新文件里写明推翻关系。
 
-共 61 项。`science_boost/` 是独立的十轮扫描子目录，索引见其 `README.md`。
+共 62 项。`science_boost/` 是独立的十一轮扫描子目录，索引见其 `README.md`。
 
 ## 文件清单
 
 | 文件 | 类型 | 首行标题 / 用途 |
 |---|---|---|
+| `cleanup_2026-10-24.md` | md | 2026-10-24 cleanup record: what was deleted, what was restored, and why `data/` was not touched |
 | `e31_contrast_expansion_limitation_2026-08-24.md` | md | E31 factorial contrast-expansion limitation (2026-08-24) |
 | `e31_factorial_pareto_protocol_2026-08-11.md` | md | E31 full-factorial and equal-budget Pareto frozen protocol |
 | `e31_family_inference_correction_2026-08-26.md` | md | E31 post-hoc family-inference correction |
@@ -74,5 +75,5 @@
 ## 阅读顺序
 
 1. 想知道项目当前状态 → `../PROJECT_STATUS.md`。
-2. 想知道某个数字的来历 → 本目录按日期回溯，或 `science_boost/<date>_innovation_scan.md`。
+2. 想知道某个数字的来历 → 本目录按日期回溯；2026-10-23 之前请读 `science_boost/README.md` 的轮次编年（原始叙述已归档到 git）。
 3. 想知道某个结论是否还成立 → `science_boost/README.md` 的「当前主线」段。

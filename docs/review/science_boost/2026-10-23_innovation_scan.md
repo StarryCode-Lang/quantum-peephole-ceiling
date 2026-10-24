@@ -29,7 +29,8 @@ BV 阶梯 $n\le24$ **零可曝光配对**，证明 BV 逃逸纯属内容类，E5
 `README.md`、`docs/PROJECT_STATUS.md`、`docs/manuscript/manuscript.md`（只读，摘要 + §1 + §6.12 + §7.5/7.6）、
 `docs/theory/framework.md`（v5.4.2）、`data/DATA_CANONICAL.md`（v2.4.0）、
 `docs/references/unified_references.md`（94 条）、`release/v15_readiness_verdict.json`、
-`docs/review/science_boost/2026-10-22_backlog_closure.md`、`2026-10-22_innovation_scan.md`。
+`docs/review/science_boost/2026-10-22_backlog_closure.md`、`2026-10-22_innovation_scan.md`
+（后两份叙述已于 2026-10-24 清理，见 `science_boost/README.md` 的轮次编年；git 可恢复）。
 
 ### 1.2 证据链现状
 
