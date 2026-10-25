@@ -1,0 +1,248 @@
+{
+  "experiment_id": "E69_WINDOW_INFERENCE_V1",
+  "purpose": "design-based (cluster-robust) inference for the frozen v16 window landscape; closes WL-4",
+  "input": {
+    "path": "data\\v16\\e46_window_landscape\\window_results.csv",
+    "sha256": "855803011ed17156a347925fe6d4998a42ac4ad63ba7a1f8838faa46e7ad082b",
+    "rows": 76236
+  },
+  "method": {
+    "cluster": "source_id (windows overlap within a source by construction)",
+    "bootstrap": "percentile, 10000 resamples over sources, seed 20261026",
+    "naive_comparator": "Wilson score interval treating windows as independent",
+    "icc": "one-way ANOVA estimator for a binary indicator, unequal cluster sizes",
+    "family_test": "two-sided z on a difference of proportions vs the largest family, Holm-adjusted"
+  },
+  "rates": [
+    {
+      "config": "w8_h2",
+      "windows": 19363,
+      "escapes": 9071,
+      "rate": "0.468471",
+      "wilson_lo": "0.461449",
+      "wilson_hi": "0.475505",
+      "cluster_lo": "0.351050",
+      "cluster_hi": "0.606426",
+      "cluster_se": "0.065182",
+      "ci_width_ratio": "18.169",
+      "sources": 94
+    },
+    {
+      "config": "w8_h3",
+      "windows": 19363,
+      "escapes": 9246,
+      "rate": "0.477509",
+      "wilson_lo": "0.470478",
+      "wilson_hi": "0.484548",
+      "cluster_lo": "0.360630",
+      "cluster_hi": "0.614755",
+      "cluster_se": "0.064791",
+      "ci_width_ratio": "18.062",
+      "sources": 94
+    },
+    {
+      "config": "w16_h2",
+      "windows": 18755,
+      "escapes": 10499,
+      "rate": "0.559797",
+      "wilson_lo": "0.552681",
+      "wilson_hi": "0.566889",
+      "cluster_lo": "0.442930",
+      "cluster_hi": "0.691464",
+      "cluster_se": "0.063520",
+      "ci_width_ratio": "17.493",
+      "sources": 73
+    },
+    {
+      "config": "w16_h3",
+      "windows": 18755,
+      "escapes": 10756,
+      "rate": "0.573500",
+      "wilson_lo": "0.566408",
+      "wilson_hi": "0.580563",
+      "cluster_lo": "0.458852",
+      "cluster_hi": "0.702907",
+      "cluster_se": "0.062521",
+      "ci_width_ratio": "17.242",
+      "sources": 73
+    }
+  ],
+  "icc": [
+    {
+      "config": "w8_h2",
+      "sources": 94,
+      "mean_cluster_size": "205.99",
+      "icc": "0.6689",
+      "design_effect": "138.12",
+      "effective_n": "140.2"
+    },
+    {
+      "config": "w8_h3",
+      "sources": 94,
+      "mean_cluster_size": "205.99",
+      "icc": "0.6512",
+      "design_effect": "134.49",
+      "effective_n": "144.0"
+    },
+    {
+      "config": "w16_h2",
+      "sources": 73,
+      "mean_cluster_size": "256.92",
+      "icc": "0.5945",
+      "design_effect": "153.14",
+      "effective_n": "122.5"
+    },
+    {
+      "config": "w16_h3",
+      "sources": 73,
+      "mean_cluster_size": "256.92",
+      "icc": "0.5729",
+      "design_effect": "147.61",
+      "effective_n": "127.1"
+    }
+  ],
+  "paired": [
+    {
+      "from": "w8_h2",
+      "to": "w16_h2",
+      "sources": 73,
+      "mean_delta": "+0.118152",
+      "cluster_lo": "+0.082172",
+      "cluster_hi": "+0.157114",
+      "sources_up": 43,
+      "sources_down": 0,
+      "sources_tied": 30
+    },
+    {
+      "from": "w8_h3",
+      "to": "w16_h3",
+      "sources": 73,
+      "mean_delta": "+0.120513",
+      "cluster_lo": "+0.086126",
+      "cluster_hi": "+0.157843",
+      "sources_up": 46,
+      "sources_down": 0,
+      "sources_tied": 27
+    },
+    {
+      "from": "w8_h2",
+      "to": "w8_h3",
+      "sources": 94,
+      "mean_delta": "+0.056216",
+      "cluster_lo": "+0.025963",
+      "cluster_hi": "+0.092028",
+      "sources_up": 33,
+      "sources_down": 0,
+      "sources_tied": 61
+    },
+    {
+      "from": "w16_h2",
+      "to": "w16_h3",
+      "sources": 73,
+      "mean_delta": "+0.019953",
+      "cluster_lo": "+0.010088",
+      "cluster_hi": "+0.031713",
+      "sources_up": 25,
+      "sources_down": 0,
+      "sources_tied": 48
+    }
+  ],
+  "stratified": [
+    {
+      "config": "w8_h2",
+      "root_kind": "GREEDY_FIXED_POINT",
+      "sources": 44,
+      "windows": 747,
+      "escapes": 99,
+      "rate": "0.132530",
+      "depth1_escapes": 0,
+      "depth_ge2_escapes": 99,
+      "depth1_share": "0.0000"
+    },
+    {
+      "config": "w8_h2",
+      "root_kind": "RAW_NORMALIZED_OVER_BASELINE_BUDGET",
+      "sources": 50,
+      "windows": 18616,
+      "escapes": 8972,
+      "rate": "0.481951",
+      "depth1_escapes": 8964,
+      "depth_ge2_escapes": 8,
+      "depth1_share": "0.9991"
+    },
+    {
+      "config": "w8_h3",
+      "root_kind": "GREEDY_FIXED_POINT",
+      "sources": 44,
+      "windows": 747,
+      "escapes": 150,
+      "rate": "0.200803",
+      "depth1_escapes": 0,
+      "depth_ge2_escapes": 150,
+      "depth1_share": "0.0000"
+    },
+    {
+      "config": "w8_h3",
+      "root_kind": "RAW_NORMALIZED_OVER_BASELINE_BUDGET",
+      "sources": 50,
+      "windows": 18616,
+      "escapes": 9096,
+      "rate": "0.488612",
+      "depth1_escapes": 8964,
+      "depth_ge2_escapes": 132,
+      "depth1_share": "0.9855"
+    },
+    {
+      "config": "w16_h2",
+      "root_kind": "GREEDY_FIXED_POINT",
+      "sources": 23,
+      "windows": 481,
+      "escapes": 152,
+      "rate": "0.316008",
+      "depth1_escapes": 0,
+      "depth_ge2_escapes": 152,
+      "depth1_share": "0.0000"
+    },
+    {
+      "config": "w16_h2",
+      "root_kind": "RAW_NORMALIZED_OVER_BASELINE_BUDGET",
+      "sources": 50,
+      "windows": 18274,
+      "escapes": 10347,
+      "rate": "0.566214",
+      "depth1_escapes": 10339,
+      "depth_ge2_escapes": 8,
+      "depth1_share": "0.9992"
+    },
+    {
+      "config": "w16_h3",
+      "root_kind": "GREEDY_FIXED_POINT",
+      "sources": 23,
+      "windows": 481,
+      "escapes": 191,
+      "rate": "0.397089",
+      "depth1_escapes": 0,
+      "depth_ge2_escapes": 191,
+      "depth1_share": "0.0000"
+    },
+    {
+      "config": "w16_h3",
+      "root_kind": "RAW_NORMALIZED_OVER_BASELINE_BUDGET",
+      "sources": 50,
+      "windows": 18274,
+      "escapes": 10565,
+      "rate": "0.578144",
+      "depth1_escapes": 10339,
+      "depth_ge2_escapes": 226,
+      "depth1_share": "0.9786"
+    }
+  ],
+  "files": {
+    "denominators.csv": "e01e3855f3ad3e382d830929d1017798c2aadf4ed504932cfb1c7f7b13e1a451",
+    "rates.csv": "936d6f96c750c3ab991b7e8101266b00eb9e06ea52f5c99afab2d51ad97f43c7",
+    "icc_deff.csv": "95c7f33e17392cbd7c65deed07123838509fb400ba774c03cfe7856ae22e5da2",
+    "families.csv": "b56986b81773bd822b723cb18a4cfaec19205a7f1c8efbc2cc41a0de1b04be5a",
+    "paired.csv": "031e0ada3ba1835ecdd3f79140ece4d72d4979571238f2d86abbec60db656609",
+    "stratified.csv": "55cf0704b90ff0575034b3d9516a22794de936145277ca7bbb76ea81e03f16d2"
+  }
+}

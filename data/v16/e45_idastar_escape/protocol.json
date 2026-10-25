@@ -1,0 +1,39 @@
+{
+  "arms": [
+    "idastar_escape"
+  ],
+  "cell_limits": {
+    "state_budget": 200000,
+    "time_budget_seconds": 30.0
+  },
+  "configuration_grid": [
+    {
+      "barrier_cap": 2,
+      "beam_width": 64,
+      "config_id": "h3_b64_s200k",
+      "horizon": 3,
+      "state_budget": 200000
+    }
+  ],
+  "experiment_id": "E45_CERTIFIED_ESCAPE_IDASTAR_V16",
+  "future_panel_access": "E46_AND_LATER_NOT_READ",
+  "phase": "full_development",
+  "rule_scope": "e44_core_v1",
+  "search_method": {
+    "id": "idastar_escape_v1",
+    "lower_bound": "ceil(gate_count_deficit / maximum_single_step_reduction)",
+    "objective": "minimum path length to a state with cost < initial cost",
+    "resource_status": "EXACT only when every depth bound through H completes",
+    "reverse_edges": "not used; rank-increasing reverse Quartz parameter-splitting remains illegal",
+    "transposition_policy": "memoize fully explored failures by (state_hash, remaining_depth); finite-depth repetitions are allowed"
+  },
+  "source_contract": {
+    "e39_path": "data/v12/e39_development_grid/inputs.csv",
+    "e44_path": "data/v13/e44_certified_landscape_oracle/inputs.jsonl",
+    "fixed_panel": "same 128-source v14 screening order",
+    "screening_manifest": "data/v14/e45_development_grid/normalization_manifest.csv",
+    "screening_manifest_sha256": "0f4babe8cd8a2b07efd5ee826152775ae0bc290649a4f48bd39eb25a811b4e09",
+    "source_count": 128
+  },
+  "status": "DEVELOPMENT_ONLY"
+}

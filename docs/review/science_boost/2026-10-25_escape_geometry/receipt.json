@@ -1,0 +1,104 @@
+{
+  "authority": "review-grade; NOT part of release/release_manifest.json",
+  "bootstrap_seed": 20261025,
+  "experiment_id": "E64_ESCAPE_GEOMETRY_ATLAS_2026_10_25",
+  "generated_at": "2026-10-25T00:00:00Z",
+  "inputs": {
+    "classification_complete": {
+      "path": "data/v15/e45_landscape_integration/classification_complete.csv",
+      "sha256": "786b8a0c4fbeb46f7813fcad5874c353402dbc565e8f07ee5d4229ade09826fc"
+    },
+    "compact_certificates": {
+      "path": "data/v14/e45_full_development/certificates.jsonl",
+      "sha256": "8a6ae277772533270a69795b20a680b6c660ca78e5eb2a2cc91357ade4c8e48b"
+    },
+    "e52_summary": {
+      "path": "docs/review/science_boost/2026-10-22_escape_mechanism/summary.json",
+      "sha256": "28b624d77b1077c592a732d8b30031780af0d1aa400352f1cf983813574f4d8d"
+    },
+    "escape_certificates": {
+      "path": "data/v15/e46_window_landscape/escape_certificates.jsonl",
+      "sha256": "5590e93a5106377e448fec95f976e247c60f09461eec4d04926192a0932da28d"
+    },
+    "idastar_certificates": {
+      "path": "data/v14/e45_idastar_escape/certificates.jsonl",
+      "sha256": "de8a829d6d52c011945408484c57abf65b66bc22bba9be3cfa4e6d80345d0516"
+    },
+    "input_summaries": {
+      "path": "data/v15/e46_window_landscape/input_summaries.csv",
+      "sha256": "370d9bb38644317a16c05adfe3ad48405d29086c9b32af61b8bf3f87aee2aa7b"
+    },
+    "window_results": {
+      "path": "data/v15/e46_window_landscape/window_results.csv",
+      "sha256": "81367fde9f26a782449b7d3bac0d52695f23a88ef6e986f1652e18a8f57c6a1a"
+    }
+  },
+  "outputs": {
+    "bounded_cell_exactification_tracker.csv": {
+      "bytes": 7763,
+      "sha256": "e5d7eac959d41623e49bbc57b683775be9de2ae95fa66e7c5fef3a9740dc277b"
+    },
+    "branching_factor_law.csv": {
+      "bytes": 307,
+      "sha256": "7e5686e504f480b61e5a5aa7dedb75698c0948c5683e8d63a4d293bcad6a20c6"
+    },
+    "contingency_source_table.csv": {
+      "bytes": 16980,
+      "sha256": "ae162c9093f67e76c4ebe3687df5c2474eff7d61ca98cf5c51f4e7f02f7dc093"
+    },
+    "escape_geometry_by_start.csv": {
+      "bytes": 260073,
+      "sha256": "3d2438c2547fbb1e85ede1398622bdf4e951b84134e0fff81a04a3604a13e3e4"
+    },
+    "escape_rate_atlas.csv": {
+      "bytes": 2212,
+      "sha256": "3155cc848ed4423bb7827228541aa8ece7ed2df23aefd7083b555f059fa60fcd"
+    },
+    "escape_rate_slices.csv": {
+      "bytes": 1201,
+      "sha256": "651279234d3b89148f44c96083736e239ebab7cf7abcabea7128a848e99cd1c4"
+    },
+    "family_profile.csv": {
+      "bytes": 2540,
+      "sha256": "86ba3c08d118eb23d5c3978c55ba8e092d47ee068c531feba8dd279e67a5aa20"
+    },
+    "source_escape_geometry.csv": {
+      "bytes": 63078,
+      "sha256": "3865b0b39b00ecc189fcbbb99150bd37c5cbbc920d9fd8ae9b5cc357ff353fad"
+    },
+    "summary.json": {
+      "bytes": 21517,
+      "sha256": "6f364164bb838a3303e9232fa13c25bd135f88a27f625ddcd3bbcfb48e72a798"
+    },
+    "summary.md": {
+      "bytes": 9187,
+      "sha256": "50fe66d0d081144c386b3bb555fb190ae25ed2901651a1b49f48d8df2f86793c"
+    },
+    "tier_family_gain_bootstrap.csv": {
+      "bytes": 1561,
+      "sha256": "f95493a764b81d9bb32b2238f5c8e73bd4dffa9c9024d4d1d8088e3e06182ecd"
+    },
+    "window_barrier_distribution.csv": {
+      "bytes": 289,
+      "sha256": "3acc4292e22a3895855923ba8466b7b124752402ca3a91cc904cf0f5ba177101"
+    },
+    "window_escape_contingency.csv": {
+      "bytes": 406,
+      "sha256": "29487a0b1350011a832408b57dbc255b8dfccd03f5fa7ae2dcd910bbdd58a446"
+    },
+    "window_escape_depth_by_family.csv": {
+      "bytes": 460,
+      "sha256": "db64a60a98c9db1a465b2380d9fca0da298795ba79e642550e9a4037051d37c5"
+    },
+    "window_gain_distribution.csv": {
+      "bytes": 796,
+      "sha256": "555fe5e9df2227a3ad11b475c4923507bc1304a11c3c1533182fe3c197dae6ac"
+    }
+  },
+  "package": "2026-10-25_escape_geometry",
+  "python_version": "3.12.12",
+  "script": {
+    "path": "scripts/e64_escape_geometry_atlas.py",
+    "sha256": "e384cf5399692a188e48e25c70e3be99a986fc3b291747e2d9acbd3ebb86cd4d"
+  }
+}

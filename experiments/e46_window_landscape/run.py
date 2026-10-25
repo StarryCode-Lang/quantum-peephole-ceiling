@@ -58,7 +58,7 @@ OUTPUT_ROOT = ROOT / "data" / "v15" / "e46_window_landscape"
 COMPACT_CERTIFICATES = ROOT / "data" / "v14" / "e45_full_development" / "certificates.jsonl"
 COMPACT_MANIFEST = ROOT / "data" / "v14" / "e45_full_development" / "normalization_manifest.csv"
 RULE_SCOPE = "e44_core_v1"
-EXPERIMENT_ID = "E46_WINDOW_LANDSCAPE_V15"
+EXPERIMENT_ID = os.environ.get("E46_EXPERIMENT_ID_OVERRIDE", "E46_WINDOW_LANDSCAPE_V15")
 
 WINDOW_WIDTHS = (8, 16)
 HORIZONS = (2, 3)
@@ -83,8 +83,13 @@ def window_state(state: LandscapeState, start: int, width: int) -> LandscapeStat
     return LandscapeState(state.num_qubits, state.gates[start : start + width]).normalized()
 
 
-def load_root_states() -> list[dict[str, Any]]:
-    """Rebuild the E45 root states and hash-check them against v14 certificates."""
+def load_root_states(root_ordering: str = "greedy") -> list[dict[str, Any]]:
+    """Rebuild the E45 root states and hash-check them against v14 certificates.
+
+    ``root_ordering="wcl"`` reorders each root listing into wire-consecutive
+    order via ``state_wcl`` (unitarily equivalent, deterministic) before
+    windowing; the root hash contract still pins the frozen pre-reorder state.
+    """
 
     frozen = {
         json.loads(line)["source_id"]: json.loads(line)["certificate"]["initial_state_sha256"]
@@ -116,6 +121,12 @@ def load_root_states() -> list[dict[str, Any]]:
         state = state_from_circuit(baseline)
         if state.state_hash != expected:
             raise RuntimeError(f"root_state_hash_mismatch:{source_id}")
+        root_kind_value = root_kind
+        if root_ordering == "wcl":
+            from src.optimisation.certified_landscape import state_wcl
+
+            state = state_wcl(state)
+            root_kind_value = f"{root_kind}_WCL"
         roots.append(
             {
                 "source_id": source_id,
@@ -124,7 +135,7 @@ def load_root_states() -> list[dict[str, Any]]:
                 "circuit_family": source["circuit_family"],
                 "n_qubits": source["n_qubits"],
                 "root_state_sha256": expected,
-                "root_kind": root_kind,
+                "root_kind": root_kind_value,
                 "root_gate_count": len(state.gates),
                 "state": state,
             }
@@ -197,10 +208,15 @@ def search_input(item: dict[str, Any]) -> dict[str, Any]:
     return {"item": item, "rows": rows, "escape_certificates": escape_certificates}
 
 
-def run(output_root: Path = OUTPUT_ROOT, workers: int = WORKERS, source_limit: int | None = None) -> dict[str, Any]:
+def run(
+    output_root: Path = OUTPUT_ROOT,
+    workers: int = WORKERS,
+    source_limit: int | None = None,
+    root_ordering: str = "greedy",
+) -> dict[str, Any]:
     output_root = output_root.resolve()
     output_root.mkdir(parents=True, exist_ok=True)
-    roots = load_root_states()
+    roots = load_root_states(root_ordering)
     if source_limit is not None:
         roots = roots[:source_limit]
 
@@ -283,6 +299,7 @@ def run(output_root: Path = OUTPUT_ROOT, workers: int = WORKERS, source_limit: i
         "panel": {
             "source": "E45 fixed panel (96 E39 + 32 E44 sources in screening order)",
             "root_states": "greedy fixed point per input; raw normalized listing when the input exceeds the baseline gate budget",
+            "root_ordering": root_ordering,
             "root_hash_contract": "every root state hash is checked against the frozen v14 compact certificate",
             "source_count": len(roots),
         },
@@ -364,8 +381,20 @@ def main() -> int:
     parser.add_argument("--output-root", type=Path, default=OUTPUT_ROOT)
     parser.add_argument("--workers", type=int, default=WORKERS)
     parser.add_argument("--source-limit", type=int)
+    parser.add_argument("--experiment-id")
+    parser.add_argument("--root-ordering", choices=("greedy", "wcl"), default="greedy")
     args = parser.parse_args()
-    print(json.dumps(run(args.output_root, args.workers, args.source_limit), sort_keys=True))
+    if args.experiment_id:
+        # spawn workers re-import this module, so the override must be visible
+        # in the environment before the pool is created
+        os.environ["E46_EXPERIMENT_ID_OVERRIDE"] = args.experiment_id
+        globals()["EXPERIMENT_ID"] = args.experiment_id
+    print(
+        json.dumps(
+            run(args.output_root, args.workers, args.source_limit, args.root_ordering),
+            sort_keys=True,
+        )
+    )
     return 0
 
 

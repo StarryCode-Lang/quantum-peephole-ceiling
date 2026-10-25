@@ -374,3 +374,110 @@ v0.3.2 (December 2024).
 
 This scan is a targeted v15 refresh, not a final systematic review or
 novelty conclusion.
+
+---
+
+## 12. 2026-10-25 external scan — certified-optimization prior-art map and scoop check (post-v15)
+
+A 31-query external scan with 17 primary fetches (executed 2026-10-25) mapped
+the 2025–2026 certified-optimization prior art and re-ran the scoop check
+against the three claim classes of §11: (1) listing-representation
+sensitivity of rewrite visibility, (2) per-input exact local-optima
+certification for greedy peephole optimization, (3) certified rewrite
+landscape with replayable per-step certificates. Items marked **VERIFIED**
+were confirmed against the primary record (abstract page or publisher DOI)
+this session; items marked **SNIPPET-ONLY** were seen only in search-result
+snippets and carry no primary-source confirmation. The arXiv export API was
+rate-limited (HTTP 503), so `abs` pages were fetched individually rather than
+via `id_list` batch calls.
+
+### 12.1 Scoop-check verdict
+
+**No scoop found.** No 2025–2026 paper performs per-instance exact
+local-optima certification for peephole fixed points, and none presents a
+classification-complete certified rewrite landscape. The five nearest
+neighbors each certify a **different** object (§12.3). One residual watch
+item:
+
+- Reddit r/informaq post "AI-Driven Certified Quantum Circuit Optimization"
+  (https://www.reddit.com/r/informaq/comments/1xd4kbp/aidriven_certified_quantum_circuit_optimization)
+  — **SNIPPET-ONLY**, no primary source located; monitor before submission.
+
+### 12.2 New must-handle entries
+
+| Record | ID / venue · date | Method (one line) | Relation to the claim classes | Status |
+|---|---|---|---|---|
+| AlchemQ: Proof-Carrying Quantum Circuit Optimization with Per-Result Equivalence Certificates (A. Laabs) | arXiv:2609.19160 (v1 2026-08-24) | Untrusted beam search + machine-checkable per-result equivalence certificates | Overlaps claim-2 **infrastructure** (the certificate layer) but certifies equivalence of results, never local optimality of a fixed point; no landscape, no representation axis. **Highest-priority differentiation.** | VERIFIED |
+| Q-PreSyn: Quantum Circuit Pre-Synthesis (LA/LANL+CSU) | arXiv:2601.19738 (2026-01-27) | RL local edits to reduce T-count | Abstract acknowledges composed local synthesis has "strong dependence on circuit representation" — closest published acknowledgment of claim-1 territory, as motivation for a method, not measured or certified. Already in ledger (§8.1, unified [90]); re-verified this scan | VERIFIED |
+| Phase transitions in quantum-circuit compilation | arXiv:2608.00189 (2026-07-31) | Simulated annealing as a spin system; phase structure of compilation | **Vocabulary collision** with the refuted phase-transition hypothesis (manuscript §1.3); a demarcation paragraph is needed | VERIFIED |
+| TZAP: Fast Quantum-Circuit Superoptimization (A. Albarghouthi) | IACR ePrint 2026/2115 (2026-09-19); code github.com/qqq-wisc/tzap | Linear passes replacing subcircuits by minimal unitary representative maps (MURM); soundness by construction | No per-instance certificates; headline cost baseline for claim-2 comparisons | VERIFIED |
+| Quasar: Equality Saturation for Quantum Circuit Optimization (Yang et al.) | PLDI 2026; DOI 10.1145/3808254 | Dual e-graphs; step-limited optimal extraction | Closure-relative optimality. **Already in ledger** (§5 [46], §8, §11 constraint 3) — cross-reference only | VERIFIED |
+| GUOQ: Optimizing Quantum Circuits, Fast and Slow (Xu, Molavi, Tannu, Albarghouthi) | ASPLOS 2025; arXiv:2411.04104; DOI 10.1145/3669940.3707240 | Unified rewrite + resynthesis optimization | Resynthesis ≈ an "oracle" in Acar's sense; feeds the claim-2 oracle-relative vocabulary. Artifact notes already in §8.2 | VERIFIED |
+| POPQC (Liu, Arora, Xu, Acar) | SPAA 2025; arXiv:2506.13720; DOI 10.1145/3694906.3743325 | Parallel local optimization with oracle-relative guarantees (parallel fingers) | Oracle-relative local optimality **attained by construction**; contrast: they ATTAIN oracle-relative local optimality, we CLASSIFY arbitrary greedy fixed points against absolute semantics (claim-2). Cross-ref §8.2, §11 | VERIFIED |
+| Local Optimization of Quantum Circuits (Arora et al.) | arXiv:2502.19526 (2025-02-26) | Cut-and-meld local optimization | Same contrast as POPQC (claim-2); cross-ref §8.2, §11 | VERIFIED |
+| Equivalence Checking via Path-Sum and Weighted Model Counting | TACAS 2026; arXiv:2604.24504; DOI 10.1007/978-3-032-22749-2_21 | Equivalence checking reduced to weighted model counting over path sums | Candidate **independent semantic validator** for witness certificates (claims 2–3 infrastructure) | VERIFIED |
+| Reducing Quantum Circuit Synthesis to #SAT | CP 2025; arXiv:2508.00416 | Exact synthesis via model counting | Methodologically adjacent to the certificate/validator layer | VERIFIED |
+| Quantum Circuit Unoptimization (Mori et al.) | PRR 7, 023139 (2025); arXiv:2311.03805; code `qcunopt`; 2026 follow-up "…as a Benchmark Task for Quantum Compilers" | Inverse-map benchmark generation; NP∩BQP remark | Benchmark-generation primitive (feeds D1/D11); both records snippet-only | SNIPPET-ONLY |
+| Scalable QAS via Landscape Analysis | arXiv:2505.05380 | Landscape analysis of variational-parameter search | "Landscape" **vocabulary collision** (variational-parameter landscapes, not rewrite landscapes); cite to fence the term (claim-3) | VERIFIED |
+| Discovering SOTA quantum circuits with LLMs | arXiv:2610.22367 (2026-10-15) | LLM-propose / verify-and-evaluate loop | Correctness-only evaluation; no certification, no landscape; claims 1–3 unaffected | VERIFIED |
+| To et al., Order of Optimization Passes | QCE 2026; arXiv:2609.29406 | Pass-ordering study | Pass ORDER ≠ input REPRESENTATION; claim-1 space still unoccupied (already in §11) | VERIFIED |
+| QuCLEAR | HPCA 2025; arXiv:2408.13316 | Clifford restructuring | Clifford-preprocessing context only | SNIPPET-ONLY |
+
+Baseline/toolchain notes (protocol freshness): Qiskit 2.5.0 ships the
+multithreaded two-qubit peephole pass; mqt-core 4.0.0 removed its ZX library;
+Quartz remains dormant since v0.3.2 (December 2024); the Fischbach ZX rewrite
+search is now integrated in PyZX/Qiskit. QED-C volumetric benchmarks and
+Nation et al., Nature Computational Science 2025 software benchmarking
+(PMC12116379) are **SNIPPET-ONLY**; MQT Bench remains the standard suite and
+no successor to SupermarQ was found.
+
+### 12.3 Nearest-neighbor map — certified object vs our object
+
+| Nearest neighbor | Object it certifies | What we certify instead |
+|---|---|---|
+| AlchemQ (arXiv:2609.19160) | Equivalence of results | Per-instance local optimality of a greedy peephole fixed point |
+| POPQC / arXiv:2502.19526 | Oracle-relative local optimality, attained by construction | Classification of arbitrary greedy fixed points against absolute semantics |
+| TZAP (IACR ePrint 2026/2115) | Minimality within a precomputed MURM | Per-input certificates that a fixed point is (or is not) a local optimum |
+| Fischbach et al. (arXiv:2503.10983) | Exhaustive search over ZX rewrites, without certificates | Per-step replayable certificates attached to the classification |
+| Quasar (PLDI 2026) | Step-limited optimum within the e-graph closure | Behavior of a bounded faithful optimizer, not closure-relative optima |
+
+### 12.4 Innovation-directions register
+
+Ranked by novelty × feasibility × impact. D2, D3 and D6 are (partially)
+derivable from the frozen data; the remainder require new compute.
+
+1. **D1 — Complexity of recognizing local optima**: ΣₖP/PSPACE-flavored
+   decision problem; anchors van de Wetering–Amy (arXiv:2310.05958) and
+   Mori's NP∩BQP remark.
+2. **D2 — Cross-representation certificate transfer**: extends claims 1+2
+   into one artifact. *(frozen data, partial)*
+3. **D3 — Statistical laws of the certified landscape**: escape-probability
+   scaling; threshold-law test of the >80-gate signal. *(frozen data,
+   partial)*
+4. **D4 — Certificate protocol as infrastructure**: machine-checkable witness
+   format; TACAS 2026 WMC as validator; answers AlchemQ's agenda for
+   optimality.
+5. **D5 — Souper/STOKE superoptimization demarcation**.
+6. **D6 — Cheap predictive features for depth ≥ 2 escapes** ("certainty
+   budget"). *(frozen data, partial)*
+7. **D7 — Noise-aware landscape re-scoring** (foil: arXiv:2507.01195).
+8. **D8 — QEC/FT extension discussion**.
+9. **D9 — Confluence theory** (Newman's lemma; capped by confluence
+   undecidability, arXiv:2608.18859).
+10. **D10 — Phase-transition demarcation paragraph** (arXiv:2608.00189; IEEE
+    bifurcation item).
+11. **D11 — Local-escape benchmark release** (complements `qcunopt` + MQT
+    Bench).
+12. **D12 — Oracle-sensitivity study**: rule-oracle vs resynthesis-oracle vs
+    #SAT-fragment verdicts; engages Acar-group vocabulary.
+
+### 12.5 Provenance and validity statement
+
+31 distinct queries and 17 primary fetches, executed 2026-10-25; the arXiv
+export API returned 503 for batch calls, so records were fetched individually
+from `abs` pages. **§11's 2026-10-11 statement — no direct prior art for the
+three claim classes — REMAINS VALID after this scan**, now with the refined
+nearest-neighbor map of §12.3.
+
+This scan is a targeted post-v15 refresh, not a final systematic review or
+novelty conclusion.

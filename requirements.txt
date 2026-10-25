@@ -15,6 +15,9 @@ scikit-learn==1.8.0
 cirq-core==1.6.1
 pytket==2.18.0
 pytket-qiskit==0.77.0
+# E53/E55/E58: external falsifier adapters (BQSKit + TZAP)
+bqskit==1.2.1
+tzap==0.8.0
 # Hardware-surrogate and real-QPU protocol dependencies
 qiskit-aer==0.17.2
 qiskit-ibm-runtime==0.47.0

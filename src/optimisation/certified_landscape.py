@@ -11,6 +11,7 @@ local optimum.
 from __future__ import annotations
 
 import hashlib
+import heapq
 import itertools
 import json
 import math
@@ -345,6 +346,74 @@ def semantically_equivalent(left: LandscapeState, right: LandscapeState) -> bool
     return bool(np.isclose(overlap, 1.0, atol=SEMANTIC_TOLERANCE, rtol=0.0))
 
 
+def state_wcl(state: LandscapeState) -> LandscapeState:
+    """Reorder the listing into wire-consecutive listing (WCL) order.
+
+    Mirrors ``WireTraversalPreprocessor.preprocess`` from
+    ``src/optimisation/phase1/wire_traversal.py`` on ``LandscapeState`` gate
+    tuples, with identical tie-breaking: each gate's primary wire is the
+    lowest qubit index it acts on; a dependency DAG adds one deduplicated
+    edge between every pair of consecutive gates on each qubit (preserving
+    their listing order); and Kahn's algorithm with a min-heap keyed on
+    ``(primary_wire, original_index)`` emits the deterministic WCL
+    permutation.  Gates sharing a qubit keep their relative order by
+    construction, and gates on disjoint qubits commute, so the result is
+    unitarily equivalent to the input.
+
+    The function is pure and returns a permutation of the same gate multiset
+    (same ``StateGate`` objects, same angles), so the total cost is invariant
+    and the output is byte-stable for a given input listing.
+
+    Semantic gaps relative to the Qiskit preprocessor: register structure,
+    global phase, classical bits, and non-unitary directives have no
+    ``LandscapeState`` counterpart and are absent here; listings of at most
+    one gate are returned unchanged, mirroring the preprocessor's
+    ``n_gates <= 1`` early return; qubit indices are used as given (the
+    Qiskit ``find_bit`` indirection has no analogue); and the cycle fallback
+    of the preprocessor is kept for parity although the DAG is acyclic by
+    construction (every per-qubit edge points from an earlier to a later
+    listing index).
+    """
+
+    gate_count = len(state.gates)
+    if gate_count <= 1:
+        return state
+    gate_qubits = [set(gate.qubits) for gate in state.gates]
+    qubit_to_gates: dict[int, list[int]] = defaultdict(list)
+    for index, qubits in enumerate(gate_qubits):
+        for qubit in qubits:
+            qubit_to_gates[qubit].append(index)
+    edges: set[tuple[int, int]] = set()
+    for gates_on_qubit in qubit_to_gates.values():
+        for k in range(len(gates_on_qubit) - 1):
+            edges.add((gates_on_qubit[k], gates_on_qubit[k + 1]))
+    in_degree = [0] * gate_count
+    adjacency: dict[int, list[int]] = defaultdict(list)
+    for left, right in edges:
+        adjacency[left].append(right)
+        in_degree[right] += 1
+    primary_wire = [min(qubits) for qubits in gate_qubits]
+    heap: list[tuple[int, int]] = []
+    for index in range(gate_count):
+        if in_degree[index] == 0:
+            heapq.heappush(heap, (primary_wire[index], index))
+    order: list[int] = []
+    while heap:
+        _, index = heapq.heappop(heap)
+        order.append(index)
+        for successor in adjacency[index]:
+            in_degree[successor] -= 1
+            if in_degree[successor] == 0:
+                heapq.heappush(heap, (primary_wire[successor], successor))
+    if len(order) != gate_count:
+        # Unreachable for a valid listing (the DAG is acyclic by
+        # construction); mirrors the preprocessor's fallback exactly.
+        return state
+    return _state_from_normalized(
+        state.num_qubits, tuple(state.gates[index] for index in order)
+    )
+
+
 @lru_cache(maxsize=4)
 def _rule_library(path: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     library = json.loads(path.read_text(encoding="utf-8"))
@@ -358,18 +427,34 @@ def _rule_library(path: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]
     return quartz, auxiliary
 
 
-@lru_cache(maxsize=8)
-def _quartz_index(path: Path, rule_scope: str = "full") -> dict[tuple[str, ...], tuple[dict[str, Any], ...]]:
-    quartz, _ = _rule_library(path)
+def filter_rule_scope(
+    rules: Iterable[Mapping[str, Any]],
+    rule_scope: str = "full",
+) -> list[dict[str, Any]]:
+    """Restrict Quartz rules to the declared certification scope.
+
+    ``full`` keeps every rule unchanged and in input order; ``e44_core_v1``
+    keeps the pinned core subset (source on at most 2 qubits, at most 4 source
+    operations, at most 6 target operations).  Any other scope name is
+    rejected.  This is the single authority for scope membership; the engine
+    indexes and the certified lower-bound derivation must agree on it.
+    """
+
+    if rule_scope == "full":
+        return list(rules)
     if rule_scope == "e44_core_v1":
-        quartz = [
-            rule for rule in quartz
+        return [
+            rule for rule in rules
             if int(rule["source"]["num_qubits"]) <= 2
             and len(rule["source"]["operations"]) <= 4
             and len(rule["target"]["operations"]) <= 6
         ]
-    elif rule_scope != "full":
-        raise ValueError(f"unknown_rule_scope:{rule_scope}")
+    raise ValueError(f"unknown_rule_scope:{rule_scope}")
+
+
+@lru_cache(maxsize=8)
+def _quartz_index(path: Path, rule_scope: str = "full") -> dict[tuple[str, ...], tuple[dict[str, Any], ...]]:
+    quartz = filter_rule_scope(_rule_library(path)[0], rule_scope)
     index: dict[tuple[str, ...], list[dict[str, Any]]] = defaultdict(list)
     for rule in quartz:
         signature = tuple(operation["name"] for operation in rule["source"]["operations"])
@@ -560,6 +645,7 @@ def _iter_quartz_rule_actions(
 
 
 _SELF_INVERSE = frozenset({"h", "x", "y", "z", "cx", "cz", "swap"})
+_ROTATION_FAMILY = frozenset({"rx", "ry", "rz"})
 _Z_FAMILY = frozenset({"z", "rz", "s", "sdg", "t", "tdg"})
 _X_FAMILY = frozenset({"x", "rx"})
 
@@ -745,10 +831,10 @@ def iter_legal_actions(
         _check_deadline(deadline)
         if rule_id in matched_quartz_rule_ids:
             signature, rule = rule_by_id[rule_id]
+            local_actions: list[LandscapeAction] = []
             for location in locations_by_signature.get(signature, ()):
                 _check_deadline(deadline)
-                local = _iter_quartz_rule_actions(state, rule, location, deadline)
-                local_actions = list(local)
+                local_actions.extend(_iter_quartz_rule_actions(state, rule, location, deadline))
             if len(local_actions) > 1:
                 local_actions.sort(key=lambda action: action.sort_key)
             yield from local_actions
@@ -1172,7 +1258,11 @@ def _minimax_barrier_compact(
     barrier value.  Here each ``(state, exact depth)`` keeps only its lowest
     reachable peak cost; a higher-peak path to the same key is dominated for
     every continuation.  Keeping exact depth preserves paths that use a
-    harmless exchange or other zero-cost edge before an improvement.
+    harmless exchange or other zero-cost edge before an improvement.  An
+    additional admissible per-gate reachability prune drops branches from
+    which no improving cost is reachable within the remaining horizon; every
+    state on any improving path survives it, so the certified minimum peak
+    and its witness height are unchanged.
     """
 
     levels: list[dict[str, tuple[LandscapeState, int]]] = [{initial.state_hash: (initial, initial.cost)}]
@@ -1182,6 +1272,28 @@ def _minimax_barrier_compact(
     order = 1
     improving: tuple[int, int, int, str] | None = None
     improving_key: tuple[int, str] | None = None
+    target_cost = initial.cost - 1
+    reach_cache: dict[tuple[str, int], bool] = {}
+
+    def _cannot_reach_target(state: LandscapeState, budget: int) -> bool:
+        """Admissible test: no cost <= target_cost state within ``budget`` actions.
+
+        Uses the per-gate certified bound, so a positive verdict proves that
+        no improving path passes through ``state`` within the remaining
+        horizon; such branches contribute no barrier witness and may be
+        dropped without changing the certified minimum peak.
+        """
+
+        key = (state.state_hash, budget)
+        verdict = reach_cache.get(key)
+        if verdict is None:
+            verdict = admissible_remaining_cost_lower_bound(
+                state, target_cost, budget,
+                rule_library_path=rule_library_path, rule_scope=rule_scope,
+            ) > target_cost
+            reach_cache[key] = verdict
+        return verdict
+
     for depth in range(horizon):
         next_level: dict[str, tuple[LandscapeState, int]] = {}
         for current_hash, (current, current_peak) in levels[depth].items():
@@ -1192,12 +1304,26 @@ def _minimax_barrier_compact(
             # state set and its exactness contract remain unchanged.
             if improving is not None and current_peak > improving[0]:
                 continue
+            # Admissible reachability prune: a state from which no improving
+            # cost is reachable within the remaining horizon cannot lie on
+            # any improving path, so expanding it cannot change the certified
+            # barrier.  Improving states always fail the cost guard below.
+            if current.cost > target_cost and _cannot_reach_target(current, horizon - depth):
+                continue
             try:
                 actions = iter_legal_actions(
                     current, rule_library_path, rule_scope, deadline=deadline
                 )
                 for action in actions:
                     child_hash = action.post_state_sha256
+                    # Prune a child whose current cost plus the admissible
+                    # remaining reduction already excludes the improvement
+                    # target within the child's remaining horizon.
+                    if (
+                        action.post_state.cost > target_cost
+                        and _cannot_reach_target(action.post_state, horizon - depth - 1)
+                    ):
+                        continue
                     child_peak = max(current_peak, action.post_state.cost)
                     # A path to the same state from an earlier depth with an
                     # equal-or-lower peak dominates this path: every
@@ -1251,15 +1377,7 @@ def _maximum_single_step_reduction(rule_library_path: Path, rule_scope: str) -> 
     """Return a safe admissible bound for one action's gate-count decrease."""
 
     quartz, _ = _rule_library(rule_library_path)
-    if rule_scope == "e44_core_v1":
-        quartz = [
-            rule for rule in quartz
-            if int(rule["source"]["num_qubits"]) <= 2
-            and len(rule["source"]["operations"]) <= 4
-            and len(rule["target"]["operations"]) <= 6
-        ]
-    elif rule_scope != "full":
-        raise ValueError(f"unknown_rule_scope:{rule_scope}")
+    quartz = filter_rule_scope(quartz, rule_scope)
     reduction = max(
         [
             len(rule["source"]["operations"]) - len(rule["target"]["operations"])
@@ -1268,6 +1386,96 @@ def _maximum_single_step_reduction(rule_library_path: Path, rule_scope: str) -> 
         + [2],  # pair cancellation is the largest auxiliary reduction
     )
     return max(0, int(reduction))
+
+
+@lru_cache(maxsize=8)
+def _per_gate_action_ceilings(rule_library_path: Path, rule_scope: str) -> dict[str, int]:
+    """Largest per-action decrease of each gate-name count in the scope.
+
+    Mirrors ``per_gate_action_ceiling`` in
+    ``scripts/derive_v15_certified_lower_bounds.py``: Quartz rules contribute
+    their source-versus-target per-name count differences and the auxiliary
+    ``pair_v1`` families contribute their fixed cancellation ceilings
+    (``exchange`` actions are count-neutral).  The returned mapping is shared
+    between callers and must not be mutated.
+    """
+
+    quartz = filter_rule_scope(_rule_library(rule_library_path)[0], rule_scope)
+    ceilings: dict[str, int] = {}
+    for rule in quartz:
+        source = Counter(operation["name"] for operation in rule["source"]["operations"])
+        target = Counter(operation["name"] for operation in rule["target"]["operations"])
+        for name in set(source) | set(target):
+            drop = max(0, source.get(name, 0) - target.get(name, 0))
+            if drop > ceilings.get(name, 0):
+                ceilings[name] = drop
+    for name in _SELF_INVERSE:
+        ceilings[name] = max(ceilings.get(name, 0), 2)
+    for left, right in (("t", "tdg"), ("s", "sdg")):
+        ceilings[left] = max(ceilings.get(left, 0), 1)
+        ceilings[right] = max(ceilings.get(right, 0), 1)
+    for name in _ROTATION_FAMILY:
+        ceilings[name] = max(ceilings.get(name, 0), 2)
+    return ceilings
+
+
+def admissible_remaining_cost_lower_bound(
+    state: LandscapeState,
+    target_cost: int,
+    remaining_actions_budget: int,
+    *,
+    rule_library_path: Path,
+    rule_scope: str = "full",
+) -> int:
+    """Certified lower bound on the cost still reachable within an action budget.
+
+    Returns a lower bound on the minimum listing cost reachable from
+    ``state`` by at most ``remaining_actions_budget`` further legal actions in
+    the declared scope.  The derivation is the certified bounded-decrease
+    argument of ``scripts/derive_v15_certified_lower_bounds.py``.  With
+    ``r_g`` the largest per-action decrease of the count ``n_g`` of gates
+    named ``g`` over all legal actions in the scope (see
+    :func:`_per_gate_action_ceilings`) and ``D`` the largest per-action total
+    gate-count decrease (see :func:`_maximum_single_step_reduction`), every
+    action of every H-step trajectory satisfies
+    ``n_g(s_{i+1}) >= n_g(s_i) - r_g`` and ``cost(s_{i+1}) >= cost(s_i) - D``,
+    hence
+
+        cost(s_H) >= max( sum_g max(0, n_g(s_0) - H * r_g),   -- per name
+                          cost(s_0) - H * D ),                -- aggregate
+
+    which is the value returned for ``H = remaining_actions_budget`` (the
+    same maximum of the per-gate and aggregate bounds that the derivation
+    script reports).  The bound never overestimates the true remaining
+    reduction: it credits each action with at most the largest single-action
+    drop any legal action in scope can realize (per gate name, and in
+    total), and it never credits reductions of gate names absent from the
+    listing, so it cannot exceed the true minimum reachable cost and pruning
+    on it can never discard an optimal path.  Once the accumulated per-name
+    sum exceeds ``target_cost`` the remaining name terms cannot lower it
+    (each is nonnegative), so the partial sum is returned immediately;
+    callers only compare the result against ``target_cost``, and the partial
+    sum still under-approximates the true reachable minimum, so every prune
+    decision stays exact.
+    """
+
+    budget = max(0, int(remaining_actions_budget))
+    ceilings = _per_gate_action_ceilings(rule_library_path, rule_scope)
+    aggregate = _maximum_single_step_reduction(rule_library_path, rule_scope)
+    total = state.cost - budget * aggregate
+    if total > target_cost:
+        # The aggregate bound alone already excludes the target; skip the
+        # per-name scan.  The returned value stays admissible because every
+        # action decreases the total gate count by at most ``aggregate``.
+        return total
+    bound = 0
+    for name, count in Counter(gate.name for gate in state.gates).items():
+        term = count - budget * ceilings.get(name, 0)
+        if term > 0:
+            bound += term
+            if bound > target_cost:
+                break
+    return max(bound, total, 0)
 
 
 def search_escape_idastar(
@@ -1313,12 +1521,45 @@ def search_escape_idastar(
     ):
         return {"status": STATUS_UNSUPPORTED}
 
-    def lower_bound(state: LandscapeState, target_cost: int) -> int:
+    def lower_bound(state: LandscapeState, target_cost: int, remaining: int) -> int:
         if state.cost <= target_cost:
             return 0
         if maximum_reduction <= 0:
             return math.inf  # type: ignore[return-value]
-        return int(math.ceil((state.cost - target_cost) / maximum_reduction))
+        coarse = int(math.ceil((state.cost - target_cost) / maximum_reduction))
+        budget = max(0, remaining)
+        if coarse > budget:
+            # The coarse bound alone proves the prune; the refinement cannot
+            # strengthen a value that already exceeds the remaining budget.
+            return coarse
+        # Per-gate certified refinement: the smallest step count H within the
+        # remaining budget whose admissible bound already reaches the target.
+        # The bound is non-increasing in H, so the predicate is monotone and a
+        # binary search is exact.  Probing at min(budget, coarse) settles the
+        # common case where the coarse bound already dominates with one call.
+        steps = bound_cache.get((state.state_hash, budget))
+        if steps is None:
+            probe = min(budget, coarse)
+            if admissible_remaining_cost_lower_bound(
+                state, target_cost, probe,
+                rule_library_path=rule_library_path, rule_scope=rule_scope,
+            ) <= target_cost:
+                steps = probe
+            else:
+                steps = budget + 1
+                low, high = coarse + 1, budget
+                while low <= high:
+                    middle = (low + high) // 2
+                    if admissible_remaining_cost_lower_bound(
+                        state, target_cost, middle,
+                        rule_library_path=rule_library_path, rule_scope=rule_scope,
+                    ) <= target_cost:
+                        steps = middle
+                        high = middle - 1
+                    else:
+                        low = middle + 1
+            bound_cache[(state.state_hash, budget)] = steps
+        return coarse if coarse >= steps else steps
 
     target_cost = initial.cost - 1
     deadline = (
@@ -1334,6 +1575,7 @@ def search_escape_idastar(
     path: list[LandscapeAction] = []
     seen_states = {initial.state_hash}
     failed_transpositions: set[tuple[str, int]] = set()
+    bound_cache: dict[tuple[str, int], int] = {}
 
     if horizon == 0 or maximum_reduction <= 0:
         result = {
@@ -1371,7 +1613,7 @@ def search_escape_idastar(
         if transposition_key in failed_transpositions:
             pruned += 1
             return None
-        lower = lower_bound(current, target_cost)
+        lower = lower_bound(current, target_cost, limit - depth)
         if depth + lower > limit:
             pruned += 1
             return None
@@ -1407,7 +1649,7 @@ def search_escape_idastar(
             failed_transpositions.add(transposition_key)
         return None
 
-    initial_limit = max(1, lower_bound(initial, target_cost))
+    initial_limit = max(1, lower_bound(initial, target_cost, horizon))
     escape_path: list[LandscapeAction] | None = None
     limit = initial_limit
     while limit <= horizon:
@@ -1749,6 +1991,8 @@ __all__ = [
     "STATUS_SEMANTIC_FAILURE",
     "STATUS_UNSUPPORTED",
     "STATUS_WITNESS_INCOMPLETE",
+    "admissible_remaining_cost_lower_bound",
+    "filter_rule_scope",
     "iter_legal_actions",
     "legal_actions",
     "normalize_angle",
@@ -1761,4 +2005,5 @@ __all__ = [
     "sha256_json",
     "state_from_spec",
     "state_unitary",
+    "state_wcl",
 ]

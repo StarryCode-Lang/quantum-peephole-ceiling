@@ -278,7 +278,7 @@ Tavily / Exa / multi-search-engine / arxiv-reader / citation-manager **本轮不
 **第 2 周（补最大缺口：片段原生基准）**
 
 4. **建片段原生基准**（P0-1 第 1 项）：6 族 × ≥8 实例 × $n=4\ldots64$，写入 `data/` 之外
-   （新目录 `docs/review/science_boost/2026-11_fragment_bench/`，带日期与来源，**不动 `data/`**）。
+   （新目录 `docs/review/science_boost/2026-10-25_fragment_bench/`，带日期与来源，**不动 `data/`**）。
 5. **重跑 E62**：报告标度律 $g_{\text{reorder}}/g_{\text{total}}$ vs $n$。
    验收：至少一条可写成"定律"的曲线，或明确否定其存在。
 

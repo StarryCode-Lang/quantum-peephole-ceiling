@@ -81,6 +81,32 @@ def source_hashes(project_root: Path, files: Iterable[str] = DEFAULT_SOURCE_FILE
     return hashes
 
 
+# Certification-critical engine modules of the v13+ certified-landscape chain.
+# These are deliberately NOT part of DEFAULT_SOURCE_FILES (which predates the
+# v13 chain and is consumed by existing release gates); new receipts should
+# record ``engine_source_hashes`` alongside payload hashes so a verifier can
+# detect an engine that differs from the one that produced the data.
+ENGINE_SOURCE_FILES = (
+    "src/optimisation/certified_landscape.py",
+    "src/optimisation/quartz_rule_import.py",
+    "src/optimisation/rewrite_exposure.py",
+)
+
+
+def engine_source_hashes(project_root: Path, files: Iterable[str] = ENGINE_SOURCE_FILES) -> Dict[str, str]:
+    """Hash the certification-critical search-engine source files.
+
+    Independent of :func:`source_hashes` and ``DEFAULT_SOURCE_FILES`` so that
+    existing green gates are unaffected; intended for NEW receipts only.
+    """
+    hashes: Dict[str, str] = {}
+    for relative in files:
+        path = project_root / relative
+        if path.exists():
+            hashes[relative] = file_sha256(path)
+    return hashes
+
+
 def optimizer_config(optimizer: Any) -> Dict[str, Any]:
     """Extract stable, serializable optimizer configuration."""
     fields = (

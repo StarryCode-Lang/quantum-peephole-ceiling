@@ -1,0 +1,149 @@
+{
+  "experiment_id": "PERP_RELIABILITY_VERIFICATION_V1",
+  "started_utc": "2026-10-25T14:23:41.298592+00:00",
+  "engine_source_sha256": "9efba38a9da2c896bf4ad528d426485e03585e79c5dea9f85c893e85c12fcb5d",
+  "z_family_from_engine": [
+    "rz",
+    "s",
+    "sdg",
+    "t",
+    "tdg",
+    "z"
+  ],
+  "x_family_from_engine": [
+    "rx",
+    "x"
+  ],
+  "rules": {
+    "exchange.disjoint": {
+      "cases": [
+        {
+          "case": "h(w0) x(w1)",
+          "commutes": true
+        }
+      ],
+      "all_commute": true
+    },
+    "exchange.same_single": {
+      "cases": [
+        {
+          "case": "h h",
+          "commutes": true
+        },
+        {
+          "case": "x x",
+          "commutes": true
+        }
+      ],
+      "all_commute": true
+    },
+    "exchange.same_axis_rotation": {
+      "cases": [
+        {
+          "case": "rz(t) rz(p)",
+          "commutes": true
+        },
+        {
+          "case": "rx(p) rx(t)",
+          "commutes": true
+        }
+      ],
+      "all_commute": true
+    },
+    "exchange.z_family": {
+      "cases": [
+        {
+          "case": "rz s",
+          "commutes": true
+        },
+        {
+          "case": "z t",
+          "commutes": true
+        },
+        {
+          "case": "tdg rz",
+          "commutes": true
+        }
+      ],
+      "all_commute": true
+    },
+    "exchange.cx_control_z": {
+      "cases": [
+        {
+          "case": "cx(0,1) z(w0)",
+          "commutes": true
+        },
+        {
+          "case": "cx(1,0) z(w1)",
+          "commutes": true
+        },
+        {
+          "case": "cx(0,1) rz(w0)",
+          "commutes": true
+        }
+      ],
+      "all_commute": true
+    },
+    "exchange.cx_target_x": {
+      "cases": [
+        {
+          "case": "cx(0,1) x(w1)",
+          "commutes": true
+        },
+        {
+          "case": "cx(0,1) rx(w1)",
+          "commutes": true
+        }
+      ],
+      "all_commute": true
+    },
+    "exchange.cz_z": {
+      "cases": [
+        {
+          "case": "cz z(w0)",
+          "commutes": true
+        },
+        {
+          "case": "cz z(w1)",
+          "commutes": true
+        },
+        {
+          "case": "cz sdg(w1)",
+          "commutes": true
+        }
+      ],
+      "all_commute": true
+    },
+    "exchange.same_swap": {
+      "cases": [
+        {
+          "case": "swap swap",
+          "commutes": true
+        }
+      ],
+      "all_commute": true
+    },
+    "exchange.same_cz": {
+      "cases": [
+        {
+          "case": "cz cz",
+          "commutes": true
+        }
+      ],
+      "all_commute": true
+    }
+  },
+  "negative_controls": {
+    "x_z_anticommute": {
+      "genuinely_noncommuting": true
+    },
+    "cx_z_on_target": {
+      "genuinely_noncommuting": true
+    },
+    "cx_x_on_control": {
+      "genuinely_noncommuting": true
+    }
+  },
+  "finished_utc": "2026-10-25T14:23:41.357524+00:00",
+  "status": "ALL_PASS"
+}

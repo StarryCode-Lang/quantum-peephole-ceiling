@@ -1,0 +1,27 @@
+{
+  "experiment_id": "E46_WCL_VS_GREEDY_PAIRED_V1",
+  "note": "source-level paired escape-rate comparison, cluster=source (window_cluster_inference_design item 3); deltas are per-source rate differences",
+  "paired_csv_sha256": "e0b793f6312dea28aa5b37c006a3cf70f30cd25004aef23a3c7d5e2fc5ca8cbe",
+  "per_config_mean_delta_and_changed_sources": {
+    "w16_h2": {
+      "mean_delta": -0.003855,
+      "sources": 73,
+      "sources_with_nonzero_delta": 7
+    },
+    "w16_h3": {
+      "mean_delta": -0.004628,
+      "sources": 73,
+      "sources_with_nonzero_delta": 7
+    },
+    "w8_h2": {
+      "mean_delta": -0.000856,
+      "sources": 94,
+      "sources_with_nonzero_delta": 7
+    },
+    "w8_h3": {
+      "mean_delta": -0.001341,
+      "sources": 94,
+      "sources_with_nonzero_delta": 7
+    }
+  }
+}

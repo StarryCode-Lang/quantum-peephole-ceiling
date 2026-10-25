@@ -92,16 +92,17 @@ def sha256_file(path: Path) -> str:
 
 
 def core_rules() -> list[dict]:
+    import sys
+
+    if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
+    from src.optimisation.certified_landscape import filter_rule_scope  # noqa: PLC0415
+
     library = json.loads(RULE_LIBRARY.read_text(encoding="utf-8"))
     rules = [rule for rule in library["rules"] if rule.get("rule_family") == "quartz_v1"]
-    core = [
-        rule
-        for rule in rules
-        if int(rule["source"]["num_qubits"]) <= 2
-        and len(rule["source"]["operations"]) <= 4
-        and len(rule["target"]["operations"]) <= 6
-    ]
-    return core
+    # Single scope authority shared with the certification engine; the pinned
+    # e44_core_v1 predicate lives in src/optimisation/certified_landscape.py.
+    return filter_rule_scope(rules, "e44_core_v1")
 
 
 def per_gate_action_ceiling(rules: list[dict], gate_names: set[str]) -> dict[str, int]:

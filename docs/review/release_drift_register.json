@@ -33,8 +33,8 @@
       "file": "requirements.txt",
       "recorded_sha256": "e5ff81c19e8e27a6e5acbe89faacf6475d81937b02f2319309f86f3689a3bab0",
       "recorded_bytes": 454,
-      "observed_sha256": "9b82251b1e72e87abcf8a5fb028b529c1d8c4b5720f50cc05fc263e64e1cf3f7",
-      "observed_bytes": 489,
+      "observed_sha256": "485ed0f1916d09c0a6ac65b2de21eaa031ed4dcaf2434c64ed65ad77cee8b5d9",
+      "observed_bytes": 580,
       "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash.",
       "attribution_commit": "8255a1634",
       "commit_date": "2026-09-02",
@@ -42,7 +42,16 @@
       "recommended_option": "A",
       "recommended_action": "Re-pin this entry from the named commit when the manifest is regenerated; no data change is implied.",
       "first_recorded": "2026-10-22",
-      "recorded_by": "scripts/verify_release_chain_with_dispositions.py"
+      "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
+      "drift_history": [
+        {
+          "observed_sha256": "9b82251b1e72e87abcf8a5fb028b529c1d8c4b5720f50cc05fc263e64e1cf3f7",
+          "observed_bytes": 489,
+          "superseded_on": "2026-10-26",
+          "root_cause": "round-13 audit edits: bqskit==1.2.1 / tzap==0.8.0 added as direct requirements"
+        }
+      ],
+      "last_observed": "2026-10-26"
     },
     {
       "file": "data/v10/prepaper/external_baselines/quartz/adapter/build_quartz_windows.cmd",
@@ -138,8 +147,8 @@
       "file": "docs/references/search_ledger.md",
       "recorded_sha256": "9fa5992da23f3dcae2535a0d09156ca61bf4529563efafe562db28246d6de91c",
       "recorded_bytes": 25710,
-      "observed_sha256": "f8b100b764f2a870d7fc6641ffae4b3bb3d37aa4f9df6ac24439263d4d42475e",
-      "observed_bytes": 30553,
+      "observed_sha256": "f9ad010bfb297fcbe105192f2ee5d0713ac3f9f6dcda35f68b431291e7e186b3",
+      "observed_bytes": 39867,
       "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash.",
       "attribution_commit": "d6c5ce2f5",
       "commit_date": "2026-10-15",
@@ -147,7 +156,16 @@
       "recommended_option": "A",
       "recommended_action": "Re-pin this entry from the named commit when the manifest is regenerated; no data change is implied.",
       "first_recorded": "2026-10-22",
-      "recorded_by": "scripts/verify_release_chain_with_dispositions.py"
+      "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
+      "drift_history": [
+        {
+          "observed_sha256": "f8b100b764f2a870d7fc6641ffae4b3bb3d37aa4f9df6ac24439263d4d42475e",
+          "observed_bytes": 30553,
+          "superseded_on": "2026-10-26",
+          "root_cause": "round-13 audit edits: section 12 external scan ledger appended"
+        }
+      ],
+      "last_observed": "2026-10-26"
     },
     {
       "file": "docs/theory/framework.md",

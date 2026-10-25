@@ -1,0 +1,38 @@
+{
+  "experiment_id": "E46_WINDOW_LANDSCAPE_WCL_V1",
+  "panel": {
+    "root_hash_contract": "every root state hash is checked against the frozen v14 compact certificate",
+    "root_ordering": "wcl",
+    "root_states": "greedy fixed point per input; raw normalized listing when the input exceeds the baseline gate budget",
+    "source": "E45 fixed panel (96 E39 + 32 E44 sources in screening order)",
+    "source_count": 128
+  },
+  "purpose": "Position-resolved certified landscape: which windows of the E45 root listings are exact local optima within a finite horizon and which hide a certified escape.  Window claims are window-local by construction.",
+  "resource_contracts": {
+    "determinism": "per-window results are deterministic; output ordering is sorted by source, width, start, horizon",
+    "workers": 7
+  },
+  "search_contract": {
+    "engine": "search_landscape_horizons_compact (same certified engine as E45)",
+    "horizons": [
+      2,
+      3
+    ],
+    "reverse_edges": "not used; rank-increasing reverse Quartz parameter-splitting remains illegal",
+    "rule_library_sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295",
+    "rule_scope": "e44_core_v1",
+    "state_budget": 20000,
+    "time_budget_seconds": 10.0,
+    "witness_replay": "every EXACT_ESCAPE window witness is replayed in-runner; failure aborts",
+    "witness_storage": "only the first escape certificate per (source, width, horizon) is stored; the deterministic runner regenerates the complete witness set on demand"
+  },
+  "window_contract": {
+    "boundary_semantics": "actions consuming gates outside the slice are invisible to the window",
+    "definition": "contiguous slice of the root listing, normalized per gate",
+    "sampling": "stride 1 up to 1024 windows per input, then ceil(gates/1024)",
+    "window_widths": [
+      8,
+      16
+    ]
+  }
+}

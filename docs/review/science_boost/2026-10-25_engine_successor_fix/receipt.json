@@ -1,0 +1,44 @@
+{
+  "artifact_sha256": {
+    "README.md": "fa62457a40c70a748ac016b845b91678e063c4df62c62c6c48028f69edc5a2e4",
+    "build_full_package.py": "c416f95f9ce0645c515d4d55782c660f8a08932efcf6f4c46f690f83d1862c23",
+    "build_package.py": "68d2a3bccb38960cf8d69579b21cb58425903360283aab4e2b8256b7c9324ece",
+    "comparison.csv": "f26f14253b353a9f74b6eb37a200700e7124a5a571a852a01c4ddc04e7f3adeb",
+    "determinism.json": "fbc618f8182219328587122341dc0790ca7b8b2e943d6923e93267ea4a43b086",
+    "determinism_cells.jsonl": "6bd979e7a0910dcc606bddb9509e5fb9917b254f7452b6d2a2fdb9d20ad6ae87",
+    "full_cells.jsonl": "edc38f088fc452bbe1ac3c7c61b96facc0f393aea27c18186f467927bcaf6871",
+    "full_cells_first_pass.jsonl": "f79ef34f482e68fc940ab9b3110451c08de3c05f3c4bf39c54f300a3bffbcf82",
+    "full_comparison.csv": "205d132f6a19743883520940bbbaa7d8ee786e49f84032287113af8dfc3377d1",
+    "full_results.json": "76c9f58e637b5f95306757fdc4e8fe7b1ca9d5662243b74476bf6f699548e4f0",
+    "pilot_cells.jsonl": "6a9a7054817bdac679f927c9c8d41b869995abd532570947c6d9e879a19c74c5",
+    "pilot_results.json": "63020b36f0972ad51204e12750b8c8c2954e1198910f8c561704e53a26406e39",
+    "rerun_all_cells.py": "a22f4ef505cfc0f181f7459a563e38e158b5cfd2cf6a5a8b3b377b50b2c22d0b"
+  },
+  "cells": 128,
+  "change_type_counts": {
+    "AGREE": 82,
+    "ESCAPE_COST_STATED_WRONG": 2,
+    "ESCAPE_DEPTH_OVERSTATED": 3,
+    "FALSE_OPTIMUM_NOW_ESCAPE": 6,
+    "FROZEN_EXACT_NOW_TRUNCATED": 1,
+    "RESOURCE_BOUNDED_BOTH": 34
+  },
+  "date": "2026-10-25",
+  "engine_source_sha256": {
+    "src/optimisation/certified_landscape.py": "9efba38a9da2c896bf4ad528d426485e03585e79c5dea9f85c893e85c12fcb5d",
+    "src/optimisation/quartz_rule_import.py": "bb51a4a891ff27cd55afab998674479668dba85ee24e312dcfa4d4bdc5ee7404",
+    "src/optimisation/rewrite_exposure.py": "88a1b9a9e7893133f490d9d9ef218de613456f3e9d1f052792fd7c1a3a295d28"
+  },
+  "experiment_id": "FULL_ENGINE_SUCCESSOR_RECERT_2026_10_25",
+  "frozen_exact_best_cost_values_changed": 8,
+  "frozen_inputs_untouched": true,
+  "input_sha256": {
+    "classification_complete": "786b8a0c4fbeb46f7813fcad5874c353402dbc565e8f07ee5d4229ade09826fc",
+    "frozen_compact_certificates": "8a6ae277772533270a69795b20a680b6c660ca78e5eb2a2cc91357ade4c8e48b",
+    "frozen_idastar_certificates": "de8a829d6d52c011945408484c57abf65b66bc22bba9be3cfa4e6d80345d0516",
+    "rule_library": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295"
+  },
+  "outside_release_hash_chain": true,
+  "stated_best_cost_exact_after_fix": 93,
+  "status": "FULL_RECERT_COMPLETE"
+}

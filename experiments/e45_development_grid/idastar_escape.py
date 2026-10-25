@@ -275,7 +275,10 @@ def main() -> int:
     parser.add_argument("--output-root", type=Path, default=OUTPUT_ROOT)
     parser.add_argument("--time-budget-seconds", type=float, default=30.0)
     parser.add_argument("--source-limit", type=int)
+    parser.add_argument("--experiment-id")
     args = parser.parse_args()
+    if args.experiment_id:
+        globals()["EXPERIMENT_ID_IDASTAR"] = args.experiment_id
     print(json.dumps(run(args.output_root, args.time_budget_seconds, args.source_limit), sort_keys=True))
     return 0
 

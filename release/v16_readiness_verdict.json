@@ -1,0 +1,107 @@
+{
+  "as_of": "2026-10-25",
+  "blocking_evidence": {
+    "landscape_integration": {
+      "bounded_best_cost_count": 34,
+      "certificate_tiers": {
+        "CLASSIFICATION_EXACT_EXTRAS_BOUNDED": 34,
+        "CLASSIFICATION_RESOURCE_BOUNDED": 1,
+        "COMPACT_COMPLETE_DERIVED": 0,
+        "COMPACT_COMPLETE_ENUMERATED": 93
+      },
+      "classified_count": 127,
+      "escape_count": 69,
+      "exact_best_cost_count": 93,
+      "local_optimum_count": 58,
+      "receipt": "data/v16/e45_landscape_integration/receipt.json",
+      "receipt_sha256": "4b26102b5fcd48ed40855a980ee17fab1d40f65afa48bf9817e066b03c7118ff",
+      "source_count": 128,
+      "unclassified_count": 1
+    },
+    "v14_readiness_verdict": "release/v14_readiness_verdict.json",
+    "window_landscape": {
+      "by_config": {
+        "w16_h2": {
+          "escape_count": 10499,
+          "escape_rate": 0.5597973873633698,
+          "inputs_with_escape": 59,
+          "local_optimum_count": 8256,
+          "window_count": 18755
+        },
+        "w16_h3": {
+          "escape_count": 10756,
+          "escape_rate": 0.5735003998933618,
+          "inputs_with_escape": 62,
+          "local_optimum_count": 7999,
+          "window_count": 18755
+        },
+        "w8_h2": {
+          "escape_count": 9071,
+          "escape_rate": 0.4684707948148531,
+          "inputs_with_escape": 59,
+          "local_optimum_count": 10292,
+          "window_count": 19363
+        },
+        "w8_h3": {
+          "escape_count": 9246,
+          "escape_rate": 0.47750865051903113,
+          "inputs_with_escape": 68,
+          "local_optimum_count": 10117,
+          "window_count": 19363
+        }
+      },
+      "escape_certificate_count": 248,
+      "escape_row_count": 39572,
+      "receipt": "data/v16/e46_window_landscape/receipt.json",
+      "receipt_sha256": "a6409dab04e1073fe9f5e689512d06ba84b1f417a5e14db7c6f02e219c060de0",
+      "resource_truncated_windows": 0,
+      "source_count": 128,
+      "status": "PANEL_COMPLETE",
+      "window_rows": 76236
+    }
+  },
+  "claim_boundary": "v16 re-pins the certified landscape under the corrected engine at the frozen budgets: 93 enumerated exact best costs (58 H-local + 35 enumerated escapes), 34 witness-bounded cells, and 1 resource-bounded cell (e39:b2f83603...) whose exact H-local claim is neither confirmed nor refuted at the frozen budgets (the corrected engine generates strictly more successors per state; the raised-contract IDA* rescue is recorded in the e65 package). The window profiles are window-local by construction, and external cold-start, real-QPU, title, and release gates remain open. v14/v15 remain the frozen pre-fix record.",
+  "derivation": {
+    "evidence": [
+      {
+        "path": "data/v16/e45_landscape_integration/protocol.json",
+        "predicate": "verify_v15_landscape_integration.py exits 0",
+        "sha256": "863746bedd79cd1ca21145b1d679e82f8dd37d95d7fd19351b5a0e15f2a1b921"
+      },
+      {
+        "path": "data/v16/e45_landscape_integration/classification_complete.csv",
+        "predicate": "128 rows, tiers 93/0/34 + 1 resource-bounded, zero replay failures",
+        "sha256": "e7ff1db7700cf3a114eedbd9ba54a4ab6b24c838efa6d8785256c8f3e5a4bb33"
+      },
+      {
+        "path": "data/v16/e45_landscape_integration/derivations.jsonl",
+        "predicate": "per-source derivation log",
+        "sha256": "2507b08f4ad2e70bae3e8fc00d1a79727434d2f649c6d36faaa22e0cb774a8e9"
+      }
+    ],
+    "script": "scripts/generate_v16_readiness_verdict.py",
+    "state_upgrade_predicate": "python scripts/verify_v16_readiness_verdict.py exits 0; the v14/v15 verdicts remain hash-unchanged; no frozen package is modified"
+  },
+  "engineering_verification": {
+    "engine_source_hashes_pinned_by": "docs/review/science_boost/2026-10-25_engine_successor_fix/",
+    "v14_readiness_verdict_unchanged_sha256": "4f81c4af898f39c15153a054b0ee34cf3db70b39c3d1d0e73ad0224bbd1bca6a",
+    "v16_landscape_integration_verifier": "PASS",
+    "witness_replay_failures": 0
+  },
+  "paper_status": "Do not claim enumerated landscape quantities for the 34 bounded cells or the 1 resource-bounded cell, whole-listing meaning for window-local profiles, or paper readiness. Manuscript numbers must state the producing engine version; the v15 statement '94 exact best costs' is superseded by the corrected-engine 93 + 1 resource-bounded.",
+  "project": "Q-research v16 corrected-engine certified landscape re-pin",
+  "schema_version": "v16-readiness-verdict-v1",
+  "scientific_gates": {
+    "C3_title_and_positioning": "USER_DECISION_PENDING",
+    "S0_to_S4": "INHERITED_WITH_BOUNDARIES",
+    "S5_E45_full_development": "COMPLETE_WITH_RESOURCE_BOUNDARY",
+    "S5_E45_v14_screening": "PASS_RESOURCE_GATE_WITH_BOUNDARIES",
+    "S6_E45_classification": "COMPLETE_128_OF_128",
+    "S6_E46_window_landscape": "PANEL_COMPLETE",
+    "S6_landscape_quantities": "EXACT_FOR_93_OF_128_WITNESS_BOUNDED_FOR_34_RESOURCE_BOUNDED_FOR_1",
+    "external_cold_start": "OPEN",
+    "real_qpu": "OPEN",
+    "release_authority": "OPEN"
+  },
+  "verdict": "NOT_READY_FOR_PAPER"
+}

@@ -21,6 +21,8 @@
 | `e31_transitive_source_provenance_limitation_2026-08-24.md` | md | E31 transitive-source provenance limitation |
 | `e32_telemetry_verifier_erratum_2026-08-31.md` | md | E32 telemetry verifier erratum (2026-08-31) |
 | `heldout_v2_protocol_2026-08-11.md` | md | Held-out v2 sealed-input protocol |
+| `data_version_semantics_2026-10-26.md` | md | v12–v16 data-version semantics, moved out of `data/DATA_CANONICAL.md` so the bound file keeps its pinned hash |
+| `science_boost/2026-10-26_innovation_scan.md` | md | Round 15: D3 window-denominator defect, E69 design-based inference, literature redirection |
 | `manuscript_correction_patch_2026-10-22.md` | md | Manuscript correction patch — 2026-10-22 |
 | `metric_audit_ledger_2026-08-11.csv` | csv | 数据/清单文件 |
 | `metric_audit_ledger_2026-08-24.csv` | csv | 数据/清单文件 |
