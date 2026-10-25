@@ -68,15 +68,33 @@ ENGINE_SOURCE_FILES = (
 
 RULE_SCOPE = "e44_core_v1"
 HORIZON = 3
-STATE_BUDGET = 1_000_000
-TIME_BUDGET_SECONDS = 300.0
-CONFIG = {
-    "config_id": "h3_b64_s1M_t300",
-    "horizon": HORIZON,
-    "beam_width": 64,
-    "state_budget": STATE_BUDGET,
-    "barrier_cap": 2,
-    "time_budget_seconds": TIME_BUDGET_SECONDS,
+
+# Tiered contracts: tier A is the declared campaign contract; tier B is the
+# reduced fallback for hosts whose free RAM cannot fit tier A (the user
+# authorized splitting the work into smaller blocks).  A cell that COMPLETES
+# enumeration under either tier is exactly certified — a completed search is
+# complete regardless of the budget label; the tier only bounds truncation.
+TIERS = {
+    "A": {
+        "config_id": "h3_b64_s1M_t300",
+        "horizon": HORIZON,
+        "beam_width": 64,
+        "state_budget": 1_000_000,
+        "barrier_cap": 2,
+        "time_budget_seconds": 300.0,
+        "ram_gate_gb_by_size": [(300, 4.0), (600, 6.0), (1200, 8.0)],
+        "ram_gate_default": None,  # >1200 gates: not attempted on this host
+    },
+    "B": {
+        "config_id": "h3_b64_s300k_t120",
+        "horizon": HORIZON,
+        "beam_width": 64,
+        "state_budget": 300_000,
+        "barrier_cap": 2,
+        "time_budget_seconds": 120.0,
+        "ram_gate_gb_by_size": [(300, 3.0), (600, 3.5), (1200, 4.0)],
+        "ram_gate_default": 4.5,
+    },
 }
 EXPERIMENT_ID = "E65_BOUNDED_EXACTIFICATION_V1"
 
@@ -87,23 +105,20 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def required_free_ram_gb(baseline_gates: int) -> float | None:
-    """Free-RAM floor per listing-size class (visited-set dominated).
+def required_free_ram_gb(baseline_gates: int, tier: str) -> float | None:
+    """Free-RAM floor for a listing-size class under a tier contract.
 
-    Returns None for listings too large to attempt on this host: the re-cert
-    package measured ~140 KB/state and ~3 GB for 20k states on 12k-gate
-    listings, so the raised 1M-state contract projects to tens of GB there —
-    physically impossible on a 16 GB workstation.  Those cells are recorded
-    as RAM_INSUFFICIENT_PROJECTED instead of run.
+    Returns None when the tier cannot attempt the listing at all on this
+    host (tier A never attempts >1200-gate listings: the re-cert measured
+    ~140 KB/state and ~3 GB for 20k states on 12k-gate listings, so the
+    1M-state contract projects to tens of GB).
     """
 
-    if baseline_gates <= 300:
-        return 4.0
-    if baseline_gates <= 600:
-        return 6.0
-    if baseline_gates <= 1200:
-        return 8.0
-    return None
+    tier_config = TIERS[tier]
+    for ceiling, gate in tier_config["ram_gate_gb_by_size"]:
+        if baseline_gates <= ceiling:
+            return gate
+    return tier_config["ram_gate_default"]
 
 
 def free_ram_gb() -> float | None:
@@ -191,7 +206,7 @@ def _engine_summary(certificate: dict, engine: str) -> dict:
     return summary
 
 
-def run_cell(root: dict, meta: dict, frozen_c: dict, frozen_i: dict, classification: dict) -> dict:
+def run_cell(root: dict, meta: dict, frozen_c: dict, frozen_i: dict, classification: dict, tier: str) -> dict:
     from experiments.e45_development_grid.run import RULE_LIBRARY
     from src.optimisation.certified_landscape import (
         replay_actions,
@@ -199,6 +214,9 @@ def run_cell(root: dict, meta: dict, frozen_c: dict, frozen_i: dict, classificat
         search_landscape_horizons_compact,
     )
 
+    tier_config = TIERS[tier]
+    state_budget = int(tier_config["state_budget"])
+    time_budget = float(tier_config["time_budget_seconds"])
     source_id = root["source_id"]
     state = root["state"]
 
@@ -207,9 +225,9 @@ def run_cell(root: dict, meta: dict, frozen_c: dict, frozen_i: dict, classificat
         state,
         RULE_LIBRARY,
         (HORIZON,),
-        state_budget=STATE_BUDGET,
+        state_budget=state_budget,
         rule_scope=RULE_SCOPE,
-        time_budget_seconds=TIME_BUDGET_SECONDS,
+        time_budget_seconds=time_budget,
     )[str(HORIZON)]
     compact_seconds = time.perf_counter() - started
 
@@ -218,9 +236,9 @@ def run_cell(root: dict, meta: dict, frozen_c: dict, frozen_i: dict, classificat
         state,
         RULE_LIBRARY,
         HORIZON,
-        state_budget=STATE_BUDGET,
+        state_budget=state_budget,
         rule_scope=RULE_SCOPE,
-        time_budget_seconds=TIME_BUDGET_SECONDS,
+        time_budget_seconds=time_budget,
     )
     idastar_seconds = time.perf_counter() - started
 
@@ -244,7 +262,8 @@ def run_cell(root: dict, meta: dict, frozen_c: dict, frozen_i: dict, classificat
         "root_kind": root["root_kind"],
         "root_gate_count": root["root_gate_count"],
         "baseline_cost": state.cost,
-        "raised_config": dict(CONFIG),
+        "raised_config": dict(tier_config),
+        "attempt_tier": tier,
         "rule_scope": RULE_SCOPE,
         "tracker_cost_class": meta["tracker_cost_class"],
         "tracker_blocker": meta["tracker_blocker"],
@@ -316,8 +335,8 @@ def main() -> int:
     args.out.parent.mkdir(parents=True, exist_ok=True)
 
     # listings too large for this host: record the projection, don't run
-    impossible = [(root, meta) for root, meta in queue if required_free_ram_gb(meta["baseline_gates"]) is None]
-    queue = [(root, meta) for root, meta in queue if required_free_ram_gb(meta["baseline_gates"]) is not None]
+    impossible = [(root, meta) for root, meta in queue if required_free_ram_gb(meta["baseline_gates"], "A") is None and required_free_ram_gb(meta["baseline_gates"], "B") is None]
+    queue = [(root, meta) for root, meta in queue if (root, meta) not in impossible]
     if impossible:
         with args.out.open("a", encoding="utf-8", newline="\n") as handle:
             for root, meta in impossible:
@@ -331,7 +350,7 @@ def main() -> int:
                             "source_id": root["source_id"],
                             "status": "RAM_INSUFFICIENT_PROJECTED",
                             "baseline_gates": meta["baseline_gates"],
-                            "raised_config": dict(CONFIG),
+                            "raised_config": dict(TIERS["A"]),
                             "projection": {
                                 "states_at_30s": states_at_30s,
                                 "projected_states_at_contract": projected_states,
@@ -358,13 +377,21 @@ def main() -> int:
             progressed = False
             deferred: list[tuple[dict, dict]] = []
             for root, meta in queue:
-                need = required_free_ram_gb(meta["baseline_gates"])
                 available = free_ram_gb()
-                if available is not None and available < need:
+                tier = "A" if required_free_ram_gb(meta["baseline_gates"], "A") is not None else "B"
+                need = required_free_ram_gb(meta["baseline_gates"], tier)
+                if need is None or (available is not None and available < need):
+                    if tier == "A":
+                        # fall back to the reduced tier before deferring
+                        need_b = required_free_ram_gb(meta["baseline_gates"], "B")
+                        if need_b is not None and (available is None or available >= need_b):
+                            tier = "B"
+                            need = need_b
+                if need is None or (available is not None and available < need):
                     deferred.append((root, meta))
                     print(
-                        f"[defer] {root['source_id'][:22]}… needs {need:.0f} GB, "
-                        f"available {available:.1f} GB",
+                        f"[defer] {root['source_id'][:22]}… tier {tier} needs {need} GB, "
+                        f"available {available if available is not None else -1:.1f} GB",
                         flush=True,
                     )
                     continue
@@ -376,6 +403,7 @@ def main() -> int:
                         frozen_c,
                         frozen_i,
                         classification,
+                        tier,
                     )
                 except MemoryError:
                     handle.write(
@@ -384,8 +412,9 @@ def main() -> int:
                                 "experiment_id": EXPERIMENT_ID,
                                 "source_id": root["source_id"],
                                 "status": "MEMORY_ERROR",
+                                "attempt_tier": tier,
                                 "baseline_gates": meta["baseline_gates"],
-                                "raised_config": dict(CONFIG),
+                                "raised_config": dict(TIERS[tier]),
                                 "note": (
                                     "search aborted on host RAM exhaustion under the "
                                     "raised contract; recorded fail-closed"
