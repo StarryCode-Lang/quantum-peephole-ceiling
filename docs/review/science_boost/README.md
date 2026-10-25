@@ -33,6 +33,7 @@ git show a8d68e370:docs/review/science_boost/2026-10-22_innovation_scan.md
 | **10-25** | **E62 绝对参照点 + 三分解 + 湮灭墙**；**E63 证明 L3 缺陷在 Qiskit 2.6.1 已修复** | **当前** | `2026-10-25_rotation_gap/`、`2026-10-25_qiskit_261/`、`2026-10-25_literature_scan/` |
 | **10-25（第 13 轮）** | **引擎 successor-generation 缺陷**（"last location wins"）修复 + v16 重钉（93 精确 / 34 bounded / 1 resource-bounded）；E64 逃逸几何；E65 精确化（5 单元 RAM 永久封死）；E66 关键对；⊥ 可靠性 ALL_PASS；WCL 窗口剖面**接近零效应** | 有效；v14/v15 冻结不再字节可再生 | `2026-10-25_engine_successor_fix/`、`2026-10-25_escape_geometry/`、`2026-10-25_bounded_exactification/`、`2026-10-25_kbc_critical_pairs/`、`2026-10-25_perp_reliability/`、`2026-10-25_wcl_window_profile/`、`2026-10-25_full_scope_pilot/`、`2026-10-25_bv_lower_bound/` |
 | **10-26（第 15 轮）** | **E69 设计式推断**：有效 n 仅 122–144（deff 134–153），配对零反转，宽度 ≈ 6× 视野；**D3 分母口径错误**（96.8% 窗口在未优化根上，其逃逸 99.9% 是 depth-1） | **当前** | `2026-10-26_window_inference/`、`2026-10-26_literature_scan/` |
+| **10-26（第 16 轮）** | **P5 外部效度 + 绝对间隙标度**：E70 fragment-bench 旋转间隙（240 实例，聚合 g_reorder/g_total=0.710，129 达绝对最优，**否定普适标度律**——家族结构主导：对照族 0.0、diagonal/random_phase 0.97–1.0、iqp 0.87–0.96、linear_rotation n=64 骤降 0.50）；E71 MQT Bench 外部集（14/14，平均削减 7.43%）；fragment bench 账目修复（形式演化=向量异或，转置错误已修）；E65 分级契约重启（授权的内存分块） | 有效 | `2026-10-26_fragment_rotation_gap/`、`2026-10-26_external_circuits/`、`2026-10-25_fragment_bench/`、`2026-10-25_bounded_exactification/` |
 
 主文件只保留三份：`2026-10-24_innovation_scan.md`（口径复核）、
 `2026-10-25_innovation_scan.md`（绝对参照点）、
