@@ -64,11 +64,16 @@ rows) is itself a paired source-level comparison under item 3.
 
 ## 4. Implementation path
 
-A single analysis script (`e66_window_cluster_inference.py`, registered
-when run) reads `window_results.csv` + `input_summaries.csv`, emits the
-per-source aggregation table, the three confirmatory results with exact
+A single analysis script reads `window_results.csv` + `input_summaries.csv`,
+emits the per-source aggregation table, the confirmatory results with exact
 cluster variances, and the denominator reconciliation table. No new data
 collection is needed; frozen and v16 panels are both sufficient.
+**Executed 2026-10-26** as `scripts/e69_window_inference.py` (round 15),
+which additionally quantifies the design effect (ICC 0.57–0.67, DEFF
+134–153: the naive window-level interval is 17–18× too narrow) and surfaces
+the D3 root-population confound (73,780/76,236 windows sit on unoptimized
+raw roots; depth-1 escape mixing), both registered in
+`docs/review/science_boost/2026-10-26_window_inference/`.
 
 ## 5. Non-goals
 

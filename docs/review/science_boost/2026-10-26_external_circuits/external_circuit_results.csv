@@ -1,0 +1,15 @@
+experiment_id,source,algorithm,n_qubits,status,raw_gates,root_gates,root_rz,root_cx,root_h,closure_gates,closure_rz,closure_cx,reduction_pct,closure_passes,closure_truncated,closure_errors,h_free,normalized_qasm,normalized_qasm_sha256
+E71_EXTERNAL_CIRCUITS_V1,mqt_bench,bv,4,OK,11,10,0,1,8,8,0,1,20.0,2,False,0,False,instances\bv_n4.qasm,91284764571ec332cb46ea0731347e2b7e8e6ef9e15d0f9d3df5472e1dc74ef9
+E71_EXTERNAL_CIRCUITS_V1,mqt_bench,bv,8,OK,25,24,0,3,20,14,0,3,41.667,2,False,0,False,instances\bv_n8.qasm,3201981c21e10f825309e6dee68ed6e163f96e1c6b38f5150707760398e4f668
+E71_EXTERNAL_CIRCUITS_V1,mqt_bench,ghz,5,OK,10,5,0,4,1,5,0,4,0.0,1,False,0,False,instances\ghz_n5.qasm,900fdff3b8379c3d6e68365afa536151ed5507f2c73b885f42971b4b1e476abd
+E71_EXTERNAL_CIRCUITS_V1,mqt_bench,ghz,10,OK,20,10,0,9,1,10,0,9,0.0,1,False,0,False,instances\ghz_n10.qasm,b94dd844d7ed51e096f68b1c2f71d2e7adfa9bae399f25c820ce8e82cb035a69
+E71_EXTERNAL_CIRCUITS_V1,mqt_bench,qft,4,OK,5,40,18,18,4,37,15,18,7.5,4,False,0,False,instances\qft_n4.qasm,3c494faa4b3cd63d8611fe6a46a458e9ea498dd9ccdc58d7d4b7bf42b04ec10a
+E71_EXTERNAL_CIRCUITS_V1,mqt_bench,qft,8,OK,9,160,84,68,8,139,63,68,13.125,11,False,0,False,instances\qft_n8.qasm,6c29b4d4f7f11560cfd640b5b03a25325ef2699e5f92afce17d72f77863ee474
+E71_EXTERNAL_CIRCUITS_V1,mqt_bench,dj,4,OK,12,15,0,3,7,15,0,3,0.0,1,False,0,False,instances\dj_n4.qasm,7ec870941f169ef18fe73c8d43a93299dd6c8aecf16e8da6855e260c605c0749
+E71_EXTERNAL_CIRCUITS_V1,mqt_bench,dj,8,OK,24,33,0,7,15,33,0,7,0.0,1,False,0,False,instances\dj_n8.qasm,4f13f613687cdd17a40f5db66f9e7a67795f438417a0ca35fdbe6b312a1561ad
+E71_EXTERNAL_CIRCUITS_V1,mqt_bench,wstate,4,OK,17,43,18,6,18,43,18,6,0.0,1,False,0,False,instances\wstate_n4.qasm,d7af64370700d259520a0b5bcaf00faa1099627e54202b5d2b4272e25ab3c276
+E71_EXTERNAL_CIRCUITS_V1,mqt_bench,wstate,8,OK,37,99,42,14,42,99,42,14,0.0,1,False,0,False,instances\wstate_n8.qasm,23225902a48b32dc9c5e7746d5f0862bfa55556759920d952577c8f6cad77ed2
+E71_EXTERNAL_CIRCUITS_V1,mqt_bench,qaoa,4,OK,16,40,12,8,20,35,11,8,12.5,3,False,0,False,instances\qaoa_n4.qasm,c85fe1593294976150d5ea9a2f4b1a59d84407fb3b6b78a02b36dcc60805aa31
+E71_EXTERNAL_CIRCUITS_V1,mqt_bench,qaoa,8,OK,52,140,44,56,40,140,44,56,0.0,1,False,0,False,instances\qaoa_n8.qasm,48ac06eaae0f6dc7941a14adba42c681cb523d04c1504ed04f06c222fca16d67
+E71_EXTERNAL_CIRCUITS_V1,mqt_bench,grover,4,OK,10,160,64,52,31,148,60,52,7.5,3,False,0,False,instances\grover_n4.qasm,76e15acfb2b048befe6cb5efe0870da4b446a220bcac5427554b2b9f2699a479
+E71_EXTERNAL_CIRCUITS_V1,mqt_bench,grover,8,OK,24,5904,2664,2192,839,5799,2623,2192,1.778,4,False,0,False,instances\grover_n8.qasm,c1d9dedee1f1d9c7168417a1881863142ba8ae27c99248d0d25120cbf4919d71

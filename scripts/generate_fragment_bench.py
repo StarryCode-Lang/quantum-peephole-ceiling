@@ -104,38 +104,31 @@ def gen_linear_rotation(n: int, seed: int) -> tuple[QuantumCircuit, int]:
     gates = cnot_network(n, n * 2, rng)
     for c, t in gates:
         qc.cx(c, t)
-    # per-wire affine form after the network = image of e_q under the map;
-    # track it by simulating the basis-vector images
-    images = []
-    for q in range(n):
-        vec = 1 << q
-        for c, t in gates:
-            if (vec >> c) & 1:
-                vec ^= 1 << t
-        images.append(vec)
+
+    def simulate_forms(extra: list[tuple[int, int]]) -> list[int]:
+        # wire forms evolve by vector XOR: forms[target] ^= forms[control]
+        masks = [1 << q for q in range(n)]
+        for c, t in list(gates) + list(extra):
+            masks[t] ^= masks[c]
+        return masks
+
+    images = simulate_forms([])
     monomials: set[tuple[int, ...]] = set()
-    def forms_after(extra):
-        out = []
-        for q in range(n):
-            vec = (1 << q)
-            for c, t in gates + extra:
-                if (vec >> c) & 1:
-                    vec ^= 1 << t
-            out.append(vec)
-        return out
+
+    def parity_of(vec: int) -> tuple[int, ...]:
+        return tuple(sorted(p for p in range(n) if (vec >> p) & 1))
+
     for q in range(n):
         if images[q]:
-            parity = tuple(sorted(p for p in range(n) if (images[q] >> p) & 1))
             qc.rz(0.7, q)
-            monomials.add(parity)
+            monomials.add(parity_of(images[q]))
     second = cnot_network(n, n, rng)
     for c, t in second:
         qc.cx(c, t)
-    for q, vec in enumerate(forms_after(second)):
+    for q, vec in enumerate(simulate_forms(second)):
         if vec:
-            parity = tuple(sorted(p for p in range(n) if (vec >> p) & 1))
             qc.rz(0.9, q)
-            monomials.add(parity)
+            monomials.add(parity_of(vec))
     for c, t in reversed(second):
         qc.cx(c, t)
     for c, t in reversed(gates):

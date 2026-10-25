@@ -57,6 +57,10 @@ and carries an `EXPERIMENT_ID` plus a contract block in its docstring.
 | `e67_full_scope_pilot.py` | E67 (2026-10-25) | `rule_scope="full"` (1,474 rules) pilot on the 32 E44 fixture cells at the frozen budgets. |
 | `generate_v16_landscape_integration.py` | v16 re-pin (2026-10-25) | v15 integration derivation against the corrected-engine v16 panels; adds the resource-bounded tier for `e39:b2f83603…`. |
 | `generate_fragment_bench.py` | P5 (2026-10-25) | Fragment-native benchmark generator: 6 families × ≥8 instances × n=4..64 with analytic phase-polynomial support size s. |
+| `e70_fragment_rotation_gap.py` | E70 (2026-10-26) | Rotation-gap decomposition on the fragment-native benchmark (240 instances, n=4..64); per-family scaling of g_reorder/g_total. |
+| `e71_external_circuits.py` | E71 (2026-10-26) | External validity set: MQT Bench subset normalized to the frozen basis + certified closure (mqt-bench 2.3.0, 14/14 OK). |
+| `build_e65_package.py` | E65 packaging | Builds summary/receipt for the bounded-exactification campaign from its resume-safe cells.jsonl. |
+| `generate_v16_readiness_verdict.py` / `verify_v16_readiness_verdict.py` | v16 re-pin (2026-10-25) | v16 readiness verdict derivation and its fail-closed verifier. |
 | `verify_bv_lower_bound.py` | P6 (2026-10-25) | Exact-arithmetic verification of the BV k+2 document: true unitary identity, Heisenberg images, achievability via the real Phase-2b pipeline, exhaustive Case-B check (n ≤ 3). |
 | `verify_perp_reliability.py` | P6 (2026-10-25) | Matrix proof of the nine ⊥ exchange rules + negative controls (exact sympy, engine families imported). |
 | `e68_literature_scan.py` | E68 (2026-10-26) | arXiv Atom + GitHub REST + Crossref/DataCite sweep. Writes a dated package with per-file SHA-256; no synthesis, no LLM. |
