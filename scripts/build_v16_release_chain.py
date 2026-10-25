@@ -127,7 +127,7 @@ def main() -> int:
         "experiment_id": EXPERIMENT_ID,
         "built_utc": datetime.now(timezone.utc).isoformat(),
         "git": git_state,
-        "engine_source_sha256": engine_source_hashes(),
+        "engine_source_sha256": engine_source_hashes(ROOT),
         "packages": {pkg: sorted(files) for pkg, files in PACKAGES.items()},
         "entries": entries,
         "entry_count": len(entries),

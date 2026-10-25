@@ -34,7 +34,7 @@ def main() -> int:
             continue
         if sha256(path) != pinned["sha256"]:
             failures.append(f"hash_drift:{rel}")
-    if chain["engine_source_sha256"] != engine_source_hashes():
+    if chain["engine_source_sha256"] != engine_source_hashes(ROOT):
         failures.append("engine_source_drift")
     commit = subprocess.run(
         ["git", "rev-parse", "HEAD"], cwd=str(ROOT), capture_output=True, text=True, check=True
