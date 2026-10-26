@@ -117,7 +117,12 @@ def main() -> int:
             row["note"] = r.get("note", "")
         csv_rows.append(row)
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(csv_rows[0].keys()), lineterminator="\n")
+        fieldnames = []
+        for row in csv_rows:
+            for key in row:
+                if key not in fieldnames:
+                    fieldnames.append(key)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(csv_rows)
 
