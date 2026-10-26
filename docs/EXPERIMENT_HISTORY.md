@@ -76,12 +76,18 @@ identity checks, root-state hash rebuilds, and witness replays all pass.
 E46 added the first position-resolved certified landscape layer: for every
 fixed-panel root listing, contiguous windows of 8 and 16 gates were searched
 exactly at horizons 2 and 3 with the E45 engine and rule scope. The panel
-ran 76,236 window searches with zero resource truncations and found 39,474
-certified window escapes. On the 123 greedy fixed-point roots, 37.2 percent
-of 16-gate windows (179 of 481) hide a certified escape of depth at least
-two, and depth-one escapes occur exclusively on the five raw-listing roots
-that exceed the baseline gate budget — a built-in correctness check. Only
-the first escape certificate per (source, width, horizon) is stored; the
+ran 76,236 window searches with zero resource truncations and, after the
+v16 engine repair and re-pin, 39,572 certified window escapes (39,474 in the
+superseded v15 run). The panel has two strata and the escape rates are
+reported per stratum: on the 23 greedy fixed-point roots that have 16-gate
+windows, 191 of 481 windows (39.71 percent) hide a certified escape of depth
+at least two, and depth-one escapes are exactly zero; on the 50 roots whose
+normalised listing exceeds the baseline gate budget, 10,565 of 18,274
+windows (57.81 percent) escape, but 10,339 of those are depth one. The
+earlier "37.2 percent on 123 greedy roots" reading mixed one stratum's
+denominator with the other stratum's qualifier and is withdrawn
+(`docs/review/science_boost/2026-10-26_innovation_scan.md` §2.2).
+Only the first escape certificate per (source, width, horizon) is stored; the
 deterministic runner regenerates the complete witness set on demand.
 
 ## Superseded interpretations

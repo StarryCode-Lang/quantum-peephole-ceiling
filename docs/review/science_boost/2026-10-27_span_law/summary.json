@@ -1,0 +1,184 @@
+{
+  "as_of": "2026-10-27",
+  "by_root_kind": {
+    "GREEDY_FIXED_POINT": {
+      "FN": 398,
+      "FP": 0,
+      "TN": 1864,
+      "TP": 194,
+      "accuracy": 0.837948,
+      "actual_escapes": 592,
+      "precision": 1.0,
+      "predicted_escapes": 194,
+      "recall": 0.327703,
+      "rows": 2456
+    },
+    "RAW_NORMALIZED_OVER_BASELINE_BUDGET": {
+      "FN": 1166,
+      "FP": 0,
+      "TN": 34800,
+      "TP": 37814,
+      "accuracy": 0.984196,
+      "actual_escapes": 38980,
+      "precision": 1.0,
+      "predicted_escapes": 37814,
+      "recall": 0.970087,
+      "rows": 73780
+    }
+  },
+  "config_law": [
+    {
+      "abs_rate_error": 0.019832,
+      "horizon": 2,
+      "observed_escapes": 9071,
+      "observed_rate": 0.468471,
+      "predicted_escapes": 8687,
+      "predicted_rate": 0.448639,
+      "window_width": 8,
+      "windows": 19363
+    },
+    {
+      "abs_rate_error": 0.025461,
+      "horizon": 3,
+      "observed_escapes": 9246,
+      "observed_rate": 0.477509,
+      "predicted_escapes": 8753,
+      "predicted_rate": 0.452048,
+      "window_width": 8,
+      "windows": 19363
+    },
+    {
+      "abs_rate_error": 0.014983,
+      "horizon": 2,
+      "observed_escapes": 10499,
+      "observed_rate": 0.559797,
+      "predicted_escapes": 10218,
+      "predicted_rate": 0.544815,
+      "window_width": 16,
+      "windows": 18755
+    },
+    {
+      "abs_rate_error": 0.021648,
+      "horizon": 3,
+      "observed_escapes": 10756,
+      "observed_rate": 0.5735,
+      "predicted_escapes": 10350,
+      "predicted_rate": 0.551853,
+      "window_width": 16,
+      "windows": 18755
+    }
+  ],
+  "config_law_greedy_only": [
+    {
+      "abs_rate_error": 0.089692,
+      "horizon": 2,
+      "observed_escapes": 99,
+      "observed_rate": 0.13253,
+      "predicted_escapes": 32,
+      "predicted_rate": 0.042838,
+      "window_width": 8,
+      "windows": 747
+    },
+    {
+      "abs_rate_error": 0.136546,
+      "horizon": 3,
+      "observed_escapes": 150,
+      "observed_rate": 0.200803,
+      "predicted_escapes": 48,
+      "predicted_rate": 0.064257,
+      "window_width": 8,
+      "windows": 747
+    },
+    {
+      "abs_rate_error": 0.216216,
+      "horizon": 2,
+      "observed_escapes": 152,
+      "observed_rate": 0.316008,
+      "predicted_escapes": 48,
+      "predicted_rate": 0.099792,
+      "window_width": 16,
+      "windows": 481
+    },
+    {
+      "abs_rate_error": 0.259875,
+      "horizon": 3,
+      "observed_escapes": 191,
+      "observed_rate": 0.397089,
+      "predicted_escapes": 66,
+      "predicted_rate": 0.137214,
+      "window_width": 16,
+      "windows": 481
+    }
+  ],
+  "contract": {
+    "read_only": [
+      "data/",
+      "release/",
+      "docs/manuscript/"
+    ],
+    "rule_scope": "e44_core_v1 (frozen); pair_v1 predicates only in the criterion",
+    "search": "none -- criterion is O(m*w) per window",
+    "source": "frozen data/v16/e46_window_landscape/window_results.csv"
+  },
+  "depth_agreement": {
+    "depth_exact": 38006,
+    "rate": 0.999947,
+    "tp_rows": 38008
+  },
+  "depth_agreement_by_root_kind": {
+    "GREEDY_FIXED_POINT": {
+      "depth_exact": 194,
+      "rate": 1.0,
+      "tp_rows": 194
+    },
+    "RAW_NORMALIZED_OVER_BASELINE_BUDGET": {
+      "depth_exact": 37812,
+      "rate": 0.999947,
+      "tp_rows": 37814
+    }
+  },
+  "experiment_id": "E72_SPAN_LAW_2026_10_27",
+  "inputs": {
+    "root_state_hash_mismatch_sources": [],
+    "window_cost_recomputation_mismatch_rows": 0,
+    "window_results": {
+      "path": "data/v16/e46_window_landscape/window_results.csv",
+      "rows": 76236,
+      "sha256": "855803011ed17156a347925fe6d4998a42ac4ad63ba7a1f8838faa46e7ad082b"
+    }
+  },
+  "overall": {
+    "FN": 1564,
+    "FP": 0,
+    "TN": 36664,
+    "TP": 38008,
+    "accuracy": 0.979485,
+    "actual_escapes": 39572,
+    "precision": 1.0,
+    "predicted_escapes": 38008,
+    "recall": 0.960477,
+    "rows": 76236
+  },
+  "residual_fn_by_family": {
+    "Adder": 64,
+    "Grover": 138,
+    "HaarRandom": 54,
+    "HardwareEfficient": 76,
+    "IQP": 386,
+    "Oracle": 12,
+    "QuantumWalk": 692,
+    "UCCSD_inspired": 142
+  },
+  "tp_by_family": {
+    "Adder": 640,
+    "Grover": 754,
+    "HaarRandom": 6096,
+    "HardwareEfficient": 2024,
+    "IQP": 96,
+    "QAOA": 5872,
+    "QuantumWalk": 7240,
+    "RandomClifford": 65,
+    "UCCSD_inspired": 1853,
+    "VQE": 13368
+  }
+}

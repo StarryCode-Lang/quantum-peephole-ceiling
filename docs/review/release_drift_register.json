@@ -1,46 +1,6 @@
 {
   "entries": [
     {
-      "attribution_commit": "87019d8fc",
-      "disposition": "SUPERSEDED_PENDING_OWNER_REPIN",
-      "evidence": "docs/review/release_drift_disposition_2026-10-18.md",
-      "file": "docs/review/metric_audit_ledger_2026-08-24.csv",
-      "first_recorded": "2026-10-18",
-      "observed_bytes": 1104488,
-      "observed_sha256": "46bb73faebf4b6fc26849af31888b60e573ea84dd92bf57b737923674acd83c5",
-      "recommended_action": "Keep metric_audit_ledger_2026-08-24.csv frozen as historical and add metric_audit_ledger_2026-09-08.csv as the active entry marked superseded, matching the E29-smoke / E26-pilot policy in data/DATA_CANONICAL.md.",
-      "recommended_option": "B",
-      "recorded_by": "science_boost 2026-10-22 (decision package)",
-      "recorded_bytes": 1091059,
-      "recorded_sha256": "f0a0ac1c05d92305a90fa88d5f8bf33d442c71df8b51538fa482ec5ae39b956b",
-      "root_cause": "The manifest was generated from a dirty working tree (manifest.git.dirty = true); the recorded hash f0a0ac1c never existed in any commit. A later wave, commit 87019d8fc (2026-09-08), rewrote 708 assessment cells across 7 columns while leaving rows (592), schema (20 columns), metric_sha256, target and target_sha256 unchanged."
-    },
-    {
-      "attribution_commit": "8e29419a4",
-      "commit_date": "2026-09-02",
-      "disposition": "POST_MANIFEST_EDIT",
-      "drift_history": [
-        {
-          "attribution_commit": "8e29419a4",
-          "observed_bytes": 489,
-          "observed_sha256": "9b82251b1e72e87abcf8a5fb028b529c1d8c4b5720f50cc05fc263e64e1cf3f7",
-          "root_cause": "round-13 audit edits: bqskit==1.2.1 / tzap==0.8.0 added as direct requirements",
-          "superseded_on": "2026-10-26"
-        }
-      ],
-      "file": "requirements.txt",
-      "first_recorded": "2026-10-22",
-      "last_observed": "2026-10-26",
-      "observed_bytes": 580,
-      "observed_sha256": "485ed0f1916d09c0a6ac65b2de21eaa031ed4dcaf2434c64ed65ad77cee8b5d9",
-      "recommended_action": "Re-pin this entry from the named commit when the manifest is regenerated; no data change is implied.",
-      "recommended_option": "A",
-      "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
-      "recorded_bytes": 454,
-      "recorded_sha256": "e5ff81c19e8e27a6e5acbe89faacf6475d81937b02f2319309f86f3689a3bab0",
-      "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash."
-    },
-    {
       "attribution_commit": "af8ed604b",
       "commit_date": "2026-09-01",
       "disposition": "POST_MANIFEST_EDIT",
@@ -71,51 +31,6 @@
       "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash."
     },
     {
-      "attribution_commit": "87019d8fc",
-      "commit_date": "2026-09-08",
-      "disposition": "POST_MANIFEST_EDIT",
-      "file": "scripts/generate_metric_audit_ledger.py",
-      "first_recorded": "2026-10-22",
-      "observed_bytes": 14777,
-      "observed_sha256": "efb4fdd209eddc7a6ecc4495c98361a49985cd626be068072490f5dc141b5693",
-      "recommended_action": "Re-pin this entry from the named commit when the manifest is regenerated; no data change is implied.",
-      "recommended_option": "A",
-      "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
-      "recorded_bytes": 14545,
-      "recorded_sha256": "550476344300266a95264ccd33ac27964a05d718a528b6dce15dc5cb4f63401d",
-      "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash."
-    },
-    {
-      "attribution_commit": "87019d8fc",
-      "commit_date": "2026-09-08",
-      "disposition": "POST_MANIFEST_EDIT",
-      "file": "scripts/merge_metric_registry_fragments.py",
-      "first_recorded": "2026-10-22",
-      "observed_bytes": 69375,
-      "observed_sha256": "6bd96fcf1964d348b5538fe14a16047290098616cdc267063d6647daf7f5152c",
-      "recommended_action": "Re-pin this entry from the named commit when the manifest is regenerated; no data change is implied.",
-      "recommended_option": "A",
-      "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
-      "recorded_bytes": 68309,
-      "recorded_sha256": "b4ebfbe59cb4cb40b135e1355d30f795114152033d1db0a48e34df06a40b075d",
-      "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash."
-    },
-    {
-      "attribution_commit": "dbbdf7837",
-      "commit_date": "2026-10-26",
-      "disposition": "POST_MANIFEST_EDIT",
-      "file": "release/sbom.cdx.json",
-      "first_recorded": "2026-10-22",
-      "observed_bytes": 477135,
-      "observed_sha256": "41e9830d1e041f736b99b264494ef7262288cc4fd3c9eb476c3b2aa3e8a184e4",
-      "recommended_action": "Re-pin this entry from the named commit when the manifest is regenerated; no data change is implied.",
-      "recommended_option": "A",
-      "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
-      "recorded_bytes": 454757,
-      "recorded_sha256": "2a4fefea4b0e0161ebf90d4192af0dfcf0ced372f488f9e4569dc0e62e8731db",
-      "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash. 2026-10-26: second edit \u2014 requirements-lock.txt extended with the bqskit/tzap dependency subtree (E53/E55/E58 declaration repair) and the SBOM regenerated; hash refreshed accordingly."
-    },
-    {
       "attribution_commit": "e4250beec",
       "commit_date": "2026-09-01",
       "disposition": "POST_MANIFEST_EDIT",
@@ -129,6 +44,21 @@
       "recorded_bytes": 54484,
       "recorded_sha256": "e389c7285a49dd56c04d10b9adb0fecc57c84867bf22ad4cc2e3594d4f8a68db",
       "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash."
+    },
+    {
+      "attribution_commit": "e1c450db2",
+      "commit_date": "2026-10-26",
+      "disposition": "POST_MANIFEST_EDIT",
+      "file": "docs/manuscript/claim_evidence_table.csv",
+      "first_recorded": "2026-10-27",
+      "last_observed": "2026-10-27",
+      "observed_bytes": 14101,
+      "observed_sha256": "e7cf03ad08c057c4233f8107262cca34bd917e109779076ce619cfc843e814a1",
+      "recommended_action": "owner decision: re-pin the manifest or split the ledger out of the manuscript tree",
+      "recorded_by": "science_boost 2026-10-27 (drift disposition)",
+      "recorded_bytes": 8660,
+      "recorded_sha256": "a774a8450108919aa6c9b6558e1314566d84048a742ebe428d066ab75cfb8f72",
+      "root_cause": "claim-evidence ledger extended with C18-C22 and repaired rows by the v16 audit sweep; the manuscript tree is read-only for this workflow, so the drift is registered rather than reverted"
     },
     {
       "attribution_commit": "8e29419a4",
@@ -159,21 +89,6 @@
       "attribution_commit": "e4250beec",
       "commit_date": "2026-09-01",
       "disposition": "POST_MANIFEST_EDIT",
-      "file": "docs/theory/framework.md",
-      "first_recorded": "2026-10-22",
-      "observed_bytes": 42987,
-      "observed_sha256": "d49ef104789a6bacbf1a38f904c9998d8c674265908029352901ba1761adb195",
-      "recommended_action": "Re-pin this entry from the named commit when the manifest is regenerated; no data change is implied.",
-      "recommended_option": "A",
-      "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
-      "recorded_bytes": 41890,
-      "recorded_sha256": "e6d7471f3998da89edb94a534ac1656a76c3ad3ed87c3f5b5470bc5138c03220",
-      "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash."
-    },
-    {
-      "attribution_commit": "e4250beec",
-      "commit_date": "2026-09-01",
-      "disposition": "POST_MANIFEST_EDIT",
       "file": "docs/results/analysis_summary.md",
       "first_recorded": "2026-10-22",
       "observed_bytes": 47398,
@@ -187,12 +102,47 @@
     },
     {
       "attribution_commit": "87019d8fc",
+      "disposition": "SUPERSEDED_PENDING_OWNER_REPIN",
+      "drift_history": [
+        {
+          "attribution_commit": "5992c19ce",
+          "observed_bytes": 1104488,
+          "observed_sha256": "46bb73faebf4b6fc26849af31888b60e573ea84dd92bf57b737923674acd83c5",
+          "root_cause": "metric 15.06 evidence hash re-derived after the SBOM repair (commit 5992c19ce)",
+          "superseded_on": "2026-10-27"
+        }
+      ],
+      "evidence": "docs/review/release_drift_disposition_2026-10-18.md",
+      "file": "docs/review/metric_audit_ledger_2026-08-24.csv",
+      "first_recorded": "2026-10-18",
+      "last_observed": "2026-10-27",
+      "observed_bytes": 1104540,
+      "observed_sha256": "8aa0ab9c84fe35799f8c8ddfd1f8ceced979d3cca4be6a44af1f3bdbe55b5be7",
+      "recommended_action": "Keep metric_audit_ledger_2026-08-24.csv frozen as historical and add metric_audit_ledger_2026-09-08.csv as the active entry marked superseded, matching the E29-smoke / E26-pilot policy in data/DATA_CANONICAL.md.",
+      "recommended_option": "B",
+      "recorded_by": "science_boost 2026-10-22 (decision package)",
+      "recorded_bytes": 1091059,
+      "recorded_sha256": "f0a0ac1c05d92305a90fa88d5f8bf33d442c71df8b51538fa482ec5ae39b956b",
+      "root_cause": "The manifest was generated from a dirty working tree (manifest.git.dirty = true); the recorded hash f0a0ac1c never existed in any commit. A later wave, commit 87019d8fc (2026-09-08), rewrote 708 assessment cells across 7 columns while leaving rows (592), schema (20 columns), metric_sha256, target and target_sha256 unchanged."
+    },
+    {
+      "attribution_commit": "87019d8fc",
       "commit_date": "2026-09-08",
       "disposition": "POST_MANIFEST_EDIT",
+      "drift_history": [
+        {
+          "attribution_commit": "5992c19ce",
+          "observed_bytes": 1033,
+          "observed_sha256": "857d59bdb835d0c41ebdb9cecebb8193fdf8334a70aaec0ac69e3b6a0e34d97e",
+          "root_cause": "metric 15.06 evidence hash re-derived after the SBOM repair (commit 5992c19ce)",
+          "superseded_on": "2026-10-27"
+        }
+      ],
       "file": "docs/review/metric_audit_resolution_2026-08-24.md",
       "first_recorded": "2026-10-22",
+      "last_observed": "2026-10-27",
       "observed_bytes": 1033,
-      "observed_sha256": "857d59bdb835d0c41ebdb9cecebb8193fdf8334a70aaec0ac69e3b6a0e34d97e",
+      "observed_sha256": "07247b5dd337f492651facc90c166e520ff0c5e5aff7c021c6f92b2d2f650527",
       "recommended_action": "Re-pin this entry from the named commit when the manifest is regenerated; no data change is implied.",
       "recommended_option": "A",
       "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
@@ -204,10 +154,20 @@
       "attribution_commit": "87019d8fc",
       "commit_date": "2026-09-08",
       "disposition": "POST_MANIFEST_EDIT",
+      "drift_history": [
+        {
+          "attribution_commit": "5992c19ce",
+          "observed_bytes": 800,
+          "observed_sha256": "715b3a97f8b5948e5bcc5729ed8ab6a3ddf1e10736fdd7c6447b59273f8dd4b0",
+          "root_cause": "metric 15.06 evidence hash re-derived after the SBOM repair (commit 5992c19ce)",
+          "superseded_on": "2026-10-27"
+        }
+      ],
       "file": "docs/review/metric_audit_summary_2026-08-24.json",
       "first_recorded": "2026-10-22",
+      "last_observed": "2026-10-27",
       "observed_bytes": 800,
-      "observed_sha256": "715b3a97f8b5948e5bcc5729ed8ab6a3ddf1e10736fdd7c6447b59273f8dd4b0",
+      "observed_sha256": "b6e511a2a6ec5c0612ab1da968041a7707293ee1489b436c5eaa69de8e25968b",
       "recommended_action": "Re-pin this entry from the named commit when the manifest is regenerated; no data change is implied.",
       "recommended_option": "A",
       "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
@@ -231,6 +191,21 @@
       "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash. 2026-10-26: second edit \u2014 metric 15.06 evidence hash refreshed to the repaired SBOM (same dependency-declaration repair)."
     },
     {
+      "attribution_commit": "e4250beec",
+      "commit_date": "2026-09-01",
+      "disposition": "POST_MANIFEST_EDIT",
+      "file": "docs/theory/framework.md",
+      "first_recorded": "2026-10-22",
+      "observed_bytes": 42987,
+      "observed_sha256": "d49ef104789a6bacbf1a38f904c9998d8c674265908029352901ba1761adb195",
+      "recommended_action": "Re-pin this entry from the named commit when the manifest is regenerated; no data change is implied.",
+      "recommended_option": "A",
+      "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
+      "recorded_bytes": 41890,
+      "recorded_sha256": "e6d7471f3998da89edb94a534ac1656a76c3ad3ed87c3f5b5470bc5138c03220",
+      "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash."
+    },
+    {
       "attribution_commit": "926c76407",
       "commit_date": "2026-09-01",
       "disposition": "POST_MANIFEST_EDIT",
@@ -243,6 +218,91 @@
       "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
       "recorded_bytes": 2597,
       "recorded_sha256": "6e93f86da9395c2a1d372b4b90013e97eae36008e2e7fa77043d3efe9e26511e",
+      "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash."
+    },
+    {
+      "attribution_commit": "dbbdf7837",
+      "commit_date": "2026-10-26",
+      "disposition": "POST_MANIFEST_EDIT",
+      "file": "release/sbom.cdx.json",
+      "first_recorded": "2026-10-22",
+      "observed_bytes": 477135,
+      "observed_sha256": "41e9830d1e041f736b99b264494ef7262288cc4fd3c9eb476c3b2aa3e8a184e4",
+      "recommended_action": "Re-pin this entry from the named commit when the manifest is regenerated; no data change is implied.",
+      "recommended_option": "A",
+      "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
+      "recorded_bytes": 454757,
+      "recorded_sha256": "2a4fefea4b0e0161ebf90d4192af0dfcf0ced372f488f9e4569dc0e62e8731db",
+      "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash. 2026-10-26: second edit \u2014 requirements-lock.txt extended with the bqskit/tzap dependency subtree (E53/E55/E58 declaration repair) and the SBOM regenerated; hash refreshed accordingly."
+    },
+    {
+      "attribution_commit": "94fe4fd3c",
+      "commit_date": "2026-10-25",
+      "disposition": "POST_MANIFEST_EDIT",
+      "file": "requirements-lock.txt",
+      "first_recorded": "2026-10-27",
+      "last_observed": "2026-10-27",
+      "observed_bytes": 154309,
+      "observed_sha256": "4673a1447699a744d2b8a86261c5fcb65b4a69198b10f9cf7bb0f85ab1fbad55",
+      "recommended_action": "owner decision: accept the regenerated lock as the active SBOM source, or re-pin the manifest after the pip-compile re-solve",
+      "recorded_by": "science_boost 2026-10-27 (drift disposition)",
+      "recorded_bytes": 147516,
+      "recorded_sha256": "3960b7126d6e8cf819bd52b77d0cca92839b5e2a0c07f1f58b9f4fe433b4b70a",
+      "root_cause": "round-16 SBOM/lock regeneration to include bqskit 1.2.1 / tzap 0.8.0 and their transitive dependencies (bqskitrs, pennylane); the manifest snapshot predates the two new direct requirements"
+    },
+    {
+      "attribution_commit": "8e29419a4",
+      "commit_date": "2026-09-02",
+      "disposition": "POST_MANIFEST_EDIT",
+      "drift_history": [
+        {
+          "attribution_commit": "8e29419a4",
+          "observed_bytes": 489,
+          "observed_sha256": "9b82251b1e72e87abcf8a5fb028b529c1d8c4b5720f50cc05fc263e64e1cf3f7",
+          "root_cause": "round-13 audit edits: bqskit==1.2.1 / tzap==0.8.0 added as direct requirements",
+          "superseded_on": "2026-10-26"
+        }
+      ],
+      "file": "requirements.txt",
+      "first_recorded": "2026-10-22",
+      "last_observed": "2026-10-26",
+      "observed_bytes": 580,
+      "observed_sha256": "485ed0f1916d09c0a6ac65b2de21eaa031ed4dcaf2434c64ed65ad77cee8b5d9",
+      "recommended_action": "Re-pin this entry from the named commit when the manifest is regenerated; no data change is implied.",
+      "recommended_option": "A",
+      "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
+      "recorded_bytes": 454,
+      "recorded_sha256": "e5ff81c19e8e27a6e5acbe89faacf6475d81937b02f2319309f86f3689a3bab0",
+      "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash."
+    },
+    {
+      "attribution_commit": "87019d8fc",
+      "commit_date": "2026-09-08",
+      "disposition": "POST_MANIFEST_EDIT",
+      "file": "scripts/generate_metric_audit_ledger.py",
+      "first_recorded": "2026-10-22",
+      "observed_bytes": 14777,
+      "observed_sha256": "efb4fdd209eddc7a6ecc4495c98361a49985cd626be068072490f5dc141b5693",
+      "recommended_action": "Re-pin this entry from the named commit when the manifest is regenerated; no data change is implied.",
+      "recommended_option": "A",
+      "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
+      "recorded_bytes": 14545,
+      "recorded_sha256": "550476344300266a95264ccd33ac27964a05d718a528b6dce15dc5cb4f63401d",
+      "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash."
+    },
+    {
+      "attribution_commit": "87019d8fc",
+      "commit_date": "2026-09-08",
+      "disposition": "POST_MANIFEST_EDIT",
+      "file": "scripts/merge_metric_registry_fragments.py",
+      "first_recorded": "2026-10-22",
+      "observed_bytes": 69375,
+      "observed_sha256": "6bd96fcf1964d348b5538fe14a16047290098616cdc267063d6647daf7f5152c",
+      "recommended_action": "Re-pin this entry from the named commit when the manifest is regenerated; no data change is implied.",
+      "recommended_option": "A",
+      "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
+      "recorded_bytes": 68309,
+      "recorded_sha256": "b4ebfbe59cb4cb40b135e1355d30f795114152033d1db0a48e34df06a40b075d",
       "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash."
     }
   ],

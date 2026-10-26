@@ -12,6 +12,17 @@
       "status": "KNOWN_DRIFT_ACCEPTED"
     },
     {
+      "attribution_commit": "94fe4fd3c",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 147516,
+      "expected_sha256": "3960b7126d6e8cf819bd52b77d0cca92839b5e2a0c07f1f58b9f4fe433b4b70a",
+      "file": "requirements-lock.txt",
+      "observed_bytes": 154309,
+      "observed_sha256": "4673a1447699a744d2b8a86261c5fcb65b4a69198b10f9cf7bb0f85ab1fbad55",
+      "recommended_option": "",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
       "attribution_commit": "af8ed604b",
       "disposition": "POST_MANIFEST_EDIT",
       "expected_bytes": 483,
@@ -56,13 +67,13 @@
       "status": "KNOWN_DRIFT_ACCEPTED"
     },
     {
-      "attribution_commit": "c52b48083",
+      "attribution_commit": "dbbdf7837",
       "disposition": "POST_MANIFEST_EDIT",
       "expected_bytes": 454757,
       "expected_sha256": "2a4fefea4b0e0161ebf90d4192af0dfcf0ced372f488f9e4569dc0e62e8731db",
       "file": "release/sbom.cdx.json",
-      "observed_bytes": 454788,
-      "observed_sha256": "5991fca2e5f31e5235563c9dfe9689669398dbd1b9601b88d684406a7e24a12e",
+      "observed_bytes": 477135,
+      "observed_sha256": "41e9830d1e041f736b99b264494ef7262288cc4fd3c9eb476c3b2aa3e8a184e4",
       "recommended_option": "A",
       "status": "KNOWN_DRIFT_ACCEPTED"
     },
@@ -86,6 +97,17 @@
       "observed_bytes": 39867,
       "observed_sha256": "f9ad010bfb297fcbe105192f2ee5d0713ac3f9f6dcda35f68b431291e7e186b3",
       "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "e1c450db2",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 8660,
+      "expected_sha256": "a774a8450108919aa6c9b6558e1314566d84048a742ebe428d066ab75cfb8f72",
+      "file": "docs/manuscript/claim_evidence_table.csv",
+      "observed_bytes": 14101,
+      "observed_sha256": "e7cf03ad08c057c4233f8107262cca34bd917e109779076ce619cfc843e814a1",
+      "recommended_option": "",
       "status": "KNOWN_DRIFT_ACCEPTED"
     },
     {
@@ -116,8 +138,8 @@
       "expected_bytes": 1091059,
       "expected_sha256": "f0a0ac1c05d92305a90fa88d5f8bf33d442c71df8b51538fa482ec5ae39b956b",
       "file": "docs/review/metric_audit_ledger_2026-08-24.csv",
-      "observed_bytes": 1104488,
-      "observed_sha256": "46bb73faebf4b6fc26849af31888b60e573ea84dd92bf57b737923674acd83c5",
+      "observed_bytes": 1104540,
+      "observed_sha256": "8aa0ab9c84fe35799f8c8ddfd1f8ceced979d3cca4be6a44af1f3bdbe55b5be7",
       "recommended_option": "B",
       "status": "KNOWN_DRIFT_ACCEPTED"
     },
@@ -128,7 +150,7 @@
       "expected_sha256": "c6aa90af6812f8a943f20badbb72b25ad91486349a6f077cea75c6fb8ded7115",
       "file": "docs/review/metric_audit_resolution_2026-08-24.md",
       "observed_bytes": 1033,
-      "observed_sha256": "857d59bdb835d0c41ebdb9cecebb8193fdf8334a70aaec0ac69e3b6a0e34d97e",
+      "observed_sha256": "07247b5dd337f492651facc90c166e520ff0c5e5aff7c021c6f92b2d2f650527",
       "recommended_option": "A",
       "status": "KNOWN_DRIFT_ACCEPTED"
     },
@@ -139,18 +161,18 @@
       "expected_sha256": "ffddeb1255125d3a9ee84f48e53c6664ca11f026f883d769267d4d2400e0a10f",
       "file": "docs/review/metric_audit_summary_2026-08-24.json",
       "observed_bytes": 800,
-      "observed_sha256": "715b3a97f8b5948e5bcc5729ed8ab6a3ddf1e10736fdd7c6447b59273f8dd4b0",
+      "observed_sha256": "b6e511a2a6ec5c0612ab1da968041a7707293ee1489b436c5eaa69de8e25968b",
       "recommended_option": "A",
       "status": "KNOWN_DRIFT_ACCEPTED"
     },
     {
-      "attribution_commit": "87019d8fc",
+      "attribution_commit": "dbbdf7837",
       "disposition": "POST_MANIFEST_EDIT",
       "expected_bytes": 1512046,
       "expected_sha256": "6170358ee14183f606871d907138d492dd6861debe051f4b808c289a4481ac3b",
       "file": "docs/review/metric_evidence_registry_2026-08-26.json",
-      "observed_bytes": 1498338,
-      "observed_sha256": "1b9413c2d280fa208b93d25d1f18d7d51cdf0f729f1fb03aa9fb3f395ca6bd09",
+      "observed_bytes": 1530667,
+      "observed_sha256": "2ce5f965fe1e2bf430e81e038282ad6869ace1f7fa1713e1ee2f12aae5c883d4",
       "recommended_option": "A",
       "status": "KNOWN_DRIFT_ACCEPTED"
     },
@@ -174,8 +196,8 @@
   "register": "docs/review/release_drift_register.json",
   "schema_version": "release-chain-verification-v1",
   "status_counts": {
-    "KNOWN_DRIFT_ACCEPTED": 15,
-    "MATCH": 35027
+    "KNOWN_DRIFT_ACCEPTED": 17,
+    "MATCH": 35025
   },
   "verdict": "PASS_WITH_ACCEPTED_DRIFT"
 }

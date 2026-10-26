@@ -23,7 +23,7 @@ result remains the baseline that makes the improvement measurable.
 | Determinism and failure handling | High-branching enumeration could overrun late checks | Stable action ordering, byte-stable certificates, deadline propagation, and fail-closed statuses are regression tested | **Closed** |
 | Historical E1-E37 evidence | Multiple audit waves and receipts | Canonical and sealed packages remain hash-bound; the 592-metric ledger keeps PASS/PARTIAL/FAIL/EXTERNAL/NA separate | **Preserved; no rerun justified by v14** |
 | E45 classification bookkeeping | v14 left 35/128 compact cells truncated with no derived claims | v15 integration: 128/128 classified; 63 exact escapes with exact minimum depth; 65 exact local optima; 94 exact best costs; 34 witness-bounded extras; 0 replay failures | **Closed for classification (v15)** |
-| Window-local certified landscape | Did not exist | E46: 76,236 window searches over the fixed panel, 0 truncations, 39,474 certified window escapes, first-escape witnesses stored | **New v15 evidence layer** |
+| Window-local certified landscape | Did not exist | E46: 76,236 window searches over the fixed panel, 0 truncations, 39,474 certified window escapes (v15 run), first-escape witnesses stored | **New v15 evidence layer; superseded by v16** |
 | Repository footprint | Restore capsules 173 MB, vendored tool checkout 365 MB, cache and garbage objects | Capsules retired (unpinned, git-redundant), checkout removed, caches purged; all pinned evidence untouched | **Closed (v15 cleanup; see `docs/review/v15_cleanup_2026-10-11.md`)** |
 | Independent cold start | Protocol exists; full independent extraction was not completed | Sparse package verification is recorded; clean non-author execution remains pending | **External/open** |
 | Real QPU validation | Protocol prepared without credentials or device run | No real-device result is claimed | **External/open** |
@@ -72,5 +72,27 @@ local engineering readiness.
 - v15 cleanup record: `docs/review/v15_cleanup_2026-10-11.md`
 - detailed execution record: `docs/review/v14_execution_status_2026-09-07.md`
 
-The repository remains `NOT_READY_FOR_PAPER` under the current v15 verdict.
-That label does not negate the completed engineering gates listed above.
+The repository remains `NOT_READY_FOR_PAPER` under the current v16 verdict
+(`release/v16_readiness_verdict.json`, as_of 2026-10-25). That label does not
+negate the completed engineering gates listed above.
+
+## v16 addendum (2026-10-25 → 2026-10-27)
+
+Added by the science-boost review round of 2026-10-27. This section does not
+rewrite any earlier row; it records what changed after the engine
+successor-generation repair and the v16 re-pin.
+
+| Area | v15 statement | v16 measured value | Disposition |
+|---|---|---|---|
+| Landscape quantities | 94 exact; 34 witness-bounded | **93 exact; 34 witness-bounded; 1 resource-bounded** | Re-pinned; v15 numbers remain the historical baseline |
+| E45 classification | 63 escapes / 65 local optima | **69 escapes / 58 local optima**, 127 classified + 1 resource tier | Re-pinned |
+| E46 window panel | 39,474 escapes | **39,572 escapes**, 0 truncations | Re-pinned |
+| Window escape rates | "37.2% of 16-gate windows on 123 greedy roots" | **two strata**: 39.71% (191/481 windows, 23 greedy roots, depth-one escapes 0) vs 57.81% (10,565/18,274 windows, 50 raw over-budget roots, 97.9% depth-one) | **Earlier single-rate statement withdrawn**; rates must be reported per stratum |
+| Span criterion | — | E72: a search-free O(m·w) criterion predicts all 76,236 window outcomes with **0 false positives** and an exact first-escape depth on **38,006/38,008** rows | New evidence layer, `docs/review/science_boost/2026-10-27_span_law/` |
+| Content class | — | E72 recall is 97.0% on raw roots but **32.8% on greedy fixed points**: 398/592 escapes are rule-library content, not commutation | New open problem G4 |
+| Rule-library completeness | — | E73: of 1,474 Quartz rules only **14 are single-qubit**, and no single-qubit source pattern has length 3; on the 2-qubit Clifford fragment **30.25% of reducible listings cannot reach the absolute optimum** | New measured caveat on every "certified optimum" claim |
+
+The operational consequence: `best_cost_at_h3` is horizon-relative *and*
+library-relative, and the library-relative gap now has a number (30.25% at
+2 qubits, 4 gates) rather than a caveat. Full review:
+`docs/review/science_boost/2026-10-27_innovation_scan.md`.

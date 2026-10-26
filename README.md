@@ -18,15 +18,21 @@ in v13. Its selected exact finite-horizon run certified 93 of 128 inputs and
 left 35 resource-truncated, while a complementary IDA* panel classified all
 128 inputs as 63 exact escapes and 65 exact local optima.
 
-The current v15 result closes the classification bookkeeping without rerunning
-any frozen search: all 128 sources now carry an exact classification, with 94
-exact best-cost quantities and 34 witness-bounded landscape extras. The new
-E46 window-landscape panel adds a position-resolved certified profile over the
-same fixed panel: 76,236 window searches with zero truncations. On greedy
-fixed-point listings, 37.2 percent of 16-gate windows hide a certified escape
-of depth at least two — an exchange-then-reduce path that the whole-listing
-greedy optimizer cannot see (depth-one escapes occur only on the five
-raw-listing roots that exceed the baseline gate budget).
+The current v16 result closes the classification bookkeeping without rerunning
+any frozen search: 93 sources carry exact best-cost quantities, 34 are
+witness-bounded and 1 is resource-bounded (127 classified plus one resource
+tier). The E46 window-landscape panel adds a position-resolved certified
+profile over the same fixed panel: 76,236 window searches with zero
+truncations and 39,572 certified escapes. The panel is **two strata and the
+rates must be read per stratum**: on the 23 greedy fixed-point roots that have
+16-gate windows, 39.71 percent of 481 windows hide a certified escape of depth
+at least two, with zero depth-one escapes; on the 50 roots whose normalised
+listing exceeds the baseline gate budget, 57.81 percent of 18,274 windows
+escape but 97.9 percent of those escapes are depth one. A search-free span
+criterion (E72, 2026-10-27) predicts every one of these 76,236 outcomes with
+zero false positives and an exact first-escape depth on 99.995 percent of
+them; the residual is a rule-library content class, quantified in
+`docs/review/science_boost/2026-10-27_innovation_scan.md`.
 
 ## What the project does
 
@@ -61,7 +67,8 @@ The project has three connected research layers:
 | v14 exact finite horizon | 93 exact; 35 resource-truncated | Enumerated quantities remain bounded for 35 cells |
 | v14 IDA* escape depth | 63 exact escapes; 65 exact local optima | Complete for the declared 128-input panel |
 | v15 landscape integration | 128/128 classified; 94 exact `best_cost_at_h3`; 34 witness-bounded | Zero unclassified cells; zero replay failures |
-| v15 E46 window landscape | 76,236 windows; 39,474 certified window escapes; 0 truncations | Window-local by construction; first-escape witnesses stored |
+| v16 landscape integration | 93 exact `best_cost_at_h3`; 34 witness-bounded; 1 resource-bounded | 127 classified + 1 resource tier (engine repair re-pin) |
+| v16 E46 window landscape | 76,236 windows; 39,572 certified escapes; 0 truncations | Two strata: 39.71% (23 greedy roots, 481 w16 windows) vs 57.81% (50 raw roots, 18,274 windows) |
 
 `best_cost_at_h3` is the exact best cost reachable within the declared horizon
 `h = 3` under rule scope `e44_core_v1`; it is **not** an unconstrained optimum.

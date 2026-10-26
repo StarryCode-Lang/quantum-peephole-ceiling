@@ -1,6 +1,6 @@
 # science_boost — 科研体检与创新方向扫描索引
 
-十五轮扫描（2026-10-16 → 2026-10-26）的记录索引。
+十六轮扫描（2026-10-16 → 2026-10-27）的记录索引。
 
 **2026-10-24 清理**：第 1–9 轮的**叙述性主文件**（`*_innovation_scan.md`、
 `2026-10-22_backlog_closure.md`）与 3 个原始 arXiv 转储目录已删除——它们的结论在后续轮次被
@@ -34,10 +34,12 @@ git show a8d68e370:docs/review/science_boost/2026-10-22_innovation_scan.md
 | **10-25（第 13 轮）** | **引擎 successor-generation 缺陷**（"last location wins"）修复 + v16 重钉（93 精确 / 34 bounded / 1 resource-bounded）；E64 逃逸几何；E65 精确化（5 单元 RAM 永久封死）；E66 关键对；⊥ 可靠性 ALL_PASS；WCL 窗口剖面**接近零效应** | 有效；v14/v15 冻结不再字节可再生 | `2026-10-25_engine_successor_fix/`、`2026-10-25_escape_geometry/`、`2026-10-25_bounded_exactification/`、`2026-10-25_kbc_critical_pairs/`、`2026-10-25_perp_reliability/`、`2026-10-25_wcl_window_profile/`、`2026-10-25_full_scope_pilot/`、`2026-10-25_bv_lower_bound/` |
 | **10-26（第 15 轮）** | **E69 设计式推断**：有效 n 仅 122–144（deff 134–153），配对零反转，宽度 ≈ 6× 视野；**D3 分母口径错误**（96.8% 窗口在未优化根上，其逃逸 99.9% 是 depth-1） | **当前** | `2026-10-26_window_inference/`、`2026-10-26_literature_scan/` |
 | **10-26（第 16 轮）** | **P5 外部效度 + 绝对间隙标度**：E70 fragment-bench 旋转间隙（240 实例，聚合 g_reorder/g_total=0.710，129 达绝对最优，**否定普适标度律**——家族结构主导：对照族 0.0、diagonal/random_phase 0.97–1.0、iqp 0.87–0.96、linear_rotation n=64 骤降 0.50）；E71 MQT Bench 外部集（14/14，平均削减 7.43%）；fragment bench 账目修复（形式演化=向量异或，转置错误已修）；E65 分级契约重启（授权的内存分块） | 有效 | `2026-10-26_fragment_rotation_gap/`、`2026-10-26_external_circuits/`、`2026-10-25_fragment_bench/`、`2026-10-25_bounded_exactification/` |
+| **10-27（第 17 轮）** | **E72 跨度判据的可预测性**：76,236 窗口 **0 假阳性**、首次逃逸深度逐窗精确 99.995%，但覆盖率分层（raw 97.0% vs greedy 32.8%）；**E73 规则库完备性**：1,474 条规则中仅 14 条单比特、无 3 门单比特模式，2q Clifford 片段上 **30.25% 的可约 listing 达不到绝对最优**，`h·x·h·z` 合法动作数为 0；**主刊门改判**：完备性路线被 `2609.40106` 占住，改走「完备性价格」 | **当前** | `2026-10-27_span_law/`、`2026-10-27_library_completeness/`、`2026-10-27_literature_scan/` |
 
-主文件只保留三份：`2026-10-24_innovation_scan.md`（口径复核）、
+主文件只保留四份：`2026-10-24_innovation_scan.md`（口径复核）、
 `2026-10-25_innovation_scan.md`（绝对参照点）、
-`2026-10-26_innovation_scan.md`（**当前**：D3 + E69 + 文献改道）。
+`2026-10-26_innovation_scan.md`（D3 + E69 + 文献改道）、
+`2026-10-27_innovation_scan.md`（**当前**：判定边界 + 完备性价格）。
 round 13/14 的执行记录是 `2026-10-25_external_audit_round13.md`。
 
 ## 阅读顺序
@@ -70,7 +72,8 @@ round 13/14 的执行记录是 `2026-10-25_external_audit_round13.md`。
   "表示敏感性"在窗口层基本消失。
 
 **投稿层级**：PRX Quantum（跨度定律，需先修 D3）；Quantum（证书方法学，证据已齐）；
-主刊的唯一活门是 **P1-1：把固定规则库换成"尺寸内可证完备"的规则集（QSymb 路线）**。
+主刊的活门本轮**改判**：不再走"造完备规则集"（`2609.40106` 已占），
+改走 **「完备性价格」**——固定长度规则库必然不完备，且代价可精确测量（E73 首点 + E75 曲线）。
 
 ## 约束（十五轮一致）
 

@@ -1,0 +1,267 @@
+{
+  "alphabet_restricted_closure": {
+    "greedy_failures": 1250,
+    "greedy_failures_budget_exhausted": 0,
+    "greedy_failures_depth_capped_at_3": 38,
+    "greedy_failures_rescued_by_bounded_search": 394,
+    "greedy_failures_unresolved": 856,
+    "greedy_failures_with_zero_legal_actions": 114,
+    "members": 4681,
+    "rate_all": 0.732963,
+    "rate_reducible": 0.558304,
+    "rate_reducible_after_search": 0.697527,
+    "reaches_c_abs_all": 3431,
+    "reaches_c_abs_reducible": 1580,
+    "reducible_members": 2830
+  },
+  "as_of": "2026-10-27",
+  "classes": {
+    "c_abs_histogram": {
+      "0": 1,
+      "1": 8,
+      "2": 37,
+      "3": 121,
+      "4": 291
+    },
+    "count": 458,
+    "size_histogram": {
+      "1": 48,
+      "2": 81,
+      "3": 48,
+      "4": 46,
+      "5": 28,
+      "6": 44,
+      "7": 12,
+      "8": 40,
+      "9": 16,
+      "10": 4,
+      "12": 12,
+      "14": 2,
+      "16": 4,
+      "17": 12,
+      "21": 2,
+      "24": 14,
+      "26": 2,
+      "28": 5,
+      "30": 2,
+      "34": 8,
+      "37": 8,
+      "61": 4,
+      "72": 8,
+      "74": 3,
+      "76": 4,
+      "167": 1
+    }
+  },
+  "contract": {
+    "absolute_optimum": "min gate count over all enumerated listings of the same unitary",
+    "read_only": [
+      "data/",
+      "release/",
+      "docs/manuscript/"
+    ],
+    "rule_library": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+    "rule_library_sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295",
+    "scope": "full (1,488 rules) + pair_v1 + structural exchanges"
+  },
+  "experiment_id": "E73_LIBRARY_COMPLETENESS_2026_10_27",
+  "failure_examples": [
+    {
+      "bfs_nodes": 0,
+      "bfs_reaches": false,
+      "c_abs": 0,
+      "c_frag": 4,
+      "class_key": "+1.000000+0.000000;+0.00",
+      "cost": 4,
+      "experiment_id": "E73_LIBRARY_COMPLETENESS_2026_10_27",
+      "frag_gap": 4,
+      "frag_path": "",
+      "listing": "h0.x0.h0.z0"
+    },
+    {
+      "bfs_nodes": 0,
+      "bfs_reaches": false,
+      "c_abs": 0,
+      "c_frag": 4,
+      "class_key": "+1.000000+0.000000;+0.00",
+      "cost": 4,
+      "experiment_id": "E73_LIBRARY_COMPLETENESS_2026_10_27",
+      "frag_gap": 4,
+      "frag_path": "",
+      "listing": "h0.z0.h0.x0"
+    },
+    {
+      "bfs_nodes": 0,
+      "bfs_reaches": false,
+      "c_abs": 0,
+      "c_frag": 4,
+      "class_key": "+1.000000+0.000000;+0.00",
+      "cost": 4,
+      "experiment_id": "E73_LIBRARY_COMPLETENESS_2026_10_27",
+      "frag_gap": 4,
+      "frag_path": "",
+      "listing": "h1.x1.h1.z1"
+    },
+    {
+      "bfs_nodes": 0,
+      "bfs_reaches": false,
+      "c_abs": 0,
+      "c_frag": 4,
+      "class_key": "+1.000000+0.000000;+0.00",
+      "cost": 4,
+      "experiment_id": "E73_LIBRARY_COMPLETENESS_2026_10_27",
+      "frag_gap": 4,
+      "frag_path": "",
+      "listing": "h1.z1.h1.x1"
+    },
+    {
+      "bfs_nodes": 0,
+      "bfs_reaches": false,
+      "c_abs": 0,
+      "c_frag": 4,
+      "class_key": "+1.000000+0.000000;+0.00",
+      "cost": 4,
+      "experiment_id": "E73_LIBRARY_COMPLETENESS_2026_10_27",
+      "frag_gap": 4,
+      "frag_path": "",
+      "listing": "x0.h0.z0.h0"
+    },
+    {
+      "bfs_nodes": 0,
+      "bfs_reaches": false,
+      "c_abs": 0,
+      "c_frag": 4,
+      "class_key": "+1.000000+0.000000;+0.00",
+      "cost": 4,
+      "experiment_id": "E73_LIBRARY_COMPLETENESS_2026_10_27",
+      "frag_gap": 4,
+      "frag_path": "",
+      "listing": "x0.z0.x0.z0"
+    },
+    {
+      "bfs_nodes": 0,
+      "bfs_reaches": false,
+      "c_abs": 0,
+      "c_frag": 4,
+      "class_key": "+1.000000+0.000000;+0.00",
+      "cost": 4,
+      "experiment_id": "E73_LIBRARY_COMPLETENESS_2026_10_27",
+      "frag_gap": 4,
+      "frag_path": "",
+      "listing": "x1.h1.z1.h1"
+    },
+    {
+      "bfs_nodes": 0,
+      "bfs_reaches": false,
+      "c_abs": 0,
+      "c_frag": 4,
+      "class_key": "+1.000000+0.000000;+0.00",
+      "cost": 4,
+      "experiment_id": "E73_LIBRARY_COMPLETENESS_2026_10_27",
+      "frag_gap": 4,
+      "frag_path": "",
+      "listing": "x1.z1.x1.z1"
+    },
+    {
+      "bfs_nodes": 0,
+      "bfs_reaches": false,
+      "c_abs": 0,
+      "c_frag": 4,
+      "class_key": "+1.000000+0.000000;+0.00",
+      "cost": 4,
+      "experiment_id": "E73_LIBRARY_COMPLETENESS_2026_10_27",
+      "frag_gap": 4,
+      "frag_path": "",
+      "listing": "z0.h0.x0.h0"
+    },
+    {
+      "bfs_nodes": 0,
+      "bfs_reaches": false,
+      "c_abs": 0,
+      "c_frag": 4,
+      "class_key": "+1.000000+0.000000;+0.00",
+      "cost": 4,
+      "experiment_id": "E73_LIBRARY_COMPLETENESS_2026_10_27",
+      "frag_gap": 4,
+      "frag_path": "",
+      "listing": "z0.x0.z0.x0"
+    }
+  ],
+  "failures": 856,
+  "frag_gap_histogram": {
+    "0": 3431,
+    "1": 502,
+    "2": 686,
+    "3": 24,
+    "4": 38
+  },
+  "fragment": {
+    "alphabet": [
+      "cx",
+      "h",
+      "x",
+      "z"
+    ],
+    "generators": [
+      "h0",
+      "h1",
+      "x0",
+      "x1",
+      "z0",
+      "z1",
+      "cx01",
+      "cx10"
+    ],
+    "listings": 4681,
+    "max_length": 4,
+    "num_qubits": 2
+  },
+  "library_structure": {
+    "gate_names_in_sources": [
+      "cx",
+      "h",
+      "rz",
+      "x"
+    ],
+    "one_qubit_rules": 14,
+    "quartz_rules": 1474,
+    "source_length_by_arity": {
+      "1": {
+        "2": 2,
+        "4": 8,
+        "5": 4
+      },
+      "2": {
+        "2": 10,
+        "3": 32,
+        "4": 97,
+        "5": 209
+      },
+      "3": {
+        "0": 12,
+        "2": 24,
+        "3": 46,
+        "4": 260,
+        "5": 770
+      }
+    },
+    "source_length_histogram": {
+      "0": 12,
+      "2": 36,
+      "3": 78,
+      "4": 365,
+      "5": 983
+    }
+  },
+  "open_gap_histogram": {
+    "0": 3431,
+    "1": 502,
+    "2": 686,
+    "3": 24,
+    "4": 38
+  },
+  "unrestricted_closure": {
+    "members_below_fragment_optimum": 0,
+    "note": "open_gap < 0 means the library rewrote the circuit into a cheaper listing outside the {h,x,z,cx} alphabet; the fragment optimum is therefore not the absolute optimum over all gate sets, only the minimum inside the alphabet."
+  }
+}

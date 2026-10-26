@@ -65,6 +65,9 @@ and carries an `EXPERIMENT_ID` plus a contract block in its docstring.
 | `verify_perp_reliability.py` | P6 (2026-10-25) | Matrix proof of the nine ⊥ exchange rules + negative controls (exact sympy, engine families imported). |
 | `e68_literature_scan.py` | E68 (2026-10-26) | arXiv Atom + GitHub REST + Crossref/DataCite sweep. Writes a dated package with per-file SHA-256; no synthesis, no LLM. |
 | `e69_window_inference.py` | E69 (2026-10-26) | Design-based inference for the frozen v16 window landscape: denominator reconciliation, cluster bootstrap, ICC/design effect, paired-by-source contrasts, and the root-kind stratification. Closes WL-4 and surfaces D3. |
+| `e72_span_law.py` | E72 (2026-10-27) | Search-free span criterion vs the frozen E46 window panel: 76,236 rows, 0 false positives, exact first-escape depth on 38,006/38,008; strata split shows recall 97.0% (raw roots) vs 32.8% (greedy fixed points). |
+| `e73_library_completeness.py` | E73 (2026-10-27) | Rule-library completeness on the 2-qubit Clifford fragment (4,681 listings / 460 unitary classes, absolute optimum by enumeration): 30.25% of reducible listings cannot reach the optimum; 114 are rewrite-isolated (zero legal actions). |
+| `e74_literature_scan.py` | E74 (2026-10-27) | Round-17 arXiv + GitHub sweep with **fielded** `abs:"..." AND abs:"..."` queries (221 records). Use this form, not `e68`'s `all:` wrapper -- the wrapper degenerates into a bag-of-words AND and drowns the relevant hits. |
 | `round12_literature_scan.py` | Round 12 literature + ecosystem sweep | 20 structured arXiv queries + authenticated GitHub snapshot. Writes a dated package; network failures are logged, never papered over. |
 | `build_round12_evidence_manifest.py` | Round 12 packaging | Adds a self-describing SHA-256 `MANIFEST.json` to each round-12 evidence package without touching the frozen release chain. |
 

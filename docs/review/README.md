@@ -3,7 +3,7 @@
 本目录是**审计与评审留痕**：每一份文件对应一次可追溯的判断（或一次被推翻的判断）。
 文件按日期或实验号命名，**不覆盖、不改写**；结论被推翻时在新文件里写明推翻关系。
 
-共 63 项。`science_boost/` 是独立的十二轮扫描子目录，索引见其 `README.md`。
+共 64 项。`science_boost/` 是独立的十六轮扫描子目录，索引见其 `README.md`。
 
 ## 文件清单
 
@@ -23,6 +23,7 @@
 | `heldout_v2_protocol_2026-08-11.md` | md | Held-out v2 sealed-input protocol |
 | `data_version_semantics_2026-10-26.md` | md | v12–v16 data-version semantics, moved out of `data/DATA_CANONICAL.md` so the bound file keeps its pinned hash |
 | `science_boost/2026-10-26_innovation_scan.md` | md | Round 15: D3 window-denominator defect, E69 design-based inference, literature redirection |
+| `science_boost/2026-10-27_innovation_scan.md` | md | Round 17: decidability frontier (E72, 0 false positives in 76,236 windows), rule-library completeness price (E73, 30.25%), main-journal gate re-routed |
 | `manuscript_correction_patch_2026-10-22.md` | md | Manuscript correction patch — 2026-10-22 |
 | `metric_audit_ledger_2026-08-11.csv` | csv | 数据/清单文件 |
 | `metric_audit_ledger_2026-08-24.csv` | csv | 数据/清单文件 |
