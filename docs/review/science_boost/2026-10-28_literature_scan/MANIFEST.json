@@ -1,0 +1,18 @@
+{
+  "experiment_id": "E76_LITERATURE_SCAN_2026_10_28",
+  "started": "2026-10-27T18:11:07+00:00",
+  "finished": "2026-10-27T18:12:47+00:00",
+  "channels": {
+    "arxiv_atom_api": "OK",
+    "github_rest": "OK (authenticated)",
+    "tavily": "UNAVAILABLE (no API key, package absent)",
+    "exa": "UNAVAILABLE (no MCP server configured)",
+    "multi-search-engine": "UNAVAILABLE (no search API key)",
+    "arxiv-reader": "UNAVAILABLE (no LLM key)",
+    "citation-manager": "UNAVAILABLE (no Crossref dependency); replaced by text-coverage audit"
+  },
+  "min_year": 2023,
+  "queries": 24,
+  "unique_records": 246,
+  "repos": 10
+}

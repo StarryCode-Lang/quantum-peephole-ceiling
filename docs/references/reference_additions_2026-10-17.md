@@ -197,3 +197,38 @@ citation.
 | tzap | v0.8.0 (2026-10-11). |
 | MQT QCEC | v3.11.0 (2026-10-09), last push 2026-10-24. |
 | Quanto / VOQC | Both queried paths return 404; correct repository paths still unidentified. |
+
+## §G Round 18 additions (2026-10-28)
+
+Retargeted at the round-18 subject: **the price of a fixed-length rule library** (E75) and the
+order/content decidability frontier (Thm 5/6, `docs/theory/decidability_frontier_2026-10-28.md`).
+Source: E76 scan (`docs/review/science_boost/2026-10-28_literature_scan/`, 24 fielded queries,
+246 unique records, 0 failed queries).
+
+| # | Reference | Added | Why it matters |
+|---|---|---|---|
+| **[129]** | "A Complete and Natural Rule Set for Multi-Qutrit Clifford Circuits," arXiv:2508.14670 (2025-08-20) | 2026-10-28 | **Precursor of [120] (2609.40106), and a date correction.** The complete multi-qutrit Clifford rule set was on arXiv in **August 2025**, not September 2026. Any sentence of the form "completeness was only recently settled" must use 2025-08. Also supplies the normal-form technique (Selinger's normal form, qutrit generalisation) that a width-$\ge2$ upper bound for Thm 6 would need. |
+| **[130]** | "Cutoff Theorems for the Equivalence of Parameterized Quantum Circuits (Extended)," arXiv:2506.20985 (2025-06-26) | 2026-10-28 | **The closest methodological relative to Thm 6 and the most likely referee objection.** They prove a *cutoff* exists for parameterised-circuit equivalence over cyclotomic gate sets: beyond a bounded length the check truncates. Difference that must be stated in one sentence: a cutoff bounds the *decision procedure for equivalence*; E75 measures the *reachability gap of a rewrite library*. Related object, different quantity — but a reviewer who knows this paper will ask, so it must be cited. |
+| **[131]** | "Automating quantum circuit optimization with AI agents," arXiv:2610.31352 (2026-10-22) | 2026-10-28 | Fourth 2026 entry in the "agentic optimiser" line (after [125]/2610.23832, 2610.22367, [132]/2603.18477). Strengthens the positioning: the project is not an optimiser, it is the **measurement of what any optimiser with a fixed rule library cannot reach**. |
+| **[132]** | "Leveraging Large Language Models for Generalizing Peephole Optimizations," arXiv:2603.18477 (2026-03-19) | 2026-10-28 | Directly on the "missing rule" gap that E73/E75 quantify. Their goal is to *generate* the general rule; E75 supplies the **value** of doing so (30.25% → 9.12% → 0.00% as the pattern length grows). This is the natural citation for "our price curve is the benchmark for rule-generation methods". |
+| **[133]** | "Completeness for Fault Equivalence of Clifford ZX Diagrams," arXiv:2510.08477 (2025-10-09) | 2026-10-28 | Completeness in the ZX setting with a *fault* semantics. Third independent completeness result (with [120] and [121]); confirms completeness is occupied territory in three separate communities and that the price/measurement framing is the only open axis. |
+
+> **No new entry needed for the nearest neighbour of Thm 6**: the reversible-logic completeness
+> paper is already **[121]** (2607.19059, 2026-07-21). It is the paper that forces the framing
+> "we do not claim completeness, we measure its price", and it was already in the catalogue
+> before this round; round 18 only *uses* it.
+
+### G.1 Ecosystem snapshot (2026-10-28, E76)
+
+| Repo | Latest | Date | Reading |
+|---|---|---|---|
+| Qiskit/qiskit | **2.6.1** | 2026-10-22 | unchanged since round 17; last push 2026-10-27 |
+| Quantinuum/tket | v2.18.5 | 2026-10-08 | stable |
+| quantum-compiler/quartz | v0.3.2 | **2025-12-10** | dormant 10 months; the 1,474-rule provenance keeps ageing |
+| zxcalc/pyzx | v0.10.7 | 2026-10-01 | active |
+| BQSKit/bqskit | 1.2.1 | 2025-08-30 | static, still the 12/14 falsifier |
+| munich-quantum-toolkit/qcec | v3.11.0 | 2026-10-09 | usable equivalence oracle (with the sysconfig shim) |
+| munich-quantum-toolkit/bench | v2.3.0 | 2026-09-12 | external benchmark used by E71 |
+| qqq-wisc/tzap | v0.8.0 | 2026-10-11 | active, still not in the ceiling panel |
+| psg-mit/quanto | **404** | — | path unresolved for the fourth consecutive round; **not invented** |
+| unitaryfund/mitiq | v1.1.0 | 2026-09-04 | unchanged |

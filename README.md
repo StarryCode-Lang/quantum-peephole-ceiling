@@ -31,8 +31,15 @@ listing exceeds the baseline gate budget, 57.81 percent of 18,274 windows
 escape but 97.9 percent of those escapes are depth one. A search-free span
 criterion (E72, 2026-10-27) predicts every one of these 76,236 outcomes with
 zero false positives and an exact first-escape depth on 99.995 percent of
-them; the residual is a rule-library content class, quantified in
-`docs/review/science_boost/2026-10-27_innovation_scan.md`.
+them; the residual is a rule-library content class, and after Holm-Bonferroni
+control (E77, 2026-10-28) it is **family-specific, not structure-generic** —
+on greedy fixed points IQP and Oracle windows carry significantly more of it
+and RandomClifford/UCCSD significantly less. The price of that incompleteness
+is thresholded, not diffuse (E75, 2026-10-28): on enumerable Clifford
+fragments, length-2 rules buy exactly 0.00 percent, and the gap collapses
+30.25% → 9.12% → 0.00% as the maximal pattern length grows 2 → 3 → 4, with
+the 1-qubit Clifford threshold at `L* = 4` against listing length `m = 8`
+(`docs/theory/decidability_frontier_2026-10-28.md`, Theorems 5-6).
 
 ## What the project does
 
@@ -69,6 +76,8 @@ The project has three connected research layers:
 | v15 landscape integration | 128/128 classified; 94 exact `best_cost_at_h3`; 34 witness-bounded | Zero unclassified cells; zero replay failures |
 | v16 landscape integration | 93 exact `best_cost_at_h3`; 34 witness-bounded; 1 resource-bounded | 127 classified + 1 resource tier (engine repair re-pin) |
 | v16 E46 window landscape | 76,236 windows; 39,572 certified escapes; 0 truncations | Two strata: 39.71% (23 greedy roots, 481 w16 windows) vs 57.81% (50 raw roots, 18,274 windows) |
+| E75 completeness price | 30.25% → 9.12% → 0.00% as maximal pattern length grows 2 → 3 → 4; 1-qubit Clifford threshold `L* = 4` | Fragment-level only (enumerable optima); width ≥ 3 unmeasured |
+| E77 family residual | Holm-controlled residual is family-specific (IQP/Oracle high; RandomClifford/UCCSD low) | Blanket "structured families" claim withdrawn |
 
 `best_cost_at_h3` is the exact best cost reachable within the declared horizon
 `h = 3` under rule scope `e44_core_v1`; it is **not** an unconstrained optimum.

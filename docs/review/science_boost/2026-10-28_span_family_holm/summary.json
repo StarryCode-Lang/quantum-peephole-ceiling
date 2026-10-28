@@ -1,0 +1,86 @@
+{
+  "as_of": "2026-10-28",
+  "contract": {
+    "alpha": 0.05,
+    "input": "docs/review/science_boost/2026-10-27_span_law/window_predictions.csv",
+    "input_sha256": "45e8d0d5fbac81b7c730def7c130bee55a05d60a6ac31508789885341d71ab6a",
+    "multiplicity": "Holm-Bonferroni across families within each stratum",
+    "read_only": [
+      "data/",
+      "release/",
+      "docs/manuscript/"
+    ],
+    "test": "Fisher exact, two-sided, family vs. rest of stratum"
+  },
+  "experiment_id": "E77_SPAN_FAMILY_HOLM_2026_10_28",
+  "purpose": "apply Holm-Bonferroni to E72's per-family content-class residual, so that 'the residual concentrates in structured families' is either supported after multiplicity control or withdrawn",
+  "strata": {
+    "ALL": {
+      "actual_escapes": 39572,
+      "families_tested": 11,
+      "holm_significant_less_residual": [
+        "VQE",
+        "HaarRandom",
+        "QAOA"
+      ],
+      "holm_significant_more_residual": [
+        "QuantumWalk",
+        "UCCSD_inspired",
+        "Grover",
+        "Adder",
+        "IQP",
+        "Oracle"
+      ],
+      "min_p_holm": 0.0,
+      "overall_fn_rate": 0.039523,
+      "rows": 76236,
+      "stratum": "ALL"
+    },
+    "GREEDY_FIXED_POINT": {
+      "actual_escapes": 592,
+      "families_tested": 4,
+      "holm_significant_less_residual": [
+        "RandomClifford",
+        "UCCSD_inspired"
+      ],
+      "holm_significant_more_residual": [
+        "IQP",
+        "Oracle"
+      ],
+      "min_p_holm": 1.4340577844731566e-42,
+      "overall_fn_rate": 0.672297,
+      "rows": 2456,
+      "stratum": "GREEDY_FIXED_POINT"
+    },
+    "RAW_NORMALIZED_OVER_BASELINE_BUDGET": {
+      "actual_escapes": 38980,
+      "families_tested": 8,
+      "holm_significant_less_residual": [
+        "VQE",
+        "HaarRandom",
+        "QAOA"
+      ],
+      "holm_significant_more_residual": [
+        "QuantumWalk",
+        "UCCSD_inspired",
+        "Grover",
+        "Adder"
+      ],
+      "min_p_holm": 1.87477759102071e-216,
+      "overall_fn_rate": 0.029913,
+      "rows": 73780,
+      "stratum": "RAW_NORMALIZED_OVER_BASELINE_BUDGET"
+    }
+  },
+  "verdict": {
+    "greedy_stratum_less_residual": [
+      "RandomClifford",
+      "UCCSD_inspired"
+    ],
+    "greedy_stratum_more_residual": [
+      "IQP",
+      "Oracle"
+    ],
+    "statement": "the blanket claim 'the content-class residual concentrates in structured families' is NOT supported: after Holm, UCCSD_inspired and RandomClifford show significantly *less* residual than the stratum average on the greedy fixed points, while IQP and Oracle show significantly more. The defensible claim is family-specific, not structure-generic."
+  }
+}

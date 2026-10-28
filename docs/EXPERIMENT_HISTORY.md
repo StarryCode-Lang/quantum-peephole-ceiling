@@ -90,6 +90,40 @@ denominator with the other stratum's qualifier and is withdrawn
 Only the first escape certificate per (source, width, horizon) is stored; the
 deterministic runner regenerates the complete witness set on demand.
 
+## Round 18 (2026-10-28): completeness price curve and multiplicity control
+
+Three review-grade panels were added; `data/`, `release/`, and
+`docs/manuscript/` were not touched. E75 parameterises the rule library by
+maximal source-pattern length on fragments where the absolute optimum is
+enumerable, and turns E73's single 30.25% point into a curve: on the 2-qubit
+Clifford fragment the gap is unchanged by adding every length-2 rule
+(exactly 0.00 gain — the pair rule already saturates that class), falls to
+9.12% with all length-3 patterns, and reaches exactly 0.00% with all
+length-4 patterns; on the 1-qubit Clifford fragment the completeness
+threshold is `L* = 4` against listing length `m = 8`, and below the
+threshold there are two regimes with no middle — P(2) rises with instance
+length while P(3) saturates and P(4) vanishes. E75 also found a
+measurement defect in E73's unitary-class key: the legacy argmax-pivot key
+splits tied-pivot Clifford unitaries across classes; the fixed
+phase-invariant key merges 12 classes to 8 on the 1-qubit fragment, and the
+E73 30.25% figure reproduces exactly under the legacy key, so the earlier
+result stands (regression-gated in the E75 summary).
+
+E77 applies Fisher exact tests per family and Holm-Bonferroni across
+families to E72's per-family content-class residual. The blanket claim that
+the residual concentrates in structured families is withdrawn: on the
+greedy fixed-point stratum, IQP and Oracle carry significantly more residual
+than the stratum average and RandomClifford and UCCSD significantly less —
+the defensible claim is family-specific. E76 retargeted the fielded
+literature and ecosystem scan at the price-of-completeness subject
+(24 fielded arXiv queries, 246 unique records, 0 failed queries) and added
+references [129]-[133] to the reference-additions register. The theory
+consolidation — Theorem 5 (order/content decidability frontier) and
+Theorem 6 (local-rigidity lower bound on the price) — is
+`docs/theory/decidability_frontier_2026-10-28.md`; the mapping of nine
+silent-failure mechanisms to fail-closed certificate fields is
+`docs/review/certificate_failure_mode_map_2026-10-28.md`.
+
 ## Superseded interpretations
 
 - The original phase-transition hypothesis is refuted by the data.

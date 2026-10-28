@@ -96,3 +96,16 @@ The operational consequence: `best_cost_at_h3` is horizon-relative *and*
 library-relative, and the library-relative gap now has a number (30.25% at
 2 qubits, 4 gates) rather than a caveat. Full review:
 `docs/review/science_boost/2026-10-27_innovation_scan.md`.
+
+## Round-18 addendum (2026-10-28)
+
+Added by the science-boost review round of 2026-10-28. No earlier row is
+rewritten; `data/`, `release/`, and `docs/manuscript/` are untouched.
+
+| Area | Round-17 statement | Round-18 measured value | Disposition |
+|---|---|---|---|
+| Content-class residual | E72: recall splits by stratum (97.0% raw / 32.8% greedy); residual read as a rule-library content class | E77 (Fisher exact per family + Holm-Bonferroni): the blanket "residual concentrates in structured families" claim is **not supported** — on greedy fixed points IQP and Oracle carry significantly *more* residual than the stratum average, RandomClifford and UCCSD significantly *less* | Claim narrowed to family-specific; `docs/review/science_boost/2026-10-28_span_family_holm/` |
+| Completeness price | E73: single point, 30.25% at 2 qubits / 4 gates | E75 curve on enumerable fragments: the price is **thresholded, not diffuse** — every length-2 rule buys exactly 0.00 (pair rule already saturates that class); +all length-3 → 9.12%; +all length-4 → 0.00% (2-qubit fragment). 1-qubit Clifford: `L* = 4 ≪ m = 8`, with two regimes and no middle (P(2) rises with instance length, P(3) saturates, P(4) = 0) | New measured caveat in threshold form; `docs/review/science_boost/2026-10-28_completeness_price/` |
+| Theory consolidation | Theorems 1/4 scattered across two theory documents | Theorem 5 (order/content decidability frontier) and Theorem 6 (local-rigidity lower bound on the price) stated and proved in one place, with their E72/E75 empirical support and explicit non-claims | `docs/theory/decidability_frontier_2026-10-28.md` |
+| Certificate semantics | Per-action witness + replay + engine hash chain justified internally | Nine silent-failure mechanisms (M1-M9) each pinned to a fail-closed certificate field, with the experiment that actually caught each one (three of them were this project's own defects) | `docs/review/certificate_failure_mode_map_2026-10-28.md` |
+| Measurement integrity | — | E75 found and fixed a **unitary-class key defect**: the legacy argmax pivot key splits tied-pivot Clifford unitaries across classes (1-qubit: 12 classes → 8; measured price 60.21% → 59.25%); E73's 30.25% reproduces exactly under the legacy key | Regression-gated: `legacy_key_reproduces_30_25pct: PASS` in the E75 summary |
