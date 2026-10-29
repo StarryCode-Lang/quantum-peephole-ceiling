@@ -1,16 +1,16 @@
 # scripts/ index
 
-89 scripts. The naming is intentionally verb-first: the prefix tells you what the script
+119 scripts. The naming is intentionally verb-first: the prefix tells you what the script
 *does*, not which experiment it belongs to. Read this file before adding a new one.
 
 ## Naming convention
 
 | Prefix | Meaning | Count |
 |---|---|---|
-| `verify_*` | Independent checker for one frozen evidence package. Exits non-zero on mismatch. These are the reproducibility chain — do not delete. | 27 |
-| `generate_*` | Builds a verdict, manifest, or disposition JSON from frozen receipts. | 12 |
-| `audit_*` | Read-only audit that writes a CSV/JSON report and mutates nothing. | 11 |
-| `e4x_*` / `e5x_*` | Experiment scripts introduced by the review rounds (E47–E63). | 19 |
+| `verify_*` | Independent checker for one frozen evidence package. Exits non-zero on mismatch. These are the reproducibility chain — do not delete. | 32 |
+| `generate_*` | Builds a verdict, manifest, or disposition JSON from frozen receipts. | 15 |
+| `audit_*` | Read-only audit that writes a CSV/JSON report and mutates nothing. | 12 |
+| `e4x_*` / `e5x_*` / `e7x_*` / `e8x_*` | Experiment scripts introduced by the review rounds (E47–E83). | 34 |
 | `build_*` | Packaging (restore capsules, readiness packages, evidence manifests). | 3 |
 | `reproduce_*` / `regenerate_*` | Full-corpus replay entry points. | 2 |
 
@@ -67,6 +67,12 @@ and carries an `EXPERIMENT_ID` plus a contract block in its docstring.
 | `e69_window_inference.py` | E69 (2026-10-26) | Design-based inference for the frozen v16 window landscape: denominator reconciliation, cluster bootstrap, ICC/design effect, paired-by-source contrasts, and the root-kind stratification. Closes WL-4 and surfaces D3. |
 | `e72_span_law.py` | E72 (2026-10-27) | Search-free span criterion vs the frozen E46 window panel: 76,236 rows, 0 false positives, exact first-escape depth on 38,006/38,008; strata split shows recall 97.0% (raw roots) vs 32.8% (greedy fixed points). |
 | `e73_library_completeness.py` | E73 (2026-10-27) | Rule-library completeness on the 2-qubit Clifford fragment (4,681 listings / 460 unitary classes, absolute optimum by enumeration): 30.25% of reducible listings cannot reach the optimum; 114 are rewrite-isolated (zero legal actions). |
+| `e78_width_threshold.py` | E78 (2026-10-29) | Completeness-threshold experiment: widths 2 and 3, listings m = 5 and 6, plus a primitive-identity census. Result: `L* = m`, not a constant. Also repairs E75's alphabet closure (name-based -> instance-based). |
+| `e80_rule_length_demand.py` | E80 (2026-10-29) | (A) the genuine 24-element one-qubit Clifford group on `{h,s,x,z}`: `L* = 5`, library price 82.87%. (B) action-type census of E72's 1,564 content-class FN rows: 954 are a **criterion implementation gap** (parametric rotation pairs), 610 genuinely need depth >= 2. |
+| `e81_ladder_m7.py` | E81 (2026-10-29) | The m=7 ladder point with a **two-pass streaming fragment** (E75's Fragment materialises every listing and died with MemoryError at 8^7). Reproduces E78's m=6 exactly before running m=7. |
+| `e79_literature_scan.py` | E79 (2026-10-29) | Round-19 arXiv + GitHub sweep (18 fielded queries, 185 records, 108 from 2026). |
+| `e82_diameter_bound.py` | E82 (2026-10-30) | **Exact Cayley distance oracle** on the projective Clifford tableau, plus a locally-rigid word census. Proves `L*(m) <= min(m, D+1)` empirically and refutes the unbounded-ladder reading of E78/E81: `W2` has `D = 7` and `L*(8) = 8`; `Q1` has `D = 4` and `L* = 5`. Reproduces E78's m=6 gap-1 count (4,664) and E81's m=7 count (7,056) bit-exactly, and matches a qiskit `Clifford` BFS bit-exactly. Also censuses the shipped library: max rule source length **5**, so it is 3 levels short of the `W2` threshold. |
+| `e83_literature_scan.py` | E83 (2026-10-30) | Round-20 sweep: 22 fielded arXiv queries (343 records, 183 from 2026, latest 2026-10-27) + 11 ecosystem repos. Coverage check excludes earlier scans' own dumps. GitHub REST returned 403 this round (unauthenticated quota). |
 | `e74_literature_scan.py` | E74 (2026-10-27) | Round-17 arXiv + GitHub sweep with **fielded** `abs:"..." AND abs:"..."` queries (221 records). Use this form, not `e68`'s `all:` wrapper -- the wrapper degenerates into a bag-of-words AND and drowns the relevant hits. |
 | `round12_literature_scan.py` | Round 12 literature + ecosystem sweep | 20 structured arXiv queries + authenticated GitHub snapshot. Writes a dated package; network failures are logged, never papered over. |
 | `build_round12_evidence_manifest.py` | Round 12 packaging | Adds a self-describing SHA-256 `MANIFEST.json` to each round-12 evidence package without touching the frozen release chain. |
@@ -75,6 +81,7 @@ and carries an `EXPERIMENT_ID` plus a contract block in its docstring.
 
 | Script | Purpose |
 |---|---|
+| `audit_frozen_bytes.py` | **Use this instead of `git status` to prove frozen data is untouched.** Hashes every `(path, sha256)` pair a manifest declares and classifies MATCH / CRLF_DRIFT / REAL_DRIFT / MISSING. Round 19 found a 6,721-byte CRLF drift that `git status` reported as clean. |
 | `audit_panel_baseline_inflation.py` | Normalisation inflation per source (E48 → D1). |
 | `census_rule_library.py` | Rule-library census: 1,474 rules, Δ histogram, reverse closure. |
 | `derive_v15_certified_lower_bounds.py` | Two-sided intervals for the 34 witness-bounded cells. |

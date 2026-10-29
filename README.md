@@ -78,6 +78,7 @@ The project has three connected research layers:
 | v16 E46 window landscape | 76,236 windows; 39,572 certified escapes; 0 truncations | Two strata: 39.71% (23 greedy roots, 481 w16 windows) vs 57.81% (50 raw roots, 18,274 windows) |
 | E75 completeness price | 30.25% → 9.12% → 0.00% as maximal pattern length grows 2 → 3 → 4; 1-qubit Clifford threshold `L* = 4` | Fragment-level only (enumerable optima); width ≥ 3 unmeasured |
 | E77 family residual | Holm-controlled residual is family-specific (IQP/Oracle high; RandomClifford/UCCSD low) | Blanket "structured families" claim withdrawn |
+| E82 diameter bound (`T-9`) | The completeness threshold is `L*(m) <= min(m, D+1)` for a fragment of Cayley diameter `D`; both measured fragments attain it (`D = 7` → `L*(8) = 8`; `D = 4` → `L* = 5`) | Fragment-level and **capped**, so the "unbounded ladder" reading of E78/E81 is withdrawn. The shipped 1,488-rule library has maximum source length **5**, three levels below the 2-qubit Clifford threshold |
 
 `best_cost_at_h3` is the exact best cost reachable within the declared horizon
 `h = 3` under rule scope `e44_core_v1`; it is **not** an unconstrained optimum.
@@ -86,10 +87,15 @@ same sources (see `docs/theory/exposability_criterion_2026-10-23.md`), and
 98.2% of that extra reduction is single-qubit gate merging (see
 `docs/review/science_boost/2026-10-24_innovation_scan.md`).
 
-The repository is engineering-verified but the v15 scientific verdict remains
+The repository is engineering-verified but the v16 scientific verdict remains
 `NOT_READY_FOR_PAPER` because enumerated landscape quantities for 34 long-listing
 cells and external execution gates have not been established. Paper writing and
 GitHub Actions are outside the current project scope.
+
+`best_cost_at_h3` is horizon-relative *and* library-relative, and the second
+qualifier now has a theorem behind it: a fixed-length rewrite library cannot be
+complete beyond the fragment's Cayley diameter (`T-9`,
+`docs/theory/diameter_bound_2026-10-30.md`).
 
 ## Quick start
 

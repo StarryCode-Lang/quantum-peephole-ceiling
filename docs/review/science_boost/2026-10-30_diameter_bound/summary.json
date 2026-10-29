@@ -1,0 +1,1003 @@
+{
+  "as_of": "2026-10-30",
+  "contract": {
+    "algorithm": "exact BFS on the projective Clifford tableau (A, s); independent of E78/E81's word enumeration, cross-checked against qiskit Clifford",
+    "cost_model": "fragment gate count == Cayley word length; the group is the complete cost model",
+    "fragments": {
+      "Q1": {
+        "generators": [
+          "h0",
+          "s0",
+          "x0",
+          "z0"
+        ],
+        "matches": "E80 part_a (24-element Clifford)",
+        "qubits": 1
+      },
+      "W2": {
+        "generators": [
+          "h0",
+          "x0",
+          "z0",
+          "h1",
+          "x1",
+          "z1",
+          "cx01",
+          "cx10"
+        ],
+        "matches": "E78 part_a_width2 / E81 m=7",
+        "qubits": 2
+      }
+    },
+    "read_only": [
+      "data/",
+      "release/",
+      "docs/manuscript/"
+    ],
+    "rule_library": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+    "rule_library_sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295"
+  },
+  "experiment_id": "E82_DIAMETER_BOUND_2026_10_30",
+  "fragments": {
+    "Q1": {
+      "diameter": 4,
+      "distance_histogram": {
+        "0": 1,
+        "1": 4,
+        "2": 8,
+        "3": 9,
+        "4": 2
+      },
+      "group_order": 24,
+      "l_star_bound": 5,
+      "qiskit_histogram": {
+        "0": 1,
+        "1": 4,
+        "2": 8,
+        "3": 9,
+        "4": 2
+      }
+    },
+    "W2": {
+      "cumulative_classes": {
+        "0": 1,
+        "1": 9,
+        "2": 46,
+        "3": 167,
+        "4": 458,
+        "5": 876,
+        "6": 1129,
+        "7": 1152
+      },
+      "diameter": 7,
+      "distance_histogram": {
+        "0": 1,
+        "1": 8,
+        "2": 37,
+        "3": 121,
+        "4": 291,
+        "5": 418,
+        "6": 253,
+        "7": 23
+      },
+      "group_order": 1152,
+      "l_star_bound": 8,
+      "qiskit_histogram": {
+        "0": 1,
+        "1": 8,
+        "2": 37,
+        "3": 121,
+        "4": 291,
+        "5": 418,
+        "6": 253,
+        "7": 23
+      }
+    }
+  },
+  "ladder": [
+    {
+      "geodesic_words_all_windows": 8,
+      "in_trivial_regime": true,
+      "l_star_upper_bound": 1,
+      "locally_rigid_gap1": 0,
+      "locally_rigid_with_gap": 0,
+      "locally_rigid_words": 8,
+      "m": 1,
+      "price_of_length_m_minus_1_library": 0.0,
+      "residue_examples": [],
+      "total_words": 8
+    },
+    {
+      "geodesic_words_all_windows": 56,
+      "in_trivial_regime": true,
+      "l_star_upper_bound": 2,
+      "locally_rigid_gap1": 0,
+      "locally_rigid_with_gap": 8,
+      "locally_rigid_words": 64,
+      "m": 2,
+      "price_of_length_m_minus_1_library": 0.125,
+      "residue_examples": [
+        {
+          "distance": 0,
+          "word": [
+            "h0",
+            "h0"
+          ]
+        },
+        {
+          "distance": 0,
+          "word": [
+            "x0",
+            "x0"
+          ]
+        },
+        {
+          "distance": 0,
+          "word": [
+            "z0",
+            "z0"
+          ]
+        }
+      ],
+      "total_words": 64
+    },
+    {
+      "geodesic_words_all_windows": 322,
+      "in_trivial_regime": true,
+      "l_star_upper_bound": 3,
+      "locally_rigid_gap1": 32,
+      "locally_rigid_with_gap": 70,
+      "locally_rigid_words": 392,
+      "m": 3,
+      "price_of_length_m_minus_1_library": 0.13671875,
+      "residue_examples": [
+        {
+          "distance": 1,
+          "word": [
+            "h0",
+            "x0",
+            "h0"
+          ]
+        },
+        {
+          "distance": 1,
+          "word": [
+            "h0",
+            "z0",
+            "h0"
+          ]
+        },
+        {
+          "distance": 1,
+          "word": [
+            "h0",
+            "h1",
+            "h0"
+          ]
+        }
+      ],
+      "total_words": 512
+    },
+    {
+      "geodesic_words_all_windows": 1464,
+      "in_trivial_regime": true,
+      "l_star_upper_bound": 4,
+      "locally_rigid_gap1": 244,
+      "locally_rigid_with_gap": 426,
+      "locally_rigid_words": 1890,
+      "m": 4,
+      "price_of_length_m_minus_1_library": 0.10400391,
+      "residue_examples": [
+        {
+          "distance": 2,
+          "word": [
+            "h0",
+            "x0",
+            "z0",
+            "h0"
+          ]
+        },
+        {
+          "distance": 2,
+          "word": [
+            "h0",
+            "x0",
+            "h1",
+            "h0"
+          ]
+        },
+        {
+          "distance": 2,
+          "word": [
+            "h0",
+            "x0",
+            "x1",
+            "h0"
+          ]
+        }
+      ],
+      "total_words": 4096
+    },
+    {
+      "geodesic_words_all_windows": 4732,
+      "in_trivial_regime": true,
+      "l_star_upper_bound": 5,
+      "locally_rigid_gap1": 1368,
+      "locally_rigid_with_gap": 2204,
+      "locally_rigid_words": 6936,
+      "m": 5,
+      "price_of_length_m_minus_1_library": 0.06726074,
+      "residue_examples": [
+        {
+          "distance": 3,
+          "word": [
+            "h0",
+            "x0",
+            "z0",
+            "h1",
+            "h0"
+          ]
+        },
+        {
+          "distance": 3,
+          "word": [
+            "h0",
+            "x0",
+            "z0",
+            "x1",
+            "h0"
+          ]
+        },
+        {
+          "distance": 3,
+          "word": [
+            "h0",
+            "x0",
+            "z0",
+            "z1",
+            "h0"
+          ]
+        }
+      ],
+      "total_words": 32768
+    },
+    {
+      "geodesic_words_all_windows": 8728,
+      "in_trivial_regime": true,
+      "l_star_upper_bound": 6,
+      "locally_rigid_gap1": 4664,
+      "locally_rigid_with_gap": 8172,
+      "locally_rigid_words": 16900,
+      "m": 6,
+      "price_of_length_m_minus_1_library": 0.03117371,
+      "residue_examples": [
+        {
+          "distance": 4,
+          "word": [
+            "h0",
+            "x0",
+            "z0",
+            "h1",
+            "x1",
+            "h0"
+          ]
+        },
+        {
+          "distance": 4,
+          "word": [
+            "h0",
+            "x0",
+            "z0",
+            "h1",
+            "z1",
+            "h0"
+          ]
+        },
+        {
+          "distance": 4,
+          "word": [
+            "h0",
+            "x0",
+            "z0",
+            "h1",
+            "cx01",
+            "h0"
+          ]
+        }
+      ],
+      "total_words": 262144
+    },
+    {
+      "geodesic_words_all_windows": 5344,
+      "in_trivial_regime": true,
+      "l_star_upper_bound": 7,
+      "locally_rigid_gap1": 7056,
+      "locally_rigid_with_gap": 15480,
+      "locally_rigid_words": 20824,
+      "m": 7,
+      "price_of_length_m_minus_1_library": 0.00738144,
+      "residue_examples": [
+        {
+          "distance": 5,
+          "word": [
+            "h0",
+            "x0",
+            "z0",
+            "h1",
+            "x1",
+            "z1",
+            "h0"
+          ]
+        },
+        {
+          "distance": 5,
+          "word": [
+            "h0",
+            "x0",
+            "z0",
+            "h1",
+            "z1",
+            "x1",
+            "h0"
+          ]
+        },
+        {
+          "distance": 5,
+          "word": [
+            "h0",
+            "x0",
+            "z0",
+            "h1",
+            "cx01",
+            "cx10",
+            "h0"
+          ]
+        }
+      ],
+      "total_words": 2097152
+    },
+    {
+      "geodesic_words_all_windows": 0,
+      "in_trivial_regime": true,
+      "l_star_upper_bound": 8,
+      "locally_rigid_gap1": 224,
+      "locally_rigid_with_gap": 4904,
+      "locally_rigid_words": 4904,
+      "m": 8,
+      "price_of_length_m_minus_1_library": 0.0002923,
+      "residue_examples": [
+        {
+          "distance": 6,
+          "word": [
+            "h0",
+            "x0",
+            "z0",
+            "h1",
+            "cx01",
+            "cx10",
+            "cx01",
+            "h1"
+          ]
+        },
+        {
+          "distance": 6,
+          "word": [
+            "h0",
+            "x0",
+            "z0",
+            "h1",
+            "cx10",
+            "cx01",
+            "cx10",
+            "h1"
+          ]
+        },
+        {
+          "distance": 6,
+          "word": [
+            "h0",
+            "x0",
+            "z0",
+            "cx01",
+            "cx10",
+            "cx01",
+            "h0",
+            "h1"
+          ]
+        }
+      ],
+      "total_words": 16777216
+    },
+    {
+      "geodesic_words_all_windows": 0,
+      "in_trivial_regime": false,
+      "l_star_upper_bound": 8,
+      "locally_rigid_gap1": 0,
+      "locally_rigid_with_gap": 0,
+      "locally_rigid_words": 0,
+      "m": 9,
+      "price_of_length_m_minus_1_library": 0.0,
+      "residue_examples": [],
+      "total_words": 134217728
+    }
+  ],
+  "ladder_q1": [
+    {
+      "geodesic_words_all_windows": 4,
+      "locally_rigid_gap1": 0,
+      "locally_rigid_with_gap": 0,
+      "locally_rigid_words": 4,
+      "m": 1,
+      "residue_examples": [],
+      "total_words": 4
+    },
+    {
+      "geodesic_words_all_windows": 12,
+      "locally_rigid_gap1": 0,
+      "locally_rigid_with_gap": 4,
+      "locally_rigid_words": 16,
+      "m": 2,
+      "residue_examples": [
+        {
+          "distance": 0,
+          "word": [
+            "h0",
+            "h0"
+          ]
+        },
+        {
+          "distance": 0,
+          "word": [
+            "s0",
+            "s0"
+          ]
+        },
+        {
+          "distance": 0,
+          "word": [
+            "x0",
+            "x0"
+          ]
+        }
+      ],
+      "total_words": 16
+    },
+    {
+      "geodesic_words_all_windows": 20,
+      "locally_rigid_gap1": 8,
+      "locally_rigid_with_gap": 16,
+      "locally_rigid_words": 36,
+      "m": 3,
+      "residue_examples": [
+        {
+          "distance": 1,
+          "word": [
+            "h0",
+            "x0",
+            "h0"
+          ]
+        },
+        {
+          "distance": 1,
+          "word": [
+            "h0",
+            "z0",
+            "h0"
+          ]
+        },
+        {
+          "distance": 2,
+          "word": [
+            "s0",
+            "x0",
+            "s0"
+          ]
+        }
+      ],
+      "total_words": 64
+    },
+    {
+      "geodesic_words_all_windows": 11,
+      "locally_rigid_gap1": 21,
+      "locally_rigid_with_gap": 29,
+      "locally_rigid_words": 40,
+      "m": 4,
+      "residue_examples": [
+        {
+          "distance": 3,
+          "word": [
+            "h0",
+            "s0",
+            "h0",
+            "s0"
+          ]
+        },
+        {
+          "distance": 3,
+          "word": [
+            "h0",
+            "x0",
+            "s0",
+            "h0"
+          ]
+        },
+        {
+          "distance": 2,
+          "word": [
+            "h0",
+            "x0",
+            "z0",
+            "h0"
+          ]
+        }
+      ],
+      "total_words": 256
+    },
+    {
+      "geodesic_words_all_windows": 0,
+      "locally_rigid_gap1": 0,
+      "locally_rigid_with_gap": 10,
+      "locally_rigid_words": 10,
+      "m": 5,
+      "residue_examples": [
+        {
+          "distance": 3,
+          "word": [
+            "h0",
+            "s0",
+            "h0",
+            "z0",
+            "s0"
+          ]
+        },
+        {
+          "distance": 3,
+          "word": [
+            "h0",
+            "s0",
+            "x0",
+            "h0",
+            "s0"
+          ]
+        },
+        {
+          "distance": 3,
+          "word": [
+            "s0",
+            "h0",
+            "s0",
+            "x0",
+            "h0"
+          ]
+        }
+      ],
+      "total_words": 1024
+    },
+    {
+      "geodesic_words_all_windows": 0,
+      "locally_rigid_gap1": 0,
+      "locally_rigid_with_gap": 0,
+      "locally_rigid_words": 0,
+      "m": 6,
+      "residue_examples": [],
+      "total_words": 4096
+    },
+    {
+      "geodesic_words_all_windows": 0,
+      "locally_rigid_gap1": 0,
+      "locally_rigid_with_gap": 0,
+      "locally_rigid_words": 0,
+      "m": 7,
+      "residue_examples": [],
+      "total_words": 16384
+    },
+    {
+      "geodesic_words_all_windows": 0,
+      "locally_rigid_gap1": 0,
+      "locally_rigid_with_gap": 0,
+      "locally_rigid_words": 0,
+      "m": 8,
+      "residue_examples": [],
+      "total_words": 65536
+    }
+  ],
+  "library_census": {
+    "max_source_length": 5,
+    "rules": 1488,
+    "rules_with_length_at_least_4": 1348,
+    "rules_with_length_at_least_8": 0,
+    "source_length_histogram": {
+      "0": 12,
+      "2": 36,
+      "3": 78,
+      "4": 365,
+      "5": 983
+    }
+  },
+  "purpose": "test whether the completeness-threshold ladder is unbounded (T-7) or capped by the fragment's Cayley diameter",
+  "runtime_seconds": 6.2,
+  "self_checks": {
+    "census_not_truncated": true,
+    "diameter_q1_is_4": true,
+    "diameter_w2_is_7": true,
+    "gap1_at_m6_is_4664": true,
+    "gap1_at_m7_is_7056": true,
+    "ladder_truncates_above_d_plus_1": true,
+    "q1_bound_is_attained": true,
+    "q1_classes_match_e80": true,
+    "q1_group_order_24": true,
+    "q1_histogram_matches_qiskit_bit_exact": true,
+    "stuck_at_m8_positive": true,
+    "stuck_at_m9_zero": true,
+    "unitary_checks_pass": true,
+    "w2_classes_at_m5_match_e78": true,
+    "w2_classes_at_m6_match_e78": true,
+    "w2_classes_at_m7_match_e81": true,
+    "w2_group_order_1152": true,
+    "w2_histogram_matches_e81_bit_exact": true,
+    "w2_histogram_matches_qiskit_bit_exact": true
+  },
+  "subset_check": {
+    "all_ours_are_in_e78_residue": false,
+    "capped_examples_all_in_residue": false,
+    "e78_m6_residue_rows": 5842,
+    "missing_examples": [
+      "cx01.cx10.cx01.h0.h1.cx01",
+      "cx01.cx10.cx01.h0.x0.cx01",
+      "cx01.cx10.cx01.h0.x0.cx10",
+      "cx01.cx10.cx01.h0.x1.cx01",
+      "cx01.cx10.cx01.h0.x1.cx10"
+    ],
+    "our_m6_stuck_words": 8172
+  },
+  "theorem": {
+    "consequence": "T-7 (unbounded ladder) is false for m >= D+2; every E78/E81 measurement lies in the trivial regime m <= D+1.",
+    "id": "T-9",
+    "proof": "Let i be the smallest index with d(w[1..i]) < i. Then w[1..i-1] is geodesic so i-1 <= D, i.e. i <= D+1; replacing that prefix by a geodesic word strictly lowers cost. Iterate until every prefix is geodesic.",
+    "statement": "For a fragment with Cayley diameter D, the length-L completeness threshold satisfies L*(m) <= min(m, D+1) for every m; hence P(L, m) = 0 for every L >= D+1 and every m."
+  },
+  "unitary_checks": [
+    {
+      "distance": 0,
+      "equivalent": true,
+      "fragment": "W2",
+      "overlap": 1.0,
+      "representative": [],
+      "word": [
+        "h0",
+        "h0"
+      ],
+      "word_length": 2
+    },
+    {
+      "distance": 0,
+      "equivalent": true,
+      "fragment": "W2",
+      "overlap": 1.0,
+      "representative": [],
+      "word": [
+        "x0",
+        "x0"
+      ],
+      "word_length": 2
+    },
+    {
+      "distance": 1,
+      "equivalent": true,
+      "fragment": "W2",
+      "overlap": 1.0,
+      "representative": [
+        "z0"
+      ],
+      "word": [
+        "h0",
+        "x0",
+        "h0"
+      ],
+      "word_length": 3
+    },
+    {
+      "distance": 1,
+      "equivalent": true,
+      "fragment": "W2",
+      "overlap": 1.0,
+      "representative": [
+        "x0"
+      ],
+      "word": [
+        "h0",
+        "z0",
+        "h0"
+      ],
+      "word_length": 3
+    },
+    {
+      "distance": 2,
+      "equivalent": true,
+      "fragment": "W2",
+      "overlap": 1.0,
+      "representative": [
+        "z0",
+        "x0"
+      ],
+      "word": [
+        "h0",
+        "x0",
+        "z0",
+        "h0"
+      ],
+      "word_length": 4
+    },
+    {
+      "distance": 2,
+      "equivalent": true,
+      "fragment": "W2",
+      "overlap": 1.0,
+      "representative": [
+        "h1",
+        "z0"
+      ],
+      "word": [
+        "h0",
+        "x0",
+        "h1",
+        "h0"
+      ],
+      "word_length": 4
+    }
+  ],
+  "witnesses": [
+    {
+      "distance": 0,
+      "fragment": "W2",
+      "m": 2,
+      "word": [
+        "h0",
+        "h0"
+      ]
+    },
+    {
+      "distance": 0,
+      "fragment": "W2",
+      "m": 2,
+      "word": [
+        "x0",
+        "x0"
+      ]
+    },
+    {
+      "distance": 1,
+      "fragment": "W2",
+      "m": 3,
+      "word": [
+        "h0",
+        "x0",
+        "h0"
+      ]
+    },
+    {
+      "distance": 1,
+      "fragment": "W2",
+      "m": 3,
+      "word": [
+        "h0",
+        "z0",
+        "h0"
+      ]
+    },
+    {
+      "distance": 2,
+      "fragment": "W2",
+      "m": 4,
+      "word": [
+        "h0",
+        "x0",
+        "z0",
+        "h0"
+      ]
+    },
+    {
+      "distance": 2,
+      "fragment": "W2",
+      "m": 4,
+      "word": [
+        "h0",
+        "x0",
+        "h1",
+        "h0"
+      ]
+    },
+    {
+      "distance": 3,
+      "fragment": "W2",
+      "m": 5,
+      "word": [
+        "h0",
+        "x0",
+        "z0",
+        "h1",
+        "h0"
+      ]
+    },
+    {
+      "distance": 3,
+      "fragment": "W2",
+      "m": 5,
+      "word": [
+        "h0",
+        "x0",
+        "z0",
+        "x1",
+        "h0"
+      ]
+    },
+    {
+      "distance": 4,
+      "fragment": "W2",
+      "m": 6,
+      "word": [
+        "h0",
+        "x0",
+        "z0",
+        "h1",
+        "x1",
+        "h0"
+      ]
+    },
+    {
+      "distance": 4,
+      "fragment": "W2",
+      "m": 6,
+      "word": [
+        "h0",
+        "x0",
+        "z0",
+        "h1",
+        "z1",
+        "h0"
+      ]
+    },
+    {
+      "distance": 5,
+      "fragment": "W2",
+      "m": 7,
+      "word": [
+        "h0",
+        "x0",
+        "z0",
+        "h1",
+        "x1",
+        "z1",
+        "h0"
+      ]
+    },
+    {
+      "distance": 5,
+      "fragment": "W2",
+      "m": 7,
+      "word": [
+        "h0",
+        "x0",
+        "z0",
+        "h1",
+        "z1",
+        "x1",
+        "h0"
+      ]
+    },
+    {
+      "distance": 6,
+      "fragment": "W2",
+      "m": 8,
+      "word": [
+        "h0",
+        "x0",
+        "z0",
+        "h1",
+        "cx01",
+        "cx10",
+        "cx01",
+        "h1"
+      ]
+    },
+    {
+      "distance": 6,
+      "fragment": "W2",
+      "m": 8,
+      "word": [
+        "h0",
+        "x0",
+        "z0",
+        "h1",
+        "cx10",
+        "cx01",
+        "cx10",
+        "h1"
+      ]
+    },
+    {
+      "distance": 0,
+      "fragment": "Q1",
+      "m": 2,
+      "word": [
+        "h0",
+        "h0"
+      ]
+    },
+    {
+      "distance": 0,
+      "fragment": "Q1",
+      "m": 2,
+      "word": [
+        "s0",
+        "s0"
+      ]
+    },
+    {
+      "distance": 1,
+      "fragment": "Q1",
+      "m": 3,
+      "word": [
+        "h0",
+        "x0",
+        "h0"
+      ]
+    },
+    {
+      "distance": 1,
+      "fragment": "Q1",
+      "m": 3,
+      "word": [
+        "h0",
+        "z0",
+        "h0"
+      ]
+    },
+    {
+      "distance": 3,
+      "fragment": "Q1",
+      "m": 4,
+      "word": [
+        "h0",
+        "s0",
+        "h0",
+        "s0"
+      ]
+    },
+    {
+      "distance": 3,
+      "fragment": "Q1",
+      "m": 4,
+      "word": [
+        "h0",
+        "x0",
+        "s0",
+        "h0"
+      ]
+    },
+    {
+      "distance": 3,
+      "fragment": "Q1",
+      "m": 5,
+      "word": [
+        "h0",
+        "s0",
+        "h0",
+        "z0",
+        "s0"
+      ]
+    },
+    {
+      "distance": 3,
+      "fragment": "Q1",
+      "m": 5,
+      "word": [
+        "h0",
+        "s0",
+        "x0",
+        "h0",
+        "s0"
+      ]
+    }
+  ]
+}

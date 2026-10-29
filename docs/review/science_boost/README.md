@@ -1,6 +1,6 @@
 # science_boost — 科研体检与创新方向扫描索引
 
-十八轮扫描（2026-10-16 → 2026-10-28）的记录索引。
+二十轮扫描（2026-10-16 → 2026-10-30）的记录索引。
 
 **2026-10-24 清理**：第 1–9 轮的**叙述性主文件**（`*_innovation_scan.md`、
 `2026-10-22_backlog_closure.md`）与 3 个原始 arXiv 转储目录已删除——它们的结论在后续轮次被
@@ -36,11 +36,16 @@ git show a8d68e370:docs/review/science_boost/2026-10-22_innovation_scan.md
 | **10-26（第 16 轮）** | **P5 外部效度 + 绝对间隙标度**：E70 fragment-bench 旋转间隙（240 实例，聚合 g_reorder/g_total=0.710，129 达绝对最优，**否定普适标度律**——家族结构主导：对照族 0.0、diagonal/random_phase 0.97–1.0、iqp 0.87–0.96、linear_rotation n=64 骤降 0.50）；E71 MQT Bench 外部集（14/14，平均削减 7.43%）；fragment bench 账目修复（形式演化=向量异或，转置错误已修）；E65 分级契约重启（授权的内存分块） | 有效 | `2026-10-26_fragment_rotation_gap/`、`2026-10-26_external_circuits/`、`2026-10-25_fragment_bench/`、`2026-10-25_bounded_exactification/` |
 | **10-27（第 17 轮）** | **E72 跨度判据的可预测性**：76,236 窗口 **0 假阳性**、首次逃逸深度逐窗精确 99.995%，但覆盖率分层（raw 97.0% vs greedy 32.8%）；**E73 规则库完备性**：1,474 条规则中仅 14 条单比特、无 3 门单比特模式，2q Clifford 片段上 **30.25% 的可约 listing 达不到绝对最优**，`h·x·h·z` 合法动作数为 0；**主刊门改判**：完备性路线被 `2609.40106` 占住，改走「完备性价格」 | 主线延续；家族级残余表述被第 18 轮 E77 校正为家族特异 | `2026-10-27_span_law/`、`2026-10-27_library_completeness/`、`2026-10-27_literature_scan/` |
 | **10-28（第 18 轮）** | **E75 完备性价格曲线（阈值而非斜坡）**：长度 2 规则贡献恰为 0.00（`pair_v1` 已饱和该类），2q Clifford 30.25% →（+全部 ≤3）9.12% →（+全部 ≤4）0.00%；1q Clifford 阈值 `L* = 4 ≪ m = 8`，阈值下两种 regime 无中间态（P(2) 随实例长度上升、P(3) 饱和、P(4) 恒 0）→ 定理 6；**E77 Holm 校正**：blanket「残余集中在结构化家族」**撤回**——greedy 不动点上 IQP/Oracle 显著更多、RandomClifford/UCCSD 显著更少（家族特异，非结构普适）；**E75 顺带修复 E73 的 unitary-key 缺陷**（argmax 枢轴并列时拆类；相位不变键 1q 片段 12→8 类；legacy 键下 30.25% 精确复现，回归门 PASS）；定理 5/6 判定边界成文（`docs/theory/decidability_frontier_2026-10-28.md`）；证书 M1–M9 失效模式映射（`docs/review/certificate_failure_mode_map_2026-10-28.md`） | **当前** | `2026-10-28_completeness_price/`、`2026-10-28_span_family_holm/`、`2026-10-28_literature_scan/` |
+| **10-29（第 19 轮）** | **E78 阈值实验推翻第 18 轮的 `L* = 4`**：宽度 2/3、m=5/6 上 **`L* = m`**（阈值 = 实例长度）；m=6 的残余 2.06% 中 **4,664 个 gap=1**，深度 1 穷尽 ⇒「长度 ≤5 的库无任何可行动作」是**证明**；机制是**共轭模板被 Pauli 劈开**（`h0.h1.x0.z0.cx01.h0`）。**D5**：第 18 轮的「1 比特 Clifford」实为 8 阶群 ⟨h,x⟩（8 类，非 24 元群）。**D6**：E75 合成库按门名而非门实例闭合，宽度 3 实测崩溃，已修。**D7**：`git status` 看不见 CRLF 漂移（6,721 字节），红线检查改为按 manifest 逐文件 sha256。 | **当前** | `2026-10-29_width_threshold/`、`2026-10-29_literature_scan/`、`2026-10-29_rule_length_demand/` |
+| **10-29 续（清偿轮）** | **E80**：真实 24 元 1 比特 Clifford 群 `L* = 5`（不是 4），库价格 **82.87%**；**D9**：`EX-1` 判据不覆盖参数化旋转对，954/1,564 FN 行是**实现缺口**，修正 recall 0.9605 → **0.9846**（greedy 分层不变）。**E81**：两遍流式重写使 m=7 可算，`P(6) = 0.46%`，**阶梯延续**（4.63% → 2.06% → 0.46%）。**D5/D6/D7/D8 全部清偿**：E75 按 `(name,qubits)` 闭合（Part C +0.13pp）、`audit_frozen_bytes.py` 接入 `reproduce_all --audit-frozen`、`THEOREM_REGISTRY.md` 建立 8 套命名空间、`length_ladder_2026-10-29.md` 定稿 `T-7` 候选并与 `2602.09874` 划界。 | **当前** | `2026-10-29_rule_length_demand/` |
+| **10-30（第 20 轮）** | **E82 直径界否证 `T-7`**：Cayley 距离预言机证明 `L*(m) ≤ min(m, D+1)`，`W2` 的 `D = 7`、`L*(8) = 8`（取等），`Q1` 的 `D = 4`、`L* = 5`（取等）；`LR_9 = 0` 是定理。距离直方图与 E81 及 qiskit `Clifford` BFS **逐位相同**，`gap=1` 在 m=6/7 上逐位复现 4,664 / 7,056。**顺带量出库的长度预算：最大源长度 5，比阈值 8 少 3 级**。**主刊门关闭**（阶梯有界）。E83：22 条字段查询 343 条记录（183 条 2026），GitHub REST 403。 | **当前** | `2026-10-30_diameter_bound/`、`2026-10-30_literature_scan/` |
 
-主文件只保留四份：`2026-10-24_innovation_scan.md`（口径复核）、
+主文件只保留六份：`2026-10-24_innovation_scan.md`（口径复核）、
 `2026-10-25_innovation_scan.md`（绝对参照点）、
 `2026-10-26_innovation_scan.md`（D3 + E69 + 文献改道）、
-`2026-10-27_innovation_scan.md`（判定边界 + 完备性价格首点）。
+`2026-10-27_innovation_scan.md`（判定边界 + 完备性价格首点）、
+`2026-10-29_innovation_scan.md`（长度阶梯：阈值 = 实例长度）、
+`2026-10-30_innovation_scan.md`（直径界：阶梯在第 D+1 级终止）。
 第 18 轮起的叙述性主文移出本目录：`docs/theory/decidability_frontier_2026-10-28.md`
 （定理 5/6 定稿）与 `docs/review/certificate_failure_mode_map_2026-10-28.md`
 （证书失效模式映射）。
@@ -83,10 +88,14 @@ round 13/14 的执行记录是 `2026-10-25_external_audit_round13.md`。
 - **家族级残余不随"结构化"普适集中**（E77，Holm 校正后）：greedy 不动点上
   IQP/Oracle 更多、RandomClifford/UCCSD 更少；引用残余表必须点名家族。
 
-**投稿层级**：PRX Quantum（跨度定律，需先修 D3）；Quantum（证书方法学，证据已齐）；
-主刊的活门本轮**改判**：不再走"造完备规则集"（`2609.40106` 已占），
-改走 **「完备性价格」**——固定长度规则库必然不完备，且代价可精确测量
-（E73 首点 + E75 曲线：阈值形式，1q Clifford 为 `L* = 4`）。
+**投稿层级（2026-10-30 再改判）**：**主刊门关闭**——`T-9` 证明阶梯有界（`L* ≤ min(m, D+1)`），
+第 19 轮的三次测量全在平凡区间。主线改为 PRX Quantum：**判定边界（`DF-5`）+ 有界价格（`T-9`）+ 两轴分离（E80-B）**；
+Quantum 承接证书方法学。唯一还活着的主刊形状是 `T-9` 的参数化推广（见 2026-10-30 扫描 §4 P0-2）。
+
+**第 18 轮的「完备性价格是阈值（`L* = 4`）」已被 E78 推翻**：在完整 Clifford 生成集上 `L* = m`，
+阈值跟着实例长度走，不跟宽度走（m=5: 4.63% / 3.82%；m=6: 2.06%）。第 18 轮的 4 是**8 阶群 ⟨h,x⟩**
+（`{h,x,z}` 生成不了 24 元 1 比特 Clifford 群）的阈值，不是 Clifford 群的阈值。详见
+`docs/theory/decidability_frontier_2026-10-28.md` §6 erratum 与 `2026-10-29_innovation_scan.md` §2。
 
 ## 约束（十八轮一致）
 

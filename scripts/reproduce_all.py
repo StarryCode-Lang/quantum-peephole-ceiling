@@ -361,6 +361,33 @@ def verify_release_manifest():
     return all_ok
 
 
+def audit_frozen_bytes():
+    """Run the byte-level manifest audit for both release manifests.
+
+    ``verify_release_manifest`` above already hashes the 37 canonical datasets.
+    This adds the 35,042-path preprint chain, and it is the check that catches
+    CRLF drift: round 19 found a frozen CSV whose worktree bytes differed from
+    its blob by 6,721 carriage returns while ``git status`` reported clean.
+    """
+    print(f"\n{'='*60}")
+    print("Auditing frozen bytes (manifest-level, not git status)")
+    print(f"{'='*60}")
+    script = PROJECT_ROOT / "scripts" / "audit_frozen_bytes.py"
+    if not script.exists():
+        print("❌ scripts/audit_frozen_bytes.py missing")
+        return False
+    ok = True
+    for manifest in ("release/release_manifest.json", "release/prepaper_release_manifest.json"):
+        proc = subprocess.run(
+            [sys.executable, str(script), "--manifest", manifest, "--allow-crlf", "--quiet"],
+            cwd=PROJECT_ROOT,
+        )
+        status = "✅ PASS" if proc.returncode == 0 else "❌ FAIL"
+        print(f"  {status}: {manifest}")
+        ok = ok and proc.returncode == 0
+    return ok
+
+
 def verify_data():
     """Verify data integrity.
 
@@ -540,6 +567,15 @@ def main():
         action="store_true",
         help="Run everything (tests, all experiments, figures, verify)"
     )
+    parser.add_argument(
+        "--audit-frozen",
+        action="store_true",
+        help=(
+            "Byte-audit every (path, sha256) pair in the release manifests with "
+            "scripts/audit_frozen_bytes.py. This is the only check that catches "
+            "line-ending drift: git status reports such a file as clean."
+        ),
+    )
     
     args = parser.parse_args()
     
@@ -590,6 +626,9 @@ def main():
     # Verify data
     if args.verify:
         results["verify"] = verify_data()
+
+    if args.audit_frozen:
+        results["audit_frozen_bytes"] = audit_frozen_bytes()
     
     # Summary
     print(f"\n{'='*60}")

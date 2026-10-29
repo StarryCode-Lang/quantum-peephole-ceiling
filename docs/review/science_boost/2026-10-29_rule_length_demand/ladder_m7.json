@@ -1,0 +1,69 @@
+{
+  "as_of": "2026-10-29",
+  "class_histogram": {
+    "0": 1,
+    "1": 8,
+    "2": 37,
+    "3": 121,
+    "4": 291,
+    "5": 418,
+    "6": 253,
+    "7": 23
+  },
+  "contract": {
+    "classes": 1152,
+    "generators": [
+      "h0",
+      "h1",
+      "x0",
+      "x1",
+      "z0",
+      "z1",
+      "cx01",
+      "cx10"
+    ],
+    "listings": 2396745,
+    "max_length": 7,
+    "note": "base library is excluded: the question is whether a length-<=max_rule synthetic rule set suffices",
+    "read_only": [
+      "data/",
+      "release/",
+      "docs/manuscript/"
+    ],
+    "reducible": null,
+    "rule_library": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+    "rule_library_sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295",
+    "search": "greedy closure (32 passes) + monotone BFS depth <= min(gap, 3), 20,000 nodes"
+  },
+  "experiment_id": "E81_LADDER_M7_2026_10_29",
+  "purpose": "the m=7 ladder point, computed with a two-pass streaming fragment",
+  "result": {
+    "after_search": 2365196,
+    "budget_exhausted": 0,
+    "failures": 10894,
+    "gap_histogram": {
+      "1": 7056,
+      "2": 8424
+    },
+    "greedy_exact": 2360610,
+    "max_rule_length": 6,
+    "members_reducible": 2376090,
+    "pass_one_seconds": 268.2,
+    "price": 0.004585,
+    "runtime_seconds": 1906.7,
+    "witnesses": [
+      "h0.h1.x0.z0.cx01.cx10.h0",
+      "h0.h1.x0.z0.cx01.cx10.h1",
+      "h0.h1.x0.z0.cx10.cx01.h0",
+      "h0.h1.x0.z0.cx10.cx01.h1",
+      "h0.h1.x0.z1.cx01.cx10.h0",
+      "h0.h1.x0.z1.cx01.cx10.h1",
+      "h0.h1.x0.z1.cx10.cx01.h0",
+      "h0.h1.x0.z1.cx10.cx01.h1",
+      "h0.h1.x0.cx01.z0.cx10.h0",
+      "h0.h1.x0.cx01.z0.cx10.h1",
+      "h0.h1.x0.cx01.z1.cx10.h0",
+      "h0.h1.x0.cx01.z1.cx10.h1"
+    ]
+  }
+}

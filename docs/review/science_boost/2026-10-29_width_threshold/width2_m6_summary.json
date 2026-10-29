@@ -1,0 +1,199 @@
+{
+  "as_of": "2026-10-29",
+  "contract": {
+    "generator_set": "h, x, z on every qubit plus cx(i, i+1) on a line; width 2 therefore matches E73's 8-generator set minus cx(1,0), width 3 is the line-CX subgroup, NOT the full 3-qubit Clifford group",
+    "read_only": [
+      "data/",
+      "release/",
+      "docs/manuscript/"
+    ],
+    "rule_library": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+    "rule_library_sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295",
+    "scope": "full (1,474 quartz rules) + pair_v1 + structural exchanges",
+    "search": "greedy closure (32 passes) + monotone BFS depth <= min(gap, 3), max 20,000 nodes",
+    "synthetic_library": "maximally powerful rule set of a given (arity, source length) class, built from exhaustive enumeration of the fragment"
+  },
+  "experiment_id": "E78_WIDTH_THRESHOLD_2026_10_29",
+  "hypotheses": {
+    "H1_width_effect": "L* grows with qubit count",
+    "H2_group_invariant": "L* is the shortest non-trivial relation length and stays <= 4"
+  },
+  "part_a_width2": {
+    "configs": {
+      "all_L2_5": {
+        "after_search": 278440,
+        "after_search_rate": 0.97945,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_5",
+        "failures": 5842,
+        "greedy_exact": 276110,
+        "greedy_rate": 0.971254,
+        "include_base": true,
+        "lmax": 5,
+        "lmin": 2,
+        "members_reducible": 284282,
+        "members_total": 299593,
+        "part": "A_width2_m5",
+        "price": 0.02055
+      },
+      "all_L2_6": {
+        "after_search": 284282,
+        "after_search_rate": 1.0,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_6",
+        "failures": 0,
+        "greedy_exact": 284282,
+        "greedy_rate": 1.0,
+        "include_base": true,
+        "lmax": 6,
+        "lmin": 2,
+        "members_reducible": 284282,
+        "members_total": 299593,
+        "part": "A_width2_m5",
+        "price": 0.0
+      },
+      "base": {
+        "after_search": 129196,
+        "after_search_rate": 0.454464,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "base",
+        "failures": 155086,
+        "greedy_exact": 103454,
+        "greedy_rate": 0.363913,
+        "include_base": true,
+        "lmax": 0,
+        "lmin": 1,
+        "members_reducible": 284282,
+        "members_total": 299593,
+        "part": "A_width2_m5",
+        "price": 0.545536
+      }
+    },
+    "fragment": {
+      "c_abs_histogram": {
+        "0": 1,
+        "1": 8,
+        "2": 37,
+        "3": 121,
+        "4": 291,
+        "5": 418,
+        "6": 253
+      },
+      "classes": 1129,
+      "generator_count": 8,
+      "generators": [
+        "h0",
+        "h1",
+        "x0",
+        "x1",
+        "z0",
+        "z1",
+        "cx01",
+        "cx10"
+      ],
+      "listings": 299593,
+      "max_length": 6,
+      "num_qubits": 2,
+      "reducible": 284282
+    },
+    "tau_by_length": [
+      {
+        "listing_length": 2,
+        "n": 8,
+        "price_L2": 1.0,
+        "price_L3": 1.0,
+        "price_L4": 1.0,
+        "price_L5": 0.0,
+        "price_L6": 0.0,
+        "tau_histogram": {
+          "5": 8
+        },
+        "tau_max": 5,
+        "tau_median": 5,
+        "tau_min": 5
+      },
+      {
+        "listing_length": 3,
+        "n": 190,
+        "price_L2": 1.0,
+        "price_L3": 1.0,
+        "price_L4": 1.0,
+        "price_L5": 0.0,
+        "price_L6": 0.0,
+        "tau_histogram": {
+          "5": 190
+        },
+        "tau_max": 5,
+        "tau_median": 5,
+        "tau_min": 5
+      },
+      {
+        "listing_length": 4,
+        "n": 2632,
+        "price_L2": 1.0,
+        "price_L3": 1.0,
+        "price_L4": 1.0,
+        "price_L5": 0.0,
+        "price_L6": 0.0,
+        "tau_histogram": {
+          "5": 2632
+        },
+        "tau_max": 5,
+        "tau_median": 5,
+        "tau_min": 5
+      },
+      {
+        "listing_length": 5,
+        "n": 28036,
+        "price_L2": 1.0,
+        "price_L3": 1.0,
+        "price_L4": 1.0,
+        "price_L5": 0.0,
+        "price_L6": 0.0,
+        "tau_histogram": {
+          "5": 28036
+        },
+        "tau_max": 5,
+        "tau_median": 5,
+        "tau_min": 5
+      },
+      {
+        "listing_length": 6,
+        "n": 253416,
+        "price_L2": 1.0,
+        "price_L3": 1.0,
+        "price_L4": 1.0,
+        "price_L5": 0.023053,
+        "price_L6": 0.0,
+        "tau_histogram": {
+          "5": 247574,
+          "6": 5842
+        },
+        "tau_max": 6,
+        "tau_median": 5,
+        "tau_min": 5
+      }
+    ],
+    "threshold": 6
+  },
+  "part_b_width3": {
+    "configs": {},
+    "fragment": {},
+    "tau_by_length": [],
+    "threshold": null
+  },
+  "part_c_primitive_identities": {},
+  "purpose": "decide whether the completeness threshold L* is a width effect or the shortest non-trivial relation of the fragment's group",
+  "runtime_seconds": 182.2,
+  "self_checks": {
+    "alphabet_leak_windows_skipped": 0,
+    "length2_rules_buy_nothing_width2": null,
+    "length2_rules_buy_nothing_width3": null,
+    "price_monotone_in_L_width2": true,
+    "price_monotone_in_L_width3": null,
+    "width2_threshold_below_max_length": false
+  }
+}

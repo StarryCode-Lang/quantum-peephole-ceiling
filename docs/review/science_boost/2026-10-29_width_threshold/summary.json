@@ -1,0 +1,625 @@
+{
+  "as_of": "2026-10-29",
+  "contract": {
+    "generator_set": "h, x, z on every qubit plus cx(i, i+1) on a line; width 2 therefore matches E73's 8-generator set minus cx(1,0), width 3 is the line-CX subgroup, NOT the full 3-qubit Clifford group",
+    "read_only": [
+      "data/",
+      "release/",
+      "docs/manuscript/"
+    ],
+    "rule_library": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+    "rule_library_sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295",
+    "scope": "full (1,474 quartz rules) + pair_v1 + structural exchanges",
+    "search": "greedy closure (32 passes) + monotone BFS depth <= min(gap, 3), max 20,000 nodes",
+    "synthetic_library": "maximally powerful rule set of a given (arity, source length) class, built from exhaustive enumeration of the fragment"
+  },
+  "experiment_id": "E78_WIDTH_THRESHOLD_2026_10_29",
+  "hypotheses": {
+    "H1_width_effect": "L* grows with qubit count",
+    "H2_group_invariant": "L* is the shortest non-trivial relation length and stays <= 4"
+  },
+  "part_a_width2": {
+    "configs": {
+      "1q_L2_2": {
+        "after_search": 17788,
+        "after_search_rate": 0.576298,
+        "arity": 1,
+        "budget_exhausted": 0,
+        "config": "1q_L2_2",
+        "failures": 13078,
+        "greedy_exact": 14096,
+        "greedy_rate": 0.456684,
+        "include_base": true,
+        "lmax": 2,
+        "lmin": 2,
+        "members_reducible": 30866,
+        "members_total": 37449,
+        "part": "A_width2_m5",
+        "price": 0.423702
+      },
+      "1q_L2_3": {
+        "after_search": 20730,
+        "after_search_rate": 0.671613,
+        "arity": 1,
+        "budget_exhausted": 0,
+        "config": "1q_L2_3",
+        "failures": 10136,
+        "greedy_exact": 15992,
+        "greedy_rate": 0.518111,
+        "include_base": true,
+        "lmax": 3,
+        "lmin": 2,
+        "members_reducible": 30866,
+        "members_total": 37449,
+        "part": "A_width2_m5",
+        "price": 0.328387
+      },
+      "1q_L2_4": {
+        "after_search": 21342,
+        "after_search_rate": 0.69144,
+        "arity": 1,
+        "budget_exhausted": 0,
+        "config": "1q_L2_4",
+        "failures": 9524,
+        "greedy_exact": 16136,
+        "greedy_rate": 0.522776,
+        "include_base": true,
+        "lmax": 4,
+        "lmin": 2,
+        "members_reducible": 30866,
+        "members_total": 37449,
+        "part": "A_width2_m5",
+        "price": 0.30856
+      },
+      "1q_L2_5": {
+        "after_search": 21342,
+        "after_search_rate": 0.69144,
+        "arity": 1,
+        "budget_exhausted": 0,
+        "config": "1q_L2_5",
+        "failures": 9524,
+        "greedy_exact": 16136,
+        "greedy_rate": 0.522776,
+        "include_base": true,
+        "lmax": 5,
+        "lmin": 2,
+        "members_reducible": 30866,
+        "members_total": 37449,
+        "part": "A_width2_m5",
+        "price": 0.30856
+      },
+      "all_L2_2": {
+        "after_search": 17788,
+        "after_search_rate": 0.576298,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_2",
+        "failures": 13078,
+        "greedy_exact": 14096,
+        "greedy_rate": 0.456684,
+        "include_base": true,
+        "lmax": 2,
+        "lmin": 2,
+        "members_reducible": 30866,
+        "members_total": 37449,
+        "part": "A_width2_m5",
+        "price": 0.423702
+      },
+      "all_L2_3": {
+        "after_search": 25970,
+        "after_search_rate": 0.841379,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_3",
+        "failures": 4896,
+        "greedy_exact": 23738,
+        "greedy_rate": 0.769066,
+        "include_base": true,
+        "lmax": 3,
+        "lmin": 2,
+        "members_reducible": 30866,
+        "members_total": 37449,
+        "part": "A_width2_m5",
+        "price": 0.158621
+      },
+      "all_L2_4": {
+        "after_search": 29436,
+        "after_search_rate": 0.953671,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_4",
+        "failures": 1430,
+        "greedy_exact": 28742,
+        "greedy_rate": 0.931186,
+        "include_base": true,
+        "lmax": 4,
+        "lmin": 2,
+        "members_reducible": 30866,
+        "members_total": 37449,
+        "part": "A_width2_m5",
+        "price": 0.046329
+      },
+      "all_L2_5": {
+        "after_search": 30866,
+        "after_search_rate": 1.0,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_5",
+        "failures": 0,
+        "greedy_exact": 30866,
+        "greedy_rate": 1.0,
+        "include_base": true,
+        "lmax": 5,
+        "lmin": 2,
+        "members_reducible": 30866,
+        "members_total": 37449,
+        "part": "A_width2_m5",
+        "price": 0.0
+      },
+      "base": {
+        "after_search": 17788,
+        "after_search_rate": 0.576298,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "base",
+        "failures": 13078,
+        "greedy_exact": 14096,
+        "greedy_rate": 0.456684,
+        "include_base": true,
+        "lmax": 0,
+        "lmin": 1,
+        "members_reducible": 30866,
+        "members_total": 37449,
+        "part": "A_width2_m5",
+        "price": 0.423702
+      }
+    },
+    "fragment": {
+      "c_abs_histogram": {
+        "0": 1,
+        "1": 8,
+        "2": 37,
+        "3": 121,
+        "4": 291,
+        "5": 418
+      },
+      "classes": 876,
+      "generator_count": 8,
+      "generators": [
+        "h0",
+        "h1",
+        "x0",
+        "x1",
+        "z0",
+        "z1",
+        "cx01",
+        "cx10"
+      ],
+      "listings": 37449,
+      "max_length": 5,
+      "num_qubits": 2,
+      "reducible": 30866
+    },
+    "tau_by_length": [
+      {
+        "listing_length": 2,
+        "n": 8,
+        "price_L2": 0.0,
+        "price_L3": 0.0,
+        "price_L4": 0.0,
+        "price_L5": 0.0,
+        "tau_histogram": {
+          "2": 8
+        },
+        "tau_max": 2,
+        "tau_median": 2,
+        "tau_min": 2
+      },
+      {
+        "listing_length": 3,
+        "n": 190,
+        "price_L2": 0.189474,
+        "price_L3": 0.0,
+        "price_L4": 0.0,
+        "price_L5": 0.0,
+        "tau_histogram": {
+          "2": 154,
+          "3": 36
+        },
+        "tau_max": 3,
+        "tau_median": 2,
+        "tau_min": 2
+      },
+      {
+        "listing_length": 4,
+        "n": 2632,
+        "price_L2": 0.31155,
+        "price_L3": 0.098024,
+        "price_L4": 0.0,
+        "price_L5": 0.0,
+        "tau_histogram": {
+          "2": 1812,
+          "3": 562,
+          "4": 258
+        },
+        "tau_max": 4,
+        "tau_median": 2,
+        "tau_min": 2
+      },
+      {
+        "listing_length": 5,
+        "n": 28036,
+        "price_L2": 0.43594,
+        "price_L3": 0.16543,
+        "price_L4": 0.051006,
+        "price_L5": 0.0,
+        "tau_histogram": {
+          "2": 15814,
+          "3": 7584,
+          "4": 3208,
+          "5": 1430
+        },
+        "tau_max": 5,
+        "tau_median": 2,
+        "tau_min": 2
+      }
+    ],
+    "threshold": 5
+  },
+  "part_b_width3": {
+    "configs": {
+      "1q_L2_2": {
+        "after_search": 71779,
+        "after_search_rate": 0.603459,
+        "arity": 1,
+        "budget_exhausted": 0,
+        "config": "1q_L2_2",
+        "failures": 47167,
+        "greedy_exact": 52017,
+        "greedy_rate": 0.437316,
+        "include_base": true,
+        "lmax": 2,
+        "lmin": 2,
+        "members_reducible": 118946,
+        "members_total": 177156,
+        "part": "B_width3_m5",
+        "price": 0.396541
+      },
+      "1q_L2_3": {
+        "after_search": 81898,
+        "after_search_rate": 0.688531,
+        "arity": 1,
+        "budget_exhausted": 0,
+        "config": "1q_L2_3",
+        "failures": 37048,
+        "greedy_exact": 57681,
+        "greedy_rate": 0.484934,
+        "include_base": true,
+        "lmax": 3,
+        "lmin": 2,
+        "members_reducible": 118946,
+        "members_total": 177156,
+        "part": "B_width3_m5",
+        "price": 0.311469
+      },
+      "1q_L2_4": {
+        "after_search": 83614,
+        "after_search_rate": 0.702958,
+        "arity": 1,
+        "budget_exhausted": 0,
+        "config": "1q_L2_4",
+        "failures": 35332,
+        "greedy_exact": 58005,
+        "greedy_rate": 0.487658,
+        "include_base": true,
+        "lmax": 4,
+        "lmin": 2,
+        "members_reducible": 118946,
+        "members_total": 177156,
+        "part": "B_width3_m5",
+        "price": 0.297042
+      },
+      "1q_L2_5": {
+        "after_search": 83614,
+        "after_search_rate": 0.702958,
+        "arity": 1,
+        "budget_exhausted": 0,
+        "config": "1q_L2_5",
+        "failures": 35332,
+        "greedy_exact": 58005,
+        "greedy_rate": 0.487658,
+        "include_base": true,
+        "lmax": 5,
+        "lmin": 2,
+        "members_reducible": 118946,
+        "members_total": 177156,
+        "part": "B_width3_m5",
+        "price": 0.297042
+      },
+      "all_L2_2": {
+        "after_search": 71779,
+        "after_search_rate": 0.603459,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_2",
+        "failures": 47167,
+        "greedy_exact": 52017,
+        "greedy_rate": 0.437316,
+        "include_base": true,
+        "lmax": 2,
+        "lmin": 2,
+        "members_reducible": 118946,
+        "members_total": 177156,
+        "part": "B_width3_m5",
+        "price": 0.396541
+      },
+      "all_L2_3": {
+        "after_search": 101612,
+        "after_search_rate": 0.85427,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_3",
+        "failures": 17334,
+        "greedy_exact": 89262,
+        "greedy_rate": 0.750441,
+        "include_base": true,
+        "lmax": 3,
+        "lmin": 2,
+        "members_reducible": 118946,
+        "members_total": 177156,
+        "part": "B_width3_m5",
+        "price": 0.14573
+      },
+      "all_L2_4": {
+        "after_search": 114404,
+        "after_search_rate": 0.961815,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_4",
+        "failures": 4542,
+        "greedy_exact": 109839,
+        "greedy_rate": 0.923436,
+        "include_base": true,
+        "lmax": 4,
+        "lmin": 2,
+        "members_reducible": 118946,
+        "members_total": 177156,
+        "part": "B_width3_m5",
+        "price": 0.038185
+      },
+      "all_L2_5": {
+        "after_search": 118946,
+        "after_search_rate": 1.0,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_5",
+        "failures": 0,
+        "greedy_exact": 118946,
+        "greedy_rate": 1.0,
+        "include_base": true,
+        "lmax": 5,
+        "lmin": 2,
+        "members_reducible": 118946,
+        "members_total": 177156,
+        "part": "B_width3_m5",
+        "price": 0.0
+      },
+      "base": {
+        "after_search": 71779,
+        "after_search_rate": 0.603459,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "base",
+        "failures": 47167,
+        "greedy_exact": 52017,
+        "greedy_rate": 0.437316,
+        "include_base": true,
+        "lmax": 0,
+        "lmin": 1,
+        "members_reducible": 118946,
+        "members_total": 177156,
+        "part": "B_width3_m5",
+        "price": 0.396541
+      }
+    },
+    "fragment": {
+      "c_abs_histogram": {
+        "0": 1,
+        "1": 11,
+        "2": 64,
+        "3": 268,
+        "4": 923,
+        "5": 2767
+      },
+      "classes": 4034,
+      "generator_count": 11,
+      "generators": [
+        "h0",
+        "h1",
+        "h2",
+        "x0",
+        "x1",
+        "x2",
+        "z0",
+        "z1",
+        "z2",
+        "cx01",
+        "cx12"
+      ],
+      "listings": 177156,
+      "max_length": 5,
+      "num_qubits": 3,
+      "reducible": 118946
+    },
+    "tau_by_length": [
+      {
+        "listing_length": 2,
+        "n": 11,
+        "price_L2": 0.0,
+        "price_L3": 0.0,
+        "price_L4": 0.0,
+        "price_L5": 0.0,
+        "tau_histogram": {
+          "2": 11
+        },
+        "tau_max": 2,
+        "tau_median": 2,
+        "tau_min": 2
+      },
+      {
+        "listing_length": 3,
+        "n": 355,
+        "price_L2": 0.11831,
+        "price_L3": 0.0,
+        "price_L4": 0.0,
+        "price_L5": 0.0,
+        "tau_histogram": {
+          "2": 313,
+          "3": 42
+        },
+        "tau_max": 3,
+        "tau_median": 2,
+        "tau_min": 2
+      },
+      {
+        "listing_length": 4,
+        "n": 7113,
+        "price_L2": 0.269225,
+        "price_L3": 0.067341,
+        "price_L4": 0.0,
+        "price_L5": 0.0,
+        "tau_histogram": {
+          "2": 5198,
+          "3": 1436,
+          "4": 479
+        },
+        "tau_max": 4,
+        "tau_median": 2,
+        "tau_min": 2
+      },
+      {
+        "listing_length": 5,
+        "n": 111467,
+        "price_L2": 0.405591,
+        "price_L3": 0.151211,
+        "price_L4": 0.040747,
+        "price_L5": 0.0,
+        "tau_histogram": {
+          "2": 66257,
+          "3": 28355,
+          "4": 12313,
+          "5": 4542
+        },
+        "tau_max": 5,
+        "tau_median": 2,
+        "tau_min": 2
+      }
+    ],
+    "threshold": 5
+  },
+  "part_c_primitive_identities": {
+    "width1": {
+      "generators": [
+        "h0",
+        "x0",
+        "z0"
+      ],
+      "identity_words_found": 207,
+      "num_qubits": 1,
+      "pair_free_identity_words": 36,
+      "primitive_by_length": {
+        "4": 6,
+        "6": 24
+      },
+      "primitive_identities": 30,
+      "search_max_length": 6,
+      "shortest_primitive_length": 4,
+      "shortest_witnesses": [
+        "h0.x0.h0.z0",
+        "h0.z0.h0.x0",
+        "x0.h0.z0.h0",
+        "x0.z0.x0.z0",
+        "z0.h0.x0.h0",
+        "z0.x0.z0.x0"
+      ],
+      "truncated": false
+    },
+    "width2": {
+      "generators": [
+        "h0",
+        "h1",
+        "x0",
+        "x1",
+        "z0",
+        "z1",
+        "cx01",
+        "cx10"
+      ],
+      "identity_words_found": 4656,
+      "num_qubits": 2,
+      "pair_free_identity_words": 968,
+      "primitive_by_length": {
+        "4": 38,
+        "5": 40,
+        "6": 662
+      },
+      "primitive_identities": 740,
+      "search_max_length": 6,
+      "shortest_primitive_length": 4,
+      "shortest_witnesses": [
+        "h0.h1.h0.h1",
+        "h0.x0.h0.z0",
+        "h0.x1.h0.x1",
+        "h0.z0.h0.x0",
+        "h0.z1.h0.z1",
+        "h1.h0.h1.h0"
+      ],
+      "truncated": false
+    },
+    "width3": {
+      "generators": [
+        "h0",
+        "h1",
+        "h2",
+        "x0",
+        "x1",
+        "x2",
+        "z0",
+        "z1",
+        "z2",
+        "cx01",
+        "cx12"
+      ],
+      "identity_words_found": 14593,
+      "num_qubits": 3,
+      "pair_free_identity_words": 3708,
+      "primitive_by_length": {
+        "4": 92,
+        "5": 40,
+        "6": 2748
+      },
+      "primitive_identities": 2880,
+      "search_max_length": 6,
+      "shortest_primitive_length": 4,
+      "shortest_witnesses": [
+        "h0.h1.h0.h1",
+        "h0.h2.h0.h2",
+        "h0.x0.h0.z0",
+        "h0.x1.h0.x1",
+        "h0.x2.h0.x2",
+        "h0.z0.h0.x0"
+      ],
+      "truncated": false
+    }
+  },
+  "purpose": "decide whether the completeness threshold L* is a width effect or the shortest non-trivial relation of the fragment's group",
+  "runtime_seconds": 284.1,
+  "self_checks": {
+    "alphabet_leak_windows_skipped": 0,
+    "length2_rules_buy_nothing_width2": true,
+    "length2_rules_buy_nothing_width3": true,
+    "price_monotone_in_L_width2": true,
+    "price_monotone_in_L_width3": true,
+    "width2_threshold_below_max_length": false
+  }
+}

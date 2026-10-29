@@ -1,0 +1,4 @@
+width,num_qubits,generators,search_max_length,identity_words_found,pair_free_identity_words,primitive_identities,shortest_primitive_length,primitive_by_length,witnesses
+width1,1,h0|x0|z0,6,207,36,30,4,"{""4"": 6, ""6"": 24}",h0.x0.h0.z0 ; h0.z0.h0.x0 ; x0.h0.z0.h0 ; x0.z0.x0.z0 ; z0.h0.x0.h0 ; z0.x0.z0.x0
+width2,2,h0|h1|x0|x1|z0|z1|cx01|cx10,6,4656,968,740,4,"{""4"": 38, ""5"": 40, ""6"": 662}",h0.h1.h0.h1 ; h0.x0.h0.z0 ; h0.x1.h0.x1 ; h0.z0.h0.x0 ; h0.z1.h0.z1 ; h1.h0.h1.h0
+width3,3,h0|h1|h2|x0|x1|x2|z0|z1|z2|cx01|cx12,6,14593,3708,2880,4,"{""4"": 92, ""5"": 40, ""6"": 2748}",h0.h1.h0.h1 ; h0.h2.h0.h2 ; h0.x0.h0.z0 ; h0.x1.h0.x1 ; h0.x2.h0.x2 ; h0.z0.h0.x0

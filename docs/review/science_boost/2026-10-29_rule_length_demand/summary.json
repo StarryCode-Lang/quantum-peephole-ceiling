@@ -1,0 +1,213 @@
+{
+  "as_of": "2026-10-29",
+  "contract": {
+    "part_a_search": "greedy closure + monotone BFS depth <= min(gap, 3), exactly E75",
+    "part_b_search": "depth 1 on the window root only; the question is which rules exist, not how deep a plan is",
+    "read_only": [
+      "data/",
+      "release/",
+      "docs/manuscript/"
+    ],
+    "rule_length_definition": "source.gate_count of the matched rule; pair_v1 actions count as 2",
+    "rule_library": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+    "rule_library_sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295",
+    "scope": "full (1,474 safe rules) + pair_v1 + structural exchanges",
+    "window_predictions": "docs/review/science_boost/2026-10-27_span_law/window_predictions.csv",
+    "window_predictions_sha256": "45e8d0d5fbac81b7c730def7c130bee55a05d60a6ac31508789885341d71ab6a"
+  },
+  "experiment_id": "E80_RULE_LENGTH_DEMAND_2026_10_29",
+  "part_a": {
+    "configs": {
+      "all_L2_2": {
+        "after_search": 6747,
+        "after_search_rate": 0.309524,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_2",
+        "failures": 15051,
+        "greedy_exact": 6575,
+        "greedy_rate": 0.301633,
+        "include_base": true,
+        "lmax": 2,
+        "lmin": 2,
+        "members_reducible": 21798,
+        "members_total": 21845,
+        "part": "A_width1_clifford24",
+        "price": 0.690476
+      },
+      "all_L2_3": {
+        "after_search": 17642,
+        "after_search_rate": 0.80934,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_3",
+        "failures": 4156,
+        "greedy_exact": 17446,
+        "greedy_rate": 0.800349,
+        "include_base": true,
+        "lmax": 3,
+        "lmin": 2,
+        "members_reducible": 21798,
+        "members_total": 21845,
+        "part": "A_width1_clifford24",
+        "price": 0.19066
+      },
+      "all_L2_4": {
+        "after_search": 21640,
+        "after_search_rate": 0.992752,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_4",
+        "failures": 158,
+        "greedy_exact": 21606,
+        "greedy_rate": 0.991192,
+        "include_base": true,
+        "lmax": 4,
+        "lmin": 2,
+        "members_reducible": 21798,
+        "members_total": 21845,
+        "part": "A_width1_clifford24",
+        "price": 0.007248
+      },
+      "all_L2_5": {
+        "after_search": 21798,
+        "after_search_rate": 1.0,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_5",
+        "failures": 0,
+        "greedy_exact": 21798,
+        "greedy_rate": 1.0,
+        "include_base": true,
+        "lmax": 5,
+        "lmin": 2,
+        "members_reducible": 21798,
+        "members_total": 21845,
+        "part": "A_width1_clifford24",
+        "price": 0.0
+      },
+      "all_L2_6": {
+        "after_search": 21798,
+        "after_search_rate": 1.0,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_6",
+        "failures": 0,
+        "greedy_exact": 21798,
+        "greedy_rate": 1.0,
+        "include_base": true,
+        "lmax": 6,
+        "lmin": 2,
+        "members_reducible": 21798,
+        "members_total": 21845,
+        "part": "A_width1_clifford24",
+        "price": 0.0
+      },
+      "all_L2_7": {
+        "after_search": 21798,
+        "after_search_rate": 1.0,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_7",
+        "failures": 0,
+        "greedy_exact": 21798,
+        "greedy_rate": 1.0,
+        "include_base": true,
+        "lmax": 7,
+        "lmin": 2,
+        "members_reducible": 21798,
+        "members_total": 21845,
+        "part": "A_width1_clifford24",
+        "price": 0.0
+      },
+      "base": {
+        "after_search": 3734,
+        "after_search_rate": 0.1713,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "base",
+        "failures": 18064,
+        "greedy_exact": 3697,
+        "greedy_rate": 0.169603,
+        "include_base": true,
+        "lmax": 0,
+        "lmin": 1,
+        "members_reducible": 21798,
+        "members_total": 21845,
+        "part": "A_width1_clifford24",
+        "price": 0.8287
+      }
+    },
+    "fragment": {
+      "c_abs_histogram": {
+        "0": 1,
+        "1": 4,
+        "2": 8,
+        "3": 9,
+        "4": 2
+      },
+      "classes": 24,
+      "generators": [
+        "h0",
+        "s0",
+        "x0",
+        "z0"
+      ],
+      "listings": 21845,
+      "max_length": 7,
+      "num_qubits": 1,
+      "reducible": 21798
+    },
+    "threshold": 5
+  },
+  "part_b": {
+    "action_kind_histogram": {
+      "cancel|rule": 378,
+      "merge|rule": 100,
+      "none": 423
+    },
+    "by_family": {
+      "Adder": {
+        "2": 32
+      },
+      "Grover": {
+        "2": 40
+      },
+      "HaarRandom": {
+        "2": 27
+      },
+      "HardwareEfficient": {
+        "2": 38
+      },
+      "IQP": {},
+      "Oracle": {},
+      "QuantumWalk": {
+        "2": 269
+      },
+      "UCCSD_inspired": {
+        "2": 72
+      }
+    },
+    "by_root_kind": {
+      "GREEDY_FIXED_POINT": {},
+      "RAW_NORMALIZED_OVER_BASELINE_BUDGET": {
+        "2": 478
+      }
+    },
+    "content_windows": 901,
+    "min_length_histogram": {
+      "2": 478
+    },
+    "no_action": 423,
+    "scanned": 901,
+    "truncated": 0
+  },
+  "purpose": "measure rule-length demand: (A) the genuine 24-element one-qubit Clifford group, (B) the content-class windows of the real panel",
+  "runtime_seconds": 43.6,
+  "self_checks": {
+    "part_a_is_the_24_element_group": true,
+    "part_a_threshold_defined": true,
+    "part_b_has_actions_for_most": null,
+    "part_b_scanned_all_windows": null
+  }
+}
