@@ -127,3 +127,28 @@ i − 1 ≤ D    ⟹    i ≤ D + 1.
 3. `T-9` 给的是**上界**；下界 `L*(m) ≥ min(m, D+1)` 需要局部刚性词的存在性，
    本文件只在两个片段上实测（`W2`、`Q1`），未给一般构造。
 4. 窗口是**连续**的。允许非连续模式（PROP 风格）时 `D` 界的证明不适用。
+
+---
+
+## 8. Erratum (2026-10-31, round 21)
+
+The statement of `T-9` and its proof are unaffected. What is corrected is the
+**parameter** substituted for the two-qubit case.
+
+`W2 = {h0, x0, z0, h1, x1, z1, cx01, cx10}` generates a group of order
+**1,152**, not the 2-qubit Clifford group (order **11,520**): `{h, x, z}`
+generate the order-8 group `⟨h,x⟩` on one qubit and `z = s^2` cannot manufacture
+the missing `s`. So §2's `D = 7` is the diameter of an index-10 **subgroup**.
+
+On the project's own basis `{h, x, rz, cx}` — where `rz` is a single native gate
+for every angle, so `z = rz(pi)` and `s = rz(pi/2)` both cost 1, and where both
+CX directions are native (the frozen panel contains 18,234 forward and 6,348
+reversed CX) — the diameter is **9** and the threshold is **10**, not 8.
+
+Consequences: the shipped library's maximum source length (5) is **5 levels**
+short, not 3; and `L*(8) = 8 = D+1` no longer reads as "the bound is attained on
+the 2-qubit Clifford group". The one-qubit claim (`Q1`: `D = 4`, `L* = 5`) stands
+and is reproduced bit-exactly.
+
+See `panel_diameter_and_length_floor_2026-10-31.md` (`PD-1`, `PD-2`, `LF-1`,
+`LF-C1`) and `docs/review/science_boost/2026-10-31_innovation_scan.md`.

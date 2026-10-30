@@ -1,0 +1,227 @@
+{
+  "experiment": "E85_LITERATURE_SCAN_2026_10_31",
+  "as_of": "2026-10-31",
+  "channels_used": {
+    "arxiv_atom_fielded": {
+      "queries": 20,
+      "records": 246
+    },
+    "github_rest_authenticated": {
+      "repos": 11,
+      "ok": 9
+    }
+  },
+  "channels_unavailable": {
+    "tavily": "no TAVILY_API_KEY, package not installed",
+    "exa": "no MCP server configured, no key",
+    "multi-search-engine": "no key",
+    "arxiv-reader": "no LLM key",
+    "citation-manager": "no Crossref dependency; replaced by a docs-wide text-coverage check"
+  },
+  "counts": {
+    "unique_records": 246,
+    "from_2026": 123,
+    "cited_in_repo": 73,
+    "uncited": 173,
+    "by_year": {
+      "2023": 25,
+      "2024": 37,
+      "2025": 61,
+      "2026": 123
+    }
+  },
+  "query_log": [
+    {
+      "query": "abs:\"Clifford\" AND abs:\"Cayley\"",
+      "status": "OK",
+      "hits": 40
+    },
+    {
+      "query": "abs:\"Clifford group\" AND abs:\"diameter\"",
+      "status": "OK",
+      "hits": 1
+    },
+    {
+      "query": "abs:\"Clifford group\" AND abs:\"word length\"",
+      "status": "OK",
+      "hits": 0
+    },
+    {
+      "query": "abs:\"gate set\" AND abs:\"compilation\" AND abs:\"quantum circuit\"",
+      "status": "OK",
+      "hits": 40
+    },
+    {
+      "query": "abs:\"quantum circuit\" AND abs:\"template\" AND abs:\"library\"",
+      "status": "OK",
+      "hits": 3
+    },
+    {
+      "query": "abs:\"peephole\" AND abs:\"quantum\"",
+      "status": "OK",
+      "hits": 9
+    },
+    {
+      "query": "abs:\"rewrite\" AND abs:\"completeness\" AND abs:\"quantum\"",
+      "status": "OK",
+      "hits": 40
+    },
+    {
+      "query": "abs:\"circuit optimization\" AND abs:\"phase polynomial\"",
+      "status": "OK",
+      "hits": 2
+    },
+    {
+      "query": "abs:\"ZX-calculus\" AND abs:\"completeness\"",
+      "status": "OK",
+      "hits": 40
+    },
+    {
+      "query": "abs:\"equality saturation\" AND abs:\"quantum\"",
+      "status": "OK",
+      "hits": 1
+    },
+    {
+      "query": "abs:\"quantum circuit\" AND abs:\"lower bound\" AND abs:\"gate count\"",
+      "status": "OK",
+      "hits": 9
+    },
+    {
+      "query": "abs:\"transpilation\" AND abs:\"equivalence\" AND abs:\"verification\"",
+      "status": "OK",
+      "hits": 1
+    },
+    {
+      "query": "abs:\"quantum circuit\" AND abs:\"large language model\" AND abs:\"compiler\"",
+      "status": "OK",
+      "hits": 3
+    },
+    {
+      "query": "abs:\"reinforcement learning\" AND abs:\"circuit synthesis\" AND abs:\"quantum\"",
+      "status": "OK",
+      "hits": 10
+    },
+    {
+      "query": "abs:\"Clifford\" AND abs:\"synthesis\" AND abs:\"optimal\"",
+      "status": "OK",
+      "hits": 40
+    },
+    {
+      "query": "abs:\"quantum compiler\" AND abs:\"testing\"",
+      "status": "OK",
+      "hits": 23
+    },
+    {
+      "query": "abs:\"quantum circuit\" AND abs:\"canonical form\"",
+      "status": "OK",
+      "hits": 20
+    },
+    {
+      "query": "abs:\"stabilizer\" AND abs:\"tableau\" AND abs:\"optimization\"",
+      "status": "OK",
+      "hits": 9
+    },
+    {
+      "query": "abs:\"quantum\" AND abs:\"compilation\" AND abs:\"co-design\"",
+      "status": "OK",
+      "hits": 40
+    },
+    {
+      "query": "abs:\"quantum circuit\" AND abs:\"representation\" AND abs:\"compiler\"",
+      "status": "OK",
+      "hits": 40
+    }
+  ],
+  "github": [
+    {
+      "repo": "Qiskit/qiskit",
+      "status": "OK",
+      "stars": "7937",
+      "pushed_at": "2026-10-30",
+      "latest_release": "2.6.1",
+      "release_date": "2026-10-22"
+    },
+    {
+      "repo": "Quantinuum/tket",
+      "status": "OK",
+      "stars": "318",
+      "pushed_at": "2026-10-30",
+      "latest_release": "v2.18.5",
+      "release_date": "2026-10-08"
+    },
+    {
+      "repo": "quantum-compiler/quartz",
+      "status": "OK",
+      "stars": "93",
+      "pushed_at": "2026-10-06",
+      "latest_release": "v0.3.2",
+      "release_date": "2025-12-10"
+    },
+    {
+      "repo": "zxcalc/pyzx",
+      "status": "OK",
+      "stars": "553",
+      "pushed_at": "2026-10-29",
+      "latest_release": "v0.10.7",
+      "release_date": "2026-10-01"
+    },
+    {
+      "repo": "BQSKit/bqskit",
+      "status": "OK",
+      "stars": "188",
+      "pushed_at": "2026-10-17",
+      "latest_release": "1.2.1",
+      "release_date": "2025-08-30"
+    },
+    {
+      "repo": "munich-quantum-toolkit/qcec",
+      "status": "OK",
+      "stars": "121",
+      "pushed_at": "2026-10-26",
+      "latest_release": "v3.11.0",
+      "release_date": "2026-10-09"
+    },
+    {
+      "repo": "munich-quantum-toolkit/bench",
+      "status": "OK",
+      "stars": "133",
+      "pushed_at": "2026-10-30",
+      "latest_release": "v2.3.0",
+      "release_date": "2026-09-12"
+    },
+    {
+      "repo": "qqq-wisc/tzap",
+      "status": "OK",
+      "stars": "51",
+      "pushed_at": "2026-10-27",
+      "latest_release": "v0.8.0",
+      "release_date": "2026-10-11"
+    },
+    {
+      "repo": "psg-mit/quanto",
+      "status": "ERROR:HTTPError",
+      "stars": "",
+      "pushed_at": "",
+      "latest_release": "",
+      "release_date": ""
+    },
+    {
+      "repo": "CQCL/tket",
+      "status": "OK",
+      "stars": "318",
+      "pushed_at": "2026-10-30",
+      "latest_release": "v2.18.5",
+      "release_date": "2026-10-08"
+    },
+    {
+      "repo": "quartz-tools/quartz",
+      "status": "ERROR:HTTPError",
+      "stars": "",
+      "pushed_at": "",
+      "latest_release": "",
+      "release_date": ""
+    }
+  ],
+  "coverage_basis": "every arXiv id mentioned anywhere under docs/ plus the top-level markdown files",
+  "elapsed_seconds": 1.1
+}

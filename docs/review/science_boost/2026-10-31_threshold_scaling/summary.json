@@ -1,0 +1,200 @@
+{
+  "experiment": "E86_THRESHOLD_SCALING_2026_10_31",
+  "as_of": "2026-10-31",
+  "contract": {
+    "offline": true,
+    "writes_under_data": false,
+    "writes_under_release": false,
+    "writes_under_manuscript": false
+  },
+  "statement": "a library whose longest source pattern is L can only reach words of length <= L over g(n) generators; completeness at n qubits therefore forces sum_{k<=L} g^k >= |C_n|, i.e. L = Omega(n^2 / log n)",
+  "formula": {
+    "clifford_order": "2^(n^2+2n) * prod_{j=1..n} (4^j - 1)",
+    "generators": "g(n) = 4n + n(n-1) = n^2 + 3n",
+    "lower_bound": "L_min(n) = min{L : sum_{k<=L} g(n)^k >= |C_n|}",
+    "asymptotic": "L_min(n) ~ 2 n^2 / log2(n^2 + 3n) = Omega(n^2 / log n)"
+  },
+  "table": [
+    {
+      "n_qubits": 1,
+      "clifford_order": "24",
+      "generator_count": 4,
+      "counting_lower_bound_L": 3,
+      "L_over_n_squared": 3.0,
+      "asymptotic_estimate": 1.0,
+      "measured_diameter": 4,
+      "measured_threshold": 5,
+      "library_budget_is_5": true
+    },
+    {
+      "n_qubits": 2,
+      "clifford_order": "11520",
+      "generator_count": 10,
+      "counting_lower_bound_L": 5,
+      "L_over_n_squared": 1.25,
+      "asymptotic_estimate": 2.41,
+      "measured_diameter": 9,
+      "measured_threshold": 10,
+      "library_budget_is_5": true
+    },
+    {
+      "n_qubits": 3,
+      "clifford_order": "92897280",
+      "generator_count": 18,
+      "counting_lower_bound_L": 7,
+      "L_over_n_squared": 0.7778,
+      "asymptotic_estimate": 4.32,
+      "measured_diameter": "",
+      "measured_threshold": "",
+      "library_budget_is_5": false
+    },
+    {
+      "n_qubits": 4,
+      "clifford_order": "12128668876800",
+      "generator_count": 28,
+      "counting_lower_bound_L": 10,
+      "L_over_n_squared": 0.625,
+      "asymptotic_estimate": 6.66,
+      "measured_diameter": "",
+      "measured_threshold": "",
+      "library_budget_is_5": false
+    },
+    {
+      "n_qubits": 5,
+      "clifford_order": "25410822678459187200",
+      "generator_count": 40,
+      "counting_lower_bound_L": 13,
+      "L_over_n_squared": 0.52,
+      "asymptotic_estimate": 9.4,
+      "measured_diameter": "",
+      "measured_threshold": "",
+      "library_budget_is_5": false
+    },
+    {
+      "n_qubits": 6,
+      "clifford_order": "852437556169034724016128000",
+      "generator_count": 54,
+      "counting_lower_bound_L": 16,
+      "L_over_n_squared": 0.4444,
+      "asymptotic_estimate": 12.51,
+      "measured_diameter": "",
+      "measured_threshold": "",
+      "library_budget_is_5": false
+    },
+    {
+      "n_qubits": 7,
+      "clifford_order": "457620995529680351512370381586432000",
+      "generator_count": 70,
+      "counting_lower_bound_L": 20,
+      "L_over_n_squared": 0.4082,
+      "asymptotic_estimate": 15.99,
+      "measured_diameter": "",
+      "measured_threshold": "",
+      "library_budget_is_5": false
+    },
+    {
+      "n_qubits": 8,
+      "clifford_order": "3930874438226752547895796427294876777840640000",
+      "generator_count": 88,
+      "counting_lower_bound_L": 24,
+      "L_over_n_squared": 0.375,
+      "asymptotic_estimate": 19.82,
+      "measured_diameter": "",
+      "measured_threshold": "",
+      "library_budget_is_5": false
+    },
+    {
+      "n_qubits": 9,
+      "clifford_order": "540253208109423312588267985484047126717256901077237760000",
+      "generator_count": 108,
+      "counting_lower_bound_L": 28,
+      "L_over_n_squared": 0.3457,
+      "asymptotic_estimate": 23.98,
+      "measured_diameter": "",
+      "measured_threshold": "",
+      "library_budget_is_5": false
+    },
+    {
+      "n_qubits": 10,
+      "clifford_order": "1188028235526100326803818367688763697313973859877261586867421184000000",
+      "generator_count": 130,
+      "counting_lower_bound_L": 33,
+      "L_over_n_squared": 0.33,
+      "asymptotic_estimate": 28.48,
+      "measured_diameter": "",
+      "measured_threshold": "",
+      "library_budget_is_5": false
+    },
+    {
+      "n_qubits": 11,
+      "clifford_order": "41800017524885693065712250470705845644013852446412739176994997214398923145216000000",
+      "generator_count": 154,
+      "counting_lower_bound_L": 38,
+      "L_over_n_squared": 0.314,
+      "asymptotic_estimate": 33.3,
+      "measured_diameter": "",
+      "measured_threshold": "",
+      "library_budget_is_5": false
+    },
+    {
+      "n_qubits": 12,
+      "clifford_order": "23531316516068580587574482684596203366169584541468731769003735683004522603504710933628846080000000",
+      "generator_count": 180,
+      "counting_lower_bound_L": 44,
+      "L_over_n_squared": 0.3056,
+      "asymptotic_estimate": 38.44,
+      "measured_diameter": "",
+      "measured_threshold": "",
+      "library_budget_is_5": false
+    },
+    {
+      "n_qubits": 13,
+      "clifford_order": "211951253428287475733514073123726734622576267410878125782793585781046905698739419752836409880365814115205120000000",
+      "generator_count": 208,
+      "counting_lower_bound_L": 49,
+      "L_over_n_squared": 0.2899,
+      "asymptotic_estimate": 43.89,
+      "measured_diameter": "",
+      "measured_threshold": "",
+      "library_budget_is_5": false
+    },
+    {
+      "n_qubits": 14,
+      "clifford_order": "30545394636940578506088730792086605859060882311160591518798269187150085390999332368110351196223309195532598518408706994995200000000",
+      "generator_count": 238,
+      "counting_lower_bound_L": 55,
+      "L_over_n_squared": 0.2806,
+      "asymptotic_estimate": 49.65,
+      "measured_diameter": "",
+      "measured_threshold": "",
+      "library_budget_is_5": false
+    }
+  ],
+  "first_n_where_library_budget_5_fails": 3,
+  "exact_points": {
+    "n=1": {
+      "diameter": 4,
+      "threshold": 5
+    },
+    "n=2": {
+      "diameter": 9,
+      "threshold": 10
+    }
+  },
+  "round20_status": "round 20 closed the main-journal route because the ladder is bounded at fixed n; the ladder is unbounded in n, so that closure was about the wrong variable",
+  "non_claims": [
+    "the counting bound is elementary and is not new mathematics",
+    "it is a lower bound on the threshold, not an equality; at n=2 it gives 4 against a measured 10",
+    "no claim is made about non-Clifford fragments, where the group is infinite and no volume argument applies"
+  ],
+  "self_checks": {
+    "order_formula_matches_n1": true,
+    "order_formula_matches_n2": true,
+    "order_formula_matches_n3_literature": true,
+    "bound_consistent_with_n1_diameter": true,
+    "bound_consistent_with_n2_diameter": true,
+    "bound_is_monotone_in_n": true,
+    "bound_grows_superlinearly": true,
+    "library_budget_fails_beyond_small_n": true
+  }
+}

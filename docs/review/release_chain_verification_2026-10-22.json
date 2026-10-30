@@ -67,6 +67,17 @@
       "status": "KNOWN_DRIFT_ACCEPTED"
     },
     {
+      "attribution_commit": "WORKTREE_2026-10-31",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 16256,
+      "expected_sha256": "b85632b63aeaed0da8e94a3ca359a32b64c5f677758c6beca9d2a50864874a85",
+      "file": "scripts/verify_metric_audit_ledger.py",
+      "observed_bytes": 17518,
+      "observed_sha256": "84a2761ec64706e6ac05885d6d6fe0d667e5091e0cc4825b766354ceb19a86b5",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
       "attribution_commit": "dbbdf7837",
       "disposition": "POST_MANIFEST_EDIT",
       "expected_bytes": 454757,
@@ -74,6 +85,17 @@
       "file": "release/sbom.cdx.json",
       "observed_bytes": 477135,
       "observed_sha256": "41e9830d1e041f736b99b264494ef7262288cc4fd3c9eb476c3b2aa3e8a184e4",
+      "recommended_option": "A",
+      "status": "KNOWN_DRIFT_ACCEPTED"
+    },
+    {
+      "attribution_commit": "WORKTREE_2026-10-31",
+      "disposition": "POST_MANIFEST_EDIT",
+      "expected_bytes": 3350,
+      "expected_sha256": "190882516c0c9ba573b442520a67b1528f5bce4af48246c703a72ad1208b3f19",
+      "file": "tests/test_verify_metric_audit_ledger.py",
+      "observed_bytes": 3876,
+      "observed_sha256": "47b4c9dcfe059b5730579400e81802868c6420be3c45f272ea9931ba4f546702",
       "recommended_option": "A",
       "status": "KNOWN_DRIFT_ACCEPTED"
     },
@@ -196,8 +218,8 @@
   "register": "docs/review/release_drift_register.json",
   "schema_version": "release-chain-verification-v1",
   "status_counts": {
-    "KNOWN_DRIFT_ACCEPTED": 17,
-    "MATCH": 35025
+    "KNOWN_DRIFT_ACCEPTED": 19,
+    "MATCH": 35023
   },
   "verdict": "PASS_WITH_ACCEPTED_DRIFT"
 }

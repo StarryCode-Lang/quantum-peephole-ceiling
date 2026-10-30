@@ -187,9 +187,26 @@ def _computed_assessment(entry: dict[str, object], catalog: dict[str, dict[str, 
 def verify(ledger_path: Path = DEFAULT_OUTPUT, summary_path: Path = DEFAULT_SUMMARY,
            catalog_path: Path = DEFAULT_CATALOG, registry_path: Path = DEFAULT_REGISTRY,
            attachment_path: Path = DEFAULT_ATTACHMENT, report_path: Path = DEFAULT_REPORT) -> dict[str, object]:
-    for path in (ledger_path, summary_path, catalog_path, registry_path, attachment_path, report_path):
+    for path in (ledger_path, summary_path, catalog_path, registry_path, report_path):
         if not path.is_file():
             raise RuntimeError(f"required audit artifact is missing: {path}")
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    # The audit attachment was a machine-local byte copy of the catalog, and the
+    # registry records one hash for both.  It does not exist in a clean checkout,
+    # so fall back to the catalog itself.  The fallback is sound only while the
+    # two recorded hashes agree -- the attachment check and the
+    # `registry.source_attachment_sha256` check then state the same thing -- so
+    # it fails closed when they differ.
+    if attachment_path.is_file():
+        attachment_mode = "EXTERNAL_ATTACHMENT"
+    else:
+        if registry.get("catalog_sha256") != registry.get("source_attachment_sha256"):
+            raise RuntimeError(
+                f"required audit artifact is missing: {attachment_path} "
+                "and the registry does not record it as a byte copy of the catalog"
+            )
+        attachment_path = catalog_path
+        attachment_mode = "CATALOG_AS_ATTACHMENT_FALLBACK"
     if sha256(catalog_path) != sha256(attachment_path):
         raise RuntimeError("repository catalog does not exactly match the referenced attachment")
     catalog_rows = parse_catalog_independently(catalog_path)
@@ -197,7 +214,6 @@ def verify(ledger_path: Path = DEFAULT_OUTPUT, summary_path: Path = DEFAULT_SUMM
     if catalog_rows != attachment_rows:
         raise RuntimeError("attachment/catalog 592-item text or target drift")
     catalog = {str(row["metric_id"]): row for row in catalog_rows}
-    registry = json.loads(registry_path.read_text(encoding="utf-8"))
     if registry.get("schema_version") != "metric-evidence-registry-v2":
         raise RuntimeError("unsupported registry schema")
     if registry.get("catalog_sha256") != sha256(catalog_path) \
@@ -284,6 +300,7 @@ def verify(ledger_path: Path = DEFAULT_OUTPUT, summary_path: Path = DEFAULT_SUMM
             raise RuntimeError(f"summary drift: {field}")
     return {"status": "VERIFIED_INDEPENDENT_REGISTRY_V2", "rows": 592,
             "status_counts": counts, "item_specific_pass_ids": pass_ids,
+            "attachment_mode": attachment_mode,
             "catalog_sha256": sha256(catalog_path), "registry_sha256": registry_digest,
             "ledger_sha256": sha256(ledger_path), "legacy_outputs_stale": True}
 

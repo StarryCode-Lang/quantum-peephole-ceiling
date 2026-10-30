@@ -1,0 +1,336 @@
+{
+  "experiment": "E84_PANEL_GATE_DIAMETER_2026_10_31",
+  "as_of": "2026-10-31",
+  "contract": {
+    "writes_under_data": false,
+    "writes_under_release": false,
+    "writes_under_manuscript": false,
+    "cost_model": "word length over the fragment's native generators; the Cayley graph is exact",
+    "no_simulation": "the fragment's cost is word length, so no unitary simulation is required"
+  },
+  "question": "what is the Cayley diameter of the panel gate set, and is the shipped library's maximum source length (5) at or above its threshold D+1?",
+  "answer": {
+    "panel_2q_diameter": 9,
+    "panel_2q_threshold_upper": 10,
+    "panel_2q_one_cx_diameter": 11,
+    "panel_1q_diameter": 4,
+    "panel_1q_threshold_upper": 5,
+    "round20_w2_diameter": 7,
+    "round20_w2_order": 1152,
+    "clifford_2q_order": 11520,
+    "library_max_source_length": 5,
+    "library_length_histogram": {
+      "2": 36,
+      "3": 78,
+      "4": 365,
+      "5": 983
+    },
+    "gap_under_round20_comparison": -3,
+    "gap_under_panel_comparison": -5,
+    "verdict": "PANEL_BUDGET_SHORT_BY_5",
+    "round20_claim_status": "WITHDRAWN_AS_UNDERCOUNT_WRONG_GROUP",
+    "one_qubit_reading": {
+      "threshold": 5,
+      "library_budget": 5,
+      "budget_meets_threshold": true,
+      "e80_complete_library_price_at_threshold": 0.0,
+      "e80_shipped_library_price": 0.8287,
+      "e80_threshold": 5,
+      "implication": "at L = D+1 a complete library has price 0, so a positive price at L = D+1 is coverage, not length"
+    }
+  },
+  "attribution": {
+    "s_effect_on_diameter": -2,
+    "s_effect_on_group_order": 10368,
+    "cx_direction_effect": 2,
+    "x_effect": 1
+  },
+  "fragments": {
+    "panel_2q": {
+      "fragment": "panel_2q",
+      "n_qubits": 2,
+      "generator_count": 10,
+      "generators": "h0 h1 x0 x1 z0 z1 s0 s1 cx01 cx10",
+      "group_order": 11520,
+      "diameter": 9,
+      "threshold_L_star_upper": 10,
+      "histogram": "{\"0\": 1, \"1\": 10, \"2\": 60, \"3\": 272, \"4\": 967, \"5\": 2465, \"6\": 3846, \"7\": 3169, \"8\": 706, \"9\": 24}"
+    },
+    "panel_2q_one_cx": {
+      "fragment": "panel_2q_one_cx",
+      "n_qubits": 2,
+      "generator_count": 9,
+      "generators": "h0 h1 x0 x1 z0 z1 s0 s1 cx01",
+      "group_order": 11520,
+      "diameter": 11,
+      "threshold_L_star_upper": 12,
+      "histogram": "{\"0\": 1, \"1\": 9, \"2\": 45, \"3\": 165, \"4\": 482, \"5\": 1112, \"6\": 2073, \"7\": 3022, \"8\": 2716, \"9\": 1432, \"10\": 432, \"11\": 31}"
+    },
+    "panel_1q": {
+      "fragment": "panel_1q",
+      "n_qubits": 1,
+      "generator_count": 4,
+      "generators": "h0 x0 z0 s0",
+      "group_order": 24,
+      "diameter": 4,
+      "threshold_L_star_upper": 5,
+      "histogram": "{\"0\": 1, \"1\": 4, \"2\": 8, \"3\": 9, \"4\": 2}"
+    },
+    "w2_round20": {
+      "fragment": "w2_round20",
+      "n_qubits": 2,
+      "generator_count": 8,
+      "generators": "h0 x0 z0 h1 x1 z1 cx01 cx10",
+      "group_order": 1152,
+      "diameter": 7,
+      "threshold_L_star_upper": 8,
+      "histogram": "{\"0\": 1, \"1\": 8, \"2\": 37, \"3\": 121, \"4\": 291, \"5\": 418, \"6\": 253, \"7\": 23}"
+    },
+    "no_s_both_cx": {
+      "fragment": "no_s_both_cx",
+      "n_qubits": 2,
+      "generator_count": 8,
+      "generators": "h0 h1 x0 x1 z0 z1 cx01 cx10",
+      "group_order": 1152,
+      "diameter": 7,
+      "threshold_L_star_upper": 8,
+      "histogram": "{\"0\": 1, \"1\": 8, \"2\": 37, \"3\": 121, \"4\": 291, \"5\": 418, \"6\": 253, \"7\": 23}"
+    },
+    "no_s_one_cx": {
+      "fragment": "no_s_one_cx",
+      "n_qubits": 2,
+      "generator_count": 7,
+      "generators": "h0 h1 x0 x1 z0 z1 cx01",
+      "group_order": 1152,
+      "diameter": 11,
+      "threshold_L_star_upper": 12,
+      "histogram": "{\"0\": 1, \"1\": 7, \"2\": 25, \"3\": 61, \"4\": 116, \"5\": 173, \"6\": 208, \"7\": 238, \"8\": 181, \"9\": 100, \"10\": 35, \"11\": 7}"
+    },
+    "no_x": {
+      "fragment": "no_x",
+      "n_qubits": 2,
+      "generator_count": 8,
+      "generators": "h0 h1 z0 z1 s0 s1 cx01 cx10",
+      "group_order": 11520,
+      "diameter": 10,
+      "threshold_L_star_upper": 11,
+      "histogram": "{\"0\": 1, \"1\": 8, \"2\": 41, \"3\": 170, \"4\": 592, \"5\": 1552, \"6\": 2948, \"7\": 3775, \"8\": 2138, \"9\": 291, \"10\": 4}"
+    }
+  },
+  "qiskit_cross_checks": {
+    "panel_2q": {
+      "order": 11520,
+      "diameter": 9,
+      "matches": true
+    },
+    "panel_2q_one_cx": {
+      "order": 11520,
+      "diameter": 11,
+      "matches": true
+    },
+    "panel_1q": {
+      "order": 24,
+      "diameter": 4,
+      "matches": true
+    },
+    "w2_round20": {
+      "order": 1152,
+      "diameter": 7,
+      "matches": true
+    },
+    "no_s_both_cx": {
+      "order": 1152,
+      "diameter": 7,
+      "matches": true
+    },
+    "no_s_one_cx": {
+      "order": 1152,
+      "diameter": 11,
+      "matches": true
+    },
+    "no_x": {
+      "order": 11520,
+      "diameter": 10,
+      "matches": true
+    }
+  },
+  "e80_part_a": {
+    "configs": {
+      "all_L2_2": {
+        "after_search": 6747,
+        "after_search_rate": 0.309524,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_2",
+        "failures": 15051,
+        "greedy_exact": 6575,
+        "greedy_rate": 0.301633,
+        "include_base": true,
+        "lmax": 2,
+        "lmin": 2,
+        "members_reducible": 21798,
+        "members_total": 21845,
+        "part": "A_width1_clifford24",
+        "price": 0.690476
+      },
+      "all_L2_3": {
+        "after_search": 17642,
+        "after_search_rate": 0.80934,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_3",
+        "failures": 4156,
+        "greedy_exact": 17446,
+        "greedy_rate": 0.800349,
+        "include_base": true,
+        "lmax": 3,
+        "lmin": 2,
+        "members_reducible": 21798,
+        "members_total": 21845,
+        "part": "A_width1_clifford24",
+        "price": 0.19066
+      },
+      "all_L2_4": {
+        "after_search": 21640,
+        "after_search_rate": 0.992752,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_4",
+        "failures": 158,
+        "greedy_exact": 21606,
+        "greedy_rate": 0.991192,
+        "include_base": true,
+        "lmax": 4,
+        "lmin": 2,
+        "members_reducible": 21798,
+        "members_total": 21845,
+        "part": "A_width1_clifford24",
+        "price": 0.007248
+      },
+      "all_L2_5": {
+        "after_search": 21798,
+        "after_search_rate": 1.0,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_5",
+        "failures": 0,
+        "greedy_exact": 21798,
+        "greedy_rate": 1.0,
+        "include_base": true,
+        "lmax": 5,
+        "lmin": 2,
+        "members_reducible": 21798,
+        "members_total": 21845,
+        "part": "A_width1_clifford24",
+        "price": 0.0
+      },
+      "all_L2_6": {
+        "after_search": 21798,
+        "after_search_rate": 1.0,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_6",
+        "failures": 0,
+        "greedy_exact": 21798,
+        "greedy_rate": 1.0,
+        "include_base": true,
+        "lmax": 6,
+        "lmin": 2,
+        "members_reducible": 21798,
+        "members_total": 21845,
+        "part": "A_width1_clifford24",
+        "price": 0.0
+      },
+      "all_L2_7": {
+        "after_search": 21798,
+        "after_search_rate": 1.0,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "all_L2_7",
+        "failures": 0,
+        "greedy_exact": 21798,
+        "greedy_rate": 1.0,
+        "include_base": true,
+        "lmax": 7,
+        "lmin": 2,
+        "members_reducible": 21798,
+        "members_total": 21845,
+        "part": "A_width1_clifford24",
+        "price": 0.0
+      },
+      "base": {
+        "after_search": 3734,
+        "after_search_rate": 0.1713,
+        "arity": null,
+        "budget_exhausted": 0,
+        "config": "base",
+        "failures": 18064,
+        "greedy_exact": 3697,
+        "greedy_rate": 0.169603,
+        "include_base": true,
+        "lmax": 0,
+        "lmin": 1,
+        "members_reducible": 21798,
+        "members_total": 21845,
+        "part": "A_width1_clifford24",
+        "price": 0.8287
+      }
+    },
+    "fragment": {
+      "c_abs_histogram": {
+        "0": 1,
+        "1": 4,
+        "2": 8,
+        "3": 9,
+        "4": 2
+      },
+      "classes": 24,
+      "generators": [
+        "h0",
+        "s0",
+        "x0",
+        "z0"
+      ],
+      "listings": 21845,
+      "max_length": 7,
+      "num_qubits": 1,
+      "reducible": 21798
+    },
+    "threshold": 5
+  },
+  "self_checks": {
+    "panel_2q_order_is_11520": true,
+    "panel_1q_order_is_24": true,
+    "w2_order_is_1152_not_11520": true,
+    "w2_reproduces_round20_diameter_7": true,
+    "w2_reproduces_round20_histogram": true,
+    "q1_reproduces_round20_histogram": true,
+    "q1_bound_attained_matches_e80": true,
+    "qiskit_matches_every_fragment": true,
+    "e82_engine_is_exact_without_s": true,
+    "e82_engine_diverges_with_s": true,
+    "adding_s_grows_the_group_to_11520": true,
+    "removing_x_costs_one_level": true,
+    "generator_tableaus_match_qiskit": true,
+    "library_max_length_is_5": true,
+    "library_rule_total_is_1488": true,
+    "library_positive_length_rules_is_1462": true,
+    "panel_uses_both_cx_directions": true,
+    "panel_2q_has_locally_rigid_word_at_d_plus_1": true,
+    "w2_has_locally_rigid_word_at_d_plus_1": true
+  },
+  "provenance": {
+    "rule_library": {
+      "path": "data\\v13\\e43_quartz_rule_import\\generation_a\\rule_library.json",
+      "sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295"
+    },
+    "e80_summary": {
+      "path": "docs\\review\\science_boost\\2026-10-29_rule_length_demand\\summary.json",
+      "sha256": "beb670a40f4dd105e30da6b6fc056f0aabcc9a1610d5f946eb5420a867b0a602"
+    },
+    "e82_summary": {
+      "path": "docs\\review\\science_boost\\2026-10-30_diameter_bound\\summary.json",
+      "sha256": "a49dcc5bacec37e1da90a2def22a2aebe8c7e8cf081e9f01a2583ec4751da627"
+    }
+  }
+}

@@ -304,16 +304,39 @@
       "recorded_bytes": 68309,
       "recorded_sha256": "b4ebfbe59cb4cb40b135e1355d30f795114152033d1db0a48e34df06a40b075d",
       "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash."
+    },
+    {
+      "attribution_commit": "WORKTREE_2026-10-31",
+      "commit_date": "2026-10-31",
+      "disposition": "POST_MANIFEST_EDIT",
+      "file": "scripts/verify_metric_audit_ledger.py",
+      "first_recorded": "2026-10-31",
+      "observed_bytes": 17518,
+      "observed_sha256": "84a2761ec64706e6ac05885d6d6fe0d667e5091e0cc4825b766354ceb19a86b5",
+      "recommended_action": "Re-pin this entry when the manifest is regenerated; the edit is a verifier bug fix, not a data or evidence change.",
+      "recommended_option": "A",
+      "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
+      "recorded_bytes": null,
+      "recorded_sha256": null,
+      "root_cause": "Round 21 (2026-10-31) fix: the verifier required a machine-local external attachment that does not exist in a clean checkout, so its four tests failed permanently. The attachment is a byte copy of the catalog (the registry records one hash for both), so the verifier now falls back to the catalog and fails closed if the two registry hashes disagree."
+    },
+    {
+      "attribution_commit": "WORKTREE_2026-10-31",
+      "commit_date": "2026-10-31",
+      "disposition": "POST_MANIFEST_EDIT",
+      "file": "tests/test_verify_metric_audit_ledger.py",
+      "first_recorded": "2026-10-31",
+      "observed_bytes": 3876,
+      "observed_sha256": "47b4c9dcfe059b5730579400e81802868c6420be3c45f272ea9931ba4f546702",
+      "recommended_action": "Re-pin this entry when the manifest is regenerated; the edit is a verifier bug fix, not a data or evidence change.",
+      "recommended_option": "A",
+      "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
+      "recorded_bytes": null,
+      "recorded_sha256": null,
+      "root_cause": "Round 21 (2026-10-31) fix: the attachment/catalog drift test now asserts the guard that is active in each mode (external attachment present vs fallback), instead of assuming the foreign absolute path exists."
     }
   ],
-  "last_scan": {
-    "date": "2026-10-22",
-    "finding": "The manifest is a 2026-08-31 time-point snapshot that was never re-pinned. All 15 mismatches are attributable to named commits made after that snapshot; none is an unattributed edit.",
-    "known_drift_accepted": 15,
-    "manifest_entries": 35042,
-    "match": 35027,
-    "unregistered": 0
-  },
+  "last_scan": "2026-10-31",
   "policy": {
     "fail_closed": "Any hash mismatch that is not registered here is reported as DRIFT_UNREGISTERED and makes the verifier exit non-zero.",
     "no_history_rewrite": "Registering an entry does not modify release/ or data/. The owner still has to choose a re-pin or a supersession in release/.",

@@ -55,7 +55,16 @@ def test_verifier_rejects_attachment_catalog_text_drift(tmp_path: Path):
     catalog = tmp_path / "catalog.md"
     catalog.write_text(DEFAULT_CATALOG.read_text(encoding="utf-8").replace(
         "核心主张证据覆盖率", "核心主张证据覆盖率已改", 1), encoding="utf-8")
-    with pytest.raises(RuntimeError, match="does not exactly match"):
+    # Two modes, two guards, one property (a mutated catalog is rejected).  The
+    # original attachment was a machine-local copy of the catalog and is absent
+    # in a clean checkout; the verifier then falls back to comparing the catalog
+    # against the hash the registry recorded, which is the same statement.
+    expected = (
+        "does not exactly match"
+        if DEFAULT_ATTACHMENT.is_file()
+        else "registry source hash drift"
+    )
+    with pytest.raises(RuntimeError, match=expected):
         verify(DEFAULT_OUTPUT, DEFAULT_SUMMARY, catalog, DEFAULT_REGISTRY,
                DEFAULT_ATTACHMENT, DEFAULT_REPORT)
 

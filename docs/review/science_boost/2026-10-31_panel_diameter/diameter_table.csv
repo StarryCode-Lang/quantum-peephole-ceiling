@@ -1,0 +1,8 @@
+fragment,n_qubits,generator_count,generators,group_order,diameter,threshold_L_star_upper,histogram,note
+panel_2q,2,10,h0 h1 x0 x1 z0 z1 s0 s1 cx01 cx10,11520,9,10,"{""0"": 1, ""1"": 10, ""2"": 60, ""3"": 272, ""4"": 967, ""5"": 2465, ""6"": 3846, ""7"": 3169, ""8"": 706, ""9"": 24}","the project's basis {h,x,rz,cx}: rz makes z and s cost 1; cx native in both directions"
+panel_2q_one_cx,2,9,h0 h1 x0 x1 z0 z1 s0 s1 cx01,11520,11,12,"{""0"": 1, ""1"": 9, ""2"": 45, ""3"": 165, ""4"": 482, ""5"": 1112, ""6"": 2073, ""7"": 3022, ""8"": 2716, ""9"": 1432, ""10"": 432, ""11"": 31}","same, but the reverse CX costs 4 h + 1 cx (not a generator)"
+panel_1q,1,4,h0 x0 z0 s0,24,4,5,"{""0"": 1, ""1"": 4, ""2"": 8, ""3"": 9, ""4"": 2}","the 1-qubit panel basis {h,x,rz}: the 24-element Clifford group"
+w2_round20,2,8,h0 x0 z0 h1 x1 z1 cx01 cx10,1152,7,8,"{""0"": 1, ""1"": 8, ""2"": 37, ""3"": 121, ""4"": 291, ""5"": 418, ""6"": 253, ""7"": 23}","round 20's W2: no s, both CX -- order 1152, an index-10 subgroup"
+no_s_both_cx,2,8,h0 h1 x0 x1 z0 z1 cx01 cx10,1152,7,8,"{""0"": 1, ""1"": 8, ""2"": 37, ""3"": 121, ""4"": 291, ""5"": 418, ""6"": 253, ""7"": 23}",panel set minus the phase gate (isolates the s contribution)
+no_s_one_cx,2,7,h0 h1 x0 x1 z0 z1 cx01,1152,11,12,"{""0"": 1, ""1"": 7, ""2"": 25, ""3"": 61, ""4"": 116, ""5"": 173, ""6"": 208, ""7"": 238, ""8"": 181, ""9"": 100, ""10"": 35, ""11"": 7}",round 20's generator set minus cx10
+no_x,2,8,h0 h1 z0 z1 s0 s1 cx01 cx10,11520,10,11,"{""0"": 1, ""1"": 8, ""2"": 41, ""3"": 170, ""4"": 592, ""5"": 1552, ""6"": 2948, ""7"": 3775, ""8"": 2138, ""9"": 291, ""10"": 4}","panel set minus x (x = h z h, so this should be a no-op up to 2 gates)"

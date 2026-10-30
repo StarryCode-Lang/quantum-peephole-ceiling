@@ -109,3 +109,20 @@ rewritten; `data/`, `release/`, and `docs/manuscript/` are untouched.
 | Theory consolidation | Theorems 1/4 scattered across two theory documents | Theorem 5 (order/content decidability frontier) and Theorem 6 (local-rigidity lower bound on the price) stated and proved in one place, with their E72/E75 empirical support and explicit non-claims | `docs/theory/decidability_frontier_2026-10-28.md` |
 | Certificate semantics | Per-action witness + replay + engine hash chain justified internally | Nine silent-failure mechanisms (M1-M9) each pinned to a fail-closed certificate field, with the experiment that actually caught each one (three of them were this project's own defects) | `docs/review/certificate_failure_mode_map_2026-10-28.md` |
 | Measurement integrity | — | E75 found and fixed a **unitary-class key defect**: the legacy argmax pivot key splits tied-pivot Clifford unitaries across classes (1-qubit: 12 classes → 8; measured price 60.21% → 59.25%); E73's 30.25% reproduces exactly under the legacy key | Regression-gated: `legacy_key_reproduces_30_25pct: PASS` in the E75 summary |
+
+## Round-21 addendum (2026-10-31)
+
+Added by the science-boost review round of 2026-10-31. No earlier row is
+rewritten; `data/`, `release/`, and `docs/manuscript/` are untouched.
+
+| Area | Round-20 statement | Round-21 measured value | Disposition |
+|---|---|---|---|
+| 2-qubit Clifford diameter | `D = 7` on the fragment `W2` | `W2` has **order 1,152**, an index-10 subgroup; the panel basis `{h,x,rz,cx}` generates all **11,520** and has `D = 9` | Round-20 number **withdrawn as an undercount**; `PD-1` supersedes it |
+| Library length budget | "3 levels below the 2-qubit threshold" | threshold **10** vs budget **5** = **5 levels** | Corrected; `LF-1` makes the resulting price strictly positive at `m = 10` |
+| Gate-set dependence | not stated | `D` is a function of the (group, generator set) pair: adding `s` grows the group 10x and moves `D` 7 -> 9; removing the reverse CX moves `D` 9 -> 11 | New concept, `PD-2`; the frozen panel uses both CX directions (18,234 / 6,348) |
+| Completeness ladder | "bounded, so the main-journal route is closed" | bounded at fixed `n`, `Omega(n^2/log n)` in `n`; `L_min(3) = 7 > 5` | Main-journal gate **conditionally reopened**; the condition is upgrading `Omega` to `Theta` |
+| External gates | `external_cold_start` / `real_qpu` / `release_authority` OPEN | unchanged | Still OPEN; the local substitute is now two independent implementations agreeing bit-exactly on 7 fragments |
+
+The operational consequence: the completeness threshold is **not** a property of
+the rule library. It is a property of the (library, native gate set, qubit
+count) triple, and on the last axis it is unbounded.

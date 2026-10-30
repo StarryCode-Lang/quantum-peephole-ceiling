@@ -119,7 +119,19 @@ def compose_fast(left, right, n: int):
 
 
 def generators(n: int, names: Iterable[str]) -> list[tuple[str, tuple[tuple[int, ...], int]]]:
-    """Tableaus for the named generators on ``n`` qubits."""
+    """Tableaus for the named generators on ``n`` qubits.
+
+    .. warning::
+       Exact only when no row of the generated group carries a ``Y``, i.e. when
+       the generator set produces no ``XZ`` row.  The per-row sign is a complete
+       invariant modulo global phase only in that case; with ``s`` in the set the
+       ``i`` factor is dropped and the *metric* is wrong (the group is still
+       right).  Round 21 measured the divergence: on the panel set this engine
+       gives 274/983/... where the exact Z4 engine and qiskit both give
+       272/967/....  ``W2`` and ``Q1`` contain no ``Y`` row, so their numbers
+       stand.  Use ``e84_panel_gate_diameter.build_group_z4`` for anything that
+       includes ``s``.
+    """
 
     table: dict[str, tuple[tuple[int, ...], int]] = {}
     for q in range(n):
