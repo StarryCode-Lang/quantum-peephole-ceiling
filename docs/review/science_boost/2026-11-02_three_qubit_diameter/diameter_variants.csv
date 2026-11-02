@@ -1,0 +1,6 @@
+variant,num_qubits,generator_count,group_order,diameter,threshold,distance_histogram,note,runtime_seconds
+w2_no_s_round20,2,8,1152,7,8,"{""0"": 1, ""1"": 8, ""2"": 37, ""3"": 121, ""4"": 291, ""5"": 418, ""6"": 253, ""7"": 23}","round 20's set: no phase gate at all (order 1,152)",0.0
+panel_2q_round21,2,10,11520,9,10,"{""0"": 1, ""1"": 10, ""2"": 60, ""3"": 272, ""4"": 967, ""5"": 2465, ""6"": 3846, ""7"": 3169, ""8"": 706, ""9"": 24}","round 21's PD-1 set: + s, but sdg still costs 2",0.6
+panel_2q_sdg,2,12,11520,9,10,"{""0"": 1, ""1"": 12, ""2"": 77, ""3"": 359, ""4"": 1253, ""5"": 2926, ""6"": 4079, ""7"": 2473, ""8"": 328, ""9"": 12}",consistently closed: sdg = rz(-pi/2) is one native gate too,0.7
+panel_1q_round21,1,4,24,4,5,"{""0"": 1, ""1"": 4, ""2"": 8, ""3"": 9, ""4"": 2}","the 24-element 1-qubit group with s, no sdg",0.0
+panel_1q_sdg,1,5,24,3,4,"{""0"": 1, ""1"": 5, ""2"": 9, ""3"": 9}",the same group with sdg closed in,0.0

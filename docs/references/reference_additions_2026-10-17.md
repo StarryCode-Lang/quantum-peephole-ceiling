@@ -232,3 +232,33 @@ Source: E76 scan (`docs/review/science_boost/2026-10-28_literature_scan/`, 24 fi
 | qqq-wisc/tzap | v0.8.0 | 2026-10-11 | active, still not in the ceiling panel |
 | psg-mit/quanto | **404** | — | path unresolved for the fourth consecutive round; **not invented** |
 | unitaryfund/mitiq | v1.1.0 | 2026-09-04 | unchanged |
+
+---
+
+## H. 第 22 轮补充（2026-11-02）
+
+Source: E89 scan (`docs/review/science_boost/2026-11-02_literature_scan/`, 18 fielded queries,
+229 unique records, 174 from 2025 or later, 23 strictly cited / 206 not).
+
+| # | Reference | Added | Why it matters |
+|---|---|---|---|
+| **[134]** | "Lower bounds for the CNOT-complexity of linear reversible operators," arXiv:2607.22248 (2026-07-24) | 2026-11-02 | **Closes the round-21 main-journal condition.** Its abstract states that the maximum CNOT-complexity over all `n×n` matrices "is known to be `Θ(n²/log n)`". `LF-C1`'s `Ω(n²/log n)` is therefore a literature fact, and the proposed upgrade `Ω → Θ` is not ours to make. Any sentence presenting the asymptotic as new must be deleted. It also supplies the state of the art on *explicit* hard families (`4n − o(n)`, `n = 17167`), which is the right citation for "the ceiling is asymptotic, not constructive". |
+| **[135]** | "Optimization of Clifford Circuits," arXiv:1305.0810 (2013-05-03); published as *Efficient synthesis of linear reversible circuits*, QIC 13 (2013) | 2026-11-02 | **The direct precursor of the whole template-library framing.** It reports optimal circuits for **all** Clifford operations up to four inputs and then applies them as a **peephole** optimiser to ≤40-input Clifford circuits from the literature, cutting gate count by about 50%. This is "use exact small-Clifford optima as the yardstick for a peephole library", 13 years early. Must be cited as the starting point, never omitted: a referee in this area will know it. |
+| **[136]** | "Heuristic and Optimal Synthesis of CNOT and Clifford Circuits," arXiv:2503.14660 (2025-03-18) | 2026-11-02 | Optimal / A\* / greedy synthesis of CNOT and Clifford circuits, minimising two-qubit count or depth, claiming lower two-qubit counts than prior methods. Consequence for wording: "certified optimum" must always be qualified by the frozen triple (contract, library, budget), because a general-purpose optimal synthesiser now exists at intermediate sizes. Pairs with [117]/2609.16208 (the LMC bound used as its A\* heuristic). |
+
+> **Also note (no new entry)**: the round-21 claim "`L*(n) = Ω(n²/log n)`, main-journal gate
+> conditionally reopened pending `Θ`" is **withdrawn** — see
+> `docs/theory/panel_diameter_and_length_floor_2026-10-31.md` §8.1. The gate is closed.
+
+### H.1 Ecosystem snapshot (2026-11-02, E89)
+
+| Repo | Latest | Date | Reading |
+|---|---|---|---|
+| Qiskit/qiskit | 2.6.1 | 2026-10-22 | unchanged; last push 2026-11-02 |
+| Quantinuum/tket | v2.18.5 | 2026-10-08 | stable |
+| quantum-compiler/quartz | v0.3.2 | **2025-12-10** | release dormant 11 months; repo pushed 2026-11-01 |
+| zxcalc/pyzx | **v0.10.8** | **2026-11-01** | new release; the E48 falsifier version must be re-checked |
+| BQSKit/bqskit | 1.2.1 | 2025-08-30 | static |
+| munich-quantum-toolkit/qcec | v3.11.0 | 2026-10-09 | still the external equivalence oracle |
+| qqq-wisc/tzap | v0.8.0 | 2026-10-11 | active |
+| psg-mit/quanto | **404** | — | fifth consecutive round unresolved; **not invented** |

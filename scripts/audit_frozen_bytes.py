@@ -19,14 +19,21 @@ CRLF_DRIFT   the Git blob for that path hashes to the declared digest, so the
 REAL_DRIFT   neither the worktree nor the blob matches: the content changed
 MISSING      the declared path does not exist
 NO_DIGEST    the entry carries no sha256 (reported, never silently skipped)
+KNOWN_DRIFT_ACCEPTED
+             the worktree digest equals the one recorded for that path in the
+             drift register (``--dispositions``), so the change is attributed
+             to a named commit and reviewed. Fails closed if the register has a
+             different digest: an accepted drift that drifts again is a real
+             drift, not an accepted one.
 
 Usage
 -----
     python scripts/audit_frozen_bytes.py --manifest release/release_manifest.json
     python scripts/audit_frozen_bytes.py --manifest release/prepaper_release_manifest.json \
-        --allow-missing --limit 5000
+        --allow-crlf --dispositions docs/review/release_drift_register.json
 
-Exit status is 0 when every entry is MATCH, or CRLF_DRIFT with ``--allow-crlf``.
+Exit status is 0 when every entry is MATCH, or CRLF_DRIFT with ``--allow-crlf``,
+or KNOWN_DRIFT_ACCEPTED with ``--dispositions``.
 """
 
 from __future__ import annotations
@@ -98,11 +105,31 @@ def main() -> int:
     parser.add_argument("--allow-missing", action="store_true", help="treat MISSING as acceptable")
     parser.add_argument("--limit", type=int, default=0, help="audit at most N entries (0 = all)")
     parser.add_argument("--report", type=Path, default=None)
+    parser.add_argument(
+        "--dispositions",
+        type=Path,
+        default=None,
+        help=(
+            "drift register (docs/review/release_drift_register.json). A path whose worktree "
+            "digest equals the register's observed_sha256 is classified KNOWN_DRIFT_ACCEPTED "
+            "and does not fail the audit. Anything not in the register still fails closed."
+        ),
+    )
     parser.add_argument("--quiet", action="store_true")
     args = parser.parse_args()
 
     manifest_path = args.manifest if args.manifest.is_absolute() else ROOT / args.manifest
     payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+    accepted: dict[str, str] = {}
+    if args.dispositions:
+        register_path = args.dispositions if args.dispositions.is_absolute() else ROOT / args.dispositions
+        register = json.loads(register_path.read_text(encoding="utf-8"))
+        for entry in register.get("entries", []):
+            path = entry.get("file")
+            digest = entry.get("observed_sha256")
+            if isinstance(path, str) and isinstance(digest, str) and len(digest) == 64:
+                accepted[path] = digest
 
     entries = list(dict.fromkeys(iter_entries(payload)))
     if args.limit:
@@ -119,6 +146,17 @@ def main() -> int:
         actual = sha256_file(path)
         if actual == expected:
             counts["MATCH"] += 1
+            continue
+        if accepted.get(relative) == actual:
+            counts["KNOWN_DRIFT_ACCEPTED"] += 1
+            problems.append(
+                {
+                    "path": relative,
+                    "status": "KNOWN_DRIFT_ACCEPTED",
+                    "expected": expected,
+                    "actual": actual,
+                }
+            )
             continue
         blob = git_blob_sha(relative)
         if blob == expected:
@@ -148,6 +186,9 @@ def main() -> int:
         "manifest": manifest_path.relative_to(ROOT).as_posix()
         if manifest_path.is_relative_to(ROOT)
         else str(manifest_path),
+        "dispositions": (
+            args.dispositions.as_posix() if args.dispositions and len(accepted) else None
+        ),
         "entries": len(entries),
         "counts": dict(sorted(counts.items())),
         "ok": ok,

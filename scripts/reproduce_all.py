@@ -378,10 +378,12 @@ def audit_frozen_bytes():
         return False
     ok = True
     for manifest in ("release/release_manifest.json", "release/prepaper_release_manifest.json"):
-        proc = subprocess.run(
-            [sys.executable, str(script), "--manifest", manifest, "--allow-crlf", "--quiet"],
-            cwd=PROJECT_ROOT,
-        )
+        cmd = [sys.executable, str(script), "--manifest", manifest, "--allow-crlf", "--quiet"]
+        # The preprint chain has 19 reviewed drifts attributed to named commits. They are
+        # accepted only through the register, so an unregistered change still fails here.
+        if manifest.endswith("prepaper_release_manifest.json"):
+            cmd += ["--dispositions", "docs/review/release_drift_register.json"]
+        proc = subprocess.run(cmd, cwd=PROJECT_ROOT)
         status = "✅ PASS" if proc.returncode == 0 else "❌ FAIL"
         print(f"  {status}: {manifest}")
         ok = ok and proc.returncode == 0

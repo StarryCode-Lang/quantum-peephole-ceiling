@@ -126,3 +126,24 @@ rewritten; `data/`, `release/`, and `docs/manuscript/` are untouched.
 The operational consequence: the completeness threshold is **not** a property of
 the rule library. It is a property of the (library, native gate set, qubit
 count) triple, and on the last axis it is unbounded.
+
+## Round-22 addendum (2026-11-02)
+
+Added by the science-boost review round of 2026-11-02. No earlier row is
+rewritten; `data/`, `release/`, and `docs/manuscript/` are untouched.
+
+| Area | Round-21 statement | Round-22 measured value | Disposition |
+|---|---|---|---|
+| Completeness-price denominator | 4.63% (L=4) / 2.06% (m=6) / 0.46% (m=7) on "the 2-qubit Clifford fragment" | those numbers are **bit-exactly reproducible but belong to a 1,152-element subgroup**; on the panel group (11,520) the L=4 price is **6.40%** and the shipped-library price is **56.07%** (subgroup: 42.37%) | Denominator corrected; E87 Part A reproduces E78 exactly, which is the proof that the numbers were right and the scope label was wrong |
+| Shipped-library coverage | "length-2 rules already saturate their class, so the ladder starts at length 3" | true on the subgroup (`base == complete_L2`), **false on the panel group** (56.07 > 47.72): 8.35pp of the price is missing length-2 coverage | Reading withdrawn for the panel; marginal value of completing each length class is 8.35 / 27.44 / 13.88 / 6.40 pp (L=2/3/4/5) against 36 / 78 / 365 / 983 rules in the library |
+| Length axis at the production budget | "price at `m = 10` is strictly positive" (`LF-1`, no number) | `P_len(5,5) = 0.00%`, `P_len(6,5) = 4.03%`; the length floor is measurable one instance-length past the budget | New measured point; `PR-1` registered as an accounting identity with two provable ends, **not** a theorem |
+| 3-qubit diameter | "not claimed; `|C_3| = 92,897,280` uncomputed" | `D_3 in [11, 12]`: certified lower bound 11 with an exactly pinned witness, sampled ceiling 12; ball growth 1/22/274/2,565/19,680/127,925/711,213 | Computed; `D_1 = 4`, `D_2 = 9`, `D_3 in [11,12]` is too short a sequence to discriminate `Theta(n^2/log n)` from linear, so it does **not** support `LF-C1` |
+| Gate-set dependence | `PD-2`: `D` depends on the (group, generator) pair | `PD-3`: adding a redundant generator can leave both the group order and `D` unchanged while **moving the distance distribution** (2q + `sdg`: `D` 9 -> 9, but d=5 layer 2,465 -> 2,926 and d=8 layer 706 -> 328); 1q + `sdg`: `D` 4 -> 3 | Thresholds are generator-set robust; **prices are not**. Every price must be reported with its generator set |
+| Main-journal gate | "conditionally reopened; condition is upgrading `Omega` to `Theta`" | `2607.22248` states the maximum CNOT-complexity is **known** to be `Theta(n^2/log n)`; `1305.0810` (2013) already applied optimal <=4-input Clifford circuits as a **peephole** optimiser (~50% reduction) | Gate **closed** on prior art, not on missing evidence. PRX Quantum is the ceiling for the price law; Quantum for the certificate methodology |
+| `real_qpu` gate | `OPEN` | argued to be **out of scope**: every claim is a gate-count claim, gate count is not monotone in fidelity at this scale, and the only thing a QPU run could check (equivalence) is already externally verified by QCEC on 128/128 sources | Reclassification recommended to the owner; `release/` untouched, so the verdict JSON still says `OPEN` |
+
+The operational consequence: the completeness threshold is a property of the
+(library, generator set, instance length) triple, and the **price** additionally
+depends on the distance distribution, which redundant generators can move
+without moving the threshold. Reporting a price without its generator set is
+now a defect, not a shorthand.

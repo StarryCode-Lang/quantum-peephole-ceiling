@@ -1,11 +1,30 @@
 # Independent cold-start reproduction protocol
 
 Status: **protocol prepared; independent execution pending** (`external_cold_start: OPEN`
-in `release/v15_readiness_verdict.json`).
+in `release/v16_readiness_verdict.json`; the v15 verdict is the frozen pre-fix record).
 
 This procedure is for a fresh user account and a clean environment. The executor
 must start from a pinned Git revision of this repository and must not mix files
 from the author's working tree into the extracted directory.
+
+## 0. What this is NOT (read first)
+
+**Two independent implementations agreeing bit-exactly is not a cold start.** E84 and
+E88 reproduce the same Cayley distance histograms with a Z4-phase tableau and with
+qiskit's `Clifford`, and E87 reproduces E78's price curve bit-exactly on the subgroup.
+All of that runs in the author's environment, on the author's machine, against the
+author's frozen inputs. It rules out *implementation* error; it cannot rule out
+*mis-specified input* or *environment-dependent output*.
+
+The distinction matters because it is the only thing the external gate still buys:
+
+| Layer | What it proves | Who has done it |
+|---|---|---|
+| 0 — two implementations, one machine | no coding error in the metric | done (E84, E87, E88) |
+| 1 — same machine, clean checkout, pinned SHA | no undeclared local state | done (`reproduce_all.py --audit-frozen`) |
+| 2 — different machine, different account | no environment dependence | **not done** (`external_cold_start: OPEN`) |
+
+Do not describe layer 0 or 1 as a cold start in the manuscript.
 
 > **Revision note (2026-10-18).** Steps 1–2 previously instructed the reader to
 > download `release/prepaper_v12_restore_capsule.zip`. That archive was **retired

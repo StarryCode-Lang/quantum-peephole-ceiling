@@ -1,0 +1,256 @@
+{
+  "as_of": "2026-11-02",
+  "contract": {
+    "cost_model": "word length in the declared generator set (the Cayley graph is the cost model)",
+    "lower_bound_argument": "B_r(id) and B_r(g) disjoint => d(g) > 2r => D >= 2r + 1",
+    "read_only": [
+      "data/",
+      "release/",
+      "docs/manuscript/"
+    ],
+    "tableau": "E84 Z4-phase representation, imported not re-derived"
+  },
+  "experiment_id": "E88_CONSISTENT_DIAMETER_AND_THREE_QUBIT_FLOOR_2026_11_02",
+  "part_a_diameters": {
+    "panel_1q_round21": {
+      "diameter": 4,
+      "distance_histogram": {
+        "0": 1,
+        "1": 4,
+        "2": 8,
+        "3": 9,
+        "4": 2
+      },
+      "generator_count": 4,
+      "generators": [
+        "h0",
+        "x0",
+        "z0",
+        "s0"
+      ],
+      "group_order": 24,
+      "num_qubits": 1,
+      "threshold": 5
+    },
+    "panel_1q_sdg": {
+      "diameter": 3,
+      "distance_histogram": {
+        "0": 1,
+        "1": 5,
+        "2": 9,
+        "3": 9
+      },
+      "generator_count": 5,
+      "generators": [
+        "h0",
+        "x0",
+        "z0",
+        "s0",
+        "sdg0"
+      ],
+      "group_order": 24,
+      "num_qubits": 1,
+      "threshold": 4
+    },
+    "panel_2q_round21": {
+      "diameter": 9,
+      "distance_histogram": {
+        "0": 1,
+        "1": 10,
+        "2": 60,
+        "3": 272,
+        "4": 967,
+        "5": 2465,
+        "6": 3846,
+        "7": 3169,
+        "8": 706,
+        "9": 24
+      },
+      "generator_count": 10,
+      "generators": [
+        "h0",
+        "h1",
+        "x0",
+        "x1",
+        "z0",
+        "z1",
+        "s0",
+        "s1",
+        "cx01",
+        "cx10"
+      ],
+      "group_order": 11520,
+      "num_qubits": 2,
+      "threshold": 10
+    },
+    "panel_2q_sdg": {
+      "diameter": 9,
+      "distance_histogram": {
+        "0": 1,
+        "1": 12,
+        "2": 77,
+        "3": 359,
+        "4": 1253,
+        "5": 2926,
+        "6": 4079,
+        "7": 2473,
+        "8": 328,
+        "9": 12
+      },
+      "generator_count": 12,
+      "generators": [
+        "h0",
+        "h1",
+        "x0",
+        "x1",
+        "z0",
+        "z1",
+        "s0",
+        "s1",
+        "sdg0",
+        "sdg1",
+        "cx01",
+        "cx10"
+      ],
+      "group_order": 11520,
+      "num_qubits": 2,
+      "threshold": 10
+    },
+    "w2_no_s_round20": {
+      "diameter": 7,
+      "distance_histogram": {
+        "0": 1,
+        "1": 8,
+        "2": 37,
+        "3": 121,
+        "4": 291,
+        "5": 418,
+        "6": 253,
+        "7": 23
+      },
+      "generator_count": 8,
+      "generators": [
+        "h0",
+        "x0",
+        "z0",
+        "h1",
+        "x1",
+        "z1",
+        "cx01",
+        "cx10"
+      ],
+      "group_order": 1152,
+      "num_qubits": 2,
+      "threshold": 8
+    }
+  },
+  "part_b_three_qubit": {
+    "ball_runtime_seconds": 0.7,
+    "ball_size_at_radius": 127925,
+    "ball_sizes": [
+      1,
+      22,
+      274,
+      2565,
+      19680,
+      127925
+    ],
+    "ball_sizes_next": [
+      1,
+      22,
+      274,
+      2565,
+      19680,
+      127925,
+      711213
+    ],
+    "diameter_lower_bound": 11,
+    "exact_distance_witness": 11,
+    "generator_count": 21,
+    "generators": [
+      "h0",
+      "h1",
+      "h2",
+      "x0",
+      "x1",
+      "x2",
+      "z0",
+      "z1",
+      "z2",
+      "s0",
+      "s1",
+      "s2",
+      "sdg0",
+      "sdg1",
+      "sdg2",
+      "cx01",
+      "cx02",
+      "cx10",
+      "cx12",
+      "cx20",
+      "cx21"
+    ],
+    "negative_control_detects_nearby": true,
+    "negative_control_intersection": 37814,
+    "negative_control_word": [
+      "cx01",
+      "sdg2"
+    ],
+    "num_qubits": 3,
+    "radius": 5,
+    "sampled_no_element_above": 12,
+    "scalar_cross_check_ok": true,
+    "trials": 9,
+    "witness": {
+      "certified_lower_bound": 11,
+      "element_key": 192690601043441,
+      "in_own_ball": false,
+      "intersection_size": 0,
+      "pin_evidence": {
+        "ball_r_plus_1_of_g_size": 711213,
+        "ball_r_plus_1_size": 711213,
+        "intersection_with_ball_r_of_g": 25
+      },
+      "pinned_exact_distance": 11,
+      "word": [
+        "sdg1",
+        "h0",
+        "x1",
+        "cx02",
+        "x1",
+        "z0",
+        "x0",
+        "h1",
+        "sdg0",
+        "cx21",
+        "h2",
+        "sdg0",
+        "h2",
+        "z1",
+        "cx01",
+        "cx20",
+        "sdg2",
+        "h0",
+        "cx12",
+        "x1"
+      ],
+      "word_length": 20
+    }
+  },
+  "purpose": "(A) close the generator set consistently -- if rz is native then sdg = rz(-pi/2) is native too -- and measure what that does to the panel diameter; (B) certify a lower bound on the 3-qubit diameter, which |C_3| = 92,897,280 puts out of reach of a plain BFS",
+  "runtime_seconds": 13.2,
+  "self_checks": {
+    "ball_is_monotone": true,
+    "e84_summary_agrees_on_panel": true,
+    "negative_control_detects_nearby": true,
+    "round20_subgroup_reproduced": true,
+    "round21_one_qubit_reproduced": true,
+    "round21_panel_reproduced": true,
+    "scalar_and_vectorised_agree": true,
+    "sdg_cannot_grow_the_group": true,
+    "sdg_cannot_increase_the_diameter": true,
+    "three_qubit_bound_exceeds_two_qubit": true,
+    "witness_distance_pinned_exactly": true,
+    "witness_found": true
+  }
+}

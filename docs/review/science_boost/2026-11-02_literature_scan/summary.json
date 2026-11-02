@@ -1,0 +1,122 @@
+{
+  "as_of": "2026-11-02",
+  "contract": {
+    "arxiv": "Atom API, field-qualified abs: queries, 3 s spacing",
+    "coverage": "arXiv ids found anywhere under docs/ plus top-level markdown",
+    "github": "REST API, authenticated when a token is available",
+    "read_only": [
+      "data/",
+      "release/",
+      "docs/manuscript/"
+    ]
+  },
+  "counts": {
+    "queries": 18,
+    "records": 229,
+    "records_2025_or_later": 174,
+    "records_2025_or_later_uncited_strict": 157,
+    "records_cited_loose": 228,
+    "records_cited_strict": 23,
+    "records_uncited_strict": 206
+  },
+  "experiment_id": "E89_LITERATURE_SCAN_2026_11_02",
+  "github": [
+    {
+      "latest_release": "2.6.1",
+      "pushed_at": "2026-11-02",
+      "release_date": "2026-10-22",
+      "repo": "Qiskit/qiskit",
+      "stars": 7946,
+      "status": "OK"
+    },
+    {
+      "latest_release": "v2.18.5",
+      "pushed_at": "2026-10-30",
+      "release_date": "2026-10-08",
+      "repo": "Quantinuum/tket",
+      "stars": 318,
+      "status": "OK"
+    },
+    {
+      "latest_release": "v0.3.2",
+      "pushed_at": "2026-11-01",
+      "release_date": "2025-12-10",
+      "repo": "quantum-compiler/quartz",
+      "stars": 93,
+      "status": "OK"
+    },
+    {
+      "latest_release": "v0.10.8",
+      "pushed_at": "2026-11-01",
+      "release_date": "2026-11-01",
+      "repo": "zxcalc/pyzx",
+      "stars": 553,
+      "status": "OK"
+    },
+    {
+      "latest_release": "1.2.1",
+      "pushed_at": "2026-10-17",
+      "release_date": "2025-08-30",
+      "repo": "BQSKit/bqskit",
+      "stars": 188,
+      "status": "OK"
+    },
+    {
+      "latest_release": "v3.11.0",
+      "pushed_at": "2026-10-31",
+      "release_date": "2026-10-09",
+      "repo": "munich-quantum-toolkit/qcec",
+      "stars": 121,
+      "status": "OK"
+    },
+    {
+      "latest_release": "v0.8.0",
+      "pushed_at": "2026-10-27",
+      "release_date": "2026-10-11",
+      "repo": "qqq-wisc/tzap",
+      "stars": 52,
+      "status": "OK"
+    },
+    {
+      "latest_release": "",
+      "pushed_at": "",
+      "release_date": "",
+      "repo": "psg-mit/quanto",
+      "stars": "",
+      "status": "ERROR:HTTPError"
+    },
+    {
+      "latest_release": "v2.18.5",
+      "pushed_at": "2026-10-30",
+      "release_date": "2026-10-08",
+      "repo": "CQCL/tket",
+      "stars": 318,
+      "status": "OK"
+    },
+    {
+      "latest_release": "",
+      "pushed_at": "",
+      "release_date": "",
+      "repo": "quartz-tools/quartz",
+      "stars": "",
+      "status": "ERROR:HTTPError"
+    },
+    {
+      "latest_release": "",
+      "pushed_at": "",
+      "release_date": "",
+      "repo": "quantum-compiler/quanto",
+      "stars": "",
+      "status": "ERROR:HTTPError"
+    }
+  ],
+  "purpose": "check whether the completeness-threshold scaling and 'optimal peephole optimization of Clifford circuits' are already published",
+  "runtime_seconds": 89.8,
+  "unavailable_channels": {
+    "arxiv-reader": "no LLM key",
+    "citation-manager": "no Crossref dependency",
+    "exa": "no MCP server configured",
+    "multi-search-engine": "no API key",
+    "tavily": "no API key and package not installed"
+  }
+}
