@@ -1,0 +1,31 @@
+{
+  "contract": {
+    "inputs": [
+      "docs\\review\\science_boost\\2026-10-26_fragment_rotation_gap\\fragment_gap_rows.csv",
+      "docs\\review\\science_boost\\2026-10-25_fragment_bench\\instances/*/*.qasm"
+    ],
+    "rerun": "none (arithmetic on the frozen E70 rows and file hashes)",
+    "writes": [
+      "docs/review/science_boost/2026-11-04_fragment_bench_dedup/"
+    ]
+  },
+  "defect": "D11",
+  "experiment_id": "E93_FRAGMENT_BENCH_DEDUP_2026_11_04",
+  "repair": "gen_trotter_zz and gen_arithmetic_phase must consume the seed (random edge order / random carry length). Regenerate into a new dated bench directory and re-run E70 there; do not overwrite the pinned 2026-10-25 package.",
+  "result": {
+    "distinct_circuits": 170,
+    "gap_total_all_rows": 4313.0,
+    "gap_total_dedup": 3480.0,
+    "pooled_share_all_rows": 0.7104103872014839,
+    "pooled_share_dedup": 0.8804597701149425,
+    "rows": 240
+  },
+  "self_checks": {
+    "bench_file_count_240": true,
+    "dedup_row_count_170": true,
+    "e70_row_count_240": true,
+    "other_families_have_40_distinct": true,
+    "pooled_share_rises_after_dedup": true,
+    "seed_independent_families_have_5_distinct": true
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "by_e46_status": {
+    "EXACT_ESCAPE": {
+      "length_histogram": {
+        "2": 19303
+      },
+      "windows": 20002,
+      "with_quartz_action": 19895,
+      "with_reducing_action": 19303
+    },
+    "LOCAL_OPTIMUM": {
+      "length_histogram": {},
+      "windows": 18116,
+      "with_quartz_action": 17447,
+      "with_reducing_action": 0
+    }
+  },
+  "by_root_stratum": {
+    "GREEDY_FIXED_POINT": {
+      "min_reducing_length_histogram": {},
+      "windows": 1228,
+      "with_reducing_action": 0
+    },
+    "RAW_NORMALIZED_OVER_BASELINE_BUDGET": {
+      "min_reducing_length_histogram": {
+        "2": 19303
+      },
+      "windows": 36890,
+      "with_reducing_action": 19303
+    }
+  },
+  "contract": {
+    "roots": "rebuilt via load_root_states (hash-checked against the v14 certificates)",
+    "rule_library": "data\\v13\\e43_quartz_rule_import\\generation_a\\rule_library.json",
+    "rule_library_sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295",
+    "rule_scope": "e44_core_v1",
+    "window_results": "data\\v16\\e46_window_landscape\\window_results.csv",
+    "window_results_sha256": "855803011ed17156a347925fe6d4998a42ac4ad63ba7a1f8838faa46e7ad082b",
+    "writes": [
+      "docs/review/science_boost/2026-11-04_rule_utilisation/"
+    ]
+  },
+  "experiment_id": "E90_RULE_UTILISATION_2026_11_04",
+  "firing_by_source_length": {
+    "2": {
+      "rules_in_scope": 12,
+      "rules_that_fire": 11,
+      "rules_that_fire_reducing": 2
+    },
+    "3": {
+      "rules_in_scope": 32,
+      "rules_that_fire": 12,
+      "rules_that_fire_reducing": 0
+    },
+    "4": {
+      "rules_in_scope": 105,
+      "rules_that_fire": 14,
+      "rules_that_fire_reducing": 0
+    }
+  },
+  "runtime_seconds": 16.0,
+  "self_checks": {
+    "every_window_has_status": true,
+    "local_optima_have_no_reducing_action": true,
+    "neutral_first_escapes_are_counted": true,
+    "reducing_lengths_within_scope": true,
+    "windows_processed": true
+  },
+  "totals": {
+    "escapes_without_reducing_action": 699,
+    "escapes_without_reducing_action_rate": 0.034947,
+    "rule_utilisation": 0.248322,
+    "rules_in_declared_scope": 149,
+    "rules_that_fire_as_reducing": 2,
+    "rules_that_fire_at_all": 37,
+    "unique_windows": 38118,
+    "windows_with_any_action": 38069,
+    "windows_with_quartz_action": 37342,
+    "windows_with_reducing_action": 19303,
+    "windows_without_any_action": 49
+  }
+}

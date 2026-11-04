@@ -1,0 +1,504 @@
+{
+  "contract": {
+    "channels": {
+      "arxiv_api": "used",
+      "exa": "unavailable (no MCP server configured)",
+      "github_rest": "used",
+      "multi_search_engine": "unavailable (no package)",
+      "tavily": "unavailable (no key in this environment)"
+    },
+    "queries": 20,
+    "query_style": "fielded abs:\"...\" AND abs:\"...\"",
+    "writes": [
+      "docs/review/science_boost/2026-11-04_literature_scan/"
+    ]
+  },
+  "experiment_id": "E92_LITERATURE_SCAN_2026_11_04",
+  "query_log": [
+    {
+      "hits": 20,
+      "query": "abs:\"rewrite\" AND abs:\"quantum circuit\" AND abs:\"complete\""
+    },
+    {
+      "hits": 9,
+      "query": "abs:\"peephole\" AND abs:\"quantum\""
+    },
+    {
+      "hits": 6,
+      "query": "abs:\"template\" AND abs:\"quantum circuit\" AND abs:\"matching\""
+    },
+    {
+      "hits": 1,
+      "query": "abs:\"equality saturation\" AND abs:\"quantum\""
+    },
+    {
+      "hits": 2,
+      "query": "abs:\"e-graph\" AND abs:\"quantum\""
+    },
+    {
+      "hits": 40,
+      "query": "abs:\"commutation\" AND abs:\"quantum circuit\" AND abs:\"optimization\""
+    },
+    {
+      "hits": 13,
+      "query": "abs:\"Clifford\" AND abs:\"optimal\" AND abs:\"synthesis\" AND abs:\"gate count\""
+    },
+    {
+      "hits": 4,
+      "query": "abs:\"CNOT\" AND abs:\"complexity\" AND abs:\"linear reversible\""
+    },
+    {
+      "hits": 4,
+      "query": "abs:\"quantum compiler\" AND abs:\"pass\" AND abs:\"ordering\""
+    },
+    {
+      "hits": 40,
+      "query": "abs:\"quantum\" AND abs:\"compilation\" AND abs:\"reinforcement learning\""
+    },
+    {
+      "hits": 3,
+      "query": "abs:\"large language model\" AND abs:\"quantum circuit\" AND abs:\"compilation\""
+    },
+    {
+      "hits": 0,
+      "query": "abs:\"benchmark\" AND abs:\"quantum compiler\" AND abs:\"reproducib\""
+    },
+    {
+      "hits": 0,
+      "query": "abs:\"circuit optimization\" AND abs:\"local optimum\" AND abs:\"quantum\""
+    },
+    {
+      "hits": 10,
+      "query": "abs:\"phase polynomial\" AND abs:\"optimization\""
+    },
+    {
+      "hits": 6,
+      "query": "abs:\"ZX-calculus\" AND abs:\"optimization\" AND abs:\"completeness\""
+    },
+    {
+      "hits": 40,
+      "query": "abs:\"quantum circuit\" AND abs:\"representation\" AND abs:\"equivalence\""
+    },
+    {
+      "hits": 40,
+      "query": "abs:\"stabilizer\" AND abs:\"circuit\" AND abs:\"lower bound\""
+    },
+    {
+      "hits": 0,
+      "query": "abs:\"transpilation\" AND abs:\"quantum\" AND abs:\"equivalence checking\""
+    },
+    {
+      "hits": 18,
+      "query": "abs:\"quantum\" AND abs:\"circuit\" AND abs:\"depth\" AND abs:\"trade-off\" AND abs:\"gate count\""
+    },
+    {
+      "hits": 4,
+      "query": "abs:\"resource estimation\" AND abs:\"fault-tolerant\" AND abs:\"circuit optimization\""
+    }
+  ],
+  "runtime_seconds": 120.3,
+  "totals": {
+    "cited_loose": 109,
+    "cited_strict": 30,
+    "records_2025_or_later": 145,
+    "records_2026_or_later": 92,
+    "unique_records": 243
+  },
+  "uncited_2026": [
+    {
+      "id": "2611.01890",
+      "published": "2026-11-01",
+      "title": "Tensor Contraction with ZX Calculus, a Graph-Theoretic Approach"
+    },
+    {
+      "id": "2611.00569",
+      "published": "2026-10-31",
+      "title": "Promotion and Extension of General Escape-Covering Duality Relationship"
+    },
+    {
+      "id": "2610.38322",
+      "published": "2026-10-28",
+      "title": "Strict Frequency Bandwidths from Causal Light Cones Enable Scalable Exact Gradient Evaluation in Quantum Optimization"
+    },
+    {
+      "id": "2610.35660",
+      "published": "2026-10-26",
+      "title": "Quantum computation of energy level degeneracy and thermodynamical properties of spin systems"
+    },
+    {
+      "id": "2610.33715",
+      "published": "2026-10-24",
+      "title": "Quantum Closed Loop Inverse Kinematics Through Hilbert-Space Encoding of Robot Kinematics"
+    },
+    {
+      "id": "2610.21782",
+      "published": "2026-10-15",
+      "title": "Quantum-compatible Riemannian conjugate gradient for ground-state preparation"
+    },
+    {
+      "id": "2610.20791",
+      "published": "2026-10-14",
+      "title": "Sparse-QITE: Discovering Compact Generators for Quantum Imaginary-Time Evolution via Regularization Methods"
+    },
+    {
+      "id": "2610.13694",
+      "published": "2026-10-09",
+      "title": "QTN-RQNN: Quantum Tensor Network-Based Recurrent Quantum Neural Network"
+    },
+    {
+      "id": "2610.12447",
+      "published": "2026-10-08",
+      "title": "Entanglement entropy and magic of ZX-diagrams"
+    },
+    {
+      "id": "2610.12098",
+      "published": "2026-10-08",
+      "title": "Nearly Optimal T-Count for Symmetry-Based Quantum State Purification"
+    },
+    {
+      "id": "2610.07252",
+      "published": "2026-10-05",
+      "title": "Resource-Aware Grover Search for Minimum Vertex Cover"
+    },
+    {
+      "id": "2610.04731",
+      "published": "2026-10-03",
+      "title": "Sum-of-squares compilation of matrix-model dynamics for NISQ and fault-tolerant hardware"
+    },
+    {
+      "id": "2610.03393",
+      "published": "2026-10-02",
+      "title": "Multivariate quantum signal processing with optimal query complexity"
+    },
+    {
+      "id": "2610.02166",
+      "published": "2026-10-01",
+      "title": "Beyond light cones: State preparation complexity in quantum spin glasses"
+    },
+    {
+      "id": "2609.39280",
+      "published": "2026-09-30",
+      "title": "Optimal learning of covariant quantum states and channels"
+    },
+    {
+      "id": "2609.40032",
+      "published": "2026-09-30",
+      "title": "Pauli instability in arbitrary states: detecting magic in physical correlators"
+    },
+    {
+      "id": "2609.36694",
+      "published": "2026-09-29",
+      "title": "Optimized Randomized Hamiltonian Simulation via Average-Error Analysis"
+    },
+    {
+      "id": "2609.35656",
+      "published": "2026-09-28",
+      "title": "The power of oracle access: Optimal sample and query complexity of the abelian state hidden subgroup problem"
+    },
+    {
+      "id": "2609.30104",
+      "published": "2026-09-24",
+      "title": "MQSS-Selector: RL-Guided Pass Selection for an MLIR Compilation Pipeline"
+    },
+    {
+      "id": "2609.23633",
+      "published": "2026-09-20",
+      "title": "Spectral width and polynomial degree in perfect state transfer"
+    },
+    {
+      "id": "2609.11153",
+      "published": "2026-09-10",
+      "title": "Optimal T-Count for Block Encodings of Fermionic and Spin Hamiltonians"
+    },
+    {
+      "id": "2609.01762",
+      "published": "2026-09-01",
+      "title": "Synthesis of Compact and Expressive Quantum-Circuit Optimizations"
+    },
+    {
+      "id": "2609.01904",
+      "published": "2026-09-01",
+      "title": "Quantum Circuit and Tensor Network Implementation of the 2D Acoustic Wave Equation"
+    },
+    {
+      "id": "2608.27592",
+      "published": "2026-08-27",
+      "title": "Plateau-Constrained Selection: Exploiting Degeneracy for Lower-Depth Quantum Compilation"
+    },
+    {
+      "id": "2608.25042",
+      "published": "2026-08-25",
+      "title": "A Unified Framework for Operator Backpropagation and Observable Measurement in Quantum Computing"
+    },
+    {
+      "id": "2608.24074",
+      "published": "2026-08-25",
+      "title": "Event-Triggered Pinning Impulsive Control of Complex Networks with Actuation Delays: Stability Analysis and Zeno-Free Conditions"
+    },
+    {
+      "id": "2608.22810",
+      "published": "2026-08-24",
+      "title": "Numerical Evaluation of ZX Calculus Optimization for Solovay Kitaev Quantum Circuit Synthesis"
+    },
+    {
+      "id": "2608.18946",
+      "published": "2026-08-19",
+      "title": "AlphaClifford: Efficient Clifford Synthesis and Transpilation with Model-based RL"
+    },
+    {
+      "id": "2608.18536",
+      "published": "2026-08-19",
+      "title": "Good Stabilizer Codes from Shallow Clifford Circuits with Random Matchings"
+    },
+    {
+      "id": "2608.17136",
+      "published": "2026-08-17",
+      "title": "Gate-level Implementation and Resource Analysis of Lackadaisical Quantum Walk Search"
+    },
+    {
+      "id": "2608.13035",
+      "published": "2026-08-13",
+      "title": "Completeness for flow-preserving rewrite rules"
+    },
+    {
+      "id": "2608.11579",
+      "published": "2026-08-12",
+      "title": "Efficient Compilation for Hamiltonian Simulation via Global Binary Symplectic Form Simplification"
+    },
+    {
+      "id": "2608.09509",
+      "published": "2026-08-10",
+      "title": "Gate-based emulation of boson sampling using photonic qubits"
+    },
+    {
+      "id": "2608.06892",
+      "published": "2026-08-07",
+      "title": "Architecture-Aware Reinforcement Learning for Communication-Efficient Distributed Quantum Circuit Compilation"
+    },
+    {
+      "id": "2608.04058",
+      "published": "2026-08-04",
+      "title": "Graph-Aware Exact Branch-and-Bound with Device Profiles for Static Qubit Allocation"
+    },
+    {
+      "id": "2607.25941",
+      "published": "2026-07-28",
+      "title": "Sampling hard circuits with verifiably high fidelity"
+    },
+    {
+      "id": "2607.24714",
+      "published": "2026-07-27",
+      "title": "Efficient LLM-Generated Shuttling Compilers for Complex Trapped-Ion Architectures"
+    },
+    {
+      "id": "2607.16996",
+      "published": "2026-07-18",
+      "title": "Encoding Choices and Fault-Tolerant Resource Estimates for Digital Quantum Hamiltonian Descent"
+    },
+    {
+      "id": "2607.08235",
+      "published": "2026-07-09",
+      "title": "Full-Spectrum Quantum Simulation for the Nuclear Shell Model"
+    },
+    {
+      "id": "2607.02242",
+      "published": "2026-07-02",
+      "title": "Computable fermionic non-Gaussianity from the covariance matrix"
+    },
+    {
+      "id": "2606.28004",
+      "published": "2026-06-26",
+      "title": "Hard-core Bosons in Action: Applications to Quantum Circuits"
+    },
+    {
+      "id": "2606.25029",
+      "published": "2026-06-23",
+      "title": "Efficient Quantum Circuits for Coherent Conversion Between General First- and Second-Quantized Many-Body Representations"
+    },
+    {
+      "id": "2606.14677",
+      "published": "2026-06-12",
+      "title": "Quasilinear Equivalence Checking for Detector Error Models"
+    },
+    {
+      "id": "2606.12816",
+      "published": "2026-06-11",
+      "title": "Graph Reinforcement Learning for Calibration-Aware Quantum Circuit Routing"
+    },
+    {
+      "id": "2606.13521",
+      "published": "2026-06-11",
+      "title": "Quantum Logic Codes: Complete Transversal Logical Clifford Instruction Sets for High-Rate Stabilizer Quantum Error Correcting Codes"
+    },
+    {
+      "id": "2606.05527",
+      "published": "2026-06-04",
+      "title": "On the Cryptographic Structure Required for Verifying Qubits"
+    },
+    {
+      "id": "2605.28586",
+      "published": "2026-05-27",
+      "title": "Stabilizer rank bounds for magic-state orbits"
+    },
+    {
+      "id": "2605.15266",
+      "published": "2026-05-14",
+      "title": "Synthesis and Optimization of Encoding Circuits for Fault-Tolerant Quantum Computation"
+    },
+    {
+      "id": "2605.15076",
+      "published": "2026-05-14",
+      "title": "Deforming the Trail: Baseline Quantum Circuitry for $\\text{SU(2)}_k$ Lattice Gauge Theory"
+    },
+    {
+      "id": "2605.13638",
+      "published": "2026-05-13",
+      "title": "CO-MAP: A Reinforcement Learning Approach to the Qubit Allocation Problem"
+    },
+    {
+      "id": "2605.12365",
+      "published": "2026-05-12",
+      "title": "QAP-Router: Tackling Qubit Routing as Dynamic Quadratic Assignment with Reinforcement Learning"
+    },
+    {
+      "id": "2605.11375",
+      "published": "2026-05-12",
+      "title": "TuniQ: Autotuning Compilation Passes for Quantum Workloads at Scale for Effectiveness and Efficiency"
+    },
+    {
+      "id": "2605.04758",
+      "published": "2026-05-06",
+      "title": "Quantum Magic in early FTQC: From Diagonal Clifford Hierarchy No-Go Theorems to Architecture Design Blueprints"
+    },
+    {
+      "id": "2605.04748",
+      "published": "2026-05-06",
+      "title": "Automated Circuit Depth Reduction of Quantum Subroutines via Compilation"
+    },
+    {
+      "id": "2605.05256",
+      "published": "2026-05-06",
+      "title": "Error Mitigation in Dynamic Circuits for Hamiltonian Simulation"
+    },
+    {
+      "id": "2605.02389",
+      "published": "2026-05-04",
+      "title": "Rethinking How to Act: Action-Space Engineering for Reinforcement Learning-Based Circuit Routing in Distributed Quantum Systems"
+    },
+    {
+      "id": "2605.02727",
+      "published": "2026-05-04",
+      "title": "Distributed Quantum Circuit Optimisation: Evaluating Global and Local encodings"
+    },
+    {
+      "id": "2605.02966",
+      "published": "2026-05-03",
+      "title": "QBalance: A Reproducible Multi-Objective Workflow for Quantum Compilation, Noise Suppression, and Error-Mitigation Strategy Selection"
+    },
+    {
+      "id": "2604.25433",
+      "published": "2026-04-28",
+      "title": "Ember: An Extensible Benchmark Suite for Quantum Annealing Embedding Algorithms"
+    },
+    {
+      "id": "2604.24289",
+      "published": "2026-04-27",
+      "title": "On the encoding complexity of quantum numerical integration: an angle-structure characterization"
+    },
+    {
+      "id": "2604.19029",
+      "published": "2026-04-21",
+      "title": "MonteQ: A Monte Carlo Tree Search Based Quantum Circuit Synthesis Framework"
+    },
+    {
+      "id": "2604.19319",
+      "published": "2026-04-21",
+      "title": "An Oracle-Free Quantum Algorithm for Nonadiabatic Quantum Molecular Dynamics"
+    },
+    {
+      "id": "2604.13812",
+      "published": "2026-04-15",
+      "title": "AlphaCNOT: Learning CNOT Minimization with Model-Based Planning"
+    },
+    {
+      "id": "2604.09956",
+      "published": "2026-04-10",
+      "title": "Logical Compilation for Multi-Qubit Iceberg Patches"
+    },
+    {
+      "id": "2604.09957",
+      "published": "2026-04-10",
+      "title": "Mitigating Barren Plateaus in Variational Quantum Circuits through PDE-Constrained Loss Functions"
+    },
+    {
+      "id": "2604.05317",
+      "published": "2026-04-07",
+      "title": "Square-root Time Atom Reconfiguration Plan for Lattice-shaped Mobile Tweezers"
+    },
+    {
+      "id": "2604.06135",
+      "published": "2026-04-07",
+      "title": "Shot-based quantum encoding: a data-loading paradigm for quantum neural networks"
+    },
+    {
+      "id": "2603.17743",
+      "published": "2026-03-18",
+      "title": "Fast stabilizer state preparation via AI-optimized graph decimation"
+    },
+    {
+      "id": "2603.11156",
+      "published": "2026-03-11",
+      "title": "Low $T$-count preparation of nuclear eigenstates with tensor networks"
+    },
+    {
+      "id": "2603.03045",
+      "published": "2026-03-03",
+      "title": "QFlowNet: Fast, Diverse, and Efficient Unitary Synthesis with Generative Flow Networks"
+    },
+    {
+      "id": "2602.24062",
+      "published": "2026-02-27",
+      "title": "Optimized Compilation for Distributed Quantum Computing"
+    },
+    {
+      "id": "2602.24152",
+      "published": "2026-02-27",
+      "title": "Advanced Scheduling Strategies for Distributed Quantum Computing Jobs"
+    },
+    {
+      "id": "2602.12831",
+      "published": "2026-02-13",
+      "title": "Optimized Compilation of Logical Clifford Circuits"
+    },
+    {
+      "id": "2602.12042",
+      "published": "2026-02-12",
+      "title": "Scalable Preparation of Matrix Product States with Sequential and Brick Wall Quantum Circuits"
+    },
+    {
+      "id": "2602.11035",
+      "published": "2026-02-11",
+      "title": "Towards Term-based Verification of Diagrammatic Equivalence"
+    },
+    {
+      "id": "2602.03840",
+      "published": "2026-02-03",
+      "title": "Investigating Quantum Circuit Designs Using Neuro-Evolution"
+    },
+    {
+      "id": "2601.22372",
+      "published": "2026-01-29",
+      "title": "Manjushri: A Tool for Equivalence Checking of Quantum Circuits"
+    },
+    {
+      "id": "2601.10042",
+      "published": "2026-01-15",
+      "title": "Towards Minimal Fault-tolerant Error-Correction Sequence with Quantum Hamming Codes"
+    },
+    {
+      "id": "2601.04407",
+      "published": "2026-01-07",
+      "title": "Exact Multimode Quantization of Superconducting Circuits via Boundary Admittance and Continued Fractions"
+    }
+  ]
+}

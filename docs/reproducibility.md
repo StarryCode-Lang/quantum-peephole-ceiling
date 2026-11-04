@@ -115,6 +115,23 @@ counterexamples, 5.01 s). Its negative control rejects 13 of 16 perturbed circui
 returns `no_information` on the other 3, so it must be described as a decisive-but-incomplete
 oracle, never as a complete decision procedure.
 
+## Rule-library reporting rule (added 2026-11-04)
+
+**Any number that depends on a rewrite library must be reported with three qualifiers, not
+one.** The 2026-11-02 round established the first (`PD-3`, the generator set); the
+2026-11-04 round establishes the other two from its own measurements.
+
+| Qualifier | Why it changes the number | Evidence |
+|---|---|---|
+| **Generator set** | `D` is a function of the (group, generator) pair. Adding `sdg` leaves the 2-qubit order and `D` at 11,520 / 9 but moves the distance distribution (d=5: 2,465 → 2,926; d=8: 706 → 328), and the *price* is a function of that distribution | E88, `PD-3` |
+| **Maximal source length, in the scope actually used** | The shipped library's maximal source length is 5, but the certified landscape runs under scope `e44_core_v1`, whose maximal source length is **4** (12 rules of length 2, 32 of length 3, 105 of length 4, 0 of length 5). Quoting "budget 5" against a threshold of 10 mixes two scopes | E90 |
+| **Cost-delta profile (reducing-only vs neutral-inclusive)** | The locally irreducible fraction is *not* ordered against the measured price when the search contract admits cost-neutral actions. E87's price at `(m=6, L=5)` is 4.03% while the locally irreducible fraction is 5.26%, which is only possible because `actions_for(..., strictly_reducing=False)` admits `cost_delta = 0` | E91 §2, E75 `actions_for` |
+
+Consequence for prose: "the library is 5 levels short of the threshold" is a statement about
+the full 1,474-rule catalogue and the 2-qubit Clifford group; "the certified landscape never
+uses a rule longer than 2" is a statement about the frozen panel under `e44_core_v1`. Both are
+true and they must not be merged into one sentence.
+
 ## Smoke reproduction
 
 Use the project reproduction entry point for selected experiments or smoke defaults:

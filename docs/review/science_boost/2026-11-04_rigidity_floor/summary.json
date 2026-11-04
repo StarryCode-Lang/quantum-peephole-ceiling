@@ -1,0 +1,262 @@
+{
+  "contract": {
+    "cost_model": "word length = Cayley distance; no unitary simulation",
+    "frozen_inputs": "none (pure group computation on the declared generator sets)",
+    "reads": [],
+    "writes": [
+      "docs/review/science_boost/2026-11-04_rigidity_floor/"
+    ]
+  },
+  "definitions": {
+    "G_m": "number of length-m words whose product has Cayley distance m",
+    "V_m_L": "number of length-m words in which every window of length <= L is geodesic",
+    "rho": "(V(m,L) - G_m) / (A**m - G_m), the locally irreducible fraction at (fragment, L, m)",
+    "rho_vs_price": "not ordered: E75 admits cost-neutral actions, so rho may exceed the measured price"
+  },
+  "experiment_id": "E91_RIGIDITY_FLOOR_2026_11_04",
+  "extremal_m_D_plus_1": {
+    "panel_1q": {
+      "L": 4,
+      "density": 0.005859375,
+      "locally_rigid_words": 6,
+      "m": 5,
+      "per_first_gate": {
+        "h0": 3,
+        "s0": 5,
+        "x0": 0,
+        "z0": 2
+      },
+      "tail_length": 3,
+      "total_words": 1024
+    },
+    "panel_2q": {
+      "L": 9,
+      "density": 2.0568e-06,
+      "locally_rigid_words": 20568,
+      "m": 10,
+      "per_first_gate": {
+        "cx01": 7773,
+        "cx10": 7773,
+        "h0": 8086,
+        "h1": 8086,
+        "s0": 7846,
+        "s1": 7846,
+        "x0": 1876,
+        "x1": 1876,
+        "z0": 2573,
+        "z1": 2573
+      },
+      "tail_length": 8,
+      "total_words": 10000000000
+    }
+  },
+  "fragments": {
+    "panel_1q": {
+      "L2": {
+        "1": 4,
+        "2": 12,
+        "3": 36,
+        "4": 108,
+        "5": 324,
+        "6": 972,
+        "7": 2916,
+        "8": 8748,
+        "9": 26244
+      },
+      "L3": {
+        "2": 12,
+        "3": 20,
+        "4": 40,
+        "5": 78,
+        "6": 142,
+        "7": 278,
+        "8": 528,
+        "9": 988
+      },
+      "alphabet": 4,
+      "diameter": 4,
+      "generators": [
+        "h0",
+        "x0",
+        "z0",
+        "s0"
+      ],
+      "geodesic_counts": {
+        "0": 1,
+        "1": 4,
+        "2": 12,
+        "3": 20,
+        "4": 10,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "group_order": 24,
+      "histogram": {
+        "0": 1,
+        "1": 4,
+        "2": 8,
+        "3": 9,
+        "4": 2
+      },
+      "note": "the 1-qubit panel basis; D = 4, A = 4"
+    },
+    "panel_2q": {
+      "L2": {
+        "1": 10,
+        "10": 3874204890,
+        "11": 34867844010,
+        "12": 313810596090,
+        "13": 2824295364810,
+        "14": 25418658283290,
+        "2": 90,
+        "3": 810,
+        "4": 7290,
+        "5": 65610,
+        "6": 590490,
+        "7": 5314410,
+        "8": 47829690,
+        "9": 430467210
+      },
+      "L3": {
+        "10": 1333345330,
+        "11": 10516676606,
+        "12": 82949663928,
+        "13": 654260268968,
+        "14": 5160436902350,
+        "2": 90,
+        "3": 702,
+        "4": 5534,
+        "5": 43682,
+        "6": 344530,
+        "7": 2717222,
+        "8": 21432332,
+        "9": 169047254
+      },
+      "L4": {
+        "10": 491938506,
+        "11": 3389462630,
+        "12": 23348744386,
+        "13": 160818183680,
+        "14": 1107659492728,
+        "3": 702,
+        "4": 4630,
+        "5": 31586,
+        "6": 218052,
+        "7": 1508020,
+        "8": 10381404,
+        "9": 71436388
+      },
+      "L5": {
+        "10": 163240958,
+        "11": 946956972,
+        "12": 5502575074,
+        "13": 32024199026,
+        "14": 186458610470,
+        "4": 4630,
+        "5": 24692,
+        "6": 140640,
+        "7": 820094,
+        "8": 4810776,
+        "9": 28121992
+      },
+      "L6": {
+        "10": 41226846,
+        "11": 188631988,
+        "12": 854415582,
+        "13": 3872244158,
+        "14": 17617841734,
+        "5": 24692,
+        "6": 92940,
+        "7": 415404,
+        "8": 1922794,
+        "9": 8934332
+      },
+      "L7": {
+        "10": 7533070,
+        "11": 24231416,
+        "12": 77066508,
+        "13": 241621756,
+        "14": 743309142,
+        "6": 92940,
+        "7": 230642,
+        "8": 718814,
+        "9": 2323940
+      },
+      "L8": {
+        "10": 540864,
+        "11": 872812,
+        "12": 1418592,
+        "13": 2299142,
+        "14": 3557916,
+        "7": 230642,
+        "8": 236196,
+        "9": 345400
+      },
+      "alphabet": 10,
+      "diameter": 9,
+      "generators": [
+        "h0",
+        "h1",
+        "x0",
+        "x1",
+        "z0",
+        "z1",
+        "s0",
+        "s1",
+        "cx01",
+        "cx10"
+      ],
+      "geodesic_counts": {
+        "0": 1,
+        "1": 10,
+        "2": 90,
+        "3": 702,
+        "4": 4630,
+        "5": 24692,
+        "6": 92940,
+        "7": 230642,
+        "8": 236196,
+        "9": 56308,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0
+      },
+      "group_order": 11520,
+      "histogram": {
+        "0": 1,
+        "1": 10,
+        "2": 60,
+        "3": 272,
+        "4": 967,
+        "5": 2465,
+        "6": 3846,
+        "7": 3169,
+        "8": 706,
+        "9": 24
+      },
+      "note": "the 2-qubit panel basis; D = 9, A = 10"
+    }
+  },
+  "self_checks": {
+    "e82_census_metric_note": "sign-only tableau; exact on W2, not on the panel set",
+    "e87_part_b_reducible_m5_reproduced": true,
+    "e87_part_d_reducible_m6_reproduced": true,
+    "geodesic_counts_match_bruteforce_1q_m4": true,
+    "panel_1q_diameter_4": true,
+    "panel_1q_order_24": true,
+    "panel_2q_diameter_9": true,
+    "panel_2q_order_11520": true,
+    "rho_zero_at_m_equals_L": true,
+    "two_window_identity_matches_generic_dp_1q": true,
+    "valid_counts_match_bruteforce_1q_L3_m5": true,
+    "valid_counts_match_bruteforce_panel_L4_m5": true
+  },
+  "versions": {
+    "python": "3.12.12"
+  }
+}

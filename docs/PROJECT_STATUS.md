@@ -147,3 +147,22 @@ The operational consequence: the completeness threshold is a property of the
 depends on the distance distribution, which redundant generators can move
 without moving the threshold. Reporting a price without its generator set is
 now a defect, not a shorthand.
+
+## Round-23 addendum (2026-11-04)
+
+Added by the science-boost review round of 2026-11-04. No earlier row is
+rewritten; `data/`, `release/`, and `docs/manuscript/` are untouched.
+
+| Area | Round-22 statement | Round-23 measured value | Disposition |
+|---|---|---|---|
+| Escape mechanism | The lead narrative was the two-regime price law | E90: of 20,002 `EXACT_ESCAPE` windows, **19,303 (96.5%) have a reducing action at the root** (content-first) and **699 (3.5%) have none** (reorder-first). The 19,303 all sit on the RAW stratum; the 1,228 greedy-fixed-point windows have **zero**. The two "axes" are therefore a partition that coincides with the two strata | Narrative re-centred on the partition; the price law becomes one section |
+| Rule utilisation | "The library budget is 5, the threshold is 10" | The declared scope `e44_core_v1` has maximal source length **4** (12 / 32 / 105 / 0 rules at lengths 2 / 3 / 4 / 5); 37 of 149 rules ever fire and **2** fire as reducing; every reducing action on the panel is source length 2 | New defect **D10** (scope label, not a number error); both readings support "the budget is far below the threshold" but must be quoted separately |
+| Locally irreducible class | `LF-1` was an existence theorem with one hand-built witness | E91 counts it exactly: **20,568 of 10^10** words at `(m=10, L=9)` are locally rigid on the panel group (2.057e-6); `rho(m,5)` peaks at m=7 (6.03%) and then decays geometrically with lambda ~ 0.58 | `LF-1` quantified; rigidity is a small-`m` phenomenon, so it is **not** the mechanism behind the rising price |
+| `rho` vs price | Implicitly `rho >= price` | E87's pooled price at `(m=6, L=5)` is 4.03% while the pooled `rho` is **4.83%**; the ordering fails because E75's search contract admits `cost_delta = 0` actions | Third reporting rule: every price must carry its **cost-delta profile** |
+| Cross-experiment alignment | Recommended in round 22 | E91 reproduces E87's two fragment denominators (80,986 / 988,046) from the geodesic-count sequence alone, bit-exactly | First implementation of the convention |
+| Fragment bench instances | "240 instances, aggregate reorder share 0.710" (round 16) | E93: the 240 rows are **170 distinct circuits**; `trotter_zz` and `arithmetic_phase` do not consume their seed, so 80 rows are 10 circuits replicated 8x. Pooled share is **0.880** | Defect **D11**; family-level conclusions stand, the aggregate is corrected, the bench is not regenerated (its manifest pins the hashes) |
+
+The operational consequence: an escape is either content-first or reorder-first,
+and the two classes are not distributed evenly across the panel — they are
+separated by the root stratum. Any future escape statistic must say which class
+it counts, or it is averaging two different mechanisms.
