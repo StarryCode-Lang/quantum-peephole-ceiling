@@ -88,3 +88,7 @@ docs/review/v14_upgrade_plan_2026-09-07.md
 # External baseline source checkouts and generated build trees
 data/v10/prepaper/external_baselines/*/repo/
 data/v10/prepaper/external_baselines/*/build*/
+
+# 373 MB regenerable evidence artifact (scripts/e87_panel_price_recheck.py): kept
+# local-only because it exceeds GitHub's 100 MB file limit (pre-receive GH001).
+docs/review/science_boost/2026-11-02_panel_price_recheck/price_curve.csv
