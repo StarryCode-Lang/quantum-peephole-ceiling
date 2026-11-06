@@ -1,0 +1,48 @@
+{
+  "experiment_id": "E96_LITERATURE_ECOLOGY_2026_11_06",
+  "date": "2026-11-06",
+  "round": 24,
+  "sources_executed": [
+    "arXiv API export.arxiv.org: newest-25 sweep (peephole / equality saturation / circuit rewriting / rewrite rules, quant-ph, submittedDate desc)",
+    "arXiv API id_list digest: 2608.13035, 2511.18770, 2409.06020, 2411.04104, 2611.02345",
+    "arXiv abs page + HTML v2 full text: 2608.27592 (precision read)",
+    "docs/-wide rg coverage check (17 tracked must-cite IDs + 7 new IDs)",
+    "docs/references/unified_references.md hub coverage check (16 key certified-era IDs)",
+    "github.com/VeriGu/QSymb shallow clone inspection (README / Artifact_README; no code executed)",
+    "GitHub REST refresh: rate-limited at scan time; E92 (2026-11-04, authenticated) remains the authoritative ecosystem snapshot",
+    "authenticated gh API ecosystem refresh (L2 agent report, 9 repos + 2 new projects, 2026-11-06)",
+    "L1 deep-sweep agent report (15 arXiv API retrievals + WebSearch cross-checks; 16-entry frontier table, 13/13 must-differentiate digests, methodology harvest)"
+  ],
+  "verdicts": {
+    "scoop": "NO SCOOP as of 2026-11-06, with ONE title-level demarcation duty: 2609.29210 (Representation-Dependent Recoverability in Quantum Compilation) formalises FT-output representation dependence — no listing model, no window landscape, no completeness price; demarcation: they study compilation outputs, we study the optimizer's input representation. 2608.22801 (Exactness Barrier) is the per-instance analogue of the counting laws — cite and demarcate.",
+    "new_optional_cite": "2611.02345 (MBUndo) — only zero-coverage hit; none-of-four",
+    "demarcation_2608.27592": "they optimize selection inside the equal-cost plateau; we decide whether the plateau is the only route (their full text has no reachability criterion, no counting law, no completeness price)",
+    "adopted_evidence_standard": "paired bootstrap CI 10k + exact Wilcoxon + Holm families (2608.27592's own bar) for P0-1 cross-source tables",
+    "citation_gap_fixed": "unified_references.md v2.2 -> v2.4: additive section Q [95]-[111] ([109] 2609.29210, [110] 2608.22801, [111] 2101.01332 appended from the L1 report) + drift-register entry 20 (hash updated after each append); audit PASS_WITH_ACCEPTED_DRIFT (20 accepted / 35,022 MATCH / ok)",
+    "ecosystem": {
+      "baseline_superseded": "E92 (2026-11-04) superseded by the 2026-11-06 authenticated refresh",
+      "highlights": [
+        "Qiskit 2.6.2 (2026-11-05); 2.6.0 fixed a cluster of peephole correctness bugs (#16402/#16599/#16592/#17321), open #17057 two-CX boundary",
+        "pytket moved to Quantinuum/tket; #2232 missed self-cancelling pairs fixed 2026-09; open #1150 peephole increases 2q count on symbolic circuits",
+        "Quartz moved to quantum-compiler/quartz; re-activated 2026-04 with a NEW Nam (5,3)-complete ECC set — upstream rule surface diverged from our frozen 1,474; open #230/#232 non-equivalent outputs",
+        "QUanto 404 with no successor; VOQC -> inQWIRE/SQIR dormant; BQSKit slow/dormant",
+        "PyZX 0.10.8 fixed PhaseGadget representation bugs (same circuit, two internal representations, different correctness); project pin 0.10.5 is 3 releases behind",
+        "MQT core jumped 3.11.0 -> 4.1.0 (MLIR/LLVM rework) — cite with the 3.x/4.x break in mind",
+        "NEW baselines: VeriGu/Quasar (PLDI 2026, e-graph/egglog, step-limited optimality) + VeriGu/QSymb (OOPSLA 2026)"
+      ]
+    }
+  },
+  "contract": {
+    "writes": [
+      "docs/review/science_boost/2026-11-06_literature_scan/"
+    ],
+    "frozen_trees_touched": [],
+    "note": "unified_references.md is prepaper-chain-pinned; its edit is registered as drift entry 20 (POST_MANIFEST_EDIT, attribution WORKTREE_2026-11-06)"
+  },
+  "provenance": {
+    "round": 24,
+    "deep_sweep_agents": "launched, not returned by package time; results are a supplement, not a dependency",
+    "ecosystem_agent": "returned 2026-11-06 via authenticated gh API after wrap-up ping; merged into literature_digest.md §5",
+    "frontier_agent": "returned 2026-11-06 after wrap-up ping; merged into literature_digest.md §6"
+  }
+}

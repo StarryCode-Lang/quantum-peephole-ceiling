@@ -379,6 +379,34 @@ The following references were identified as missing from the original 42-referen
 
 ---
 
-*Document version: 2.2*
-*Last updated: 2026-08-24*
+## Q. Certified-Era Additions (2026-11-06, round 24)
+
+Added by the round-24 scan after a coverage check showed that the certified-era
+must-cite set (review rounds 10–23) was documented across `docs/` but absent
+from this hub. Provenance per entry names the round that surfaced it. Entries
+marked "(title as cited in project docs)" were not re-verified against arXiv
+in this round and must be confirmed at writing time.
+
+- [95] "Plateau-Constrained Selection: Exploiting Degeneracy for Lower-Depth Quantum Compilation," arXiv:2608.27592, 2026 (v2 2026-09-11; under review at IEEE TQE). Equal-support-cost term orders route to different depths (228.6 / 233.8 / 256.7 at cost 74); selection *within* the equal-cost plateau, no reachability criterion. Strongest external corroboration and nearest priority competitor of the two-axis partition (E90/E95); demarcation: they optimize the selection inside the plateau, we decide whether the plateau is the only route. Surfaced by E92; full text read 2026-11-06.
+- [96] "A Complete and Natural Rule Set for Multi-Qudit Clifford Circuits in All Odd Prime Dimensions," arXiv:2609.40106, 2026. Occupies the "build a complete rule set" position; the main-journal route was re-routed to the completeness *price* because of it (round 17). Surfaced by E74.
+- [97] W. Qiang and R. Gu, "Synthesis of Compact and Expressive Quantum-Circuit Optimizations" (QSymb), arXiv:2609.01762, 2026 (OOPSLA 2026; code: github.com/VeriGu/QSymb). Symbolic + concrete rule synthesis with soundness, non-derivability, and bounded completeness; second-library candidate (P1-2, Go with a 1-day timebox). Surfaced by the round-22 scan.
+- [98] AlchemQ, arXiv:2609.19160, 2026. Certifies *equivalence*, not optimality — must-differentiate on the certification target. Surfaced by the 2026-10-25 scan.
+- [99] arXiv:2607.22248 — states that the maximum CNOT complexity is known to be Θ(n²/log n); basis of the round-22 main-journal gate closure on prior art (title as cited in project docs).
+- [100] arXiv:1305.0810, 2013 — applies optimal ≤4-input Clifford circuits as a *peephole* optimiser (~50% reduction); prior art for library-based peephole rewriting (title as cited in project docs).
+- [101] arXiv:2608.18859 — Π⁰₁-completeness of rewrite-system confluence; ended the general-confluence program (title as cited in project docs). Surfaced by the 2026-10-25 scan.
+- [102] arXiv:2604.24504, TACAS 2026 (WMC) — candidate independent witness validator for rewrite certificates (title as cited in project docs). Surfaced by the 2026-10-25 scan.
+- [103] POPQC, arXiv:2502.19526 and arXiv:2506.13720, 2025–2026 — oracle-relative optimality (titles as cited in project docs). Surfaced by the 2026-10-25 scan.
+- [104] arXiv:2608.00189 — phase-transition vocabulary collision (title as cited in project docs). Surfaced by the 2026-10-25 scan.
+- [105] "Completeness for flow-preserving rewrite rules," arXiv:2608.13035, 2026. Completeness *of a rule set for a ZX fragment* — a different sense of completeness from the measured completeness price; cite when distinguishing the two. Surfaced by the round-24 arXiv sweep (already covered in `docs/`).
+- [106] "HOPPS: Hardware-Aware Optimal Phase Polynomial Synthesis with Blockwise Optimization for Quantum Circuits," arXiv:2511.18770, 2025. SAT-based optimal blockwise {CNOT, Rz} synthesis used as a peephole pass — the modern instance of the [100] line. Surfaced by the round-24 arXiv sweep (already covered in `docs/`).
+- [107] "MBUndo: Sound, Automatic, and Efficient Measurement-Based Uncomputation for Quantum Circuits," arXiv:2611.02345, 2026. The only zero-coverage hit of the round-24 scoop check (2026-11-02); overlap none-of-four (uncomputation, not representation dependence). Optional cite for the methodology track.
+- [108] "Simpler Presentations for Many Fragments of Quantum Circuits," arXiv:2602.09874, 2026. Demarcation partner of the length-ladder candidate T-7 (round 19). Surfaced by E79.
+- [109] J. Yang, Y. Li, X.-H. Deng, "Representation-Dependent Recoverability in Quantum Compilation," arXiv:2609.29210, 2026. Title-level representation-dependence with a theorem and a *preregistered protocol*; the object is recoverability of aggregate phases across fault-tolerant compilation outputs (phase scheduling / Clifford+T synthesis / randomized compiling), **not** the peephole action space. Must-cite with the demarcation: they study representation-dependence of *compilation outputs*, we study reachability-dependence of the *optimizer's input representation* (no listing model, no window landscape, no completeness price). Author list as reported by the round-24 sweep — verify at writing time. Surfaced by the round-24 deep sweep.
+- [110] C.-F. Kam, A. Mahasinghe, K. De Silva, et al., "An Exactness Barrier for ZX-Calculus Optimization of Synthesized Clifford+T Circuits," arXiv:2608.22801, 2026. Per-instance T-count reachability lower bounds with rigidity certificates reporting 99.4–99.9% of instances incompressible — the per-instance analogue of this project's population-level counting laws (`RF-1`/`LF-1`); cite and demarcate (they: an exactness barrier for *exact* optimizers; we: the measured price of library-relative incompleteness). Author list as reported by the round-24 sweep — verify at writing time. Surfaced by the round-24 deep sweep.
+- [111] Y. Yang, M. Phothilimtha, Y. R. Wang, M. Willsey, S. Roy, J. Pienaar, "Equality Saturation for Tensor Graph Superoptimization," arXiv:2101.01332, 2021. The classical EqSat antecedent of the Quanto lineage (entry [63]); had zero coverage under `docs/` before the round-24 sweep. Lineage addition, pre-certified-era.
+
+---
+
+*Document version: 2.4*
+*Last updated: 2026-11-06 (section Q added by the round-24 scan; entries [109]–[111] appended from the deep-sweep report the same day; additive only, no earlier entry changed)*
 *Author: Q-Research Reference Compilation*

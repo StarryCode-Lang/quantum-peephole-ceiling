@@ -1,0 +1,48 @@
+{
+  "experiment_id": "COLD_START_LITE_2026_11_06",
+  "date": "2026-11-06",
+  "round": 24,
+  "purpose": "Local substitute for the Docker cold-start gate (round-23 30-day item 7). Docker is NOT installed on this box (verified 2026-11-06: `where docker` empty in cmd and PATH; round-23's '本地 Docker 可用' premise is wrong, matching the 2026-10-26 verification). Cold-start-lite = fresh CPython interpreter with zero third-party packages running the manifest-level byte audit chain.",
+  "environment": {
+    "python": "3.12.12 (fresh venv, no pip packages installed)",
+    "venv_location": "outside the repository (D:/Documents/ZCodeData/tmp/qresearch_coldstart_20261106)",
+    "docker": "absent (cmd `where docker` and PATH both empty)"
+  },
+  "results": {
+    "byte_audit_release_manifest": {
+      "command": "audit_frozen_bytes.py --manifest release/release_manifest.json --allow-crlf",
+      "entries": 37,
+      "MATCH": 37,
+      "ok": true,
+      "exit_code": 0
+    },
+    "byte_audit_prepaper_chain": {
+      "command": "audit_frozen_bytes.py --manifest release/prepaper_release_manifest.json --allow-crlf --dispositions docs/review/release_drift_register.json --quiet",
+      "exit_code": 0,
+      "note": "quiet mode; exit 0 = PASS_WITH_ACCEPTED_DRIFT (19 registered dispositions)"
+    },
+    "requirements_lock_not_installable": {
+      "command": "pip install -r requirements-lock.txt (fresh venv)",
+      "result": "ResolutionImpossible",
+      "significance": "first direct execution evidence for the pending owner item 'requirements-lock 一致性 / full pip-compile' (round-19 queue); the lock file cannot recreate the environment as-is"
+    },
+    "reproduce_all_gate_bug": {
+      "found": "reproduce_all.py --audit-frozen alone printed help and exited 0 without auditing anything (args.audit_frozen missing from the no-flags guard's any() list)",
+      "fixed": "2026-11-06, scripts/reproduce_all.py (not hash-bound: only listed in reproduction.entrypoints, not source_hashes)",
+      "classification": "silent-failure mode of the M1-M9 family (fail-closed discipline)",
+      "verification": "2026-11-06 07:06 local: reproduce_all.py --audit-frozen --verify now runs both manifest audits (PASS/PASS) and prints the full REPRODUCTION SUMMARY; ALL TASKS PASSED, exit 0"
+    }
+  },
+  "contract": {
+    "writes": [
+      "docs/review/science_boost/2026-11-06_cold_start_lite/"
+    ],
+    "frozen_trees_touched": [],
+    "red_lines": "data/, release/, docs/manuscript/ untouched"
+  },
+  "provenance": {
+    "utc_log_start": "2026-11-05T22:56:47Z",
+    "local_date": "2026-11-06 (UTC+8)",
+    "closes_30day_item": "7 (as far as locally possible; true third-party cold start on a second machine remains an external blocker)"
+  }
+}

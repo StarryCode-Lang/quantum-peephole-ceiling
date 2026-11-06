@@ -166,3 +166,29 @@ The operational consequence: an escape is either content-first or reorder-first,
 and the two classes are not distributed evenly across the panel — they are
 separated by the root stratum. Any future escape statistic must say which class
 it counts, or it is averaging two different mechanisms.
+
+## Round-24 addendum (2026-11-06)
+
+Added by the science-boost review round of 2026-11-06. No earlier row is
+rewritten; `data/`, `release/`, and `docs/manuscript/` are untouched.
+
+| Area | Round-23 statement | Round-24 measured value | Disposition |
+|---|---|---|---|
+| Two-axis escape partition | window-level only: 19,303 / 699 coinciding with the root strata (E90) | **source-level: 49 / 69 content-first vs 20 / 69 reorder-first, coinciding exactly with the strata** (all 49 RAW escapes content-first, all 20 greedy-fixed-point escapes reorder-first); E52's 63 shared sources agree with zero disagreements; 19/19 self-checks (E95) | Round-23 30-day item 1 **closed**; `AX-1` is now measured at both window and source level |
+| Rigidity decay constant | λ ≈ 0.58 from 7 points (m = 8..14), L = 5 only | **λ stable per window length**, far inside the registered ±0.02 criterion: panel_2q λ(2..5) = 0.900 / 0.789 / 0.689 / 0.582, panel_1q λ(2,3) = 0.750 / 0.476; curves extended to m = 20; λ(L) decreases ≈ 0.106 per level (empirical, not a theorem) (E94) | Round-23 30-day item 4 **closed** |
+| Cold start | protocol exists; "local Docker available" assumed | **Docker is absent on this box** (premise corrected); a zero-third-party-dependency CPython 3.12 interpreter audits both release chains **PASS** (37/37 MATCH + prepaper chain exit 0 with 20 registered dispositions) | Round-23 30-day item 7 **closed locally**; true third-party cold start still needs a second machine (owner) |
+| Reproducibility tooling | `--audit-frozen` documented as the byte-level check | the flag alone **silently did nothing** (printed help, exit 0) — `args.audit_frozen` was missing from the no-flags guard; found by the cold start attempt and fixed the same day, verified with a full `--audit-frozen --verify` run | Fixed 2026-11-06; a silent-failure mode of the M1–M9 family; no published number was ever produced through the broken path |
+| Reference hub | `unified_references.md` v2.2 (2026-08-24) | v2.3: **additive section Q** ([95]–[108], the certified-era must-cite set of rounds 10–23, 1 of 16 key IDs was previously present); drift registered as **entry 20** | Audit: 20 KNOWN_DRIFT_ACCEPTED / 35,022 MATCH / ok |
+| Scoop status | E92 (2026-11-04): 2608.27592 nearest competitor | E96 (2026-11-06): arXiv newest-25 sweep + 7-ID coverage check — **no scoop**; only zero-coverage hit 2611.02345 (MBUndo) is none-of-four, optional cite; 2608.27592 full text read — demarcation holds (they select inside the plateau; no reachability criterion) | Verdict current as of 2026-11-06 |
+| Fragment bench (D11) | 240 rows = 170 distinct circuits; aggregate 0.710 published, 0.880 after dedup reweighting | generators consume the seed (shuffled layer order / random carry length + window start); v2 bench = 240 rows / **230 distinct** (remainder is the n=4 structural cap); E70-v2 rerun: the four untouched families reproduce their shares **bit-exactly** (0.991 / 0.982 / 0.883 / 0.715 — harness validation), `trotter_zz` 0.000 → **0.118** (the old 0 was an artifact of identical layer orderings), pooled **0.736**, gap total 4,313 and absolute-optimum count 129 unchanged | Frozen 2026-10-25 bench untouched; quote 0.736 for the repaired bench, 0.880 only as the reweighting of the broken one |
+| λ decay shape | λ ≈ 0.58 (L=5) from 7 points | λ per L, m→20: panel_2q λ(2..7) = 0.900 / 0.789 / 0.689 / 0.582 / 0.456 / 0.313 — per-L stability holds (≪ ±0.02) but the **linear reading is refuted** (per-level drop accelerates beyond L=5: −0.126, −0.143; convex decay) | Empirical shape: strictly decreasing, convex in L; not a linear law |
+| Second panel | E90/E95 conclusions rested on one pipeline (96 sources) | E97 (2026-11-06): **30/30 MQT Bench circuits** (16 new algorithms) equivalence-certified and censused — min reducing source length **{2: 17}, 100% = 2**; 5 reducing-firing rules all length 2; all 8 greedy fixed points have zero reducing actions (stratification coincidence replicates); 23-circuit partition 14 content-first / 9 reorder-first; ghz5/ghz10 have **no action at all** (real-circuit `LF-1` instances); E71 gate counts reproduce field-exactly | Round-23 30-day item 3 closed; one honest difference (3 circuits whose closure-witness first step is a zero-cost exchange despite reducing actions at the root — witness-strategy dependence) establishes the reporting rule: a source's axis label must name its witness strategy |
+
+The operational consequence: the two-axis partition no longer rests on window
+slices alone — the source-level table (49/20) is the number to quote for "how
+many certified escapes must begin with a cost-neutral action", and the λ table
+is the number to quote for "how the locally irreducible class decays" (with the
+convex-decay caveat). Both are review-grade (outside the hash chain) until the
+release re-pin decision. The second-panel census (E97) replicates both headline
+regularities outside the original pipeline. The reference hub now carries the
+certified-era must-cite set as additive section Q ([95]–[111]; drift entry 20).

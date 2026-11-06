@@ -1,0 +1,191 @@
+{
+  "by_escape_class": {
+    "content_first": {
+      "enumerated_compact": 15,
+      "witness_bounded": 34
+    },
+    "reorder_first": {
+      "enumerated_compact": 20
+    }
+  },
+  "by_stratum": {
+    "axis_by_stratum": {
+      "GREEDY_FIXED_POINT": {
+        "reorder_first": 20
+      },
+      "RAW_NORMALIZED_OVER_BASELINE_BUDGET": {
+        "content_first": 49
+      }
+    },
+    "e90_prediction_greedy_all_reorder_first": true,
+    "stratum_counts": {
+      "GREEDY_FIXED_POINT": 20,
+      "RAW_NORMALIZED_OVER_BASELINE_BUDGET": 49
+    }
+  },
+  "contract": {
+    "reads": {
+      "classification_complete": {
+        "path": "data/v16/e45_landscape_integration/classification_complete.csv",
+        "sha256": "e7ff1db7700cf3a114eedbd9ba54a4ab6b24c838efa6d8785256c8f3e5a4bb33"
+      },
+      "compact_certificates": {
+        "path": "data/v16/e45_full_development/certificates.jsonl",
+        "sha256": "57714e451071595f12d69f21ec97c2f04be34f447723e981b121ca6c9850c7c4"
+      },
+      "e52_escape_mechanism_csv": {
+        "path": "docs/review/science_boost/2026-10-22_escape_mechanism/escape_mechanism.csv",
+        "sha256": "0541e34b8ab8a1dc06d47008dc53eb2b2fd4ab5078b3c183b9da9e7bed087087"
+      },
+      "e90_summary_json": {
+        "path": "docs/review/science_boost/2026-11-04_rule_utilisation/summary.json",
+        "sha256": "0f888bd5fdf6ccc686d591f21c088811981e4804b8b43f5c81cf93656cb1c7cf"
+      },
+      "idastar_certificates": {
+        "path": "data/v16/e45_idastar_escape/certificates.jsonl",
+        "sha256": "7f4c6779d9d78bb9992025f04af2b491d83e5a04a6f8d835faeb08e831222932"
+      },
+      "rule_library": {
+        "path": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+        "sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295"
+      }
+    },
+    "root_action_enumeration": "iter_legal_actions on the 69 escape roots only (E90's window machinery, whole listing)",
+    "root_states": "rebuilt via experiments.e46_window_landscape.run.load_root_states (hash-checked)",
+    "search_rerun": false,
+    "writes": [
+      "docs/review/science_boost/2026-11-06_source_axis_partition/"
+    ]
+  },
+  "date": "2026-11-06",
+  "definitions": {
+    "canonical_witness": "compact (e45_full_development); classification records witness_source=COMPACT for all 69",
+    "content_first": "first action of the certified escape witness has cost_delta < 0",
+    "reorder_first": "first action of the certified escape witness has cost_delta == 0",
+    "stratum": "root_kind from load_root_states (GREEDY_FIXED_POINT vs RAW_NORMALIZED_OVER_BASELINE_BUDGET)"
+  },
+  "e52_alignment": {
+    "disagreements": [],
+    "e52_escape_sources": 63,
+    "e52_greedy_escapes": 14,
+    "e52_package": "docs/review/science_boost/2026-10-22_escape_mechanism/escape_mechanism.csv",
+    "method": "E52's published neutral_prefix_length (v14 IDA* witnesses) == 0 maps to content_first, > 0 maps to reorder_first; compared against today's axis on every shared source. Note the brief's '14 escape sources' corresponds to E52's 14 GREEDY_FIXED_POINT escapes, all reorder-first here as in E52's neutral prefix.",
+    "root_kind_mismatches_vs_e52": [],
+    "shared_sources": 63,
+    "subset_of_69": true,
+    "v16_only_escape_sources": [
+      "e39:0ed63ca188a0b57909ea58f75b874bc3ffbc1cf811ad49c73522148c5bd18b55",
+      "e39:7130c27a527965bb0f258cb842a9113fb05e3fbe44a5dfbedcb9b9003b5cc534",
+      "e39:8a0f6aa4d86982e6f5d44dfb1933a65cba2e861eeaa794468785325cd7f38e8a",
+      "e39:a8db7c393892d2adec545708e5f0d633c2a3a558227f079b35365b5a62cf7950",
+      "e39:b81e1fce8a1444d85177c6bc7af38bad39960f4060e55d08611f399ee4619722",
+      "e39:d666adb13ce66e444e16398e08fd2d7d2169fcc728eb154e78b91f40918df82c"
+    ]
+  },
+  "e90_window_comparison": {
+    "comparability": "Denominators differ (38,118 frozen windows vs 69 whole-listing sources), so the numbers need not match; the aligned claim is directional. Window level: 19,303 content-first vs 699 reorder-first, with the greedy stratum holding 0 reducing windows. Source level: the greedy stratum holds 0 content-first escapes. Both levels agree that reorder-first escapes are the minority and live in the greedy stratum.",
+    "source": "docs/review/science_boost/2026-11-04_rule_utilisation/summary.json",
+    "source_level": {
+      "classified_sources": 69,
+      "content_first": 49,
+      "reorder_first": 20
+    },
+    "source_sha256": "0f888bd5fdf6ccc686d591f21c088811981e4804b8b43f5c81cf93656cb1c7cf",
+    "window_level_by_root_stratum": {
+      "GREEDY_FIXED_POINT": {
+        "min_reducing_length_histogram": {},
+        "windows": 1228,
+        "with_reducing_action": 0
+      },
+      "RAW_NORMALIZED_OVER_BASELINE_BUDGET": {
+        "min_reducing_length_histogram": {
+          "2": 19303
+        },
+        "windows": 36890,
+        "with_reducing_action": 19303
+      }
+    },
+    "window_level_totals": {
+      "escapes_without_reducing_action": 699,
+      "unique_windows": 38118,
+      "windows_with_reducing_action": 19303
+    }
+  },
+  "experiment_id": "E95_SOURCE_AXIS_PARTITION_2026_11_06",
+  "first_action_source_length": {
+    "content_first": {
+      "2": 49
+    },
+    "note": "E90's length-2 claim is about REDUCING actions; reorder-first first actions may be longer (here: lengths 3 and 4 occur)",
+    "reorder_first": {
+      "2": 8,
+      "3": 11,
+      "4": 1
+    }
+  },
+  "first_rule_counts": {
+    "exchange.cx_control_z": 8,
+    "pair_v1.rotation_merge": 25,
+    "pair_v1.rotation_zero": 4,
+    "pair_v1.self_inverse": 18,
+    "quartz_v1:15_2:6984096ccd0f->9302b827fe85:from_anchor": 11,
+    "quartz_v1:45_2:890711354af3->9f27c1d5db0d:to_anchor": 1,
+    "quartz_v1:506_3:31a27fe7fe12->4f2fcb00a52a:to_anchor": 2
+  },
+  "first_rule_family_by_axis": {
+    "content_first": {
+      "pair_v1": 47,
+      "quartz_v1": 2
+    },
+    "reorder_first": {
+      "quartz_v1": 12,
+      "structural_exchange_v1": 8
+    }
+  },
+  "headline": {
+    "classified_sources": 69,
+    "content_first": 49,
+    "content_first_share": 0.7101,
+    "reorder_first": 20,
+    "unresolved": 0
+  },
+  "resource_bounded": {
+    "classification_status": "RESOURCE_BOUNDED_NO_WITNESS",
+    "classified": false,
+    "compact_resource_reason": "time_budget",
+    "compact_status": "RESOURCE_BOUNDED_NO_WITNESS",
+    "idastar_status": "RESOURCE_BOUNDED_NO_WITNESS",
+    "note": "resource-bounded, no witness; excluded from the two-axis partition by contract",
+    "source_id": "e39:b2f83603b76f95e86e3b51898d6ea360adf3a62f51aa296baf0178913d4108b2"
+  },
+  "root_action_census": {
+    "content_first_roots_with_reducing_action": 49,
+    "reading": "At the source level the first-step axis coincides exactly with the window-level definition: a root admits a reducing action iff the certified escape opens with one.",
+    "reorder_first_roots_with_reducing_action": 0
+  },
+  "self_checks": {
+    "classified_count_is_69": true,
+    "compact_idastar_first_step_direction_agree": true,
+    "compact_status_matches_package": true,
+    "content_first_first_action_source_length_is_2": true,
+    "content_first_roots_all_have_reducing_action": true,
+    "content_first_rows_have_negative_delta": true,
+    "e52_escapes_subset_of_69": true,
+    "e52_neutral_prefix_matches_today_axis": true,
+    "e90_prediction_greedy_escapes_all_reorder_first": true,
+    "first_reducing_step_source_length_is_2": true,
+    "no_positive_first_step_delta": true,
+    "no_unresolved_sources": true,
+    "rebuilt_root_hash_matches_certificates": true,
+    "reorder_first_roots_have_no_reducing_action": true,
+    "reorder_first_rows_have_zero_delta": true,
+    "resource_bounded_recorded_separately": true,
+    "root_kind_matches_e52_published": true,
+    "witness_first_step_pre_state_matches_certificate": true,
+    "witness_length_matches_classification_escape_depth": true
+  },
+  "unresolved": [],
+  "versions": {
+    "python": "3.12.12"
+  }
+}

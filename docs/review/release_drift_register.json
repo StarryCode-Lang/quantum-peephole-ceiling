@@ -188,7 +188,7 @@
       "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
       "recorded_bytes": 1512046,
       "recorded_sha256": "6170358ee14183f606871d907138d492dd6861debe051f4b808c289a4481ac3b",
-      "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash. 2026-10-26: second edit \u2014 metric 15.06 evidence hash refreshed to the repaired SBOM (same dependency-declaration repair)."
+      "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash. 2026-10-26: second edit — metric 15.06 evidence hash refreshed to the repaired SBOM (same dependency-declaration repair)."
     },
     {
       "attribution_commit": "e4250beec",
@@ -233,7 +233,7 @@
       "recorded_by": "scripts/verify_release_chain_with_dispositions.py",
       "recorded_bytes": 454757,
       "recorded_sha256": "2a4fefea4b0e0161ebf90d4192af0dfcf0ced372f488f9e4569dc0e62e8731db",
-      "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash. 2026-10-26: second edit \u2014 requirements-lock.txt extended with the bqskit/tzap dependency subtree (E53/E55/E58 declaration repair) and the SBOM regenerated; hash refreshed accordingly."
+      "root_cause": "Edited after the manifest snapshot (manifest created_utc 2026-08-31T09:44:39Z). The manifest was never re-pinned, so the entry records a pre-edit hash. 2026-10-26: second edit — requirements-lock.txt extended with the bqskit/tzap dependency subtree (E53/E55/E58 declaration repair) and the SBOM regenerated; hash refreshed accordingly."
     },
     {
       "attribution_commit": "94fe4fd3c",
@@ -334,6 +334,21 @@
       "recorded_bytes": null,
       "recorded_sha256": null,
       "root_cause": "Round 21 (2026-10-31) fix: the attachment/catalog drift test now asserts the guard that is active in each mode (external attachment present vs fallback), instead of assuming the foreign absolute path exists."
+    },
+    {
+      "attribution_commit": "WORKTREE_2026-11-06",
+      "commit_date": "2026-11-06",
+      "disposition": "POST_MANIFEST_EDIT",
+      "file": "docs/references/unified_references.md",
+      "first_recorded": "2026-11-06",
+      "observed_bytes": 32596,
+      "observed_sha256": "560cbf4f30498b56a815691819d57c378d66471d98a9ef0ebcc0d78eebc6d962",
+      "recommended_action": "Re-pin this entry when the manifest is regenerated; the edit is an additive reference section (Q, certified-era additions) with no change to any earlier entry.",
+      "recommended_option": "A",
+      "recorded_by": "scripts/audit_frozen_bytes.py (round-24 manual registration)",
+      "recorded_bytes": 26686,
+      "recorded_sha256": "d63ce65b405cf7f28ae15db573cd22069ae694abfd120de23acb818df6e6364c",
+      "root_cause": "Round 24 (2026-11-06): additive section Q ([95]-[108]) plus same-day append [109]-[111] from the deep-sweep report (2609.29210, 2608.22801, 2101.01332). No earlier entry or cross-reference map was modified."
     }
   ],
   "last_scan": "2026-10-31",

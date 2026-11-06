@@ -132,6 +132,22 @@ the full 1,474-rule catalogue and the 2-qubit Clifford group; "the certified lan
 uses a rule longer than 2" is a statement about the frozen panel under `e44_core_v1`. Both are
 true and they must not be merged into one sentence.
 
+## Cross-experiment alignment admission gate (added 2026-11-06)
+
+**Every new experiment that re-measures a quantity another package already published must
+reproduce at least one of those published numbers from its own code path, and record the
+comparison in its `summary.json` self-checks.** This was a recommended convention on
+2026-10-22, first implemented by E91 on 2026-11-04 (it reproduced E87's two fragment
+denominators, 80,986 / 988,046, from the geodesic G-sequence alone), and is an admission
+requirement from 2026-11-06.
+
+- An experiment whose quantity has no published counterpart must say so explicitly in
+  `summary.json` (`"alignment": "no published counterpart"`) rather than skip the check
+  silently.
+- An alignment check that fails blocks the experiment's acceptance: numbers that disagree
+  with a published value are a defect (D-register), not a footnote.
+- Examples: E91 ↔ E87 denominators; E94 ↔ frozen E91 `rho(m,5)` values; E87 Part A ↔ E78.
+
 ## Smoke reproduction
 
 Use the project reproduction entry point for selected experiments or smoke defaults:

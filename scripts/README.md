@@ -1,6 +1,6 @@
 # scripts/ index
 
-119 scripts. The naming is intentionally verb-first: the prefix tells you what the script
+130 scripts (2026-11-06 recount; the previous header said 119). The naming is intentionally verb-first: the prefix tells you what the script
 *does*, not which experiment it belongs to. Read this file before adding a new one.
 
 ## Naming convention
@@ -10,8 +10,8 @@
 | `verify_*` | Independent checker for one frozen evidence package. Exits non-zero on mismatch. These are the reproducibility chain — do not delete. | 32 |
 | `generate_*` | Builds a verdict, manifest, or disposition JSON from frozen receipts. | 15 |
 | `audit_*` | Read-only audit that writes a CSV/JSON report and mutates nothing. | 12 |
-| `e4x_*` / `e5x_*` / `e7x_*` / `e8x_*` | Experiment scripts introduced by the review rounds (E47–E83). | 34 |
-| `build_*` | Packaging (restore capsules, readiness packages, evidence manifests). | 3 |
+| `eNN_*.py` | Experiment scripts introduced by the review rounds (E47–E94; e4x 4 / e5x 11 / e6x 10 / e7x 10 / e8x 10 / e9x 5). | 50 |
+| `build_*` | Packaging (restore capsules, readiness packages, evidence manifests). | 5 |
 | `reproduce_*` / `regenerate_*` | Full-corpus replay entry points. | 2 |
 
 ## Entry points
@@ -24,7 +24,7 @@
 | v15 readiness | `python scripts/verify_v15_readiness_verdict.py` |
 | Certificate verifier (standalone) | `python scripts/verify_certificate_qrcert_v1.py <cert>` |
 
-## Review-round experiments (E47–E63)
+## Review-round experiments (E47–E94)
 
 Each writes a dated evidence package under `docs/review/science_boost/<date>_<topic>/`
 and carries an `EXPERIMENT_ID` plus a contract block in its docstring.
@@ -79,6 +79,10 @@ and carries an `EXPERIMENT_ID` plus a contract block in its docstring.
 | `e88_consistent_diameter.py` | E88 (2026-11-02) | Three-qubit diameter via bidirectional ball growth: `D_3 in [11, 12]` (lower bound pinned exactly by `ball_5(e) ∩ ball_6(g) != ∅` and `ball_5(e) ∩ ball_5(g) = ∅`), ball growth 1/22/274/2,565/19,680/127,925/711,213. Also the generator-variant table behind `PD-3`: adding `sdg` leaves the 2-qubit group order and `D` unchanged but moves the distance distribution (d=5: 2,465 -> 2,926; d=8: 706 -> 328), and drops the 1-qubit `D` from 4 to 3. 12 self-checks. |
 | `e89_literature_scan.py` | E89 (2026-11-02) | Round-22 arXiv sweep (18 fielded queries, 229 records, 174 from 2025+). Reports **two** coverage keys, `records_cited_loose` and `records_cited_strict`; the loose count matches a substring anywhere under `docs/`, the strict one requires the id to appear outside earlier scans' own dumps. Found `2607.22248` (states `Theta(n^2/log n)` is known) and `1305.0810` (PMH 2013 peephole with optimal <=4-input Clifford circuits), both previously uncited. |
 | `e90_rule_utilisation.py` | E90 (2026-11-04) | Census of which rules the frozen E46 window panel actually uses: 38,118 unique windows, 19,303 with a reducing action and **every one of them source length 2**; only 37 of the 149 `e44_core_v1` rules ever fire, 2 of them as reducing; 699 of 20,002 escapes have **no** reducing action at the root (reorder-first), and all 19,303 content-first windows sit on the RAW stratum while the 1,228 greedy-fixed-point windows have none. Also records that the declared scope's maximal source length is **4**, not the catalogue's 5 (defect D10). 5 self-checks. |
+| `e75_completeness_price.py` | E75 (2026-10-28) | Completeness-price curve on enumerable fragments: **thresholded, not diffuse** (30.25% → 9.12% → 0.00% as max source length grows 2→3→4). Also found and fixed E73's unitary-class key defect (tied-pivot Clifford unitaries split across classes); the legacy key reproduces 30.25% bit-exactly (regression gate in the summary). |
+| `e76_literature_scan.py` | E76 (2026-10-28) | Round-18 fielded arXiv sweep: 24 queries / 246 records / 0 failed. Added refs [129]–[133]; corrected the multi-qutrit Clifford completeness date (2025-08, not 2026-09). |
+| `e77_span_family_holm.py` | E77 (2026-10-28) | Fisher exact per family + Holm-Bonferroni over E72's content-class residual: the blanket "residual concentrates in structured families" claim is **withdrawn** — on greedy fixed points IQP/Oracle carry significantly more residual, RandomClifford/UCCSD significantly less (family-specific, not structure-generic). |
+| `e94_rigidity_lambda.py` | E94 (2026-11-06) | λ-stability of the rigidity decay (closes round-23 30-day item 4): extends E91's ρ curves to m=20 and fits λ per window length L. panel_2q: λ(2..5) = 0.900 / 0.789 / 0.689 / 0.582; panel_1q: λ(2,3) = 0.750 / 0.476; every fit stable far inside the registered ±0.02 criterion (max spread 4.4e-4). Reproduces the frozen E91 ρ(m,5) values and E87's two denominators exactly. 8 self-checks. |
 | `e91_rigidity_floor.py` | E91 (2026-11-04) | Exact counting law for the locally irreducible class, no search and no sampling: `V(m,L)` = words of length `m` whose every window of length `<= L` is geodesic, by DP on the last `L-1` generators; `m = D+1, L = D` by the two-window identity. Panel group: 20,568 of 10^10 at `(10, 9)` (2.057e-6); `rho(m,5)` peaks at m=7 (6.03%) then decays geometrically with lambda ~ 0.58. Reproduces E87's two fragment denominators (80,986 / 988,046) from the `G` sequence alone. 11 self-checks. |
 | `e92_literature_scan.py` | E92 (2026-11-04) | Round-23 arXiv sweep (20 fielded queries, 243 records, 92 from 2026) reusing E85's client. Found `2608.27592` (plateau-constrained selection: equal-cost orders give routed depths 228.6 / 233.8 / 256.7) — the strongest external corroboration of the neutral-move mechanism and the closest priority competitor. |
 | `e93_fragment_bench_dedup.py` | E93 (2026-11-04) | Defect D11: the fragment bench's 240 "instances" are **170 distinct circuits** -- `gen_trotter_zz` and `gen_arithmetic_phase` never consume their seed, so 80 rows are 10 circuits replicated 8x. `trotter_zz` has a reorder share of exactly 0 but 22.1% of the gap weight, so the duplication inflated it 8x: pooled `g_reorder/g_total` is **0.880**, not the published 0.710. Family-level conclusions are unaffected. 6 self-checks. |

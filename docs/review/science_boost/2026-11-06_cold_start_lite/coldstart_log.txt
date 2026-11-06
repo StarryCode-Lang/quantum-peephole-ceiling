@@ -1,0 +1,53 @@
+# cold-start-lite log 2026-11-05T22:56:47Z
+## step 1: venv create
+VENV_OK
+## step 2: pip install -r requirements-lock.txt
+    patsy 1.0.2 depends on numpy>=1.4
+    pytket 2.18.0 depends on numpy>=1.26.4
+    pytket-qiskit 0.77.0 depends on numpy>=1.26.4
+    pyzx 0.10.5 depends on numpy>=1.14
+    qiskit 2.4.1 depends on numpy<3 and >=1.21
+    qiskit-aer 0.17.2 depends on numpy>=1.16.3
+    qiskit-ibm-runtime 0.47.0 depends on numpy>=1.26.2
+    rustworkx 0.18.0 depends on numpy<3 and >=1.16.0
+    samplomatic 0.20.0 depends on numpy>=1.26
+    scikit-learn 1.8.0 depends on numpy>=1.24.1
+    scipy 1.13.1 depends on numpy<2.3 and >=1.22.4
+    seaborn 0.13.2 depends on numpy!=1.24.0 and >=1.20
+    statsmodels 0.14.6 depends on numpy<3 and >=1.22.3
+    autograd 1.8.0 depends on numpy<3
+    bqskit 1.2.1 depends on numpy>=1.22.0
+    pennylane 0.45.1 depends on numpy>=2.0
+
+To fix this you could try to:
+1. loosen the range of package versions you've specified
+2. remove package versions to allow pip to attempt to solve the dependency conflict
+
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: D:\Documents\ZCodeData\tmp\qresearch_coldstart_20261106\venv\Scripts\python.exe -m pip install --upgrade pip
+ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
+PIP_EXIT=0
+## step 3: audit-frozen with fresh interpreter
+usage: reproduce_all.py [-h]
+                        [--experiments {E1,E2,E3,E4,E5,E10,E10p2b,E11,E12,E13,E14,E15,E16,E17,E18,E19,E20,E21,E22,E23,E24,E25,E26,E26-pilot,E29,E30,ALL} [{E1,E2,E3,E4,E5,E10,E10p2b,E11,E12,E13,E14,E15,E16,E17,E18,E19,E20,E21,E22,E23,E24,E25,E26,E26-pilot,E29,E30,ALL} ...]]
+                        [--figures] [--tests] [--verify] [--smoke] [--all]
+                        [--audit-frozen]
+
+One-command reproduction for Q-Research project
+
+options:
+  -h, --help            show this help message and exit
+  --experiments {E1,E2,E3,E4,E5,E10,E10p2b,E11,E12,E13,E14,E15,E16,E17,E18,E19,E20,E21,E22,E23,E24,E25,E26,E26-pilot,E29,E30,ALL} [{E1,E2,E3,E4,E5,E10,E10p2b,E11,E12,E13,E14,E15,E16,E17,E18,E19,E20,E21,E22,E23,E24,E25,E26,E26-pilot,E29,E30,ALL} ...]
+                        Experiments to run (default: none unless --all)
+  --figures             Generate figures
+  --tests               Run unit tests
+  --verify              Verify data integrity
+  --smoke               Run tests and data verification only
+  --all                 Run everything (tests, all experiments, figures,
+                        verify)
+  --audit-frozen        Byte-audit every (path, sha256) pair in the release
+                        manifests with scripts/audit_frozen_bytes.py. This is
+                        the only check that catches line-ending drift: git
+                        status reports such a file as clean.
+AUDIT_EXIT=0

@@ -593,8 +593,11 @@ def main():
         if args.experiments is None:
             args.experiments = []
     
-    # If no flags specified, show help
-    if not any([args.tests, args.experiments, args.figures, args.verify, args.smoke]):
+    # If no flags specified, show help.  --audit-frozen alone is a valid
+    # invocation (the manifest-level byte audit); before 2026-11-06 it was
+    # missing from this list, so the flag silently printed help and exited 0
+    # without auditing anything.
+    if not any([args.tests, args.experiments, args.figures, args.verify, args.smoke, args.audit_frozen]):
         parser.print_help()
         return
     

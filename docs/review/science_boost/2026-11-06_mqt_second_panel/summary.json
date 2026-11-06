@@ -1,0 +1,443 @@
+{
+  "contract": {
+    "reads": {
+      "e71_results_csv": {
+        "path": "docs/review/science_boost/2026-10-26_external_circuits/external_circuit_results.csv",
+        "sha256": "c46f4f6efc14ef1a5230cef45cf27f3c960406a99c7feac5027b88dc324d1695"
+      },
+      "e90_summary_json": {
+        "path": "docs/review/science_boost/2026-11-04_rule_utilisation/summary.json",
+        "sha256": "0f888bd5fdf6ccc686d591f21c088811981e4804b8b43f5c81cf93656cb1c7cf"
+      },
+      "e95_summary_json": {
+        "path": "docs/review/science_boost/2026-11-06_source_axis_partition/summary.json",
+        "sha256": "3d3c429d304b09a9d77b99bd1cb8efa316b298512a5b87da00c1a80595daa46f"
+      }
+    },
+    "rule_library": {
+      "path": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+      "sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295"
+    },
+    "rule_scope": "e44_core_v1",
+    "search_rerun": false,
+    "writes": [
+      "docs/review/science_boost/2026-11-06_mqt_second_panel"
+    ]
+  },
+  "date": "2026-11-06",
+  "definitions": {
+    "axis_witness": "first action of the certified closure witness, classified by cost_delta (E95's convention)",
+    "content_first": "root census shows at least one reducing action (reducing-at-root)",
+    "escape_certified": "certified commutation closure (E56 closure_run, replayed) reaches a strictly lower cost",
+    "reorder_first_candidate": "root census shows zero reducing actions; recorded explicitly, not dropped",
+    "root_census": "legal_actions at the ROOT state of the whole normalized listing, declared scope e44_core_v1 (E90's machinery, no windows)",
+    "stratum": "E46 semantics: greedy applied iff listing <= MAX_BASELINE_GATES(80); GREEDY_FIXED_POINT = normalized listing already greedy-stable"
+  },
+  "determinism_check": {
+    "circuits": [
+      {
+        "algorithm": "bv",
+        "identical": true,
+        "n_qubits": 4
+      },
+      {
+        "algorithm": "bv",
+        "identical": true,
+        "n_qubits": 8
+      }
+    ],
+    "identical": true
+  },
+  "e71_alignment": {
+    "compared_fields": [
+      "raw_gates",
+      "root_gates",
+      "root_rz",
+      "root_cx",
+      "root_h",
+      "closure_gates"
+    ],
+    "exact_match": true,
+    "mismatches": [],
+    "per_circuit": [
+      {
+        "algorithm": "bv",
+        "mismatches": {},
+        "n_qubits": 4
+      },
+      {
+        "algorithm": "bv",
+        "mismatches": {},
+        "n_qubits": 8
+      },
+      {
+        "algorithm": "ghz",
+        "mismatches": {},
+        "n_qubits": 5
+      },
+      {
+        "algorithm": "ghz",
+        "mismatches": {},
+        "n_qubits": 10
+      },
+      {
+        "algorithm": "qft",
+        "mismatches": {},
+        "n_qubits": 4
+      },
+      {
+        "algorithm": "qft",
+        "mismatches": {},
+        "n_qubits": 8
+      },
+      {
+        "algorithm": "dj",
+        "mismatches": {},
+        "n_qubits": 4
+      },
+      {
+        "algorithm": "dj",
+        "mismatches": {},
+        "n_qubits": 8
+      },
+      {
+        "algorithm": "wstate",
+        "mismatches": {},
+        "n_qubits": 4
+      },
+      {
+        "algorithm": "wstate",
+        "mismatches": {},
+        "n_qubits": 8
+      },
+      {
+        "algorithm": "qaoa",
+        "mismatches": {},
+        "n_qubits": 4
+      },
+      {
+        "algorithm": "qaoa",
+        "mismatches": {},
+        "n_qubits": 8
+      },
+      {
+        "algorithm": "grover",
+        "mismatches": {},
+        "n_qubits": 4
+      },
+      {
+        "algorithm": "grover",
+        "mismatches": {},
+        "n_qubits": 8
+      }
+    ],
+    "shared_circuits": 14
+  },
+  "e90_e95_comparison": {
+    "comparability": "Denominators differ (E90: 38,118 windows on the frozen E46 panel; E95: 69 certified escape sources; E97: 30 whole-listing MQT roots). The replicated claims are the length-2 saturation of every reducing action and the stratum coincidence (greedy fixed points admit no reducing action).",
+    "e90_window_level": {
+      "min_reducing_source_length_histogram": {
+        "2": 19303
+      },
+      "source": "docs/review/science_boost/2026-11-04_rule_utilisation/summary.json",
+      "unique_windows": 38118,
+      "windows_with_reducing_action": 19303
+    },
+    "e95_source_level": {
+      "classified_sources": 69,
+      "content_first": 49,
+      "reorder_first": 20,
+      "source": "docs/review/science_boost/2026-11-06_source_axis_partition/summary.json"
+    },
+    "e97_mqt_root_level": {
+      "circuits": 30,
+      "min_reducing_source_length_histogram": {
+        "2": 17
+      },
+      "with_reducing_action": 17
+    }
+  },
+  "experiment_id": "E97_MQT_SECOND_PANEL_2026_11_06",
+  "headline": {
+    "axes_agreement_on_escapes": {
+      "agree": 20,
+      "escape_rows": 23
+    },
+    "axis_root_split": {
+      "content_first": 17,
+      "reorder_first_candidate": 13
+    },
+    "by_stratum": {
+      "GREEDY_FIXED_POINT": {
+        "circuits": 8,
+        "min_reducing_length_histogram": {},
+        "with_reducing_action": 0
+      },
+      "GREEDY_REDUCIBLE": {
+        "circuits": 9,
+        "min_reducing_length_histogram": {
+          "2": 9
+        },
+        "with_reducing_action": 9
+      },
+      "RAW_NORMALIZED_OVER_BASELINE_BUDGET": {
+        "circuits": 13,
+        "min_reducing_length_histogram": {
+          "2": 8
+        },
+        "with_reducing_action": 8
+      }
+    },
+    "circuits_censused": 30,
+    "escape_axis_witness_split": {
+      "content_first": 14,
+      "reorder_first": 9
+    },
+    "escape_certified_count": 23,
+    "greedy_fixed_points_all_zero_reducing": true,
+    "library_silent_roots": [
+      {
+        "algorithm": "ghz",
+        "n_qubits": 5
+      },
+      {
+        "algorithm": "ghz",
+        "n_qubits": 10
+      }
+    ],
+    "locally_irreducible_roots": [
+      {
+        "algorithm": "ghz",
+        "n_qubits": 5,
+        "root_gates": 5
+      },
+      {
+        "algorithm": "ghz",
+        "n_qubits": 10,
+        "root_gates": 10
+      },
+      {
+        "algorithm": "dj",
+        "n_qubits": 4,
+        "root_gates": 15
+      },
+      {
+        "algorithm": "dj",
+        "n_qubits": 8,
+        "root_gates": 33
+      },
+      {
+        "algorithm": "wstate",
+        "n_qubits": 4,
+        "root_gates": 43
+      },
+      {
+        "algorithm": "wstate",
+        "n_qubits": 8,
+        "root_gates": 99
+      },
+      {
+        "algorithm": "qaoa",
+        "n_qubits": 8,
+        "root_gates": 140
+      }
+    ],
+    "min_reducing_length_all_2": true,
+    "min_reducing_source_length_histogram": {
+      "2": 17
+    },
+    "quartz_reducing_rules_beyond_pair_v1": [
+      "quartz_v1:506_3:31a27fe7fe12->4f2fcb00a52a:to_anchor",
+      "quartz_v1:506_3:bb1ed99d9eca->4f2fcb00a52a:to_anchor"
+    ],
+    "roots_with_reducing_action": 17,
+    "roots_without_any_action": 2,
+    "roots_without_reducing_action": 13,
+    "rules_fired_any": 53,
+    "rules_fired_reducing": 5,
+    "rules_in_declared_scope": 149,
+    "stratum_counts": {
+      "GREEDY_FIXED_POINT": 8,
+      "GREEDY_REDUCIBLE": 9,
+      "RAW_NORMALIZED_OVER_BASELINE_BUDGET": 13
+    }
+  },
+  "panel": {
+    "equivalence": "src.equivalence.certify_equivalence (exact numerical-unitary, threshold 0.99)",
+    "kind": "mqt_bench (external, not generated by this project)",
+    "mqt_bench_version": "2.3.0",
+    "normalization": "experiments.e45_development_grid.run.normalize_circuit (E71's path, frozen basis {h,x,rz,cx})",
+    "ok_count": 30,
+    "refusals": [],
+    "scope_reduction": null,
+    "target_count": 30,
+    "targets": [
+      [
+        "mqt_bench",
+        "bv",
+        4
+      ],
+      [
+        "mqt_bench",
+        "bv",
+        8
+      ],
+      [
+        "mqt_bench",
+        "ghz",
+        5
+      ],
+      [
+        "mqt_bench",
+        "ghz",
+        10
+      ],
+      [
+        "mqt_bench",
+        "qft",
+        4
+      ],
+      [
+        "mqt_bench",
+        "qft",
+        8
+      ],
+      [
+        "mqt_bench",
+        "dj",
+        4
+      ],
+      [
+        "mqt_bench",
+        "dj",
+        8
+      ],
+      [
+        "mqt_bench",
+        "wstate",
+        4
+      ],
+      [
+        "mqt_bench",
+        "wstate",
+        8
+      ],
+      [
+        "mqt_bench",
+        "qaoa",
+        4
+      ],
+      [
+        "mqt_bench",
+        "qaoa",
+        8
+      ],
+      [
+        "mqt_bench",
+        "grover",
+        4
+      ],
+      [
+        "mqt_bench",
+        "grover",
+        8
+      ],
+      [
+        "mqt_bench",
+        "graphstate",
+        4
+      ],
+      [
+        "mqt_bench",
+        "graphstate",
+        8
+      ],
+      [
+        "mqt_bench",
+        "qftentangled",
+        4
+      ],
+      [
+        "mqt_bench",
+        "qftentangled",
+        8
+      ],
+      [
+        "mqt_bench",
+        "qpeexact",
+        4
+      ],
+      [
+        "mqt_bench",
+        "qpeexact",
+        8
+      ],
+      [
+        "mqt_bench",
+        "qpeinexact",
+        4
+      ],
+      [
+        "mqt_bench",
+        "qnn",
+        4
+      ],
+      [
+        "mqt_bench",
+        "qnn",
+        8
+      ],
+      [
+        "mqt_bench",
+        "randomcircuit",
+        4
+      ],
+      [
+        "mqt_bench",
+        "randomcircuit",
+        8
+      ],
+      [
+        "mqt_bench",
+        "qwalk",
+        4
+      ],
+      [
+        "mqt_bench",
+        "vqe_real_amp",
+        4
+      ],
+      [
+        "mqt_bench",
+        "vqe_su2",
+        4
+      ],
+      [
+        "mqt_bench",
+        "draper_qft_adder",
+        4
+      ],
+      [
+        "mqt_bench",
+        "hhl",
+        4
+      ]
+    ]
+  },
+  "runtime_seconds": 36.2,
+  "self_checks": {
+    "all_census_rows_equivalence_verified": true,
+    "closure_no_positive_step": true,
+    "determinism_two_circuits_identical": true,
+    "e71_alignment_exact_on_shared_14": true,
+    "every_refusal_recorded_with_reason": true,
+    "greedy_fixed_points_record_zero_reducing_explicitly": true,
+    "no_reducing_root_opens_only_neutrally": true,
+    "reducing_lengths_within_scope": true,
+    "reducing_witness_implies_root_reducing_action": true,
+    "target_list_recorded_and_accounted": true
+  },
+  "versions": {
+    "python": "3.12.12"
+  }
+}

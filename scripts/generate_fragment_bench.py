@@ -137,12 +137,18 @@ def gen_linear_rotation(n: int, seed: int) -> tuple[QuantumCircuit, int]:
 
 
 def gen_trotter_zz(n: int, seed: int) -> tuple[QuantumCircuit, int]:
+    # D11 repair (2026-11-06): the seed is now consumed — each Trotter layer
+    # visits the linear-neighbour edges in a seed-shuffled order.  Family
+    # semantics unchanged (the same n-1 ZZ interactions per layer, fixed
+    # angle); the frozen 2026-10-25 bench keeps the seed-blind generator.
     rng = random.Random(seed)
     qc = QuantumCircuit(n)
     edges = set()
     reps = 2
     for _ in range(reps):
-        for i in range(n - 1):
+        order = list(range(n - 1))
+        rng.shuffle(order)
+        for i in order:
             edge = tuple(sorted((i, i + 1)))
             qc.cx(i, i + 1)
             qc.rz(0.9, i + 1)
@@ -174,14 +180,22 @@ def gen_iqp_core(n: int, seed: int) -> tuple[QuantumCircuit, int]:
 
 
 def gen_arithmetic_phase(n: int, seed: int) -> tuple[QuantumCircuit, int]:
-    """Carry-chain phase oracle: rz on chained parities; s = chain length."""
+    """Carry-chain phase oracle: rz on chained parities; s = chain length.
+
+    D11 repair (2026-11-06): the seed is consumed through a random carry
+    length ``k`` in [max(2, n // 2), n], so instances of the same n are no
+    longer byte-identical.  Family semantics unchanged (prefix-parity chain,
+    fixed angle 0.5, exact uncomputation)."""
+    rng = random.Random(seed)
     qc = QuantumCircuit(n)
     monomials: set[tuple[int, ...]] = set()
-    for i in range(n - 1):
+    k = rng.randint(max(2, n // 2), n)
+    start = rng.randint(0, n - k)
+    for i in range(start, start + k - 1):
         qc.cx(i, i + 1)
         qc.rz(0.5, i + 1)
-        monomials.add(tuple(range(i + 1)))
-    for i in range(n - 2, -1, -1):
+        monomials.add(tuple(range(start, i + 2)))
+    for i in range(start + k - 2, start - 1, -1):
         qc.cx(i, i + 1)
     return qc, len(monomials)
 
