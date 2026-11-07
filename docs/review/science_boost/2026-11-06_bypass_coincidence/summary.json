@@ -1,0 +1,154 @@
+{
+  "bypass_provenance": {
+    "where_the_80_gate_bypass_enters_the_e95_pipeline": "experiments/e45_development_grid/run.py:97 defines MAX_BASELINE_GATES = 80. experiments/e46_window_landscape/run.py:111-113 (inside load_root_states) applies the bypass: `if int(circuit.size()) > MAX_BASELINE_GATES: baseline = circuit; root_kind = \"RAW_NORMALIZED_OVER_BASELINE_BUDGET\"` -- sources above 80 gates skip the greedy baseline entirely. E95 inherits this through scripts/e95_source_axis_partition.py:612 (`return e52.load_root_states()`), which resolves to the import at scripts/e52_escape_mechanism_census.py:59 (`from experiments.e46_window_landscape.run import ... load_root_states`); E95 consumes it at scripts/e95_source_axis_partition.py:184 and writes the resulting label into source_axis_partition.csv at scripts/e95_source_axis_partition.py:260-261 (`\"root_kind\": root[\"root_kind\"], \"stratum\": root[\"root_kind\"]`). The partition.csv `stratum` column is therefore a direct function of the bypass.",
+    "where_the_e54_baseline_replaces_it": "scripts/e54_d2_uniform_rebaseline.py:152-156 constructs the uniform baseline with no bypass: `greedy = GreedyGateCancellation(max_iterations=50, fidelity_threshold=1.0, success_reduction=0.0).optimize(circuit).optimized_circuit` is applied unconditionally to every normalized circuit, and scripts/e54_d2_uniform_rebaseline.py:158 takes `state = state_from_circuit(greedy)` as the root. The contract is stated at scripts/e54_d2_uniform_rebaseline.py:342: \"uniform greedy fixed point; NO MAX_BASELINE_GATES bypass\". E98 applies this identical construction per source (via the imported e54 module) and re-derives strata and axes on the result."
+  },
+  "contract": {
+    "reads": {
+      "classification_complete": {
+        "path": "data/v16/e45_landscape_integration/classification_complete.csv",
+        "sha256": "e7ff1db7700cf3a114eedbd9ba54a4ab6b24c838efa6d8785256c8f3e5a4bb33"
+      },
+      "compact_certificates_v16": {
+        "path": "data/v16/e45_full_development/certificates.jsonl",
+        "sha256": "57714e451071595f12d69f21ec97c2f04be34f447723e981b121ca6c9850c7c4"
+      },
+      "e54_rebaseline_csv": {
+        "path": "docs/review/science_boost/2026-10-22_d2_rebaseline/rebaseline.csv",
+        "sha256": "c8ed420d766e2c807db58235077a1766a6d5493145837d2795549d2c38fe34b2"
+      },
+      "e95_partition_csv": {
+        "path": "docs/review/science_boost/2026-11-06_source_axis_partition/source_axis_partition.csv",
+        "sha256": "2141e48287c5666f44a053ba78d295422cc620fa927e6a9064f3cddb92cb1a44"
+      },
+      "normalization_manifest": {
+        "path": "data/v14/e45_full_development/normalization_manifest.csv",
+        "sha256": "0de35d33ad281b0b43dc8f5e38e76567d8c4afc14747a9eff0e7756196b1ba84"
+      },
+      "rule_library": {
+        "path": "data/v13/e43_quartz_rule_import/generation_a/rule_library.json",
+        "sha256": "fe9876de0d9b75afc458bbdcf806bdc797da0369ac5cd595cb4bf7a0232f3295"
+      }
+    },
+    "root_states": "frozen roots rebuilt via experiments.e46_window_landscape.run.load_root_states through e52 (hash-checked, raises on mismatch); uniform roots rebuilt with e54's unconditional greedy construction",
+    "writes": [
+      "docs/review/science_boost/2026-11-06_bypass_coincidence/"
+    ]
+  },
+  "date": "2026-11-07",
+  "determinism_recheck": {
+    "details": {
+      "e39:02163c542c157c61ed7195186ff2f5485f3042166bff997c922c173ac06103d0": {
+        "deterministic": true,
+        "fields_compared": [
+          "root_has_reducing_action",
+          "root_min_reducing_source_length",
+          "root_neutral_action_count",
+          "root_reducing_action_count",
+          "uniform_adjacent_reducible_pairs",
+          "uniform_h1_fixed_point",
+          "uniform_root_gate_count",
+          "uniform_root_state_sha256"
+        ],
+        "mismatches": []
+      },
+      "e39:03b7ba6584cd57903d9049d3d8d9d802e36a1d22303218b80bcdf8645fad3484": {
+        "deterministic": true,
+        "fields_compared": [
+          "search_best_cost",
+          "search_status",
+          "uniform_adjacent_reducible_pairs",
+          "uniform_first_rule_id",
+          "uniform_first_step_cost_delta",
+          "uniform_h1_fixed_point",
+          "uniform_path_length",
+          "uniform_root_gate_count",
+          "uniform_root_state_sha256",
+          "witness_first_step_pre_state_matches_uniform_root"
+        ],
+        "mismatches": []
+      }
+    },
+    "sources": [
+      "e39:02163c542c157c61ed7195186ff2f5485f3042166bff997c922c173ac06103d0",
+      "e39:03b7ba6584cd57903d9049d3d8d9d802e36a1d22303218b80bcdf8645fad3484"
+    ]
+  },
+  "experiment_id": "E98_BYPASS_COINCIDENCE_2026_11_07",
+  "headline": {
+    "claim_checked": "greedy-stratum escapes are 100% reorder-first (E95, round-24)",
+    "count_changes": [
+      {
+        "change": "content_first_escape_enters_uniform_greedy_stratum",
+        "circuit_family": "QAOA",
+        "reason": "the escape survives re-derivation (exact at h=3, best cost 80 < 85) and keeps its content-first first step, now inside the uniform greedy stratum; the greedy root is NOT h1-fixed (15 adjacent rz-merge pairs remain -- GreedyGateCancellation does not merge rotations), so this is the same 'baseline was never fully optimized' phenomenon E54 diagnosed, relocated into the greedy stratum by removing the bypass",
+        "source_id": "e39:03b7ba6584cd57903d9049d3d8d9d802e36a1d22303218b80bcdf8645fad3484"
+      },
+      {
+        "change": "escape_vanished",
+        "circuit_family": "HardwareEfficient",
+        "reason": "the certified content-first escape attached to the raw (never-greedy) baseline; under E54's uniform greedy baseline the re-run frozen-contract search finds no escape at h=3 (EXACT_H_LOCAL_OPTIMUM) on the h1-fixed root, so the source contributes no escape to the uniform greedy stratum",
+        "source_id": "e39:5644fee5bd8328c655b27bf4202f33cb49d6ff723364d466a3a1421f12c14466"
+      },
+      {
+        "change": "axis content_first -> positive_first",
+        "circuit_family": "Grover",
+        "reason": "the exact h=3 escape at the h1-fixed greedy root opens with a cost-INCREASING step (first_step_cost_delta +1, rule quartz_v1:514_3:0db3aa28be83->48d82ea69f60:from_anchor) before recovering (net -1); positive_first is a class the frozen 69 never showed, so the two-axis taxonomy needs this extension under the uniform baseline",
+        "source_id": "e39:c91f83f84726fdd86c22a20ea08453d780f2bdd292a5b3b056d983430ea40d06"
+      }
+    ],
+    "new_class_observed_under_uniform_baseline": "positive_first",
+    "reading": "Three-layer answer. (1) Core: all 20 GREEDY_FIXED_POINT escapes keep stratum and axis exactly -- the uniform baseline reproduces their frozen roots bit-for-bit (20/20 hash equality, all 20 h1-fixed with zero adjacent reducible pairs) and the certified witness first steps attach to them -- so for the stratum's original members the 100%-reorder-first headline is bypass-INDEPENDENT. (2) Stratum extension: removing the bypass moves former-RAW sources into the greedy stratum, and 2 of the 3 probed controls still escape there -- one content-first (QAOA: its greedy root is NOT h1-fixed, 15 adjacent rz-merge pairs remain, so the depth-1 escape is again the 'baseline was never fully optimized' phenomenon E54 diagnosed, relocated into the greedy stratum) and one positive-first (Grover: an h1-fixed root whose exact h=3 escape opens by INCREASING cost +1 before recovering -2 -- a class absent from the frozen 69). The unqualified round-24 headline therefore does NOT survive extension to the bypass-added stratum members, and E95's two-axis taxonomy needs the positive_first extension under the uniform baseline. (3) Qualification for writing: the content-first escape inside the uniform greedy stratum sits on a non-h1-fixed root; on genuinely h1-fixed probed roots no content-first escape appears (1 of 2 stops escaping entirely, consistent with E54 Part C), but the remaining escape is positive-first, not reorder-first. E54's part_d reading that 'the 49 depth-1 escapes disappear' under re-baselining was an inference, not a search; this 3-source probe shows 1 of 3 does disappear and 2 of 3 persist in changed form.",
+    "survives": false,
+    "survives_for_original_greedy_members": true,
+    "under_e54_uniform_baseline": {
+      "content_first": 1,
+      "no_longer_escaping": 1,
+      "positive_first": 1,
+      "reorder_first": 20,
+      "sources_probed": 23,
+      "unresolved": 0
+    },
+    "under_e95_frozen_panel": {
+      "content_first": 0,
+      "greedy_stratum_escapes": 20,
+      "reorder_first": 20
+    }
+  },
+  "method": {
+    "content_controls": "3 of the 49 RAW content-first escapes; escape re-derived by re-running the frozen contract search (h=3, e44_core_v1, 200k states, 30 s -- E54 Part C's contract) on the new root",
+    "control_selection_rule": "among the 49 RAW content-first escapes, the smallest E54-rebased root cost per circuit family, tie-break source_id; deterministic and independent of outcome",
+    "greedy_escape_sources": "20 GREEDY_FIXED_POINT escapes of E95's partition; frozen certified witness reused, validity at the uniform root proven by pre-state hash; no search re-run",
+    "search_rerun": "controls only (3 + 1 determinism recheck)",
+    "uniform_baseline": "E54's D2 construction applied per source: GreedyGateCancellation(max_iterations=50, fidelity_threshold=1.0, success_reduction=0.0) on the normalized circuit with NO MAX_BASELINE_GATES branch, then state_from_circuit"
+  },
+  "question": "Is the round-24 headline 'greedy-stratum certified escapes are 100% reorder-first' (E95, docs/review/science_boost/2026-11-06_innovation_scan.md section 2.1) an artifact of the 80-gate baseline bypass?",
+  "scope": {
+    "content_controls": 3,
+    "control_ids": [
+      "e39:03b7ba6584cd57903d9049d3d8d9d802e36a1d22303218b80bcdf8645fad3484",
+      "e39:5644fee5bd8328c655b27bf4202f33cb49d6ff723364d466a3a1421f12c14466",
+      "e39:c91f83f84726fdd86c22a20ea08453d780f2bdd292a5b3b056d983430ea40d06"
+    ],
+    "greedy_escape_sources": 20,
+    "scope_note": "The registered brief allows reducing to the 20 reorder-first sources + 3 content-stratum controls if the rerun is too heavy; the full 23-source scope ran (only the 3 controls required the heavy search re-run), so no scope_reduction was needed. The uniform greedy stratum is probed on these 23 of the 128 panel sources; the RAW-side generalization over the remaining 47 former-RAW escapes is a scope note, not a claim.",
+    "scope_reduction": false,
+    "sources": 23
+  },
+  "self_checks": {
+    "control_witnesses_replay_clean": true,
+    "controls_fail_closed_no_unresolved": true,
+    "determinism_recheck_2_sources": true,
+    "e95_partition_axis_invariants": true,
+    "frozen_root_hashes_verified": true,
+    "greedy_stratum_roots_unchanged_under_uniform_baseline": true,
+    "rederived_axis_invariants": true,
+    "scope_counts_match_brief": true,
+    "witness_first_step_valid_at_uniform_root": true
+  },
+  "unresolved": [],
+  "versions": {
+    "python": "3.12.12",
+    "qiskit": "2.4.1"
+  }
+}

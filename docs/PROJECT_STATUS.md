@@ -184,14 +184,17 @@ rewritten; `data/`, `release/`, and `docs/manuscript/` are untouched.
 | λ decay shape | λ ≈ 0.58 (L=5) from 7 points | λ per L, m→20: panel_2q λ(2..7) = 0.900 / 0.789 / 0.689 / 0.582 / 0.456 / 0.313 — per-L stability holds (≪ ±0.02) but the **linear reading is refuted** (per-level drop accelerates beyond L=5: −0.126, −0.143; convex decay) | Empirical shape: strictly decreasing, convex in L; not a linear law |
 | Second panel | E90/E95 conclusions rested on one pipeline (96 sources) | E97 (2026-11-06): **30/30 MQT Bench circuits** (16 new algorithms) equivalence-certified and censused — min reducing source length **{2: 17}, 100% = 2**; 5 reducing-firing rules all length 2; all 8 greedy fixed points have zero reducing actions (stratification coincidence replicates); 23-circuit partition 14 content-first / 9 reorder-first; ghz5/ghz10 have **no action at all** (real-circuit `LF-1` instances); E71 gate counts reproduce field-exactly | Round-23 30-day item 3 closed; one honest difference (3 circuits whose closure-witness first step is a zero-cost exchange despite reducing actions at the root — witness-strategy dependence) establishes the reporting rule: a source's axis label must name its witness strategy |
 | Benchmark accounting | protocol preregistered 2026-11-04, not executed | **round 1 executed (E99, 2026-11-06)**: Qiskit L0–L3 × MQT 30, 120/120 rows double-certified (QCEC primary + numerical cross-check, zero exclusions), zero self-check failures. **The reporting convention decides the sign of the story**: baseline-relative total shows the conventional "+8.07 pp optimization gain" at L1, while source-relative shows the whole transpile chain **inflates** circuits relative to their algorithmic source (total mean −1150 pp, median −160 pp; 2-qubit −368 to −390 pp). H1 falls in the preregistered h0 branch on all four configs (per protocol §2/§6, a publishable negative; full verdict needs the pytket/BQSKit/pyzx rounds); H2 underpowered (2 random-family circuits); monotonicity violated on **8/30** (L3 worse than L2, echoing E61's 6/101) | Round-23 30-day item 5 closed for round 1; the multi-tool rounds are the remaining path to a full H1 verdict |
+| Bypass confound | the RAW/greedy stratification depends on an 80-gate bypass baseline (defined `experiments/e45_development_grid/run.py:97`, applied `e46/run.py:111-113`) — flagged as a possible artifact of the partition coincidence | E98 (2026-11-06, 23 sources, no scope reduction): the **core headline survives** — all 20 greedy-stratum escapes have uniform-baseline roots **byte-identical** to their frozen roots (all h1-fixed, zero adjacent reducible pairs), so they remain reorder-first independent of the bypass. But the *unrestricted* statement fails: without the bypass, former RAW sources join the greedy stratum — one control keeps a content-first escape on a **non-h1-fixed** greedy root (15 residual rz-merge pairs: greedy never merges rotations), one control yields the **first `positive_first` escape ever observed** (first step costs +1, later −2, net −1, on an h1-fixed root), and one control's escape disappears (a genuine bypass artifact) | Round-23 30-day item 2 closed **with an amendment**: `AX-1` is amended from a binary to a **ternary** partition by first-step cost-delta sign (<0 / =0 / >0); "strata coincidence" is a per-baseline statement (fourth reporting rule: name the baseline alongside the coincidence); E54 part_d's "49 depth-1 escapes vanish" is inference, not search — cite it as such |
 
 The operational consequence: the two-axis partition no longer rests on window
 slices alone — the source-level table (49/20) is the number to quote for "how
-many certified escapes must begin with a cost-neutral action", and the λ table
-is the number to quote for "how the locally irreducible class decays" (with the
-convex-decay caveat). Both are review-grade (outside the hash chain) until the
-release re-pin decision. The second-panel census (E97) replicates both headline
-regularities outside the original pipeline, and the audit's first round (E99)
-shows the sign of a reported optimization effect flips with its accounting
-convention. The reference hub now carries the certified-era must-cite set as
-additive section Q ([95]–[111]; drift entry 20).
+many certified escapes must begin with a cost-neutral action" (with the ternary
+amendment from E98), and the λ table is the number to quote for "how the
+locally irreducible class decays" (with the convex-decay caveat). All are
+review-grade (outside the hash chain) until the release re-pin decision. The
+second-panel census (E97) replicates both headline regularities outside the
+original pipeline, the audit's first round (E99) shows the sign of a reported
+optimization effect flips with its accounting convention, and E98 shows the
+partition's core survives the bypass confound while extending the
+classification. The reference hub now carries the certified-era must-cite set
+as additive section Q ([95]–[111]; drift entry 20).

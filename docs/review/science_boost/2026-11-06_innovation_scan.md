@@ -62,7 +62,7 @@
    14/9；ghz5/ghz10 整条无动作 = `LF-1` 真实实例。一处真实差异
    （3 个电路 witness 策略依赖）确立写作规范：**源轴标签必须连同
    witness 策略声明**。round-23 清单 #3 关闭。
-9c. **基准口径审计首轮执行（E99，预注册协议 v1.0）**：Qiskit L0–L3 ×
+9c. **基准口径审计首轮执行（E99，预注册协议 v1.0，§2.9）**：Qiskit L0–L3 ×
    MQT 30 面板，120 行全部双认证（QCEC 主 + 数值证明交叉，**零排除**），
    零自检失败、零 scope 缩减，51.8 s。**结论符号随口径翻转**：
    基线相对口径 total 均值 **+8.07 pp**（L1 vs L0 的"优化增益"），
@@ -78,6 +78,13 @@
     （16 条 + 13/13 必引摘要）——新增标题级划界义务 `2609.29210`、
     逐实例类比 `2608.22801`、唯一真缺口 `2101.01332`；引文枢纽
     **[109]–[111] 已补**，审计保持 20 accepted / 35,022 MATCH / ok。
+9d. **bypass 一致性校验（E98，§2.8）**：23 源全覆盖（无 scope 缩减）——
+   **核心头条幸存且与 bypass 无关**（20/20 greedy 逃逸的均匀根与冻结根
+   逐位相同 → 全部仍 reorder-first）；但发现第三类逃逸 **`positive_first`**
+   （Grover：h1-fixed 根上首步 +1 → −2 净 −1）→ **`AX-1` 修正为三分**；
+   分层重合确立为**逐基线命题**（第四条报告规则）；HE 对照的 content-first
+   逃逸确认是 bypass 伪象（1/3 消失、2/3 变形持续；E54 part_d 的
+   "49 个 depth-1 逃逸消失"是推断非搜索）。round-23 清单 #2 关闭。
 11. `pytest` 全量套件本轮复核 exit 0（§7）。
 
 ---
@@ -309,7 +316,47 @@ e90 普查 + e95/e52 划分机制，无逻辑复制）。**30/30** 个 MQT Bench
 **判定**：round-23 清单 #3 关闭——内容轴在自家基准饱和于长度 2、
 greedy 层序优先，两个头条都在独立流水线的 30 个电路上复制。
 
-### 2.8 E99：基准口径审计首轮（`2026-11-06_benchmark_accounting_round1/`，round-23 清单 #5 关闭）
+### 2.8 E98：bypass 一致性校验（`2026-11-06_bypass_coincidence/`，round-23 清单 #2 关闭）
+
+**方法**：23 源 = E95 的全部 20 个 GREEDY_FIXED_POINT 逃逸 + 3 个
+content-stratum 对照（确定性选取：49 个 RAW content-first 逃逸中每族取
+E54-rebased 代价最小者，≤200 门安全边界）。均匀基线 importlib 复用 e54
+的无旁路 greedy；冻结根经 e52 `load_root_states` 哈希校验重建；对照逃逸
+在冻结契约（h=3、`e44_core_v1`、200k/30s）下重推导，witness 逐步 replay。
+9/9 自检，无 scope 缩减，未触 MemoryError 边界。
+
+**两层答案**：
+
+1. **核心头条幸存，且与 bypass 无关**：20/20 个 greedy 逃逸的均匀根与
+   冻结根**逐位相同**（哈希相等、全部 h1-fixed、零相邻可约对），认证
+   witness 首步原样附着 → **20/20 仍 reorder-first**。round-24 头条
+   （greedy 层 = 100% 序优先）不是 80 门 bypass 的产物。
+2. **非限定表述不成立，且发现第三类**：去掉旁路后前 RAW 源并入 greedy
+   层——QAOA 保持 content-first，但其 greedy 根**非** h1-fixed（残留
+   15 个相邻 rz-merge 对：greedy 不做旋转合并，E54 诊断的"基线没优化完"
+   现象搬进了 greedy 层）；Grover 在 h1-fixed 根上得到**首步涨代价**的
+   精确逃逸（+1 → −2，净 −1）——冻结 69 中从未出现的 **`positive_first`
+   类**；HE 对照的逃逸消失（EXACT_H_LOCAL_OPTIMUM）——其 content-first
+   逃逸确系 bypass 伪象。
+
+**三条读数**：
+
+1. **`AX-1` 需从二分改为三分（定义修正，非缺陷）**：逃逸路径按首步
+   `cost_delta` 符号是三元划分（<0 内容优先 / =0 序优先 / >0
+   涨代价优先）；E98 给出第三类在真实电路上的第一个实例。写进正文时
+   二分表述必须加限定，或直接采用三分。
+2. **分层重合是"逐基线"命题**：冻结面板的表述幸存（根逐位相同），
+   但换基线后分层本身移动——报告分层重合必须连同基线声明（与"价格
+   必须连同生成元集"同型的第四条报告规则）。
+3. **E54 part_d 的"49 个 depth-1 逃逸消失"是推断非搜索**：本探针显示
+   1/3 消失、2/3 变形持续——引用该数字时必须注明是推断。
+
+**bypass 出处（file:line，入 summary.json）**：定义于
+`experiments/e45_development_grid/run.py:97`，应用于
+`experiments/e46_window_landscape/run.py:111-113`，经
+`e95:612 → e52:59` 进入 E95；`e54:152-158,342` 以均匀基线替换。
+
+### 2.9 E99：基准口径审计首轮（`2026-11-06_benchmark_accounting_round1/`，round-23 清单 #5 关闭）
 
 **方法**：`scripts/e99_benchmark_accounting_round1.py` 严格按预注册协议 v1.0
 （`docs/review/benchmark_accounting_protocol_2026-11-04.md`，sha256 入档）。
@@ -438,7 +485,7 @@ cold-start-lite 是**内部**外部效度：零依赖冷解释器可独立复核
 
 ### P1-1 基准口径审计（唯一主刊形状）—— Δ 首轮已执行
 
-- **首轮已执行（E99，§2.8）**：Qiskit L0–L3 × MQT 30，120/120 双认证。
+- **首轮已执行（E99，§2.9）**：Qiskit L0–L3 × MQT 30，120/120 双认证。
   核心现象成立——**报告口径决定结论符号**（基线相对 +8 pp vs 源相对
   −1150 pp）；按预注册判定 H1 落入 h0 分支（通胀是本项目基线的特异性，
   阴性可发表），完整 H1 判定待 pytket/BQSKit/pyzx 轮。
@@ -450,13 +497,20 @@ cold-start-lite 是**内部**外部效度：零依赖冷解释器可独立复核
 - **投稿层级**：Nature Physics（Comment/Perspective）或 Nature Communications；
   退路 PRX Quantum Perspective。
 
-### P1-2 QSymb 第二库 Go/No-Go —— Δ 判定升级为"GO，步骤已具体化"
+### P1-2 QSymb 第二库 Go/No-Go —— Δ 判定定案：GO，执行被 Docker 阻塞
 
-- `VeriGu/QSymb`（OOPSLA 2026）存在；工具链 JDK 17 + Maven≥3.6 +
-  `egglog-experimental` 1.0.0 + Python 3.10。1 天时间盒的执行序：
-  ① `build_qsymb.sh` 构建；② 对面板门集 `{h,x,rz,cx}` 合成规则集
-  （重点拿**长度 2** 规则——E90 已证明真实基准只用长度 2）；③ 规则集塞进
-  E87 价格表，对照"覆盖问题 vs 长度问题"判据（56.07% → 接近 47.72%？）。
+- `VeriGu/QSymb`（OOPSLA 2026）存在；本机核查（2026-11-07）：`paper_results/`
+  只有结果 CSV，**无预合成规则集文件**（规则由 Java 工具链运行时合成）；
+  本机 Java 1.8（需 17）、无 Maven、无 egglog——三条原生路径全缺。
+  **官方 artifact 提供 Docker 镜像** `xiaoqianghweye/qsymb:oopsla26`
+  （~10 GB，含 Java 17 / Python 3.10 / Z3 4.12 全工具链）。
+- **判定：GO 维持，会话内执行 NO-GO**——被 Docker 缺席阻塞（与 P1-3
+  冷启动同一阻塞）。**owner 建议：安装 Docker Desktop 一并解锁两项**
+  （P1-3 真冷启动 + P1-2 时间盒）。
+- 解锁后的 1 天时间盒执行序不变：① `docker run` 镜像；② 对面板门集
+  `{h,x,rz,cx}` 合成规则集（重点拿**长度 2** 规则——E90/E97 已证真实
+  基准只用长度 2）；③ 规则集塞进 E87 价格表，对照"覆盖问题 vs 长度
+  问题"判据（56.07% → 接近 47.72%？）。
 - 失败处置不变：E75 合成库当第二库（只给上界，正文写明）。
 - **投稿层级**：P0-1 的一节。
 
@@ -478,11 +532,11 @@ cold-start-lite 是**内部**外部效度：零依赖冷解释器可独立复核
 | # | 动作 | 状态 | 产出 / 判据 |
 |---|---|---|---|
 | 1 | 源级两轴划分 | ✅ E95 | 49/20，分层精确重合，19/19 自检 |
-| 2 | **分层重合的 bypass 检验**（23 greedy 源，关 80 门 bypass，E54 基线） | 待做 | 结论不变或记录差异 |
+| 2 | **分层重合的 bypass 检验**（23 greedy 源，关 80 门 bypass，E54 基线） | ✅ E98 | 核心幸存（20/20 根逐位相同）；`positive_first` 第三类发现 → `AX-1` 三分修正；分层重合 = 逐基线命题 |
 | 3 | **E90/E95 扩到 MQT Bench 30 电路**（第二面板） | ✅ E97 | 30/30 认证；{2:17}=100%、greedy 层零可约、划分 14/9；witness 策略差异记录 |
 | 4 | `RF-1` λ 稳定性 | ✅ E94 | 全部 λ 稳定（≪±0.02）；λ(L) 线性下降为新经验规律 |
 | 5 | 基准口径审计首轮（Qiskit L0–L3 × MQT Bench 30） | ✅ E99 | 120/120 双认证零排除；符号翻转成立；H1 h0 分支（阴性可发表）；多工具轮待续 |
-| 6 | QSymb 1 天时间盒执行 | 待做（GO 已确认，构建步骤 §4 P1-2） | 第二库价格表或明确失败 |
+| 6 | QSymb 1 天时间盒执行 | 判定定案（§4 P1-2）：GO，会话内 NO-GO（Docker 缺席阻塞；官方镜像 ~10 GB 可解锁） | 镜像跑通后 3 步执行序 |
 | 7 | 冷启动 | ✅ 本地部分（cold-start-lite） | 双链 PASS；第二台机器仍 owner |
 | 8 | 正文 patch list 执行（P1-1/P1-2/P1-3 + framework.md 指针） | owner | 三条各有证据引用 |
 | 9 | `src/` 暴露 `load_rule_library()` / `rule_source_length()` | 待做（与 #10 捆绑） | E90 不再 import 私有名 |
@@ -514,7 +568,8 @@ cold-start-lite 是**内部**外部效度：零依赖冷解释器可独立复核
 | 13 | L1/L2 deep-sweep 未返回 | 本轮启动 | **限时收尾后双双返回**：L2 生态认证刷新（并入 E96 §5），L1 完整前沿 + 2609.29210 划界义务 + [109]–[111] 入枢纽（并入 E96 §6） |
 | 14 | round-23 清单 #3：第二面板 | round-23 | **E97 关闭**（§2.7）：30/30 MQT 电路，长度 2 饱和与分层重合双复制；witness 策略差异 → 新写作规范 |
 | 15 | `AX-1` 的逐源标签 vs 逐路径定义 | E97 发现 | **写作规范确立**：同一根的不同逃逸路径可落不同轴；逐路径划分良定义，逐源标签必须连同 witness 策略 |
-| 16 | round-23 清单 #5：基准口径审计首轮 | round-23 | **E99 关闭（首轮）**（§2.8）：协议 v1.0 严格执行，120/120 双认证，符号翻转 + H1 h0 分支（阴性可发表）+ 单调性违例 8/30 |
+| 16 | round-23 清单 #5：基准口径审计首轮 | round-23 | **E99 关闭（首轮）**（§2.9）：协议 v1.0 严格执行，120/120 双认证，符号翻转 + H1 h0 分支（阴性可发表）+ 单调性违例 8/30 |
+| 17 | round-23 清单 #2：bypass 校验 | round-23 | **E98 关闭（带修正）**（§2.8）：核心头条幸存且 bypass 无关（20/20 根逐位相同）；但发现 `positive_first` 第三类 → `AX-1` 修正为三分；分层重合确立为"逐基线"命题（第四条报告规则）；E54 part_d"消失"实为推断 |
 
 **新增缺陷**：0 个数据/口径缺陷。1 个工程 bug（已修复，#5）。
 **未删除任何绑定文件**（本轮删除仅 `.pytest_cache`，gitignored 缓存）。
@@ -546,9 +601,11 @@ cold-start-lite 是**内部**外部效度：零依赖冷解释器可独立复核
 | `docs/review/science_boost/2026-11-06_fragment_bench_v2_e70/` | E70-v2 重跑（合并 0.736；四族逐位复现） |
 | `docs/review/science_boost/2026-11-06_mqt_second_panel/` | E97：MQT 第二面板（30 电路普查 + 划分 + E71 对齐） |
 | `docs/review/science_boost/2026-11-06_benchmark_accounting_round1/` | E99：基准口径审计首轮（120 行双认证，协议 v1.0） |
+| `docs/review/science_boost/2026-11-06_bypass_coincidence/` | E98：bypass 一致性校验（23 源对照表 + bypass 出处 file:line） |
 | `scripts/e94_rigidity_lambda.py` | λ 稳定性实验（L=2..7 延拓后复跑） |
 | `scripts/e95_source_axis_partition.py` | 源级两轴划分实验 |
 | `scripts/e97_mqt_second_panel.py` | MQT 第二面板实验 |
+| `scripts/e98_bypass_coincidence.py` | bypass 一致性校验实验 |
 | `scripts/e99_benchmark_accounting_round1.py` | 基准口径审计首轮实验 |
 | `scripts/generate_fragment_bench.py`（修改） | 两个生成器消费种子（D11 修复；文件未钉扎） |
 | `docs/references/unified_references.md`（修改） | v2.4：Section Q [95]–[111]（纯增量；漂移条目 20） |
