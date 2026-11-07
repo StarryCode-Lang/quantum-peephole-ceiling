@@ -62,7 +62,8 @@ from experiments.e46_window_landscape.run import (  # noqa: E402
 from src.optimisation.certified_landscape import (  # noqa: E402
     filter_rule_scope,
     legal_actions,
-    _rule_library,
+    load_rule_library,
+    rule_source_length,
 )
 
 OUTPUT_ROOT = ROOT / "docs" / "review" / "science_boost" / "2026-11-04_rule_utilisation"
@@ -82,14 +83,20 @@ def sha256_file(path: Path) -> str:
 def rule_source_lengths() -> tuple[dict[str, int], dict[str, str], dict[str, int]]:
     """rule_id -> source gate count, rule family, cost delta (declared scope only)."""
 
-    quartz, _ = _rule_library(RULE_LIBRARY)
+    quartz, _ = load_rule_library(RULE_LIBRARY)
     scoped = filter_rule_scope(quartz, RULE_SCOPE)
     lengths: dict[str, int] = {}
     families: dict[str, str] = {}
     deltas: dict[str, int] = {}
     for rule in scoped:
         rule_id = rule["rule_id"]
-        lengths[rule_id] = int(rule["source_gate_count"])
+        # rule_source_length() is the public accessor; the stored field must
+        # agree with it or the library schema changed underneath us.
+        declared = int(rule["source_gate_count"])
+        derived = rule_source_length(rule)
+        if declared != derived:
+            raise ValueError(f"rule_source_length_mismatch:{rule_id}")
+        lengths[rule_id] = declared
         families[rule_id] = str(rule.get("rule_family", "quartz_v1"))
         deltas[rule_id] = int(rule.get("cost_delta", 0))
     return lengths, families, deltas

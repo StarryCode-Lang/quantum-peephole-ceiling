@@ -564,7 +564,36 @@ distributional theorem and a valid quantifier/size argument.
 
 ---
 
-**Document version**: 5.4.0 (Consolidated)  
-**Last updated**: 2026-06-13  
+## Certified-Era Pointer (added 2026-11-07)
+
+This document is the hub of the **"structural ceilings" era** (2026-06 – 2026-08).
+The certified era that followed (review rounds 10–24, 2026-10-16 onward)
+re-centred the project's main line on the **two-axis escape partition** and
+its measurable quantities; the authoritative current statement of the theory
+lives in:
+
+- `docs/theory/THEOREM_REGISTRY.md` — the 8 theorem namespaces, including
+  `EX-1` (decidable reorder-axis criterion, $h^* = D+1$), `PD-1/2/3`
+  (panel gate diameters and gate-set dependence), `LF-1`/`RF-1` (the
+  locally irreducible class, existence then exact counting with convex
+  decay), `PR-1` (completeness price as an accounting identity), and `T-9`
+  (diameter bound capping the completeness ladder);
+- `docs/theory/decidability_frontier_2026-10-28.md` — Theorems 5/6;
+- `docs/theory/diameter_bound_2026-10-30.md` and
+  `docs/theory/panel_diameter_and_length_floor_2026-10-31.md` — the
+  certified-era diameter and length-floor results (with errata);
+- the round chronicle `docs/review/science_boost/README.md` (rounds 10–24)
+  and the current scan `2026-11-06_innovation_scan.md`.
+
+Reading order for a new reader: this document for the vocabulary
+(D1–D11), then the theorem registry for the certified-era claims. The
+"structural ceiling" classification of families is retained below as the
+historical record that rounds 19–24 revised (see the manuscript's re-labelled
+Class IIIa and the E48/E53 falsification packages).
+
+---
+
+**Document version**: 5.5.0 (certified-era pointer added 2026-11-07; sections above unchanged)  
+**Last updated**: 2026-11-07  
 **Author**: Q-research Theoretical Framework Team  
 **Companion document**: `formal_results.md` (all theorems, lemmas, propositions, conjectures, scope analysis, and proof appendices)

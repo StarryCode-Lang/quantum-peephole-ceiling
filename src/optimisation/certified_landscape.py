@@ -427,6 +427,20 @@ def _rule_library(path: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]
     return quartz, auxiliary
 
 
+def load_rule_library(path: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Public access to the frozen rule library: (quartz rules, auxiliary rules).
+
+    Thin wrapper over :func:`_rule_library` so audit and census scripts do not
+    import a private name (round-23 engineering debt; resolved 2026-11-07).
+    """
+    return _rule_library(path)
+
+
+def rule_source_length(rule: Mapping[str, Any]) -> int:
+    """Maximal source length of one rule: operations in its source pattern."""
+    return len(rule["source"]["operations"])
+
+
 def filter_rule_scope(
     rules: Iterable[Mapping[str, Any]],
     rule_scope: str = "full",
