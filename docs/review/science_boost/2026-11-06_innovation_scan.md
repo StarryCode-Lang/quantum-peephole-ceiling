@@ -62,6 +62,12 @@
    14/9；ghz5/ghz10 整条无动作 = `LF-1` 真实实例。一处真实差异
    （3 个电路 witness 策略依赖）确立写作规范：**源轴标签必须连同
    witness 策略声明**。round-23 清单 #3 关闭。
+9e. **多工具审计轮（E100，§2.10）**：pyzx/pytket/BQSKit 各 30 电路，90/90
+   行双认证。**H1 跨 4 工具/7 配置全部落入 h0 分支**——预注册方向被否定，
+   "符号由口径决定而非优化器"成为跨工具结论；H0 可发表（外部工具在冻结
+   基组下整体膨胀）。附带：pytket-qiskit 转换层缺陷（纯转换=导线置换，
+   停止规则触发移附录）；bqskit 近似合成的严格门拒绝（fail-closed）。
+   round-23 清单 #5 **完整关闭**。
 9c. **基准口径审计首轮执行（E99，预注册协议 v1.0，§2.9）**：Qiskit L0–L3 ×
    MQT 30 面板，120 行全部双认证（QCEC 主 + 数值证明交叉，**零排除**），
    零自检失败、零 scope 缩减，51.8 s。**结论符号随口径翻转**：
@@ -387,8 +393,41 @@ Wilcoxon + Holm、族分层 bootstrap CI 10,000、ICC/deff、ITT）。
 4. **单调性违例 8/30**（L3 劣于 L2），与 E61 在 101 源上的 6/101 呼应——
    "更高的优化级别更好"的默认叙事在两个独立面板上都不成立。
 
-**方法学精读池**：本轮全文精读 1 篇（2608.27592，最高优先级竞争者）+
-deep-sweep 代理的 13/13 必引摘要（Section B）+ 16 条前沿表（Section A）。
+### 2.10 E100：多工具审计轮（`2026-11-07_benchmark_accounting_multitool/`，round-23 清单 #5 完整关闭）
+
+**方法**：`scripts/e100_benchmark_accounting_multitool.py` 复用 E99 的统计/
+认证门与 e48/e53 的工具适配器（零逻辑复制）。pyzx full_reduce、pytket FPO、
+BQSKit default 各跑 30 电路；每行 QCEC 3.11.0 + 数值证明双认证。90/90 行、
+12/12 自检、无 scope 缩减。版本实测：pytket 2.18.0 / bqskit 1.2.1 /
+pyzx 0.10.5（qiskit 2.4.1）。
+
+**各口径中位数（认证行，pp；与 E99 同口径集）**：
+
+| 工具 | ①源相对 total | ②基线相对 total | h1 差（①−②） |
+|---|---|---|---|
+| pyzx | −382.1 | −86.8 | **−313.8** |
+| pytket | −427.6 | −190.0 | **−245.4** |
+| bqskit | −800.0 | −381.3 | **−562.5** |
+
+**H1 全工具判定（预注册问题得到完整回答）**：加上 E99 的 Qiskit L0–L3，
+**4 个工具 / 7 个配置无一支持 H1**——注册方向（源相对 − 基线相对 ≥ +5 pp）
+被否定（中位差 −160 至 −563 pp，Wilcoxon greater 全部 p≈1，Holm 后不显著，
+bootstrap 95% CI 全部深负）。按协议 §2/§6，**H0 可发表**：在冻结基组
+`{h,x,rz,cx}` 下"基线通胀"不能推广到外部工具——外部工具在冻结基组下
+甚至整体膨胀。**符号由口径决定，不由优化器决定**——这句话现在是
+跨工具结论。H3 不支持；H2 无数据（random 族仅 2 个）。
+
+**两个附带真发现**：
+
+1. **pytket-qiskit 转换层缺陷**：7 行被两个 certifier 一致拒绝，定位为
+   **纯转换往返（无优化器）即非等价**，且在 ≤4 比特电路上等于输入的
+   导线置换（如 (3,0,1,2)）——与 FPO 和 rebase 无关。§3.5 停止规则触发
+   （23.3% > 20%），该工具移出主检验进附录。是否上报上游 = owner 决策
+   （round-22 已有"不上报、留作回归证书"的先例）。
+2. **BQSKit 近似合成的严格门拒绝**：默认 compile 带 synthesis_epsilon=1e-8，
+   QCEC 拒绝而数值证明接受——按预注册门 fail-closed 移出；失败计数在
+   三次执行间波动（24/25/23 认证，骑在 20% 停止规则边界上），H1 结论
+   在每次执行中不变。
 **L1 补充的新发现**：(a) **`2609.29210`（Representation-Dependent
 Recoverability in Quantum Compilation，2026-09-24）是唯一的标题级重叠**
 ——它形式化"FT 编译输出的表示如何改变下游相位恢复代价"，带定理与
@@ -492,8 +531,11 @@ cold-start-lite 是**内部**外部效度：零依赖冷解释器可独立复核
 - 2608.27592 自己量出**同一实验三种基线口径给 12.83% / 14.77% / 22.39%**
   三个幅度——这正是"报告口径系统性影响社区认知"的活例子，写进 P1-1 的
   动机段可直接引用。
-- **下一步**：多工具轮（pytket/BQSKit/pyzx 各一轮），把 H1 从 h0 分支
-  判定中解放出来；样本扩展 QASMBench 20（协议已注册）。
+- **多工具轮已执行（E100，§2.10）**：H1 完整判定 = 全配置 h0 分支
+  （4 工具/7 配置）；审计的可发表内容转为"口径决定符号"的跨工具演示 +
+  H0 阴性 + 两个工具缺陷定位（pytket-qiskit 转换置换、bqskit 近似合成
+  严格门拒绝）。剩余扩展：QASMBench 20 样本（协议已注册）、把
+  pytket 转换缺陷的处置决定交给 owner。
 - **投稿层级**：Nature Physics（Comment/Perspective）或 Nature Communications；
   退路 PRX Quantum Perspective。
 
@@ -535,7 +577,7 @@ cold-start-lite 是**内部**外部效度：零依赖冷解释器可独立复核
 | 2 | **分层重合的 bypass 检验**（23 greedy 源，关 80 门 bypass，E54 基线） | ✅ E98 | 核心幸存（20/20 根逐位相同）；`positive_first` 第三类发现 → `AX-1` 三分修正；分层重合 = 逐基线命题 |
 | 3 | **E90/E95 扩到 MQT Bench 30 电路**（第二面板） | ✅ E97 | 30/30 认证；{2:17}=100%、greedy 层零可约、划分 14/9；witness 策略差异记录 |
 | 4 | `RF-1` λ 稳定性 | ✅ E94 | 全部 λ 稳定（≪±0.02）；λ(L) 线性下降为新经验规律 |
-| 5 | 基准口径审计首轮（Qiskit L0–L3 × MQT Bench 30） | ✅ E99 | 120/120 双认证零排除；符号翻转成立；H1 h0 分支（阴性可发表）；多工具轮待续 |
+| 5 | 基准口径审计首轮（Qiskit L0–L3 × MQT Bench 30） | ✅ E99 + E100 | 120+90 行双认证；H1 跨 4 工具/7 配置全部 h0 分支（阴性可发表）；符号翻转跨工具成立；两个工具缺陷定位 |
 | 6 | QSymb 1 天时间盒执行 | 判定定案（§4 P1-2）：GO，会话内 NO-GO（Docker 缺席阻塞；官方镜像 ~10 GB 可解锁） | 镜像跑通后 3 步执行序 |
 | 7 | 冷启动 | ✅ 本地部分（cold-start-lite） | 双链 PASS；第二台机器仍 owner |
 | 8 | 正文 patch list 执行（P1-1/P1-2/P1-3 + framework.md 指针） | owner | 三条各有证据引用 |
@@ -570,6 +612,7 @@ cold-start-lite 是**内部**外部效度：零依赖冷解释器可独立复核
 | 15 | `AX-1` 的逐源标签 vs 逐路径定义 | E97 发现 | **写作规范确立**：同一根的不同逃逸路径可落不同轴；逐路径划分良定义，逐源标签必须连同 witness 策略 |
 | 16 | round-23 清单 #5：基准口径审计首轮 | round-23 | **E99 关闭（首轮）**（§2.9）：协议 v1.0 严格执行，120/120 双认证，符号翻转 + H1 h0 分支（阴性可发表）+ 单调性违例 8/30 |
 | 17 | round-23 清单 #2：bypass 校验 | round-23 | **E98 关闭（带修正）**（§2.8）：核心头条幸存且 bypass 无关（20/20 根逐位相同）；但发现 `positive_first` 第三类 → `AX-1` 修正为三分；分层重合确立为"逐基线"命题（第四条报告规则）；E54 part_d"消失"实为推断 |
+| 18 | round-23 清单 #5：多工具轮 | E99 首轮遗留 | **E100 完整关闭**（§2.10）：H1 全配置 h0 分支（4 工具/7 配置）；两个工具缺陷定位（pytket-qiskit 转换置换、bqskit 近似合成） |
 
 **新增缺陷**：0 个数据/口径缺陷。1 个工程 bug（已修复，#5）。
 **未删除任何绑定文件**（本轮删除仅 `.pytest_cache`，gitignored 缓存）。
@@ -602,11 +645,13 @@ cold-start-lite 是**内部**外部效度：零依赖冷解释器可独立复核
 | `docs/review/science_boost/2026-11-06_mqt_second_panel/` | E97：MQT 第二面板（30 电路普查 + 划分 + E71 对齐） |
 | `docs/review/science_boost/2026-11-06_benchmark_accounting_round1/` | E99：基准口径审计首轮（120 行双认证，协议 v1.0） |
 | `docs/review/science_boost/2026-11-06_bypass_coincidence/` | E98：bypass 一致性校验（23 源对照表 + bypass 出处 file:line） |
+| `docs/review/science_boost/2026-11-07_benchmark_accounting_multitool/` | E100：多工具审计轮（90 行双认证，H1 全工具判定） |
 | `scripts/e94_rigidity_lambda.py` | λ 稳定性实验（L=2..7 延拓后复跑） |
 | `scripts/e95_source_axis_partition.py` | 源级两轴划分实验 |
 | `scripts/e97_mqt_second_panel.py` | MQT 第二面板实验 |
 | `scripts/e98_bypass_coincidence.py` | bypass 一致性校验实验 |
 | `scripts/e99_benchmark_accounting_round1.py` | 基准口径审计首轮实验 |
+| `scripts/e100_benchmark_accounting_multitool.py` | 多工具审计轮实验 |
 | `scripts/generate_fragment_bench.py`（修改） | 两个生成器消费种子（D11 修复；文件未钉扎） |
 | `docs/references/unified_references.md`（修改） | v2.4：Section Q [95]–[111]（纯增量；漂移条目 20） |
 | （文档刷新）`scripts/README.md`、`docs/review/README.md`、`docs/reproducibility.md`、`science_boost/README.md` | 索引与准入门 |
